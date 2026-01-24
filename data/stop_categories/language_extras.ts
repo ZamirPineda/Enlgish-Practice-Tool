@@ -5,7 +5,8 @@ import { collocationsData } from './definitions/collocations';
 import { oppositesData } from './definitions/opposites';
 import { falseFriendsData } from './definitions/false_friends';
 import { minimalPairsData } from './definitions/minimal_pairs';
-import { creativeLanguageData } from './definitions/creative_language';
+import { compoundWordsData } from './definitions/compound_words';
+import { soundsAndNoiseData } from './definitions/sounds_and_noise';
 import { slangData } from './definitions/slang';
 import { rareLiteraryData } from './definitions/rare_literary';
 
@@ -20,7 +21,8 @@ alphabet.forEach(letter => {
         ...(oppositesData[letter] || {}),
         ...(falseFriendsData[letter] || {}),
         ...(minimalPairsData[letter] || {}),
-        ...(creativeLanguageData[letter] || {}),
+        ...(compoundWordsData[letter] || {}),
+        ...(soundsAndNoiseData[letter] || {}),
         ...(slangData[letter] || {}),
         ...(rareLiteraryData[letter] || {})
     };

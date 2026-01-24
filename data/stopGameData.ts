@@ -21,6 +21,7 @@ import { technologyData } from './stop_categories/technology';
 import { languageExtrasData } from './stop_categories/language_extras';
 import { educationData } from './stop_categories/education';
 import { vocabularyChallengeData } from './stop_categories/vocabulary_challenge';
+import { philosophyData } from './stop_categories/philosophy';
 
 // This file aggregates all the categorized data into the master structure used by the UI
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
@@ -49,7 +50,7 @@ alphabet.forEach(letter => {
         ...(scienceData[letter] || {}),
         ...(animalsData[letter] || {}),
         ...(colorsData[letter] || {}),
-        
+
         // Merge Fruits & Vegetables (combined key)
         ...(mergedFood.length > 0 ? { 'Fruits & Vegetables': mergedFood } : {}),
 
@@ -82,5 +83,8 @@ alphabet.forEach(letter => {
 
         // Merge Vocabulary Challenges
         ...(vocabularyChallengeData[letter] || {}),
+
+        // Merge Philosophy
+        ...(philosophyData[letter] || {}),
     };
 });

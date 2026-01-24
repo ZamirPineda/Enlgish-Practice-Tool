@@ -217,8 +217,10 @@ export const slangData: StopData = {
             { word: 'Mint', ipa: '/mɪnt/', translation: 'Perfecto/Nuevo (Mint condition)' },
             { word: 'Mod', ipa: '/mɒd/', translation: 'Moderno / Moderador' },
             { word: 'Mooch', ipa: '/muːtʃ/', translation: 'Gorrón/Pedir prestado' },
+            { word: 'Mood', ipa: '/muːd/', translation: 'Identificable/Estado de ánimo' },
             { word: 'Mug', ipa: '/mʌɡ/', translation: 'Cara / Tonto (UK)' },
-            { word: 'My bad', ipa: '/maɪ bæd/', translation: 'Culpa mía' }
+            { word: 'My bad', ipa: '/maɪ bæd/', translation: 'Culpa mía' },
+            { word: 'Meme', ipa: '/miːm/', translation: 'Meme' }
         ]
     },
     N: {
@@ -265,7 +267,7 @@ export const slangData: StopData = {
             { word: 'Pooped', ipa: '/puːpt/', translation: 'Muy cansado' },
             { word: 'Pop', ipa: '/pɒp/', translation: 'Refresco (US) / Padre / Música' },
             { word: 'Posh', ipa: '/pɒʃ/', translation: 'Elegante/Pijo' },
-            { word: 'Prop', ipa: '/prɒp/', translation: 'Reconocimiento (Props)' },
+            { word: 'Props', ipa: '/prɒps/', translation: 'Reconocimiento (Props)' },
             { word: 'Psyched', ipa: '/saɪkt/', translation: 'Emocionado' },
             { word: 'Pumped', ipa: '/pʌmpt/', translation: 'Emocionado/Musculado' }
         ]
@@ -288,6 +290,8 @@ export const slangData: StopData = {
             { word: 'Redneck', ipa: '/ˈrɛdnɛk/', translation: 'Campesino (despectivo)' },
             { word: 'Rent-free', ipa: '/rɛnt friː/', translation: 'Vivir en la mente de alguien' },
             { word: 'Ripped', ipa: '/rɪpt/', translation: 'Musculoso / Estafado' },
+            { word: 'Rip-off', ipa: '/rɪp ɔːf/', translation: 'Estafa/Robo' },
+            { word: 'Rizz', ipa: '/rɪz/', translation: 'Carisma (ligue)' },
             { word: 'Roast', ipa: '/roʊst/', translation: 'Criticar duramente (broma)' },
             { word: 'Rock', ipa: '/rɒk/', translation: 'Lucir (ropa) / Gustar' },
             { word: 'Rookie', ipa: '/ˈrʊki/', translation: 'Novato' },
