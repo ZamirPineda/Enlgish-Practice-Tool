@@ -1,0 +1,516 @@
+
+import { StopData } from '../../types';
+
+export const householdData: StopData = {
+  A: {
+    'Household Items': [
+        { word: 'Alarm clock', ipa: '/əˈlɑːrm klɒk/', translation: 'Despertador', definition: 'Clock to wake you up' },
+        { word: 'Armchair', ipa: '/ˈɑːrmtʃɛər/', translation: 'Sillón', definition: 'Comfortable chair with supports' },
+        { word: 'Air conditioner', ipa: '/ɛər kənˈdɪʃənər/', translation: 'Aire acondicionado', definition: 'Cooling device' },
+        { word: 'Aquarium', ipa: '/əˈkwɛəriəm/', translation: 'Acuario', definition: 'Tank for fish' },
+        { word: 'Air freshener', ipa: '/ɛər ˈfrɛʃənər/', translation: 'Ambientador', definition: 'Scent spray' },
+        { word: 'Aluminum foil', ipa: '/əˈluːmɪnəm fɔɪl/', translation: 'Papel de aluminio', definition: 'Metal sheet for cooking' },
+        { word: 'Adapter', ipa: '/əˈdæptər/', translation: 'Adaptador', definition: 'Connector for plugs' },
+        { word: 'Apron', ipa: '/ˈeɪprən/', translation: 'Delantal', definition: 'Cooking protective cloth' },
+        { word: 'Ashtray', ipa: '/ˈæʃtreɪ/', translation: 'Cenicero', definition: 'Dish for ash' },
+        { word: 'Album', ipa: '/ˈælbəm/', translation: 'Álbum', definition: 'Book for photos' },
+        { word: 'Antiseptic', ipa: '/ˌæntɪˈsɛptɪk/', translation: 'Antiséptico', definition: 'Cleaning liquid for wounds' },
+        { word: 'Air purifier', ipa: '/ɛər ˈpjʊərɪfaɪər/', translation: 'Purificador de aire', definition: 'Device to clean air' },
+        { word: 'Amplifier', ipa: '/ˈæmplɪfaɪər/', translation: 'Amplificador', definition: 'Sound booster' },
+        { word: 'Answering machine', ipa: '/ˈɑːnsərɪŋ məˈʃiːn/', translation: 'Contestador', definition: 'Records voice messages' },
+        { word: 'Antenna', ipa: '/ænˈtɛnə/', translation: 'Antena', definition: 'Signal receiver' },
+        { word: 'Artwork', ipa: '/ˈɑːrtwɜːrk/', translation: 'Obras de arte', definition: 'Paintings or decor' },
+        { word: 'Aspirin', ipa: '/ˈæsprɪn/', translation: 'Aspirina', definition: 'Pain relief pill' },
+        { word: 'Atomizer', ipa: '/ˈætəmaɪzər/', translation: 'Atomizador', definition: 'Spray bottle' },
+        { word: 'Awl', ipa: '/ɔːl/', translation: 'Punzón', definition: 'Tool for piercing' },
+        { word: 'Airbed', ipa: '/ˈɛərbɛd/', translation: 'Colchón inflable', definition: 'Inflatable mattress' }
+    ]
+  },
+  B: {
+    'Household Items': [
+        { word: 'Basin', ipa: '/ˈbeɪsɪn/', translation: 'Lavabo/Palangana', definition: 'Bowl for water' },
+        { word: 'Basket', ipa: '/ˈbɑːskɪt/', translation: 'Cesta', definition: 'Woven container' },
+        { word: 'Bathtub', ipa: '/ˈbɑːθtʌb/', translation: 'Bañera', definition: 'Tub for bathing' },
+        { word: 'Bed', ipa: '/bɛd/', translation: 'Cama', definition: 'Furniture for sleep' },
+        { word: 'Bin', ipa: '/bɪn/', translation: 'Papelera', definition: 'Trash container' },
+        { word: 'Blanket', ipa: '/ˈblæŋkɪt/', translation: 'Manta', definition: 'Warm bed cover' },
+        { word: 'Blender', ipa: '/ˈblɛndər/', translation: 'Licuadora', definition: 'Mixing machine' },
+        { word: 'Bookshelf', ipa: '/ˈbʊkʃɛlf/', translation: 'Estantería', definition: 'Shelf for books' },
+        { word: 'Bowl', ipa: '/boʊl/', translation: 'Tazón', definition: 'Deep dish' },
+        { word: 'Broom', ipa: '/bruːm/', translation: 'Escoba', definition: 'Sweeping tool' },
+        { word: 'Bucket', ipa: '/ˈbʌkɪt/', translation: 'Cubo', definition: 'Pail with handle' },
+        { word: 'Bulb', ipa: '/bʌlb/', translation: 'Bombilla', definition: 'Light source' },
+        { word: 'Battery', ipa: '/ˈbætəri/', translation: 'Batería/Pila', definition: 'Power source' },
+        { word: 'Bottle', ipa: '/ˈbɒtəl/', translation: 'Botella', definition: 'Liquid container' },
+        { word: 'Box', ipa: '/bɒks/', translation: 'Caja', definition: 'Storage container' },
+        { word: 'Brush', ipa: '/brʌʃ/', translation: 'Cepillo', definition: 'Cleaning or hair tool' },
+        { word: 'Bathmat', ipa: '/ˈbɑːθmæt/', translation: 'Alfombrilla de baño', definition: 'Rug for bathroom' },
+        { word: 'Bathrobe', ipa: '/ˈbɑːθroʊb/', translation: 'Albornoz', definition: 'Robe for after bath' },
+        { word: 'Bench', ipa: '/bɛntʃ/', translation: 'Banco', definition: 'Long seat' },
+        { word: 'Bedspread', ipa: '/ˈbɛdsprɛd/', translation: 'Colcha', definition: 'Decorative bed cover' }
+    ]
+  },
+  C: {
+    'Household Items': [
+        { word: 'Cabinet', ipa: '/ˈkæbɪnɪt/', translation: 'Gabinete/Armario', definition: 'Storage furniture' },
+        { word: 'Calculator', ipa: '/ˈkælkjʊleɪtər/', translation: 'Calculadora', definition: 'Math device' },
+        { word: 'Calendar', ipa: '/ˈkælɪndər/', translation: 'Calendario', definition: 'Date chart' },
+        { word: 'Can opener', ipa: '/kæn ˈoʊpənər/', translation: 'Abrelatas', definition: 'Opens tin cans' },
+        { word: 'Candle', ipa: '/ˈkændl/', translation: 'Vela', definition: 'Wax light' },
+        { word: 'Carpet', ipa: '/ˈkɑːrpɪt/', translation: 'Alfombra', definition: 'Floor fabric' },
+        { word: 'Casserole dish', ipa: '/ˈkæsəroʊl dɪʃ/', translation: 'Cazuela', definition: 'Baking dish' },
+        { word: 'Ceiling fan', ipa: '/ˈsiːlɪŋ fæn/', translation: 'Ventilador de techo', definition: 'Overhead cooler' },
+        { word: 'Chair', ipa: '/tʃɛər/', translation: 'Silla', definition: 'Seat' },
+        { word: 'Chandelier', ipa: '/ˌʃændəˈlɪər/', translation: 'Candelabro', definition: 'Fancy ceiling light' },
+        { word: 'Chest of drawers', ipa: '/tʃɛst əv drɔːrz/', translation: 'Cómoda', definition: 'Storage for clothes' },
+        { word: 'Clock', ipa: '/klɒk/', translation: 'Reloj', definition: 'Timepiece' },
+        { word: 'Coaster', ipa: '/ˈkoʊstər/', translation: 'Posavasos', definition: 'Mat for cups' },
+        { word: 'Coffee maker', ipa: '/ˈkɒfi ˈmeɪkər/', translation: 'Cafetera', definition: 'Brews coffee' },
+        { word: 'Colander', ipa: '/ˈkʌləndər/', translation: 'Colador', definition: 'Draining bowl' },
+        { word: 'Comb', ipa: '/koʊm/', translation: 'Peine', definition: 'Hair tool' },
+        { word: 'Computer', ipa: '/kəmˈpjuːtər/', translation: 'Ordenador', definition: 'PC/Laptop' },
+        { word: 'Corkscrew', ipa: '/ˈkɔːrkskruː/', translation: 'Sacacorchos', definition: 'Bottle opener' },
+        { word: 'Couch', ipa: '/kaʊtʃ/', translation: 'Sofá', definition: 'Sofa' },
+        { word: 'Cup', ipa: '/kʌp/', translation: 'Taza', definition: 'Drink container' },
+        { word: 'Curtains', ipa: '/ˈkɜːrtənz/', translation: 'Cortinas', definition: 'Window covers' },
+        { word: 'Cushion', ipa: '/ˈkʊʃən/', translation: 'Cojín', definition: 'Soft pillow' },
+        { word: 'Cutting board', ipa: '/ˈkʌtɪŋ bɔːrd/', translation: 'Tabla de cortar', definition: 'Chopping surface' },
+        { word: 'Charger', ipa: '/ˈtʃɑːrdʒər/', translation: 'Cargador', definition: 'Power supply' },
+        { word: 'Coat rack', ipa: '/koʊt ræk/', translation: 'Perchero', definition: 'Stand for coats' }
+    ]
+  },
+  D: {
+    'Household Items': [
+        { word: 'Desk', ipa: '/dɛsk/', translation: 'Escritorio', definition: 'Work table' },
+        { word: 'Detergent', ipa: '/dɪˈtɜːrdʒənt/', translation: 'Detergente', definition: 'Cleaning soap' },
+        { word: 'Dishwasher', ipa: '/ˈdɪʃwɒʃər/', translation: 'Lavavajillas', definition: 'Washes dishes' },
+        { word: 'Door', ipa: '/dɔːr/', translation: 'Puerta', definition: 'Room entry' },
+        { word: 'Doormat', ipa: '/ˈdɔːrmæt/', translation: 'Felpudo', definition: 'Floor mat at entry' },
+        { word: 'Drawer', ipa: '/drɔːr/', translation: 'Cajón', definition: 'Sliding box' },
+        { word: 'Drill', ipa: '/drɪl/', translation: 'Taladro', definition: 'Boring tool' },
+        { word: 'Dryer', ipa: '/ˈdraɪər/', translation: 'Secadora', definition: 'Dries clothes' },
+        { word: 'Dustbin', ipa: '/ˈdʌstbɪn/', translation: 'Basurero', definition: 'Trash can' },
+        { word: 'Duster', ipa: '/ˈdʌstər/', translation: 'Plumero', definition: 'Dusting tool' },
+        { word: 'Dustpan', ipa: '/ˈdʌstpæn/', translation: 'Recogedor', definition: 'Scoop for dust' },
+        { word: 'Duvet', ipa: '/ˈduːveɪ/', translation: 'Edredón', definition: 'Thick quilt' },
+        { word: 'Desk lamp', ipa: '/dɛsk læmp/', translation: 'Lámpara de escritorio', definition: 'Work light' },
+        { word: 'Dishcloth', ipa: '/ˈdɪʃklɒθ/', translation: 'Trapo de cocina', definition: 'Cloth for dishes' },
+        { word: 'Doll', ipa: '/dɒl/', translation: 'Muñeca', definition: 'Toy' },
+        { word: 'Doorbell', ipa: '/ˈdɔːrbɛl/', translation: 'Timbre', definition: 'Signal bell' },
+        { word: 'Drainer', ipa: '/ˈdreɪnər/', translation: 'Escurridor', definition: 'Rack for wet dishes' },
+        { word: 'Dresser', ipa: '/ˈdrɛsər/', translation: 'Tocador/Cómoda', definition: 'Furniture with drawers' },
+        { word: 'DVD player', ipa: '/ˌdiːviːˈdiː ˈpleɪər/', translation: 'Reproductor DVD', definition: 'Movie player' },
+        { word: 'Dehumidifier', ipa: '/ˌdiːhjuːˈmɪdɪfaɪər/', translation: 'Deshumidificador', definition: 'Removes moisture' }
+    ]
+  },
+  E: {
+    'Household Items': [
+        { word: 'Egg cup', ipa: '/ɛɡ kʌp/', translation: 'Huevera', definition: 'Holder for boiled egg' },
+        { word: 'Eggbeater', ipa: '/ˈɛɡˌbiːtər/', translation: 'Batidora manual', definition: 'Mixer for eggs' },
+        { word: 'Electric blanket', ipa: '/ɪˈlɛktrɪk ˈblæŋkɪt/', translation: 'Manta eléctrica', definition: 'Heated blanket' },
+        { word: 'Extension lead', ipa: '/ɪkˈstɛnʃən liːd/', translation: 'Alargador', definition: 'Power cord extension' },
+        { word: 'Eraser', ipa: '/ɪˈreɪzər/', translation: 'Borrador', definition: 'Removes pencil marks' },
+        { word: 'Envelope', ipa: '/ˈɛnvələʊp/', translation: 'Sobre', definition: 'Paper cover for mail' },
+        { word: 'Extinguisher', ipa: '/ɪkˈstɪŋɡwɪʃər/', translation: 'Extintor', definition: 'Put out fires' },
+        { word: 'Easel', ipa: '/ˈiːzəl/', translation: 'Caballete', definition: 'Stand for painting' },
+        { word: 'Electric shaver', ipa: '/ɪˈlɛktrɪk ˈʃeɪvər/', translation: 'Afeitadora eléctrica', definition: 'Shaving device' },
+        { word: 'Epilator', ipa: '/ˈɛpɪleɪtər/', translation: 'Depiladora', definition: 'Hair removal device' },
+        { word: 'Espresso machine', ipa: '/ɛˈsprɛsoʊ məˈʃiːn/', translation: 'Máquina exprés', definition: 'Coffee machine' },
+        { word: 'Extractor fan', ipa: '/ɪkˈstræktər fæn/', translation: 'Extractor', definition: 'Removes fumes' },
+        { word: 'Eiderdown', ipa: '/ˈaɪdərdaʊn/', translation: 'Edredón de plumón', definition: 'Soft quilt' },
+        { word: 'Egg timer', ipa: '/ɛɡ ˈtaɪmər/', translation: 'Reloj de arena/huevos', definition: 'Times boiling eggs' },
+        { word: 'Emery board', ipa: '/ˈɛməri bɔːrd/', translation: 'Lima de uñas', definition: 'Nail file' },
+        { word: 'Eye drops', ipa: '/aɪ drɒps/', translation: 'Gotas para los ojos', definition: 'Medicine for eyes' },
+        { word: 'Earplugs', ipa: '/ˈɪərplʌɡz/', translation: 'Tapones', definition: 'Blocks noise' },
+        { word: 'End table', ipa: '/ɛnd ˈteɪbəl/', translation: 'Mesa auxiliar', definition: 'Small sofa table' },
+        { word: 'Encyclopedia', ipa: '/ɪnˌsaɪkləˈpiːdiə/', translation: 'Enciclopedia', definition: 'Reference book' },
+        { word: 'Extension cord', ipa: '/ɪkˈstɛnʃən kɔːrd/', translation: 'Cable de extensión', definition: 'Power extender' }
+    ]
+  },
+  F: {
+    'Household Items': [
+        { word: 'Fan', ipa: '/fæn/', translation: 'Ventilador', definition: 'Air cooler' },
+        { word: 'Faucet', ipa: '/ˈfɔːsɪt/', translation: 'Grifo', definition: 'Water tap' },
+        { word: 'File', ipa: '/faɪl/', translation: 'Archivo/Lima', definition: 'Folder or tool' },
+        { word: 'Fireplace', ipa: '/ˈfaɪərpleɪs/', translation: 'Chimenea', definition: 'Hearth' },
+        { word: 'First aid kit', ipa: '/fɜːrst eɪd kɪt/', translation: 'Botiquín', definition: 'Medical supplies' },
+        { word: 'Flashlight', ipa: '/ˈflæʃlaɪt/', translation: 'Linterna', definition: 'Portable light' },
+        { word: 'Flask', ipa: '/flɑːsk/', translation: 'Termo', definition: 'Insulated bottle' },
+        { word: 'Flatware', ipa: '/ˈflætwɛər/', translation: 'Cubertería', definition: 'Eating utensils' },
+        { word: 'Floor lamp', ipa: '/flɔːr læmp/', translation: 'Lámpara de pie', definition: 'Tall lamp' },
+        { word: 'Floss', ipa: '/flɒs/', translation: 'Hilo dental', definition: 'Dental thread' },
+        { word: 'Flowerpot', ipa: '/ˈflaʊərpɒt/', translation: 'Maceta', definition: 'Container for plants' },
+        { word: 'Food processor', ipa: '/fuːd ˈprɒsɛsər/', translation: 'Procesador de alimentos', definition: 'Kitchen machine' },
+        { word: 'Footstool', ipa: '/ˈfʊtstuːl/', translation: 'Reposapiés', definition: 'Stool for feet' },
+        { word: 'Fork', ipa: '/fɔːrk/', translation: 'Tenedor', definition: 'Eating tool' },
+        { word: 'Frame', ipa: '/freɪm/', translation: 'Marco', definition: 'Photo border' },
+        { word: 'Freezer', ipa: '/ˈfriːzər/', translation: 'Congelador', definition: 'Ice machine' },
+        { word: 'Fridge', ipa: '/frɪdʒ/', translation: 'Refrigerador', definition: 'Cooling appliance' },
+        { word: 'Frying pan', ipa: '/ˈfraɪɪŋ pæn/', translation: 'Sartén', definition: 'Cooking pan' },
+        { word: 'Funnel', ipa: '/ˈfʌnəl/', translation: 'Embudo', definition: 'Pouring tool' },
+        { word: 'Furniture', ipa: '/ˈfɜːrnɪtʃər/', translation: 'Muebles', definition: 'Home items' }
+    ]
+  },
+  G: {
+    'Household Items': [
+        { word: 'Garbage bag', ipa: '/ˈɡɑːrbɪdʒ bæɡ/', translation: 'Bolsa de basura', definition: 'Trash sack' },
+        { word: 'Garbage can', ipa: '/ˈɡɑːrbɪdʒ kæn/', translation: 'Cubo de basura', definition: 'Trash bin' },
+        { word: 'Garden hose', ipa: '/ˈɡɑːrdən hoʊz/', translation: 'Manguera', definition: 'Watering tube' },
+        { word: 'Glass', ipa: '/ɡlɑːs/', translation: 'Vaso', definition: 'Drinking vessel' },
+        { word: 'Gloves', ipa: '/ɡlʌvz/', translation: 'Guantes', definition: 'Hand protection' },
+        { word: 'Glue', ipa: '/ɡluː/', translation: 'Pegamento', definition: 'Adhesive' },
+        { word: 'Goblet', ipa: '/ˈɡɒblɪt/', translation: 'Copa', definition: 'Wine glass' },
+        { word: 'Grater', ipa: '/ˈɡreɪtər/', translation: 'Rallador', definition: 'Shredding tool' },
+        { word: 'Griddle', ipa: '/ˈɡrɪdl/', translation: 'Plancha de cocina', definition: 'Flat cooking plate' },
+        { word: 'Grill', ipa: '/ɡrɪl/', translation: 'Parrilla', definition: 'Cooking grid' },
+        { word: 'Guitar', ipa: '/ɡɪˈtɑːr/', translation: 'Guitarra', definition: 'Instrument' },
+        { word: 'Games console', ipa: '/ɡeɪmz kənˈsoʊl/', translation: 'Consola', definition: 'Gaming device' },
+        { word: 'Garage opener', ipa: '/ɡəˈrɑːʒ ˈoʊpənər/', translation: 'Mando de garaje', definition: 'Remote for door' },
+        { word: 'Gas stove', ipa: '/ɡæs stoʊv/', translation: 'Cocina de gas', definition: 'Gas cooker' },
+        { word: 'Gate', ipa: '/ɡeɪt/', translation: 'Verja/Puerta', definition: 'Garden door' },
+        { word: 'Gauze', ipa: '/ɡɔːz/', translation: 'Gasa', definition: 'Medical dressing' },
+        { word: 'Globe', ipa: '/ɡloʊb/', translation: 'Globo terráqueo', definition: 'World map ball' },
+        { word: 'Goggles', ipa: '/ˈɡɒɡəlz/', translation: 'Gafas protectoras', definition: 'Eye protection' },
+        { word: 'Gown', ipa: '/ɡaʊn/', translation: 'Bata', definition: 'Dressing gown' },
+        { word: 'Grinder', ipa: '/ˈɡraɪndər/', translation: 'Molinillo', definition: 'Crushing tool' }
+    ]
+  },
+  H: {
+    'Household Items': [
+        { word: 'Hairbrush', ipa: '/ˈhɛərbrʌʃ/', translation: 'Cepillo de pelo', definition: 'Hair tool' },
+        { word: 'Hairdryer', ipa: '/ˈhɛərdraɪər/', translation: 'Secador', definition: 'Hair drying tool' },
+        { word: 'Hamper', ipa: '/ˈhæmpər/', translation: 'Cesto', definition: 'Laundry basket' },
+        { word: 'Hand towel', ipa: '/hænd ˈtaʊəl/', translation: 'Toalla de manos', definition: 'Small towel' },
+        { word: 'Hanger', ipa: '/ˈhæŋər/', translation: 'Percha', definition: 'Clothes hook' },
+        { word: 'Headphones', ipa: '/ˈhɛdfoʊnz/', translation: 'Auriculares', definition: 'Listening device' },
+        { word: 'Heater', ipa: '/ˈhiːtər/', translation: 'Calefactor', definition: 'Warming device' },
+        { word: 'High chair', ipa: '/haɪ tʃɛər/', translation: 'Trona', definition: 'Baby chair' },
+        { word: 'Hinge', ipa: '/hɪndʒ/', translation: 'Bisagra', definition: 'Door joint' },
+        { word: 'Hoe', ipa: '/hoʊ/', translation: 'Azada', definition: 'Garden tool' },
+        { word: 'Hook', ipa: '/hʊk/', translation: 'Gancho', definition: 'Hanging peg' },
+        { word: 'Hose', ipa: '/hoʊz/', translation: 'Manguera', definition: 'Water tube' },
+        { word: 'Hot water bottle', ipa: '/hɒt ˈwɔːtər ˈbɒtl/', translation: 'Bolsa de agua caliente', definition: 'Warmer' },
+        { word: 'Humidifier', ipa: '/hjuːˈmɪdɪfaɪər/', translation: 'Humidificador', definition: 'Moisture machine' },
+        { word: 'Hammer', ipa: '/ˈhæmər/', translation: 'Martillo', definition: 'Striking tool' },
+        { word: 'Handbag', ipa: '/ˈhændbæɡ/', translation: 'Bolso', definition: 'Purse' },
+        { word: 'Handkerchief', ipa: '/ˈhæŋkərtʃiːf/', translation: 'Pañuelo', definition: 'Cloth for nose' },
+        { word: 'Hard drive', ipa: '/hɑːrd draɪv/', translation: 'Disco duro', definition: 'Data storage' },
+        { word: 'Hat rack', ipa: '/hæt ræk/', translation: 'Perchero', definition: 'Stand for hats' },
+        { word: 'Headboard', ipa: '/ˈhɛdbɔːrd/', translation: 'Cabecero', definition: 'Bed panel' }
+    ]
+  },
+  I: {
+    'Household Items': [
+        { word: 'Ice cube tray', ipa: '/aɪs kjuːb treɪ/', translation: 'Cubitera', definition: 'Mold for ice' },
+        { word: 'Ice pick', ipa: '/aɪs pɪk/', translation: 'Picahielo', definition: 'Ice tool' },
+        { word: 'Incense', ipa: '/ˈɪnsɛns/', translation: 'Incienso', definition: 'Scent stick' },
+        { word: 'Insect repellent', ipa: '/ˈɪnsɛkt rɪˈpɛlənt/', translation: 'Repelente', definition: 'Bug spray' },
+        { word: 'Intercom', ipa: '/ˈɪntərkɒm/', translation: 'Interfono', definition: 'Voice system' },
+        { word: 'Iron', ipa: '/ˈaɪərn/', translation: 'Plancha', definition: 'Clothes press' },
+        { word: 'Ironing board', ipa: '/ˈaɪərnɪŋ bɔːrd/', translation: 'Tabla de planchar', definition: 'Ironing table' },
+        { word: 'iPad', ipa: '/ˈaɪpæd/', translation: 'iPad/Tablet', definition: 'Tablet' },
+        { word: 'Ice bucket', ipa: '/aɪs ˈbʌkɪt/', translation: 'Cubitera (cubo)', definition: 'Bucket for ice' },
+        { word: 'Inhaler', ipa: '/ɪnˈheɪlər/', translation: 'Inhalador', definition: 'Medical breather' },
+        { word: 'Ink', ipa: '/ɪŋk/', translation: 'Tinta', definition: 'Writing fluid' },
+        { word: 'Invitation', ipa: '/ˌɪnvɪˈteɪʃən/', translation: 'Invitación', definition: 'Card' },
+        { word: 'Invoice', ipa: '/ˈɪnvɔɪs/', translation: 'Factura', definition: 'Bill' },
+        { word: 'Iodine', ipa: '/ˈaɪədiːn/', translation: 'Yodo', definition: 'Antiseptic' },
+        { word: 'Island (kitchen)', ipa: '/ˈaɪlənd/', translation: 'Isla de cocina', definition: 'Central counter' }
+    ]
+  },
+  J: {
+    'Household Items': [
+        { word: 'Jack', ipa: '/dʒæk/', translation: 'Gato (coche)', definition: 'Lifting tool' },
+        { word: 'Jacket', ipa: '/ˈdʒækɪt/', translation: 'Chaqueta', definition: 'Coat' },
+        { word: 'Jacuzzi', ipa: '/dʒəˈkuːzi/', translation: 'Jacuzzi', definition: 'Hot tub' },
+        { word: 'Jar', ipa: '/dʒɑːr/', translation: 'Tarro', definition: 'Glass container' },
+        { word: 'Jewelry box', ipa: '/ˈdʒuːəlri bɒks/', translation: 'Joyero', definition: 'Box for gems' },
+        { word: 'Jigsaw', ipa: '/ˈdʒɪɡsɔː/', translation: 'Puzzle/Sierra', definition: 'Game or tool' },
+        { word: 'Journal', ipa: '/ˈdʒɜːrnəl/', translation: 'Diario', definition: 'Notebook' },
+        { word: 'Jug', ipa: '/dʒʌɡ/', translation: 'Jarra', definition: 'Pitcher' },
+        { word: 'Juicer', ipa: '/ˈdʒuːsər/', translation: 'Exprimidor', definition: 'Juice machine' },
+        { word: 'Jumper', ipa: '/ˈdʒʌmpər/', translation: 'Jersey (UK)', definition: 'Sweater' },
+        { word: 'Junk', ipa: '/dʒʌŋk/', translation: 'Trastos', definition: 'Rubbish' }
+    ]
+  },
+  K: {
+    'Household Items': [
+        { word: 'Kettle', ipa: '/ˈkɛtl/', translation: 'Hervidor', definition: 'Boils water' },
+        { word: 'Key', ipa: '/kiː/', translation: 'Llave', definition: 'Opener' },
+        { word: 'Keyboard', ipa: '/ˈkiːbɔːrd/', translation: 'Teclado', definition: 'Typing board' },
+        { word: 'Keyring', ipa: '/ˈkiːrɪŋ/', translation: 'Llavero', definition: 'Ring for keys' },
+        { word: 'Kitchen towel', ipa: '/ˈkɪtʃɪn ˈtaʊəl/', translation: 'Paño de cocina', definition: 'Dish cloth' },
+        { word: 'Kitchenware', ipa: '/ˈkɪtʃɪnwɛər/', translation: 'Utensilios', definition: 'Cooking tools' },
+        { word: 'Kite', ipa: '/kaɪt/', translation: 'Cometa', definition: 'Flying toy' },
+        { word: 'Knife', ipa: '/naɪf/', translation: 'Cuchillo', definition: 'Cutting tool' },
+        { word: 'Knife block', ipa: '/naɪf blɒk/', translation: 'Bloque cuchillos', definition: 'Knife holder' },
+        { word: 'Knob', ipa: '/nɒb/', translation: 'Pomo', definition: 'Door handle' },
+        { word: 'Knocker', ipa: '/ˈnɒkər/', translation: 'Aldaba', definition: 'Door hammer' },
+        { word: 'Kit', ipa: '/kɪt/', translation: 'Kit', definition: 'Set of tools' },
+        { word: 'Kleenex', ipa: '/ˈkliːnɛks/', translation: 'Pañuelo papel', definition: 'Tissue' },
+        { word: 'Knick-knack', ipa: '/ˈnɪknæk/', translation: 'Adorno barato', definition: 'Trinket' },
+        { word: 'Knife sharpener', ipa: '/naɪf ˈʃɑːrpənər/', translation: 'Afilador', definition: 'Sharpens blades' }
+    ]
+  },
+  L: {
+    'Household Items': [
+        { word: 'Label', ipa: '/ˈleɪbəl/', translation: 'Etiqueta', definition: 'Tag' },
+        { word: 'Ladder', ipa: '/ˈlædər/', translation: 'Escalera', definition: 'Climbing tool' },
+        { word: 'Ladle', ipa: '/ˈleɪdl/', translation: 'Cucharón', definition: 'Soup spoon' },
+        { word: 'Lamp', ipa: '/læmp/', translation: 'Lámpara', definition: 'Light' },
+        { word: 'Lampshade', ipa: '/ˈlæmpʃeɪd/', translation: 'Pantalla lámpara', definition: 'Light cover' },
+        { word: 'Laptop', ipa: '/ˈlæptɒp/', translation: 'Portátil', definition: 'Computer' },
+        { word: 'Laundry basket', ipa: '/ˈlɔːndri ˈbɑːskɪt/', translation: 'Cesto ropa', definition: 'Clothes bin' },
+        { word: 'Lawnmower', ipa: '/ˈlɔːnmoʊər/', translation: 'Cortacésped', definition: 'Grass cutter' },
+        { word: 'Leaflet', ipa: '/ˈliːflɪt/', translation: 'Folleto', definition: 'Pamphlet' },
+        { word: 'Leash', ipa: '/liːʃ/', translation: 'Correa', definition: 'Dog lead' },
+        { word: 'Letter opener', ipa: '/ˈlɛtər ˈoʊpənər/', translation: 'Abrecartas', definition: 'Knife for mail' },
+        { word: 'Lightbulb', ipa: '/ˈlaɪtbʌlb/', translation: 'Bombilla', definition: 'Glass light' },
+        { word: 'Lighter', ipa: '/ˈlaɪtər/', translation: 'Mechero', definition: 'Fire maker' },
+        { word: 'Linens', ipa: '/ˈlɪnɪnz/', translation: 'Ropa de casa', definition: 'Sheets/Towels' },
+        { word: 'Lipstick', ipa: '/ˈlɪpstɪk/', translation: 'Lápiz labial', definition: 'Makeup' },
+        { word: 'Lock', ipa: '/lɒk/', translation: 'Cerradura', definition: 'Security' },
+        { word: 'Locker', ipa: '/ˈlɒkər/', translation: 'Taquilla', definition: 'Storage box' },
+        { word: 'Lotion', ipa: '/ˈloʊʃən/', translation: 'Loción', definition: 'Cream' },
+        { word: 'Loudspeaker', ipa: '/ˌlaʊdˈspiːkər/', translation: 'Altavoz', definition: 'Audio device' },
+        { word: 'Luggage', ipa: '/ˈlʌɡɪdʒ/', translation: 'Equipaje', definition: 'Suitcases' }
+    ]
+  },
+  M: {
+    'Household Items': [
+        { word: 'Magazine', ipa: '/ˌmæɡəˈziːn/', translation: 'Revista', definition: 'Periodical' },
+        { word: 'Magnet', ipa: '/ˈmæɡnɪt/', translation: 'Imán', definition: 'Attracts metal' },
+        { word: 'Mailbox', ipa: '/ˈmeɪlbɒks/', translation: 'Buzón', definition: 'Post box' },
+        { word: 'Makeup', ipa: '/ˈmeɪkʌp/', translation: 'Maquillaje', definition: 'Cosmetics' },
+        { word: 'Mallet', ipa: '/ˈmælɪt/', translation: 'Mazo', definition: 'Soft hammer' },
+        { word: 'Map', ipa: '/mæp/', translation: 'Mapa', definition: 'Chart' },
+        { word: 'Marker', ipa: '/ˈmɑːrkər/', translation: 'Marcador', definition: 'Pen' },
+        { word: 'Mask', ipa: '/mæsk/', translation: 'Máscara', definition: 'Face cover' },
+        { word: 'Mat', ipa: '/mæt/', translation: 'Alfombrilla', definition: 'Small rug' },
+        { word: 'Matches', ipa: '/ˈmætʃɪz/', translation: 'Fósforos', definition: 'Fire sticks' },
+        { word: 'Mattress', ipa: '/ˈmætrɪs/', translation: 'Colchón', definition: 'Bed part' },
+        { word: 'Measuring cup', ipa: '/ˈmɛʒərɪŋ kʌp/', translation: 'Taza medidora', definition: 'Volume tool' },
+        { word: 'Medicine', ipa: '/ˈmɛdɪsɪn/', translation: 'Medicina', definition: 'Drugs' },
+        { word: 'Microwave', ipa: '/ˈmaɪkrəweɪv/', translation: 'Microondas', definition: 'Fast oven' },
+        { word: 'Mirror', ipa: '/ˈmɪrər/', translation: 'Espejo', definition: 'Reflector' },
+        { word: 'Mixer', ipa: '/ˈmɪksər/', translation: 'Batidora', definition: 'Food blender' },
+        { word: 'Modem', ipa: '/ˈmoʊdɛm/', translation: 'Módem', definition: 'Internet box' },
+        { word: 'Monitor', ipa: '/ˈmɒnɪtər/', translation: 'Monitor', definition: 'Screen' },
+        { word: 'Mop', ipa: '/mɒp/', translation: 'Fregona', definition: 'Floor cleaner' },
+        { word: 'Mug', ipa: '/mʌɡ/', translation: 'Taza', definition: 'Large cup' }
+    ]
+  },
+  N: {
+    'Household Items': [
+        { word: 'Nail', ipa: '/neɪl/', translation: 'Clavo', definition: 'Metal spike' },
+        { word: 'Nail clipper', ipa: '/neɪl ˈklɪpər/', translation: 'Cortauñas', definition: 'Trims nails' },
+        { word: 'Nail file', ipa: '/neɪl faɪl/', translation: 'Lima', definition: 'Smooths nails' },
+        { word: 'Nail polish', ipa: '/neɪl ˈpɒlɪʃ/', translation: 'Esmalte', definition: 'Nail paint' },
+        { word: 'Napkin', ipa: '/ˈnæpkɪn/', translation: 'Servilleta', definition: 'Table cloth/paper' },
+        { word: 'Needle', ipa: '/ˈniːdl/', translation: 'Aguja', definition: 'Sewing tool' },
+        { word: 'Newspaper', ipa: '/ˈnjuːzpeɪpər/', translation: 'Periódico', definition: 'Daily news' },
+        { word: 'Nightlight', ipa: '/ˈnaɪtlaɪt/', translation: 'Luz de noche', definition: 'Dim lamp' },
+        { word: 'Notebook', ipa: '/ˈnəʊtbʊk/', translation: 'Cuaderno', definition: 'Paper book' },
+        { word: 'Nozzle', ipa: '/ˈnɒzəl/', translation: 'Boquilla', definition: 'Spout' },
+        { word: 'Nutcracker', ipa: '/ˈnʌtkrækər/', translation: 'Cascanueces', definition: 'Cracks nuts' },
+        { word: 'Nuts', ipa: '/nʌts/', translation: 'Tuercas', definition: 'Fasteners' },
+        { word: 'Name tag', ipa: '/neɪm tæɡ/', translation: 'Etiqueta nombre', definition: 'ID badge' },
+        { word: 'Necklace', ipa: '/ˈnɛklɪs/', translation: 'Collar', definition: 'Jewelry' },
+        { word: 'Net', ipa: '/nɛt/', translation: 'Red', definition: 'Mesh' }
+    ]
+  },
+  O: {
+    'Household Items': [
+        { word: 'Oar', ipa: '/ɔːr/', translation: 'Remo', definition: 'Boat paddle' },
+        { word: 'Oil', ipa: '/ɔɪl/', translation: 'Aceite', definition: 'Lubricant/Food' },
+        { word: 'Oil burner', ipa: '/ɔɪl ˈbɜːrnər/', translation: 'Quemador aceite', definition: 'Scent device' },
+        { word: 'Ointment', ipa: '/ˈɔɪntmənt/', translation: 'Pomada', definition: 'Cream' },
+        { word: 'Opener', ipa: '/ˈoʊpənər/', translation: 'Abridor', definition: 'Tool' },
+        { word: 'Ornament', ipa: '/ˈɔːrnəmənt/', translation: 'Adorno', definition: 'Decoration' },
+        { word: 'Ottoman', ipa: '/ˈɒtəmən/', translation: 'Otomana', definition: 'Footstool' },
+        { word: 'Outlet', ipa: '/ˈaʊtlɛt/', translation: 'Enchufe', definition: 'Socket' },
+        { word: 'Oven', ipa: '/ˈʌvən/', translation: 'Horno', definition: 'Baker' },
+        { word: 'Oven glove', ipa: '/ˈʌvən ɡlʌv/', translation: 'Guante horno', definition: 'Heat glove' },
+        { word: 'Overcoat', ipa: '/ˈoʊvərkoʊt/', translation: 'Abrigo', definition: 'Coat' }
+    ]
+  },
+  P: {
+    'Household Items': [
+        { word: 'Padlock', ipa: '/ˈpædlɒk/', translation: 'Candado', definition: 'Lock' },
+        { word: 'Paint', ipa: '/peɪnt/', translation: 'Pintura', definition: 'Color liquid' },
+        { word: 'Pan', ipa: '/pæn/', translation: 'Sartén', definition: 'Cookware' },
+        { word: 'Paper', ipa: '/ˈpeɪpər/', translation: 'Papel', definition: 'Writing material' },
+        { word: 'Paper clip', ipa: '/ˈpeɪpər klɪp/', translation: 'Clip', definition: 'Fastener' },
+        { word: 'Paper towel', ipa: '/ˈpeɪpər ˈtaʊəl/', translation: 'Toalla papel', definition: 'Wipe' },
+        { word: 'Peeler', ipa: '/ˈpiːlər/', translation: 'Pelador', definition: 'Skin remover' },
+        { word: 'Pen', ipa: '/pɛn/', translation: 'Bolígrafo', definition: 'Writer' },
+        { word: 'Pencil', ipa: '/ˈpɛnsəl/', translation: 'Lápiz', definition: 'Writer' },
+        { word: 'Perfume', ipa: '/ˈpɜːrfjuːm/', translation: 'Perfume', definition: 'Scent' },
+        { word: 'Phone', ipa: '/foʊn/', translation: 'Teléfono', definition: 'Caller' },
+        { word: 'Photo', ipa: '/ˈfoʊtoʊ/', translation: 'Foto', definition: 'Image' },
+        { word: 'Piano', ipa: '/piˈænoʊ/', translation: 'Piano', definition: 'Instrument' },
+        { word: 'Picture', ipa: '/ˈpɪktʃər/', translation: 'Cuadro', definition: 'Art' },
+        { word: 'Pillow', ipa: '/ˈpɪloʊ/', translation: 'Almohada', definition: 'Cushion' },
+        { word: 'Pillowcase', ipa: '/ˈpɪloʊkeɪs/', translation: 'Funda', definition: 'Pillow cover' },
+        { word: 'Pitcher', ipa: '/ˈpɪtʃər/', translation: 'Jarra', definition: 'Jug' },
+        { word: 'Plant', ipa: '/plɑːnt/', translation: 'Planta', definition: 'Greenery' },
+        { word: 'Plate', ipa: '/pleɪt/', translation: 'Plato', definition: 'Dish' },
+        { word: 'Plug', ipa: '/plʌɡ/', translation: 'Enchufe', definition: 'Connector' }
+    ]
+  },
+  Q: {
+    'Household Items': [
+        { word: 'Quart jar', ipa: '/kwɔːrt dʒɑːr/', translation: 'Tarro de cuarto', definition: 'Jar size' },
+        { word: 'Queen bed', ipa: '/kwiːn bɛd/', translation: 'Cama Queen', definition: 'Bed size' },
+        { word: 'Quilt', ipa: '/kwɪlt/', translation: 'Edredón', definition: 'Bed cover' },
+        { word: 'Q-tip', ipa: '/ˈkjuː tɪp/', translation: 'Bastoncillo', definition: 'Cotton swab' },
+        { word: 'Quill', ipa: '/kwɪl/', translation: 'Pluma', definition: 'Writing feather' }
+    ]
+  },
+  R: {
+    'Household Items': [
+        { word: 'Rack', ipa: '/ræk/', translation: 'Estante', definition: 'Holder' },
+        { word: 'Radio', ipa: '/ˈreɪdioʊ/', translation: 'Radio', definition: 'Audio' },
+        { word: 'Rag', ipa: '/ræɡ/', translation: 'Trapo', definition: 'Cloth' },
+        { word: 'Rake', ipa: '/reɪk/', translation: 'Rastrillo', definition: 'Garden tool' },
+        { word: 'Range', ipa: '/reɪndʒ/', translation: 'Cocina', definition: 'Stove' },
+        { word: 'Razor', ipa: '/ˈreɪzər/', translation: 'Cuchilla', definition: 'Shaver' },
+        { word: 'Receipt', ipa: '/rɪˈsiːt/', translation: 'Recibo', definition: 'Proof of buy' },
+        { word: 'Recliner', ipa: '/rɪˈklaɪnər/', translation: 'Sillón relax', definition: 'Chair' },
+        { word: 'Recorder', ipa: '/rɪˈkɔːrdər/', translation: 'Grabadora', definition: 'Audio tool' },
+        { word: 'Refrigerator', ipa: '/rɪˈfrɪdʒəreɪtər/', translation: 'Frigorífico', definition: 'Fridge' },
+        { word: 'Remote', ipa: '/rɪˈmoʊt/', translation: 'Mando', definition: 'Controller' },
+        { word: 'Ribbon', ipa: '/ˈrɪbən/', translation: 'Cinta', definition: 'Decor strip' },
+        { word: 'Rice cooker', ipa: '/raɪs ˈkʊkər/', translation: 'Arrocera', definition: 'Cooks rice' },
+        { word: 'Ring', ipa: '/rɪŋ/', translation: 'Anillo', definition: 'Jewelry' },
+        { word: 'Robe', ipa: '/roʊb/', translation: 'Bata', definition: 'Gown' },
+        { word: 'Robot vacuum', ipa: '/ˈroʊbɒt ˈvækjʊəm/', translation: 'Robot aspirador', definition: 'Auto cleaner' },
+        { word: 'Rolling pin', ipa: '/ˈroʊlɪŋ pɪn/', translation: 'Rodillo', definition: 'Dough tool' },
+        { word: 'Rope', ipa: '/roʊp/', translation: 'Cuerda', definition: 'Cord' },
+        { word: 'Router', ipa: '/ˈraʊtər/', translation: 'Router', definition: 'Net device' },
+        { word: 'Rug', ipa: '/rʌɡ/', translation: 'Alfombra', definition: 'Mat' }
+    ]
+  },
+  S: {
+    'Household Items': [
+        { word: 'Safe', ipa: '/seɪf/', translation: 'Caja fuerte', definition: 'Security box' },
+        { word: 'Safety pin', ipa: '/ˈseɪfti pɪn/', translation: 'Imperdible', definition: 'Fastener' },
+        { word: 'Saucer', ipa: '/ˈsɔːsər/', translation: 'Platillo', definition: 'Small plate' },
+        { word: 'Saucepan', ipa: '/ˈsɔːspæn/', translation: 'Cazo', definition: 'Cooking pot' },
+        { word: 'Scale', ipa: '/skeɪl/', translation: 'Báscula', definition: 'Weigher' },
+        { word: 'Scissors', ipa: '/ˈsɪzərz/', translation: 'Tijeras', definition: 'Cutters' },
+        { word: 'Screen', ipa: '/skriːn/', translation: 'Pantalla', definition: 'Display' },
+        { word: 'Screw', ipa: '/skruː/', translation: 'Tornillo', definition: 'Fastener' },
+        { word: 'Screwdriver', ipa: '/ˈskruːdraɪvər/', translation: 'Destornillador', definition: 'Tool' },
+        { word: 'Shampoo', ipa: '/ʃæmˈpuː/', translation: 'Champú', definition: 'Hair wash' },
+        { word: 'Sheet', ipa: '/ʃiːt/', translation: 'Sábana', definition: 'Bed linen' },
+        { word: 'Shelf', ipa: '/ʃɛlf/', translation: 'Estante', definition: 'Ledge' },
+        { word: 'Shoe rack', ipa: '/ʃuː ræk/', translation: 'Zapatero', definition: 'Shoe storage' },
+        { word: 'Shower', ipa: '/ˈʃaʊər/', translation: 'Ducha', definition: 'Bath' },
+        { word: 'Sink', ipa: '/sɪŋk/', translation: 'Fregadero', definition: 'Basin' },
+        { word: 'Soap', ipa: '/soʊp/', translation: 'Jabón', definition: 'Cleaner' },
+        { word: 'Sofa', ipa: '/ˈsoʊfə/', translation: 'Sofá', definition: 'Couch' },
+        { word: 'Speaker', ipa: '/ˈspiːkər/', translation: 'Altavoz', definition: 'Audio output' },
+        { word: 'Sponge', ipa: '/spʌndʒ/', translation: 'Esponja', definition: 'Cleaner' },
+        { word: 'Spoon', ipa: '/spuːn/', translation: 'Cuchara', definition: 'Utensil' }
+    ]
+  },
+  T: {
+    'Household Items': [
+        { word: 'Table', ipa: '/ˈteɪbl/', translation: 'Mesa', definition: 'Furniture' },
+        { word: 'Tablecloth', ipa: '/ˈteɪblklɒθ/', translation: 'Mantel', definition: 'Table cover' },
+        { word: 'Tablet', ipa: '/ˈtæblɪt/', translation: 'Tableta', definition: 'Device' },
+        { word: 'Tape', ipa: '/teɪp/', translation: 'Cinta', definition: 'Adhesive' },
+        { word: 'Teapot', ipa: '/ˈtiːpɒt/', translation: 'Tetera', definition: 'Tea pot' },
+        { word: 'Telephone', ipa: '/ˈtɛlɪfoʊn/', translation: 'Teléfono', definition: 'Phone' },
+        { word: 'Television', ipa: '/ˈtɛlɪvɪʒən/', translation: 'Televisión', definition: 'TV' },
+        { word: 'Thermometer', ipa: '/θərˈmɒmɪtər/', translation: 'Termómetro', definition: 'Temp meter' },
+        { word: 'Thermostat', ipa: '/ˈθɜːrməstæt/', translation: 'Termostato', definition: 'Temp control' },
+        { word: 'Thread', ipa: '/θrɛd/', translation: 'Hilo', definition: 'Sewing string' },
+        { word: 'Timer', ipa: '/ˈtaɪmər/', translation: 'Temporizador', definition: 'Time keeper' },
+        { word: 'Tissue', ipa: '/ˈtɪʃuː/', translation: 'Pañuelo', definition: 'Paper wipe' },
+        { word: 'Toaster', ipa: '/ˈtoʊstər/', translation: 'Tostadora', definition: 'Toast maker' },
+        { word: 'Toilet', ipa: '/ˈtɔɪlɪt/', translation: 'Inodoro', definition: 'WC' },
+        { word: 'Toilet paper', ipa: '/ˈtɔɪlɪt ˈpeɪpər/', translation: 'Papel higiénico', definition: 'Bath paper' },
+        { word: 'Toolbox', ipa: '/ˈtuːlbɒks/', translation: 'Caja herramientas', definition: 'Tool case' },
+        { word: 'Toothbrush', ipa: '/ˈtuːθbrʌʃ/', translation: 'Cepillo dientes', definition: 'Tooth cleaner' },
+        { word: 'Toothpaste', ipa: '/ˈtuːθpeɪst/', translation: 'Pasta dientes', definition: 'Tooth soap' },
+        { word: 'Torch', ipa: '/tɔːrtʃ/', translation: 'Linterna', definition: 'Flashlight' },
+        { word: 'Towel', ipa: '/ˈtaʊəl/', translation: 'Toalla', definition: 'Dryer cloth' }
+    ]
+  },
+  U: {
+    'Household Items': [
+        { word: 'Umbrella', ipa: '/ʌmˈbrɛlə/', translation: 'Paraguas', definition: 'Rain shield' },
+        { word: 'Umbrella stand', ipa: '/ʌmˈbrɛlə stænd/', translation: 'Paragüero', definition: 'Umbrella holder' },
+        { word: 'Underwear', ipa: '/ˈʌndərwɛər/', translation: 'Ropa interior', definition: 'Intimates' },
+        { word: 'Unit', ipa: '/ˈjuːnɪt/', translation: 'Mueble/Unidad', definition: 'Furniture piece' },
+        { word: 'Upholstery', ipa: '/ʌpˈhoʊlstəri/', translation: 'Tapicería', definition: 'Furniture fabric' },
+        { word: 'Urn', ipa: '/ɜːrn/', translation: 'Urna', definition: 'Vase' },
+        { word: 'USB cable', ipa: '/ˌjuːɛsˈbiː ˈkeɪbəl/', translation: 'Cable USB', definition: 'Connector' },
+        { word: 'Utensils', ipa: '/juːˈtɛnsɪlz/', translation: 'Utensilios', definition: 'Kitchen tools' },
+        { word: 'Utility knife', ipa: '/juːˈtɪlɪti naɪf/', translation: 'Cuchillo multiusos', definition: 'Cutter' }
+    ]
+  },
+  V: {
+    'Household Items': [
+        { word: 'Vacuum', ipa: '/ˈvækjʊəm/', translation: 'Aspiradora', definition: 'Cleaner' },
+        { word: 'Valve', ipa: '/vælv/', translation: 'Válvula', definition: 'Tap part' },
+        { word: 'Vanity', ipa: '/ˈvænɪti/', translation: 'Tocador', definition: 'Makeup table' },
+        { word: 'Vase', ipa: '/vɑːz/', translation: 'Jarrón', definition: 'Flower pot' },
+        { word: 'VCR', ipa: '/ˌviːsiːˈɑːr/', translation: 'Video', definition: 'Video player' },
+        { word: 'Vegetable peeler', ipa: '/ˈvɛdʒtəbəl ˈpiːlər/', translation: 'Pelador', definition: 'Kitchen tool' },
+        { word: 'Vent', ipa: '/vɛnt/', translation: 'Ventilación', definition: 'Air hole' },
+        { word: 'Video game', ipa: '/ˈvɪdioʊ ɡeɪm/', translation: 'Videojuego', definition: 'Game' },
+        { word: 'Vinegar', ipa: '/ˈvɪnɪɡər/', translation: 'Vinagre', definition: 'Condiment' },
+        { word: 'Vitamin', ipa: '/ˈvaɪtəmɪn/', translation: 'Vitamina', definition: 'Supplement' },
+        { word: 'Vodka', ipa: '/ˈvɒdkə/', translation: 'Vodka', definition: 'Drink' },
+        { word: 'Voucher', ipa: '/ˈvaʊtʃər/', translation: 'Vale', definition: 'Coupon' }
+    ]
+  },
+  W: {
+    'Household Items': [
+        { word: 'Waffle iron', ipa: '/ˈwɒfl ˈaɪərn/', translation: 'Gofrera', definition: 'Waffle maker' },
+        { word: 'Wall clock', ipa: '/wɔːl klɒk/', translation: 'Reloj de pared', definition: 'Timepiece' },
+        { word: 'Wallpaper', ipa: '/ˈwɔːlpeɪpər/', translation: 'Papel pintado', definition: 'Wall cover' },
+        { word: 'Wallet', ipa: '/ˈwɒlɪt/', translation: 'Billetera', definition: 'Money holder' },
+        { word: 'Wardrobe', ipa: '/ˈwɔːrdroʊb/', translation: 'Armario', definition: 'Clothes closet' },
+        { word: 'Washcloth', ipa: '/ˈwɒʃklɒθ/', translation: 'Toallita', definition: 'Face cloth' },
+        { word: 'Washer', ipa: '/ˈwɒʃər/', translation: 'Arandela/Lavadora', definition: 'Part/Machine' },
+        { word: 'Washing machine', ipa: '/ˈwɒʃɪŋ məˈʃiːn/', translation: 'Lavadora', definition: 'Clothes washer' },
+        { word: 'Wastebasket', ipa: '/ˈweɪstbɑːskɪt/', translation: 'Papelera', definition: 'Trash can' },
+        { word: 'Watch', ipa: '/wɒtʃ/', translation: 'Reloj', definition: 'Wrist timer' },
+        { word: 'Water bottle', ipa: '/ˈwɔːtər ˈbɒtl/', translation: 'Botella de agua', definition: 'Container' },
+        { word: 'Water heater', ipa: '/ˈwɔːtər ˈhiːtər/', translation: 'Calentador', definition: 'Boiler' },
+        { word: 'Watering can', ipa: '/ˈwɔːtərɪŋ kæn/', translation: 'Regadera', definition: 'Plant waterer' },
+        { word: 'Webcam', ipa: '/ˈwɛbkæm/', translation: 'Cámara web', definition: 'Camera' },
+        { word: 'Whisk', ipa: '/wɪsk/', translation: 'Batidor', definition: 'Mixer' },
+        { word: 'Whistle', ipa: '/ˈwɪsəl/', translation: 'Silbato', definition: 'Sounder' },
+        { word: 'Wipes', ipa: '/waɪps/', translation: 'Toallitas', definition: 'Cleaners' },
+        { word: 'Window', ipa: '/ˈwɪndoʊ/', translation: 'Ventana', definition: 'Glass opening' },
+        { word: 'Wine glass', ipa: '/waɪn ɡlɑːs/', translation: 'Copa de vino', definition: 'Drink glass' },
+        { word: 'Wire', ipa: '/waɪər/', translation: 'Alambre/Cable', definition: 'Metal thread' },
+        { word: 'Wok', ipa: '/wɒk/', translation: 'Wok', definition: 'Cooking pan' },
+        { word: 'Wool', ipa: '/wʊl/', translation: 'Lana', definition: 'Fabric' },
+        { word: 'Workbench', ipa: '/ˈwɜːrkbɛntʃ/', translation: 'Banco de trabajo', definition: 'Tool table' },
+        { word: 'Wrench', ipa: '/rɛntʃ/', translation: 'Llave inglesa', definition: 'Tool' }
+    ]
+  },
+  Y: {
+    'Household Items': [
+        { word: 'Yardstick', ipa: '/ˈjɑːrdstɪk/', translation: 'Regla de yarda', definition: 'Measure' },
+        { word: 'Yarn', ipa: '/jɑːrn/', translation: 'Hilo/Lana', definition: 'Knitting thread' },
+        { word: 'Yoga mat', ipa: '/ˈjoʊɡə mæt/', translation: 'Esterilla yoga', definition: 'Exercise mat' },
+        { word: 'Yoghurt maker', ipa: '/ˈjoʊɡərt ˈmeɪkər/', translation: 'Yogurtera', definition: 'Appliance' },
+        { word: 'Yo-yo', ipa: '/ˈjoʊjoʊ/', translation: 'Yoyó', definition: 'Toy' }
+    ]
+  },
+  Z: {
+    'Household Items': [
+        { word: 'Zester', ipa: '/ˈzɛstər/', translation: 'Rallador cítricos', definition: 'Peel tool' },
+        { word: 'Zipper', ipa: '/ˈzɪpər/', translation: 'Cremallera', definition: 'Fastener' },
+        { word: 'Zip tie', ipa: '/zɪp taɪ/', translation: 'Brida', definition: 'Cable tie' },
+        { word: 'Zigzag', ipa: '/ˈzɪɡzæɡ/', translation: 'Zigzag', definition: 'Pattern' }
+    ]
+  }
+};
