@@ -6,6 +6,8 @@ import { oppositesData } from './definitions/opposites';
 import { falseFriendsData } from './definitions/false_friends';
 import { minimalPairsData } from './definitions/minimal_pairs';
 import { creativeLanguageData } from './definitions/creative_language';
+import { slangData } from './definitions/slang';
+import { rareLiteraryData } from './definitions/rare_literary';
 
 // Aggregate language extras from modular files
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
@@ -18,6 +20,8 @@ alphabet.forEach(letter => {
         ...(oppositesData[letter] || {}),
         ...(falseFriendsData[letter] || {}),
         ...(minimalPairsData[letter] || {}),
-        ...(creativeLanguageData[letter] || {})
+        ...(creativeLanguageData[letter] || {}),
+        ...(slangData[letter] || {}),
+        ...(rareLiteraryData[letter] || {})
     };
 });

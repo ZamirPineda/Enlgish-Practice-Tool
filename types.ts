@@ -142,7 +142,7 @@ export type StopCategory =
   // NEW CHALLENGE CATEGORIES
   'Short & Rare' | 'Long & Rare' |
   // LATEST ADDITIONS
-  'Compound Adjectives' | 'Modal Verbs';
+  'Compound Adjectives' | 'Modal Verbs' | 'Rare & Literary';
 
 export interface WordFamily {
   noun?: string;
