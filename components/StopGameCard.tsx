@@ -1,6 +1,9 @@
-
 import React, { useState } from 'react';
 import { StopItem, WordFamily, StopCategory } from '../types';
+import {
+    getCategoryIcon, getCategoryTheme, GroupName, CATEGORY_GROUPS, PREDEFINED_ALL_ORDER,
+    getFlagUrl
+} from '../utils/stopGameHelpers';
 
 // --- ICONS ---
 const PlayIcon = () => (
@@ -28,65 +31,6 @@ const SaveIcon = ({ saved }: { saved: boolean }) => (
     </svg>
 );
 
-// --- COUNTRY DATA ---
-const COUNTRY_CODES: Record<string, string> = {
-    'Afghanistan': 'af', 'Albania': 'al', 'Algeria': 'dz', 'Andorra': 'ad', 'Angola': 'ao', 
-    'Antigua and Barbuda': 'ag', 'Argentina': 'ar', 'Armenia': 'am', 'Australia': 'au', 'Austria': 'at', 'Azerbaijan': 'az',
-    'Bahamas': 'bs', 'Bahrain': 'bh', 'Bangladesh': 'bd', 'Barbados': 'bb', 'Belarus': 'by', 
-    'Belgium': 'be', 'Belize': 'bz', 'Benin': 'bj', 'Bhutan': 'bt', 'Bolivia': 'bo', 
-    'Bosnia and Herzegovina': 'ba', 'Botswana': 'bw', 'Brazil': 'br', 'Brunei': 'bn', 'Bulgaria': 'bg', 
-    'Burkina Faso': 'bf', 'Burundi': 'bi',
-    'Cabo Verde': 'cv', 'Cambodia': 'kh', 'Cameroon': 'cm', 'Canada': 'ca', 'Central African Republic': 'cf', 
-    'Chad': 'td', 'Chile': 'cl', 'China': 'cn', 'China (Tibet)': 'cn', 'Colombia': 'co', 
-    'Comoros': 'km', 'Congo': 'cg', 'Democratic Republic of the Congo': 'cd', 'Costa Rica': 'cr', 
-    'Croatia': 'hr', 'Cuba': 'cu', 'Cyprus': 'cy', 'Czech Republic': 'cz',
-    'Denmark': 'dk', 'Djibouti': 'dj', 'Dominica': 'dm', 'Dominican Republic': 'do',
-    'Ecuador': 'ec', 'Egypt': 'eg', 'El Salvador': 'sv', 'Equatorial Guinea': 'gq', 'Eritrea': 'er', 
-    'Estonia': 'ee', 'Eswatini': 'sz', 'Ethiopia': 'et',
-    'Fiji': 'fj', 'Finland': 'fi', 'France': 'fr',
-    'Gabon': 'ga', 'Gambia': 'gm', 'Georgia': 'ge', 'Germany': 'de', 'Ghana': 'gh', 'Greece': 'gr', 
-    'Grenada': 'gd', 'Guatemala': 'gt', 'Guinea': 'gn', 'Guinea-Bissau': 'gw', 'Guyana': 'gy', 'Gibraltar': 'gi',
-    'Haiti': 'ht', 'Honduras': 'hn', 'Hungary': 'hu',
-    'Iceland': 'is', 'India': 'in', 'Indonesia': 'id', 'Iran': 'ir', 'Iraq': 'iq', 'Iraq (Ruins)': 'iq',
-    'Ireland': 'ie', 'Israel': 'il', 'Italy': 'it', 'Ivory Coast': 'ci',
-    'Jamaica': 'jm', 'Japan': 'jp', 'Jordan': 'jo', 'Jordan/Israel': 'jo',
-    'Kazakhstan': 'kz', 'Kenya': 'ke', 'Kiribati': 'ki', 'Kuwait': 'kw', 'Kyrgyzstan': 'kg',
-    'North Korea': 'kp', 'South Korea': 'kr',
-    'Laos': 'la', 'Latvia': 'lv', 'Lebanon': 'lb', 'Lesotho': 'ls', 'Liberia': 'lr', 'Libya': 'ly', 
-    'Liechtenstein': 'li', 'Lithuania': 'lt', 'Luxembourg': 'lu',
-    'Madagascar': 'mg', 'Malawi': 'mw', 'Malaysia': 'my', 'Maldives': 'mv', 'Mali': 'ml', 'Malta': 'mt', 
-    'Marshall Islands': 'mh', 'Mauritania': 'mr', 'Mauritius': 'mu', 'Mexico': 'mx', 'Micronesia': 'fm', 
-    'Moldova': 'md', 'Monaco': 'mc', 'Mongolia': 'mn', 'Montenegro': 'me', 'Morocco': 'ma', 'Mozambique': 'mz', 'Myanmar': 'mm',
-    'Namibia': 'na', 'Nauru': 'nr', 'Nepal': 'np', 'Nepal/China': 'np', 'Netherlands': 'nl', 'New Zealand': 'nz', 
-    'Nicaragua': 'ni', 'Niger': 'ne', 'Nigeria': 'ng', 'North Macedonia': 'mk', 'Norway': 'no',
-    'Oman': 'om',
-    'Pakistan': 'pk', 'Palau': 'pw', 'Palestine State': 'ps', 'Palestine': 'ps', 'Panama': 'pa', 
-    'Papua New Guinea': 'pg', 'Paraguay': 'py', 'Peru': 'pe', 'Philippines': 'ph', 'Poland': 'pl', 'Portugal': 'pt',
-    'Qatar': 'qa',
-    'Romania': 'ro', 'Russia': 'ru', 'Rwanda': 'rw',
-    'Saint Kitts and Nevis': 'kn', 'Saint Lucia': 'lc', 'Saint Vincent and the Grenadines': 'vc', 
-    'Samoa': 'ws', 'San Marino': 'sm', 'Sao Tome and Principe': 'st', 'Saudi Arabia': 'sa', 'Senegal': 'sn', 
-    'Serbia': 'rs', 'Seychelles': 'sc', 'Sierra Leone': 'sl', 'Singapore': 'sg', 'Slovakia': 'sk', 
-    'Slovenia': 'si', 'Solomon Islands': 'sb', 'Somalia': 'so', 'South Africa': 'za', 'South Sudan': 'ss', 
-    'Spain': 'es', 'Sri Lanka': 'lk', 'Sudan': 'sd', 'Suriname': 'sr', 'Sweden': 'se', 'Switzerland': 'ch', 'Syria': 'sy',
-    'Scotland': 'gb-sct', 'Wales': 'gb-wls',
-    'Tajikistan': 'tj', 'Tanzania': 'tz', 'Thailand': 'th', 'Timor-Leste': 'tl', 'Togo': 'tg', 
-    'Tonga': 'to', 'Trinidad and Tobago': 'tt', 'Tunisia': 'tn', 'Turkey': 'tr', 'Turkmenistan': 'tm', 'Tuvalu': 'tv', 'Taiwan': 'tw',
-    'Uganda': 'ug', 'Ukraine': 'ua', 'United Arab Emirates': 'ae', 'UAE': 'ae', 'United Kingdom': 'gb', 'UK': 'gb', 
-    'United States': 'us', 'USA': 'us', 'Uruguay': 'uy', 'Uzbekistan': 'uz',
-    'Vanuatu': 'vu', 'Vatican City': 'va', 'Venezuela': 've', 'Vietnam': 'vn',
-    'Yemen': 'ye',
-    'Zambia': 'zm', 'Zimbabwe': 'zw',
-    'Aruba': 'aw', 'Greenland': 'gl', 'Puerto Rico': 'pr', 'Hong Kong': 'hk', 'Macau': 'mo'
-};
-
-const getFlagUrl = (countryName: string | undefined): string | null => {
-    if (!countryName) return null;
-    const primaryCountry = countryName.split('/')[0].trim();
-    const code = COUNTRY_CODES[primaryCountry];
-    if (code) return `https://flagcdn.com/w40/${code}.png`;
-    return null;
-};
 
 const getLevelBadgeColor = (level: string) => {
     switch (level) {
@@ -113,6 +57,7 @@ interface StopGameCardProps {
     micState: string;
     transcript: string;
     feedback: string | null;
+    onDetailClick?: (item: StopItem) => void;
 }
 
 const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
@@ -135,12 +80,13 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
     );
 };
 
-export const StopGameCard: React.FC<StopGameCardProps> = ({ 
-    item, category, theme, onPlay, onPractice, onSave, 
-    isAudioLoading, isPracticing, isSaved, micState, transcript, feedback 
+export const StopGameCard: React.FC<StopGameCardProps> = ({
+    item, category, theme, onPlay, onPractice, onSave,
+    isAudioLoading, isPracticing, isSaved, micState, transcript, feedback,
+    onDetailClick
 }) => {
     const [layer, setLayer] = useState(1);
-    
+
     // Determine Logic for Layers
     const isVerbOrAdjective = ['Verbs', 'Adjectives'].includes(category);
     const isComplexGrammar = ['Phrasal Verbs', 'Connectors', 'Emphasis', 'Collocations', 'Idioms'].includes(category);
@@ -148,10 +94,10 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
 
     // Minimal Pairs should strictly have 1 layer (maxLayers = 1) so it doesn't cycle.
     // Creative categories (Slang, Compound, etc.) should have 2 layers (Definition -> Example).
-    const maxLayers = isVerbOrAdjective ? 2 : 
-                      (isComplexGrammar && item.definition ? 3 : 
-                      (isCreative && item.example ? 2 : 1));
-    
+    const maxLayers = isVerbOrAdjective ? 2 :
+        (isComplexGrammar && item.definition ? 3 :
+            (isCreative && item.example ? 2 : 1));
+
     const isMinimalPair = category === 'Minimal Pairs';
     // Force the "fancy card" layout for Minimal Pairs even though it has 1 layer
     const showCardLayout = maxLayers > 1 || (isMinimalPair && item.definition?.includes('vs.'));
@@ -164,29 +110,32 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
 
     // Metadata Logic
     let flagUrl = null;
-    if (category === 'Countries') { flagUrl = getFlagUrl(item.word); } 
+    if (category === 'Countries') { flagUrl = getFlagUrl(item.word); }
     else if (['Cities', 'Capitals', 'World Landmarks'].includes(category) && item.country) { flagUrl = getFlagUrl(item.country); }
-    
+
     const isIrregularVerb = category === 'Verbs' && item.tag === 'Irregular';
 
     return (
-        <div className={`flex flex-col group bg-slate-900/40 p-2.5 rounded-lg border transition-all hover:bg-slate-800 hover:shadow-lg ${theme.glow} ${isPracticing ? 'border-sky-500/50 bg-slate-800' : isSaved ? 'border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.1)]' : 'border-transparent hover:border-slate-600'}`}>
+        <div
+            onClick={() => onDetailClick && onDetailClick(item)}
+            className={`flex flex-col group bg-slate-900/40 p-2.5 rounded-lg border transition-all hover:bg-slate-800 hover:shadow-lg ${theme.glow} ${isPracticing ? 'border-sky-500/50 bg-slate-800' : isSaved ? 'border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.1)]' : 'border-transparent hover:border-slate-600'} ${onDetailClick ? 'cursor-pointer hover:scale-[1.02]' : ''}`}
+        >
             <div className="flex items-center justify-between">
                 <div className="min-w-0 pr-2 flex-1">
                     {/* Top Row: Flag/Color/Word/Level */}
                     <div className="flex items-center gap-2 mb-0.5">
-                        {flagUrl && <img src={flagUrl} alt="flag" className="w-5 h-auto rounded-sm shadow-sm object-cover"/>}
+                        {flagUrl && <img src={flagUrl} alt="flag" className="w-5 h-auto rounded-sm shadow-sm object-cover" />}
                         {category === 'Colors' && <span className="w-3 h-3 rounded-full border border-slate-500/50 shadow-sm flex-shrink-0" style={{ backgroundColor: item.hex ?? 'transparent' }} aria-hidden="true" />}
                         <p className={`font-bold truncate text-lg group-hover:text-white transition-colors ${theme.textClass}`}>{item.word}</p>
                         {item.level && <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border uppercase tracking-wide ${getLevelBadgeColor(item.level)}`}>{item.level}</span>}
                         {isIrregularVerb && <span className="text-[9px] font-bold bg-amber-900/40 text-amber-400 px-1.5 py-0.5 rounded border border-amber-600/30 uppercase tracking-wide">Irregular</span>}
-                        
+
                         {/* RESTORED: Tags for Animals, Nature, etc. */}
                         {item.tag && !isIrregularVerb && (
-                             <span className="text-[9px] font-bold bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded border border-slate-600 uppercase tracking-wide">{item.tag}</span>
+                            <span className="text-[9px] font-bold bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded border border-slate-600 uppercase tracking-wide">{item.tag}</span>
                         )}
                     </div>
-                    
+
                     {/* IPA & Translation */}
                     <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
                         <span className="text-cyan-400 font-mono text-xs tracking-wide">{item.ipa}</span>
@@ -217,32 +166,32 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                             </div>
                             <div className="text-xs">
                                 {(layer === 1 || isMinimalPair) && (
-                                    category === 'Verbs' ? <p className="text-sky-100">{item.definition || "Regular Verb"}</p> : 
-                                    <div className="space-y-1">
-                                        {category === 'Minimal Pairs' && item.definition?.includes('vs.') ? (
-                                            <div className="mt-1">
-                                                <p className="text-[10px] text-slate-500 font-bold uppercase mb-1">Compare vs:</p>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {item.definition.replace('vs.', '').split('/').map((pairWord) => {
-                                                        const w = pairWord.trim();
-                                                        return (
-                                                            <button
-                                                                key={w}
-                                                                onClick={(e) => { e.stopPropagation(); onPlay(w); }}
-                                                                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-indigo-500/20 hover:bg-indigo-500/40 border border-indigo-500/30 text-indigo-200 text-xs font-medium transition-all"
-                                                            >
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.414z" clipRule="evenodd" /></svg>
-                                                                {w}
-                                                            </button>
-                                                        );
-                                                    })}
+                                    category === 'Verbs' ? <p className="text-sky-100">{item.definition || "Regular Verb"}</p> :
+                                        <div className="space-y-1">
+                                            {category === 'Minimal Pairs' && item.definition?.includes('vs.') ? (
+                                                <div className="mt-1">
+                                                    <p className="text-[10px] text-slate-500 font-bold uppercase mb-1">Compare vs:</p>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {item.definition.replace('vs.', '').split('/').map((pairWord) => {
+                                                            const w = pairWord.trim();
+                                                            return (
+                                                                <button
+                                                                    key={w}
+                                                                    onClick={(e) => { e.stopPropagation(); onPlay(w); }}
+                                                                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-indigo-500/20 hover:bg-indigo-500/40 border border-indigo-500/30 text-indigo-200 text-xs font-medium transition-all"
+                                                                >
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                                                                    {w}
+                                                                </button>
+                                                            );
+                                                        })}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ) : (
-                                            item.definition ? <p className="text-sky-100">{item.definition}</p> : <p className="text-sky-100 italic">{item.translation}</p>
-                                        )}
-                                        {item.synonyms && <p className="text-sky-500 font-bold text-[10px]">Syn: {item.synonyms.join(', ')}</p>}
-                                    </div>
+                                            ) : (
+                                                item.definition ? <p className="text-sky-100">{item.definition}</p> : <p className="text-sky-100 italic">{item.translation}</p>
+                                            )}
+                                            {item.synonyms && <p className="text-sky-500 font-bold text-[10px]">Syn: {item.synonyms.join(', ')}</p>}
+                                        </div>
                                 )}
                                 {!isMinimalPair && layer === 2 && <p className="text-emerald-100 italic">"{item.examSentence || item.example || "..."}"</p>}
                                 {!isMinimalPair && layer === 3 && (
@@ -277,7 +226,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
             {/* Practice Feedback Area */}
             {isPracticing && (
                 <div className="mt-2 pt-2 border-t border-slate-700/50">
-                        <div className="flex items-center justify-between mb-1"><span className={`text-[10px] uppercase font-bold ${micState === 'listening' ? 'text-sky-400 animate-pulse' : 'text-slate-400'}`}>{micState === 'listening' ? 'Listening...' : 'Tap mic to speak'}</span>{micState === 'listening' && <button onClick={() => {}} className="text-[10px] text-slate-400 hover:text-white underline font-bold">Done</button>}</div>
+                    <div className="flex items-center justify-between mb-1"><span className={`text-[10px] uppercase font-bold ${micState === 'listening' ? 'text-sky-400 animate-pulse' : 'text-slate-400'}`}>{micState === 'listening' ? 'Listening...' : 'Tap mic to speak'}</span>{micState === 'listening' && <button onClick={() => { }} className="text-[10px] text-slate-400 hover:text-white underline font-bold">Done</button>}</div>
                     <div className="min-h-[1.5em] text-sm font-medium text-white break-words bg-slate-900/50 p-1.5 rounded border border-slate-600/50 mb-2">
                         {transcript ? <span className="text-emerald-300">{transcript}</span> : <span className="text-slate-500 italic">Say "{item.word}"...</span>}
                     </div>

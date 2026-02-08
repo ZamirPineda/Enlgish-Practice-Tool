@@ -61,7 +61,7 @@ export const SparklesIcon = () => (
 export type GroupName = 'All' | 'Geography & Travel' | 'Grammar & Language' | 'Professional' | 'Nature & Science' | 'Daily Life' | 'Media & Fun' | 'Knowledge & Culture' | 'Lifestyle' | 'Word Challenge';
 
 export const CATEGORY_GROUPS: Record<GroupName, StopCategory[]> = {
-    'All': [], 
+    'All': [],
     'Geography & Travel': ['Countries', 'Cities', 'Capitals', 'World Landmarks'],
     'Grammar & Language': ['Verbs', 'Modal Verbs', 'Adjectives', 'Compound Adjectives', 'Phrasal Verbs', 'Connectors', 'Emotions', 'Collocations', 'Idioms', 'Opposites & Synonyms', 'Emphasis'],
     'Professional': ['Business', 'Architecture', 'Dev Terms', 'Technology & Internet'],
@@ -84,13 +84,13 @@ export const PREDEFINED_ALL_ORDER: StopCategory[] = [
     'Verbs', 'Adjectives', 'Phrasal Verbs', 'Collocations', 'Idioms', 'Opposites & Synonyms', 'Connectors', 'Emphasis',
     'Movies', 'Songs', 'Sports', 'Mythology',
     'Nature', 'Science', 'Environment',
-    'Business', 'Technology & Internet', 'Architecture', 'Dev Terms', 
+    'Business', 'Technology & Internet', 'Architecture', 'Dev Terms',
     'Education & Learning', 'IELTS Trends', 'Abstract Nouns', 'Culture', 'Historical Figures'
 ];
 
 // --- HELPER FUNCTIONS ---
 export const getCategoryIcon = (category: StopCategory) => {
-    switch(category) {
+    switch (category) {
         case 'Countries': return '🌍';
         case 'Cities': return '🏙️';
         case 'Capitals': return '🏛️';
@@ -149,9 +149,9 @@ export const getCategoryIcon = (category: StopCategory) => {
 };
 
 export const getCategoryTheme = (category: StopCategory) => {
-    let theme = { 
-        accentColor: 'border-slate-500', 
-        bgGradient: 'bg-slate-800', 
+    let theme = {
+        accentColor: 'border-slate-500',
+        bgGradient: 'bg-slate-800',
         headerGradient: 'bg-slate-800',
         textClass: 'text-slate-300',
         iconBg: 'bg-slate-700',
@@ -164,7 +164,7 @@ export const getCategoryTheme = (category: StopCategory) => {
         theme = { accentColor: 'border-amber-400', bgGradient: 'bg-gradient-to-b from-slate-800 to-slate-900', headerGradient: 'bg-gradient-to-r from-amber-900/40 to-slate-800', textClass: 'text-amber-400', iconBg: 'bg-amber-900/30 text-amber-300', glow: 'group-hover:shadow-[0_0_20px_rgba(251,191,36,0.15)]' };
     } else if (['Philosophy & Concepts', 'Abstract Nouns'].includes(category)) {
         theme = { accentColor: 'border-indigo-500', bgGradient: 'bg-gradient-to-b from-slate-800 to-slate-900', headerGradient: 'bg-gradient-to-r from-indigo-900/40 to-slate-800', textClass: 'text-indigo-300', iconBg: 'bg-indigo-900/30 text-indigo-300', glow: 'group-hover:shadow-[0_0_20px_rgba(99,102,241,0.15)]' };
-    } 
+    }
     else if (['Minimal Pairs', 'False Friends', 'Short & Rare', 'Long & Rare'].includes(category)) {
         theme = { accentColor: 'border-violet-500', bgGradient: 'bg-gradient-to-b from-slate-800 to-slate-900', headerGradient: 'bg-gradient-to-r from-violet-900/40 to-slate-800', textClass: 'text-violet-300', iconBg: 'bg-violet-900/30 text-violet-300', glow: 'group-hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]' };
     }
@@ -185,3 +185,64 @@ export const getCategoryTheme = (category: StopCategory) => {
     }
     return theme;
 }
+
+// --- COUNTRY DATA ---
+export const COUNTRY_CODES: Record<string, string> = {
+    'Afghanistan': 'af', 'Albania': 'al', 'Algeria': 'dz', 'Andorra': 'ad', 'Angola': 'ao',
+    'Antigua and Barbuda': 'ag', 'Argentina': 'ar', 'Armenia': 'am', 'Australia': 'au', 'Austria': 'at', 'Azerbaijan': 'az',
+    'Bahamas': 'bs', 'Bahrain': 'bh', 'Bangladesh': 'bd', 'Barbados': 'bb', 'Belarus': 'by',
+    'Belgium': 'be', 'Belize': 'bz', 'Benin': 'bj', 'Bhutan': 'bt', 'Bolivia': 'bo',
+    'Bosnia and Herzegovina': 'ba', 'Botswana': 'bw', 'Brazil': 'br', 'Brunei': 'bn', 'Bulgaria': 'bg',
+    'Burkina Faso': 'bf', 'Burundi': 'bi',
+    'Cabo Verde': 'cv', 'Cambodia': 'kh', 'Cameroon': 'cm', 'Canada': 'ca', 'Central African Republic': 'cf',
+    'Chad': 'td', 'Chile': 'cl', 'China': 'cn', 'China (Tibet)': 'cn', 'Colombia': 'co',
+    'Comoros': 'km', 'Congo': 'cg', 'Democratic Republic of the Congo': 'cd', 'Costa Rica': 'cr',
+    'Croatia': 'hr', 'Cuba': 'cu', 'Cyprus': 'cy', 'Czech Republic': 'cz',
+    'Denmark': 'dk', 'Djibouti': 'dj', 'Dominica': 'dm', 'Dominican Republic': 'do',
+    'Ecuador': 'ec', 'Egypt': 'eg', 'El Salvador': 'sv', 'Equatorial Guinea': 'gq', 'Eritrea': 'er',
+    'Estonia': 'ee', 'Eswatini': 'sz', 'Ethiopia': 'et',
+    'Fiji': 'fj', 'Finland': 'fi', 'France': 'fr',
+    'Gabon': 'ga', 'Gambia': 'gm', 'Georgia': 'ge', 'Germany': 'de', 'Ghana': 'gh', 'Greece': 'gr',
+    'Grenada': 'gd', 'Guatemala': 'gt', 'Guinea': 'gn', 'Guinea-Bissau': 'gw', 'Guyana': 'gy', 'Gibraltar': 'gi',
+    'Haiti': 'ht', 'Honduras': 'hn', 'Hungary': 'hu',
+    'Iceland': 'is', 'India': 'in', 'Indonesia': 'id', 'Iran': 'ir', 'Iraq': 'iq', 'Iraq (Ruins)': 'iq',
+    'Ireland': 'ie', 'Israel': 'il', 'Italy': 'it', 'Ivory Coast': 'ci',
+    'Jamaica': 'jm', 'Japan': 'jp', 'Jordan': 'jo', 'Jordan/Israel': 'jo',
+    'Kazakhstan': 'kz', 'Kenya': 'ke', 'Kiribati': 'ki', 'Kuwait': 'kw', 'Kyrgyzstan': 'kg',
+    'North Korea': 'kp', 'South Korea': 'kr',
+    'Laos': 'la', 'Latvia': 'lv', 'Lebanon': 'lb', 'Lesotho': 'ls', 'Liberia': 'lr', 'Libya': 'ly',
+    'Liechtenstein': 'li', 'Lithuania': 'lt', 'Luxembourg': 'lu',
+    'Madagascar': 'mg', 'Malawi': 'mw', 'Malaysia': 'my', 'Maldives': 'mv', 'Mali': 'ml', 'Malta': 'mt',
+    'Marshall Islands': 'mh', 'Mauritania': 'mr', 'Mauritius': 'mu', 'Mexico': 'mx', 'Micronesia': 'fm',
+    'Moldova': 'md', 'Monaco': 'mc', 'Mongolia': 'mn', 'Montenegro': 'me', 'Morocco': 'ma', 'Mozambique': 'mz', 'Myanmar': 'mm',
+    'Namibia': 'na', 'Nauru': 'nr', 'Nepal': 'np', 'Nepal/China': 'np', 'Netherlands': 'nl', 'New Zealand': 'nz',
+    'Nicaragua': 'ni', 'Niger': 'ne', 'Nigeria': 'ng', 'North Macedonia': 'mk', 'Norway': 'no',
+    'Oman': 'om',
+    'Pakistan': 'pk', 'Palau': 'pw', 'Palestine State': 'ps', 'Palestine': 'ps', 'Panama': 'pa',
+    'Papua New Guinea': 'pg', 'Paraguay': 'py', 'Peru': 'pe', 'Philippines': 'ph', 'Poland': 'pl', 'Portugal': 'pt',
+    'Qatar': 'qa',
+    'Romania': 'ro', 'Russia': 'ru', 'Rwanda': 'rw',
+    'Saint Kitts and Nevis': 'kn', 'Saint Lucia': 'lc', 'Saint Vincent and the Grenadines': 'vc',
+    'Samoa': 'ws', 'San Marino': 'sm', 'Sao Tome and Principe': 'st', 'Saudi Arabia': 'sa', 'Senegal': 'sn',
+    'Serbia': 'rs', 'Seychelles': 'sc', 'Sierra Leone': 'sl', 'Singapore': 'sg', 'Slovakia': 'sk',
+    'Slovenia': 'si', 'Solomon Islands': 'sb', 'Somalia': 'so', 'South Africa': 'za', 'South Sudan': 'ss',
+    'Spain': 'es', 'Sri Lanka': 'lk', 'Sudan': 'sd', 'Suriname': 'sr', 'Sweden': 'se', 'Switzerland': 'ch', 'Syria': 'sy',
+    'Scotland': 'gb-sct', 'Wales': 'gb-wls',
+    'Tajikistan': 'tj', 'Tanzania': 'tz', 'Thailand': 'th', 'Timor-Leste': 'tl', 'Togo': 'tg',
+    'Tonga': 'to', 'Trinidad and Tobago': 'tt', 'Tunisia': 'tn', 'Turkey': 'tr', 'Turkmenistan': 'tm', 'Tuvalu': 'tv', 'Taiwan': 'tw',
+    'Uganda': 'ug', 'Ukraine': 'ua', 'United Arab Emirates': 'ae', 'UAE': 'ae', 'United Kingdom': 'gb', 'UK': 'gb',
+    'United States': 'us', 'USA': 'us', 'Uruguay': 'uy', 'Uzbekistan': 'uz',
+    'Vanuatu': 'vu', 'Vatican City': 'va', 'Venezuela': 've', 'Vietnam': 'vn',
+    'Yemen': 'ye',
+    'Zambia': 'zm', 'Zimbabwe': 'zw',
+    'Aruba': 'aw', 'Greenland': 'gl', 'Puerto Rico': 'pr', 'Hong Kong': 'hk', 'Macau': 'mo'
+};
+
+export const getFlagUrl = (countryName: string | undefined): string | null => {
+    if (!countryName) return null;
+    const primaryCountry = countryName.split('/')[0].trim();
+    const code = COUNTRY_CODES[primaryCountry];
+    if (code) return `https://flagcdn.com/w40/${code}.png`;
+    return null;
+};
+
