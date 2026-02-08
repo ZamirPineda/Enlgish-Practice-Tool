@@ -25,7 +25,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({ onPlayWord, isWordAudio
     const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
     const [browseFilter, setBrowseFilter] = useState('');
     const [showSavedOnly, setShowSavedOnly] = useState(false);
-    const [showSavedOnly, setShowSavedOnly] = useState(false);
+
     const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
 
     // Study Mode State
@@ -367,19 +367,19 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({ onPlayWord, isWordAudio
                     )}
                 </div>
             </div>
+
+            {
+                selectedItemForModal && (
+                    <StopItemModal
+                        item={selectedItemForModal.item}
+                        category={selectedItemForModal.category}
+                        onClose={() => setSelectedItemForModal(null)}
+                        onPlay={onPlayWord}
+                    />
+                )
+            }
         </>
-      {
-        selectedItemForModal && (
-            <StopItemModal
-                item={selectedItemForModal.item}
-                category={selectedItemForModal.category}
-                onClose={() => setSelectedItemForModal(null)}
-                onPlay={onPlayWord}
-            />
-        )
-    }
-      </>
-  );
+    );
 };
 
 export default StopGameBrowse;
