@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-type MathTab = 'calculus' | 'geometry' | 'algebra';
+type MathTab = 'calculus' | 'geometry' | 'algebra' | 'examples';
 
 const MathView: React.FC = () => {
     const [activeTab, setActiveTab] = useState<MathTab>('calculus');
@@ -107,218 +107,348 @@ const MathView: React.FC = () => {
         }
     ];
 
-    const algebraSections = [
+    const solvedExamples = [
         {
-            title: "1. Productos Notables y Factorización",
-            headers: ["Nombre", "Fórmula/Identidad", "Ejemplo"],
-            rows: [
-                ["Diferencia de Cuadrados", "a² - b² = (a - b)(a + b)", "x² - 9 = (x - 3)(x + 3)"],
-                ["Trinomio Cuadrado Perfecto", "(a ± b)² = a² ± 2ab + b²", "(x + 3)² = x² + 6x + 9"],
-                ["Suma de Cubos", "a³ + b³ = (a + b)(a² - ab + b²)", "x³ + 8 = (x + 2)(x² - 2x + 4)"],
-                ["Diferencia de Cubos", "a³ - b³ = (a - b)(a² + ab + b²)", "x³ - 27 = (x - 3)(x² + 3x + 9)"],
-                ["Factor Común", "ax + ay = a(x + y)", "2x² + 4x = 2x(x + 2)"],
-                ["Trinomio de la forma x²+bx+c", "x² + (a+b)x + ab = (x+a)(x+b)", "x² + 5x + 6 = (x+2)(x+3)"]
+            title: "Derivada: Regla del Producto + Cadena",
+            problem: "y = x² \\sin(3x)",
+            description: "Derivar la función aplicando la regla del producto y la regla de la cadena.",
+            steps: [
+                {
+                    explanation: "Identificar u y v para la regla del producto: (uv)' = u'v + uv'",
+                    math: "u = x², \\quad v = \\sin(3x)"
+                },
+                {
+                    explanation: "Derivar u (Regla de la potencia)",
+                    math: "u' = 2x"
+                },
+                {
+                    explanation: "Derivar v (Regla de la cadena: sin(g(x)) -> g'(x)cos(g(x)))",
+                    math: "v' = \\cos(3x) \\cdot (3x)' = 3\\cos(3x)"
+                },
+                {
+                    explanation: "Aplicar la fórmula del producto: u'v + uv'",
+                    math: "y' = (2x)(\\sin(3x)) + (x²)(3\\cos(3x))"
+                },
+                {
+                    explanation: "Simplificar",
+                    math: "y' = 2x\\sin(3x) + 3x²\\cos(3x)"
+                }
             ]
         },
         {
-            title: "2. Ecuación Cuadrática",
-            headers: ["Concepto", "Fórmula", "Notas"],
-            rows: [
-                ["Fórmula General", "x = (-b ± √(b² - 4ac)) / 2a", "Para ax² + bx + c = 0"],
-                ["Discriminante (Δ)", "Δ = b² - 4ac", "Δ > 0: 2 raíces reales\nΔ = 0: 1 raíz real\nΔ < 0: Raíces complejas"],
-                ["Suma de Raíces", "x₁ + x₂ = -b/a", ""],
-                ["Producto de Raíces", "x₁ · x₂ = c/a", ""]
+            title: "Integral por Partes",
+            problem: "\\int x e^{2x} dx",
+            description: "Usar la fórmula ∫u dv = uv - ∫v du (ILATE: Algebraica antes que Exponencial)",
+            steps: [
+                {
+                    explanation: "Elección de u y dv (ILATE: x es Algebraica, e^2x es Exponencial)",
+                    math: "u = x \\quad \\Rightarrow \\quad du = dx"
+                },
+                {
+                    explanation: "Calcular v integrando dv",
+                    math: "dv = e^{2x} dx \\quad \\Rightarrow \\quad v = \\frac{1}{2}e^{2x}"
+                },
+                {
+                    explanation: "Aplicar fórmula: uv - ∫v du",
+                    math: "\\int x e^{2x} dx = x(\\frac{1}{2}e^{2x}) - \\int \\frac{1}{2}e^{2x} dx"
+                },
+                {
+                    explanation: "Resolver la integral restante",
+                    math: "= \\frac{1}{2}xe^{2x} - \\frac{1}{2} \\int e^{2x} dx"
+                },
+                {
+                    explanation: "Integral final constante y resultado",
+                    math: "= \\frac{1}{2}xe^{2x} - \\frac{1}{2}(\\frac{1}{2}e^{2x}) + C = \\frac{1}{2}xe^{2x} - \\frac{1}{4}e^{2x} + C"
+                }
             ]
         },
         {
-            title: "3. Leyes de Exponentes y Radicales",
-            headers: ["Regla", "Identidad", "Ejemplo"],
-            rows: [
-                ["Producto de Potencias", "aᵐ · aⁿ = aᵐ⁺ⁿ", "x² · x³ = x⁵"],
-                ["Cociente de Potencias", "aᵐ / aⁿ = aᵐ⁻ⁿ", "x⁵ / x² = x³"],
-                ["Potencia de Potencia", "(aᵐ)ⁿ = aᵐ·ⁿ", "(x²)³ = x⁶"],
-                ["Potencia de un Producto", "(ab)ⁿ = aⁿ · bⁿ", "(2x)³ = 8x³"],
-                ["Exponente Negativo", "a⁻ⁿ = 1 / aⁿ", "x⁻² = 1/x²"],
-                ["Exponente Cero", "a⁰ = 1", "5⁰ = 1 (a ≠ 0)"],
-                ["Raíz como Exponente", "ⁿ√aᵐ = aᵐ/ⁿ", "³√x² = x²/³"],
-                ["Producto de Raíces", "ⁿ√a · ⁿ√b = ⁿ√(a·b)", "√2 · √3 = √6"]
+            title: "Integral por Sustitución Trigonométrica",
+            problem: "\\int \\frac{1}{\\sqrt{9-x^2}} dx",
+            description: "Forma √(a²-u²) sugiere sustitución x = a sin(θ)",
+            steps: [
+                {
+                    explanation: "Identificar a y el cambio de variable",
+                    math: "a = 3 \\quad \\Rightarrow \\quad x = 3\\sin(\\theta), \\quad dx = 3\\cos(\\theta) d\\theta"
+                },
+                {
+                    explanation: "Sustituir en la raíz",
+                    math: "\\sqrt{9 - (3\\sin\\theta)^2} = \\sqrt{9(1-\\sin^2\\theta)} = \\sqrt{9\\cos^2\\theta} = 3\\cos\\theta"
+                },
+                {
+                    explanation: "Sustituir todo en la integral",
+                    math: "\\int \\frac{1}{3\\cos\\theta} (3\\cos\\theta d\\theta) = \\int 1 d\\theta"
+                },
+                {
+                    explanation: "Integrar respecto a θ",
+                    math: "= \\theta + C"
+                },
+                {
+                    explanation: "Volver a la variable x (θ = arcsin(x/3))",
+                    math: "= \\arcsin(\\frac{x}{3}) + C"
+                }
             ]
         }
     ];
+    {
+        title: "1. Productos Notables y Factorización",
+            headers: ["Nombre", "Fórmula/Identidad", "Ejemplo"],
+                rows: [
+                    ["Diferencia de Cuadrados", "a² - b² = (a - b)(a + b)", "x² - 9 = (x - 3)(x + 3)"],
+                    ["Trinomio Cuadrado Perfecto", "(a ± b)² = a² ± 2ab + b²", "(x + 3)² = x² + 6x + 9"],
+                    ["Suma de Cubos", "a³ + b³ = (a + b)(a² - ab + b²)", "x³ + 8 = (x + 2)(x² - 2x + 4)"],
+                    ["Diferencia de Cubos", "a³ - b³ = (a - b)(a² + ab + b²)", "x³ - 27 = (x - 3)(x² + 3x + 9)"],
+                    ["Factor Común", "ax + ay = a(x + y)", "2x² + 4x = 2x(x + 2)"],
+                    ["Trinomio de la forma x²+bx+c", "x² + (a+b)x + ab = (x+a)(x+b)", "x² + 5x + 6 = (x+2)(x+3)"]
+                ]
+    },
+    {
+        title: "2. Ecuación Cuadrática",
+            headers: ["Concepto", "Fórmula", "Notas"],
+                rows: [
+                    ["Fórmula General", "x = (-b ± √(b² - 4ac)) / 2a", "Para ax² + bx + c = 0"],
+                    ["Discriminante (Δ)", "Δ = b² - 4ac", "Δ > 0: 2 raíces reales\nΔ = 0: 1 raíz real\nΔ < 0: Raíces complejas"],
+                    ["Suma de Raíces", "x₁ + x₂ = -b/a", ""],
+                    ["Producto de Raíces", "x₁ · x₂ = c/a", ""]
+                ]
+    },
+    {
+        title: "3. Leyes de Exponentes y Radicales",
+            headers: ["Regla", "Identidad", "Ejemplo"],
+                rows: [
+                    ["Producto de Potencias", "aᵐ · aⁿ = aᵐ⁺ⁿ", "x² · x³ = x⁵"],
+                    ["Cociente de Potencias", "aᵐ / aⁿ = aᵐ⁻ⁿ", "x⁵ / x² = x³"],
+                    ["Potencia de Potencia", "(aᵐ)ⁿ = aᵐ·ⁿ", "(x²)³ = x⁶"],
+                    ["Potencia de un Producto", "(ab)ⁿ = aⁿ · bⁿ", "(2x)³ = 8x³"],
+                    ["Exponente Negativo", "a⁻ⁿ = 1 / aⁿ", "x⁻² = 1/x²"],
+                    ["Exponente Cero", "a⁰ = 1", "5⁰ = 1 (a ≠ 0)"],
+                    ["Raíz como Exponente", "ⁿ√aᵐ = aᵐ/ⁿ", "³√x² = x²/³"],
+                    ["Producto de Raíces", "ⁿ√a · ⁿ√b = ⁿ√(a·b)", "√2 · √3 = √6"]
+                ]
+    }
+    ];
 
-    return (
-        <div className="flex-1 flex flex-col h-full overflow-hidden bg-slate-900">
-            {/* Header with Tabs */}
-            <div className="flex-shrink-0 bg-slate-900 border-b border-slate-700/50 p-4 text-center">
-                <h2 className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500 font-mono tracking-tight mb-4">
-                    FORMULARIO MATEMÁTICO
-                </h2>
+return (
+    <div className="flex-1 flex flex-col h-full overflow-hidden bg-slate-900">
+        {/* Header with Tabs */}
+        <div className="flex-shrink-0 bg-slate-900 border-b border-slate-700/50 p-4 text-center">
+            <h2 className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500 font-mono tracking-tight mb-4">
+                FORMULARIO MATEMÁTICO
+            </h2>
 
-                <div className="flex justify-center gap-4">
-                    <button
-                        onClick={() => setActiveTab('calculus')}
-                        className={`px-4 py-2 rounded-lg font-bold text-sm transition-all ${activeTab === 'calculus'
-                            ? 'bg-sky-600 text-white shadow-lg shadow-sky-900/50'
-                            : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
-                            }`}
-                    >
-                        ∫ Cálculo
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('geometry')}
-                        className={`px-4 py-2 rounded-lg font-bold text-sm transition-all ${activeTab === 'geometry'
-                            ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50'
-                            : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
-                            }`}
-                    >
-                        📐 Geometría
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('algebra')}
-                        className={`px-4 py-2 rounded-lg font-bold text-sm transition-all ${activeTab === 'algebra'
-                            ? 'bg-violet-600 text-white shadow-lg shadow-violet-900/50'
-                            : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
-                            }`}
-                    >
-                        🧮 Álgebra
-                    </button>
-                </div>
-            </div>
-
-            {/* Content Area */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-8 pb-20 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
-
-                {activeTab === 'calculus' && (
-                    <>
-                        <div className="text-center mb-6">
-                            <p className="text-slate-400 text-xs md:text-sm">
-                                Donde <strong>u</strong> es una función derivable de <strong>x</strong> (Regla de la Cadena).
-                            </p>
-                        </div>
-                        {calculusSections.map((section, idx) => (
-                            <div key={idx} className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden shadow-sm">
-                                <div className="bg-slate-800/80 px-4 py-3 border-b border-slate-700">
-                                    <h3 className="font-bold text-sky-400 text-lg">{section.title}</h3>
-                                </div>
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-left text-sm md:text-base border-collapse">
-                                        <thead className="bg-slate-900/50 text-slate-300 font-semibold">
-                                            <tr>
-                                                {section.headers.map((h, i) => (
-                                                    <th key={i} className="p-3 border-b border-slate-700 min-w-[120px] whitespace-nowrap first:min-w-[100px]">
-                                                        {h}
-                                                    </th>
-                                                ))}
-                                            </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-slate-700/50">
-                                            {section.rows.map((row, rIdx) => (
-                                                <tr key={rIdx} className="hover:bg-slate-700/30 transition-colors">
-                                                    {row.map((cell, cIdx) => (
-                                                        <td key={cIdx} className={`p-3 text-slate-200 ${cIdx === 0 ? 'font-bold text-sky-200' : 'font-mono'}`}>
-                                                            {cell}
-                                                        </td>
-                                                    ))}
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        ))}
-                    </>
-                )}
-
-                {activeTab === 'geometry' && (
-                    <>
-                        <div className="text-center mb-6">
-                            <p className="text-slate-400 text-xs md:text-sm">
-                                Áreas, Perímetros y Volúmenes de figuras comunes.
-                            </p>
-                        </div>
-                        {geometrySections.map((section, idx) => (
-                            <div key={idx} className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden shadow-sm">
-                                <div className="bg-slate-800/80 px-4 py-3 border-b border-slate-700">
-                                    <h3 className="font-bold text-emerald-400 text-lg">{section.title}</h3>
-                                </div>
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-left text-sm md:text-base border-collapse">
-                                        <thead className="bg-slate-900/50 text-slate-300 font-semibold">
-                                            <tr>
-                                                {section.headers.map((h, i) => (
-                                                    <th key={i} className="p-3 border-b border-slate-700 min-w-[150px] whitespace-nowrap">
-                                                        {h}
-                                                    </th>
-                                                ))}
-                                            </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-slate-700/50">
-                                            {section.rows.map((row, rIdx) => (
-                                                <tr key={rIdx} className="hover:bg-slate-700/30 transition-colors">
-                                                    {row.map((cell, cIdx) => (
-                                                        <td key={cIdx} className={`p-3 text-slate-200 align-top ${cIdx === 0 ? 'font-bold text-emerald-200' : 'font-mono whitespace-pre-wrap'}`}>
-                                                            {cell}
-                                                        </td>
-                                                    ))}
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        ))}
-                    </>
-                )}
-
-                {activeTab === 'algebra' && (
-                    <>
-                        <div className="text-center mb-6">
-                            <p className="text-slate-400 text-xs md:text-sm">
-                                Factorización, Ecuaciones y Leyes de Exponentes.
-                            </p>
-                        </div>
-                        {algebraSections.map((section, idx) => (
-                            <div key={idx} className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden shadow-sm">
-                                <div className="bg-slate-800/80 px-4 py-3 border-b border-slate-700">
-                                    <h3 className="font-bold text-violet-400 text-lg">{section.title}</h3>
-                                </div>
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-left text-sm md:text-base border-collapse">
-                                        <thead className="bg-slate-900/50 text-slate-300 font-semibold">
-                                            <tr>
-                                                {section.headers.map((h, i) => (
-                                                    <th key={i} className="p-3 border-b border-slate-700 min-w-[150px] whitespace-nowrap">
-                                                        {h}
-                                                    </th>
-                                                ))}
-                                            </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-slate-700/50">
-                                            {section.rows.map((row, rIdx) => (
-                                                <tr key={rIdx} className="hover:bg-slate-700/30 transition-colors">
-                                                    {row.map((cell, cIdx) => (
-                                                        <td key={cIdx} className={`p-3 text-slate-200 align-top ${cIdx === 0 ? 'font-bold text-violet-200' : 'font-mono whitespace-pre-wrap'}`}>
-                                                            {cell}
-                                                        </td>
-                                                    ))}
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        ))}
-                    </>
-                )}
-
-                <div className="text-center text-slate-500 text-xs pt-8">
-                    {activeTab === 'calculus' ? 'Formulario de cálculo integral y diferencial.' :
-                        activeTab === 'geometry' ? 'Fórmulas geométricas esenciales.' :
-                            'Fundamentos de álgebra.'}
-                </div>
+            <div className="flex justify-center gap-4">
+                <button
+                    onClick={() => setActiveTab('calculus')}
+                    className={`px-4 py-2 rounded-lg font-bold text-sm transition-all ${activeTab === 'calculus'
+                        ? 'bg-sky-600 text-white shadow-lg shadow-sky-900/50'
+                        : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+                        }`}
+                >
+                    ∫ Cálculo
+                </button>
+                <button
+                    onClick={() => setActiveTab('geometry')}
+                    className={`px-4 py-2 rounded-lg font-bold text-sm transition-all ${activeTab === 'geometry'
+                        ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50'
+                        : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+                        }`}
+                >
+                    📐 Geometría
+                </button>
+                <button
+                    onClick={() => setActiveTab('algebra')}
+                    className={`px-4 py-2 rounded-lg font-bold text-sm transition-all ${activeTab === 'algebra'
+                        ? 'bg-violet-600 text-white shadow-lg shadow-violet-900/50'
+                        : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+                        }`}
+                >
+                    🧮 Álgebra
+                </button>
+                <button
+                    onClick={() => setActiveTab('examples')}
+                    className={`px-4 py-2 rounded-lg font-bold text-sm transition-all ${activeTab === 'examples'
+                        ? 'bg-amber-500 text-white shadow-lg shadow-amber-900/50'
+                        : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+                        }`}
+                >
+                    💡 Ejemplos
+                </button>
             </div>
         </div>
-    );
+
+        {/* Content Area */}
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-8 pb-20 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+
+            {activeTab === 'calculus' && (
+                <>
+                    <div className="text-center mb-6">
+                        <p className="text-slate-400 text-xs md:text-sm">
+                            Donde <strong>u</strong> es una función derivable de <strong>x</strong> (Regla de la Cadena).
+                        </p>
+                    </div>
+                    {calculusSections.map((section, idx) => (
+                        <div key={idx} className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden shadow-sm">
+                            <div className="bg-slate-800/80 px-4 py-3 border-b border-slate-700">
+                                <h3 className="font-bold text-sky-400 text-lg">{section.title}</h3>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left text-sm md:text-base border-collapse">
+                                    <thead className="bg-slate-900/50 text-slate-300 font-semibold">
+                                        <tr>
+                                            {section.headers.map((h, i) => (
+                                                <th key={i} className="p-3 border-b border-slate-700 min-w-[120px] whitespace-nowrap first:min-w-[100px]">
+                                                    {h}
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-700/50">
+                                        {section.rows.map((row, rIdx) => (
+                                            <tr key={rIdx} className="hover:bg-slate-700/30 transition-colors">
+                                                {row.map((cell, cIdx) => (
+                                                    <td key={cIdx} className={`p-3 text-slate-200 ${cIdx === 0 ? 'font-bold text-sky-200' : 'font-mono'}`}>
+                                                        {cell}
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    ))}
+                </>
+            )}
+
+            {activeTab === 'geometry' && (
+                <>
+                    <div className="text-center mb-6">
+                        <p className="text-slate-400 text-xs md:text-sm">
+                            Áreas, Perímetros y Volúmenes de figuras comunes.
+                        </p>
+                    </div>
+                    {geometrySections.map((section, idx) => (
+                        <div key={idx} className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden shadow-sm">
+                            <div className="bg-slate-800/80 px-4 py-3 border-b border-slate-700">
+                                <h3 className="font-bold text-emerald-400 text-lg">{section.title}</h3>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left text-sm md:text-base border-collapse">
+                                    <thead className="bg-slate-900/50 text-slate-300 font-semibold">
+                                        <tr>
+                                            {section.headers.map((h, i) => (
+                                                <th key={i} className="p-3 border-b border-slate-700 min-w-[150px] whitespace-nowrap">
+                                                    {h}
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-700/50">
+                                        {section.rows.map((row, rIdx) => (
+                                            <tr key={rIdx} className="hover:bg-slate-700/30 transition-colors">
+                                                {row.map((cell, cIdx) => (
+                                                    <td key={cIdx} className={`p-3 text-slate-200 align-top ${cIdx === 0 ? 'font-bold text-emerald-200' : 'font-mono whitespace-pre-wrap'}`}>
+                                                        {cell}
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    ))}
+                </>
+            )}
+
+            {activeTab === 'algebra' && (
+                <>
+                    <div className="text-center mb-6">
+                        <p className="text-slate-400 text-xs md:text-sm">
+                            Factorización, Ecuaciones y Leyes de Exponentes.
+                        </p>
+                    </div>
+                    {algebraSections.map((section, idx) => (
+                        <div key={idx} className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden shadow-sm">
+                            <div className="bg-slate-800/80 px-4 py-3 border-b border-slate-700">
+                                <h3 className="font-bold text-violet-400 text-lg">{section.title}</h3>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left text-sm md:text-base border-collapse">
+                                    <thead className="bg-slate-900/50 text-slate-300 font-semibold">
+                                        <tr>
+                                            {section.headers.map((h, i) => (
+                                                <th key={i} className="p-3 border-b border-slate-700 min-w-[150px] whitespace-nowrap">
+                                                    {h}
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-700/50">
+                                        {section.rows.map((row, rIdx) => (
+                                            <tr key={rIdx} className="hover:bg-slate-700/30 transition-colors">
+                                                {row.map((cell, cIdx) => (
+                                                    <td key={cIdx} className={`p-3 text-slate-200 align-top ${cIdx === 0 ? 'font-bold text-violet-200' : 'font-mono whitespace-pre-wrap'}`}>
+                                                        {cell}
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    ))}
+                </>
+            )}
+
+            {activeTab === 'examples' && (
+                <>
+                    <div className="text-center mb-6">
+                        <p className="text-slate-400 text-xs md:text-sm">
+                            Problemas resueltos paso a paso para entender la lógica.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {solvedExamples.map((ex, idx) => (
+                            <div key={idx} className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden shadow-lg flex flex-col">
+                                <div className="bg-slate-800/80 px-4 py-3 border-b border-slate-700 flex justify-between items-center">
+                                    <h3 className="font-bold text-amber-400 text-base">{ex.title}</h3>
+                                </div>
+                                <div className="p-4 bg-slate-900/30 flex-1">
+                                    <div className="mb-4 text-center">
+                                        <span className="text-lg font-mono text-white bg-slate-700 px-3 py-1 rounded-md inline-block">
+                                            {ex.problem}
+                                        </span>
+                                        <p className="text-slate-400 text-sm mt-2 italic">{ex.description}</p>
+                                    </div>
+                                    <div className="space-y-3">
+                                        {ex.steps.map((step, sIdx) => (
+                                            <div key={sIdx} className="text-sm border-l-2 border-slate-600 pl-3">
+                                                <p className="text-amber-200/80 font-semibold mb-1">Paso {sIdx + 1}:</p>
+                                                <p className="text-slate-300 mb-1">{step.explanation}</p>
+                                                <p className="text-sky-300 font-mono bg-slate-800/50 p-1 rounded inline-block">
+                                                    {step.math}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </>
+            )}
+
+            <div className="text-center text-slate-500 text-xs pt-8">
+                {activeTab === 'calculus' ? 'Formulario de cálculo integral y diferencial.' :
+                    activeTab === 'geometry' ? 'Fórmulas geométricas esenciales.' :
+                        activeTab === 'algebra' ? 'Fundamentos de álgebra.' :
+                            'Ejemplos detallados de aplicación.'}
+            </div>
+        </div>
+    </div>
+);
 };
 
 export default MathView;
