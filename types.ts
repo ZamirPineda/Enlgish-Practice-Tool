@@ -87,7 +87,8 @@ export type SentenceStructureCategory = 'Negative Adverb' | 'Auxiliary' | 'Subje
 // New IELTS Categories
 export type IeltsCategory = 'Trend Verb' | 'Trend Adjective' | 'Trend Noun' | 'Environmental Term' | 'Academic Noun' | 'Cultural Concept';
 
-export type WordCategory = AdjectiveCategory | PrepositionCategory | GrammarCategory | VerbPatternCategory | IdiomCategory | SentenceStructureCategory | IeltsCategory;
+export type AdvancedCategory = 'Connectors' | 'Adjectives';
+export type WordCategory = AdjectiveCategory | PrepositionCategory | GrammarCategory | VerbPatternCategory | IdiomCategory | SentenceStructureCategory | IeltsCategory | AdvancedCategory;
 
 export interface WordPart {
   word: string;
