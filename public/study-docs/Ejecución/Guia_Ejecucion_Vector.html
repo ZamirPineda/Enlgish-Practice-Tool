@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Vector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Vector</h1>
+    <h2>Explicación</h2><h3>Guía Rápida para Ejecutar Vector Localmente</h3><p>Esta guía te permitirá configurar y ejecutar una instancia básica de [Vector](https://vector.dev/), un agente de datos de observabilidad de alto rendimiento, utilizando Podman o Docker. La configuración provista hará que Vector monitoree un archivo de log (<code>dummy.log</code>) en tu sistema local y envíe su contenido, transformado a formato JSON, directamente a la consola (stdout) del contenedor.</p><p>#### Pasos a Seguir:</p><p>1.  <strong>Crea los archivos necesarios:</strong></p><ul><li>   *   Guarda el contenido del <code>Dockerfile</code> en un archivo llamado <code>Dockerfile</code>.</li><li>   *   Guarda el contenido de <code>vector.toml</code> en un archivo llamado <code>vector.toml</code>.</li><li>   *   Crea un directorio llamado <code>logs</code> en el mismo nivel que <code>Dockerfile</code> y <code>vector.toml</code>.</li><li>   *   Dentro del directorio <code>logs</code>, guarda el contenido de <code>logs/dummy.log</code> en un archivo llamado <code>dummy.log</code>.</li></ul><p>    La estructura de tu directorio debería ser algo así:</p><pre><code>    . 
+    ├── Dockerfile
+    ├── vector.toml
+    └── logs/
+        └── dummy.log</code></pre><p>2.  <strong>Construye la imagen de Docker/Podman:</strong></p><p>    Ejecuta el primer comando de <code>runCommands</code> para construir la imagen. Puedes reemplazar <code>podman</code> con <code>docker</code> si lo prefieres.</p><p>3.  <strong>Ejecuta el contenedor de Vector:</strong></p><p>    Ejecuta el segundo comando de <code>runCommands</code> para iniciar el contenedor. Este comando iniciará el contenedor, montará tu directorio <code>logs</code> local en el contenedor y cargará la configuración de Vector.</p><p>4.  <strong>Verifica la salida:</strong></p><p>    Una vez que el contenedor esté en ejecución, usa el siguiente comando para ver la salida de Vector:</p><pre><code>    podman logs -f vector-instance
+    # O si usas Docker:
+    # docker logs -f vector-instance</code></pre><p>    Deberías ver las líneas del <code>dummy.log</code> procesadas y mostradas en formato JSON.</p><p>5.  <strong>Prueba la reactividad (Opcional):</strong></p><p>    Mientras <code>podman logs -f</code> (o <code>docker logs -f</code>) está en ejecución, puedes añadir nuevas líneas al archivo <code>logs/dummy.log</code> en tu sistema host. Por ejemplo:</p><pre><code>    echo '{"timestamp": "2023-10-27T10:00:15Z", "level": "INFO", "message": "New log entry!"}' &gt;&gt; logs/dummy.log</code></pre><p>    Vector debería detectar los cambios y mostrar las nuevas líneas en la consola del contenedor.</p><p>6.  <strong>Detén y elimina el contenedor (cuando termines):</strong></p><pre><code>    podman stop vector-instance
+    podman rm vector-instance
+    # O si usas Docker:
+    # docker stop vector-instance
+    # docker rm vector-instance</code></pre><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-vector-instance . && podman run -d --name vector-instance -v $(pwd)/logs:/var/log/app my-vector-instance</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de Vector como base.
+# Se elige una versión específica y una variante Alpine para un tamaño más pequeño y eficiencia.
+FROM timberio/vector:0.35.0-alpine
+
+# Establece el directorio de trabajo dentro del contenedor donde se gestionarán los archivos de configuración.
+WORKDIR /etc/vector
+
+# Copia el archivo de configuración de Vector `vector.toml` desde el sistema host al contenedor.
+# Este archivo define cómo Vector recolectará, transformará y enrutará los datos.
+COPY vector.toml .
+
+# Crea un directorio dentro del contenedor que será usado para montar los logs del host.
+# Este es el directorio que la fuente 'file' en `vector.toml` monitoreará.
+RUN mkdir -p /var/log/app
+
+# Expone el puerto 8686. Aunque no es estrictamente necesario para esta configuración básica de archivo a consola,
+# es un puerto común utilizado por Vector para fuentes o destinos basados en HTTP/TCP, y una buena práctica para futuras extensiones.
+EXPOSE 8686
+
+# Comando por defecto para iniciar Vector con el archivo de configuración especificado.
+# Vector leerá esta configuración y comenzará a ejecutar sus pipelines de datos.
+CMD ["vector", "--config", "/etc/vector/vector.toml"]</code></pre><h3>vector.toml</h3><pre><code># vector.toml
+# Configuración básica de Vector: Lee de un archivo local y envía a la consola.
+
+# Define una fuente de tipo 'file' para monitorear y recolectar logs de una aplicación.
+# Vector observará el archivo especificado para nuevas líneas.
+[sources.my_app_logs]
+  type = "file"
+  # La ruta al archivo de log dentro del contenedor que Vector debe monitorear.
+  # Asegúrate de que este directorio `/var/log/app` se mapee desde un directorio del host
+  # (por ejemplo, `./logs`) usando el comando `podman run -v` o `docker run -v`.
+  include = ["/var/log/app/dummy.log"]
+  # Opcional: Ajusta el intervalo de sondeo para que Vector verifique el archivo.
+  # Por defecto, es bastante eficiente, pero puedes ajustarlo si los logs no se escriben continuamente.
+  # polling_interval_secs = 1
+
+# Define un destino de tipo 'console' para imprimir los eventos procesados por Vector.
+# Este destino enviará la salida directamente al stdout del contenedor.
+[sinks.my_console_sink]
+  type = "console"
+  # Especifica qué fuentes deben ser procesadas por este sink. En este caso, `my_app_logs`.
+  inputs = ["my_app_logs"]
+  # Configura la codificación de la salida. JSON es un formato común y legible para logs estructurados.
+  encoding.codec = "json"</code></pre><h3>logs/dummy.log</h3><pre><code>{"timestamp": "2023-10-27T10:00:00Z", "level": "INFO", "message": "User logged in"}
+{"timestamp": "2023-10-27T10:00:05Z", "level": "DEBUG", "message": "Processing request 123"}
+{"timestamp": "2023-10-27T10:00:10Z", "level": "ERROR", "message": "Failed to connect to database", "error_code": 500}</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE5EGSKQElLQMBHfViDOfG6LuygjjZO9CFs2ZP10yq7ZbvErR23j1wV_R_7UJh_z25w06vyQnPjIfSGJN5hVjEfXbN-XmmSwktNqj3hN3MtDBM_ROmvd9zeQKRkUdxIP14YlptaPSyEgrBMeUH_dzGP00dEs8-l8SuW-a-CDEzUpeieLtKXDHbJSFfbDA2N51aLBAGIIOHowR3_ffAp" target="_blank" rel="noopener noreferrer">domestika.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEw0v7iGXSFsPGkpK_HozvbKCnwV4btQ-2JpJsqYenF4IyVf9ZpqMZTvQFGaQnwXs24T3MQKSdaGkDsS_fYkCAVcaVBSS_cldUMARuldCPL7XkSZA==" target="_blank" rel="noopener noreferrer">vector.dev</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEDHoiNNh5wvh-puSsndOIU3QSHeMYNwBeg-W42iTe6TEUbY79mgDegMaefjXdH9dp5iHQVlLwZpwIbLyOUIPpGYv_pk7gSyeTc-wTf7I57-9qiD-WGERPfrVJcBUzKUruO7zhRePsDClfxlhiOCpML7yIy-VGf8qxbb3ZaS_RfVZApmLXPTs6I6X-_4V8oHNLg1-y1TRs=" target="_blank" rel="noopener noreferrer">vectorworks.net</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG1TWHQVUCTXJQ0akTI3KRzUio4Ex1m2JjBoEtce0NuFswqoLHjvr3DQRX9uJvsb9bmGvJpq6m9_1svPCQCub7Al_3jkDtndqnXzKbdfFkO9pjpCLwSBJeAkdavXWvbSqYQsm9fsm8=" target="_blank" rel="noopener noreferrer">youtube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYfElNxQPOGndym76WdrfHEt7Ho1h0MEsw_baIQhJ_VlE6DZH-LpQeJ2ZQ7LGMkNonPvLAMAi82icUBqgOUZVBNCPJRGX_F0pesQVvCLCmZ5nwF34I80h82zj6aAjaOYmrLEa7Bx8=" target="_blank" rel="noopener noreferrer">youtube.com</a></li></ul>
+  </div>
+</body>
+</html>

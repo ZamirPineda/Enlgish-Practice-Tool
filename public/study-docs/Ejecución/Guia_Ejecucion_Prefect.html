@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Prefect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Prefect</h1>
+    <h2>Explicación</h2><p># Configuración Básica de Prefect con Docker Compose</p><p>Esta configuración te permitirá levantar una instancia básica de Prefect 2 Server y su base de datos PostgreSQL asociada utilizando <code>docker-compose</code>. Prefect Server incluye la interfaz de usuario (UI) y la API para gestionar tus flujos de trabajo (flows) y despliegues.</p><h2>Componentes:</h2><ul><li>  <em></em><code>prefect_db</code><em></em>: Un contenedor PostgreSQL que actuará como la base de datos para Prefect. Los datos se persistirán en un volumen <code>prefect_db_data</code>.</li><li>  <em></em><code>prefect_server</code><em></em>: El contenedor principal de Prefect 2 Server. Incluye la API y la UI, y se conectará a la base de datos PostgreSQL. Expondrá el puerto <code>4200</code> para que puedas acceder a la UI desde tu navegador.</li></ul><h2>Pasos a seguir:</h2><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio, por ejemplo, <code>prefect-local</code>. Dentro de este directorio, guarda el contenido proporcionado de <code>docker-compose.yml</code>.</p><p>2.  <strong>Inicia los servicios</strong>: Abre tu terminal en el directorio <code>prefect-local</code> y ejecuta el comando <code>docker-compose up -d</code>.</p><p>3.  <strong>Accede a la UI</strong>: Una vez que los contenedores estén en funcionamiento (puede tardar un minuto para que la base de datos se inicialice y el servidor Prefect se conecte), abre tu navegador web y navega a <code>http://localhost:4200</code> para acceder a la interfaz de usuario de Prefect.</p><p>4.  <strong>Limpiar</strong>: Para detener y eliminar los contenedores y el volumen de datos, ejecuta <code>docker-compose down -v</code> en el mismo directorio.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  prefect_db:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=prefect
+      - POSTGRES_PASSWORD=prefect
+      - POSTGRES_DB=prefect
+    volumes:
+      - prefect_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prefect -d prefect"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  prefect_server:
+    image: prefecthq/prefect:2-python3.10
+    restart: always
+    environment:
+      # Conecta al servidor Prefect a la base de datos
+      - PREFECT_API_DATABASE_CONNECTION_URL=postgresql+asyncpg://prefect:prefect@prefect_db/prefect
+      # Configura la URL de la API que usarán los clientes y la UI
+      - PREFECT_API_URL=http://prefect_server:4200/api
+      # Permite que la API escuche en todas las interfaces de red dentro del contenedor
+      - PREFECT_SERVER_API_HOST=0.0.0.0
+    ports:
+      - "4200:4200" # Expone el puerto 4200 para la UI/API de Prefect
+    depends_on:
+      prefect_db:
+        condition: service_healthy # Asegura que la DB esté lista antes de iniciar el servidor
+    # Inicia el servidor Prefect escuchando en 0.0.0.0 en el puerto 4200
+    command: prefect server start --host 0.0.0.0 --port 4200
+
+volumes:
+  prefect_db_data: # Volumen para persistir los datos de la base de datos PostgreSQL</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGdzTf4GKz7FzuYm__WRKDNkmR9RT8VHNAOgcsCzTPozayCOWLTNWAZbWJj7-ki4H54oqWb8S8d405UbpqWES_0YRpREfhInF3KHhUR78NIV_ZPLRSwA7JMr4Sh3a3oifYSOe6kZwUTrrVrj8c=" target="_blank" rel="noopener noreferrer">prefect.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHYkOglZq9DNZRMun011YQLVYcmh7Os_dJgSZRhUejrbx8cgelmfb2VOq08Du_vVyFqzeTN6S6m7bi1hXpYyEn-CnWjyUFjKDcOEsc0vcCjC5haQw==" target="_blank" rel="noopener noreferrer">prefect.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExU7xT0V3HCTen-TE10ERJU_C4TkVmTkodRYqaePEQPKGjvAmBsoBjHv5oUPtAXvCDFJx_K0S80x6gLdWthNsXMB-wPZp9YlhML4rhAAsJOMh0q8xRBkjBEr9N1oPdxWiIYVd5T26nIp52s7skDY1vKS8J0FAmFKM6JRg5kfciaQCLRALSBqm3pEXYB7W31o2P33Epbsk7LUlnUDZ3DzVhBDs-jWvctuLHeWID-9kUKBlqpHhQFA==" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFheatrH3WzCOxKDUjzyvUz9Tu6eiwq0hj4xH3k33J0vGFj96M4j4Pwr7ZpSX4n2Pu7O9pim47zua3SO1N5-yklAkub-KTbRhXmcMZ5Bd6HVfxyuwg0bXv81x0RV5B3d0TMlbUJ44FgriESicu5wUQPbZ0ikjrq0y41HwZ60x9RYVa4kw==" target="_blank" rel="noopener noreferrer">datacamp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgSYQsKYA8XW9AVARu-gVaXKvMB5jvu5mqf1oWMCKEpRxsZYdBKkw0qyPG_eRINWyJpk0FFVzSKjKiB1uEQ4AceBNEgJPOJoUelzK_E49EOqBizg94l4cNlSSv8KFgrw==" target="_blank" rel="noopener noreferrer">github.com</a></li></ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_RabbitMQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_RabbitMQ</h1>
+    <h2>Explicación</h2><p>Este setup proporciona una instancia básica de RabbitMQ con el plugin de gestión (Management UI) habilitado, utilizando Docker Compose para una fácil <span class="tooltip" data-tooltip-text="La gestión y coordinación automatizada de sistemas informáticos, aplicaciones y servicios complejos. Kubernetes es un ejemplo popular de un orquestador de contenedores.">orquestación</span>.</p><p><strong>Componentes:</strong></p><ul><li>  <strong>RabbitMQ 3-Management:</strong> La imagen oficial de RabbitMQ que incluye el plugin de gestión para acceder a la interfaz web.</li><li>  <strong>Volumen persistente:</strong> Se configura un volumen <code>rabbitmq_data</code> para asegurar que los datos de RabbitMQ (colas, mensajes, configuraciones) persistan entre reinicios del contenedor.</li><li>  <strong>Puertos expuestos:</strong></li><li>   *   <code>5672</code>: El puerto estándar de <span class="tooltip" data-tooltip-text="Protocolo Avanzado de Cola de Mensajes (Advanced Message Queuing Protocol). Un estándar de protocolo abierto para middleware orientado a mensajes, utilizado por brokers como RabbitMQ.">AMQP</span>, utilizado por los clientes para conectarse a RabbitMQ.</li><li>   *   <code>15672</code>: El puerto para la interfaz de gestión web, accesible a través de tu navegador.</li></ul><p><strong>Pasos para ejecutar:</strong></p><p>1.  Asegúrate de tener Docker o Podman y Docker Compose instalados.</p><p>2.  Guarda el contenido de <code>docker-compose.yml</code> en un archivo con ese nombre en tu directorio de trabajo.</p><p>3.  Ejecuta el comando provisto en <code>runCommands</code>.</p><p>4.  Una vez que los contenedores estén levantados, podrás acceder a la interfaz de gestión de RabbitMQ en <code>http://localhost:15672</code> usando las credenciales <code>user</code> / <code>password</code> (definidas en el <code>docker-compose.yml</code>).</p><p>No se necesitan Dockerfiles personalizados ya que se utiliza la imagen oficial <code>rabbitmq:3-management</code> directamente, que ya incluye todo lo necesario para una configuración básica.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672" # AMQP port
+      - "15672:15672" # Management UI port
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq # For persistent data
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  rabbitmq_data:
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKc8DS_9f7zgQ03MlceGaDEsmXw_Yh5iUsUDYJ1B3qE7edpq-I7ZcEQAbBGCeX_Rk-CFbvqUroBhZpBR4XTthgW9O-Fza4I82jFDthRvC_jC-m3BiPzRk=" target="_blank" rel="noopener noreferrer">rabbitmq.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE-tHXxNspsAi9w3uZaRsZFkzvJ8RSB9q1Ls8QR-ofRAXQZ7Ku1IkoVwxhO0Aa-udIzBydQRAyASb8OUlINf14rX_Fy59kQU73IijFCxKno9X5M5M7L6hlxCiKhEw==" target="_blank" rel="noopener noreferrer">rabbitmq.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFFXiciOF-jLyrtg38xojur5HKUCk12fUy45ADSauh1xbDHCigpEGZ1PcAva91qp_6_MGK3TDyvhe5b07NZGjQBZ_Tw36vedf9JDwWf0ePlPvVKikKsW07wxIecva2SwLtsDE-7yKrYOKqo_iazBIgsqsyhSdcTRllcC5yC5oNRVwMKTG--sOxIZntC" target="_blank" rel="noopener noreferrer">cloudamqp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH5MpmA3x918C0E46GcYW2KUv_Sv335BTMqXxxdnzHP3sxnkUKARmh3pOVJg0-hqblsKWRaDhJpr54lY74Dqwp-c6Z54xx5wS1_4ZrXsqkjLP5-GyvZLMQ8EYixton4fpjT_HeqVGDB2ymwK1ImyfyTr7em4j--9vQk_R4gZNo2kaFjaayKT1saiZbTztxKKsmE5doApfW3iNjc_m4=" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHkp4NMnG0glajzpVnmlikIO_NgCTmzhNHFEptYtxb1PT-569ZkqbnXVqVq2Gs-Q4l1AO72OUivrh4B8eHQPGLECRSZScmhRnJdU4rJVQNteNMVzxvjG0ZG5kt39mU8nou2MxifbBu-LXg1QDahQVlqgQvqsZrdsg==" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETnqrOWqRB9B6c2LnC89LDnpzc7UvXY35N44AfdUZ1MCc2RmGm_szg49ke9_7ER-4Cwimy8cy3a8JllNZ0JJ_1JSkRsu27mzMupiyCef6yntWtB7koFuvYuc0EtfTV3-bwC1G1hSORO4dNu6Od5R1MEBPwHenPacF98BprqttqCiYa" target="_blank" rel="noopener noreferrer">dev.to</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH2pvUGuspX-nkm5pHlo23qYqEsvo58ELWNzq_1saGcaBvWvEABMvFbexRQID9WoK85z8xJY2Kof7nZ_BHyJHrrHtr_q7cheHVT22eAXjnnqWbcPKgReExOg0eLXyo9ZXNflIoa6kUn0cKlqS7PhLvVl059NI4scMGTgNIn2swt5dh8" target="_blank" rel="noopener noreferrer">hostman.com</a></li></ul>
+  </div>
+</body>
+</html>

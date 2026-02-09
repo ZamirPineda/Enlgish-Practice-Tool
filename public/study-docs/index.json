@@ -1,0 +1,1724 @@
+﻿[
+    {
+        "path":  "Cloud-Native \u0026 DevOps",
+        "name":  "Cloud-Native \u0026 DevOps",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/Chaos_Engineering.html",
+                             "name":  "Chaos_Engineering.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/Contenedorización_y_Orquestación.html",
+                             "name":  "Contenedorización_y_Orquestación.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/Estrategias_de_Balanceo_de_Carga.html",
+                             "name":  "Estrategias_de_Balanceo_de_Carga.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/Estrategias_de_Despliegue_(Blue-Green,_Canary).html",
+                             "name":  "Estrategias_de_Despliegue_(Blue-Green,_Canary).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/FinOps_(Cloud_Financial_Management).html",
+                             "name":  "FinOps_(Cloud_Financial_Management).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/Gestión_de_Secretos_y_Configuración.html",
+                             "name":  "Gestión_de_Secretos_y_Configuración.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/GitOps.html",
+                             "name":  "GitOps.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/Infrastructure_as_Code_(IaC).html",
+                             "name":  "Infrastructure_as_Code_(IaC).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/Observabilidad_en_Microservicios.html",
+                             "name":  "Observabilidad_en_Microservicios.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/Pipelines_CI_CD.html",
+                             "name":  "Pipelines_CI_CD.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/Platform_Engineering.html",
+                             "name":  "Platform_Engineering.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/Software_Supply_Chain_Security.html",
+                             "name":  "Software_Supply_Chain_Security.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Cloud-Native \u0026 DevOps/The_Twelve-Factor_App.html",
+                             "name":  "The_Twelve-Factor_App.html",
+                             "type":  "file"
+                         }
+                     ]
+    },
+    {
+        "path":  "Comparación",
+        "name":  "Comparación",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Comparación/Amazon_S3_vs._Azure_Blob_Storage_vs._Google_Cloud_Storage.html",
+                             "name":  "Amazon_S3_vs._Azure_Blob_Storage_vs._Google_Cloud_Storage.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Apache_Flink_vs._Kafka_Streams_vs._Livy_vs._Materialize_vs._RisingWave.html",
+                             "name":  "Apache_Flink_vs._Kafka_Streams_vs._Livy_vs._Materialize_vs._RisingWave.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Apache_Hudi_vs._Apache_Iceberg_vs._Apache_Parquet_vs._Delta_Lake.html",
+                             "name":  "Apache_Hudi_vs._Apache_Iceberg_vs._Apache_Parquet_vs._Delta_Lake.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Apache_Spark_vs._Google_Cloud_Dataflow_vs._Kafka_Streams_vs._Spark_Streaming_vs._ksqlDB.html",
+                             "name":  "Apache_Spark_vs._Google_Cloud_Dataflow_vs._Kafka_Streams_vs._Spark_Streaming_vs._ksqlDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Apache_Spark_vs._Hadoop_vs._Hive.html",
+                             "name":  "Apache_Spark_vs._Hadoop_vs._Hive.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/API_Gateway_vs._Apigee_vs._Istio_vs._Linkerd_vs._Service_Mesh.html",
+                             "name":  "API_Gateway_vs._Apigee_vs._Istio_vs._Linkerd_vs._Service_Mesh.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/API_Keys_vs._JWT_(JSON_Web_Tokens)_vs._Rate_Limiting_vs._WAF_(Web_Application_Firewall)_vs._mTLS_(Mutual_TLS).html",
+                             "name":  "API_Keys_vs._JWT_(JSON_Web_Tokens)_vs._Rate_Limiting_vs._WAF_(Web_Application_Firewall)_vs._mTLS_(Mutual_TLS).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Argo_CD_vs._CircleCI_vs._GitHub_Actions_vs._GitLab_CI_vs._Jenkins.html",
+                             "name":  "Argo_CD_vs._CircleCI_vs._GitHub_Actions_vs._GitLab_CI_vs._Jenkins.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Arquitectura_Hexagonal_(Puertos_y_Adaptadores)_vs._Arquitectura_Monolítica_vs._Arquitectura_Serverless_vs._Microservicios_vs._SOA_(Arquitectura_Orientada_a_Servicios).html",
+                             "name":  "Arquitectura_Hexagonal_(Puertos_y_Adaptadores)_vs._Arquitectura_Monolítica_vs._Arquitectura_Serverless_vs._Microservicios_vs._SOA_(Arquitectura_Orientada_a_Servicios).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/ASP.NET_Core_vs._Django_vs._Express.js_vs._Quarkus_vs._SpringBoot.html",
+                             "name":  "ASP.NET_Core_vs._Django_vs._Express.js_vs._Quarkus_vs._SpringBoot.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/AWS_CloudFormation_vs._Ansible_vs._Azure_Bicep_vs._Pulumi_vs._Terraform.html",
+                             "name":  "AWS_CloudFormation_vs._Ansible_vs._Azure_Bicep_vs._Pulumi_vs._Terraform.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/AWS_EC2_vs._AWS_ECS_Fargate_vs._AWS_Lambda_vs._Docker_vs._Kubernetes.html",
+                             "name":  "AWS_EC2_vs._AWS_ECS_Fargate_vs._AWS_Lambda_vs._Docker_vs._Kubernetes.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/AWS_EC2_vs._Azure_Functions_vs._Google_Cloud_Functions_vs._Google_Compute_Engine_vs._HashiCorp_Nomad.html",
+                             "name":  "AWS_EC2_vs._Azure_Functions_vs._Google_Cloud_Functions_vs._Google_Compute_Engine_vs._HashiCorp_Nomad.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/AWS_ECS_Fargate_vs._Docker_vs._Google_Cloud_Functions_vs._HashiCorp_Nomad_vs._Kubernetes.html",
+                             "name":  "AWS_ECS_Fargate_vs._Docker_vs._Google_Cloud_Functions_vs._HashiCorp_Nomad_vs._Kubernetes.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/AWS_Kinesis_Data_Analytics_vs._Apache_Flink_vs._Apache_Spark_vs._Kafka_Streams_vs._Spark_Streaming.html",
+                             "name":  "AWS_Kinesis_Data_Analytics_vs._Apache_Flink_vs._Apache_Spark_vs._Kafka_Streams_vs._Spark_Streaming.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/AWS_SQS_vs._Apache_Pulsar_vs._Kafka_(con_KRaft)_vs._NATS_vs._RabbitMQ.html",
+                             "name":  "AWS_SQS_vs._Apache_Pulsar_vs._Kafka_(con_KRaft)_vs._NATS_vs._RabbitMQ.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/AWS_SQS_vs._Azure_Service_Bus_vs._Google_Cloud_Pub_Sub_vs._Kafka_(con_KRaft)_vs._Redis_Pub_Sub.html",
+                             "name":  "AWS_SQS_vs._Azure_Service_Bus_vs._Google_Cloud_Pub_Sub_vs._Kafka_(con_KRaft)_vs._Redis_Pub_Sub.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/AWS_Step_Functions_vs._Apache_Airflow_vs._Dagster_vs._Oozie_vs._Prefect.html",
+                             "name":  "AWS_Step_Functions_vs._Apache_Airflow_vs._Dagster_vs._Oozie_vs._Prefect.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Cassandra_vs._DynamoDB_vs._Elasticsearch_vs._Oracle_vs._PostgreSQL.html",
+                             "name":  "Cassandra_vs._DynamoDB_vs._Elasticsearch_vs._Oracle_vs._PostgreSQL.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Chroma_DB_vs._Milvus_vs._Pinecone_vs._Weaviate_vs._pgvector.html",
+                             "name":  "Chroma_DB_vs._Milvus_vs._Pinecone_vs._Weaviate_vs._pgvector.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Consul_vs._CoreDNS_vs._ZooKeeper_vs._etcd.html",
+                             "name":  "Consul_vs._CoreDNS_vs._ZooKeeper_vs._etcd.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Cosmos_DB_vs._Couchbase_vs._HBase_vs._Redis_vs._YugabyteDB.html",
+                             "name":  "Cosmos_DB_vs._Couchbase_vs._HBase_vs._Redis_vs._YugabyteDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Couchbase_vs._DynamoDB_vs._Elasticsearch_vs._MongoDB_vs._Neo4j.html",
+                             "name":  "Couchbase_vs._DynamoDB_vs._Elasticsearch_vs._MongoDB_vs._Neo4j.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Datadog_vs._Grafana_vs._Jaeger_vs._Kibana_vs._Prometheus.html",
+                             "name":  "Datadog_vs._Grafana_vs._Jaeger_vs._Kibana_vs._Prometheus.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Datadog_vs._Loki_vs._OpenTelemetry_vs._Vector_vs._Zipkin.html",
+                             "name":  "Datadog_vs._Loki_vs._OpenTelemetry_vs._Vector_vs._Zipkin.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/Feast_vs._Tecton.html",
+                             "name":  "Feast_vs._Tecton.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/GraphQL_vs._REST_vs._Server-Sent_Events_(SSE)_vs._WebSockets_vs._gRPC.html",
+                             "name":  "GraphQL_vs._REST_vs._Server-Sent_Events_(SSE)_vs._WebSockets_vs._gRPC.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comparación/HBase_vs._MySQL_vs._Oracle_vs._PostgreSQL_vs._SQL.html",
+                             "name":  "HBase_vs._MySQL_vs._Oracle_vs._PostgreSQL_vs._SQL.html",
+                             "type":  "file"
+                         }
+                     ]
+    },
+    {
+        "path":  "Comunicación e Integración",
+        "name":  "Comunicación e Integración",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Comunicación e Integración/API_Gateway.html",
+                             "name":  "API_Gateway.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/Backend_for_Frontend_(BFF).html",
+                             "name":  "Backend_for_Frontend_(BFF).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/Change_Data_Capture_(CDC).html",
+                             "name":  "Change_Data_Capture_(CDC).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/gRPC_vs._REST.html",
+                             "name":  "gRPC_vs._REST.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/Malla_de_Servicios_(Service_Mesh).html",
+                             "name":  "Malla_de_Servicios_(Service_Mesh).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/Message_Brokers_(RabbitMQ_vs._Kafka).html",
+                             "name":  "Message_Brokers_(RabbitMQ_vs._Kafka).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/MQTT_(Message_Queuing_Telemetry_Transport).html",
+                             "name":  "MQTT_(Message_Queuing_Telemetry_Transport).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/Principios_de_Diseño_de_APIs_(RESTful,_HATEOAS).html",
+                             "name":  "Principios_de_Diseño_de_APIs_(RESTful,_HATEOAS).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/Publicación_Suscripción_(Pub_Sub).html",
+                             "name":  "Publicación_Suscripción_(Pub_Sub).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/Schema_Registry_(Registro_de_Esquemas).html",
+                             "name":  "Schema_Registry_(Registro_de_Esquemas).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/Server-Sent_Events_(SSE).html",
+                             "name":  "Server-Sent_Events_(SSE).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/Tipos_de_Colas_y_Conceptos.html",
+                             "name":  "Tipos_de_Colas_y_Conceptos.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/Webhooks_(HTTP_Push_API).html",
+                             "name":  "Webhooks_(HTTP_Push_API).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Comunicación e Integración/WebSockets.html",
+                             "name":  "WebSockets.html",
+                             "type":  "file"
+                         }
+                     ]
+    },
+    {
+        "path":  "Ejecución",
+        "name":  "Ejecución",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Ansible.html",
+                             "name":  "Guia_Ejecucion_Ansible.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Apache_ActiveMQ.html",
+                             "name":  "Guia_Ejecucion_Apache_ActiveMQ.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Apache_Airflow.html",
+                             "name":  "Guia_Ejecucion_Apache_Airflow.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Apache_Flink.html",
+                             "name":  "Guia_Ejecucion_Apache_Flink.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Apache_Hudi.html",
+                             "name":  "Guia_Ejecucion_Apache_Hudi.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Apache_Iceberg.html",
+                             "name":  "Guia_Ejecucion_Apache_Iceberg.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Apache_Pulsar.html",
+                             "name":  "Guia_Ejecucion_Apache_Pulsar.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Apache_Spark (1).html",
+                             "name":  "Guia_Ejecucion_Apache_Spark (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Apache_Spark.html",
+                             "name":  "Guia_Ejecucion_Apache_Spark.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Apigee.html",
+                             "name":  "Guia_Ejecucion_Apigee.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_API_Gateway.html",
+                             "name":  "Guia_Ejecucion_API_Gateway.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Cassandra.html",
+                             "name":  "Guia_Ejecucion_Cassandra.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Chroma_DB.html",
+                             "name":  "Guia_Ejecucion_Chroma_DB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Cilium.html",
+                             "name":  "Guia_Ejecucion_Cilium.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_CockroachDB.html",
+                             "name":  "Guia_Ejecucion_CockroachDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Cosmos_DB.html",
+                             "name":  "Guia_Ejecucion_Cosmos_DB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Couchbase.html",
+                             "name":  "Guia_Ejecucion_Couchbase.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Crossplane.html",
+                             "name":  "Guia_Ejecucion_Crossplane.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Dagster.html",
+                             "name":  "Guia_Ejecucion_Dagster.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Datadog.html",
+                             "name":  "Guia_Ejecucion_Datadog.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Delta_Lake.html",
+                             "name":  "Guia_Ejecucion_Delta_Lake.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_DynamoDB.html",
+                             "name":  "Guia_Ejecucion_DynamoDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Elasticsearch.html",
+                             "name":  "Guia_Ejecucion_Elasticsearch.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Feast.html",
+                             "name":  "Guia_Ejecucion_Feast.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Grafana.html",
+                             "name":  "Guia_Ejecucion_Grafana.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Hadoop.html",
+                             "name":  "Guia_Ejecucion_Hadoop.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_HBase.html",
+                             "name":  "Guia_Ejecucion_HBase.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Hive.html",
+                             "name":  "Guia_Ejecucion_Hive.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_InfluxDB.html",
+                             "name":  "Guia_Ejecucion_InfluxDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Istio.html",
+                             "name":  "Guia_Ejecucion_Istio.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Jaeger.html",
+                             "name":  "Guia_Ejecucion_Jaeger.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Kafka_(con_KRaft).html",
+                             "name":  "Guia_Ejecucion_Kafka_(con_KRaft).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Kafka_Streams.html",
+                             "name":  "Guia_Ejecucion_Kafka_Streams.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Kibana.html",
+                             "name":  "Guia_Ejecucion_Kibana.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Kong.html",
+                             "name":  "Guia_Ejecucion_Kong.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_ksqlDB.html",
+                             "name":  "Guia_Ejecucion_ksqlDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Linkerd.html",
+                             "name":  "Guia_Ejecucion_Linkerd.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Livy.html",
+                             "name":  "Guia_Ejecucion_Livy.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Loki.html",
+                             "name":  "Guia_Ejecucion_Loki.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Materialize.html",
+                             "name":  "Guia_Ejecucion_Materialize.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Milvus.html",
+                             "name":  "Guia_Ejecucion_Milvus.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_MongoDB.html",
+                             "name":  "Guia_Ejecucion_MongoDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_MySQL.html",
+                             "name":  "Guia_Ejecucion_MySQL.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_NATS.html",
+                             "name":  "Guia_Ejecucion_NATS.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Neo4j.html",
+                             "name":  "Guia_Ejecucion_Neo4j.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Nginx.html",
+                             "name":  "Guia_Ejecucion_Nginx.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Oozie.html",
+                             "name":  "Guia_Ejecucion_Oozie.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_OpenTelemetry.html",
+                             "name":  "Guia_Ejecucion_OpenTelemetry.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Oracle.html",
+                             "name":  "Guia_Ejecucion_Oracle.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_pgvector.html",
+                             "name":  "Guia_Ejecucion_pgvector.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_PostgreSQL.html",
+                             "name":  "Guia_Ejecucion_PostgreSQL.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Prefect.html",
+                             "name":  "Guia_Ejecucion_Prefect.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Prometheus (1).html",
+                             "name":  "Guia_Ejecucion_Prometheus (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Prometheus.html",
+                             "name":  "Guia_Ejecucion_Prometheus.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Pulumi (1).html",
+                             "name":  "Guia_Ejecucion_Pulumi (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Pulumi.html",
+                             "name":  "Guia_Ejecucion_Pulumi.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_RabbitMQ (1).html",
+                             "name":  "Guia_Ejecucion_RabbitMQ (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_RabbitMQ.html",
+                             "name":  "Guia_Ejecucion_RabbitMQ.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Redis.html",
+                             "name":  "Guia_Ejecucion_Redis.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Redis_Pub_Sub.html",
+                             "name":  "Guia_Ejecucion_Redis_Pub_Sub.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_RisingWave.html",
+                             "name":  "Guia_Ejecucion_RisingWave.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Service_Mesh.html",
+                             "name":  "Guia_Ejecucion_Service_Mesh.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Spark_Streaming.html",
+                             "name":  "Guia_Ejecucion_Spark_Streaming.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Terraform.html",
+                             "name":  "Guia_Ejecucion_Terraform.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_TimescaleDB.html",
+                             "name":  "Guia_Ejecucion_TimescaleDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Vector.html",
+                             "name":  "Guia_Ejecucion_Vector.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Weaviate.html",
+                             "name":  "Guia_Ejecucion_Weaviate.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_YugabyteDB.html",
+                             "name":  "Guia_Ejecucion_YugabyteDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Ejecución/Guia_Ejecucion_Zipkin.html",
+                             "name":  "Guia_Ejecucion_Zipkin.html",
+                             "type":  "file"
+                         }
+                     ]
+    },
+    {
+        "path":  "Estilos Arquitectónicos",
+        "name":  "Estilos Arquitectónicos",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_Basada_en_el_Espacio.html",
+                             "name":  "Arquitectura_Basada_en_el_Espacio.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_Cliente-Servidor.html",
+                             "name":  "Arquitectura_Cliente-Servidor.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_de_Microkernel_(Plugins).html",
+                             "name":  "Arquitectura_de_Microkernel_(Plugins).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_de_Tuberías_y_Filtros.html",
+                             "name":  "Arquitectura_de_Tuberías_y_Filtros.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_en_Capas_(N-Tier).html",
+                             "name":  "Arquitectura_en_Capas_(N-Tier).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_Hexagonal_(Puertos_y_Adaptadores) (3).html",
+                             "name":  "Arquitectura_Hexagonal_(Puertos_y_Adaptadores) (3).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_Lambda_y_Kappa.html",
+                             "name":  "Arquitectura_Lambda_y_Kappa.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_Monolítica.html",
+                             "name":  "Arquitectura_Monolítica.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_Orientada_a_Eventos.html",
+                             "name":  "Arquitectura_Orientada_a_Eventos.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_Orientada_a_Servicios_(SOA).html",
+                             "name":  "Arquitectura_Orientada_a_Servicios_(SOA).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Arquitectura_Serverless.html",
+                             "name":  "Arquitectura_Serverless.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Cell-Based_Architecture.html",
+                             "name":  "Cell-Based_Architecture.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/CQRS_(Command_Query_Responsibility_Segregation).html",
+                             "name":  "CQRS_(Command_Query_Responsibility_Segregation).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Data_Mesh.html",
+                             "name":  "Data_Mesh.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Microservicios.html",
+                             "name":  "Microservicios.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Micro_Frontends.html",
+                             "name":  "Micro_Frontends.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estilos Arquitectónicos/Self-Contained_Systems_(SCS).html",
+                             "name":  "Self-Contained_Systems_(SCS).html",
+                             "type":  "file"
+                         }
+                     ]
+    },
+    {
+        "path":  "Estructuras de Datos y Algoritmos",
+        "name":  "Estructuras de Datos y Algoritmos",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Estructuras de Datos y Algoritmos/Algoritmos_de_Búsqueda_(Binaria,_Lineal).html",
+                             "name":  "Algoritmos_de_Búsqueda_(Binaria,_Lineal).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estructuras de Datos y Algoritmos/Algoritmos_de_Ordenamiento_(Bubble,_Merge,_Quick).html",
+                             "name":  "Algoritmos_de_Ordenamiento_(Bubble,_Merge,_Quick).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estructuras de Datos y Algoritmos/Arrays_y_Listas.html",
+                             "name":  "Arrays_y_Listas.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estructuras de Datos y Algoritmos/Listas_Enlazadas.html",
+                             "name":  "Listas_Enlazadas.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estructuras de Datos y Algoritmos/Notación_Big_O.html",
+                             "name":  "Notación_Big_O.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estructuras de Datos y Algoritmos/Pilas_y_Colas.html",
+                             "name":  "Pilas_y_Colas.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estructuras de Datos y Algoritmos/Programación_Dinámica.html",
+                             "name":  "Programación_Dinámica.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estructuras de Datos y Algoritmos/Recursividad.html",
+                             "name":  "Recursividad.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estructuras de Datos y Algoritmos/Tablas_Hash.html",
+                             "name":  "Tablas_Hash.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Estructuras de Datos y Algoritmos/Árboles_y_Grafos.html",
+                             "name":  "Árboles_y_Grafos.html",
+                             "type":  "file"
+                         }
+                     ]
+    },
+    {
+        "path":  "Explicación",
+        "name":  "Explicación",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Algoritmos_de_Búsqueda_(Binaria,_Lineal).html",
+                             "name":  "Explicacion_Profunda_Algoritmos_de_Búsqueda_(Binaria,_Lineal).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Algoritmos_de_Ordenamiento_(Bubble,_Merge,_Quick).html",
+                             "name":  "Explicacion_Profunda_Algoritmos_de_Ordenamiento_(Bubble,_Merge,_Quick).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Amazon_S3.html",
+                             "name":  "Explicacion_Profunda_Amazon_S3.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Ansible.html",
+                             "name":  "Explicacion_Profunda_Ansible.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_ActiveMQ (1).html",
+                             "name":  "Explicacion_Profunda_Apache_ActiveMQ (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_ActiveMQ.html",
+                             "name":  "Explicacion_Profunda_Apache_ActiveMQ.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_Airflow (1).html",
+                             "name":  "Explicacion_Profunda_Apache_Airflow (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_Airflow.html",
+                             "name":  "Explicacion_Profunda_Apache_Airflow.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_Flink.html",
+                             "name":  "Explicacion_Profunda_Apache_Flink.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_Hudi (1).html",
+                             "name":  "Explicacion_Profunda_Apache_Hudi (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_Hudi.html",
+                             "name":  "Explicacion_Profunda_Apache_Hudi.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_Iceberg.html",
+                             "name":  "Explicacion_Profunda_Apache_Iceberg.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_Parquet.html",
+                             "name":  "Explicacion_Profunda_Apache_Parquet.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_Pulsar (1).html",
+                             "name":  "Explicacion_Profunda_Apache_Pulsar (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_Pulsar.html",
+                             "name":  "Explicacion_Profunda_Apache_Pulsar.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apache_Spark.html",
+                             "name":  "Explicacion_Profunda_Apache_Spark.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Apigee.html",
+                             "name":  "Explicacion_Profunda_Apigee.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_API_Gateway.html",
+                             "name":  "Explicacion_Profunda_API_Gateway.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_API_Keys.html",
+                             "name":  "Explicacion_Profunda_API_Keys.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Architect_(arc.codes).html",
+                             "name":  "Explicacion_Profunda_Architect_(arc.codes).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Argo_CD.html",
+                             "name":  "Explicacion_Profunda_Argo_CD.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Arrays_y_Listas.html",
+                             "name":  "Explicacion_Profunda_Arrays_y_Listas.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_AWS_CloudFormation.html",
+                             "name":  "Explicacion_Profunda_AWS_CloudFormation.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_AWS_EC2.html",
+                             "name":  "Explicacion_Profunda_AWS_EC2.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_AWS_ECS_Fargate.html",
+                             "name":  "Explicacion_Profunda_AWS_ECS_Fargate.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_AWS_Kinesis_Data_Analytics.html",
+                             "name":  "Explicacion_Profunda_AWS_Kinesis_Data_Analytics.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_AWS_Lambda.html",
+                             "name":  "Explicacion_Profunda_AWS_Lambda.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_AWS_SAM.html",
+                             "name":  "Explicacion_Profunda_AWS_SAM.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_AWS_SQS.html",
+                             "name":  "Explicacion_Profunda_AWS_SQS.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_AWS_Step_Functions.html",
+                             "name":  "Explicacion_Profunda_AWS_Step_Functions.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Azure_Bicep.html",
+                             "name":  "Explicacion_Profunda_Azure_Bicep.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Azure_Blob_Storage.html",
+                             "name":  "Explicacion_Profunda_Azure_Blob_Storage.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Azure_Functions.html",
+                             "name":  "Explicacion_Profunda_Azure_Functions.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Azure_Service_Bus.html",
+                             "name":  "Explicacion_Profunda_Azure_Service_Bus.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Cassandra.html",
+                             "name":  "Explicacion_Profunda_Cassandra.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Chalice.html",
+                             "name":  "Explicacion_Profunda_Chalice.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Chroma_DB.html",
+                             "name":  "Explicacion_Profunda_Chroma_DB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Cilium.html",
+                             "name":  "Explicacion_Profunda_Cilium.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_CircleCI.html",
+                             "name":  "Explicacion_Profunda_CircleCI.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_CockroachDB.html",
+                             "name":  "Explicacion_Profunda_CockroachDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Consul.html",
+                             "name":  "Explicacion_Profunda_Consul.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_CoreDNS.html",
+                             "name":  "Explicacion_Profunda_CoreDNS.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Cosmos_DB.html",
+                             "name":  "Explicacion_Profunda_Cosmos_DB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Couchbase.html",
+                             "name":  "Explicacion_Profunda_Couchbase.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Crossplane.html",
+                             "name":  "Explicacion_Profunda_Crossplane.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Dagster.html",
+                             "name":  "Explicacion_Profunda_Dagster.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Datadog (1).html",
+                             "name":  "Explicacion_Profunda_Datadog (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Datadog.html",
+                             "name":  "Explicacion_Profunda_Datadog.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Delta_Lake.html",
+                             "name":  "Explicacion_Profunda_Delta_Lake.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Docker.html",
+                             "name":  "Explicacion_Profunda_Docker.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_DynamoDB.html",
+                             "name":  "Explicacion_Profunda_DynamoDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Elasticsearch.html",
+                             "name":  "Explicacion_Profunda_Elasticsearch.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_etcd.html",
+                             "name":  "Explicacion_Profunda_etcd.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Feast.html",
+                             "name":  "Explicacion_Profunda_Feast.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_GitHub_Actions.html",
+                             "name":  "Explicacion_Profunda_GitHub_Actions.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_GitLab_CI.html",
+                             "name":  "Explicacion_Profunda_GitLab_CI.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Google_Cloud_Dataflow.html",
+                             "name":  "Explicacion_Profunda_Google_Cloud_Dataflow.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Google_Cloud_Functions.html",
+                             "name":  "Explicacion_Profunda_Google_Cloud_Functions.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Google_Cloud_Pub_Sub.html",
+                             "name":  "Explicacion_Profunda_Google_Cloud_Pub_Sub.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Google_Cloud_Run.html",
+                             "name":  "Explicacion_Profunda_Google_Cloud_Run.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Google_Cloud_Storage.html",
+                             "name":  "Explicacion_Profunda_Google_Cloud_Storage.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Google_Compute_Engine.html",
+                             "name":  "Explicacion_Profunda_Google_Compute_Engine.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Grafana.html",
+                             "name":  "Explicacion_Profunda_Grafana.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Hadoop.html",
+                             "name":  "Explicacion_Profunda_Hadoop.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_HashiCorp_Nomad.html",
+                             "name":  "Explicacion_Profunda_HashiCorp_Nomad.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_HBase.html",
+                             "name":  "Explicacion_Profunda_HBase.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Hive.html",
+                             "name":  "Explicacion_Profunda_Hive.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_InfluxDB.html",
+                             "name":  "Explicacion_Profunda_InfluxDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Istio.html",
+                             "name":  "Explicacion_Profunda_Istio.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Jaeger.html",
+                             "name":  "Explicacion_Profunda_Jaeger.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Jenkins.html",
+                             "name":  "Explicacion_Profunda_Jenkins.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_JWT_(JSON_Web_Tokens).html",
+                             "name":  "Explicacion_Profunda_JWT_(JSON_Web_Tokens).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Kafka_(con_KRaft) (1).html",
+                             "name":  "Explicacion_Profunda_Kafka_(con_KRaft) (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Kafka_(con_KRaft).html",
+                             "name":  "Explicacion_Profunda_Kafka_(con_KRaft).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Kafka_(con_ZooKeeper).html",
+                             "name":  "Explicacion_Profunda_Kafka_(con_ZooKeeper).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Kafka_Streams.html",
+                             "name":  "Explicacion_Profunda_Kafka_Streams.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Kibana.html",
+                             "name":  "Explicacion_Profunda_Kibana.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Kong.html",
+                             "name":  "Explicacion_Profunda_Kong.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_ksqlDB.html",
+                             "name":  "Explicacion_Profunda_ksqlDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Kubernetes.html",
+                             "name":  "Explicacion_Profunda_Kubernetes.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Linkerd.html",
+                             "name":  "Explicacion_Profunda_Linkerd.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Listas_Enlazadas.html",
+                             "name":  "Explicacion_Profunda_Listas_Enlazadas.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Livy.html",
+                             "name":  "Explicacion_Profunda_Livy.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Loki.html",
+                             "name":  "Explicacion_Profunda_Loki.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Materialize.html",
+                             "name":  "Explicacion_Profunda_Materialize.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Milvus.html",
+                             "name":  "Explicacion_Profunda_Milvus.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_MongoDB.html",
+                             "name":  "Explicacion_Profunda_MongoDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_mTLS_(Mutual_TLS).html",
+                             "name":  "Explicacion_Profunda_mTLS_(Mutual_TLS).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_MySQL.html",
+                             "name":  "Explicacion_Profunda_MySQL.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_NATS.html",
+                             "name":  "Explicacion_Profunda_NATS.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Neo4j.html",
+                             "name":  "Explicacion_Profunda_Neo4j.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Nginx.html",
+                             "name":  "Explicacion_Profunda_Nginx.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_NoSQL.html",
+                             "name":  "Explicacion_Profunda_NoSQL.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Oozie.html",
+                             "name":  "Explicacion_Profunda_Oozie.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_OpenTelemetry.html",
+                             "name":  "Explicacion_Profunda_OpenTelemetry.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Oracle.html",
+                             "name":  "Explicacion_Profunda_Oracle.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_pgvector.html",
+                             "name":  "Explicacion_Profunda_pgvector.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Pilas_y_Colas.html",
+                             "name":  "Explicacion_Profunda_Pilas_y_Colas.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Pinecone.html",
+                             "name":  "Explicacion_Profunda_Pinecone.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_PostgreSQL.html",
+                             "name":  "Explicacion_Profunda_PostgreSQL.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Prefect.html",
+                             "name":  "Explicacion_Profunda_Prefect.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Prometheus.html",
+                             "name":  "Explicacion_Profunda_Prometheus.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Pulumi.html",
+                             "name":  "Explicacion_Profunda_Pulumi.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Quarkus.html",
+                             "name":  "Explicacion_Profunda_Quarkus.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_RabbitMQ (1).html",
+                             "name":  "Explicacion_Profunda_RabbitMQ (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_RabbitMQ.html",
+                             "name":  "Explicacion_Profunda_RabbitMQ.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Rate_Limiting.html",
+                             "name":  "Explicacion_Profunda_Rate_Limiting.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Redis.html",
+                             "name":  "Explicacion_Profunda_Redis.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Redis_Pub_Sub (1).html",
+                             "name":  "Explicacion_Profunda_Redis_Pub_Sub (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Redis_Pub_Sub.html",
+                             "name":  "Explicacion_Profunda_Redis_Pub_Sub.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_RisingWave.html",
+                             "name":  "Explicacion_Profunda_RisingWave.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Serverless_Framework.html",
+                             "name":  "Explicacion_Profunda_Serverless_Framework.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Service_Mesh.html",
+                             "name":  "Explicacion_Profunda_Service_Mesh.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Spark_Streaming.html",
+                             "name":  "Explicacion_Profunda_Spark_Streaming.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Spinnaker.html",
+                             "name":  "Explicacion_Profunda_Spinnaker.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_SpringBoot.html",
+                             "name":  "Explicacion_Profunda_SpringBoot.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_SQL.html",
+                             "name":  "Explicacion_Profunda_SQL.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Tablas_Hash.html",
+                             "name":  "Explicacion_Profunda_Tablas_Hash.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Tecton.html",
+                             "name":  "Explicacion_Profunda_Tecton.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Terraform (1).html",
+                             "name":  "Explicacion_Profunda_Terraform (1).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Terraform.html",
+                             "name":  "Explicacion_Profunda_Terraform.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_TimescaleDB.html",
+                             "name":  "Explicacion_Profunda_TimescaleDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Vector.html",
+                             "name":  "Explicacion_Profunda_Vector.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_WAF_(Web_Application_Firewall).html",
+                             "name":  "Explicacion_Profunda_WAF_(Web_Application_Firewall).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Weaviate.html",
+                             "name":  "Explicacion_Profunda_Weaviate.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_YugabyteDB.html",
+                             "name":  "Explicacion_Profunda_YugabyteDB.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Zipkin.html",
+                             "name":  "Explicacion_Profunda_Zipkin.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_ZooKeeper.html",
+                             "name":  "Explicacion_Profunda_ZooKeeper.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Explicación/Explicacion_Profunda_Árboles_y_Grafos.html",
+                             "name":  "Explicacion_Profunda_Árboles_y_Grafos.html",
+                             "type":  "file"
+                         }
+                     ]
+    },
+    {
+        "path":  "Gestión de Datos y Escalabilidad",
+        "name":  "Gestión de Datos y Escalabilidad",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/ACID_vs._BASE.html",
+                             "name":  "ACID_vs._BASE.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Criterios_de_Selección__MongoDB_vs._Oracle.html",
+                             "name":  "Criterios_de_Selección__MongoDB_vs._Oracle.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Escalabilidad_y_Rendimiento (2).html",
+                             "name":  "Escalabilidad_y_Rendimiento (2).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Escalado_de_BD_para_Millones_de_Usuarios.html",
+                             "name":  "Escalado_de_BD_para_Millones_de_Usuarios.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Estrategias_de_Caché.html",
+                             "name":  "Estrategias_de_Caché.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Estrategias_para_Alta_Concurrencia.html",
+                             "name":  "Estrategias_para_Alta_Concurrencia.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Fundamentos_de_BD_(DDL,_DML,_DCL).html",
+                             "name":  "Fundamentos_de_BD_(DDL,_DML,_DCL).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Modelos_de_Consistencia_(Fuerte,_Eventual,_Causal).html",
+                             "name":  "Modelos_de_Consistencia_(Fuerte,_Eventual,_Causal).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Patrones_de_Caché_(Cache-Aside,_Read-Through,_Write-Through).html",
+                             "name":  "Patrones_de_Caché_(Cache-Aside,_Read-Through,_Write-Through).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Persistencia_con_JPA_Hibernate.html",
+                             "name":  "Persistencia_con_JPA_Hibernate.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Persistencia_Políglota.html",
+                             "name":  "Persistencia_Políglota.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Replicación_vs._Sharding.html",
+                             "name":  "Replicación_vs._Sharding.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Sharding_de_Base_de_Datos.html",
+                             "name":  "Sharding_de_Base_de_Datos.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Gestión de Datos y Escalabilidad/Teorema_CAP.html",
+                             "name":  "Teorema_CAP.html",
+                             "type":  "file"
+                         }
+                     ]
+    },
+    {
+        "path":  "Observabilidad y Monitoreo",
+        "name":  "Observabilidad y Monitoreo",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Observabilidad y Monitoreo/Alerting_y_SLOs_SLIs_SLAs.html",
+                             "name":  "Alerting_y_SLOs_SLIs_SLAs.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Observabilidad y Monitoreo/Continuous_Profiling.html",
+                             "name":  "Continuous_Profiling.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Observabilidad y Monitoreo/eBPF_(extended_Berkeley_Packet_Filter).html",
+                             "name":  "eBPF_(extended_Berkeley_Packet_Filter).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Observabilidad y Monitoreo/Logging.html",
+                             "name":  "Logging.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Observabilidad y Monitoreo/Log_Aggregation_(Fluentd,_Logstash).html",
+                             "name":  "Log_Aggregation_(Fluentd,_Logstash).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Observabilidad y Monitoreo/Métricas.html",
+                             "name":  "Métricas.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Observabilidad y Monitoreo/Tracing_(Rastreo_Distribuido).html",
+                             "name":  "Tracing_(Rastreo_Distribuido).html",
+                             "type":  "file"
+                         }
+                     ]
+    },
+    {
+        "path":  "Patrones de Diseño y Principios",
+        "name":  "Patrones de Diseño y Principios",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Patrones de Diseño y Principios/Conceptos_de_SSL_TLS.html",
+                             "name":  "Conceptos_de_SSL_TLS.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Domain-Driven_Design_(DDD).html",
+                             "name":  "Domain-Driven_Design_(DDD).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Event_Sourcing.html",
+                             "name":  "Event_Sourcing.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Fallacies_of_Distributed_Computing.html",
+                             "name":  "Fallacies_of_Distributed_Computing.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Idempotencia_en_APIs.html",
+                             "name":  "Idempotencia_en_APIs.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/OAuth_2.0_y_OpenID_Connect_(OIDC).html",
+                             "name":  "OAuth_2.0_y_OpenID_Connect_(OIDC).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Orquestación_vs._Coreografía.html",
+                             "name":  "Orquestación_vs._Coreografía.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Patrón_Adapter.html",
+                             "name":  "Patrón_Adapter.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Patrón_Ambassador.html",
+                             "name":  "Patrón_Ambassador.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Patrón_Bulkhead_(Mamparo).html",
+                             "name":  "Patrón_Bulkhead_(Mamparo).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Patrón_Circuit_Breaker.html",
+                             "name":  "Patrón_Circuit_Breaker.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Patrón_Materialized_View.html",
+                             "name":  "Patrón_Materialized_View.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Patrón_Outbox.html",
+                             "name":  "Patrón_Outbox.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Patrón_Retry_(Reintento).html",
+                             "name":  "Patrón_Retry_(Reintento).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Patrón_SAGA.html",
+                             "name":  "Patrón_SAGA.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Patrón_Sidecar.html",
+                             "name":  "Patrón_Sidecar.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Patrón_Strangler_Fig.html",
+                             "name":  "Patrón_Strangler_Fig.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Principios_KISS,_DRY,_YAGNI.html",
+                             "name":  "Principios_KISS,_DRY,_YAGNI.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Principios_SOLID.html",
+                             "name":  "Principios_SOLID.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Test-Driven_Development_(TDD).html",
+                             "name":  "Test-Driven_Development_(TDD).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Patrones de Diseño y Principios/Zero_Trust_Architecture_(ZTA).html",
+                             "name":  "Zero_Trust_Architecture_(ZTA).html",
+                             "type":  "file"
+                         }
+                     ]
+    },
+    {
+        "path":  "Plataformas y Lenguajes",
+        "name":  "Plataformas y Lenguajes",
+        "type":  "directory",
+        "children":  [
+                         {
+                             "path":  "Plataformas y Lenguajes/Comparativa__Spring_Boot_vs._Quarkus.html",
+                             "name":  "Comparativa__Spring_Boot_vs._Quarkus.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Plataformas y Lenguajes/Compilación_Just-In-Time_(JIT).html",
+                             "name":  "Compilación_Just-In-Time_(JIT).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Plataformas y Lenguajes/Concurrencia_Avanzada_y_Java_Memory_Model.html",
+                             "name":  "Concurrencia_Avanzada_y_Java_Memory_Model.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Plataformas y Lenguajes/Evolución_de_Java_(8,_11,_17+).html",
+                             "name":  "Evolución_de_Java_(8,_11,_17+).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Plataformas y Lenguajes/Gestión_de_Memoria_y_GC_en_Java.html",
+                             "name":  "Gestión_de_Memoria_y_GC_en_Java.html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Plataformas y Lenguajes/Java_en_Contenedores_(Docker_Kubernetes).html",
+                             "name":  "Java_en_Contenedores_(Docker_Kubernetes).html",
+                             "type":  "file"
+                         },
+                         {
+                             "path":  "Plataformas y Lenguajes/Programación_Reactiva_(Project_Reactor).html",
+                             "name":  "Programación_Reactiva_(Project_Reactor).html",
+                             "type":  "file"
+                         }
+                     ]
+    }
+]

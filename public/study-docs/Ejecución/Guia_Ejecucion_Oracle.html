@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Oracle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Oracle</h1>
+    <h2>Explicación</h2><p>Esta guía le permitirá levantar una instancia local de Oracle Database Express Edition (XE) usando <code>gvenzl/oracle-xe</code>, una imagen Docker muy popular y fácil de usar para entornos de desarrollo. Utilizaremos <code>docker-compose</code> para simplificar la configuración, la persistencia de datos y la gestión de la base de datos. Se expondrán los puertos <code>1521</code> para conexiones SQL y <code>8080</code> para acceder a la interfaz de APEX y SQL Developer Web.</p><h3>Pasos a seguir:</h3><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio para tu proyecto (ej. <code>oracle-xe-local</code>). Dentro de él, guarda el contenido proporcionado en los archivos <code>docker-compose.yml</code>, <code>Dockerfile</code> y <code>healthcheck.sql</code> con sus respectivos nombres.</p><p>2.  <strong>Ajusta la contraseña</strong>: Abre <code>docker-compose.yml</code> y cambia <code>your_secure_password</code> por una contraseña segura y real. Esta será la contraseña para los usuarios <code>SYS</code>, <code>SYSTEM</code> y <code>PDBADMIN</code>.</p><p>3.  <strong>Inicia el contenedor</strong>: Desde el directorio donde guardaste los archivos, ejecuta el comando <code>docker-compose up -d</code>.</p><p>4.  <strong>Verifica el estado</strong>: Puedes verificar el estado de los contenedores con <code>docker-compose ps</code> y los logs con <code>docker-compose logs -f oracle-xe</code>. La base de datos puede tardar unos minutos en inicializarse completamente. La comprobación de salud (<code>healthcheck</code>) en <code>docker-compose.yml</code> ayudará a confirmar que está lista.</p><p>5.  <strong>Conéctate a la base de datos</strong>: Una vez que el contenedor esté en funcionamiento, podrás conectarte a la base de datos utilizando un cliente SQL (como SQL Developer, DBeaver o <code>sqlplus</code>) a través del puerto <code>1521</code> en <code>localhost</code>.</p><ul><li>   *   <strong>Host</strong>: <code>localhost</code></li><li>   *   <strong>Puerto</strong>: <code>1521</code></li><li>   *   <strong>Service Name (PDB)</strong>: <code>XEPDB1</code> (por defecto)</li><li>   *   <strong>Usuario</strong>: <code>system</code> o <code>sys</code> (con el rol <code>SYSDBA</code>)</li><li>   *   <strong>Contraseña</strong>: La que definiste en <code>ORACLE_PASSWORD</code>.</li></ul><p>6.  <strong>Acceso Web</strong>: Accede a SQL Developer Web o APEX (si está configurado) a través de <code>http://localhost:8080/ords/sql-developer</code> o <code>http://localhost:8080/ords/apex</code>.</p><p>Este setup provee una base de datos Oracle XE funcional para desarrollo, con persistencia de datos y una forma sencilla de gestión.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para una instancia básica de Oracle XE
+# Utiliza la imagen gvenzl/oracle-xe como base, que ya está preconfigurada para Oracle XE.
+# Esto permite una puesta en marcha rápida sin necesidad de un Dockerfile complejo.
+FROM gvenzl/oracle-xe:21-slim-faststart
+
+# Opcional: Define metadatos para tu imagen personalizada.
+LABEL maintainer="Tu Nombre &lt;tu.email@example.com&gt;"
+LABEL description="Imagen personalizada de Oracle XE para desarrollo local"
+
+# Puedes añadir aquí cualquier script de inicialización o configuración adicional
+# que desees ejecutar cuando el contenedor se inicie por primera vez.
+# Por ejemplo, para crear esquemas específicos, usuarios o cargar datos iniciales.
+# Si necesitas scripts, colócalos en el directorio ./init_scripts y descomenta la línea
+# de volumen en docker-compose.yml que los mapea a /container-entrypoint-initdb.d/
+# COPY ./init_scripts/my_init_script.sql /container-entrypoint-initdb.d/
+
+# La imagen base ya expone los puertos necesarios (1521 para SQL, 8080 para APEX/SQL Developer Web).
+# No es necesario re-exponerlos aquí a menos que quieras cambiarlos o añadir otros.
+EXPOSE 1521
+EXPOSE 8080
+
+# El ENTRYPOINT y CMD ya están definidos en la imagen base para iniciar la base de datos.
+# No es necesario modificarlos para un setup básico.
+</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  oracle-xe:
+    image: gvenzl/oracle-xe:21-slim-faststart
+    container_name: oracle-xe
+    hostname: oracle-xe
+    ports:
+      - "1521:1521" # Puerto para conexiones SQL
+      - "8080:8080" # Puerto para APEX y SQL Developer Web
+    environment:
+      # Establece la contraseña para los usuarios SYS, SYSTEM y PDBADMIN.
+      # ¡CAMBIA ESTO POR UNA CONTRASEÑA SEGURA Y REAL!
+      ORACLE_PASSWORD: "your_secure_password"
+      # Opcional: Nombre del PDB (Plugable Database). Por defecto es XEPDB1.
+      # ORACLE_PDB: "MYPDB"
+      # Opcional: Permite conexiones remotas (por defecto true, pero explícito es bueno).
+      ORACLE_ALLOW_REMOTE: "true"
+    volumes:
+      - oracle_xe_data:/opt/oracle/oradata # Para persistir los datos de la base de datos
+      # Opcional: Para scripts de inicialización que se ejecuten al primer arranque.
+      # Descomenta la siguiente línea y crea un directorio 'init_scripts' con tus .sql o .sh
+      # - ./init_scripts:/container-entrypoint-initdb.d/
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "sqlplus", "-L", "system/$ORACLE_PASSWORD@//localhost:1521/XEPDB1", "AS SYSDBA", "-S", "@/healthcheck.sql"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 120s # Dar tiempo a la BD para iniciar
+      # En lugar de usar @healthcheck.sql directamente, podríamos copiarlo y ejecutarlo desde dentro del contenedor
+      # Si el healthcheck falla, intenta conectarte con sqlplus desde el host para diagnosticar.
+
+volumes:
+  oracle_xe_data:
+    driver: local
+</code></pre><h3>healthcheck.sql</h3><pre><code>WHENEVER SQLERROR EXIT 1;
+SELECT 1 FROM DUAL;
+EXIT;
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFLcpMFntcZiZe1-affxpWieXCXhq6fKn1RFU3SyHrQ8D5eyNdiIukCZTeE49ezOUn4sKeFNuiuSvSEzHscMWIx-FuXtsO15VArOXaxD9v31bT3UFoUN0auGUz_H9TWqSaFKAYJ_NpZenTTvA8VS3z06eKd_ig3IFUSvp5p7oZj8ZcD8eAIBZMS4x0mzJkxxv0v0oTUbUtzwdjACyfsCaGS7-U=" target="_blank" rel="noopener noreferrer">oracle.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGWgTxV7pKYLmiSETDWdVh-WE6EB9zqCSPGDk8fTtqSdBYtxDzSM66jf6KmECwQrMmk85f06hnriMxZFQihHgjU0O1z3zBEuGsge4oXCBZ78jjPCGWc5xFWzA==" target="_blank" rel="noopener noreferrer">oracletutorial.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJ9aXSLCJuYPYyaXF1xrZHBKEj_qpBrxLgfEgq4L-wPzbfrDV86wxN9BPPzGwKOYLoJekcNd8VaRUouIoT7i72IpH7vzmuxopKKDDsg_hxmYxD" target="_blank" rel="noopener noreferrer">oracle.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtm10r8df8lrlkKhaSw3iRUyk-0ulMGsGUyxh-MLXyDO6aVA4_EjqNoKwlPTdHEnFIq3LfK2aRSLySPfju7TnNC8wG81jkLsnAaYOdWasDuAkYgHG9qnUHDHShEUCZh6QsnQd-eJCG" target="_blank" rel="noopener noreferrer">oratable.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHMQM5d4JSnbrtaCW1d9HTDJ6kXtBuMM6Qns7k9rh1KJVJHSCfc8jCdcxBK9iz_P8Xc7rues8xFPKxwMrtElbSwUpDq9W0h0Fg9wg34_E6XvsYzBZRT4Lxhg4oM1mcajMTnXzWzG_47pJzvChP4KBG3eUYzwkYwhmshBxpY2yVG" target="_blank" rel="noopener noreferrer">slainstitute.com</a></li></ul>
+  </div>
+</body>
+</html>

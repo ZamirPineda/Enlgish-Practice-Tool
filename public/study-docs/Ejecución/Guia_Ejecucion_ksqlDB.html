@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_ksqlDB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_ksqlDB</h1>
+    <h2>Explicación</h2><p>Esta guía le permitirá levantar una instancia básica de ksqlDB, junto con sus dependencias (Kafka y Zookeeper), utilizando Docker Compose. La configuración incluye los siguientes servicios:</p><ul><li>  <strong>Zookeeper</strong>: Es esencial para Kafka, gestionando los metadatos del <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span>.</li><li>  <strong>Kafka</strong>: El <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de mensajería distribuido sobre el cual ksqlDB opera. Está configurado para ser accesible desde la máquina host en el puerto <code>9092</code>.</li><li>  <strong>ksqlDB Server</strong>: El servidor de ksqlDB que procesa las consultas SQL sobre los flujos de datos de Kafka. Es accesible en el puerto <code>8088</code>.</li><li>  <strong>ksqlDB CLI</strong>: Una interfaz de línea de comandos para interactuar con el servidor de ksqlDB.</li></ul><h3>Pasos a seguir:</h3><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio de proyecto (ej. <code>ksqldb-local</code>) y guarda el contenido de <code>docker-compose.yml</code> en un archivo con ese mismo nombre dentro del directorio.</p><p>2.  <strong>Ejecuta los contenedores</strong>: Abre una terminal en el directorio donde guardaste <code>docker-compose.yml</code> y ejecuta el comando proporcionado en <code>runCommands</code>.</p><p>3.  <strong>Verifica el estado</strong>: Una vez que los contenedores estén levantados, puedes verificar su estado con <code>docker-compose ps</code>.</p><p>4.  <strong>Conéctate a ksqlDB CLI</strong>: Para interactuar con ksqlDB, puedes acceder al contenedor <code>ksqldb-cli</code>:</p><pre><code>    docker exec -it ksqldb-cli ksql http://ksqldb-server:8088</code></pre><p>    Una vez dentro del CLI, puedes ejecutar comandos ksqlDB, como <code>SHOW TOPICS;</code> o <code>SHOW STREAMS;</code>.</p><p>5.  <strong>Crea un tópico y un stream de ejemplo</strong>: Para probar, podrías crear un tópico en Kafka y luego un stream en ksqlDB.</p><ul><li>   *   <strong>Desde el host (opcional, para producir mensajes simples):</strong></li></ul><p>        Si deseas enviar mensajes a Kafka desde fuera del entorno de Docker, puedes usar una herramienta como <code>kafkacat</code> o una aplicación simple. Por ejemplo, creando un tópico <code>test_topic</code> con <code>docker exec -it kafka kafka-topics --create --topic test_topic --bootstrap-server localhost:29092 --partitions 1 --replication-factor 1</code>.</p><ul><li>   *   <strong>Desde el ksqlDB CLI (más común):</strong></li></ul><p>        Para crear un stream y luego insertarle datos directamente desde el CLI:</p><pre><code>        CREATE STREAM users (id INT, name VARCHAR) WITH (kafka_topic='users_topic', value_format='JSON', partitions=1);
+        INSERT INTO users (id, name) VALUES (1, 'Alice');
+        INSERT INTO users (id, name) VALUES (2, 'Bob');
+        SELECT * FROM users EMIT CHANGES;</code></pre><p>        Esto creará un stream <code>users</code>, un tópico <code>users_topic</code> subyacente en Kafka y te permitirá insertar y consultar datos.</p><p>Para detener y limpiar los servicios, usa <code>docker-compose down</code> en el mismo directorio.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    hostname: kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      # Deshabilita JMX para simplificar si no se necesita monitoreo
+      # KAFKA_JMX_PORT: 9991
+      # KAFKA_JMX_HOSTNAME: localhost
+
+  ksqldb-server:
+    image: confluentinc/cp-ksqldb-server:7.5.0
+    hostname: ksqldb-server
+    container_name: ksqldb-server
+    ports:
+      - "8088:8088"
+    depends_on:
+      - kafka
+    environment:
+      KSQL_LISTENERS: http://0.0.0.0:8088
+      KSQL_BOOTSTRAP_SERVERS: kafka:29092
+      KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
+      KSQL_KSQL_LOGGING_PROCESSING_ERROR_STREAM_AUTO_CREATE: "true"
+      KSQL_KSQL_INTERNAL_TOPIC_REPLICATION_FACTOR: 1 # Importante para un nodo único
+      KSQL_KSQL_QUERY_DIR: "/etc/ksqldb/queries" # Directorio para queries persistentes (opcional)
+
+  ksqldb-cli:
+    image: confluentinc/cp-ksqldb-cli:7.5.0
+    hostname: ksqldb-cli
+    container_name: ksqldb-cli
+    depends_on:
+      - ksqldb-server
+    entrypoint: /bin/bash
+    tty: true</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEImp3VmKm3GSKnS-cpWu4QwKzWBcIKyGGEmZf0-XMJnpdUeDNjWc2ur1rRqbQ1xLiywa4Bo-5W1183Nps3ZWqdzDw89orH9RuUdlmbbIBJ9hImKbqQZADQlgDhG530lsCk0GfZ75haZHpBHTfTTOrQMFGqii8ZzcJP0dvY" target="_blank" rel="noopener noreferrer">confluent.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF6gvYGqkANG8Vtcu3rnpIxJeE_qJSOLlCYNuUCMmclBRNvVokGJq54Bou3zf7-NmKkpDaPW7jZTLPsKr9B4JS3mENMvPdte7hQTupjYmwhP8lpCPBSy4xM_Wn56ecgmao2G0-QASDX415QR5FFhELVl0ugH23MJJ0m" target="_blank" rel="noopener noreferrer">risingwave.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFglIoVi-_2YCAXty3C38_O6dDs1P8QaUHhJDw9cE_ZmjFUv2fMTd04Thjn6nPvMsVnv-SK_8Oc1HUiGCCAeQFejtm_P_Wef6zxxRL1Eb2Vp-q_j-OZWyv4qW4=" target="_blank" rel="noopener noreferrer">baeldung.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiDsRDMXH0tpSx7ZTcikwmSzfh_Cgq-NG3TusHvqkv5eD-i0X2XVGVGeE5c2OMr19HHwbFU8W0V1qKrBx1JoPRnuW0431oQY2tWsEQFyecfHNpEGZAv0WG6IYvCBG9xVv0PqfL1e2KeuNJKA==" target="_blank" rel="noopener noreferrer">topictale.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPjTY7zpfNcss8CFj7AxIZ5xdIoPjVSk5t71xxJqSQcy3RT27BWK0Ic3suoXCjspoPXlyai9f9xt67s8uAd9Ya9m5TLOdwArDyvabyJVPg91VxCIQuOMEt7NtHiTNLPJpJ4wX9KMs=" target="_blank" rel="noopener noreferrer">youtube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFhXwf4HNpQ1XOn4anEluZug6QABNjIPTFXEySFvCT6hEYmkxzrRwYJm-HX2JVXUrK3k1WE3kGA-KRWD_5kXv5ruXpmbzjJTQF8z78LrO7LKVN0WBbfglnfyolM7npV-Ni2pOnBycM=" target="_blank" rel="noopener noreferrer">youtube.com</a></li></ul>
+  </div>
+</body>
+</html>

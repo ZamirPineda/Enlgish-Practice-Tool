@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Apache Iceberg</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Apache Iceberg</h1>
+    <h2>Explicación</h2><p>Esta configuración proporciona un entorno local completo para trabajar con Apache Iceberg, utilizando Docker Compose para orquestar los siguientes servicios:</p><ul><li>  <strong>MinIO</strong>: Un servicio de almacenamiento de objetos compatible con S3 que actuará como el Data Lake donde Iceberg almacenará los datos de las tablas.</li><li>  <strong>PostgreSQL</strong>: Una base de datos utilizada por el Hive Metastore para persistir sus metadatos.</li><li>  <strong>Hive Metastore (HMS)</strong>: El catálogo de tablas para Iceberg. Almacenará los metadatos y esquemas de las tablas Iceberg, así como de tablas Hive tradicionales si se usaran.</li><li>  <strong>Spark Master y Worker</strong>: Un clúster de Spark configurado con las dependencias necesarias de Iceberg y S3 (para MinIO), listo para ejecutar consultas y operaciones sobre las tablas Iceberg.</li><li>  <strong>MinIO Client</strong>: Un contenedor efímero que se encarga de crear el bucket <code>iceberg-warehouse</code> en MinIO, donde se almacenarán los datos de Iceberg.</li></ul><p><strong>Pasos para ejecutar esta configuración:</strong></p><p>1.  Guarda todos los archivos proporcionados (<code>docker-compose.yml</code>, <code>Dockerfile.spark</code>, <code>spark-defaults.conf</code>, <code>minio-setup.sh</code>) en una misma carpeta en tu sistema local.</p><p>2.  Abre una terminal en esa carpeta.</p><p>3.  Construye la imagen personalizada de Spark:</p><pre><code>docker-compose build spark-master spark-worker</code></pre><p>4.  Inicia todos los servicios en segundo plano:</p><pre><code>docker-compose up -d</code></pre><p>5.  Espera unos momentos para que todos los servicios se inicialicen, especialmente Hive Metastore y PostgreSQL.</p><p>6.  Para interactuar con Iceberg, accede al contenedor <code>spark-master</code>:</p><pre><code>docker-compose exec spark-master bash</code></pre><p>7.  Dentro del contenedor de Spark, puedes iniciar una sesión de <code>pyspark</code> o <code>spark-sql</code> (ya preconfigurada con Iceberg, HMS y MinIO):</p><pre><code>/opt/bitnami/spark/bin/pyspark</code></pre><p>    o para SQL puro:</p><pre><code>/opt/bitnami/spark/bin/spark-sql</code></pre><p>8.  Ahora puedes crear y manipular tablas Iceberg. Por ejemplo, en <code>pyspark</code>:</p><pre><code>spark.sql("CREATE NAMESPACE IF NOT EXISTS hive_prod.default_db").show()
+spark.sql("CREATE TABLE hive_prod.default_db.my_iceberg_table (id BIGINT, name STRING) USING iceberg").show()
+spark.sql("INSERT INTO hive_prod.default_db.my_iceberg_table VALUES (1, 'Alice'), (2, 'Bob')").show()
+spark.sql("SELECT * FROM hive_prod.default_db.my_iceberg_table").show()</code></pre><p><strong>Para detener y limpiar:</strong></p><ul><li>  Detener los servicios: <code>docker-compose down</code></li><li>  Detener y eliminar volúmenes (borrar datos persistentes): <code>docker-compose down -v</code></li></ul><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.spark</h3><pre><code># Usa una imagen base de Spark con soporte para Python.
+# bitnami/spark es una buena opción ya que viene con Java y Spark preconfigurados.
+FROM bitnami/spark:3.5.0
+
+USER root
+
+# Copia la configuración de Spark, que incluirá la configuración del Metastore de Hive y S3,
+# y también especificará las dependencias del runtime de Iceberg para Spark.
+COPY spark-defaults.conf /opt/bitnami/spark/conf/spark-defaults.conf
+
+# Vuelve al usuario no-root (1001 es común para las imágenes de Bitnami)
+USER 1001</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001" # Consola de MinIO
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_SERVER_URL: http://minio:9000 # Para comunicación interna en la red
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data # Persistir datos
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - iceberg-net
+
+  minio-client:
+    image: minio/mc:latest # Imagen del cliente MinIO
+    entrypoint: /bin/sh -c "./minio-setup.sh"
+    volumes:
+      - ./minio-setup.sh:/minio-setup.sh
+    environment:
+      MINIO_HOST: minio
+      MINIO_PORT: 9000
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    depends_on:
+      minio:
+        condition: service_healthy
+    networks:
+      - iceberg-net
+    restart: "no" # Asegura que no se siga ejecutando después de completar su tarea
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: metastore
+      POSTGRES_USER: hive
+      POSTGRES_PASSWORD: hive
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hive -d metastore"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - iceberg-net
+
+  hive-metastore:
+    image: apache/hive-metastore:3.1.2 # Imagen dedicada del Hive Metastore
+    ports:
+      - "9083:9083"
+    environment:
+      # Configuración para conectarse a PostgreSQL
+      METASTORE_DB_HOSTNAME: db
+      METASTORE_DB_PORT: 5432
+      METASTORE_DB_NAME: metastore
+      METASTORE_DB_USER: hive
+      METASTORE_DB_PASSWORD: hive
+      # Inicializar esquema en la primera ejecución
+      METASTORE_SCHEMA_VERIFICATION: false
+      METASTORE_DETACH_JVM: true # Ejecutar en primer plano
+    depends_on:
+      db:
+        condition: service_healthy
+      minio-client: # Esperar a que el bucket de MinIO se haya creado
+        condition: service_completed_successfully
+    networks:
+      - iceberg-net
+
+  spark-master:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    hostname: spark-master
+    environment:
+      SPARK_MODE: master
+      SPARK_RPC_AUTHENTICATION_ENABLED: "false"
+      SPARK_RPC_ENCRYPTION_ENABLED: "false"
+      SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "false"
+      SPARK_UI_PORT: 8080
+      SPARK_MASTER_WEBUI_PORT: 8080
+    ports:
+      - "8080:8080" # UI de Spark Master
+      - "7077:7077" # Puerto interno de Spark Master
+    volumes:
+      - ./spark-defaults.conf:/opt/bitnami/spark/conf/spark-defaults.conf
+    depends_on:
+      minio:
+        condition: service_healthy
+      hive-metastore:
+        condition: service_started # HMS debe estar corriendo
+    networks:
+      - iceberg-net
+
+  spark-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    hostname: spark-worker-${HOSTNAME}
+    environment:
+      SPARK_MODE: worker
+      SPARK_MASTER_URL: spark://spark-master:7077
+      SPARK_WORKER_CORES: 1
+      SPARK_WORKER_MEMORY: 1G
+      SPARK_RPC_AUTHENTICATION_ENABLED: "false"
+      SPARK_RPC_ENCRYPTION_ENABLED: "false"
+      SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "false"
+    depends_on:
+      spark-master:
+        condition: service_started
+    networks:
+      - iceberg-net
+
+volumes:
+  minio_data:
+  pg_data:
+
+networks:
+  iceberg-net:
+    driver: bridge</code></pre><h3>spark-defaults.conf</h3><pre><code># --- Configuración de Iceberg y Hive Metastore ---
+# Agrega las extensiones SQL de Iceberg a Spark
+spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions
+
+# Configura un catálogo de Spark para Iceberg, apuntando al Hive Metastore
+# 'hive_prod' es el nombre del catálogo que usarás en Spark SQL, por ejemplo, 'USE hive_prod.default_db;'
+spark.sql.catalog.hive_prod=org.apache.iceberg.spark.SparkSessionCatalog
+spark.sql.catalog.hive_prod.type=hive
+spark.sql.catalog.hive_prod.uri=thrift://hive-metastore:9083
+spark.sql.catalog.hive_prod.warehouse=s3a://iceberg-warehouse/
+
+# También configura un catálogo Hive simple si quieres interactuar con tablas Hive regulares
+spark.hadoop.hive.metastore.uris=thrift://hive-metastore:9083
+
+# --- Configuración de S3 (MinIO) ---
+# Establece el endpoint S3 a MinIO
+spark.hadoop.fs.s3a.endpoint=http://minio:9000
+# Habilita el acceso estilo ruta para MinIO
+spark.hadoop.fs.s3a.path.style.access=true
+# Credenciales de MinIO
+spark.hadoop.fs.s3a.access.key=minioadmin
+spark.hadoop.fs.s3a.secret.key=minioadmin
+# Proveedor de credenciales para S3A
+spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider
+spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
+
+# --- Dependencias de Spark ---
+# Agrega las dependencias de Iceberg Spark runtime y el paquete Hadoop AWS (S3A)
+# Asegúrate de que las versiones coincidan con tu versión de Spark y las librerías de Iceberg
+spark.jars.packages=org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.4.0,org.apache.hadoop:hadoop-aws:3.3.2,com.amazonaws:aws-java-sdk-bundle:1.11.1026
+
+# --- Configuraciones opcionales de Spark ---
+spark.driver.memory=2g
+spark.executor.memory=2g
+spark.executor.cores=1
+spark.cores.max=2
+spark.sql.shuffle.partitions=2
+spark.sql.warehouse.dir=s3a://iceberg-warehouse/</code></pre><h3>minio-setup.sh</h3><pre><code>#!/bin/sh
+# minio-setup.sh
+# Configura las credenciales de mc para MinIO
+/usr/bin/mc alias set myminio http://${MINIO_HOST}:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
+
+echo "Waiting for MinIO to be ready..."
+# Espera a que MinIO esté disponible y responda a 'mc ls'
+until /usr/bin/mc ls myminio &gt; /dev/null 2&gt;&1; do
+  sleep 1
+done
+
+# Define el nombre del bucket para el warehouse de Iceberg
+ICEBERG_WAREHOUSE_BUCKET="iceberg-warehouse"
+
+# Crea el bucket si no existe
+if ! /usr/bin/mc ls myminio/${ICEBERG_WAREHOUSE_BUCKET} &gt; /dev/null 2&gt;&1; then
+  echo "Creating bucket '${ICEBERG_WAREHOUSE_BUCKET}'..."
+  /usr/bin/mc mb myminio/${ICEBERG_WAREHOUSE_BUCKET}
+  echo "Bucket '${ICEBERG_WAREHOUSE_BUCKET}' created."
+else
+  echo "Bucket '${ICEBERG_WAREHOUSE_BUCKET}' already exists."
+fi
+
+# Nota: No se requiere configurar políticas de acceso adicionales para este setup local,
+# ya que Spark se autenticará con las credenciales de MinIO.</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHnlRqJWtC6FKQOBl9rgz128dHX9aH83FT7l4AkPUdLJbuxPfuIhcaW_rp1Xr5_TYL2R1-LbImZkpBxlHYQJH5LIFY7x1NXTiRy54z1OPY6u0FQXllACPxbcsfUOK0wCrdxkLCLz1jY4TgtkFU0KtRZE8EPyH62Bg==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEmDLiuDjfG8RDmnX7C1UJFRM0mgbM-lRGcCSNjHekjHkDK7N-ef1R7iVkxex_ABhMe_S6StKdnHQVvm_LcKAgBW7ciUMlTNN5AZlk8-crjKu7AEctJ40Kgx3NJH9FXEO4lqg==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHqL_5i7mrZiG73Q9lkxuMGR3Yjzy1xvg4zX5Cvsu9iQExJ3EkodrEshDx6obZf6unL4Vw55A9mq_zx8KAuiTBwSaRLUN45l7DhWvZOQCzW23NnhIkZoYORorVX339zJm3B0oZ2xyUywtR6" target="_blank" rel="noopener noreferrer">datacamp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4OKLB2XDbFOoXnepnT3oBKDz8FaSr1E87U2cvikHg3XQkctewH4w8fn6XFqrjWyXioXdYvpwwx5h5Bn2AgfaYI22tuGl_DNf2F2tzPvvFmh60f5cGrxA0jEMM3XaBVpfISIABVIfin63Qz7OjEMQIww==" target="_blank" rel="noopener noreferrer">estuary.dev</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHBMXIbrQhzpY3YoibC-MQuCl2bFAy6Ygyrji4RlQmrPwTnbP2vSnUbuW4xf3UP4oviY4LPdGvZhrr5ZF2_Wzk290LtbWNA_WyIK-QrSv2OWgLg7-fceUYfhMloHxUtaryhf1EpKjg=" target="_blank" rel="noopener noreferrer">apache.org</a></li></ul>
+  </div>
+</body>
+</html>

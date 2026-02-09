@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explicacion_Profunda_Listas Enlazadas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Explicacion_Profunda_Listas Enlazadas</h1>
+    <h2>Explicación Profunda de Listas Enlazadas</h2><p>Una Lista Enlazada (Linked List) es una estructura de datos lineal donde los elementos no se almacenan en ubicaciones de memoria contiguas. En lugar de ello, cada elemento (o "nodo") contiene no solo los datos en sí, sino también una referencia (o "puntero") al siguiente nodo en la secuencia. Esta naturaleza no contigua y basada en referencias es lo que la distingue fundamentalmente de estructuras como los arrays.</p><h3>Conceptos Fundamentales:</h3><p>La idea principal es desacoplar la ubicación lógica de los datos de su ubicación física en la memoria. Un elemento puede estar en cualquier parte de la memoria, siempre y cuando sepamos dónde buscar el siguiente. Esto se logra mediante:</p><ul><li>  <strong>Nodo (Node):</strong> La unidad básica de una lista enlazada. Cada nodo típicamente contiene:</li><li>   *   <strong>Dato (Data/Value):</strong> El valor que se desea almacenar.</li><li>   *   <strong>Puntero/Referencia (Next Pointer/Reference):</strong> Una referencia a la dirección de memoria del siguiente nodo en la secuencia.</li><li>  <strong>Cabeza (Head):</strong> Un puntero especial que apunta al primer nodo de la lista. Si la lista está vacía, <code>Head</code> suele ser <code>null</code>.</li><li>  <strong>Cola (Tail - opcional):</strong> Un puntero opcional que apunta al último nodo de la lista. Su uso puede optimizar ciertas operaciones, como la inserción al final. El puntero <code>Next</code> del último nodo siempre es <code>null</code> (en listas simples y doblemente enlazadas no circulares) para indicar el fin de la lista.</li></ul><h3>Arquitectura Interna:</h3><p>Internamente, una lista enlazada se compone de una secuencia de objetos <code>Node</code> interconectados.</p><p>1.  <strong>Estructura de un Nodo:</strong></p><pre><code>    class Node {
+        Data value;
+        Node next; // En listas simple
+        Node prev; // En listas doblemente enlazadas (además de 'next')
+    }</code></pre><p>2.  <strong>Funcionamiento Básico:</strong></p><ul><li>   *   La lista mantiene una referencia a su <code>Head</code> (y opcionalmente <code>Tail</code>).</li><li>   *   Para acceder a un elemento, se comienza desde <code>Head</code> y se sigue el puntero <code>next</code> de cada nodo hasta llegar al deseado.</li><li>   *   <strong>Inserción:</strong> Para insertar un nuevo nodo entre <code>A</code> y <code>B</code>, se modifica el puntero <code>next</code> de <code>A</code> para que apunte al nuevo nodo, y el puntero <code>next</code> del nuevo nodo se establece para que apunte a <code>B</code>. En listas doblemente enlazadas, también se actualizan los punteros <code>prev</code>.</li><li>   *   <strong>Eliminación:</strong> Para eliminar un nodo <code>X</code> entre <code>A</code> y <code>B</code>, se modifica el puntero <code>next</code> de <code>A</code> para que apunte a <code>B</code>. Si <code>X</code> es el <code>Head</code> o <code>Tail</code>, se actualizan esos punteros correspondientemente.</li></ul><p>Existen varias variantes:</p><ul><li>  <strong>Listas Enlazadas Simples (Singly Linked List):</strong> Cada nodo solo tiene un puntero al siguiente nodo. Permiten la navegación unidireccional.</li><li>  <strong>Listas Enlazadas Doblemente Enlazadas (Doubly Linked List):</strong> Cada nodo tiene un puntero al siguiente (<code>next</code>) y otro al anterior (<code>prev</code>). Permiten la navegación bidireccional, lo que facilita operaciones de inserción/eliminación y la iteración inversa, a costa de mayor uso de memoria por nodo.</li><li>  <strong>Listas Enlazadas Circulares (Circular Linked List):</strong> El último nodo apunta al primer nodo, creando un ciclo. Pueden ser simples o dobles. Son útiles en escenarios donde se necesita un recorrido continuo o un punto de inicio arbitrario.</li></ul><h3>Modelo de Datos/Comunicación:</h3><p>El modelo de datos es <strong>secuencial</strong>. Los datos se almacenan en los nodos individuales, y la "comunicación" o acceso a estos datos se realiza siguiendo la cadena de punteros desde el <code>Head</code>. No hay acceso directo por índice como en los arrays. Para llegar al <code>k</code>-ésimo elemento, se deben recorrer <code>k-1</code> nodos desde el <code>Head</code>.</p><h3>Ventajas Clave y Desventajas:</h3><p><strong>Ventajas Clave:</strong></p><p>1.  <strong>Tamaño Dinámico:</strong> A diferencia de los arrays estáticos, las listas enlazadas no requieren una asignación de memoria previa y fija. Pueden crecer o encogerse dinámicamente según sea necesario, utilizando solo la memoria que realmente necesitan para los nodos existentes. Esto previene el desperdicio de memoria o la necesidad de redimensionamiento costoso.</p><p>2.  <strong>Inserción y Eliminación Eficientes:</strong></p><ul><li>   *   Una vez que se tiene una referencia al nodo previo (o al nodo mismo, en una doblemente enlazada), la inserción o eliminación de un nodo en cualquier posición (incluyendo el inicio o el final si se mantiene un puntero <code>Tail</code>) se realiza en tiempo <code>O(1)</code> (constante), simplemente modificando un par de punteros. Esto contrasta con los arrays, donde estas operaciones pueden requerir mover muchos elementos, resultando en <code>O(n)</code> (lineal).</li><li>   *   Esto es particularmente útil para implementar colas, pilas o estructuras de "historial" donde las adiciones y eliminaciones son frecuentes en los extremos.</li></ul><p>3.  <strong>Flexibilidad de Memoria:</strong> Los nodos pueden estar dispersos en la memoria, no requieren un bloque contiguo. Esto puede ser ventajoso en sistemas con fragmentación de memoria.</p><p><strong>Desventajas Clave:</strong></p><p>1.  <strong>Acceso No Aleatorio (Acceso Secuencial):</strong> Para acceder a un elemento en una posición arbitraria <code>k</code>, es necesario recorrer la lista desde el <code>Head</code> hasta esa posición. Esto resulta en una complejidad de tiempo de <code>O(n)</code> (lineal) para el acceso, lo que es significativamente más lento que el acceso <code>O(1)</code> de los arrays.</p><p>2.  <strong>Mayor Consumo de Memoria:</strong> Cada nodo debe almacenar no solo los datos, sino también uno o dos punteros. Esto introduce una sobrecarga de memoria por cada elemento almacenado en comparación con los arrays, donde solo se almacenan los datos.</p><p>3.  <strong>Mala Localidad de Referencia y Rendimiento de Caché:</strong> Debido a que los nodos pueden estar dispersos en la memoria, es menos probable que estén en ubicaciones contiguas, lo que reduce la localidad de referencia. Esto puede llevar a un mayor número de fallos de caché (cache misses) y, en consecuencia, a un rendimiento más lento en comparación con los arrays cuando se procesan grandes conjuntos de datos de forma secuencial, ya que el procesador no puede cargar fácilmente bloques de datos útiles en el caché.</p><p>4.  <strong>Mayor Complejidad en la Implementación:</strong> Manipular punteros requiere un cuidado meticuloso para evitar errores como <code>null pointer exceptions</code>, bucles infinitos o la pérdida de partes de la lista (memory leaks en lenguajes sin recolector de basura).</p><p>5.  <strong>Dificultad para Recorrer Hacia Atrás (Listas Simples):</strong> En una lista enlazada simple, no hay forma directa de moverse hacia el nodo anterior. Para hacerlo, habría que recorrer la lista desde el <code>Head</code> cada vez o usar una lista doblemente enlazada.</p><h2>Preguntas de Entrevista sobre Listas Enlazadas</h2><h3>Pregunta 1: ¿Cuáles son las diferencias fundamentales entre un array y una lista enlazada en términos de estructura, rendimiento y casos de uso preferidos?</h3><p><strong>Respuesta Detallada:</strong></p><p>Las diferencias son profundas y se resumen en cómo manejan la memoria y el acceso a los datos:</p><ul><li>  <strong>Estructura y Memoria:</strong></li><li>   *   <strong>Array:</strong> Almacena elementos en bloques de memoria contiguos. Su tamaño puede ser fijo (arrays estáticos) o redimensionable (arrays dinámicos como <code>ArrayList</code> en Java o <code>std::vector</code> en C++), pero un redimensionamiento implica copiar todos los elementos a una nueva ubicación más grande.</li><li>   *   <strong>Lista Enlazada:</strong> Almacena elementos de forma no contigua. Cada elemento (nodo) contiene los datos y un puntero al siguiente nodo. No hay una "ubicación" global para la lista, solo una referencia al primer nodo (<code>Head</code>).</li><li>  <strong>Rendimiento (Complejidad Temporal):</strong></li><li>   *   <strong>Acceso a Elementos (por índice/posición):</strong></li><li>       *   <strong>Array:</strong> <code>O(1)</code> (constante). Dada una posición, se puede calcular la dirección de memoria directamente.</li><li>       *   <strong>Lista Enlazada:</strong> <code>O(n)</code> (lineal). Requiere recorrer la lista desde el <code>Head</code> hasta la posición deseada.</li><li>   *   <strong>Inserción/Eliminación de Elementos:</strong></li><li>       *   <strong>Array:</strong> <code>O(n)</code> en el peor caso. Insertar o eliminar en medio requiere mover todos los elementos subsiguientes. Insertar al final es <code>O(1)</code> amortizado para arrays dinámicos, pero puede ser <code>O(n)</code> si se requiere un redimensionamiento.</li><li>       *   <strong>Lista Enlazada:</strong> <code>O(1)</code> si ya se tiene una referencia al nodo previo o al nodo a insertar/eliminar. Si primero se debe buscar la posición, entonces es <code>O(n)</code>.</li><li>   *   <strong>Consumo de Memoria:</strong></li><li>       *   <strong>Array:</strong> <code>O(n)</code> para los datos. No hay sobrecarga de punteros, pero puede haber memoria desperdiciada si el array está parcialmente lleno o si se pre-asigna un tamaño muy grande.</li><li>       *   <strong>Lista Enlazada:</strong> <code>O(n)</code> para los datos más <code>O(n)</code> para los punteros (una o dos referencias por nodo), lo que resulta en una mayor sobrecarga de memoria por elemento.</li><li>  <strong>Localidad de Referencia y Rendimiento de Caché:</strong></li><li>   *   <strong>Array:</strong> Excelente localidad de referencia. Los elementos contiguos en el array también son contiguos en la memoria, lo que optimiza el uso de la caché del procesador.</li><li>   *   <strong>Lista Enlazada:</strong> Pobre localidad de referencia. Los nodos pueden estar dispersos, lo que lleva a más fallos de caché y un rendimiento potencialmente más lento para el procesamiento secuencial.</li><li>  <strong>Casos de Uso Preferidos:</strong></li><li>   *   <strong>Array:</strong> Ideal cuando el acceso aleatorio es frecuente (necesidad de acceder a elementos por índice), el tamaño de la colección es relativamente estable, o cuando la localidad de referencia es crítica para el rendimiento (ej. procesamiento numérico, algoritmos que iteran sobre todos los elementos).</li><li>   *   <strong>Lista Enlazada:</strong> Ideal cuando las inserciones y eliminaciones frecuentes se realizan en los extremos o en posiciones conocidas (sin necesidad de búsqueda), el tamaño de la colección es altamente dinámico e impredecible, o cuando la memoria disponible está fragmentada.</li></ul><h3>Pregunta 2: Implementa una función para eliminar un nodo de una lista enlazada simple, dado <em>solamente</em> una referencia al nodo a eliminar (y no al nodo previo). ¿Qué implicaciones tiene esta operación?</h3><p><strong>Respuesta Detallada:</strong></p><p>Esta es una pregunta clásica que prueba la comprensión de las limitaciones de las listas enlazadas simples. Normalmente, para eliminar un nodo <code>curr</code>, necesitaríamos una referencia al nodo <code>prev</code> para poder actualizar <code>prev.next = curr.next</code>. Si solo tenemos <code>curr</code>, no podemos acceder a <code>prev</code>.</p><p><strong>La Solución (el "truco"):</strong></p><p>No podemos eliminar el nodo <code>curr</code> directamente en el sentido tradicional, porque no podemos modificar el puntero <code>next</code> del nodo anterior. Sin embargo, podemos <em>simular</em> su eliminación copiando los datos del <em>siguiente</em> nodo al nodo actual y luego eliminando el <em>siguiente</em> nodo.</p><pre><code>class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def delete_node(node_to_delete):
+    if not node_to_delete or not node_to_delete.next:
+        # No se puede eliminar si es nulo, o si es el último nodo.
+        # Eliminar el último nodo con solo una referencia a él mismo es imposible
+        # sin una referencia al nodo previo o al head de la lista.
+        print("No se puede eliminar el nodo. Es nulo o el último de la lista.")
+        return False
+
+    node_to_delete.data = node_to_delete.next.data # Copiar datos del siguiente
+    node_to_delete.next = node_to_delete.next.next # Saltar el siguiente nodo
+    return True
+
+# Ejemplo de uso:
+# head = Node(1)
+# head.next = Node(2)
+# node_to_delete_ref = head.next # Referencia al nodo con valor 2
+# head.next.next = Node(3)
+# head.next.next.next = Node(4) # 1 -&gt; 2 -&gt; 3 -&gt; 4
+#
+# print("Antes de eliminar:")
+# current = head
+# while current:
+#     print(current.data, end=" -&gt; ")
+#     current = current.next
+# print("None") # Output: 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; None
+#
+# delete_node(node_to_delete_ref) # Se elimina el "2"
+#
+# print("Después de eliminar:")
+# current = head
+# while current:
+#     print(current.data, end=" -&gt; ")
+#     current = current.next
+# print("None") # Output: 1 -&gt; 3 -&gt; 4 -&gt; None</code></pre><p><strong>Implicaciones de esta Operación:</strong></p><p>1.  <strong>Imposibilidad de Eliminar el Último Nodo:</strong> Esta técnica no funciona si el <code>node_to_delete</code> es el último nodo de la lista, ya que <code>node_to_delete.next</code> sería <code>None</code>. En ese caso, la única forma de eliminarlo sería recorrer la lista desde el <code>Head</code> para encontrar su predecesor.</p><p>2.  <strong>Modificación de Datos:</strong> El contenido de los datos del <code>node_to_delete</code> es sobrescrito por los datos del siguiente nodo. Esto puede ser una implicación importante si el nodo tiene identidad más allá de sus datos (ej. un objeto con una identidad única, no solo un valor primitivo). El nodo original "eliminado" (el <code>node_to_delete.next</code> real) se convierte en inaccesible y eventualmente será recolectado por el GC (si aplica). El <code>node_to_delete</code> <em>lógico</em> sigue existiendo en su misma dirección de memoria, pero con datos diferentes.</p><p>3.  <strong>No es una Eliminación Verdadera:</strong> Técnicamente, no estamos eliminando el objeto <code>node_to_delete</code> de la memoria, sino que estamos "remplazando" sus datos y haciendo que apunte más allá del nodo que se deseaba eliminar. Esto puede ser confuso y debe documentarse cuidadosamente.</p><p>4.  <strong>No Aplica a Listas Doblemente Enlazadas:</strong> En una lista doblemente enlazada, esta restricción no existe, ya que cada nodo tiene un puntero <code>prev</code> que permitiría acceder al nodo anterior y realizar la eliminación correctamente.</p><h3>Pregunta 3: Explica el concepto de "puntero lento y puntero rápido" (tortuga y liebre) y cómo se usa en listas enlazadas. Proporciona al menos dos aplicaciones comunes.</h3><p><strong>Respuesta Detallada:</strong></p><p>El concepto de "puntero lento y puntero rápido" (también conocido como algoritmo de la tortuga y la liebre o Floyd's Cycle-Finding Algorithm en un contexto específico) implica el uso de dos punteros que recorren la lista enlazada a velocidades diferentes. Típicamente, el puntero "lento" (<code>slow</code> o tortuga) avanza un nodo a la vez, mientras que el puntero "rápido" (<code>fast</code> o liebre) avanza dos nodos a la vez.</p><p>La lógica clave es que, si la lista tiene una estructura particular (como un ciclo), los dos punteros eventualmente se encontrarán o mantendrán una relación de distancia específica.</p><p><strong>Aplicaciones Comunes:</strong></p><p>1.  <strong>Detección de Ciclos en Listas Enlazadas (Floyd's Cycle-Finding Algorithm):</strong></p><ul><li>   *   <strong>Cómo funciona:</strong> Si la lista contiene un ciclo, el puntero rápido eventualmente alcanzará al puntero lento. Esto sucede porque el puntero rápido está "ganando terreno" en cada paso. Si la lista no tiene ciclo, el puntero rápido (o <code>fast.next</code>) llegará a <code>null</code>.</li><li>   *   <strong>Implementación:</strong> Se inicializan <code>slow</code> y <code>fast</code> en el <code>Head</code>. En cada iteración, <code>slow = slow.next</code> y <code>fast = fast.next.next</code>. Si en algún momento <code>slow == fast</code> (y no son <code>null</code>), se ha detectado un ciclo.</li><li>   *   <strong>Utilidad:</strong> Es fundamental para detectar errores en la construcción de listas, en algoritmos donde se pueden formar ciclos (ej. grafos, garbage collection) o para resolver problemas de entrevistas donde se pide verificar la validez de una lista.</li></ul><p>2.  <strong>Encontrar el Nodo Medio de una Lista Enlazada:</strong></p><ul><li>   *   <strong>Cómo funciona:</strong> Cuando el puntero rápido llega al final de la lista, el puntero lento estará exactamente en el nodo medio. Esto se debe a que el puntero rápido ha recorrido el doble de distancia que el lento.</li><li>   *   <strong>Implementación:</strong> Se inicializan <code>slow</code> y <code>fast</code> en el <code>Head</code>. En cada iteración, <code>slow = slow.next</code> y <code>fast = fast.next.next</code>. El bucle continúa mientras <code>fast</code> y <code>fast.next</code> no sean <code>null</code>. Cuando el bucle termina, <code>slow</code> estará apuntando al nodo medio (o al primer nodo de los dos del medio en listas de longitud par).</li><li>   *   <strong>Utilidad:</strong> Útil en algoritmos como la partición de listas (ej. para Quicksort en listas), para dividir una lista en dos mitades, o para balancear estructuras de datos basadas en listas.</li></ul><p>3.  <strong>Encontrar el K-ésimo Nodo desde el Final de una Lista Enlazada:</strong></p><ul><li>   *   <strong>Cómo funciona:</strong> Se usan dos punteros <code>p1</code> y <code>p2</code>. <code>p1</code> avanza <code>k</code> pasos. Luego, <code>p1</code> y <code>p2</code> avanzan juntos, un paso a la vez. Cuando <code>p1</code> llega al final de la lista, <code>p2</code> estará en el K-ésimo nodo desde el final.</li><li>   *   <strong>Variante de Tortuga y Liebre:</strong> <code>fast</code> avanza <code>k</code> pasos primero. Luego <code>slow</code> y <code>fast</code> avanzan simultáneamente, un paso a la vez. Cuando <code>fast</code> llega a <code>null</code>, <code>slow</code> está en la posición deseada.</li><li>   *   <strong>Utilidad:</strong> Común en problemas donde se necesita acceder a elementos relativos al final de la lista sin conocer su longitud total de antemano.</li></ul><h3>Pregunta 4: ¿Cuándo sería una lista enlazada doblemente enlazada una mejor elección que una lista enlazada simple, y cuándo no? Considera los compromisos de diseño.</h3><p><strong>Respuesta Detallada:</strong></p><p>Las listas doblemente enlazadas ofrecen mayor flexibilidad a cambio de una mayor complejidad y consumo de memoria.</p><p><strong>Cuándo es una mejor elección (Ventajas sobre la Lista Simple):</strong></p><p>1.  <strong>Recorrido Bidireccional:</strong> Permiten iterar la lista hacia adelante y hacia atrás. Esto es crucial en aplicaciones donde la navegación inversa es necesaria (ej. historial de "deshacer/rehacer", navegadores web, editores de texto).</p><p>2.  <strong>Eliminación de Nodos Más Fácil:</strong> Para eliminar un nodo <code>X</code> dado su referencia, no es necesario encontrar su predecesor, ya que <code>X</code> tiene un puntero a <code>prev</code>. Esto simplifica la lógica y hace que la eliminación sea <code>O(1)</code> (asumiendo que ya se tiene la referencia al nodo). En una lista simple, necesitaríamos recorrer desde el <code>Head</code> para encontrar el nodo <code>prev</code> (<code>O(n)</code>) o usar el "truco" de copiar datos (con sus limitaciones).</p><p>3.  <strong>Inserción y Eliminación en el Final de la Lista:</strong> Si se mantiene un puntero <code>Tail</code>, la inserción y eliminación al final es <code>O(1)</code>, lo cual es igual que en una lista simple. Sin embargo, la eliminación del <em>último</em> nodo es más sencilla en una doblemente enlazada, ya que <code>Tail.prev</code> apunta directamente al nuevo <code>Tail</code>.</p><p>4.  <strong>Manipulación de Colecciones Dinámicas:</strong> Cuando se necesitan operaciones frecuentes de inserción, eliminación y movimiento de elementos en cualquier punto de la lista.</p><p><strong>Cuándo NO es una mejor elección (Desventajas comparadas con la Lista Simple):</strong></p><p>1.  <strong>Mayor Consumo de Memoria:</strong> Cada nodo requiere un puntero adicional (<code>prev</code>), lo que duplica la sobrecarga de memoria para los punteros en comparación con una lista simple. Esto puede ser significativo en sistemas con memoria muy restringida o con un número muy grande de nodos pequeños.</p><p>2.  <strong>Mayor Complejidad en la Implementación:</strong> Las operaciones de inserción y eliminación requieren la manipulación de <em>dos</em> punteros (<code>next</code> y <code>prev</code>) por cada nodo afectado, en lugar de solo uno. Esto aumenta la probabilidad de errores (ej. dejar un puntero <code>prev</code> o <code>next</code> sin actualizar correctamente) y hace el código ligeramente más verboso y propenso a errores.</p><p>3.  <strong>Rendimiento Ligeramente Inferior en Algunas Operaciones:</strong> Aunque las operaciones asintóticas son las mismas para muchas tareas, la sobrecarga adicional de manejar dos punteros y la potencial mayor dispersión en memoria pueden llevar a un rendimiento ligeramente inferior en algunas plataformas o casos de uso debido a los mayores requisitos de memoria y posibles fallos de caché.</p><p>4.  <strong>Cuando el Recorrido Unidireccional es Suficiente:</strong> Si el caso de uso solo requiere avanzar por la lista (ej. una cola simple, una pila), la complejidad y sobrecarga adicionales de una lista doblemente enlazada son innecesarias.</p><p><strong>Compromisos de Diseño:</strong></p><p>La elección entre una lista simple y una doblemente enlazada es un compromiso entre:</p><ul><li>  <strong>Espacio vs. Tiempo:</strong> Mayor flexibilidad y eficiencia en ciertas operaciones (eliminar un nodo dado su referencia, recorrer hacia atrás) a cambio de un mayor consumo de memoria.</li><li>  <strong>Complejidad de Implementación:</strong> Un código más complejo y propenso a errores vs. una implementación más sencilla.</li></ul><p>En general, si la navegación bidireccional o la eliminación eficiente de un nodo por referencia son requisitos clave, las listas doblemente enlazadas justifican la sobrecarga. Si solo se necesita un recorrido simple y las limitaciones de la lista simple son aceptables, esta última es la opción más ligera.</p><h3>Pregunta 5: Describe un caso de uso real donde una lista enlazada sería la estructura de datos más apropiada en comparación con un array dinámico.</h3><p><strong>Respuesta Detallada:</strong></p><p>Un excelente caso de uso real donde una lista enlazada (particularmente una lista doblemente enlazada) es más apropiada que un array dinámico es la <strong>implementación de la funcionalidad "deshacer/rehacer" (Undo/Redo) en un editor de texto o una aplicación gráfica.</strong></p><p><strong>Explicación:</strong></p><p>Imagina un usuario trabajando en un editor. Cada acción que modifica el estado del documento (escribir un carácter, aplicar formato, mover un objeto) se puede registrar.</p><ul><li>  <strong>Problema con Arrays Dinámicos:</strong></li><li>   *   Si usamos un array dinámico (<code>ArrayList</code>, <code>std::vector</code>) para almacenar el historial de estados:</li><li>       *   Cada vez que el usuario realiza una nueva acción, se añade al final. Si la capacidad se llena, el array debe redimensionarse y copiar todos los elementos, lo cual es costoso (<code>O(n)</code>).</li><li>       <em>   Cuando el usuario hace "deshacer" (undo), retrocedemos en el historial. Si luego realiza una </em>nueva* acción, todos los estados de "rehacer" que estaban más allá del punto actual deben ser eliminados. Eliminar elementos del medio o al final de un array dinámico también es <code>O(n)</code> porque todos los elementos subsiguientes deben ser desplazados. Esto sería muy ineficiente y generaría muchos movimientos de datos.</li><li>  <strong>Solución con Listas Doblemente Enlazadas:</strong></li><li>   *   Cada nodo de la lista representa un estado del documento (o una acción realizada).</li><li>   *   El puntero <code>Head</code> puede ser el estado inicial, y el <code>Tail</code> el estado actual. Un puntero adicional <code>current_state</code> siempre apunta al estado actual visible para el usuario.</li><li>   *   <strong>Nueva Acción:</strong> Cuando el usuario realiza una nueva acción:</li></ul><p>        1.  Se crea un nuevo nodo para el nuevo estado.</p><p>        2.  Se inserta el nuevo nodo <em>después</em> de <code>current_state</code>.</p><p>        3.  <code>current_state.next</code> apunta al nuevo nodo.</p><p>        4.  El nuevo nodo.prev apunta a <code>current_state</code>.</p><p>        5.  <code>current_state</code> se actualiza para apuntar al nuevo nodo.</p><p>        6.  Todos los nodos <em>después</em> del nuevo <code>current_state</code> (los estados de "rehacer" obsoletos) simplemente se "desvinculan" y se convierten en elegibles para recolección de basura. Esto es una operación <code>O(1)</code> de manipulación de punteros.</p><ul><li>   *   <strong>Deshacer (Undo):</strong> Simplemente se mueve <code>current_state = current_state.prev</code>. Operación <code>O(1)</code>.</li><li>   *   <strong>Rehacer (Redo):</strong> Simplemente se mueve <code>current_state = current_state.next</code> (si existe). Operación <code>O(1)</code>.</li></ul><p><strong>Ventajas clave de la Lista Enlazada en este escenario:</strong></p><ul><li>  <strong>Eficiencia en Inserciones/Eliminaciones:</strong> Añadir una nueva acción o "cortar" el historial de rehacer obsoleto son operaciones <code>O(1)</code>, ya que solo implican ajustar unos pocos punteros. Esto es mucho más eficiente que los <code>O(n)</code> de un array dinámico.</li><li>  <strong>Flexibilidad en Navegación:</strong> La capacidad de moverse hacia adelante y hacia atrás (<code>undo</code>/<code>redo</code>) es inherente a la estructura doblemente enlazada, siendo ambas <code>O(1)</code>.</li><li>  <strong>Uso de Memoria Dinámico:</strong> El historial crece y se encoge sin las penalizaciones de redimensionamiento de un array.</li></ul><p>Este ejemplo ilustra perfectamente cómo la naturaleza de <code>O(1)</code> para inserciones/eliminaciones en un punto conocido de una lista enlazada la hace superior cuando la secuencia de datos cambia frecuentemente de maneras que serían costosas para un array.</p><h3>Pregunta 6: Diseña una función para invertir una lista enlazada simple de forma iterativa.</h3><p><strong>Respuesta Detallada:</strong></p><p>Invertir una lista enlazada simple significa que el último nodo se convierte en el primero, y el <code>next</code> de cada nodo apuntará a su predecesor original. Esto se logra iterando a través de la lista y cambiando los punteros <code>next</code> de cada nodo.</p><p><strong>Algoritmo:</strong></p><p>Necesitaremos tres punteros:</p><p>1.  <code>prev</code>: Apunta al nodo previamente procesado. Inicialmente <code>None</code>.</p><p>2.  <code>current</code>: Apunta al nodo que estamos procesando actualmente. Inicialmente el <code>Head</code> de la lista original.</p><p>3.  <code>next_node</code>: Almacena temporalmente el <code>next</code> del <code>current</code> antes de que <code>current.next</code> sea modificado, para no perder el resto de la lista.</p><p>Los pasos en cada iteración son:</p><p>1.  Almacenar el <code>next</code> del <code>current</code> en <code>next_node</code>.</p><p>2.  Cambiar <code>current.next</code> para que apunte a <code>prev</code> (invirtiendo el enlace).</p><p>3.  Mover <code>prev</code> al <code>current</code> (preparando para la siguiente iteración).</p><p>4.  Mover <code>current</code> a <code>next_node</code> (avanzando al siguiente nodo original).</p><p>El bucle continúa mientras <code>current</code> no sea <code>None</code>. Al final, <code>prev</code> apuntará al nuevo <code>Head</code> de la lista invertida.</p><pre><code>class Node:
+    def __init__(self, data=0):
+        self.data = data
+        self.next = None
+
+def reverse_linked_list(head):
+    prev = None
+    current = head
+
+    while current is not None:
+        next_node = current.next  # 1. Guarda el siguiente nodo
+        current.next = prev       # 2. Invierte el puntero 'next' del nodo actual
+        prev = current            # 3. Mueve 'prev' un paso adelante
+        current = next_node       # 4. Mueve 'current' un paso adelante
+
+    return prev # 'prev' será la nueva cabeza de la lista invertida
+
+# Ejemplo de uso:
+# Crear una lista: 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; None
+# head = Node(1)
+# head.next = Node(2)
+# head.next.next = Node(3)
+# head.next.next.next = Node(4)
+#
+# print("Lista original:")
+# temp = head
+# while temp:
+#     print(temp.data, end=" -&gt; ")
+#     temp = temp.next
+# print("None") # Output: 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; None
+#
+# new_head = reverse_linked_list(head)
+#
+# print("Lista invertida:")
+# temp = new_head
+# while temp:
+#     print(temp.data, end=" -&gt; ")
+#     temp = temp.next
+# print("None") # Output: 4 -&gt; 3 -&gt; 2 -&gt; 1 -&gt; None</code></pre><p><strong>Complejidad:</strong></p><ul><li>  <strong>Tiempo:</strong> <code>O(n)</code>, donde <code>n</code> es el número de nodos en la lista, ya que recorremos cada nodo exactamente una vez.</li><li>  <strong>Espacio:</strong> <code>O(1)</code>, ya que solo utilizamos un número constante de variables auxiliares (<code>prev</code>, <code>current</code>, <code>next_node</code>).</li></ul><h3>Pregunta 7: ¿Cómo detectarías un ciclo en una lista enlazada simple y cómo encontrarías el nodo donde el ciclo comienza?</h3><p><strong>Respuesta Detallada:</strong></p><p>La detección de ciclos en una lista enlazada simple se realiza utilizando el algoritmo de Floyd's Cycle-Finding, también conocido como el algoritmo de la Tortuga y la Liebre (Slow and Fast Pointers).</p><p><strong>1. Detección del Ciclo:</strong></p><ul><li>  <strong>Idea:</strong> Se usan dos punteros, uno lento (<code>slow</code>) que avanza un paso por vez y uno rápido (<code>fast</code>) que avanza dos pasos por vez.</li><li>  <strong>Lógica:</strong> Si hay un ciclo en la lista, el puntero rápido eventualmente alcanzará y se encontrará con el puntero lento dentro del ciclo. Si no hay ciclo, el puntero <code>fast</code> (o <code>fast.next</code>) llegará a <code>None</code>.</li><li>  <strong>Pasos:</strong></li></ul><p>    1.  Inicializa <code>slow</code> y <code>fast</code> en el <code>Head</code> de la lista.</p><p>    2.  Mientras <code>fast</code> y <code>fast.next</code> no sean <code>None</code>:</p><ul><li>       *   Avanza <code>slow</code> un paso: <code>slow = slow.next</code></li><li>       *   Avanza <code>fast</code> dos pasos: <code>fast = fast.next.next</code></li><li>       *   Si <code>slow == fast</code>, se ha detectado un ciclo. Rompe el bucle.</li></ul><p>    3.  Si el bucle termina porque <code>fast</code> o <code>fast.next</code> es <code>None</code>, no hay ciclo.</p><pre><code>def detect_cycle(head):
+    if not head or not head.next:
+        return False, None # No hay ciclo en listas de 0 o 1 nodo
+
+    slow = head
+    fast = head
+
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True, slow # Ciclo detectado, 'slow' está en el punto de encuentro
+    
+    return False, None # No hay ciclo</code></pre><p><strong>2. Encontrar el Nodo donde Comienza el Ciclo:</strong></p><p>Una vez que se ha detectado un ciclo (es decir, <code>slow == fast</code>), podemos encontrar el nodo de inicio del ciclo con un segundo paso:</p><ul><li>  <strong>Idea:</strong> Reinicia uno de los punteros (por ejemplo, <code>slow</code>) al <code>Head</code> de la lista. Mantén el otro puntero (<code>fast</code>, que está en el punto de encuentro) en su lugar.</li><li>  <strong>Lógica:</strong> Ahora, avanza ambos punteros (<code>slow</code> y <code>fast</code>) un paso a la vez. El punto donde se encuentren de nuevo será el nodo donde el ciclo comienza.</li><li>  <strong>Justificación Matemática:</strong></li><li>   *   Sea <code>D</code> la distancia desde el <code>Head</code> hasta el inicio del ciclo.</li><li>   *   Sea <code>L</code> la longitud del ciclo.</li><li>   *   Sea <code>K</code> la distancia desde el inicio del ciclo hasta el punto de encuentro (<code>slow == fast</code>).</li><li>   *   Cuando <code>slow</code> y <code>fast</code> se encuentran:</li><li>       *   <code>slow</code> ha recorrido <code>D + K</code> pasos.</li><li>       *   <code>fast</code> ha recorrido <code>D + K + n*L</code> pasos (donde <code>n</code> es el número de veces que <code>fast</code> ha recorrido el ciclo).</li><li>       *   Sabemos que <code>fast</code> se mueve al doble de velocidad que <code>slow</code>, por lo tanto, <code>2 * (D + K) = D + K + n*L</code>.</li><li>       *   Simplificando: <code>D + K = n*L</code>.</li><li>       *   Reordenando: <code>D = n*L - K</code>.</li><li>       *   También podemos escribir <code>D = (n-1)*L + (L - K)</code>. Esto significa que la distancia <code>D</code> desde el <code>Head</code> hasta el inicio del ciclo es igual a <code>L-K</code> (la distancia desde el punto de encuentro hasta el inicio del ciclo, recorriendo el ciclo hacia adelante) más un número de vueltas completas al ciclo.</li><li>       *   Entonces, si reiniciamos <code>slow</code> al <code>Head</code> y <code>fast</code> permanece en el punto de encuentro, y ambos avanzan un paso a la vez, se encontrarán en el inicio del ciclo.</li></ul><pre><code>def find_cycle_start(head):
+    cycle_detected, meeting_point = detect_cycle(head)
+
+    if not cycle_detected:
+        return None # No hay ciclo
+
+    # Reinicia 'slow' al Head
+    pointer1 = head
+    # 'pointer2' es el punto de encuentro del algoritmo anterior
+    pointer2 = meeting_point
+
+    # Avanza ambos punteros un paso a la vez hasta que se encuentren
+    while pointer1 != pointer2:
+        pointer1 = pointer1.next
+        pointer2 = pointer2.next
+    
+    return pointer1 # Este es el nodo donde el ciclo comienza
+
+# Ejemplo de uso:
+# Construir una lista con ciclo: 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5 -&gt; (apunta a 3)
+# head = Node(1)
+# head.next = Node(2)
+# head.next.next = Node(3)
+# head.next.next.next = Node(4)
+# head.next.next.next.next = Node(5)
+# head.next.next.next.next.next = head.next.next # 5 apunta a 3 (inicio del ciclo)
+
+# start_node = find_cycle_start(head)
+# if start_node:
+#     print(f"El ciclo comienza en el nodo con valor: {start_node.data}") # Output: 3
+# else:
+#     print("No se encontró ciclo.")</code></pre><p><strong>Complejidad:</strong></p><ul><li>  <strong>Tiempo:</strong> <code>O(n)</code>, donde <code>n</code> es el número de nodos. Ambos pasos (detección y encontrar el inicio) implican recorrer la lista a lo sumo dos veces.</li><li>  <strong>Espacio:</strong> <code>O(1)</code>, ya que solo utilizamos un número constante de punteros.</li></ul><h2><span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">Tópicos</span> Avanzados y Errores Comunes</h2><h3><span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">Tópicos</span> Avanzados:</h3><p>1.  <strong>Skip Lists (Listas de Salto):</strong></p><ul><li>   *   <strong>Concepto:</strong> Una Skip List es una estructura de datos probabilística que permite una búsqueda, inserción y eliminación de <code>O(log n)</code> en promedio, similar a un árbol balanceado, pero con una implementación mucho más sencilla.</li><li>   *   <strong>Arquitectura:</strong> Consiste en múltiples "niveles" de listas enlazadas. El nivel más bajo contiene todos los elementos de la lista enlazada ordenada. Los niveles superiores actúan como "autopistas", conteniendo un subconjunto de elementos del nivel inferior. Cada nodo tiene una altura aleatoria, lo que determina a cuántos niveles superiores pertenece.</li><li>   *   <strong>Ventajas:</strong> Ofrecen un rendimiento comparable a los árboles de búsqueda binaria balanceados, pero son más fáciles de implementar y mantener. Son robustas frente a la distribución de los datos.</li><li>   *   <strong>Casos de Uso:</strong> Bases de datos (ej. Redis), estructuras de índice, implementaciones de conjuntos ordenados o mapas.</li></ul><p>2.  <strong>Uso en Otras Estructuras de Datos y Algoritmos:</strong></p><ul><li>   *   <strong>Tablas Hash con Encadenamiento (Chaining):</strong> Cuando ocurre una colisión de hash (dos claves diferentes se mapean a la misma cubeta), en lugar de sobrescribir, los elementos se almacenan en una lista enlazada asociada a esa cubeta.</li><li>   *   <strong>Colas (Queues) y Pilas (Stacks):</strong> Las listas enlazadas son una base excelente para implementar colas (<span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span> - inserción al final, eliminación al principio) y pilas (LIFO - inserción y eliminación al principio/final). La lista doblemente enlazada es ideal para una cola de doble extremo (Deque).</li><li>   *   <strong>Cachés LRU (Least Recently Used):</strong> Una lista doblemente enlazada se utiliza a menudo para mantener el orden de uso de los elementos en una caché LRU. Los elementos más recientemente usados se mueven al <code>Head</code>, y los menos usados se eliminan del <code>Tail</code>.</li><li>   *   <strong>Asignadores de Memoria Personalizados:</strong> Pueden usarse para mantener un seguimiento de los bloques de memoria libres o asignados en un heap de memoria.</li></ul><p>3.  <strong>Comparación de Rendimiento de Caché:</strong></p><ul><li>   *   Aunque la complejidad temporal asintótica es clave, en sistemas modernos, el rendimiento de la caché de la CPU juega un papel crucial. Las listas enlazadas (debido a su naturaleza no contigua) exhiben una pobre localidad de referencia, lo que significa que los datos de los nodos pueden estar dispersos en la memoria.</li><li>   *   Esto lleva a más "cache misses" (fallos de caché), donde el procesador tiene que ir a la memoria principal (mucho más lenta) para obtener los datos. Los arrays, al ser contiguos, tienen una excelente localidad de referencia y son mucho más amigables con la caché.</li><li>   *   Para grandes volúmenes de datos que se recorren secuencialmente, un array (o un <code>vector</code>/<code>ArrayList</code> en su defecto) a menudo supera a una lista enlazada en la práctica, a pesar de que la complejidad asintótica de algunas operaciones sea <code>O(n)</code> para ambos. Discutir este aspecto demuestra un entendimiento profundo de la optimización del rendimiento en hardware moderno.</li></ul><h3>Errores Comunes al Usar Listas Enlazadas:</h3><p>1.  <em></em>Manejo Incorrecto de Punteros <code>None</code>/<code>Null</code>:<em></em></p><ul><li>   *   El error más frecuente es no verificar si un puntero es <code>None</code> antes de intentar desreferenciarlo (ej. <code>node.next.data</code> cuando <code>node.next</code> es <code>None</code>). Esto causa <code>NullPointerException</code> (o similar). Es crucial manejar los casos de listas vacías, el primer nodo, y el último nodo.</li><li>   *   Especialmente al insertar o eliminar al principio o al final de la lista, o cuando se trabaja con listas con un solo elemento.</li></ul><p>2.  <strong>Pérdida de la Lista (Head Perdido):</strong></p><ul><li>   *   Al modificar el <code>Head</code> de la lista, si no se actualiza la referencia a la nueva <code>Head</code>, se puede perder el acceso a toda la lista (o gran parte de ella). Esto es común al insertar un nuevo nodo al principio o al eliminar el <code>Head</code> actual.</li><li>   *   De manera similar, al romper accidentalmente una cadena de <code>next</code> punteros durante una inserción o eliminación, se pueden perder nodos en la parte restante de la lista.</li></ul><p>3.  <em></em>Fallas en la Actualización de Punteros <code>prev</code> (en Listas Doblemente Enlazadas):<em></em></p><ul><li>   *   En listas doblemente enlazadas, es fácil olvidarse de actualizar el puntero <code>prev</code> de un nodo cuando se realizan inserciones o eliminaciones. Por ejemplo, al insertar un nodo <code>X</code> entre <code>A</code> y <code>B</code>, no solo hay que hacer <code>A.next = X</code> y <code>X.next = B</code>, sino también <code>B.prev = X</code> y <code>X.prev = A</code>. Si uno de estos se omite, la navegación bidireccional se rompe.</li></ul><p>4.  <strong>Memory Leaks (en lenguajes sin Recolector de Basura):</strong></p><ul><li>   *   En lenguajes como C o C++, si se "desvincula" un nodo de la lista pero no se libera explícitamente la memoria asignada a ese nodo (usando <code>free()</code> o <code>delete</code>), la memoria permanecerá ocupada y no podrá ser reutilizada, lo que lleva a un <code>memory leak</code>. Los lenguajes con recolección de basura (Java, Python, C#) manejan esto automáticamente cuando el nodo se vuelve inalcanzable.</li></ul><p>5.  <strong>Bucle Infinito en la Travesía:</strong></p><ul><li>   *   Esto ocurre si un puntero <code>next</code> apunta incorrectamente hacia atrás, creando un ciclo no intencional en una lista que se supone que no debe tenerlo. Una simple travesía <code>while current is not None: current = current.next</code> entrará en un bucle infinito. La detección de ciclos (como con el algoritmo de Tortuga y Liebre) es crucial para identificar estos errores.</li></ul><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjXm_6kdfWmxo139sd0a7IcQER1-lxIu4pyyuFpvwzy2dYPhJfqT381EImRbYOT99CrGT1nv0ceh7TLQBIq8GRSGVyTOUxd37zzv9rvhI0VljQjVOZ1SNjhbeoNANpCfgPoclbJC9RJeHwfr8qXBMVOpflAbimy6U_km-VLjIFbja7qStl0y44yQ==" target="_blank" rel="noopener noreferrer">uprb.edu</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH1P7cFtce4VIwMw6RNhuavK8JqZYL_6Tg8a6ioys7vOPy3pYRTxGmTV12tXsh6hVcWpxorBDRx8FndF-pKE-LagIDcwywI_f_GXximCalm7INDOIJKwhtcKuBWcJppZC7yG0vngAM4-v089t-YsA2JwNoCkgxYC3_PlBRyEqTq6L_j9MDmBrm-DhKfhQ==" target="_blank" rel="noopener noreferrer">uv.mx</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE74d4PkRJBQFsOodBf09pwxrT1NVLXJrEN8TZ9jBCbsS_GNaWU7SnxWWkjffEWA4xPpaGFi7ke4bRtuusdLhuuE5Y1zAqtFFpFBbOcgougVh4O7ok9U2hbLw4KRKsE1K14MWzHN0TFGxZJHijOzQE0LKc=" target="_blank" rel="noopener noreferrer">datacamp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHd-7EZt3j55p15622YD0ql57FwMymaYxB7z9GbxUa2M_kjPRbpEfXzvXjfE7xOOzvU-2xg2iiqZ_VzddBC7bIwrdEs0O7sGCEIefkP2wDsS2NNjgIzr41w-e2TRwotBmbmNN4yRNHC5Ia2sKd9sOn17IoRqId0UJK3VhrK7jFycQza" target="_blank" rel="noopener noreferrer">ervinsantos.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFmtABlfOPE12TdcAwoSuo3vegsM8oQDAQq9cK681hHPMpVOGCVYLHHzi4h10Bt6l2c2vLM7aES6o3t4REvwuUxVEfyeuS9H6dkUOPlzpvcV8HqZ9DAbYwvObvvg01za5up3z7k0Bk=" target="_blank" rel="noopener noreferrer">wikipedia.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5rh9BUWG8X-8c-LPvUoaxF2Mjhetn7r1scp38bPd9wYZlpSMeOZ-Y9FMMhfcwiCG64VBIUy1-8SLW2Uh5UCPUj-Dbf1vmxTOnxiIoyYYLUHAyp6hqvoE2IBCo6waXwNs0AUZh2WkwXxy4j_gDER5TBd04wb4=" target="_blank" rel="noopener noreferrer">sebastian-gomez.com</a></li></ul>
+  </div>
+</body>
+</html>

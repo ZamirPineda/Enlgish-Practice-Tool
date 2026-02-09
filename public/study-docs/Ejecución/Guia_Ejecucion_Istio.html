@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Istio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Istio</h1>
+    <h2>Explicación</h2><h3>Guía de Instalación de Istio Local con Minikube (Docker/Podman)</h3><p>Esta guía te permitirá configurar una instancia básica de Istio en tu máquina local utilizando Minikube, que a su vez usa Docker o Podman como driver. Istio es un "<span class="tooltip" data-tooltip-text="Una capa de infraestructura dedicada para gestionar la comunicación entre servicios. Proporciona funciones como el descubrimiento de servicios, el balanceo de carga, el cifrado y la observabilidad de forma desacoplada del código de la aplicación.">Service Mesh</span>" que se ejecuta sobre Kubernetes, por lo que primero necesitamos un clúster de Kubernetes local.</p><p><strong>Prerrequisitos:</strong></p><ul><li>  <strong>kubectl</strong>: Herramienta de línea de comandos para interactuar con clústeres de Kubernetes.</li><li>  <strong>Minikube</strong>: Herramienta para ejecutar un clúster de Kubernetes de un solo nodo localmente.</li><li>  <strong>istioctl</strong>: Herramienta de línea de comandos de Istio. Descárgala de la página oficial de Istio y añádela a tu PATH.</li><li>  <strong>Docker o Podman</strong>: Un runtime de contenedor instalado y configurado (Minikube lo usará como driver).</li></ul><p><strong>Pasos para la Configuración:</strong></p><p>1.  <strong>Asegúrate de tener los prerrequisitos instalados y configurados.</strong> Si no los tienes, puedes encontrarlos en sus sitios web oficiales.</p><p>2.  <strong>Crea los siguientes archivos</strong> en un directorio de trabajo vacío (o en el directorio que prefieras):</p><ul><li>   *   <code>bookinfo.yaml</code></li><li>   *   <code>bookinfo-gateway.yaml</code></li><li>   *   <code>Dockerfile</code> (ejemplo de una aplicación <span class="tooltip" data-tooltip-text="Un servidor web de alto rendimiento, también usado comúnmente como balanceador de carga, proxy inverso y caché HTTP.">Nginx</span>, no directamente usada por la aplicación Bookinfo)</li><li>   *   <code>index.html</code> (para el Dockerfile de ejemplo de <span class="tooltip" data-tooltip-text="Un servidor web de alto rendimiento, también usado comúnmente como balanceador de carga, proxy inverso y caché HTTP.">Nginx</span>)</li></ul><p>3.  <em></em>Ejecuta el comando <code>runCommands</code><em></em> proporcionado. Este comando iniciará Minikube, instalará Istio con el perfil <code>demo</code>, habilitará la inyección automática de sidecars de Istio en el namespace <code>default</code>, y finalmente desplegará la aplicación de ejemplo Bookinfo junto con su Gateway de entrada.</p><pre><code>    minikube start --driver=docker && \
+    echo "Minikube iniciado. Instalando Istio..." && \
+    istioctl install --set profile=demo -y && \
+    echo "Istio instalado. Habilitando la inyección de sidecars para el namespace 'default'..." && \
+    kubectl label namespace default istio-injection=enabled --overwrite=true && \
+    echo "Desplegando la aplicación Bookinfo..." && \
+    kubectl apply -f bookinfo.yaml && \
+    echo "Desplegando el Istio Gateway para Bookinfo..." && \
+    kubectl apply -f bookinfo-gateway.yaml</code></pre><p>4.  <strong>Verifica los componentes de Istio y Bookinfo.</strong> Puedes necesitar esperar unos minutos para que todos los pods se inicien y estén en estado <code>Running</code>.</p><pre><code>    kubectl get pods -n istio-system
+    kubectl get pods</code></pre><p>5.  <strong>Habilita el túnel de Minikube</strong> en una <strong><em>terminal separada</strong></em>. Esto es crucial para acceder al Ingress Gateway de Istio desde tu máquina local:</p><pre><code>    minikube tunnel</code></pre><p>    Mantén esta terminal abierta y el comando ejecutándose. Podría pedirte tu contraseña de administrador para configurar las rutas de red.</p><p>6.  <strong>Accede a la aplicación Bookinfo.</strong> Una vez que <code>minikube tunnel</code> esté ejecutándose, el Ingress Gateway de Istio será accesible en <code>127.0.0.1</code> (puerto 80 por defecto). Puedes verificarlo con:</p><pre><code>    curl http://127.0.0.1/productpage</code></pre><p>    Si todo está configurado correctamente, verás la salida HTML de la página de producto de Bookinfo. También puedes abrir <code>http://127.0.0.1/productpage</code> en tu navegador web.</p><p>7.  <strong>Explora los dashboards de Istio</strong> (opcional):</p><p>    Una vez que la aplicación esté funcionando, puedes acceder a los dashboards de Istio para visualizar la malla de servicios:</p><ul><li>   *   <code>istioctl dashboard kiali</code> (para ver la topología del servicio)</li><li>   *   <code>istioctl dashboard prometheus</code> (para métricas)</li><li>   *   <code>istioctl dashboard grafana</code> (para paneles de control)</li></ul><p><strong>Nota sobre Dockerfiles:</strong></p><p>El archivo <code>Dockerfile</code> y <code>index.html</code> proporcionados son un ejemplo de cómo podrías crear tu propia aplicación <span class="tooltip" data-tooltip-text="Un servidor web de alto rendimiento, también usado comúnmente como balanceador de carga, proxy inverso y caché HTTP.">Nginx</span> para desplegar en Istio. La configuración principal de esta guía utiliza la aplicación de ejemplo Bookinfo de Istio, que ya usa imágenes de contenedor pre-construidas y no requiere Dockerfiles personalizados para su despliegue.</p><h2>Comandos de Ejecución</h2><pre><code>minikube start --driver=docker && echo "Minikube iniciado. Instalando Istio..." && istioctl install --set profile=demo -y && echo "Istio instalado. Habilitando la inyección de sidecars para el namespace 'default'..." && kubectl label namespace default istio-injection=enabled --overwrite=true && echo "Desplegando la aplicación Bookinfo..." && kubectl apply -f bookinfo.yaml && echo "Desplegando el Istio Gateway para Bookinfo..." && kubectl apply -f bookinfo-gateway.yaml</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM nginx:latest
+LABEL author="AI Assistant"
+COPY index.html /usr/share/nginx/html/index.html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]</code></pre><h3>bookinfo.yaml</h3><pre><code>apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-productpage
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-details
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-reviews
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-ratings
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: details
+  labels:
+    app: details
+    service: details
+spec:
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: details
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: details-v1
+  labels:
+    app: details
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: details
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: details
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-details
+      containers:
+      - name: details
+        image: docker.io/istio/examples-bookinfo-details-v1:1.18.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ratings
+  labels:
+    app: ratings
+    service: ratings
+spec:
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: ratings
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings-v1
+  labels:
+    app: ratings
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ratings
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ratings
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-ratings
+      containers:
+      - name: ratings
+        image: docker.io/istio/examples-bookinfo-ratings-v1:1.18.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reviews
+  labels:
+    app: reviews
+    service: reviews
+spec:
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: reviews
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v1
+  labels:
+    app: reviews
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reviews
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-reviews
+      containers:
+      - name: reviews
+        image: docker.io/istio/examples-bookinfo-reviews-v1:1.18.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v2
+  labels:
+    app: reviews
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reviews
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v2
+    spec:
+      serviceAccountName: bookinfo-reviews
+      containers:
+      - name: reviews
+        image: docker.io/istio/examples-bookinfo-reviews-v2:1.18.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v3
+  labels:
+    app: reviews
+    version: v3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reviews
+      version: v3
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v3
+    spec:
+      serviceAccountName: bookinfo-reviews
+      containers:
+      - name: reviews
+        image: docker.io/istio/examples-bookinfo-reviews-v3:1.18.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: productpage
+  labels:
+    app: productpage
+    service: productpage
+spec:
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: productpage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productpage-v1
+  labels:
+    app: productpage
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productpage
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: productpage
+        version: v1
+    spec:
+      serviceAccountName: bookinfo-productpage
+      containers:
+      - name: productpage
+        image: docker.io/istio/examples-bookinfo-productpage-v1:1.18.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+        env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: "cluster.local"</code></pre><h3>bookinfo-gateway.yaml</h3><pre><code>apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: bookinfo-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: bookinfo
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - bookinfo-gateway
+  http:
+  - match:
+    - uri:
+        exact: /productpage
+    - uri:
+        prefix: /static
+    - uri:
+        exact: /login
+    - uri:
+        exact: /logout
+    - uri:
+        prefix: /api/v1/products
+    route:
+    - destination:
+        host: productpage
+        port:
+          number: 9080</code></pre><h3>index.html</h3><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Hello Istio!&lt;/title&gt;
+&lt;style&gt;
+    body { width: 35em; margin: 0 auto;
+    font-family: Tahoma, Verdana, Arial, sans-serif; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Hello Istio!&lt;/h1&gt;
+&lt;p&gt;This is a simple Nginx server running inside your Istio-enabled Kubernetes cluster.&lt;/p&gt;
+&lt;p&gt;Access it via the Istio Ingress Gateway.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjeRK79jsbZ80QOHvQiRj-zuj_c9eQG0QAtmiMFuX6iN6rF1RqJ-L0iGhfG1EDu-E7ZeZZMVo2rAR8dEhtBxlVWiW4Tu3V2rRzXuqn73lKobadwlVlPyT_2c-uZYToEuJzIDzkBmkyQmixnfZB" target="_blank" rel="noopener noreferrer">istio.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE7JMhYSPUKlcQ41ohLjwf2Lg5KcmNzDjOS03XIDeCF84fiZ41cvE9ROFnj3vm6-3HeS8EtDo_JRPvAxYiYHd_c4YLrCuC0bjWU0Qv351xVByU-wn7FjdajJ5-USaLnpRI3nRxVq7meJqfpKCQQ6jZp" target="_blank" rel="noopener noreferrer">istio.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGdiK3xFxeYIubA1eTPFFMB6Haj3dr1iGhwQfVvj2JkLBQTtReMkH6gsWuhC-0asVARKuEPSwO8BEEhGiu2WnoXJI79gN79cEtmmZfrGecunoJ-aBh1qwk=" target="_blank" rel="noopener noreferrer">istio.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFCfIBehZonsgkuSD4va5WnZwiSsAstVCnFtI1KFqrVr9VbU5iKNlWLNQyg25W9dsBfT1I278bTcq0wesk1MwgzCMgTeONXcVjDlC36mC576_QNMQ6fVKBVzctJpIt35LBLf1sunAPLiHqGiauhgNw4lw1nHgcRhY-OMXCHCOX8i3XfTK7Lj2DerlgISsoNjBxr5qy9khq9jogssDActUOiO-0=" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH0L3D5dsM3f26dp6zNe9gZfuojPC7zPgRh7uFFMYUTW-2X7bwtara4Ludbjov_dD_GgRB0NoFqcSd5AL7ycpBD6kaBwAarRfl-9F3O1wUxASLexAWYL7tupuIUYcdwKKXRB0tethzvitj6Oe7_ygOLNXNb73KR7Gcu1FQgnFoZWf2tvTQi8jAPKEniGiGHGPsBbOyNm-H6ZnOz2rHqsIrpl0OF8fpcwsJ4Wz4qJnAaDx5r0_DH-fvAZCVx" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFFkl620-r-RbSzbmoopUcjW88d1c8P4guHEM_GI46ZJ_tm5dlUSXBDEUqbmMnfNFMcFyMKE-VOQC5UVKj_BNanZenjSfqGYQpMRE6KN0tcyLPgCORH00tYI9FbivTZHwDJMfb63XoQrKbZfZQ1N9eJgsyVg7-HP4Fmujrb4KA2HwPPkPrGiLHGDxzkBn-s8epHmAJDn87CXA==" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
+  </div>
+</body>
+</html>

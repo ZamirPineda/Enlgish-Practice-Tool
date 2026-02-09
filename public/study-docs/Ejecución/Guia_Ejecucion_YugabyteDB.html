@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_YugabyteDB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_YugabyteDB</h1>
+    <h2>Explicación</h2><p>Esta guía le permitirá configurar una instancia local básica de YugabyteDB utilizando <code>docker-compose</code>. YugabyteDB es una base de datos SQL distribuida de código abierto, compatible con PostgreSQL y Cassandra, diseñada para cargas de trabajo de alto rendimiento y <span class="tooltip" data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL.">escalabilidad horizontal</span>. Esta configuración lanzará un clúster de 3 nodos máster y 3 nodos de servidor de tablas (tservers), proporcionando una configuración básica de alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y <span class="tooltip" data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen.">tolerancia a fallos</span>. Los datos se persistirán utilizando volúmenes de Docker.</p><p><strong>Componentes del Clúster:</strong></p><ul><li>  <strong>3 YB-Master nodes</strong>: Gestionan los metadatos del clúster y la coordinación. Corren en los puertos <span class="tooltip" data-tooltip-text="Siglas de &quot;Remote Procedure Call&quot; (Llamada a Procedimiento Remoto). Es un protocolo que un programa puede usar para solicitar un servicio de otro programa en una red sin tener que comprender los detalles de la misma.">RPC</span> <code>7100</code> y la UI en el puerto <code>7000</code> (solo para <code>yb-master-1</code> expuesto al host).</li><li>  <strong>3 YB-TServer nodes</strong>: Almacenan y sirven los datos. Corren en los puertos <span class="tooltip" data-tooltip-text="Siglas de &quot;Remote Procedure Call&quot; (Llamada a Procedimiento Remoto). Es un protocolo que un programa puede usar para solicitar un servicio de otro programa en una red sin tener que comprender los detalles de la misma.">RPC</span> <code>9100</code>, la UI en el puerto <code>9000</code> (solo para <code>yb-tserver-1</code> expuesto al host), la API PostgreSQL en <code>5433</code> y la API Cassandra en <code>9042</code> (ambas solo para <code>yb-tserver-1</code> expuestas al host).</li></ul><p><strong>Pasos para Iniciar:</strong></p><p>1.  Asegúrese de tener Docker o Podman y Docker Compose (o Podman Compose) instalados en su sistema.</p><p>2.  Cree un directorio para su proyecto, por ejemplo, <code>yugabytedb-local</code>.</p><p>3.  Dentro de este directorio, cree un archivo llamado <code>docker-compose.yml</code> con el contenido proporcionado en <code>supportFiles</code>.</p><p>4.  Abra una terminal en el directorio <code>yugabytedb-local</code>.</p><p>5.  Ejecute el comando <code>docker-compose up -d</code> para construir y lanzar el clúster.</p><p><strong>Verificación:</strong></p><ul><li>  Una vez que los contenedores estén en ejecución, puede acceder a la UI del máster en <code>http://localhost:7000</code>.</li><li>  Puede conectar a la base de datos PostgreSQL en <code>localhost:5433</code> con el usuario <code>yugabyte</code> y sin contraseña. Por ejemplo, usando <code>psql</code>:</li></ul><p>    <code>psql -h localhost -p 5433 -U yugabyte</code></p><ul><li>  Puede conectar a la API de Cassandra en <code>localhost:9042</code>.</li></ul><p>Para detener y limpiar el clúster (incluyendo los datos), use <code>docker-compose down -v</code>.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+services:
+  yb-master-1:
+    image: yugabytedb/yugabyte:2.20.1.0-b2
+    container_name: yb-master-1
+    command: ["/home/yugabyte/bin/yb-master", "--fs_data_dirs", "/mnt/disk0", "--rpc_bind_addresses", "yb-master-1:7100", "--master_addresses", "yb-master-1:7100,yb-master-2:7100,yb-master-3:7100", "--replication_factor=3"]
+    ports:
+      - "7000:7000" # Master UI
+    volumes:
+      - yb-master-1-data:/mnt/disk0
+    networks:
+      - yb-network
+
+  yb-master-2:
+    image: yugabytedb/yugabyte:2.20.1.0-b2
+    container_name: yb-master-2
+    command: ["/home/yugabyte/bin/yb-master", "--fs_data_dirs", "/mnt/disk0", "--rpc_bind_addresses", "yb-master-2:7100", "--master_addresses", "yb-master-1:7100,yb-master-2:7100,yb-master-3:7100", "--replication_factor=3"]
+    volumes:
+      - yb-master-2-data:/mnt/disk0
+    networks:
+      - yb-network
+
+  yb-master-3:
+    image: yugabytedb/yugabyte:2.20.1.0-b2
+    container_name: yb-master-3
+    command: ["/home/yugabyte/bin/yb-master", "--fs_data_dirs", "/mnt/disk0", "--rpc_bind_addresses", "yb-master-3:7100", "--master_addresses", "yb-master-1:7100,yb-master-2:7100,yb-master-3:7100", "--replication_factor=3"]
+    volumes:
+      - yb-master-3-data:/mnt/disk0
+    networks:
+      - yb-network
+
+  yb-tserver-1:
+    image: yugabytedb/yugabyte:2.20.1.0-b2
+    container_name: yb-tserver-1
+    command: ["/home/yugabyte/bin/yb-tserver", "--fs_data_dirs", "/mnt/disk0", "--rpc_bind_addresses", "yb-tserver-1:9100", "--tserver_master_addrs", "yb-master-1:7100,yb-master-2:7100,yb-master-3:7100"]
+    ports:
+      - "9000:9000" # TServer UI
+      - "5433:5433" # YSQL API (PostgreSQL compatible)
+      - "9042:9042" # YCQL API (Cassandra compatible)
+    volumes:
+      - yb-tserver-1-data:/mnt/disk0
+    depends_on:
+      - yb-master-1
+      - yb-master-2
+      - yb-master-3
+    networks:
+      - yb-network
+
+  yb-tserver-2:
+    image: yugabytedb/yugabyte:2.20.1.0-b2
+    container_name: yb-tserver-2
+    command: ["/home/yugabyte/bin/yb-tserver", "--fs_data_dirs", "/mnt/disk0", "--rpc_bind_addresses", "yb-tserver-2:9100", "--tserver_master_addrs", "yb-master-1:7100,yb-master-2:7100,yb-master-3:7100"]
+    volumes:
+      - yb-tserver-2-data:/mnt/disk0
+    depends_on:
+      - yb-master-1
+      - yb-master-2
+      - yb-master-3
+    networks:
+      - yb-network
+
+  yb-tserver-3:
+    image: yugabytedb/yugabyte:2.20.1.0-b2
+    container_name: yb-tserver-3
+    command: ["/home/yugabyte/bin/yb-tserver", "--fs_data_dirs", "/mnt/disk0", "--rpc_bind_addresses", "yb-tserver-3:9100", "--tserver_master_addrs", "yb-master-1:7100,yb-master-2:7100,yb-master-3:7100"]
+    volumes:
+      - yb-tserver-3-data:/mnt/disk0
+    depends_on:
+      - yb-master-1
+      - yb-master-2
+      - yb-master-3
+    networks:
+      - yb-network
+
+networks:
+  yb-network:
+    driver: bridge
+
+volumes:
+  yb-master-1-data:
+  yb-master-2-data:
+  yb-master-3-data:
+  yb-tserver-1-data:
+  yb-tserver-2-data:
+  yb-tserver-3-data:
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEue2gpqp5uThJbv-j1rWxuzUo_DIz25CP60IlsTlCHVLbzNmkEVmtRmCSQMlXl39987lqWnS8wvdM3CJp66cbNuPUu5ubLJOm79jXYCZUJUCHSQBkD8_OjkE0_jj4PNeWZRclIXhntcqKpLBJOW8EpBBGXRDgeHtxW" target="_blank" rel="noopener noreferrer">yugabyte.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5LZVzSrZVDyG82Fq-3MNwndhc4bxMyZmVHNtvqv9wT6JN0uxuOknDP6_cjD9CHBnKUwnWfYf0WJY-uax6D4PprwpWdGvmTiBhH7b1vMeYA6BLGKBhtGif9T-TYJXDvywUs2CxsJp4mxXEqsVZ3cI=" target="_blank" rel="noopener noreferrer">yugabyte.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5DC0c4Spx_jd47D26TMEfJqhZpi0_7M57eM-W5tnN8m-nf-ADZ_Bkr-5Nj8zYqX5emmrW0vtd42D7ukxi-BD6xh8Qw9-nWG5Ujv0o6b-APZlgc43vUe2_zRcsFX99AjlIsoxWcE_tm2mctpqf_k8=" target="_blank" rel="noopener noreferrer">yugabyte.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6m_uqAq6vDgKytxXTmRxdep-PxVCaPNTVcnoG_K3CO6bft7uSjfYqyps16KUsRTIXn7kmxSAuPGqlBcCIsHYeICUHc4Vp9uSUbCoJ6BYcjflbFb0itmXjmreDDnhx-OQ8mrVYjn74ZYcED3BZlWmhx6vVaZqm7lGUcXgH" target="_blank" rel="noopener noreferrer">yugabyte.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFDhz86OehqNGG_edkhOLxXf_3MY1N4KGrUDnMWWwXe-LSZYYqIj-hbDSRas8PdQSl-tu5feUJqWJDWDEwJ1rHwsqts7mlkNf7aBNYS7ZeCHvepEMSjl46rkPgYhZh4" target="_blank" rel="noopener noreferrer">yugabyte.com</a></li></ul>
+  </div>
+</body>
+</html>

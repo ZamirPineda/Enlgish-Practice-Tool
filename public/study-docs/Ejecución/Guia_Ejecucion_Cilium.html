@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Cilium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Cilium</h1>
+    <h2>Explicación</h2><p>Esta guía práctica te permitirá levantar un clúster local de Kubernetes usando Kind (Kubernetes in Docker/Podman) y luego instalar Cilium como su solución de red (CNI) y seguridad. Cilium aprovecha eBPF para proporcionar redes de alta eficiencia, visibilidad y aplicación de políticas de seguridad. Se configurará para reemplazar el <code>kube-proxy</code> de Kubernetes y se habilitará Hubble para una visibilidad profunda del tráfico de red. Antes de comenzar, asegúrate de tener instalados <code>kind</code>, <code>helm</code> y <code>kubectl</code>.</p><h2>Comandos de Ejecución</h2><pre><code># 1. Crear un clúster de Kubernetes local con Kind\n#    Este paso creará un clúster de un solo nodo en tu entorno Docker o Podman.\n#    Para usar Podman, puedes ejecutar: KIND_EXPERIMENTAL_PROVIDER=podman kind create cluster --config kind-config.yaml\nkind create cluster --config kind-config.yaml\n\n# 2. Obtener la IP del nodo de control-plane de Kind\n#    Esta IP es necesaria para configurar Cilium en modo 'kubeProxyReplacement=strict'.\n#    Si usas Podman, reemplaza 'docker inspect' con 'podman inspect'.\nKIND_CONTROL_PLANE_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' cilium-cluster-control-plane)\n\n# 3. Configurar Helm y agregar el repositorio de Cilium\nhelm repo add cilium https://helm.cilium.io/\nhelm repo update\n\n# 4. Instalar Cilium en el clúster usando Helm\n#    Se configura Cilium para reemplazar completamente kube-proxy ('strict' mode).\n#    Se habilita Hubble (UI, Relay y Metrics) para la observabilidad de la red.\n#    Asegúrate de que la versión de Cilium sea compatible con tu versión de Kubernetes en Kind.\n#    (ej. 1.15.x para K8s 1.28/1.29)\nhelm install cilium cilium/cilium --namespace kube-system --set global.kubeProxyReplacement=strict --set global.k8sServiceHost=${KIND_CONTROL_PLANE_IP} --set global.k8sServicePort=6443 --set global.hubble.enabled=true --set global.hubble.ui.enabled=true --set global.hubble.relay.enabled=true --set global.hubble.metrics.enable='{dns,drop,tcp,flow,port-distribution,icmp,http}' --version 1.15.4 # Especifica una versión de Cilium (puedes verificar las últimas versiones en la doc oficial)\n\n# 5. Verificar el estado del despliegue de Cilium y Hubble\necho \"Esperando que Cilium se despliegue...\"\nkubectl -n kube-system rollout status ds/cilium --timeout=300s\nkubectl -n kube-system rollout status deployment/cilium-operator --timeout=300s\nkubectl -n kube-system rollout status deployment/hubble-ui --timeout=300s\nkubectl -n kube-system rollout status deployment/hubble-relay --timeout=300s\n\n# 6. Acceder a la interfaz de usuario de Hubble\necho \"\\nPara acceder a Hubble UI:\"\necho \"Ejecuta: kubectl port-forward -n kube-system service/hubble-ui 8080:80\"\necho \"Luego abre http://localhost:8080 en tu navegador.\\n\"\n\n# 7. Acceder a los logs de Cilium\necho \"Para acceder a los logs de Cilium (ejemplo de un pod):\"\necho \"kubectl logs -n kube-system -l k8s-app=cilium --tail=50\"\n</code></pre><h2>Archivos de Configuración</h2><h3>kind-config.yaml</h3><pre><code>kind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nname: cilium-cluster\nnodes:\n- role: control-plane\n  # Configuración opcional para mapear puertos del host al contenedor del clúster.\n  # Útil si planeas desplegar aplicaciones que necesiten ser accesibles desde el host.\n  extraPortMappings:\n  - containerPort: 80\n    hostPort: 80\n    listenAddress: \"127.0.0.1\"\n    protocol: tcp\n  - containerPort: 443\n    hostPort: 443\n    listenAddress: \"127.0.0.1\"\n    protocol: tcp\n</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGvaSxmlqxCIFdXzVYz0mKay-B9T2uIIChwRyy4xiberwgJUnNwGht88FjjhWkx7eOrkJoVGqImenaIIGZ0q3sEC6y43exs22wb5MZqduV_Fdq1Uub7btCsoWO72Q==" target="_blank" rel="noopener noreferrer">cilium.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG6NKKE230MTj03xUgmFiSfLj8hKNosibxhEMIEbH_j7gFlbBmO-OWq6xpCnYCAkNI3iVkfCwmIOuPj-simlGuaP0AEz-dg01tYMH7Kb8j4Aw_NbfJyffZDziPh0XlBDfL16OB3nP_qg3oApQjesWXWV9I0i_BzkgsYF-2zmgAq7vYaQQ==" target="_blank" rel="noopener noreferrer">cilium.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFL61Ohld9cvLmJF_0JW3U0HexbZCqEogSaKi3wHTzOaaLq1s1GrIlNUppmOAvyi70a-SFrJdQMrbh-g6jRM856VSMfFFAjHKCHGFuLbdBJMG305NjZaGegqJ9boOmeVBXzwjp19jvdYrWnfulPYbj95-RRLjizseoXgL3x3Va8Y2yen-nweLRbsm2Djt_597rkiB2d-ZjerepEqnZQRkgriv3tRZ2wsxRUUQ96kl-U-cYTHucMBnAkLRx9gjpu52cC5v4=" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFmVQSsFfp_SllDYadkYMXtAoG37f1gN8rGqLpZC2eSXal55KGPGic5EJ0LVweCryTCzXdmEghKdjscCGuS3ahFUsw9MntbtIU3zQ-7Lg7TnwcDQzuUewGH3qqpQFP3mmRnz_lzdbTBIBt42wJ3cB6Qs-QmiejRkvfeUammXWUejZtfoF-ZJhMxAnKLxsGB" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQECnnhI3yswboqY4leupqty9NOPmeSlh-Wcnjf2v4cTipDZsiGD17UhKUI3ghAgLhA2HNBCUEH4ExWZrk7mNzBfX0ryDBrL5NrebjGWcKsCVtZbOOIWy40XLdhFEjy8k91nmwtun3O785FU0mLqAUdGoGlZq1RQUU3ku0iQtLxyvpiFGHYjy9FVYCffQc1iThE7gRX68SdsEKXCYIgycaM0CvKWUZIISHGOlayQvMzUVVSBYxMFmGOxVOLgHYORVLI=" target="_blank" rel="noopener noreferrer">kodekloud.com</a></li></ul>
+  </div>
+</body>
+</html>

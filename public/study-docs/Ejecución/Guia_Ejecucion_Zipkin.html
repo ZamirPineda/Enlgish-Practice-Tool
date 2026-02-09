@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Zipkin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Zipkin</h1>
+    <h2>Explicación</h2><p>Zipkin es un sistema de trazado distribuido de código abierto que ayuda a recopilar datos de temporización necesarios para solucionar problemas de <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> en arquitecturas de microservicios. Proporciona una interfaz web para ver el seguimiento de principio a fin de las solicitudes a través de diferentes servicios.</p><p>Esta configuración básica lanzará una instancia de Zipkin utilizando su imagen oficial, haciéndolo accesible en el puerto <code>9411</code> de tu máquina local. No se requieren Dockerfiles personalizados ni archivos de soporte adicionales para una ejecución básica, ya que la imagen oficial <code>openzipkin/zipkin</code> contiene todo lo necesario.</p><p><strong>Pasos para ejecutar Zipkin:</strong></p><p>1. Asegúrate de tener Podman o Docker instalado y funcionando.</p><p>2. Ejecuta el comando proporcionado en la sección <code>runCommands</code>.</p><p>3. Una vez que el contenedor esté en ejecución, abre tu navegador web y navega a <code>http://localhost:9411</code> para acceder a la interfaz de usuario de Zipkin.</p><h2>Comandos de Ejecución</h2><pre><code>podman run --rm -d -p 9411:9411 --name zipkin openzipkin/zipkin</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGDh6p1kGADV3l3fE2eeA9bifma6k3mC7dzyZtbeQBmBUS6jjY4jd6B_HDssx4BO4v-OaZnX1q8-jNE-kghvHBSos5McQjUj9Y7r8kjuzo_9SxmeDm0qKYfNJMW32o=" target="_blank" rel="noopener noreferrer">zipkin.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHrprsoBti18d0msEduumkQvpi_DZdZmzX65BdHJSztAYMzJrgWT5W4MflGUboWncOIU5aDLcmot4R2jyH3CCd-OFNhk3hpHjEyidGJpxxcIOWJb0EFkjpBskzCk1SE5w==" target="_blank" rel="noopener noreferrer">github.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHUnsptUg2CINPW_mFaGGA3RBAH6fZildbzMpkTMuS0wcSqYqqXXbLXUZP2Jr7x283nxDw-4Kd1OMA0z37azx2LTbploQDqQYdl1wV8JgNeXtcD9xW-sSHPj57YiEf2DuBcuOFnGBadDHw_lg-QCZ0ghe5DCF7zTIKZDpVTY1RKEw==" target="_blank" rel="noopener noreferrer">sentinelone.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH-RNAuPnHys8hxSHbRH5eHs8AZINlyJkmiQmfbPrdx061E8rvUdolGu5fF8ga6E22QQMgPXW3OUewpZw3IAFdZKcn_fBa6g1CvuOZZe8c8_Re8k48=" target="_blank" rel="noopener noreferrer">lumigo.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE7pvUXJACR4EUxKuX4CS73HH_8rQMhrw1gvG6guA4XMbbbKMBw1XpAxHATwd3td0vua5D82zW38GQsYOa8Ftl4gf4fwAtAjlzRPAI2GTnV-kMSBAOoRk523pLXDvNFMhzNSAR8GGLp7v7bJN_169GMbata0QM9p21uRzpB99wKVY3Uu1Nz7g==" target="_blank" rel="noopener noreferrer">devzery.com</a></li></ul>
+  </div>
+</body>
+</html>

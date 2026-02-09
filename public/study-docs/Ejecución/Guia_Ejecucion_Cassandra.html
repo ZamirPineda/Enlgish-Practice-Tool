@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Cassandra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Cassandra</h1>
+    <h2>Explicación</h2><p>Esta guía te permitirá levantar una instancia básica de Cassandra como un nodo único utilizando la imagen oficial de Docker (o Podman). Configura el puerto 9042 para la interfaz CQL y persiste los datos en un volumen para asegurar que la información no se pierda al reiniciar el contenedor. Es ideal para desarrollo local y pruebas básicas.</p><h2>Comandos de Ejecución</h2><pre><code>docker run --name cassandra-node -p 9042:9042 -v cassandra_data:/var/lib/cassandra -d cassandra:latest</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzlvzAdlUs21Ju5Ha__7Gy8mF-KVy38FZQCd2rvaK1dGQ3hBZoEXRSXLYJIsZfikwPh5VOV4ztMXM6_YPK_W5KZ9ya4mg7GrPORRhzS2n8YQrfWmv2f1K1rBZ1AQhtUwyoG-YcVBY-4_Wm5VKvUdu01glLpJthJAtcJm38Ia0gXjDayep7x60brQ==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRHeczBzvPqq_PRicMBRB__k3Qg9AKPI6QoPWyTgQOfK1SQcn_WSU-isf0MP1y4ljLtMPpn1bCZzzhfHVID88NwUWjyPMRhwtpSHhyJUEehptnSWp_613Z27btGgHxi7IQ3zNWLB7w7W8=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG4BM4cdGPVGBBqgV50SVSuWgUkZ77GZTArTh7EDFZnwk0ZXgJI4fAKz-QBdosuRalFghhxbU-ZjFVks_AMbFgd51BrYjc3773aEMRS5N8X3MZzGz1Zj2FjUZ7rfaOd9-wwSIp8hIHo-izlydt0TouklnEAmOOI8llGET8FVrp7M8rDpeOVKuMy_Tw7GKN7FWCcu_-ptB1_" target="_blank" rel="noopener noreferrer">developerindian.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEx49GRfWPvrWq5G96Seatw4cPOjH6zX8SRj2zs8p_pRWR-jpQe8S6G6g6LsppObwfq5cEe682nHnL6-hnoothfhWpS8FMkwR8kxdA2Ts6pcgHtIEqmkVRRy0h9sb1NU5cuSak=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5oeS8ulkdJpoSWlQHTBumm2jB2SdYCVfBB5SECeDCRfp-wJQi9vCiuo29McERC46bP1M3Vw0D1z5dB7hSFNFJYKEqdv463jzmtbytgjoUc3VTrLWdGBaPrU7OBBF9zlwEIHgV" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPSCocnbe6XiuksuXcJRZvGVCGOkf18_6ItlZQ-6mZ7N1aDuVM0D6Xs7wY2tvI4mWW4jR6da__XTNbYgxHTYNLQbU7X8IVgrvZtxiF7diFayNTGdsVzzVyh58tNHRK5h7dqoWFW5diIKADw4srmZ37CQ==" target="_blank" rel="noopener noreferrer">github.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEzQPVsztmPdmNy4XclridZlaG6SB3AxmBJJpp_xXcVgMQetKJrw49j9TOMT5yAxojHV2SujtAgb9x6B2jwYgnlZ2x2n1lVNqyCwwN-r2EYboyHdUBAg4DyPKHkDIGpssJI_maaL50VZHqyiD0n6h7pS1fk8UEzZzubhd3JpMWUXN_Vq2kwyIlFfBZ_" target="_blank" rel="noopener noreferrer">nextbrick.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGHf-tcsSk35da6gOyjp0Ph3kf8bI7tmCLHBlu9BHrSI2217rGpQCYt4n6UlrYEDBOzIPqO7TPO4nQDfi8WLJej-DvH6w34ULLty4W4fZW7MjuTg2IUCB2zRAlDRBelWQ2P-4AlIxNyLXOdFUV6jlDF83d6Z43M8A96o_MIFyubQsdfH78Z" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHb1hVA1YN1VSUuMRNshblGS2bX7dX9Py4mqNJLdxaObrscQnqAJwnDcn8H8xTm_20zVJZIzv4WP79Omuef5fwjFH428ME6zx8SJz72ZLOb0iPFUAF0NP3W7y9vUXDbLIG05cxtkn1Ha7ekwIfWeFp1oVGlQdvVKsZmuxS3UICsyc4KCaIWx1WW57fAKHJq2dl24Q==" target="_blank" rel="noopener noreferrer">learnwithyan.com</a></li></ul>
+  </div>
+</body>
+</html>

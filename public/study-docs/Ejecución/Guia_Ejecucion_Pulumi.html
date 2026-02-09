@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Pulumi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Pulumi</h1>
+    <h2>Explicación</h2><p>Esta guía le permitirá ejecutar el CLI de Pulumi dentro de un contenedor Docker/Podman. Pulumi es una herramienta de Infraestructura como Código (IaC) que le permite definir y gestionar su infraestructura en la nube utilizando lenguajes de programación. Ejecutar Pulumi en un contenedor es útil para:</p><p>1.  <strong>Aislamiento</strong>: Mantener las dependencias de Pulumi separadas de su sistema anfitrión.</p><p>2.  <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span></strong>: Asegurar que todos los miembros del equipo usen la misma versión de Pulumi.</p><p>3.  <strong><span class="tooltip" data-tooltip-text="Siglas de Integración Continua (CI) y Entrega o Despliegue Continuo (CD). Un conjunto de prácticas que automatizan las fases de desarrollo, prueba y despliegue de software.">CI/CD</span></strong>: Facilita la integración en <span class="tooltip" data-tooltip-text="Una serie de etapas de procesamiento de datos conectadas en secuencia, donde la salida de una etapa es la entrada de la siguiente. Común en sistemas de CI/CD y procesamiento de datos.">pipelines</span> de integración y despliegue continuo.</p><p>La configuración incluye un <code>Dockerfile</code> que construye una imagen con el CLI de Pulumi y Node.js (necesario para proyectos Pulumi basados en TypeScript/JavaScript). También se proporcionan un archivo <code>Pulumi.yaml</code> y un <code>index.ts</code> con un proyecto Pulumi mínimo de ejemplo que genera un UUID aleatorio, que no requiere credenciales de nube. Este proyecto sirve para demostrar que Pulumi puede ejecutarse y gestionar un recurso.</p><h3>Pasos para Ejecutar:</h3><p>1.  <strong>Crear un directorio de proyecto</strong>: Cree una carpeta vacía, por ejemplo, <code>my-pulumi-project</code>.</p><p>2.  <strong>Guardar los archivos</strong>: Coloque el <code>Dockerfile</code>, <code>Pulumi.yaml</code> y <code>index.ts</code> proporcionados dentro de este directorio.</p><p>3.  <strong>Instalar dependencias del proyecto (opcional pero recomendado)</strong>: Dentro de su directorio <code>my-pulumi-project</code>, ejecute <code>npm install @pulumi/pulumi @pulumi/random</code>. Esto creará el directorio <code>node_modules</code> que será montado en el contenedor.</p><p>4.  <strong>Obtener un Token de Acceso de Pulumi</strong>: Necesitará un token de acceso de Pulumi para autenticarse con el servicio de Pulumi (para gestionar estados). Puede generarlo en [app.pulumi.com](https://app.pulumi.com) en la sección de configuración de su cuenta.</p><p>5.  <strong>Ejecutar los comandos</strong>: Utilice los <code>runCommands</code> proporcionados para construir la imagen y luego ejecutar el proyecto Pulumi. Asegúrese de reemplazar <code><your_pulumi_access_token></code> con su token real.</p><p>Una vez completado el <code>pulumi up</code>, puede ver el UUID generado ejecutando:</p><pre><code>docker run --rm -it -v "$(pwd):/app" -w /app -e PULUMI_ACCESS_TOKEN="&lt;your_pulumi_access_token&gt;" pulumi-cli stack output outputUuid</code></pre><p>Para eliminar los recursos creados (el UUID aleatorio en el servicio de Pulumi, no el UUID en sí), ejecute:</p><pre><code>docker run --rm -it -v "$(pwd):/app" -w /app -e PULUMI_ACCESS_TOKEN="&lt;your_pulumi_access_token&gt;" pulumi-cli destroy --yes</code></pre><h2>Comandos de Ejecución</h2><pre><code># Paso 1: Construir la imagen del CLI de Pulumi
+docker build -t pulumi-cli .
+
+# Paso 2: Ejecutar el comando 'pulumi up' para desplegar la infraestructura.
+# Asegúrate de reemplazar '&lt;your_pulumi_access_token&gt;' con tu token de acceso de Pulumi real.
+# Este token es necesario para autenticarse con el servicio de Pulumi.
+# Puedes obtenerlo desde la consola de Pulumi en app.pulumi.com.
+# El volumen '-v "$(pwd):/app"' mapea tu directorio de proyecto local al contenedor,
+# y '-w /app' establece el directorio de trabajo dentro del contenedor.
+docker run --rm -it \
+  -v "$(pwd):/app" \
+  -w /app \
+  -e PULUMI_ACCESS_TOKEN="&lt;your_pulumi_access_token&gt;" \
+  pulumi-cli up --yes
+</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para Pulumi CLI con soporte para proyectos Node.js
+FROM node:18-alpine
+
+LABEL maintainer="Your Name &lt;your.email@example.com&gt;"
+
+# Instalar dependencias necesarias para Pulumi CLI
+RUN apk add --no-cache curl unzip
+
+# Descargar e instalar Pulumi CLI
+# Puedes especificar una versión de Pulumi si lo deseas, ej: ENV PULUMI_VERSION="3.90.0"
+ENV PULUMI_VERSION="3.90.0"
+
+RUN PULUMI_CLI_URL="https://github.com/pulumi/pulumi/releases/download/v${PULUMI_VERSION}/pulumi-v${PULUMI_VERSION}-linux-x64.tar.gz" && \
+    curl -L ${PULUMI_CLI_URL} -o /tmp/pulumi.tar.gz && \
+    tar -xzf /tmp/pulumi.tar.gz -C /usr/local/bin && \
+    rm /tmp/pulumi.tar.gz && \
+    chmod +x /usr/local/bin/pulumi/pulumi && \
+    ln -s /usr/local/bin/pulumi/pulumi /usr/local/bin/pulumi
+
+# Configurar el PATH para que el comando pulumi esté disponible
+ENV PATH="/usr/local/bin/pulumi:${PATH}"
+
+# Establecer el punto de entrada predeterminado al comando 'pulumi'
+ENTRYPOINT ["pulumi"]
+
+# Por defecto, puedes mostrar la versión o ayuda si no se proporcionan argumentos
+CMD ["version"]
+</code></pre><h3>Pulumi.yaml</h3><pre><code>name: my-first-pulumi-project
+runtime: nodejs
+description: Un proyecto Pulumi mínimo para demostrar la ejecución local.
+</code></pre><h3>index.ts</h3><pre><code>import * as pulumi from "@pulumi/pulumi";
+import * as random from "@pulumi/random";
+
+// Crea un UUID aleatorio usando el proveedor 'random'
+const myRandomUuid = new random.RandomUuid("myRandomUuid");
+
+// Exporta el UUID generado como una salida de la pila
+export const outputUuid = myRandomUuid.id;
+
+// Para ver esta salida después de 'pulumi up', puedes ejecutar:
+// pulumi stack output outputUuid
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHwC67_t43zrOWf8CMgL9PZNMxOoTLQ94QD-wZwbjA0lWmglIwIInfb_7lXo-HraeDyFmTN6UXarfNHlE6NE76agEi-3-F3zVoxdV4X8u7bBA36MevB6s7XtP1yYs3Zap8_xw==" target="_blank" rel="noopener noreferrer">pulumi.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGftxoTJA9A-vUxVNDhegR0pEtJv5_uw72i_T-RzyQiQKFQxgV5fMM2NoAY2rY-MMKp0MzJK4G5Ipxg7yNEaLcd_JuksljNhagTPES_hSnB9ITXXX30hA==" target="_blank" rel="noopener noreferrer">pulumi.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHn0fi05_6Yv9YmlV2wdrl6e8GVa0IWc5fdTqC1TLpaYvFNNvcFfSqGCuGAeAR6M2uSXiIZDsYABPx-4pLtgesA4HYG8T-shhNM9I2btQ2zj2ojVfFNmuDxyt_A" target="_blank" rel="noopener noreferrer">pulumi.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGPM8iqTc6NkWDAG3kRI51nA1BGtjw-xa-kPIPP2RbfS1BRGh8bmfo8qzJoVrhMTHhLBMpluEBcXk4-RIG-Aj6mLqayKYeCVwWPIURBLFE_5qnZLNJz6omYn1hbpwudnHS_JsjXYiDIuNiSFfVQKMtrDA==" target="_blank" rel="noopener noreferrer">awsfundamentals.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEWl_7rXMR7sNr9k-TDYCDakhy4s_t6zrOqip93vbDh232dG5qM6KWiqfCwaadKsAgi8sHCW0ctILtVt6GI2uuQ5HoAknkzufcZCQhdfvaZDZa60K8-peqf-eapCRlaBpBtEFFCFHgpmHVRATFcH9x1IfBDE8d1HOnobnB-qNgPYRttPl9XZQ9XRq2ebHEjw49SYoi8rIPKyYZs5bn2uwDXEQMoOC6iacxvpn3uwrM=" target="_blank" rel="noopener noreferrer">dev.to</a></li></ul>
+  </div>
+</body>
+</html>

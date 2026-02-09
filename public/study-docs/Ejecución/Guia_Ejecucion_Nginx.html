@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Nginx</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Nginx</h1>
+    <h2>Explicación</h2><p>Esta configuración desplegará una instancia básica de <span class="tooltip" data-tooltip-text="Un servidor web de alto rendimiento, también usado comúnmente como balanceador de carga, proxy inverso y caché HTTP.">Nginx</span>, un servidor web de alto rendimiento y proxy inverso. Utilizaremos la imagen oficial de <span class="tooltip" data-tooltip-text="Un servidor web de alto rendimiento, también usado comúnmente como balanceador de carga, proxy inverso y caché HTTP.">Nginx</span> de Docker Hub y montaremos una configuración personalizada (<code>nginx.conf</code>) junto con un directorio que contendrá una página HTML estática (<code>html/index.html</code>).</p><p>Pasos:</p><p>1.  Asegúrate de tener un directorio donde guardar <code>nginx.conf</code> y el directorio <code>html</code> con <code>index.html</code>.</p><p>2.  Crea el archivo <code>nginx.conf</code> y el directorio <code>html</code> con su <code>index.html</code> en tu directorio de trabajo.</p><p>3.  Ejecuta el comando <code>podman run</code> (o <code>docker run</code>) proporcionado en el mismo directorio donde creaste los archivos.</p><p>4.  Una vez que el contenedor esté en ejecución, podrás acceder a la página web en <code>http://localhost:8080</code> en tu navegador.</p><p>5.  Para detener el contenedor: <code>podman stop my-nginx</code> (o <code>docker stop my-nginx</code>).</p><p>6.  Para eliminar el contenedor: <code>podman rm my-nginx</code> (o <code>docker rm my-nginx</code>).</p><h2>Comandos de Ejecución</h2><pre><code>podman run --name my-nginx -p 8080:80 -v ./nginx.conf:/etc/nginx/nginx.conf:ro -v ./html:/usr/share/nginx/html:ro -d nginx:latest</code></pre><h2>Archivos de Configuración</h2><h3>nginx.conf</h3><pre><code>user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen 80;
+        server_name  localhost;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+}</code></pre><h3>html/index.html</h3><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;¡Hola Nginx!&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        h1 { color: #333; }
+        p { color: #666; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;¡Bienvenido a Nginx!&lt;/h1&gt;
+    &lt;p&gt;¡Tu servidor Nginx está funcionando correctamente en Podman/Docker!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGsC3k7cHJ_6lDFtb95Onh42-4dGMtqG-sqwOcLNFusyCYdMRtnvjl_MqaRTGIjOiP0y8JEXjz_0KppAH4SBcSwd81o5P2PwBqJNiS6mPq5hufdzIFoCmHBhks7M6D-1OJNEdjXOt2F2GY=" target="_blank" rel="noopener noreferrer">nginx.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeCWTRkTOsSKmek8kkZKh5L_iulPYvN0Gl7FmrewCE3J3FlMgJUsj0KyH9N-K1B-fUZ3DCowjtzrEI2VhZ4fiOYWToPMTooEdGK_N7zIEBYHWIa5GlXnWCMzyppBCpVXdS-ehNtg1JQzqDg2CTvDSINHJBdrJP7zJK_7CdavY5bQyJo2oIODHgv1i1YwPTGuxivYnYcjfAye0IB3GJw02nod8Dei0hteXIwn-iMopZzC0GcaEGc5vlryZHRFA5_g==" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPn4ZsnUep174Eb-oBKoIATUn5xXQJEQvg1fdrh-jl8ogalZt8AB6ZHJ4IpEQyp0UoUD6WACERNYCX91LBL6pKd4pIcmVTmsw89rkSAHKfa9Ut6A5jzwLr_qid1ylC-rChNMfyM0ANHWhdUNFGrA5RPA0wOPn3MsoiqHZZ7NcfXjAN6xOsJ7zNA-cbWvFkC-CVrzuykb2AWYIL4DuCXxrs_g==" target="_blank" rel="noopener noreferrer">dev.to</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGCvJEOjBZe_X9p_7fqVUUbTaq1Foglpdc8tUESdI8Eeh0bPAmyLHLbBXLNJGfKffyF3Jm0Xr_9qY9QP0IgG9BlXrlESED6WiGgHDw5KNZV08mB0xw17oPOpcvI70SIeZCaiWxiM50Be6WQ19eQUMqjTiej6ke5yKel-LKOY5bgoE2r" target="_blank" rel="noopener noreferrer">taikun.cloud</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHkX1vyYMLmBQx8NNtBpn-7C3_NZdk0MJvnosY9mhgLeY3GsZhasjj7dIgFoV_PKwgQKU__cmoBLRrT9O5GPqAdVJN1xqk6iJ--NyEFQd5n8r2-xqkp" target="_blank" rel="noopener noreferrer">nginx.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHuGo6oQU3mhU-zNeKgDxhGmKzNAlErHrb_NYf1uB5FPBpDQd9S9oEnGXaK6-6yY_VsKvv9aUUVF58N44mpM41GKrHZ880c_eyWoesjGA==" target="_blank" rel="noopener noreferrer">nginx.org</a></li></ul>
+  </div>
+</body>
+</html>

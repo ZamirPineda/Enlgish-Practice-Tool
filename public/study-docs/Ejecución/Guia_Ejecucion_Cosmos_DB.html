@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Cosmos DB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Cosmos DB</h1>
+    <h2>Explicación</h2><p>Azure Cosmos DB es una base de datos distribuida globalmente, NoSQL y relacional, totalmente administrada por Microsoft Azure. Para el desarrollo local, Microsoft proporciona el "Azure Cosmos DB Emulator", que replica la funcionalidad del servicio en la nube en tu máquina local. Esto permite a los desarrolladores construir y probar aplicaciones de Cosmos DB sin incurrir en costos de Azure y sin necesidad de una conexión a internet. Este setup utiliza <code>docker-compose</code> para orquestar el emulador de forma sencilla, exponiendo los puertos necesarios y configurando un volumen persistente para los datos. Puedes acceder al explorador de datos del emulador a través de <code>https://localhost:8081/_explorer/index.html</code> en tu navegador. Ignora cualquier advertencia de certificado, ya que el emulador usa certificados autofirmados. Para Podman, puedes usar <code>podman-compose</code> como reemplazo directo de <code>docker-compose</code>.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  cosmosdb-emulator:
+    # Utiliza la imagen oficial de Microsoft para el emulador de Cosmos DB en Linux.
+    image: mcr.microsoft.com/azure-cosmos-db/linux/azure-cosmos-db-emulator
+    container_name: cosmosdb-emulator
+    ports:
+      - "8081:8081" # Puerto principal de la API SQL (documentos) y el explorador de datos.
+      - "10251:10251" # Puerto de la API de MongoDB.
+      - "10252:10252" # Puerto de la API de Gremlin (Graph).
+      - "10253:10253" # Puerto de la API de Cassandra.
+      - "10254:10254" # Puerto de la API de Table (Azure Table Storage compatible).
+      - "10255:10255" # Puerto secundario de la API SQL.
+    volumes:
+      - cosmosdb_data:/cosmos/data # Monta un volumen para la persistencia de los datos del emulador.
+    environment:
+      # Argumentos opcionales para el emulador. /DisableRateLimiting es útil para desarrollo local.
+      - AZURE_COSMOS_EMULATOR_ARGS=/DisableRateLimiting
+    # Un "healthcheck" para asegurar que el contenedor está listo y funcional.
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://localhost:8081/_explorer/index.html", "--insecure"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  # Definición del volumen persistente para los datos del emulador.
+  cosmosdb_data:
+    driver: local
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNOtKA-x4G6TKOD1VdMw98kkHb4b7tN0FZV8swQ1A4ECWn5syykWPQK204VwXVQa1j9J-07L_UOJN_19OKR4OVwgvYQt_VoJ1jb0lJPRC_Oc0CR3Wg_wyjT_hp7MK3xOe32r8EKKW2dyT85hl5" target="_blank" rel="noopener noreferrer">microsoft.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFkurGuCfRT5mIeslc-dHxaEht0I5x22Cw2ynd8TBI-EQRb5BgWEFTDwWZFhm25X--vRqAHypOUmEo7zQUV4LVUGybVWxe7vjwQQ63_oNUc2v11Ts43HT0-iyrdZHAGAY4s1A-GFvhGjQE4_f502uVJsN4ApSrytpPHXmDZ5TRtDlTOCig=" target="_blank" rel="noopener noreferrer">microsoft.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHTfRpZbUSkSq4WVs8Dfha0SIOeby82s0OhBjWHcO68CmWlUuniyswjOCsg5yAgyOJ9cT37I8hSxakQs_NEkavQUu3rw4Fw_-rMHjl3VFiTvig9rBd84Si0kOmZ9yn8TBjL0EdwymNbUxdLQ7eFMoN9CceS_DXfLaiqONqliHtsbP4=" target="_blank" rel="noopener noreferrer">freecodecamp.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGHkvRxF_ox-mtNJt7G3nFIxoc-ZpdVVyTnbo13Nl93rHlpRsb1JTW7LcQi6kQNn9zqaV-j0X_GXdc1r-IJ6Lpr8x3G-g5YIqCjQCgMIk9wCDMco4H256Q2gEkRnbXmOSFpZMBmBaxuGx1w4NbvpMU3XrsK2WXBXbVf0DGhGFeGzvvNXgiAhHOIlxNqGVrfWlkpdyOBfXnUkxkzfA==" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE7zLF790tS0cvlQjulfzPl1NNDacEx0S-uyUBvEBulbPLJlhTozdjoUcX6eMzvjkUs4558uvyXVm64q5yoMkDf_ZfIEsJT1NH1sT9acQuANjwgZWPosRPg2-ucDp65blLVX8mIU7QFxkBQ9wTd-qh6t7FcmDvReGC-b_MafNPd9uFz4axKarUor-lxUHZM9FuyO6ba2N9ioAId_HDA-5_CZPpz" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
+  </div>
+</body>
+</html>

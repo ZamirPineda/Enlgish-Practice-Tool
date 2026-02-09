@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Árboles y Grafos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Árboles y Grafos</h1>
+    <p># Concepto de Ingeniería de Software: "Árboles y Grafos"</p><p>En ingeniería de software, los "Árboles y Grafos" son estructuras de datos fundamentales utilizadas para modelar y organizar información de manera eficiente, representando relaciones entre entidades. Son la base de numerosos algoritmos y soluciones en diversas aplicaciones.</p><h2>Conceptos Principales</h2><h3>Nodos y Aristas (o Vértices y Ejes)</h3><ul><li>  <strong>Nodo (o Vértice):</strong> Es la unidad fundamental de un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> o árbol. Representa una entidad, un objeto o un punto de datos individual.</li><li>  <strong>Arista (o Eje):</strong> Es una conexión entre dos nodos. Representa una relación, un vínculo o una transición entre las entidades que los nodos representan.</li><li>   *   <strong>Dirigida:</strong> La conexión va en una sola dirección (A -> B).</li><li>   *   <strong>No Dirigida:</strong> La conexión es bidireccional (A <-> B).</li><li>   *   <strong>Ponderada:</strong> La arista tiene un valor asociado (peso o costo), como una distancia o un tiempo.</li></ul><h3>Grafos</h3><p>Un <strong><span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span></strong> es una colección de nodos (vértices) y las aristas que los conectan. Es una estructura de datos muy general que permite modelar relaciones complejas.</p><ul><li>  <strong>Características:</strong></li><li>   *   Puede tener <strong>ciclos</strong> (un camino que empieza y termina en el mismo nodo).</li><li>   *   Puede estar <strong>conectado</strong> (hay un camino entre cada par de nodos) o <strong>desconectado</strong> (contener componentes separadas).</li><li>   *   No tiene una jerarquía predefinida; las relaciones pueden ser de cualquier tipo.</li><li>  <strong>Representaciones Comunes:</strong></li><li>   *   <strong>Matriz de Adyacencia:</strong> Una matriz donde cada celda <code>[i][j]</code> indica si hay una arista entre el nodo <code>i</code> y el nodo <code>j</code>. Eficiente para grafos densos (muchas aristas).</li><li>   *   <strong>Lista de Adyacencia:</strong> Para cada nodo, se almacena una lista de sus nodos vecinos. Eficiente para grafos dispersos (pocas aristas).</li></ul><h3>Árboles</h3><p>Un <strong>árbol</strong> es un tipo especial de <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> no dirigido que es <strong>conectado</strong> y <strong>acíclico</strong> (no contiene ciclos). Se caracteriza por tener una estructura jerárquica.</p><ul><li>  <strong>Características:</strong></li><li>   *   <strong>Raíz:</strong> El nodo superior del árbol, del cual descienden todos los demás nodos. Es el único nodo sin un "padre".</li><li>   *   <strong>Hijo:</strong> Un nodo directamente conectado debajo de otro nodo.</li><li>   *   <strong>Padre:</strong> El nodo directamente conectado encima de un nodo hijo.</li><li>   *   <strong>Hojas (o Nodos Terminales):</strong> Nodos que no tienen hijos.</li><li>   *   <strong>Nodos Internos:</strong> Nodos que tienen al menos un hijo.</li><li>   *   <strong>Profundidad:</strong> La distancia desde la raíz a un nodo.</li><li>   *   <strong>Altura:</strong> La longitud del camino más largo desde la raíz a una hoja.</li><li>   *   <strong>Subárbol:</strong> Un nodo y todos sus descendientes.</li><li>  <strong>Tipos Comunes:</strong></li><li>   *   <strong>Árbol Binario:</strong> Cada nodo tiene como máximo dos hijos (izquierdo y derecho).</li><li>   *   <strong>Árbol Binario de Búsqueda (BST):</strong> Un árbol binario donde, para cada nodo, todos los valores en su subárbol izquierdo son menores que el valor del nodo, y todos los valores en su subárbol derecho son mayores. Permite búsquedas, inserciones y eliminaciones eficientes.</li></ul><h2>Casos de Uso Comunes</h2><h3>Grafos</h3><ul><li>  <strong>Redes Sociales:</strong> Representar usuarios (nodos) y sus conexiones o amistades (aristas).</li><li>  <strong>Mapas y Sistemas de Navegación (GPS):</strong> Ciudades o intersecciones (nodos), carreteras o rutas (aristas ponderadas por distancia/tiempo). Algoritmos de ruta más corta (Dijkstra, A*).</li><li>  <strong>Internet y Redes de Computadoras:</strong> Servidores y routers (nodos), conexiones de red (aristas).</li><li>  <strong>Dependencias de Proyectos/Tareas:</strong> Tareas (nodos), requisitos previos (aristas dirigidas).</li><li>  <strong>Sistemas de Recomendación:</strong> Usuarios y productos (nodos), interacciones (aristas).</li><li>  <strong>Modelado de Circuitos Eléctricos o Redes de Suministro.</strong></li></ul><h3>Árboles</h3><ul><li>  <strong>Sistemas de Archivos:</strong> Directorios y subdirectorios (nodos), archivos (hojas).</li><li>  <strong>Estructura de Documentos (HTML, XML, JSON):</strong> El Document Object Model (DOM) es un árbol.</li><li>  <strong>Árboles de Decisión (Machine Learning):</strong> Representar una secuencia de decisiones y sus posibles resultados.</li><li>  <strong>Bases de Datos:</strong> Índices como B-Trees y B+ Trees para búsquedas eficientes.</li><li>  <strong>Compiladores:</strong> Árboles de sintaxis abstracta para representar la estructura del código fuente.</li><li>  <strong>Organigramas Empresariales:</strong> Representar la jerarquía de una organización.</li></ul><h2>Ventajas</h2><h3>Grafos</h3><ul><li>  <strong>Flexibilidad:</strong> Pueden modelar relaciones arbitrarias y complejas entre entidades.</li><li>  <strong>Representación Intuitiva:</strong> Son una forma natural de visualizar redes y conexiones.</li><li>  <strong>Potentes Algoritmos:</strong> Existen muchos algoritmos bien establecidos para resolver problemas en grafos (caminos más cortos, flujos máximos, detección de ciclos, etc.).</li></ul><h3>Árboles</h3><ul><li>  <strong>Organización Jerárquica:</strong> Ideales para datos que tienen una relación padre-hijo inherente.</li><li>  <strong>Eficiencia en Búsquedas y Ordenamiento:</strong> Especialmente los árboles binarios de búsqueda y sus variantes balanceadas (AVL, Red-Black Trees) permiten operaciones en tiempo logarítmico (O(log n)).</li><li>  <strong>Aseguran Ausencia de Ciclos:</strong> La naturaleza acíclica simplifica muchos algoritmos en comparación con los grafos generales.</li><li>  <strong>Fácil Recorrido:</strong> Recorridos como preorden, inorden y postorden son estándar y útiles.</li></ul><h2>Desventajas</h2><h3>Grafos</h3><ul><li>  <strong>Complejidad Algorítmica:</strong> Muchos problemas de grafos son NP-difíciles (no tienen soluciones eficientes conocidas para todos los casos).</li><li>  <strong>Mayor Complejidad de Implementación:</strong> La gestión de la memoria y la lógica para los algoritmos pueden ser más complejas que con otras estructuras de datos.</li><li>  <strong>Consumo de Memoria:</strong> Para grafos densos, la matriz de adyacencia puede consumir mucha memoria (O(V^2), donde V es el número de vértices).</li></ul><h3>Árboles</h3><ul><li>  <strong>Falta de Flexibilidad en Relaciones:</strong> Solo pueden modelar relaciones jerárquicas; no son adecuados para relaciones de red arbitrarias.</li><li>  <strong>Desequilibrio (en BST):</strong> Si los datos se insertan en un orden particular (por ejemplo, ya ordenados), un árbol binario de búsqueda puede degenerar en una lista enlazada, resultando en un rendimiento de O(n) para las operaciones en lugar de O(log n). Esto requiere algoritmos de auto-balanceo (AVL, Red-Black) que añaden complejidad.</li><li>  <strong>Naturaleza Rígida:</strong> La estructura estrictamente jerárquica no siempre se adapta a todos los tipos de datos del mundo real.</li></ul><h2>Ejemplo de Aplicación Real</h2><p>Aquí tienes un ejemplo detallado de la aplicación del concepto de "Árboles y Grafos" en un escenario del mundo real, utilizando un Sistema de Navegación GPS.</p><p>---</p><p># Aplicación de Árboles y Grafos: Sistema de Navegación GPS</p><h2>1. Descripción del Problema</h2><p>El problema central que enfrentan los sistemas de navegación GPS es encontrar la <strong>ruta óptima</strong> entre dos puntos geográficos (un origen y un destino) en una red de carreteras. La "ruta óptima" puede significar la distancia más corta, el tiempo de viaje más rápido, la ruta con menos peajes, la que evita el tráfico, o una combinación de estos factores.</p><p>Este no es un problema trivial, ya que la red de carreteras de una ciudad, región o país es inmensa y está en constante cambio (construcciones, accidentes, tráfico). Un sistema de GPS debe ser capaz de:</p><ul><li>  <strong>Modelar</strong> de manera eficiente la infraestructura vial.</li><li>  <strong>Calcular</strong> rutas rápidamente, a menudo en milisegundos.</li><li>  <strong>Adaptarse</strong> a condiciones cambiantes (tráfico en tiempo real).</li><li>  <strong>Proporcionar</strong> indicaciones claras y precisas.</li></ul><h2>2. Aplicación del Concepto "Árboles y Grafos"</h2><p>El concepto de "Árboles y Grafos" es fundamental para resolver el problema de la navegación GPS, ya que permite modelar la red de carreteras y aplicar algoritmos eficientes para encontrar rutas.</p><h3>2.1 Modelado del Mundo Real como un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">Grafo</span></h3><p>La clave es representar la red de carreteras como un <strong><span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> dirigido y ponderado</strong>:</p><ul><li>  <strong>Nodos (Vértices):</strong> Representan intersecciones de calles, puntos de interés (POI), o puntos específicos a lo largo de un segmento de carretera. Cada nodo tiene una ubicación geográfica (latitud y longitud).</li><li>  <strong>Aristas (Edges):</strong> Representan los segmentos de carretera que conectan dos nodos. Una arista puede ser dirigida (por ejemplo, una calle de un solo sentido) o bidireccional (una calle de doble sentido, representada por dos aristas dirigidas opuestas).</li><li>  <strong>Pesos (Weights):</strong> Cada arista tiene asociado uno o más pesos que representan la "costo" de atravesar ese segmento de carretera. Estos pesos pueden incluir:</li><li>   *   <strong>Distancia:</strong> Longitud del segmento (en metros o kilómetros).</li><li>   *   <strong>Tiempo:</strong> Tiempo promedio para recorrer el segmento (en segundos o minutos). Este peso puede ser dinámico y actualizarse con datos de tráfico en tiempo real.</li><li>   *   <strong>Velocidad máxima:</strong> Límite de velocidad de la carretera.</li><li>   *   <strong>Peajes:</strong> Costo monetario si el segmento es una autopista de peaje.</li><li>   *   <strong>Tipo de carretera:</strong> Autopista, calle residencial, etc., que puede influir en la preferencia de ruta.</li></ul><h3>2.2 Algoritmo de Búsqueda de Ruta</h3><p>Una vez que la red de carreteras se modela como un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span>, el problema de encontrar la ruta óptima se convierte en un <strong>problema de búsqueda del camino más corto</strong> en un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> ponderado. El algoritmo más comúnmente utilizado para esto es el <strong>Algoritmo de Dijkstra</strong> (para encontrar el camino más corto entre un nodo de origen y todos los demás nodos) o su extensión más eficiente, el <strong>Algoritmo A\* (A-star)</strong>, que utiliza una heurística para priorizar la exploración de nodos que están más cerca del destino.</p><p>El algoritmo funciona de la siguiente manera (simplificado para A\*):</p><p>1.  <strong>Inicialización:</strong> Se asigna una "distancia estimada" infinita a todos los nodos excepto al nodo de origen, al cual se le asigna 0. Se mantiene una lista de nodos por visitar (a menudo una cola de prioridad).</p><p>2.  <strong>Exploración:</strong> En cada paso, el algoritmo selecciona el nodo de la cola de prioridad con la menor "costo total estimado" (costo real desde el origen hasta el nodo actual + costo heurístico estimado desde el nodo actual hasta el destino).</p><p>3.  <strong>Actualización (Relajación):</strong> Para cada vecino del nodo seleccionado, el algoritmo calcula una nueva distancia desde el origen a través del nodo actual. Si esta nueva distancia es menor que la distancia previamente registrada, se actualiza y se agrega el vecino a la cola de prioridad (o se actualiza su prioridad si ya está en la cola).</p><p>4.  <strong>Terminación:</strong> El algoritmo continúa hasta que el nodo destino es seleccionado (se ha encontrado el camino más corto) o la cola de prioridad está vacía (no hay camino).</p><h3>2.3 Estructuras de Datos Utilizadas</h3><p>Para implementar el <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> y los algoritmos eficientemente, se utilizan estructuras de datos clave:</p><ul><li>  <strong>Lista de Adyacencia:</strong> Es la forma más común de representar el <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span>. Para cada nodo, se almacena una lista de sus vecinos directos y el peso de la arista que los conecta. Esto es eficiente para grafos "dispersos" como las redes de carreteras (donde cada nodo solo tiene unos pocos vecinos).</li><li>  <strong>Cola de Prioridad (Priority Queue):</strong> Es esencial para los algoritmos de Dijkstra y A\*. Permite recuperar rápidamente el nodo con la menor "costo estimado" para expandir a continuación, optimizando la búsqueda. Usualmente implementado con un Heap binario.</li></ul><h2>3. Implementación (Esquema Conceptual)</h2><p>Imaginemos un esquema de cómo se verían las clases principales:</p><pre><code>import heapq
+
+class Nodo:
+    def __init__(self, id, latitud, longitud):
+        self.id = id
+        self.latitud = latitud
+        self.longitud = longitud
+        self.vecinos = [] # Lista de tuplas (Nodo_vecino, peso_arista)
+
+    def agregar_vecino(self, vecino, peso):
+        self.vecinos.append((vecino, peso))
+
+class GrafoCarreteras:
+    def __init__(self):
+        self.nodos = {} # Diccionario: id_nodo -&gt; Objeto Nodo
+
+    def agregar_nodo(self, id, latitud, longitud):
+        if id not in self.nodos:
+            self.nodos[id] = Nodo(id, latitud, longitud)
+        return self.nodos[id]
+
+    def agregar_arista(self, id_origen, id_destino, peso):
+        origen = self.nodos.get(id_origen)
+        destino = self.nodos.get(id_destino)
+        if origen and destino:
+            origen.agregar_vecino(destino, peso)
+            # Si las calles son bidireccionales, agregar también la arista inversa:
+            # destino.agregar_vecino(origen, peso)
+
+    def encontrar_ruta_mas_corta(self, id_origen, id_destino, tipo_peso='tiempo'):
+        # Implementación conceptual del Algoritmo de Dijkstra/A*
+        # (Para simplificar, usaremos Dijkstra básico enfocado en un solo tipo de peso)
+
+        origen = self.nodos.get(id_origen)
+        destino = self.nodos.get(id_destino)
+
+        if not origen or not destino:
+            return None, "Origen o destino no encontrados."
+
+        distancias = {nodo_id: float('inf') for nodo_id in self.nodos}
+        distancias[origen.id] = 0
+        predecesores = {} # Para reconstruir el camino
+
+        # Cola de prioridad: (costo_acumulado, id_nodo)
+        cola_prioridad = [(0, origen.id)]
+
+        while cola_prioridad:
+            costo_actual, id_actual = heapq.heappop(cola_prioridad)
+
+            # Si ya hemos encontrado un camino más corto a este nodo, saltar
+            if costo_actual &gt; distancias[id_actual]:
+                continue
+
+            # Si hemos llegado al destino
+            if id_actual == destino.id:
+                break
+
+            nodo_actual = self.nodos[id_actual]
+            for vecino_obj, pesos_arista in nodo_actual.vecinos:
+                # Asumimos que pesos_arista es un diccionario {'tiempo': X, 'distancia': Y}
+                peso_arista = pesos_arista.get(tipo_peso, 1) # Usar 1 como fallback si el tipo no existe
+
+                nuevo_costo = costo_actual + peso_arista
+
+                if nuevo_costo &lt; distancias[vecino_obj.id]:
+                    distancias[vecino_obj.id] = nuevo_costo
+                    predecesores[vecino_obj.id] = id_actual
+                    heapq.heappush(cola_prioridad, (nuevo_costo, vecino_obj.id))
+
+        # Reconstruir el camino
+        camino = []
+        if distancias[destino.id] == float('inf'):
+            return None, "No se encontró un camino."
+
+        id_paso = destino.id
+        while id_paso is not None:
+            camino.insert(0, id_paso)
+            id_paso = predecesores.get(id_paso)
+            if id_paso == origen.id: # Asegurarse de agregar el origen
+                camino.insert(0, id_paso)
+                break
+            if id_paso is None and camino[0] != origen.id: # Caso donde el origen no fue insertado al final
+                 break # Esto debería ser manejado mejor, pero para el ejemplo
+
+        # Asegurarse que el origen y destino estén en el camino
+        if not camino or camino[0] != origen.id:
+            camino = []
+            current = destino.id
+            while current in predecesores and current != origen.id:
+                camino.insert(0, current)
+                current = predecesores[current]
+            if current == origen.id:
+                camino.insert(0, current)
+            else:
+                return None, "Error al reconstruir el camino"
+
+
+        return camino, distancias[destino.id]
+
+# --- Ejemplo de uso ---
+mapa = GrafoCarreteras()
+
+# Añadir nodos (intersecciones/puntos)
+mapa.agregar_nodo("A", 40.71, -74.00) # Nueva York
+mapa.agregar_nodo("B", 40.72, -73.99)
+mapa.agregar_nodo("C", 40.73, -73.98)
+mapa.agregar_nodo("D", 40.74, -73.97)
+mapa.agregar_nodo("E", 40.75, -73.96)
+
+# Añadir aristas (segmentos de carretera con pesos de tiempo y distancia)
+# (Origen, Destino, {'tiempo': X_minutos, 'distancia': Y_km})
+mapa.agregar_arista("A", "B", {'tiempo': 5, 'distancia': 1.5})
+mapa.agregar_arista("A", "C", {'tiempo': 12, 'distancia': 4.0})
+mapa.agregar_arista("B", "D", {'tiempo': 7, 'distancia': 2.0})
+mapa.agregar_arista("C", "D", {'tiempo': 3, 'distancia': 1.0})
+mapa.agregar_arista("D", "E", {'tiempo': 6, 'distancia': 2.5})
+mapa.agregar_arista("B", "E", {'tiempo': 10, 'distancia': 3.0}) # Ruta alternativa B a E
+
+# Encontrar la ruta más rápida (basada en tiempo)
+ruta_rapida, tiempo_total = mapa.encontrar_ruta_mas_corta("A", "E", tipo_peso='tiempo')
+if ruta_rapida:
+    print(f"Ruta más rápida de A a E: {' -&gt; '.join(ruta_rapida)}")
+    print(f"Tiempo total estimado: {tiempo_total} minutos")
+else:
+    print(tiempo_total)
+
+# Encontrar la ruta más corta (basada en distancia)
+ruta_corta, distancia_total = mapa.encontrar_ruta_mas_corta("A", "E", tipo_peso='distancia')
+if ruta_corta:
+    print(f"\nRuta más corta de A a E: {' -&gt; '.join(ruta_corta)}")
+    print(f"Distancia total estimada: {distancia_total} km")
+else:
+    print(distancia_total)</code></pre><h2>4. Resultados y Beneficios Obtenidos</h2><p>La aplicación de grafos y algoritmos de búsqueda permite a los sistemas GPS ofrecer una multitud de beneficios:</p><ul><li>  <strong>Rutas Óptimas:</strong> Proporcionar consistentemente la ruta más eficiente según los criterios deseados (tiempo, distancia, etc.).</li><li>  <strong>Tiempo Real:</strong> Al actualizar dinámicamente los pesos de las aristas con datos de tráfico en vivo, los sistemas pueden recalcular rutas para evitar congestiones, accidentes o construcciones, ofreciendo la ruta más rápida <em>en ese momento</em>.</li><li>  <strong>Estimación Precisa:</strong> Ofrecer tiempos de llegada estimados con mayor precisión.</li><li>  <strong>Re-rutas Dinámicas:</strong> Si el usuario se desvía del camino, el sistema puede recalcular instantáneamente una nueva ruta óptima desde la posición actual.</li><li>  <strong>Navegación Paso a Paso:</strong> Al reconstruir el camino más corto, el sistema puede generar instrucciones detalladas para cada giro o maniobra.</li><li>  <strong>Flexibilidad:</strong> Permite al usuario elegir entre diferentes opciones de ruta (más rápida, más corta, evitar peajes, etc.) simplemente cambiando el "peso" considerado por el algoritmo.</li><li>  <strong>Escalabilidad:</strong> Aunque las redes viales son enormes, los algoritmos de grafos, combinados con optimizaciones como la pre-computación de rutas para áreas grandes o el uso de índices espaciales (como árboles R-tree para ubicar nodos cercanos), permiten un rendimiento aceptable.</li></ul><h2>5. Consideraciones Adicionales</h2><ul><li>  <strong>Grafos Jerárquicos:</strong> Para manejar la enorme escala de mapas mundiales, a menudo se utilizan grafos jerárquicos. Por ejemplo, un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> de calles locales, un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> de carreteras secundarias, y un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> de autopistas. Esto permite búsquedas más rápidas al operar en el nivel de detalle necesario para cada parte del viaje.</li><li>  <strong>Heurísticas (A\<em>):</strong> Para búsquedas en grafos muy grandes, el algoritmo A\</em> es preferible a Dijkstra, ya que usa una función heurística (por ejemplo, la distancia euclidiana o de Manhattan al destino) para guiar la búsqueda y evitar explorar caminos inútiles, reduciendo significativamente el tiempo de cálculo.</li><li>  <strong>Costo Multi-Criterio:</strong> Los sistemas modernos suelen optimizar múltiples criterios simultáneamente (ej. "ruta más rápida que evita peajes"). Esto requiere extensiones de los algoritmos de camino más corto que consideren vectores de costos.</li></ul><p>En resumen, los grafos son el modelo matemático perfecto para representar redes de transporte, y los algoritmos de búsqueda de caminos en grafos son la columna vertebral de cualquier sistema de navegación GPS moderno, permitiendo una experiencia de usuario eficiente y adaptable.</p><h2>Preguntas de Entrevista</h2><div>
+        <div class="accordion-item">
+          <p class="accordion-question">Describe una situación real donde la elección entre una estructura de árbol y una de grafo tiene implicaciones significativas en el rendimiento y la complejidad. Justifica tu elección óptima.</p>
+          <div class="accordion-answer"><p>Consideremos la representación de un sistema de archivos versus una red social. Un sistema de archivos es inherentemente jerárquico, donde los directorios contienen archivos y subdirectorios, formando una estructura de árbol. Un árbol es óptimo para esto porque las operaciones de búsqueda (path), creación/eliminación (child nodes), y listar contenido son eficientes (logarítmicas o lineales con la profundidad/número de elementos en un directorio), y la ausencia de ciclos simplifica la gestión. En contraste, una red social donde los usuarios pueden tener múltiples conexiones entre sí sin una jerarquía estricta (A es amigo de B, B de C, C de A) se modela mejor con un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span>. Aquí, las relaciones no son exclusivas ni unidireccionales, y las búsquedas como 'amigos de amigos' o 'rutas de conexión' requieren algoritmos de recorrido de grafos (BFS/DFS), donde la complejidad suele ser O(V+E). Usar un árbol para una red social sería inviable, ya que forzaría una jerarquía artificial y no permitiría representar relaciones complejas como los ciclos o múltiples padres.</p></div>
+        </div>
+      
+        <div class="accordion-item">
+          <p class="accordion-question">Dada una red de carreteras con peajes variables (pesos en los bordes) y límites de velocidad (atributos de los nodos o bordes), ¿cómo encontrarías la ruta más rápida y rentable entre dos ciudades? Discute los algoritmos apropiados y sus complejidades.</p>
+          <div class="accordion-answer"><p>Este es un problema de camino más corto con múltiples criterios. Primero, modelaría la red como un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> dirigido donde las ciudades son nodos y las carreteras son bordes. Cada borde tendría dos pesos: uno para el costo (peaje) y otro para el tiempo (distancia/velocidad). Para encontrar la 'ruta más rápida y rentable', podría plantearlo de varias maneras: 1. Minimizar el costo total bajo un umbral de tiempo máximo. 2. Minimizar el tiempo total bajo un umbral de costo máximo. 3. Una combinación ponderada de tiempo y costo. Para la opción 3, aplicaría el algoritmo de Dijkstra, donde el peso de cada borde es una función de sus peajes y tiempos (ej., peso = α <em> costo + β </em> tiempo), donde α y β son coeficientes de ponderación. La complejidad de Dijkstra con un min-heap es O(E log V). Si los pesos fueran negativos (lo cual no ocurre con peajes y tiempos positivos), se necesitaría Bellman-Ford O(V<em>E). Para la opción 1 o 2, podría usar una modificación de Dijkstra o A</em>, donde la función de costo se ajusta dinámicamente o se realizan múltiples ejecuciones/filtrados.</p></div>
+        </div>
+      
+        <div class="accordion-item">
+          <p class="accordion-question">En un grafo dirigido acíclico (DAG), ¿cómo detectarías un ciclo si, por error, se introduce uno? Explica el algoritmo y su complejidad.</p>
+          <div class="accordion-answer"><p>Para detectar un ciclo en un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> dirigido, incluso si se supone que es acíclico (DAG), se puede utilizar una modificación del algoritmo de búsqueda en profundidad (DFS). Se mantiene un estado para cada nodo: 'no visitado', 'visitando' (actualmente en el stack de recursión DFS) y 'visitado' (DFS completado para ese nodo). El algoritmo es el siguiente:Para cada nodo 'u' en el <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span>:1.  Si 'u' es 'no visitado': Iniciar DFS desde 'u'.2.  Durante el DFS desde 'u':    a.  Marcar 'u' como 'visitando'.    b.  Para cada vecino 'v' de 'u':        i.   Si 'v' es 'visitando', se ha encontrado un ciclo (un 'back-edge').        ii.  Si 'v' es 'no visitado', llamar recursivamente DFS(v).        iii. Si 'v' es 'visitado', continuar (no hay ciclo a través de este camino).    c.  Una vez que todos los vecinos de 'u' han sido procesados, marcar 'u' como 'visitado' y sacarlo del estado 'visitando'.La complejidad de este algoritmo es O(V+E), ya que cada nodo y cada arista se visitan y procesan como máximo una vez.</p></div>
+        </div>
+      
+        <div class="accordion-item">
+          <p class="accordion-question">Explica la importancia de los árboles auto-balanceados (ej. AVL, Red-Black) en sistemas de bases de datos o índices. ¿Cuándo preferirías uno sobre el otro y por qué?</p>
+          <div class="accordion-answer"><p>Los árboles auto-balanceados son cruciales en sistemas de bases de datos e índices porque garantizan que las operaciones de búsqueda, inserción y eliminación se mantengan con una complejidad de tiempo logarítmica (O(log N)). Sin auto-balanceo, un árbol de búsqueda binario degeneraría en una lista enlazada en el peor de los casos (ej., inserciones en orden ascendente), llevando a una complejidad lineal (O(N)), lo cual es inaceptable para grandes volúmenes de datos.Los árboles AVL son más estrictamente balanceados que los Red-Black (la diferencia de altura entre subárboles de cualquier nodo es como máximo 1), lo que resulta en búsquedas ligeramente más rápidas. Sin embargo, esto se logra a costa de más rotaciones durante las inserciones y eliminaciones para mantener ese balance estricto.Los árboles Red-Black permiten un balanceo menos estricto (la ruta más larga a una hoja es como máximo el doble de larga que la más corta), lo que significa que requieren menos rotaciones para mantener su balance. Esto los hace generalmente más eficientes para cargas de trabajo donde las inserciones y eliminaciones son más frecuentes que las búsquedas, o cuando se necesita un rendimiento de escritura predecible.En la práctica, los árboles Red-Black son a menudo preferidos en implementaciones de diccionarios (como <code>std::map</code> en C++ o <code>TreeMap</code> en Java) y en muchos sistemas de archivos e índices de bases de datos, debido a su buen compromiso entre el rendimiento de lectura y escritura.</p></div>
+        </div>
+      
+        <div class="accordion-item">
+          <p class="accordion-question">Estás diseñando un sistema para recomendar amigos en una red social. ¿Cómo modelarías los datos usando grafos para generar recomendaciones significativas? ¿Qué algoritmos usarías para encontrar las mejores recomendaciones?</p>
+          <div class="accordion-answer"><p>Modelaría la red social como un <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> no dirigido donde cada usuario es un nodo y una amistad mutua se representa como una arista entre dos nodos. También podría añadir aristas dirigidas para 'seguidores' o 'conexiones pendientes'. Para recomendaciones significativas, se pueden usar varios enfoques y algoritmos:1.  <strong>Amigos en común:</strong> El algoritmo más simple es buscar usuarios que no son amigos del usuario objetivo 'U', pero que tienen muchos amigos en común con 'U'. Esto se puede hacer iterando sobre los amigos de 'U' (vecinos en el <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span>) y luego sobre los amigos de esos amigos (vecinos de vecinos), excluyendo los amigos directos de 'U'.2.  <strong>Proximidad en el <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span>:</strong> Usar algoritmos de camino más corto (como BFS) para encontrar usuarios 'cercanos' a 'U' en el <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span> que aún no son amigos. Las recomendaciones se basarían en usuarios a una distancia de 2 o 3 aristas.3.  <strong>Análisis de comunidades/clusters:</strong> Aplicar algoritmos de detección de comunidades (ej., Louvain, Girvan-Newman) para identificar grupos de usuarios con conexiones densas. Si 'U' pertenece a una comunidad, se pueden recomendar otros miembros de esa comunidad con los que 'U' aún no tiene amistad.4.  <strong>Similitud de atributos:</strong> Además de la estructura del <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span>, se pueden incorporar atributos de los usuarios (intereses, ubicación, etc.). Los algoritmos como Jaccard Index o Cosine Similarity pueden medir la similitud entre el perfil de 'U' y el de otros usuarios, ponderando estas similitudes con la proximidad en el <span class="tooltip" data-tooltip-text="Un tipo de base de datos NoSQL diseñada para almacenar y navegar relaciones. Los datos se modelan como nodos, aristas y propiedades para representar redes complejas como las redes sociales.">grafo</span>.5.  <strong>PageRank modificado o algoritmos de 'paseo aleatorio':</strong> Se podría adaptar PageRank para encontrar usuarios 'influyentes' o 'centrales' que podrían ser buenas recomendaciones, o simular paseos aleatorios desde el usuario 'U' para encontrar nodos frecuentemente visitados que no son amigos directos.La 'mejor' recomendación a menudo implica una combinación ponderada de estos criterios.</p></div>
+        </div>
+      </div><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFEK50fBuenv6ZSkKxej_akfY-Jh3LjbFhNnQN_uH2Y70IU9W_klVOpx-ay0qPJ6ODY7bLRIayqMLnQmu38t4qBx06VCAH9pAkG-NivII5uxBGqtk9OuADYn-D8iMmDVyFyv7bKqr5o5v9vSSMJSAEs-JpGNnouOR0rXmWzpW32G4I=" target="_blank" rel="noopener noreferrer">unemi.edu.ec</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEmYEASc5ELVKJq5CT8z4W17h5Xx21juPp0Dun4KrEoMlJe8rqsQvv8CLzEXUQ7F-sNg9VULuFWhcAWEbZl_gMEuPhFOqyGwEukDvsDgpodU0NRZrRos4xxFU5GRJheDixMEGhp0mnegmzwcI1Tqpp90jFWa03ruGIp3Yf6tBywaA-A95D6wg3zFSZlhG4QHQVLgVCkY4Eb031TPZl7iW7W0KBK6AtRvhtzkh-r7qMwr2DeLziS" target="_blank" rel="noopener noreferrer">quora.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7PlWgzZFHgIjbq2lzxTCLCWoJQKQXaRybMQmF8qx-3RmdeLTDFLRfmREsvCmQV1lLlbYiOF3I865mO4KNwK_7592Q0kTUGLt-3I2u0OFDMvEBSRqWAF8NjgmZus0xhFuENgh48cY4EsA=" target="_blank" rel="noopener noreferrer">apinem.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG_aoV8n6jAYScbCa8YXkgQ8MMhGPVmJGk1mPrxJ38nrNFvubiFMeffEzt58eW9IXYPBxCXnYX0e1O58Wg4P0jSikrhKJkAAXLlbqMjn7lyZQ9STqSZ3FHEmOEumMZ-SG_ZnvMYwnRioiemQn2P8P4xBzvaVEsmyTnH3KUS5uyMF_Z28VmFAGc=" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH4PWhi3zKoVf6TUHp7QcPXEh4ilvzGoAQpDZSoAR4nI7u1Vb_qAn3T9CXtqY9Rb44bc97RzfCqeTfuD0teuKnZEi0IxT_KhnE8px3GVL7WDnjVJA26uUi88UHzev_hO-ZlC8ssAA==" target="_blank" rel="noopener noreferrer">luisllamas.es</a></li></ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_pgvector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_pgvector</h1>
+    <h2>Explicación</h2><p>Esta guía le permitirá configurar y ejecutar una instancia local de PostgreSQL con la extensión <code>pgvector</code> utilizando Podman o Docker. Se creará una imagen de Docker personalizada que incluye la extensión <code>pgvector</code> compilada desde su fuente, y se inicializará una base de datos con la extensión habilitada y una tabla de ejemplo.</p><h3>Pasos a seguir:</h3><p>1.  <em></em>Crear el <code>Dockerfile</code>:<em></em> Este archivo (<code>Dockerfile</code>) define cómo construir la imagen de PostgreSQL con <code>pgvector</code>. Clona el repositorio de <code>pgvector</code>, lo compila y lo instala.</p><p>2.  <em></em>Crear el archivo <code>init.sql</code>:<em></em> Este script se ejecutará automáticamente la primera vez que se inicie el contenedor de PostgreSQL. Creará una base de datos llamada <code>vectordb</code>, habilitará la extensión <code>vector</code> dentro de ella y creará una tabla <code>items</code> con una columna <code>embedding</code> de tipo <code>vector(3)</code> junto con algunos datos de ejemplo.</p><p>3.  <strong>Construir y ejecutar el contenedor:</strong> El comando <code>runCommands</code> se encarga de estos dos pasos:</p><ul><li>   *   <code>podman build -t pgvector-db .</code>: Construye la imagen de Docker/Podman con el tag <code>pgvector-db</code> usando el <code>Dockerfile</code> en el directorio actual.</li><li>   *   <code>podman run ...</code>: Inicia un contenedor a partir de la imagen recién creada. Mapea el puerto <code>5432</code> del host al contenedor, establece las credenciales de la base de datos (<code>pguser</code>, <code>pgpassword</code>, <code>vectordb</code>) y monta el archivo <code>init.sql</code> para la inicialización automática.</li></ul><p>Una vez que el contenedor esté en funcionamiento, podrá conectarse a la base de datos <code>vectordb</code> usando las credenciales proporcionadas y verificar que la extensión <code>pgvector</code> esté instalada y funcionando.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t pgvector-db . && podman run --name pgvector-instance -e POSTGRES_USER=pguser -e POSTGRES_PASSWORD=pgpassword -e POSTGRES_DB=vectordb -p 5432:5432 -v "$(pwd)/init.sql:/docker-entrypoint-initdb.d/init.sql" -d pgvector-db</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa una imagen base de PostgreSQL. Alpine es ligera y reduce el tamaño final de la imagen.
+FROM postgres:16-alpine
+
+# Instala las herramientas necesarias para compilar pgvector.
+# build-base incluye make y gcc. postgresql-dev proporciona los headers de desarrollo de PostgreSQL.
+# git es necesario para clonar el repositorio de pgvector.
+RUN apk add --no-cache build-base postgresql-dev git
+
+# Clona el repositorio de pgvector. Usa una versión específica para mayor estabilidad.
+# La versión 0.6.0 es una de las más recientes y estables en el momento de escribir esto.
+# Clona el repositorio en /usr/src/pgvector.
+RUN git clone --branch v0.6.0 https://github.com/pgvector/pgvector.git /usr/src/pgvector
+
+# Compila e instala pgvector.
+# Cambia al directorio del código fuente de pgvector.
+WORKDIR /usr/src/pgvector
+# Ejecuta 'make' para compilar la extensión.
+RUN make
+# Ejecuta 'make install' para instalar la extensión en el sistema de PostgreSQL.
+RUN make install
+
+# Limpia las herramientas de compilación y los archivos fuente para reducir el tamaño de la imagen.
+# Vuelve al directorio raíz.
+WORKDIR /
+# Elimina los paquetes de compilación y el repositorio git clonado.
+RUN apk del build-base postgresql-dev git && \
+    rm -rf /usr/src/pgvector
+
+# El puerto por defecto de PostgreSQL es 5432. Lo exponemos para la comunicación externa.
+EXPOSE 5432
+
+# La imagen base de PostgreSQL está configurada para ejecutar automáticamente scripts
+# SQL o shell ubicados en /docker-entrypoint-initdb.d/ al iniciar por primera vez el contenedor.
+# Esto se utilizará con un volumen montado para el archivo 'init.sql'.</code></pre><h3>init.sql</h3><pre><code>-- Este script se ejecutará automáticamente cuando el contenedor de PostgreSQL inicie por primera vez
+-- gracias al mapeo de volumen a /docker-entrypoint-initdb.d/init.sql.
+
+-- Se conectará a la base de datos 'vectordb' que se crea automáticamente por la imagen de PostgreSQL
+-- usando la variable de entorno POSTGRES_DB.
+
+-- Habilita la extensión 'vector'. Esto hará que los tipos de datos VECTOR estén disponibles.
+-- Si la base de datos no es 'vectordb', el usuario deberá ajustar el comando de conexión
+-- o especificar la base de datos con -d en psql.
+CREATE EXTENSION IF NOT EXISTS vector;
+
+-- Crea una tabla de ejemplo con una columna de tipo VECTOR.
+CREATE TABLE IF NOT EXISTS items (
+    id bigserial PRIMARY KEY,
+    embedding vector(3) -- Define una columna para almacenar vectores de 3 dimensiones
+);
+
+-- Inserta algunos datos de ejemplo si la tabla está vacía.
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM items WHERE embedding = '[1,2,3]') THEN
+        INSERT INTO items (embedding) VALUES ('[1,2,3]'), ('[4,5,6]'), ('[7,8,9]');
+    END IF;
+END
+$$;
+
+-- Opcional: crea un índice para búsquedas de similitud (ej. usando IVFFlat).
+-- Esto requiere una versión reciente de pgvector y un tamaño mínimo de tabla para que sea eficiente.
+-- Descomentar y ajustar 'lists' según el tamaño esperado de su tabla.
+-- CREATE INDEX IF NOT EXISTS ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100);
+
+-- Muestra los datos insertados para verificar.
+SELECT * FROM items;
+
+-- Muestra las extensiones instaladas para confirmar que 'vector' está presente.
+SELECT * FROM pg_extension WHERE extname = 'vector';</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWXyO5bu-qMMAO_yS-UQBwEzRLbXY1AWFUqm_9K3Ff2oMAEeT4vy5JxZ0jKTp6gTqDIS8s1WLN7KxZon71JZxFmE5ro0f7tv8va2z6mwoepqhF1VpvE3qmK0P-3f1p" target="_blank" rel="noopener noreferrer">github.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGdDLef5uxJctZh_MeHTsDrKd6HKLurrRlXMKu5WYVDHtQo6-aciGbKmXIaDG9GAcAWAw7LD3CSclDMZAslRYdkBRkP7rwhMicfpeOL0jynwHwqZhPJfcVOtnoE_iiuvxV8JIuFlMcY1HrIDMfEkEAyBASzsXKzbyUcZ_RPlKfZsm2cWgkPaxs=" target="_blank" rel="noopener noreferrer">tigerdata.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE5YPFQAILIhcSZuCxkMqcUt6qZskjxZOdBxxGX9zDwfAA6gl-UfbGztZjeMFIpGQpq3jckTSowJjd-SHZv1FOlljdQExGLnpCBQIvBDbMceldUl_eO37QTSFSZtOZxi6NJZgoFpOsgaj4kyMFDOJwVEIbBZGHxdRAf0sM5F0kFV5y4-eSadSrqRNuU" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNRdtnVi9ZAe8YVsWZkqlCID7x3_In1nc-RYLR6ZCPl9zKZqNVsqA4UwtXPUfsugrTZWTupGzGS_Dfjn7lBv38i_hA_V3vhsXeJ5sYHBFdblhyU3pXz6oG06t3Y-tU_W85jJTQhFaNtXYVhmoH" target="_blank" rel="noopener noreferrer">datacamp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE-QZhL3X4l0gu4GSKUSvH4RJAketlklBbeUuwAEetBfbLUqeAFKIH25IVkHqO98NKK7ZP8JnUT15pxfzDxU6QiGLOTYqJJc85vS0mF7aVBudJSDQvSe8eLn3er0QadPHbWXye5gGEMmPpIl2rFXv5yZ4EfKmoCcZ6iFljE" target="_blank" rel="noopener noreferrer">yugabyte.com</a></li></ul>
+  </div>
+</body>
+</html>

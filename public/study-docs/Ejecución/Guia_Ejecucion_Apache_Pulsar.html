@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Apache Pulsar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Apache Pulsar</h1>
+    <h2>Explicación</h2><p>Esta guía te permitirá levantar una instancia básica de Apache Pulsar en modo standalone usando Podman o Docker. En este modo, un solo contenedor ejecuta todos los componentes necesarios de Pulsar (Zookeeper, BookKeeper y el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">Broker</span> de Pulsar), lo que lo hace ideal para el desarrollo local y pruebas.</p><p>Los pasos son los siguientes:</p><p>1.  <strong>Guardar el comando</strong>: Copia el comando <code>docker run</code> proporcionado.</p><p>2.  <strong>Ejecutar el contenedor</strong>: Ejecuta el comando en tu terminal. Esto descargará la imagen de Apache Pulsar si no la tienes localmente y luego iniciará el contenedor en segundo plano.</p><p>3.  <strong>Verificar el estado</strong>: Una vez que el contenedor esté en ejecución, Pulsar estará disponible en los puertos <code>6650</code> (para clientes) y <code>8080</code> (para la API de administración). Puedes verificar que el servicio está funcionando accediendo a <code>http://localhost:8080/metrics</code> en tu navegador, lo que debería mostrar métricas de Prometheus.</p><p>Para interactuar con Pulsar, puedes usar la herramienta de línea de comandos <code>pulsar-client</code> que se encuentra dentro del contenedor, o cualquier cliente Pulsar SDK desde tu aplicación.</p><p><strong>Ejemplo de uso (dentro del contenedor):</strong></p><pre><code>docker exec -it pulsar-standalone bin/pulsar-admin clusters list</code></pre><h2>Comandos de Ejecución</h2><pre><code>docker run -d \
+  -p 6650:6650 \
+  -p 8080:8080 \
+  --name pulsar-standalone \
+  apachepulsar/pulsar:2.11.0 \
+  bin/pulsar standalone</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpZHajOs2YyT8DrSvyXzpPc4A-yccuvn4ryMd3CVHSXrz7ESL0-Go0-uOCSaADrxYSuscN3qjMGr4pvweDOBTUi4oVjQwYAFxVjiqE2LNG4t9C-PP5Sd8WVR17xjJNmNBtY_OPfHaNJHDGoN66IUa3zsE-SQ==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF_S0UqDJYYMclXk8stWgmBbDF76aqfShppzkrtG4sVGUJafgMbDRJjRmnK1Tp_GzcCxQyj4UKvnzZAxdgEMgnNkg-2BopOqyLkjJQLrJybt8LIHpS8uQfDHQiIC40NwH4TVAa-dVoiShQbV2i4jzZ6Bay90nE=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEuzqUSpE4eeRhsh7gYW6BZeH25n3UDSjjRvodjCHM4UhGtR_130ayLueRIH0k7bsKbeZAeOFoh2BOUyxfmY09Zp8LYg4zXqflBzlQby5D6I598ekpKYIuN_O7ip146lwRClIvylb-8hJ2EOPMKVLDaBQtTmrfe" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGwtCeoUhQx9W1VkhUKOQ-6dDnhGM7CWsdukN9CzXGJmEYBX5JGaQLhTZe5NA8zjTZ3ESAVpT-8peTiUBPHlbeQgGA-PGY8pn_UOXWS2neQY-gvbfaGq3FtwuSKG8UxgPnOWaCE0dw=" target="_blank" rel="noopener noreferrer">youtube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHkN741dgVPTjsWgsuot7wRri_FFofOngV1-oVcxK6pFWl1_qpBwFOWRVMr_M5almXaYNKr8RwsSay-Qkjx0vzhLAcHepgq71mGKUQhOCnBnnEOyKxlMQwyFIyfk8K2BDzW" target="_blank" rel="noopener noreferrer">baeldung.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEI0cj-vJLGxePRYCcu26WwRaaRtxILv2zhBqU26NfrgZ5kg8mbrlNnJtYLxS28yKYUC7HbSBSnAJiDSkgqocRKL2X7fkA-36rxRcamWv7zwUVeZISa9IU6-7j5BQs2BeDfaVJYMPOl-E6Ja1BxmYrLyok3ArIkDee6TLKFWgb9El7jsg0=" target="_blank" rel="noopener noreferrer">risingwave.com</a></li></ul>
+  </div>
+</body>
+</html>

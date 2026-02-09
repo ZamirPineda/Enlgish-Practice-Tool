@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Milvus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Milvus</h1>
+    <h2>Explicación</h2><h3>Configuración de Milvus Standalone con Docker Compose</h3><p>Milvus es una base de datos vectorial de código abierto, diseñada para la búsqueda de similitud y análisis de datos no estructurados. Esta guía te permitirá levantar una instancia básica de Milvus en modo <em>standalone</em> utilizando Docker Compose, lo cual es ideal para entornos de desarrollo y pruebas locales.</p><p>La configuración incluye los siguientes componentes:</p><ul><li>  <strong>Etcd</strong>: Un almacén de clave-valor distribuido que Milvus utiliza para la gestión de metadatos.</li><li>  <strong>MinIO</strong>: Un servidor de almacenamiento de objetos compatible con S3, empleado por Milvus para almacenar datos vectoriales e índices de forma persistente.</li><li>  <strong>Milvus</strong>: El servidor principal de Milvus que coordina las operaciones de almacenamiento, indexación y búsqueda de vectores.</li></ul><p><strong>Pasos a seguir:</strong></p><p>1.  Guarda el contenido proporcionado para <code>docker-compose.yml</code> en un archivo llamado <code>docker-compose.yml</code> en un directorio de tu elección.</p><p>2.  Asegúrate de tener Docker Compose (o Podman Compose) instalado en tu sistema.</p><p>3.  Abre una terminal, navega hasta el directorio donde guardaste <code>docker-compose.yml</code>.</p><p>4.  Ejecuta el comando <code>docker-compose up -d</code> para iniciar los servicios en segundo plano.</p><p>5.  Verifica el estado de los contenedores con <code>docker-compose ps</code>.</p><p>6.  Una vez que todos los contenedores estén en estado 'Up', Milvus estará accesible para tus aplicaciones cliente en el puerto <code>19530</code> de tu máquina local. MinIO estará disponible en el puerto <code>9000</code> (API) y su consola de administración en el puerto <code>9001</code>.</p><p>Esta configuración utiliza volúmenes persistentes (<code>/opt/milvus/etcd</code>, <code>/opt/milvus/minio</code>, <code>/opt/milvus/milvus</code>) para asegurar que tus datos no se pierdan al reiniciar los contenedores.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.5'
+services:
+  etcd:
+    container_name: milvus-etcd
+    image: quay.io/coreos/etcd:v3.5.0
+    command: etcd -auto-compaction-mode full -auto-compaction-retention 1h --data-dir /etcd
+    ports:
+      - "2379:2379"
+    volumes:
+      - /opt/milvus/etcd:/etcd # Persistencia de datos para etcd
+    healthcheck:
+      test: ["CMD", "etcdctl", "get", "/"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  minio:
+    container_name: milvus-minio
+    image: minio/minio:RELEASE.2023-03-20T20-16-36Z # Versión estable de MinIO
+    environment:
+      MINIO_ACCESS_KEY: minioadmin # Clave de acceso por defecto
+      MINIO_SECRET_KEY: minioadmin # Clave secreta por defecto
+    command: minio server /minio_data --console-address ":9001"
+    ports:
+      - "9000:9000" # Puerto para la API de MinIO
+      - "9001:9001" # Puerto para la consola web de MinIO
+    volumes:
+      - /opt/milvus/minio:/minio_data # Persistencia de datos para MinIO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  milvus:
+    container_name: milvus-standalone
+    image: milvusdb/milvus:v2.3.11 # Utiliza una versión estable de Milvus
+    command: milvus_standalone # Comando para iniciar Milvus en modo standalone
+    environment:
+      ETCD_ENDPOINTS: etcd:2379 # Dirección de Etcd
+      MINIO_ADDRESS: minio:9000 # Dirección de MinIO
+      COMMON_STORAGETYPE: minio # Especifica MinIO como tipo de almacenamiento de objetos
+    ports:
+      - "19530:19530" # Puerto principal de Milvus para comunicación con clientes
+      - "9091:9091"   # Puerto para métricas de Milvus (Prometheus)
+    volumes:
+      - /opt/milvus/milvus:/var/lib/milvus # Persistencia de datos para Milvus
+    depends_on:
+      - etcd
+      - minio # Milvus depende de Etcd y MinIO para iniciar correctamente
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJhkmnkr7SYNPkNxpYLsGjlcYKw0k-m9Z5T16gXv7Q9FNb0x4umIxs5L-FIm1nolo93_LAgX2LHHg8QgXPgGNJiRtwUxEda7AWVLbfqXzuVykSKBl1o_wCOzD9QvSXjA==" target="_blank" rel="noopener noreferrer">milvus.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHRF0nMlmOptMGK0HLzKtdxp_b0jwLu0iZKOjivS2_bx41tTH48Jlal1hxLIrm3ASkz3BtW3v8f-CqGkQgmqgPh7lYYXZF5_p6wLvYiiEb9tn4AXWQpr9KZhXihYUbxG26y7Vjrcrd1ybP5dmhiCyIbCZls" target="_blank" rel="noopener noreferrer">milvus.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHjBiAVSoxytlN_4yLvY7Y2uMecsUW-MT0x0av8OWerRRXlLq79oZQ75QPyXhnBZVY7zf-wEqlO8gFuu414c85uunupq9Bva2Tnzf1pWg==" target="_blank" rel="noopener noreferrer">milvus.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjjJAtqzlRAscXIZFQKHI2ZtZXbLAMYW6rsX-qI1OEQYzJh3lcTXdB-81gcy6Otzc-dZSc7U3TmlnObXgiTxnhkX4FRHIDCjqADhj9N3ugm2gOlQqdrAvUN4VVhNHQHUQ0BNWuTLdL6-JwIwhCSChYifE9hMlekEJftujM19ATcZp_71nWAI4hzvK0Iyi1vNaEMioxG__AWcHtJs_7zNCNHjo=" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7vEREsev6lnnX8u_-WIk-bqZVG7GDS_HZaDl4HUp6kxeK4__MPG-mZ01Dvg4RpsGR18XY6YJNioAB3zUePDSJ6pEp-enwi6eBcvEVHgdLDgGxAb46j_ehWUjYYjXs2lezMyKi9VCvJFLq4jkKhFLtvUVsDt1366IYFPM4TpuSPVDHhhU3bsR-p3c0u7AkEZSEZBfaM26roX_Fwgjodc7QYG0Nf98v" target="_blank" rel="noopener noreferrer">reddit.com</a></li></ul>
+  </div>
+</body>
+</html>

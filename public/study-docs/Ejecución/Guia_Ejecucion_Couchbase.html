@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Couchbase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Couchbase</h1>
+    <h2>Explicación</h2><p>Esta guía le permitirá configurar una instancia básica de Couchbase Server de un solo nodo utilizando Podman (o Docker). La configuración incluye el levantamiento del contenedor del servidor de Couchbase y un script para la inicialización automática del nodo, la configuración de un usuario administrador y la creación de un bucket de datos.</p><p><strong>Pasos a seguir:</strong></p><p>1.  <strong>Guardar Archivos</strong>: Guarde el contenido de <code>Dockerfile</code> y <code>setup.sh</code> en la misma carpeta en su máquina local.</p><p>2.  <strong>Construir la Imagen</strong>: Abra una terminal en la carpeta donde guardó los archivos y construya la imagen de Docker:</p><pre><code>    podman build -t couchbase-server-custom .
+    # O si usa Docker:
+    # docker build -t couchbase-server-custom .</code></pre><p>3.  <strong>Ejecutar el Contenedor</strong>: Inicie el contenedor de Couchbase utilizando el comando proporcionado. Este comando lanzará el servidor, mapeará los puertos necesarios y montará el script <code>setup.sh</code> dentro del contenedor en <code>/tmp/setup.sh</code>. También montará un volumen para la persistencia de los datos.</p><pre><code>    podman run -d --name couchbase -p 8091:8091 -p 8092:8092 -p 8093:8093 -p 8094:8094 -p 11210:11210 -v couchbase_data:/opt/couchbase/var -v ./setup.sh:/tmp/setup.sh couchbase-server-custom
+    # O si usa Docker:
+    # docker run -d --name couchbase -p 8091:8091 -p 8092:8092 -p 8093:8093 -p 8094:8094 -p 11210:11210 -v couchbase_data:/opt/couchbase/var -v ./setup.sh:/tmp/setup.sh couchbase-server-custom</code></pre><p>4.  <strong>Ejecutar el Script de Configuración</strong>: Una vez que el contenedor esté en ejecución, ejecute el script <code>setup.sh</code> dentro del contenedor para inicializar Couchbase. Es importante esperar unos segundos después de que el contenedor se inicie para que el servidor de Couchbase esté listo.</p><pre><code>    podman exec -it couchbase /bin/bash -c "chmod +x /tmp/setup.sh && /tmp/setup.sh"
+    # O si usa Docker:
+    # docker exec -it couchbase /bin/bash -c "chmod +x /tmp/setup.sh && /tmp/setup.sh"</code></pre><p>5.  <strong>Acceder a la Interfaz de Usuario</strong>: Una vez que el script de configuración haya terminado, podrá acceder a la Consola Web de Couchbase a través de su navegador web en <code>http://localhost:8091</code>.</p><p>    Utilice las siguientes credenciales para iniciar sesión:</p><ul><li>   *   <strong>Usuario</strong>: <code>Administrator</code></li><li>   *   <strong>Contraseña</strong>: <code>password</code></li></ul><p>¡Felicidades! Ha levantado una instancia de Couchbase Server con un bucket llamado <code>test_bucket</code> listo para usar.</p><h2>Comandos de Ejecución</h2><pre><code>podman run -d --name couchbase -p 8091:8091 -p 8092:8092 -p 8093:8093 -p 8094:8094 -p 11210:11210 -v couchbase_data:/opt/couchbase/var -v ./setup.sh:/tmp/setup.sh couchbase-server-custom</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM couchbase/server:7.2.3
+
+# Este Dockerfile simplemente utiliza la imagen oficial de Couchbase Server.
+# Para una configuración básica local, es común ejecutar directamente desde la imagen oficial.
+# No se suelen necesitar modificaciones personalizadas aquí a menos que se requieran
+# extensiones específicas o pre-configuraciones que no puedan realizarse mediante scripts de inicialización.
+
+# Exponer los puertos que los servicios de Couchbase suelen utilizar:
+# 8091: Consola Web, API REST
+# 8092: Servicio de Analytics
+# 8093: Servicio de Consultas (N1QL)
+# 8094: Servicio de Búsqueda de Texto Completo (FTS)
+# 11210: Servicio de Datos (Key-Value)
+EXPOSE 8091 8092 8093 8094 11210</code></pre><h3>setup.sh</h3><pre><code>#!/bin/bash
+
+# Script para inicializar un nodo de Couchbase Server.
+
+echo "Esperando que el servidor de Couchbase se inicie..."
+until curl -s http://127.0.0.1:8091/pools &gt; /dev/null; do
+  sleep 5
+done
+echo "Servidor de Couchbase iniciado."
+
+# Paso 1: Inicializar el nodo con servicios y cuotas de memoria
+echo "Inicializando el nodo de Couchbase..."
+/opt/couchbase/bin/couchbase-cli cluster-init -c 127.0.0.1:8091 \
+  --cluster-username Administrator \
+  --cluster-password password \
+  --cluster-port 8091 \
+  --services data,index,query,fts,analytics,eventing \
+  --cluster-ramsize 512 \
+  --cluster-index-ramsize 256 \
+  --cluster-fts-ramsize 256 \
+  --cluster-analytics-ramsize 1024 \
+  --cluster-eventing-ramsize 256 \
+  --cluster-config-data-path /opt/couchbase/var/lib/couchbase/data \
+  --cluster-config-index-path /opt/couchbase/var/lib/couchbase/data \
+  --cluster-config-fts-path /opt/couchbase/var/lib/couchbase/data
+
+if [ $? -eq 0 ]; then
+  echo "Nodo de Couchbase inicializado correctamente."
+else
+  echo "La inicialización del nodo de Couchbase falló o ya está inicializado. Asegurando la configuración de administrador."
+  # En caso de que la inicialización falle (ej. ya inicializado), establecemos las credenciales de administrador
+  /opt/couchbase/bin/couchbase-cli setting-autofailover -c 127.0.0.1:8091 \
+    --username Administrator \
+    --password password \
+    --set-autofailover-enabled 0
+fi
+
+# Paso 2: Crear un bucket de ejemplo
+echo "Creando el bucket 'test_bucket'..."
+/opt/couchbase/bin/couchbase-cli bucket-create -c 127.0.0.1:8091 \
+  --username Administrator \
+  --password password \
+  --bucket test_bucket \
+  --bucket-type couchbase \
+  --bucket-ramsize 256 \
+  --bucket-replica 0 \
+  --enable-flush 1
+
+if [ $? -eq 0 ]; then
+  echo "Bucket 'test_bucket' creado correctamente."
+else
+  echo "La creación del bucket 'test_bucket' falló o ya existe."
+fi
+
+echo "Script de configuración de Couchbase finalizado."</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEzUeJqNNzqiyx36DVCR7gMRBVf5D-pPh2bI4MeqlqjOR95m3kmLChQII30PZtSGPDxmDRopax8r1qAjVT-FtwXnpkuQ_OQNt9fHR3t8C1PVmA33fhbhe8zO0weFBp4xlXjP6f_fZP-NmcMHqNx8gXx7WT65XuzPinXAN8BaueP4Jd3Hw==" target="_blank" rel="noopener noreferrer">couchbase.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH3-dVc4xx3EzMvwj5wCAto_HPRzdSLIwLNYmjVsFzOdU9GQorkfl1JZZDF1SbS3xKb_Jhn-msb_6K3ij7L7T-nwmMEhkeiC7pBcSufX-AK5XIc8a0IUftZscX9YciypiBmQM5a" target="_blank" rel="noopener noreferrer">couchbase.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGrTaAn59VHhRntJtmx6hl6-yooitzb1EB2HFPFNIfgL3RG1QUPlClp6_OmfHl2d7o97rV-iqhpl0_21n3vBdpBi15vROlfpJvhsm8GFlRx2ivjwx4MtaElh-fNCxXIzZ6J83-upu9Wt0TBmcVYbMuLImWoRAEd6xa6GgI=" target="_blank" rel="noopener noreferrer">couchbase.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGezzxUaHhpEcJw3nbbEcKpBtkprPiyqM8UVtarV_mZarO_i4KqQpWRarNQ4jhpFRmLropPRysW2BSO94w6rELEw3ylok90bgvRsPlSmycLt66eJGqU-ShV8spHqukSKkpNU1bCeHPCQTFq3GEvCdbpQR2GnlXeEoDvErmNdfiUi9q05ehZJAKf_7q2G8t2cA==" target="_blank" rel="noopener noreferrer">kdnuggets.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjBeMgPDnlWEl4U0t4ilfzdnLgrClCTgKX4OHdFURn-fcBlIL5h3Ed1LUxY-fT5FSxQ1Kg03vaRiSs-qOoq5iypnx_ASQMvLeNzKwad_ruPgjoHvKXDbnV_4gS9WmtonPaXaKHOyLBOFlbY8WhCVimNd_ht7KlrZLhTD2ngudH2q18dnLH4UpAu5y3VNX9aaE191ARvvBe6poc2Ao2OpWSD9PgSm2BUL89IOWdud_j0pjpAYw=" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEXQUfKTmGh7x0pEi5xk7DdvvfVmV49JBlL3qdWLDkOZfgrpWG1S-pa6RAmPu5tkv2BxF1zbCe-VEYZv2Q74Xz-AEp9chNJZOtzbVs8Hwnvs31om08l0yfoUIH4mXxOkDlHVz5M9rHeaUR-QEejdpU7clFq8MbqyWJY9FD0HYvwyw8tkl50ol9OaeO9_E7ORcQuVEF_K1gAl5r5Tg==" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
+  </div>
+</body>
+</html>

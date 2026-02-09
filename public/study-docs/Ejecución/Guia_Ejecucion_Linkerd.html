@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Linkerd</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Linkerd</h1>
+    <h2>Explicación</h2><p>Linkerd es un <em><span class="tooltip" data-tooltip-text="Una capa de infraestructura dedicada para gestionar la comunicación entre servicios. Proporciona funciones como el descubrimiento de servicios, el balanceo de carga, el cifrado y la observabilidad de forma desacoplada del código de la aplicación.">service mesh</span></em> ultraligero y de alto rendimiento para Kubernetes. Su función principal es añadir observabilidad, fiabilidad y seguridad a las aplicaciones de forma transparente, sin necesidad de modificar el código de la aplicación. Para funcionar, Linkerd requiere un clúster de Kubernetes.</p><p>Esta guía te permitirá "levantar" una instancia básica de Linkerd localmente utilizando Kind (Kubernetes in Docker/Podman) y el CLI de Linkerd dentro de un contenedor. Los pasos incluyen:</p><p>1.  <strong>Crear un clúster de Kubernetes local con Kind</strong>: Kind es una herramienta que ejecuta clústeres de Kubernetes utilizando contenedores Docker/Podman como nodos.</p><p>2.  <em></em>Construir un contenedor con el CLI de Linkerd y <code>kubectl</code><em></em>: Este contenedor se utilizará para interactuar con el clúster de Kind.</p><p>3.  <strong>Instalar el plano de control de Linkerd</strong>: El CLI de Linkerd desplegará los componentes necesarios (controlador, inyector de proxy, etc.) en el clúster de Kind.</p><p>4.  <strong>Desplegar una aplicación de ejemplo e inyectar el proxy de Linkerd</strong>: Se desplegará una simple aplicación <span class="tooltip" data-tooltip-text="Un servidor web de alto rendimiento, también usado comúnmente como balanceador de carga, proxy inverso y caché HTTP.">Nginx</span> y se modificará para que Linkerd inyecte su <em>sidecar proxy</em> en los pods de la aplicación, habilitando así las funcionalidades del <em>mesh</em>.</p><p><strong>Prerrequisitos:</strong></p><ul><li>  Tener <code>docker</code> o <code>podman</code> instalado y funcionando.</li><li>  Tener el CLI de <code>kind</code> instalado (puedes descargarlo desde <code>https://kind.sigs.k8s.io/docs/user/quick-start/#installation</code>).</li></ul><p>El script <code>setup.sh</code> automatiza todos estos pasos.</p><h2>Comandos de Ejecución</h2><pre><code>sh ./setup.sh</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.linkerd-cli</h3><pre><code>FROM curlimages/curl:latest as downloader
+
+ARG LINKERD_VERSION="stable-2.14.7" # Versión estable de Linkerd CLI
+RUN curl -sLO "https://github.com/linkerd/linkerd2/releases/download/${LINKERD_VERSION}/linkerd2-cli-${LINKERD_VERSION}-linux-amd64" \
+    && mv linkerd2-cli-${LINKERD_VERSION}-linux-amd64 /usr/local/bin/linkerd \
+    && chmod +x /usr/local/bin/linkerd
+
+ARG KUBECTL_VERSION="v1.28.0" # Versión de kubectl compatible con K8s (Kind)
+RUN curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
+    && mv kubectl /usr/local/bin/kubectl \
+    && chmod +x /usr/local/bin/kubectl
+
+FROM alpine/git:latest # Utiliza una imagen base con bash y herramientas comunes
+LABEL maintainer="YourName &lt;your.email@example.com&gt;"
+
+# Instala bash si no está presente (alpine/git generalmente lo incluye)
+RUN apk add --no-cache bash
+
+# Copia los CLIs descargados de la etapa 'downloader'
+COPY --from=downloader /usr/local/bin/linkerd /usr/local/bin/linkerd
+COPY --from=downloader /usr/local/bin/kubectl /usr/local/bin/kubectl
+
+WORKDIR /app
+
+# Asegura herramientas de red como 'dig' para 'linkerd check'
+RUN apk add --no-cache bind-tools # Proporciona dig, nslookup
+
+CMD ["bash"]</code></pre><h3>kind-config.yaml</h3><pre><code>kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: linkerd-local
+nodes:
+  - role: control-plane
+    # Puedes añadir mapeos de puertos si necesitas acceder a servicios del clúster
+    # directamente desde el host, por ejemplo, para una app de ejemplo:
+    # extraPortMappings:
+    #   - containerPort: 80
+    #     hostPort: 8080
+    #     listenAddress: "127.0.0.1"</code></pre><h3>sample-app.yaml</h3><pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP</code></pre><h3>setup.sh</h3><pre><code>#!/bin/bash
+set -euo pipefail
+
+# --- Configuración --- #
+KIND_CLUSTER_NAME="linkerd-local"
+
+# --- Comprobación de prerrequisitos --- #
+if ! command -v kind &&gt; /dev/null; then
+    echo "Error: El CLI de 'kind' no se encontró. Por favor, instálalo: https://kind.sigs.k8s.io/docs/user/quick-start/#installation"
+    exit 1
+fi
+
+CONTAINER_CLI="docker"
+if command -v podman &&gt; /dev/null; then
+    CONTAINER_CLI="podman"
+    echo "Usando Podman para la gestión de contenedores."
+elif command -v docker &&gt; /dev/null; then
+    echo "Usando Docker para la gestión de contenedores."
+else
+    echo "Error: No se encontró Docker ni Podman. Por favor, instala uno de ellos."
+    exit 1
+fi
+
+# --- 1. Crear clúster de Kind --- #
+echo "\n--- 1. Creando clúster de Kind '$KIND_CLUSTER_NAME' ... ---"
+if ! kind get clusters | grep -q "^$KIND_CLUSTER_NAME$"; then
+    kind create cluster --name "$KIND_CLUSTER_NAME" --config kind-config.yaml
+    echo "Clúster '$KIND_CLUSTER_NAME' creado exitosamente."
+else
+    echo "El clúster Kind '$KIND_CLUSTER_NAME' ya existe. Saltando la creación."
+fi
+
+# Asegura que kubectl use el contexto del clúster Kind
+kubectl config use "kind-$KIND_CLUSTER_NAME"
+
+# --- 2. Construir imagen Docker del CLI de Linkerd --- #
+echo "\n--- 2. Construyendo la imagen '$CONTAINER_CLI build -t linkerd-cli' ... ---"
+$CONTAINER_CLI build -t linkerd-cli -f Dockerfile.linkerd-cli .
+echo "Imagen 'linkerd-cli' construida exitosamente."
+
+# --- 3. Instalar Linkerd y desplegar app de ejemplo --- #
+echo "\n--- 3. Instalando Linkerd y desplegando aplicación de ejemplo... ---"
+
+# Obtener el kubeconfig del clúster Kind y guardarlo temporalmente
+KIND_KUBECONFIG_CONTENT=$(kind get kubeconfig --name "$KIND_CLUSTER_NAME")
+echo "$KIND_KUBECONFIG_CONTENT" &gt; /tmp/kind-kubeconfig.yml
+chmod 600 /tmp/kind-kubeconfig.yml # Asegurar permisos adecuados
+
+# Ejecutar el contenedor del CLI de Linkerd para interactuar con el clúster
+$CONTAINER_CLI run --rm \
+    -v /tmp/kind-kubeconfig.yml:/app/kubeconfig.yml \
+    -v "$(pwd)":/app/project \
+    -e KUBECONFIG=/app/kubeconfig.yml \
+    linkerd-cli bash -c " \
+        echo '  - Ejecutando 'linkerd check --pre'...'; \
+        linkerd check --pre; \
+        echo '  - Instalando plano de control de Linkerd...'; \
+        linkerd install | kubectl apply -f -; \
+        echo '  - Esperando a que el plano de control de Linkerd esté listo...'; \
+        linkerd check --wait; \
+        echo '  - Desplegando aplicación de ejemplo (nginx)...'; \
+        kubectl apply -f /app/project/sample-app.yaml; \
+        echo '  - Inyectando proxy de Linkerd en la aplicación de ejemplo...'; \
+        linkerd inject /app/project/sample-app.yaml | kubectl apply -f -; \
+        echo '  - Esperando a que la aplicación de ejemplo esté lista e inyectada...'; \
+        kubectl rollout status deployment/nginx-deployment -n default --timeout=300s; \
+        echo '  - Comprobación final de Linkerd...'; \
+        linkerd check; \
+    "
+
+# Limpiar archivo kubeconfig temporal
+rm /tmp/kind-kubeconfig.yml
+
+echo "\n--- Instalación de Linkerd y la aplicación de ejemplo completada exitosamente. ---"
+
+# --- Pasos Siguientes --- #
+echo "\n--- Pasos Siguientes ---"
+echo "Puedes explorar el dashboard de Linkerd ejecutando:"
+echo "  $CONTAINER_CLI run --rm -v /tmp/kind-kubeconfig.yml:/app/kubeconfig.yml -e KUBECONFIG=/app/kubeconfig.yml linkerd-cli linkerd dashboard"
+echo "O, si tienes el CLI de Linkerd instalado en tu host: 'linkerd dashboard'"
+echo "Para limpiar el clúster de Kind, ejecuta: 'kind delete cluster --name $KIND_CLUSTER_NAME'"
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE3xWwT5dPXi5-bo4JRvdsgrEZ9mDcsKhER78SkUZhUdEn8oO7i5wdM7HkrmZ2ganw1y-I7HuESziwMXiflJUF2CwM_I3PPjNXnyQFSFokanfhMt3gCmnXOcWo8WA9K0sf7gYM=" target="_blank" rel="noopener noreferrer">linkerd.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH7WTJTTBOGE-agQR-Fx5DF7OewhXzc_qgh5YKKAbR9dnawMVDk1B-t146GBy3KHnBGjToM6jlZaSk6Irf5EUPO2j2vg-S-Ex4t4liY2A9omvQM1c2t3mseOnRdhlk9Ju0ceuo=" target="_blank" rel="noopener noreferrer">linkerd.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQv_Ge0voyGmOum_AxvSdeS0HN3GZYBAewxzT9IHk4mlTq42KrJzf9UOnYjoaBD-mkdH8-gCsIKflCae6cdZXyMR5e5QquqtaCxEl1iyz7932h0wNgwG1a" target="_blank" rel="noopener noreferrer">cozykube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiNNRprL8ieo4AMOJp_ZQYFA-6PdX2Q8St08iFzJWcVz5GeukV6kbCvCZRHLwj2I07hiEvrzLey3HGAeRTIBbGwOKyGJuhVlNgO3sS-cepqnpRAJ2Uu44p9qHz8OZd3tA2FxAPoiuqbLVhBZ0DvtcMgZEX5qHnaFaGWqF9Q8RJWbbb2T2vzseA6G3Mr-s9YSVMz4FbGpdgtCDk" target="_blank" rel="noopener noreferrer">digitalocean.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFp-pWBmwcq3r64ZocmLLeC1FEeXJVIkw0sHbG1SCRwJWl3ahGIdhdl17AQf2GrMnQtgCnlYsuwkG-jugjj5qz2hDMlUv4QOWWmHqwWssGoXhkjWJ2LTDwDBl88KKJEYvBporc-mk00GFWl01br3NTr2ZTQPJs3Q61NfWs9BQ==" target="_blank" rel="noopener noreferrer">platform9.com</a></li></ul>
+  </div>
+</body>
+</html>

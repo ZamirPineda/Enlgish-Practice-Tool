@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Kafka Streams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Kafka Streams</h1>
+    <h2>Explicación</h2><p>Esta guía proporciona una configuración básica para ejecutar una aplicación Kafka Streams junto con un clúster de Apache Kafka (Zookeeper + <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">Broker</span>) usando Docker Compose. La aplicación de ejemplo de Kafka Streams leerá mensajes de un tema de entrada ('streams-plaintext-input'), convertirá el texto a mayúsculas y escribirá el resultado en un tema de salida ('streams-uppercase-output').</p><p><strong>Pasos a seguir:</strong></p><p>1.  <strong>Crear los archivos:</strong> Guarda los contenidos proporcionados en sus respectivos archivos y directorios. Asegúrate de crear el directorio <code>src/main/java/com/example/</code> para el archivo <code>StreamApp.java</code>.</p><p>2.  <strong>Dar permisos al script:</strong> <code>chmod +x create-topics.sh</code></p><p>3.  <strong>Iniciar el clúster y la aplicación:</strong> Ejecuta <code>docker-compose up -d</code>. Esto levantará Zookeeper, Kafka y construirá/ejecutará la aplicación Kafka Streams.</p><p>4.  <strong>Crear temas de Kafka:</strong> Una vez que Kafka esté en funcionamiento (puede tardar unos segundos), ejecuta <code>./create-topics.sh</code> para crear los temas necesarios.</p><p>5.  <strong>Probar la aplicación:</strong></p><ul><li>   *   Envía un mensaje al tema de entrada: <code>docker exec -it kafka-broker kafka-console-producer.sh --broker-list localhost:9092 --topic streams-plaintext-input</code> (luego escribe tus mensajes, ej: "hello world", "Kafka Streams").</li><li>   *   Consume mensajes del tema de salida para ver el resultado: <code>docker exec -it kafka-broker kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic streams-uppercase-output --from-beginning</code></li></ul><p>6.  <strong>Ver logs de la aplicación Streams:</strong> <code>docker logs kafka-streams-app</code></p><p>7.  <strong>Detener la configuración:</strong> <code>docker-compose down</code></p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.streams-app</h3><pre><code># Usa una imagen base de OpenJDK para compilar y ejecutar la aplicación Java
+FROM openjdk:11-jdk-slim as builder
+
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Instala Maven
+RUN apt-get update && apt-get install -y maven
+
+# Copia los archivos de configuración de Maven y el código fuente
+COPY pom.xml .
+COPY src ./src
+
+# Compila la aplicación usando Maven
+# --batch-mode para ejecución no interactiva
+# -DskipTests para saltar las pruebas durante la compilación
+# package para empaquetar la aplicación en un JAR ejecutable
+RUN mvn clean package -DskipTests
+
+# Fase de ejecución
+FROM openjdk:11-jre-slim
+
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Copia el JAR compilado de la fase de construcción
+COPY --from=builder /app/target/kafka-streams-example-1.0-SNAPSHOT.jar kafka-streams-example.jar
+
+# Define el punto de entrada para ejecutar la aplicación
+# java -jar &lt;nombre_del_jar&gt;
+ENTRYPOINT ["java", "-jar", "kafka-streams-example.jar"]
+</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka-broker:
+    image: confluentinc/cp-kafka:7.4.0
+    hostname: kafka-broker
+    container_name: kafka-broker
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  kafka-streams-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.streams-app
+    depends_on:
+      - kafka-broker
+    environment:
+      # Asegúrate de que la aplicación Kafka Streams se conecte al broker
+      # El broker es accesible por su nombre de servicio 'kafka-broker' dentro de la red Docker Compose.
+      KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+    # Puedes añadir más variables de entorno si tu aplicación las necesita
+    # ports:
+    #   - "8080:8080" # Mapea un puerto si quieres acceder a alguna interfaz web de tu app (no aplica para este ejemplo)
+</code></pre><h3>create-topics.sh</h3><pre><code>#!/bin/bash
+echo "Waiting for Kafka to be ready..."
+
+# Wait until Kafka broker is up and running
+# The following loop attempts to connect to Kafka's internal port
+# for topic creation. 'kafka-broker' is the service name in docker-compose.
+while ! nc -z kafka-broker 29092; do
+  sleep 1
+done
+
+echo "Kafka broker is up. Creating topics..."
+
+# Create input topic
+docker exec kafka-broker kafka-topics.sh --create --topic streams-plaintext-input --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1 --if-not-exists
+
+# Create output topic
+docker exec kafka-broker kafka-topics.sh --create --topic streams-uppercase-output --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1 --if-not-exists
+
+echo "Topics created successfully: streams-plaintext-input, streams-uppercase-output"
+</code></pre><h3>pom.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.example&lt;/groupId&gt;
+    &lt;artifactId&gt;kafka-streams-example&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;kafka.version&gt;3.4.0&lt;/kafka.version&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;
+            &lt;artifactId&gt;kafka-streams&lt;/artifactId&gt;
+            &lt;version&gt;${kafka.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+            &lt;artifactId&gt;slf4j-simple&lt;/artifactId&gt;
+            &lt;version&gt;1.7.32&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;!-- Plugin para crear un JAR ejecutable con todas las dependencias --&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+                &lt;version&gt;3.3.0&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;archive&gt;
+                        &lt;manifest&gt;
+                            &lt;mainClass&gt;com.example.StreamApp&lt;/mainClass&gt;
+                        &lt;/manifest&gt;
+                    &lt;/archive&gt;
+                    &lt;descriptorRefs&gt;
+                        &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+                    &lt;/descriptorRefs&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;id&gt;make-assembly&lt;/id&gt;
+                        &lt;phase&gt;package&lt;/phase&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;single&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre><h3>src/main/java/com/example/StreamApp.java</h3><pre><code>package com.example;
+
+import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.StreamsBuilder;
+import org.apache.kafka.streams.StreamsConfig;
+import org.apache.kafka.streams.Topology;
+import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.Produced;
+
+import java.util.Properties;
+
+public class StreamApp {
+
+    public static void main(String[] args) {
+        // Configuración de la aplicación Kafka Streams
+        Properties props = new Properties();
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-uppercase-app");
+        // KAFKA_BOOTSTRAP_SERVERS se inyecta como variable de entorno desde docker-compose.yml
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, System.getenv("KAFKA_BOOTSTRAP_SERVERS"));
+        props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+
+        // Construye la topología de la aplicación Kafka Streams
+        StreamsBuilder builder = new StreamsBuilder();
+        builder.stream("streams-plaintext-input", Consumed.with(Serdes.String(), Serdes.String()))
+                .mapValues(value -&gt; value.toUpperCase()) // Convierte el valor a mayúsculas
+                .to("streams-uppercase-output", Produced.with(Serdes.String(), Serdes.String()));
+
+        Topology topology = builder.build();
+        System.out.println(topology.describe()); // Imprime la descripción de la topología en los logs
+
+        // Crea y arranca la aplicación Kafka Streams
+        KafkaStreams streams = new KafkaStreams(topology, props);
+        // Limpiar el estado local de la aplicación (útil para desarrollo, no para producción)
+        // streams.cleanUp(); // Descomentar para limpiar el estado local al iniciar (útil en desarrollo)
+        streams.start();
+
+        // Añade un hook de apagado para cerrar la aplicación de Streams de forma elegante
+        Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+    }
+}
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHUTC85u6p9_8E5_aNfP1ZrLOCA7Tz2QWLjHW5c75jLVBY22e8G6p8blITNZSYRSC2mKUt_Ing1ww7tOSFq9FI6uz4t_ex6WDC9bsOFOtlz54Ec6ZzUQAdmTbhCi_9Psin3vdlsh56RrCQZ" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF_SABqhih47RSSahE8oCz3cyG7AI3I77_hvu16QcJ7Jlny12KMXcjn40QHqZDcZBn21Kz1sqKf7DbaL8jzqkzsCZTSMZGYEerTo15iwMuM62yC5qc0sEiHl_UZ1Tor1ylVng==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzP2ZhInUwZiOkMWB1CXhmTTmz0voHVxIZ2Rl-vCzd1NQIzIr4YNjBgqxbbQY_-YQm3AcSJotoxA_LDPh-2hIhXN3akxv-DH-kxSDRt2Sz6BtozA7Ie-AU3JMU-Mw-sdR-fIQGu3mIFN8ErEN-d36mRM_FUfQUoFeK" target="_blank" rel="noopener noreferrer">confluent.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQfCpz369m29lAtSwq9ui1cSIuPg7CA00oF4zLYKtY6r-1G9b1MuLHKZ80P6AJuRNrcrRKMi2suHCloWJWoIz5wS_4KX_d_NUTHFYLW-hytfjZ_vJxpI0_VB2uBaVjm3XCFAQyXuuhM9_X" target="_blank" rel="noopener noreferrer">aprenderbigdata.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEDAftgNhSUE88fv_qZLb4D3K4MLDB81WAg8_bpVJZTdyZqT6oK_wXrnbzzTc3O-1pYWjNYXE7_0tO9sIpee07MLF4hN_WgA8Kp2sDtmFld28wo3DEONBwvOigN8EbY" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKlC4ru-JuFp6Py78fqAlrJee9rZMrxNg1teDKi5Ngvs50n5UANt9wQU23bGKhv4yrheCdb3veM06Zy2yidqGRTaN7ZdbcdlSgeze_U3pc9ZMaycjr7udVO1eBX_NtiSY0SXyGVavsqz08DG-cM-4YcPyN_ekGptHrAhTO1dauEOCepTtkKIu-aovajmUJwIs=" target="_blank" rel="noopener noreferrer">datacamp.com</a></li></ul>
+  </div>
+</body>
+</html>

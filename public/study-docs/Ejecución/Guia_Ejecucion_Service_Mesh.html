@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Service Mesh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Service Mesh</h1>
+    <h2>Explicación</h2><p>Esta configuración proporciona una demostración básica de los conceptos de un <span class="tooltip" data-tooltip-text="Una capa de infraestructura dedicada para gestionar la comunicación entre servicios. Proporciona funciones como el descubrimiento de servicios, el balanceo de carga, el cifrado y la observabilidad de forma desacoplada del código de la aplicación.">Service Mesh</span> utilizando Envoy Proxy como un sidecar virtual para dos servicios simples de Python (Service A y Service B). Aunque no es una implementación completa de un <span class="tooltip" data-tooltip-text="Una capa de infraestructura dedicada para gestionar la comunicación entre servicios. Proporciona funciones como el descubrimiento de servicios, el balanceo de carga, el cifrado y la observabilidad de forma desacoplada del código de la aplicación.">Service Mesh</span> como Istio o Linkerd (que suelen requerir Kubernetes), ilustra cómo un proxy puede interceptar, enrutar y equilibrar la carga del tráfico entre servicios.</p><h3>Componentes:</h3><ul><li>  <strong>Service A y Service B</strong>: Son aplicaciones Flask muy simples que devuelven un mensaje "Hello from Service X!". Representan microservicios de tu aplicación.</li><li>  <strong>Envoy Proxy</strong>: Actúa como un proxy de "<span class="tooltip" data-tooltip-text="Una capa de infraestructura dedicada para gestionar la comunicación entre servicios. Proporciona funciones como el descubrimiento de servicios, el balanceo de carga, el cifrado y la observabilidad de forma desacoplada del código de la aplicación.">Service Mesh</span>". Está configurado para escuchar en el puerto 8000 y distribuir las peticiones entrantes entre Service A y Service B utilizando una política de round-robin. También expone su interfaz de administración en el puerto 9901.</li><li>  <strong>docker-compose.yml</strong>: Orquesta la construcción y ejecución de los tres contenedores, asegurando que Envoy enrute el tráfico correctamente entre los servicios en la red definida.</li></ul><h3>Pasos para ejecutar:</h3><p>1.  Guarda los archivos con las rutas de directorio especificadas (ej. crea una carpeta <code>service_a</code> y dentro de ella <code>Dockerfile</code>, <code>app.py</code>, <code>requirements.txt</code>).</p><p>2.  Navega a la raíz del directorio donde guardaste <code>docker-compose.yml</code>.</p><p>3.  Ejecuta el comando <code>docker-compose up -d</code>.</p><p>4.  Una vez que los contenedores estén levantados y saludables, puedes acceder al <span class="tooltip" data-tooltip-text="Una capa de infraestructura dedicada para gestionar la comunicación entre servicios. Proporciona funciones como el descubrimiento de servicios, el balanceo de carga, el cifrado y la observabilidad de forma desacoplada del código de la aplicación.">Service Mesh</span> a través de <code>http://localhost:8000</code>. Cada vez que actualices la página, verás alternativamente mensajes de "Hello from Service A!" y "Hello from Service B!" debido al <span class="tooltip" data-tooltip-text="El proceso de distribuir el tráfico de red o de aplicaciones de manera uniforme entre múltiples servidores para garantizar que ningún servidor individual se sobrecargue.">balanceo de carga</span> de Envoy.</p><p>5.  Para detener y eliminar los contenedores, usa <code>docker-compose down</code>.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>service_a/Dockerfile</h3><pre><code>FROM python:3.9-slim-buster
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY app.py .
+EXPOSE 5000
+CMD ["python", "app.py"]
+</code></pre><h3>service_b/Dockerfile</h3><pre><code>FROM python:3.9-slim-buster
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY app.py .
+EXPOSE 5000
+CMD ["python", "app.py"]
+</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+services:
+  service-a:
+    build: ./service_a
+    container_name: service-a
+    expose:
+      - "5000"
+    networks:
+      - servicemesh_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  service-b:
+    build: ./service_b
+    container_name: service-b
+    expose:
+      - "5000"
+    networks:
+      - servicemesh_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  envoy:
+    image: envoyproxy/envoy:v1.28.0
+    container_name: envoy
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    ports:
+      - "8000:8000" # Puerto para peticiones entrantes
+      - "9901:9901" # Puerto de administración de Envoy
+    command: "envoy -c /etc/envoy/envoy.yaml --service-cluster front-proxy"
+    depends_on:
+      service-a:
+        condition: service_healthy
+      service-b:
+        condition: service_healthy
+    networks:
+      - servicemesh_net
+
+networks:
+  servicemesh_net:
+    driver: bridge
+</code></pre><h3>envoy.yaml</h3><pre><code>admin:
+  access_log_path: /dev/stdout
+  address:
+    socket_address:
+      protocol: TCP
+      address: 0.0.0.0
+      port_value: 9901
+
+static_resources:
+  listeners:
+  - name: listener_0
+    address:
+      socket_address:
+        protocol: TCP
+        address: 0.0.0.0
+        port_value: 8000
+    filter_chains:
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: ingress_http
+          codec_type: AUTO
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: backend
+              domains: ["*"]
+              routes:
+              - match:
+                  prefix: "/"
+                route:
+                  cluster: services_cluster
+          http_filters:
+          - name: envoy.filters.http.router
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+
+  clusters:
+  - name: services_cluster
+    connect_timeout: 0.25s
+    type: LOGICAL_DNS
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: services_cluster
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: service-a # Nombre del servicio en la red Docker
+                port_value: 5000
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: service-b # Nombre del servicio en la red Docker
+                port_value: 5000
+</code></pre><h3>service_a/app.py</h3><pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello_a():
+    return "Hello from Service A!"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+</code></pre><h3>service_a/requirements.txt</h3><pre><code>flask
+</code></pre><h3>service_b/app.py</h3><pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello_b():
+    return "Hello from Service B!"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+</code></pre><h3>service_b/requirements.txt</h3><pre><code>flask
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEaMQNt5XvXf_hJi1bhkr9xCJ3bDWS8lM3vGr94f_roFqECV4kfUKKghBO_haO_VhNe-mgZJtxrbs_Kku4YjHTUi1_NgK_p9S5YogD6U_K80E3tbfUT6sRBsP5WBiAxbLGG_vRv6n_VR9BG0ahnUUvB1akX25RkRc8ZePaI_XjXtOqCjZqMBCjO_laUecmkPep409qbKAAABqiYDqY=" target="_blank" rel="noopener noreferrer">middleware.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQERSyfUkvjsHSHfhh8O_uDnFUQr-mfULjGMoTe8zKMecUE-9d6Tji_2eWNsSXEOruJbKw1j5FiTcqyTL4XFU5WwOuaiu-i071eZbY9WthC5FmGktlXYU-2H-SrGJrr7gukzdZ4TgZu_79Ck0RHdvoGSOMpKuQ==" target="_blank" rel="noopener noreferrer">civo.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFMfiZhmG-Bs2St0bDRNdPgT3fkYCpBZDeIJIThJR7hBIfsFtZ4-iUTcMrn79MnYyvCzTxJv7aPezTpd4I3VK6Eq9DHg7vT661B8IKFo2367_JsvNSm3GA=" target="_blank" rel="noopener noreferrer">istio.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFO4vBZvphIIGnBrrWWli_5-XYWJnjNZDQWMF7jo1hxWlW9xl7pZpgoDc3pry22BKV9u5-C5YujF1t6HO3xRlFxvHU5ueh1VcQQuwelloec8CPyjNixJjt6PrUj0oFqBILyJC3iwXrRFivOMt_KByU2w6UjDJsfLJsr" target="_blank" rel="noopener noreferrer">linkerd.io</a></li></ul>
+  </div>
+</body>
+</html>

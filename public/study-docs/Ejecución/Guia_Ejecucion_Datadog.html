@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Datadog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Datadog</h1>
+    <h2>Explicación</h2><p>Esta configuración proporciona una instancia básica de Datadog Agent junto con una aplicación Flask de ejemplo, lo que permite observar cómo el agente recopila métricas, logs y trazas de una aplicación y las envía a Datadog HQ. Deberás reemplazar <code>YOUR_DATADOG_API_KEY</code> con tu clave API real de Datadog y <code>datadoghq.com</code> con el sitio de Datadog correcto (ej., <code>eu.datadoghq.com</code>). La aplicación Flask incluye la biblioteca <code>ddtrace</code> para instrumentación automática de APM y envía métricas personalizadas vía DogStatsD.</p><h3>Pasos a seguir:</h3><p>1.  <strong>Guarda los archivos:</strong> Crea una carpeta y guarda <code>docker-compose.yml</code>, <code>Dockerfile.app</code>, <code>app.py</code> y <code>requirements.txt</code> en ella.</p><p>2.  <strong>Obtén tu API Key de Datadog:</strong> Visita [Datadog](https://app.datadoghq.com/account/settings#api) para obtener tu clave API.</p><p>3.  <em></em>Actualiza <code>docker-compose.yml</code>:<em></em> Reemplaza <code>YOUR_DATADOG_API_KEY</code> con tu clave API.</p><p>4.  <strong>Ejecuta los contenedores:</strong> Abre una terminal en la carpeta donde guardaste los archivos y ejecuta el comando en <code>runCommands</code>.</p><p>5.  <strong>Verifica en Datadog:</strong> Después de unos minutos, deberías ver métricas, logs y trazas de la aplicación <code>my-flask-app</code> en tu cuenta de Datadog.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.app</h3><pre><code>FROM python:3.9-slim-buster
+
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copia el archivo de requisitos e instala las dependencias
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia la aplicación Flask
+COPY app.py .
+
+# Expone el puerto que usará la aplicación
+EXPOSE 5000
+
+# Comando para ejecutar la aplicación
+CMD ["python", "app.py"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+services:
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: flask-app
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+      # Configuración de ddtrace para APM y métricas personalizadas
+      - DD_AGENT_HOST=datadog-agent
+      - DD_TRACE_AGENT_HOSTNAME=datadog-agent
+      - DD_SERVICE=my-flask-app
+      - DD_ENV=local
+      - DD_VERSION=1.0.0
+      - DD_LOGS_INJECTION=true
+    # Labels para la autodetección de Datadog (logs y http_check)
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "flask", "service": "my-flask-app"}]'
+      com.datadoghq.ad.check_names: '["http_check"]'
+      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.instances: '[{"url": "http://%%host%%:5000", "timeout": 1, "name": "my-flask-service", "tags": ["env:local"]}]'
+    depends_on:
+      - datadog-agent
+
+  datadog-agent:
+    image: datadog/agent:latest
+    hostname: datadog-agent
+    environment:
+      - DD_API_KEY=YOUR_DATADOG_API_KEY
+      - DD_SITE=datadoghq.com
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_APM_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      - DD_TAGS=env:local,project:datadog-guide
+    ports:
+      - "8125:8125/udp" # Para DogStatsD
+      - "8126:8126/tcp" # Para APM
+    volumes:
+      # Permite al agente recolectar métricas del host y logs de contenedores
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # Usar /run/podman/podman.sock para Podman
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+    privileged: true # Necesario para monitorear el host completamente
+    cap_add:
+      - SYS_ADMIN # Permite al agente ejecutar algunas verificaciones de host
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge</code></pre><h3>app.py</h3><pre><code>import os
+import logging
+from flask import Flask, request, jsonify
+from ddtrace import tracer
+from datadog import DogStatsd
+import time
+
+# Configuración de logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Inicializa Flask
+app = Flask(__name__)
+
+# Inicializa DogStatsd para métricas personalizadas
+statsd = DogStatsd(host=os.getenv('DD_AGENT_HOST', 'localhost'), port=8125)
+
+# Decorador para trazas de Datadog APM
+@tracer.wrap()
+def do_some_work():
+    time.sleep(0.05) # Simula algo de trabajo
+    logger.info("Realizando alguna tarea importante...")
+    statsd.increment('my_flask_app.work_done', tags=['result:success'])
+
+@app.route('/')
+def hello_world():
+    logger.info("Solicitud recibida en el endpoint /")
+    statsd.increment('my_flask_app.requests.total', tags=['endpoint:/'])
+    with tracer.trace("web.request", service="my-flask-app") as span:
+        span.set_tag("http.method", request.method)
+        span.set_tag("http.url", request.url)
+        do_some_work()
+        statsd.histogram('my_flask_app.response_time', time.time() - span.start, tags=['endpoint:/'])
+        return 'Hello, Datadog! From Flask app!'
+
+@app.route('/metrics')
+def metrics_endpoint():
+    logger.warning("Solicitud a endpoint de métricas. Esto podría ser un problema si no está monitorizado correctamente.")
+    statsd.increment('my_flask_app.requests.total', tags=['endpoint:/metrics'])
+    statsd.gauge('my_flask_app.current_users', 10, tags=['region:us-east'])
+    return jsonify({"status": "ok", "message": "Metrics exposed (simulated)"})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)</code></pre><h3>requirements.txt</h3><pre><code>Flask
+ddtrace
+python-dogstatsd</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHe1YjjhyDl7vFVn3_XU7dtkk2g3BFN_5_quT5d_z70DRMLjlVGQi_wlY9Z8PpuLlbZf6oDsbi8OaB2q_2LmMQPArtSNqiJt3ndNfrZoSBr-Wze8535UEYLH-GCi_epgej8Epm-uIs=" target="_blank" rel="noopener noreferrer">datadoghq.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG8sP7Mr3ZhHQ5LjNzPtyUMgOYv6jFrJUJnKmFAiGAHUjwS5qDPd64uWLnVD2q1_8NYm1yAtJ-thawqWPSB6IGYJKG_-2J1Bn-7Brmu32mKtq6T0zXu1w==" target="_blank" rel="noopener noreferrer">datadoghq.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXuKaBNZKd0IftC-Dji0GkO-UuayXFbwWPP_CtL1TWk0KRlL8FLgTuEbS1t6UvLWgRt_M1EiCmH9Ovf6Oki7Li7g489Zck24itYVMpICs3Io5wP9HfXDkl3jtXu9T7fwHCOelLBCXKGrfUpxREszDO4w419XIL_i0q3qKEUjocHT_jPDriYFk8MKNU" target="_blank" rel="noopener noreferrer">criticalcloud.ai</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGVCgIqdl4bqT_srnDknA10qQsnU3tR73LayqicbUqkfVkH6R7ygR3DeNnrCk40WC0Sb7xSyWALVA6BIKkGx05Fvb1LniHvUf6KBwtPFZpyWuJqu_T_qR48jES0x78ChkLL-KoHV3J8HQoh8EbsPHpMV-RSOaeM5FGe2dJ4YuftO8GHWnehUe49603YtW0=" target="_blank" rel="noopener noreferrer">moldstud.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHmnLz8kHdAyzJJoNDgb9x5bJn7FH7iDYWMRnz7j5AIZ0FLjyJ2sl_NChA1vxoCzstJKanqWJoYfhK8rTDvfeUH-w68GBf-wugMaVj8yDYD5VDnPTssIvIwujhyUj-_cG_4zSuhVas20c5lI0KcQnTs" target="_blank" rel="noopener noreferrer">datadoghq.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8DrToqmE1pj2bPeu--vfl5iTXar6byEC_jzb7awo9NV1vcgE3iKQs4_JW3eKsQPqABVsGiOMoGLpDdrxIh7ztzh07RyIVMkfU7W4XF8P1gD2P0223CfZsCb46hYtGqt2qOZmMGhc=" target="_blank" rel="noopener noreferrer">youtube.com</a></li></ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Crossplane</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Crossplane</h1>
+    <h2>Explicación</h2><p>Crossplane es un complemento de Kubernetes de código abierto que le permite aprovisionar y administrar infraestructura de nube (o cualquier recurso) desde <code>kubectl</code>. Esta guía te ayudará a levantar una instancia básica de Crossplane en un clúster de Kubernetes local utilizando <code>kind</code> (Kubernetes en Docker/Podman). Primero, crearemos el clúster local. Luego, instalaremos Crossplane a través de Helm y desplegaremos el <code>provider-kubernetes</code>, que permite a Crossplane gestionar recursos <em>dentro del mismo clúster de Kubernetes</em>. Finalmente, definiremos una <code>CompositeResourceDefinition</code> (XRD) y una <code>Composition</code> para un Namespace de Kubernetes, y crearemos un <code>Composite Resource Claim</code> (XR Claim) para que Crossplane aprovisione un Namespace, demostrando su capacidad de extender Kubernetes para gestionar recursos externos o internos como si fueran nativos. Aunque <code>kind</code> utiliza contenedores Docker/Podman para crear el clúster, los comandos de Crossplane en sí son de <code>helm</code> y <code>kubectl</code>.</p><h2>Comandos de Ejecución</h2><pre><code># Paso 0: Asegúrate de tener kind, kubectl y helm instalados. Las instrucciones de instalación pueden variar según tu sistema operativo. Por ejemplo, para macOS con Homebrew:
+# brew install kind kubectl helm
+
+# 1. Crea un clúster de Kubernetes local con Kind
+# kind utiliza contenedores Docker o Podman para ejecutar los nodos de Kubernetes.
+echo "Creando un clúster de Kubernetes local con Kind..."
+kind create cluster --config kind-config.yaml
+
+# Espera a que el clúster de Kind esté listo
+echo "Esperando que el clúster de Kind esté listo..."
+kubeconfig_path="$(kind get kubeconfig --name crossplane-kind)"
+KUBECONFIG="${kubeconfig_path}" kubectl wait --for=condition=ready node --all --timeout=300s
+
+# 2. Añade el repositorio de Helm de Crossplane e instálalo
+echo "Instalando Crossplane en el clúster..."
+KUBECONFIG="${kubeconfig_path}" helm repo add crossplane-stable https://charts.crossplane.io/stable
+KUBECONFIG="${kubeconfig_path}" helm repo update
+KUBECONFIG="${kubeconfig_path}" helm install crossplane crossplane-stable/crossplane --namespace crossplane-system --create-namespace --wait
+
+# 3. Verifica que los pods de Crossplane estén corriendo
+echo "Verificando la instalación de Crossplane..."
+KUBECONFIG="${kubeconfig_path}" kubectl get pods -n crossplane-system
+
+# 4. Instala el Provider para Kubernetes
+# Este provider permite a Crossplane gestionar recursos del propio Kubernetes.
+echo "Instalando provider-kubernetes..."
+KUBECONFIG="${kubeconfig_path}" kubectl apply -f provider-kubernetes.yaml
+
+# 5. Configura el Provider para Kubernetes para que apunte al clúster actual
+# Usa las credenciales del Service Account de Crossplane para operar en el mismo clúster.
+echo "Configurando provider-kubernetes..."
+KUBECONFIG="${kubeconfig_path}" kubectl apply -f provider-config-kubernetes.yaml
+
+# 6. Aplica la CompositeResourceDefinition (XRD) y una Composition para crear un Namespace de Kubernetes
+# Esto define un nuevo tipo de recurso abstracto 'KubernetesNamespace' y cómo se aprovisiona.
+echo "Definiendo una Composition y XRD para un Namespace de Kubernetes..."
+KUBECONFIG="${kubeconfig_path}" kubectl apply -f composition-kubernetes-namespace.yaml
+
+# Espera a que la Composition y los CRDs estén listos
+echo "Esperando que la Composition y los CRDs estén listos..."
+KUBECONFIG="${kubeconfig_path}" kubectl wait --for=condition=Established crd/kubernetesnamespaces.kubernetes.crossplane.io --timeout=300s
+KUBECONFIG="${kubeconfig_path}" kubectl wait --for=condition=Established crd/xkubernetesnamespaces.kubernetes.crossplane.io --timeout=300s
+
+# 7. Crea un Composite Resource Claim (XR Claim) para provisionar el Namespace
+# Esto actúa como una solicitud del usuario para un Namespace.
+echo "Creando un Composite Resource Claim para provisionar un Namespace..."
+KUBECONFIG="${kubeconfig_path}" kubectl apply -f xr-kubernetes-namespace.yaml
+
+# 8. Verifica que el Namespace haya sido creado por Crossplane
+echo "Verificando el Namespace 'my-crossplane-namespace' creado por Crossplane..."
+KUBECONFIG="${kubeconfig_path}" kubectl get namespace my-crossplane-namespace
+
+echo "Crossplane configurado exitosamente y Namespace aprovisionado. Para limpiar, consulta las instrucciones en los comentarios."
+
+# Opcional: Para limpiar el entorno:
+# KUBECONFIG="${kubeconfig_path}" kubectl delete kubernetesnamespace my-crossplane-namespace-claim
+# KUBECONFIG="${kubeconfig_path}" kubectl delete composition xkubernetesnamespaces.kubernetes.crossplane.io
+# KUBECONFIG="${kubeconfig_path}" kubectl delete crd xkubernetesnamespaces.kubernetes.crossplane.io
+# KUBECONFIG="${kubeconfig_path}" kubectl delete crd kubernetesnamespaces.kubernetes.crossplane.io
+# KUBECONFIG="${kubeconfig_path}" kubectl delete providerconfig.kubernetes.crossplane.io default
+# KUBECONFIG="${kubeconfig_path}" kubectl delete provider.pkg provider-kubernetes
+# KUBECONFIG="${kubeconfig_path}" helm uninstall crossplane -n crossplane-system
+# kind delete cluster</code></pre><h2>Archivos de Configuración</h2><h3>kind-config.yaml</h3><pre><code>kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: crossplane-kind
+nodes:
+- role: control-plane
+  image: kindest/node:v1.28.0@sha256:b7a4049d598f06529280a56e431379766a0a4c28471511886ab88487ba57c181</code></pre><h3>provider-kubernetes.yaml</h3><pre><code>apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-kubernetes
+spec:
+  package: "crossplane/provider-kubernetes:v0.12.0"</code></pre><h3>provider-config-kubernetes.yaml</h3><pre><code>apiVersion: kubernetes.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: default
+spec:
+  credentials:
+    source: InjectedIdentity # Utiliza las credenciales del Service Account del pod de Crossplane en el mismo clúster.</code></pre><h3>composition-kubernetes-namespace.yaml</h3><pre><code>apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xkubernetesnamespaces.kubernetes.crossplane.io
+spec:
+  group: kubernetes.crossplane.io
+  names:
+    kind: XKubernetesNamespace
+    plural: xkubernetesnamespaces
+    shortNames:
+      - xkns
+  claimNames:
+    kind: KubernetesNamespace
+    plural: kubernetesnamespaces
+    shortNames:
+      - kns
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: "El nombre del Namespace de Kubernetes a crear."
+                  maxLength: 63
+                  pattern: "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+              required:
+                - id
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xkubernetesnamespaces.kubernetes.crossplane.io
+  labels:
+    crossplane.io/xrd: xkubernetesnamespaces.kubernetes.crossplane.io
+spec:
+  compositeTypeRef:
+    apiVersion: kubernetes.crossplane.io/v1alpha1
+    kind: XKubernetesNamespace
+  resources:
+    - name: namespace
+      base:
+        apiVersion: v1
+        kind: Namespace
+        metadata:
+          labels: {}
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          type: FromCompositeFieldPath
+        - fromFieldPath: metadata.labels
+          toFieldPath: metadata.labels
+          type: FromCompositeFieldPath
+          policy:
+            fromFieldPath: Optional</code></pre><h3>xr-kubernetes-namespace.yaml</h3><pre><code>apiVersion: kubernetes.crossplane.io/v1alpha1
+kind: KubernetesNamespace
+metadata:
+  name: my-crossplane-namespace-claim
+  labels:
+    environment: dev
+spec:
+  id: my-crossplane-namespace # Este es el campo 'id' definido en la XRD</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGr1Fd3eJWJ5NceTQCo_5LOYRtsgSwGtQMCNozOJs6pqWWoSfrHZXGacVDHmZQ8tjns0V4aH-cOhZ04Up7eSgELtMzRJlPftu9m0jZBFP4sAZE2xmxbw9-XM0Wo62W1USkZ6Qi9ea2faL8=" target="_blank" rel="noopener noreferrer">crossplane.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFcJZWUruiarcfZl0oFyPy71K4ZTCts8j42h-QhL1V055sxPNZQz1QNK8voMrrU9_VS--DHdxbLZz_YajYci1i9c3RUZdmq5OLo9Bji3AtAW2MiNceU69-6pT3dV9l6byzn-uXrIkKHji3FfZ0rxqFfTOZhACefr1OuVgPR4jHwi3aVCXGK4DU=" target="_blank" rel="noopener noreferrer">tamerlan.dev</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGjru5eetYPeOb29yG_Fxf991PROwnPtM_sh2SAmdSwalUYALAgkE2KkMww3vHflMOXG5B6m6mmD_2QJmPo65SxJM7q_792coi4u2mAm2U41Nvn0giiSzAzeHs_0vIWIbbWJI_YoqmD1ZzQo3LJp51wbmDndNxb8C0SRnzcq4kLnLwNeGRZK1gh5-WloqKKGOsR-Bc-Rpka2EeMEvQ1yv65" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEDQvySDlITnlBayXsq7LfMhWiBud4Nt9vppEwHU4oBrW6FoK5IAn0khbOTkClcDlYdGgK1HBVOUxjppohlzEsyX5S5HvNsnMtBLmGEwam37Qz244S1RrCDJwQXPfxDopCI-G1Ps_2MQKQzfX0xlNlM4O5yq4EOX1pUMJmWANDc92R5AgNZ2dWEdzK7uESZUYCBcws=" target="_blank" rel="noopener noreferrer">tekanaid.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtXV6d-kTxRkP51VQkaATVH4MO-ha9q-2YashPXVrCCbrdiUU8OG3s_iFwc7DTOIOth7UVq_WcS3ukopleeqPgnOmWrERdQU3RcDkTvOko2HIuTwLAmhNeFzZY9NrFI-Uaj7OYJTQ=" target="_blank" rel="noopener noreferrer">youtube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEADHaqyLIVgjkV5ctY_x024Im_Fpwgx7lccqGQiB_frfRUHPYNLOv0LAiCn-MMl-W1n5TbTwpXg7C4up0WQoFuAEdmlxl6nxVGUleGW9kGvQ9BdyNEi4_RaBz6Mu8LzCcrzVfc2jNEjwzwcJdZWgsbZuS6h96P5HPQHd7Xhugpr9yH8NiKZ10=" target="_blank" rel="noopener noreferrer">komodor.com</a></li></ul>
+  </div>
+</body>
+</html>

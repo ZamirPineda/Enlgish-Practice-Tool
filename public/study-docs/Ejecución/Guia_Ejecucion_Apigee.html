@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Apigee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Apigee</h1>
+    <h2>Explicación</h2><p>Apigee es una plataforma de gestión de API robusta. Dada su complejidad y naturaleza típicamente en la nube o en entornos empresariales, levantar una "instancia básica" completa de Apigee Edge o Apigee X localmente con Docker o Podman no es una tarea sencilla ni se proporciona un método oficial y ligero para ello. Sin embargo, el <strong>Apigee Edge Microgateway</strong> (Microgateway) es un componente ligero que permite implementar proxies de API localmente, aplicando políticas de Apigee y enrutando tráfico a backends. Esta guía te permitirá levantar una instancia local del Microgateway en modo <em>standalone</em>, lo que significa que no se conectará a una instancia de Apigee Edge/X completa, sino que cargará sus definiciones de proxy desde archivos locales. Es la forma más práctica de obtener una experiencia "Apigee" básica y local.</p><p>Esta configuración utilizará <code>docker-compose</code> para orquestar el Microgateway:</p><p>1.  <em></em><code>Dockerfile</code><em></em>: Construye una imagen de Node.js, instala globalmente <code>apigee-microgateway</code> y copia los archivos de configuración y proxy.</p><p>2.  <em></em><code>docker-compose.yml</code><em></em>: Define el servicio <code>apigee-microgateway</code>, construyendo la imagen desde el <code>Dockerfile</code> local, mapeando el puerto <code>8000</code> y montando los archivos de configuración.</p><p>3.  <em></em><code>config.yaml</code><em></em>: Archivo de configuración principal del Microgateway. Define el puerto y una sección <code>management</code> básica, aunque no se use en modo standalone.</p><p>4.  <em></em><code>default.yaml</code><em></em>: Define un proxy de API simple (<code>/my-proxy</code>) que enruta las solicitudes a <code>https://httpbin.org/get</code>. Esto te permitirá probar que el Microgateway está funcionando.</p><p><strong>Pasos para ejecutar:</strong></p><p>1.  Guarda los archivos <code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>config.yaml</code> y <code>default.yaml</code> en un mismo directorio.</p><p>2.  Abre tu terminal en ese directorio.</p><p>3.  Ejecuta el comando <code>docker-compose up -d</code> para construir la imagen y levantar el contenedor.</p><p>4.  Una vez que el contenedor esté en ejecución (puedes verificar con <code>docker-compose ps</code>), puedes probar el proxy accediendo a <code>http://localhost:8000/my-proxy</code> en tu navegador o con <code>curl</code>.</p><p>Para detener y eliminar los contenedores, ejecuta <code>docker-compose down</code>.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM node:18-alpine
+
+WORKDIR /app
+
+# Instala Apigee Edge Microgateway globalmente
+RUN npm install -g apigee-microgateway
+
+# Copia los archivos de configuración del Microgateway
+COPY config.yaml .
+COPY default.yaml .
+
+# Expone el puerto por defecto del Apigee Microgateway
+EXPOSE 8000
+
+# Inicia Apigee Edge Microgateway en modo standalone
+# '-c config.yaml' especifica el archivo de configuración del Microgateway.
+# '--proxyDir /app' le dice al Microgateway que busque las definiciones de proxy
+# (como default.yaml) en el directorio actual.
+CMD ["sh", "-c", "edgemicro start -c config.yaml --proxyDir /app"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+services:
+  apigee-microgateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000" # Mapea el puerto del host al puerto del contenedor
+    volumes:
+      # Monta los archivos de configuración para que el contenedor los pueda usar
+      - ./config.yaml:/app/config.yaml
+      - ./default.yaml:/app/default.yaml
+    # El comando para iniciar el microgateway, tal como se especifica en el Dockerfile
+    command: sh -c "edgemicro start -c config.yaml --proxyDir /app"
+    restart: always # Asegura que el contenedor se reinicie si falla</code></pre><h3>config.yaml</h3><pre><code># Archivo de configuración para Apigee Edge Microgateway en modo standalone
+# Este archivo define los ajustes básicos para el Microgateway.
+
+runtime:
+  # Un ID de cluster para la instancia del Microgateway
+  clusterId: apigee-microgateway-local
+  # logLevel: info # Descomentar para cambiar el nivel de log
+
+gateway:
+  # El puerto en el que el Microgateway escuchará las solicitudes entrantes
+  port: 8000
+  # plugins:
+  #   dir: /app/plugins # Directorio donde se pueden encontrar los plugins
+  #   sequence:        # Secuencia de ejecución de plugins
+  #     - cors
+
+# Sección de gestión (management) - Requerida aunque no se use en modo standalone.
+# La URL puede ser un marcador de posición, ya que no nos conectamos a una instancia de Apigee Edge.
+management:
+  url: http://localhost:8080/v1
+  virtualHosts:
+    - default # Nombre del host virtual predeterminado</code></pre><h3>default.yaml</h3><pre><code># Definición de proxy para Apigee Edge Microgateway en modo standalone
+# Este archivo define cómo el Microgateway manejará las solicitudes para una API específica.
+
+proxy:
+  # Nombre único para este proxy
+  name: my-simple-proxy
+  # La ruta base de la API que este proxy manejará. Las solicitudes a /my-proxy/* serán enrutadas.
+  base_path: /my-proxy
+  # Configuración del endpoint de destino (backend) para este proxy
+  target_endpoint:
+    name: default # Nombre del endpoint de destino
+    url: https://httpbin.org/get # URL del servicio backend al que se enrutarán las solicitudes
+
+# Opcional: Aquí se pueden aplicar políticas de Microgateway.
+# Por ejemplo, para añadir un encabezado de solicitud:
+# policies:
+#   request:
+#     - assign-message:
+#         name: add-custom-header
+#         source:
+#           headers:
+#             - name: X-Microgateway-ID
+#               value: "local-instance-123"
+#   response:
+#     - assign-message:
+#         name: remove-server-header
+#         remove:
+#           headers:
+#             - Server</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEHMJM7nprOdSKzzRu8IbTCYJShLfBKIluXfDaEDlSfyhnCgocGVqV3fmPFB7DfKcet2kAilORcibeBajfMcY7N5iyV81ZnbZSqZeL8R7HKcLt7bVsI5a-rM4a5CLNuP_FJrYNO" target="_blank" rel="noopener noreferrer">google.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGo3LQqz2HwKECzVNWzvpwrJyrL2ThWPZjqy0BIISA8yxOfRu03buLwzHumUCl7JNCjdF-JH0oexXGcddsqR956LYqNmr8degP8VdbOpRhc_nfFXY1gP7qF7UdliqDvaeG-xLPdklxBGSzuOQ08seHiZj6h6i_eY1sfsoaPdt7nsN9SUk5jKrLibA==" target="_blank" rel="noopener noreferrer">google.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwfhDlo3zOokGVHH6qivaYi_mWig744F4AzEN8fUqcQXVABI7xGTUQtE95bf6Yg8nww2eI0sFNjAyAM114L8D1gTkDy4gphyc3kS6ndiY3568m2XdAh376yB8sjfxnByWPhY2a-KTmz0-TIZeRV20fRH2SGo-dbsdFvffqVt1emJiozRwSG-s=" target="_blank" rel="noopener noreferrer">opencldev.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGL5H50CfftrnRs5EZrpA2DCLZautbcE5Xse-4KMyrNCC9GFBNWtxNO_2d9qe2RCQb0ROSu24GXaH4ToWFJNIVVGp2ZHRbYPF7SHLI2ooGlq8cJT0vFo2uprbIl0QvCIZa3yjoLaW_RgEBrUv9q494hXBdR1GzhKoi5s0YdqzYFtoyFFlRDiOxJ" target="_blank" rel="noopener noreferrer">google.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHX8U_Pt-69F86n_M13fh4Rtaw9MdHwOLLk-DgHzAbR5xJQQzUFf9i5EuybMiVADyIfXklk8coYkozdzidIhnJvNAWilkT5MfJpacR6cWKeVVeplJuqE_iPDHxw10V7xra2GhIryxVfxVvkIOBZqUoVtpsOKxl8A5yL74NhB0an4Mw=" target="_blank" rel="noopener noreferrer">google.dev</a></li></ul>
+  </div>
+</body>
+</html>

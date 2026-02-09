@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Spark Streaming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Spark Streaming</h1>
+    <h2>Explicación</h2><p>Esta guía te permitirá configurar y ejecutar una instancia básica de Spark Streaming utilizando Docker Compose. La configuración incluye un maestro de Spark, un trabajador de Spark y un servidor Netcat que actuará como fuente de datos para el streaming. Un script de Python (<code>spark_streaming_app.py</code>) consumirá los datos del Netcat y realizará un simple conteo de palabras.</p><h3>Pasos para la ejecución:</h3><p>1.  <strong>Crear el Dockerfile y los archivos de soporte</strong>: Asegúrate de tener los archivos <code>Dockerfile</code>, <code>docker-compose.yml</code> y <code>spark_streaming_app.py</code> en el mismo directorio.</p><p>2.  <strong>Construir la imagen de Docker</strong>: Desde el directorio donde guardaste los archivos, ejecuta el siguiente comando para construir la imagen base de Spark:</p><pre><code>    docker build -t spark-streaming-base:latest .</code></pre><p>3.  <strong>Iniciar los servicios de Docker Compose</strong>: Una vez que la imagen esté construida, puedes levantar todos los contenedores definidos en <code>docker-compose.yml</code>:</p><pre><code>    docker-compose up -d</code></pre><p>    Esto iniciará el maestro de Spark (accesible en <code>http://localhost:8080</code>), el trabajador de Spark (accesible en <code>http://localhost:8081</code>) y el servidor Netcat que estará escuchando en el puerto <code>9999</code> de tu máquina local.</p><p>4.  <strong>Ejecutar la aplicación de Spark Streaming</strong>: Envía el script de Python al maestro de Spark para que empiece a procesar el flujo de datos. Para ello, primero copia el script dentro del contenedor del maestro:</p><pre><code>    docker cp spark_streaming_app.py spark-master:/app/spark_streaming_app.py</code></pre><p>    Luego, ejecuta la aplicación:</p><pre><code>    docker exec -it spark-master /opt/spark/bin/spark-submit /app/spark_streaming_app.py</code></pre><p>    Verás mensajes indicando que la aplicación de streaming ha comenzado y está esperando datos.</p><p>5.  <strong>Enviar datos al servidor Netcat</strong>: Abre una nueva terminal y envía algunos mensajes al servidor Netcat. Puedes hacer esto desde tu máquina local (ya que el puerto 9999 está mapeado):</p><pre><code>    echo "hello spark streaming world" | nc localhost 9999
+    echo "spark is awesome" | nc localhost 9999
+    echo "hello again" | nc localhost 9999</code></pre><p>6.  <strong>Observar la salida</strong>: Regresa a la terminal donde ejecutaste <code>spark-submit</code>. Deberías ver los conteos de palabras en tiempo real impresos en la consola por la aplicación de Spark Streaming.</p><p>7.  <strong>Detener los servicios</strong>: Para detener y eliminar todos los contenedores, ejecuta:</p><pre><code>    docker-compose down</code></pre><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para construir la imagen base de Spark
+FROM openjdk:11-jre-slim
+
+# Actualizar e instalar curl y netcat-traditional (para el servidor Netcat)
+RUN apt-get update && apt-get install -y curl netcat-traditional && rm -rf /var/lib/apt/lists/*
+
+# Definir la versión de Spark y Hadoop
+ENV SPARK_VERSION=3.5.1
+ENV HADOOP_VERSION=3
+
+# Descargar, extraer y configurar Spark
+RUN curl -o /tmp/spark.tgz https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop$HADOOP_VERSION.tgz \
+    && tar -xzf /tmp/spark.tgz -C /opt \
+    && mv /opt/spark-$SPARK_VERSION-bin-hadoop$HADOOP_VERSION /opt/spark \
+    && rm /tmp/spark.tgz
+
+# Configurar variables de entorno de Spark
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+
+# Exponer puertos para la interfaz de usuario del Maestro de Spark (8080), comunicación del Maestro (7077),
+# interfaz de usuario del Trabajador de Spark (8081) y otros posibles puertos.
+EXPOSE 8080 7077 8081 7000
+
+# Comando por defecto (será sobrescrito por docker-compose para los servicios específicos)
+CMD ["/opt/spark/bin/spark-shell"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+services:
+  spark-master:
+    image: spark-streaming-base:latest
+    container_name: spark-master
+    hostname: spark-master
+    ports:
+      - "8080:8080" # Interfaz de usuario del Maestro de Spark
+      - "7077:7077" # Comunicación interna del Maestro de Spark
+    environment:
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_MASTER_PORT=7077
+      - SPARK_MASTER_WEBUI_PORT=8080
+    command: bash -c "/opt/spark/sbin/start-master.sh -h spark-master -p 7077 --webui-port 8080"
+    networks:
+      - spark-net
+
+  spark-worker:
+    image: spark-streaming-base:latest
+    container_name: spark-worker
+    hostname: spark-worker
+    depends_on:
+      - spark-master
+    ports:
+      - "8081:8081" # Interfaz de usuario del Trabajador de Spark
+    environment:
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_WEBUI_PORT=8081
+    command: bash -c "/opt/spark/sbin/start-worker.sh spark://spark-master:7077 -h spark-worker --webui-port 8081"
+    networks:
+      - spark-net
+
+  netcat-server:
+    image: spark-streaming-base:latest # Reutilizamos la imagen base ya que incluye netcat
+    container_name: netcat-server
+    hostname: netcat-server
+    command: bash -c "echo 'Iniciando servidor Netcat en el puerto 9999...' && nc -lk 9999"
+    ports:
+      - "9999:9999" # Puerto para el servidor Netcat
+    networks:
+      - spark-net
+
+networks:
+  spark-net:
+    driver: bridge
+</code></pre><h3>spark_streaming_app.py</h3><pre><code># spark_streaming_app.py
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import explode, split
+from pyspark.sql.types import StructType, StructField, StringType
+
+# Inicializar Spark Session
+spark = SparkSession.builder \
+    .appName("NetcatWordCount") \
+    .master("spark://spark-master:7077") \
+    .getOrCreate()
+
+spark.sparkContext.setLogLevel("ERROR") # Establecer nivel de log para reducir la verbosidad
+
+print("Spark Session inicializada. Esperando datos del servidor Netcat...")
+
+# Crear un DataFrame que represente el flujo de líneas de entrada del servidor Netcat
+# Asegúrate de que 'netcat-server' sea el nombre de host y 9999 el puerto
+lines = spark.readStream \
+    .format("socket") \
+    .option("host", "netcat-server") \
+    .option("port", 9999) \
+    .load()
+
+# Dividir las líneas en palabras
+words = lines.select(
+    explode(split(lines.value, " ")).alias("word")
+)
+
+# Generar el conteo de palabras en ejecución
+wordCounts = words.groupBy("word").count()
+
+# Iniciar la consulta que imprime los conteos en la consola
+# Usar el modo 'complete' para esta demostración.
+query = wordCounts.writeStream \
+    .outputMode("complete") \
+    .format("console") \
+    .start()
+
+print("Consulta de streaming iniciada. Para enviar datos, usa: echo 'tu mensaje' | nc localhost 9999")
+print("Presiona Ctrl+C para detener la aplicación cuando hayas terminado.")
+
+query.awaitTermination()
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4XGNYiGL6KIIIOHmS87Ha8ob8pjlwLSUtdCcKjss_vopFqP0u1F4rv9b59mOMr7_p7z-3IESZDNNVpXZIwoqh2T3ZRng26UX_lOygrCV-T9nuuLeKBdQ5D2kc1OUrlJNQC0Lbe91nPSUYwQ4StZ4SAVhPg1Ncp1OTeUvpryOg" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF57f7BTCtakgloZHw-JeT7y0Iolwew3r_KmAn9UB7T4jhwLu8Bo2PkvTZiAz0Wq6csleHInDwuVcHR9X8fYdo-Mpy5jMSpClae7-aIGeun9E3-dtWejtoN5eYOp72jXBJF8T7jDIFQ-A3DjyjIQdU3rQmwWA4=" target="_blank" rel="noopener noreferrer">databricks.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPrRkMcso8yhmfqAVnZCXozF2KdBWcdIhDHlmjBJ4FaOppwYRiZuZbnkOInoHNRL2dw2doxNF3b7amm1TLxBQvytNVRlUk2O08gl4PbTLD3_8l_Rpf5VxsMy3aDDmznSxITR3If3DIlhE_gcxGKg3oHcelTAmQhUGu_i4XxoTDmH4XuewEcPAGICk=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEu96Uh4MNIVFZRnI-5VocB7nfLA-DNP4dmSgq1_HIEDpSh3NGh3dLjNcilFIwzChUmN5XUQ26mPNOVSP0kZZ3ufAPt7Vx01Z1Bg-zsI_nHDg-fbymd9MAQC9ZJY9K53Rn9OwI27ydPC6JzYQks5-X-sQo8aJlyVkPv9B6uCxG7Kq1o_eylCw==" target="_blank" rel="noopener noreferrer">databricks.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGf0BT4K9sBuoDyC32xmvOfQRh6x31L2reLpkLZVoz48KiLVuH90MnDiL0bEZSEFwBcSNeQARX7YhwP09IjmeaQUJlv0FfgrRsOsnU4InElr1-lGChNoPIolSYfEkyGAPExHsqsFx_SdsAXGtfFXiNohVJWvs6tL0Pk9gu_2ER3wqhjRxhP" target="_blank" rel="noopener noreferrer">damavis.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHuaR5VWXqlWYqc-034DJWFXK_IoIE7AfEgemHas_4_E3NGWzVEF2sSLpDBZ60-5WyVPWB_BiuQfA13jQXnieKiP5s5OF-iqLZnQzstGkAvR74UqMF8KN6G7JDWolyf2C-U4aJM2ZjqLLu1buPb60IAvttPG4Z5SwYKzx5wMapzRgB4oiNRx9x8b_Kkpg==" target="_blank" rel="noopener noreferrer">damavis.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEN02q8SPKIRH2lhHgqzgVR0BOAE-dRp3Q0Fxba5e9odb_oEHzoJfDFBasOJZieRnogsqCvhGNLbJoArjffF3QkiunFwztFjlwUUT5lA4tUshZB6xZzz0iuepE70lduDqBxaduLeOlNdGR9nAs2EBmn7n2avV7xXLWTepncLTLeqH7Blzwl9LlTOqlONsU0yAWNJo1e9_QtNQcCb9Q=" target="_blank" rel="noopener noreferrer">microsoft.com</a></li></ul>
+  </div>
+</body>
+</html>

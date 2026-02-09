@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Dagster</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Dagster</h1>
+    <h2>Explicación</h2><p>Esta guía proporciona una configuración básica de Dagster usando Docker Compose (compatible con Podman Compose). Dagster es una plataforma de <span class="tooltip" data-tooltip-text="La gestión y coordinación automatizada de sistemas informáticos, aplicaciones y servicios complejos. Kubernetes es un ejemplo popular de un orquestador de contenedores.">orquestación</span> de datos que permite definir, desarrollar y monitorear <span class="tooltip" data-tooltip-text="Una serie de etapas de procesamiento de datos conectadas en secuencia, donde la salida de una etapa es la entrada de la siguiente. Común en sistemas de CI/CD y procesamiento de datos.">pipelines</span> de datos. Esta configuración incluye:</p><p>1.  <strong>PostgreSQL</strong>: Una base de datos para almacenar los metadatos de Dagster (historial de ejecuciones, logs de eventos, etc.). Esto asegura la persistencia de los datos del sistema de Dagster.</p><p>2.  <em></em><code>user_code_server</code><em></em>: Un contenedor que ejecuta su código Dagster (activos, trabajos, etc.) como un servidor gRPC. Este contenedor se construye a partir de un <code>Dockerfile</code> personalizado y contiene un ejemplo simple de un activo Dagster.</p><p>3.  <strong>Dagit</strong>: La interfaz de usuario web de Dagster, que se conecta al servidor de código de usuario para cargar las definiciones de sus activos y trabajos, y a PostgreSQL para acceder a los metadatos de las ejecuciones.</p><h3>Pasos para levantar la instancia:</h3><p>1.  <strong>Guarde los archivos</strong>: Cree la estructura de directorios y guarde los contenidos proporcionados en sus respectivos archivos. Asegúrese de que el directorio <code>my_dagster_project</code> contenga <code>__init__.py</code>, <code>repo.py</code> y <code>requirements.txt</code>.</p><pre><code>    .
+    ├── docker-compose.yml
+    ├── Dockerfile
+    ├── dagster_home
+    │   ├── dagster.yaml
+    │   └── workspace.yaml
+    └── my_dagster_project
+        ├── __init__.py
+        ├── repo.py
+        └── requirements.txt</code></pre><p>2.  <strong>Ejecute Docker Compose</strong>: Navegue hasta el directorio donde guardó <code>docker-compose.yml</code> y ejecute el comando:</p><pre><code>    docker-compose up -d</code></pre><p>    (O <code>podman-compose up -d</code> si usa Podman Compose).</p><p>3.  <strong>Acceda a Dagit</strong>: Una vez que todos los contenedores estén en funcionamiento, abra su navegador y navegue a <code>http://localhost:3000</code>. Debería ver la interfaz de usuario de Dagit con el activo <code>my_first_asset</code> cargado en la sección 'Assets'.</p><p>4.  <strong>Limpieza</strong>: Para detener y eliminar los contenedores y volúmenes, ejecute:</p><pre><code>    docker-compose down -v</code></pre><p>    (O <code>podman-compose down -v</code>). El flag <code>-v</code> eliminará también el volumen de PostgreSQL, borrando los metadatos de Dagster.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para el servidor de código de usuario de Dagster
+FROM python:3.9-slim-buster
+
+# Establecer variables de entorno
+ENV DAGSTER_HOME=/opt/dagster/dagster_home
+ENV PYTHONUNBUFFERED=1 # Salida sin búfer para Python
+
+# Crear un directorio de trabajo
+WORKDIR /usr/app
+
+# Copiar el archivo de requisitos e instalar dependencias
+COPY my_dagster_project/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar el código del proyecto Dagster como un paquete
+COPY my_dagster_project my_dagster_project
+
+# Exponer el puerto gRPC para que Dagit se conecte
+EXPOSE 4000
+
+# Comando para ejecutar el servidor de código de usuario de Dagster
+# Esto servirá el repositorio definido en `my_dagster_project/repo.py`
+CMD ["dagster", "api", "grpc", "--host", "0.0.0.0", "--port", "4000", "--module", "my_dagster_project.repo"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  # Base de datos PostgreSQL para metadatos de Dagster (historial de ejecuciones, logs de eventos)
+  postgres:
+    image: postgres:13
+    container_name: dagster_postgres
+    environment:
+      POSTGRES_DB: dagster_db
+      POSTGRES_USER: dagster_user
+      POSTGRES_PASSWORD: dagster_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dagster_user -d dagster_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Despliegue de código de usuario de Dagster, ejecutando nuestro `my_dagster_project`
+  user_code_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dagster_user_code_server
+    # Asegurarse de que este servicio usa la misma configuración de instancia de Dagster
+    environment:
+      DAGSTER_HOME: /opt/dagster/dagster_home
+    volumes:
+      # Montar dagster_home para obtener dagster.yaml
+      - ./dagster_home:/opt/dagster/dagster_home
+    ports:
+      - "4000:4000" # Exponer para posible depuración, aunque Dagit se conecta internamente
+    depends_on:
+      postgres:
+        condition: service_healthy # Esperar a que postgres esté listo
+    # El comando se define en el Dockerfile
+
+  # Servidor web Dagit (UI)
+  dagit:
+    image: dagster/dagster-webserver:1.7.0 # Versión de Dagster compatible con las dependencias
+    container_name: dagster_dagit
+    ports:
+      - "3000:3000" # Exponer la UI de Dagit
+    environment:
+      DAGSTER_HOME: /opt/dagster/dagster_home
+    volumes:
+      # Montar dagster_home para obtener workspace.yaml y dagster.yaml
+      - ./dagster_home:/opt/dagster/dagster_home
+    depends_on:
+      postgres:
+        condition: service_healthy
+      user_code_server:
+        condition: service_started # Dagit necesita que el servidor de código de usuario esté activo para cargar definiciones
+    command:
+      [
+        "dagster-webserver",
+        "-h", "0.0.0.0",
+        "-p", "3000",
+        "-D", "/opt/dagster/dagster_home", # Directorio para la configuración de la instancia de Dagster (dagster.yaml)
+        "-w", "/opt/dagster/dagster_home/workspace.yaml" # Archivo workspace apuntando al código de usuario
+      ]
+
+volumes:
+  postgres_data:
+</code></pre><h3>dagster_home/dagster.yaml</h3><pre><code># dagster_home/dagster.yaml: Configuración para la instancia de Dagster.
+# Este archivo le indica a Dagster cómo conectarse a su base de datos de metadatos.
+run_storage:
+  module: dagster_postgres.run_storage
+  class: PostgresRunStorage
+  config:
+    postgres_db_name: dagster_db
+    postgres_host: postgres
+    postgres_port: 5432
+    postgres_user: dagster_user
+    postgres_password: dagster_password
+event_log_storage:
+  module: dagster_postgres.event_log
+  class: PostgresEventLogStorage
+  config:
+    postgres_db_name: dagster_db
+    postgres_host: postgres
+    postgres_port: 5432
+    postgres_user: dagster_user
+    postgres_password: dagster_password
+</code></pre><h3>dagster_home/workspace.yaml</h3><pre><code># workspace.yaml: Define dónde Dagit puede encontrar los repositorios de Dagster.
+load_from:
+  - grpc_server:
+      host: user_code_server # Esto coincide con el nombre del servicio en docker-compose.yml
+      port: 4000
+      location_name: my_dagster_project_repo # Un nombre lógico para la ubicación del repositorio
+</code></pre><h3>my_dagster_project/__init__.py</h3><pre><code># Archivo __init__.py para tratar 'my_dagster_project' como un paquete Python.</code></pre><h3>my_dagster_project/repo.py</h3><pre><code># my_dagster_project/repo.py: Contiene un activo simple de Dagster y una definición de repositorio.
+from dagster import asset, Definitions
+
+# Definir un activo simple de Dagster
+@asset
+def my_first_asset():
+    """
+    Este es un activo básico de Dagster.
+    Cuando se materialice, imprimirá un mensaje en la consola.
+    """
+    print("Ejecutando my_first_asset: ¡Hola, Dagster!")
+    return "Datos de my_first_asset"
+
+# Definir un repositorio usando Definitions (el enfoque moderno en Dagster 1.0+)
+# Esto hace que el activo sea detectable por Dagit
+@Definitions(
+    assets=[my_first_asset],
+    # Puede añadir jobs, schedules, sensors aquí también
+)
+def my_dagster_repository():
+    return None # El objeto Definitions se devuelve implícitamente
+</code></pre><h3>my_dagster_project/requirements.txt</h3><pre><code>dagster==1.7.0
+dagster-postgres==1.7.0
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEx5llOmvf3j9tBWD7kGRK_sFF2pf0iAeOLFBdUun5WQEtFFfPQfev5XvZVJv986EFXGIW6EenHha-5NA2eW4S2w0lvOMWZ6-Pe3tRuxK3Lx45MQaTSIng8lzg04rKHQye4VMfDpYP_8AyzYgfp" target="_blank" rel="noopener noreferrer">dagster.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHLx1QR2fzxigueEsHJ_OX_DOG6ebGlsbg-9Y08GuV0dME7M5zOEQN8aJOVQMsFtosK1VpXtrABwLTU_t0dWF3Lv7t4fHbyB-mfqUJuUTpnL4Q-6A==" target="_blank" rel="noopener noreferrer">dagster.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG95bB6WrIcd9KxI9B4qTYihazSjeqK96sRjuunMSdhkw7K4xzB1n8deOT4aQxJuoSCuqV200BqAN0D6NveqKujtkl-1OdfCYrcfCHTR2V1kVEYFRWOjZHT41UbdVzruUCUFJGfLO1yR6Bn" target="_blank" rel="noopener noreferrer">dagster.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHdJgMdMgBH2XwV_W-j8-7Z3_N32ppP4q-DGi9ktE0qlockGvvtfMr8Mt4ZpvAIw5xSnfUUL7s0WnZS2VIKlpz1uCTwjRc94U8kM7H8WJD0szqjo7JEVjV964CTuaRarag3AEQ_eymgdIfme0-pW3tVB7OuMvUJZKPH" target="_blank" rel="noopener noreferrer">skytowner.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEzqReqHoZE_zGq5rbh_JUE06gpH9G6z-r9GslIPTqKmkeHSzUB_qFM_s-6eXHv_QvF9sUlfY2k7QcD3EwNOv9fheCvzCXLbZaFvAoDEAjuN0vBwAoJda0Om78eKQeFgJokeXRM2b6AWyvwUAKcAbEa3yWeCTVDsn8CO4_JfOz3LZo30TXJoDB7xhkZwX1X-Rc8BalLQxJM_lUXXOv9XzvzZjPPh5VLxkRXQ3bltb1XfnJtygk=" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
+  </div>
+</body>
+</html>

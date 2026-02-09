@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Livy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Livy</h1>
+    <h2>Explicación</h2><p>Esta guía le permitirá levantar una instancia básica de Apache Livy con un clúster de Apache Spark Standalone utilizando Docker Compose. Livy es un servicio REST que permite interactuar con un clúster de Spark, ejecutar código Scala, Python o R de forma remota, enviar trabajos Spark, etc. Es ideal para aplicaciones que necesitan interactuar programáticamente con Spark sin tener que ejecutar el código directamente en el clúster.</p><p>La configuración incluye:</p><ul><li>Un <strong>Spark Master</strong>: El nodo principal del clúster Spark.</li><li>Un <strong>Spark Worker</strong>: Un nodo trabajador que se conecta al Spark Master para ejecutar tareas.</li><li>Un <strong>Livy Server</strong>: El servicio Livy que se conecta al Spark Master.</li></ul><p><strong>Pasos para ejecutar:</strong></p><p>1.  Guarde los contenidos proporcionados en sus respectivos archivos (<code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>livy.conf</code>) en un mismo directorio.</p><p>2.  Abra una terminal en ese directorio.</p><p>3.  Ejecute el comando <code>docker-compose up -d</code> para construir la imagen de Livy y levantar todos los servicios.</p><p>4.  Una vez que los contenedores estén en funcionamiento (puede verificar con <code>docker-compose ps</code>), podrá acceder:</p><ul><li>   -   La interfaz de usuario de Spark Master en <code>http://localhost:8080</code>.</li><li>   -   La API REST de Livy en <code>http://localhost:8998</code>.</li></ul><p><strong>Ejemplo de uso de Livy (después de levantar los servicios):</strong></p><p>Para crear una sesión interactiva de Livy:</p><pre><code>curl -X POST --data '{"kind": "spark"}' -H "Content-Type: application/json" http://localhost:8998/sessions</code></pre><p>Esto devolverá un ID de sesión. Luego, puede enviar declaraciones a esa sesión:</p><pre><code>curl -X POST --data '{"code": "sc.version"}' -H "Content-Type: application/json" http://localhost:8998/sessions/&lt;SESSION_ID&gt;/statements</code></pre><p>(Reemplace <code><SESSION_ID></code> con el ID devuelto en el paso anterior).</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para Livy
+FROM openjdk:8-jdk-slim
+
+LABEL maintainer="" # Se deja vacío según la instrucción
+
+ENV SPARK_VERSION=3.2.4
+ENV HADOOP_VERSION=3.2
+ENV LIVY_VERSION=0.7.1
+
+# Instala paquetes necesarios como wget, curl y unzip
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    curl \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Descarga e instala Spark
+# Spark es un prerrequisito para Livy, aunque Livy se conectará a un Spark Master externo.
+# Las binarios de Spark deben estar disponibles dentro del contenedor Livy.
+RUN wget -qO /tmp/spark.tgz "https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" \
+    && tar -xzf /tmp/spark.tgz -C /opt \
+    && mv /opt/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} /opt/spark \
+    && rm /tmp/spark.tgz
+
+ENV SPARK_HOME=/opt/spark
+ENV PATH="${SPARK_HOME}/bin:${SPARK_HOME}/sbin:${PATH}"
+
+# Descarga e instala Livy
+RUN wget -qO /tmp/livy.tgz "https://archive.apache.org/dist/incubator/livy/${LIVY_VERSION}/apache-livy-${LIVY_VERSION}-bin.zip" \
+    && unzip -q /tmp/livy.tgz -d /opt \
+    && mv /opt/apache-livy-${LIVY_VERSION}-bin /opt/livy \
+    && rm /tmp/livy.tgz
+
+ENV LIVY_HOME=/opt/livy
+ENV PATH="${LIVY_HOME}/bin:${PATH}"
+
+# Crea el directorio de logs para Livy
+RUN mkdir -p ${LIVY_HOME}/logs
+
+# Expone el puerto por defecto de Livy
+EXPOSE 8998
+
+# Copia la configuración personalizada de Livy
+COPY livy.conf ${LIVY_HOME}/conf/livy.conf
+
+# Establece el comando por defecto para iniciar el servidor Livy
+CMD ["${LIVY_HOME}/bin/livy-server"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  spark-master:
+    image: bitnami/spark:3.2.4
+    container_name: spark-master
+    # Puertos para la UI de Spark (8080) y la comunicación interna del Master (7077)
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=false
+      - SPARK_RPC_ENCRYPTION_ENABLED=false
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=false
+      - SPARK_SSL_ENABLED=false
+    networks:
+      - livy-network
+
+  spark-worker:
+    image: bitnami/spark:3.2.4
+    container_name: spark-worker
+    # Comando para que el worker se conecte al master
+    command: bash -c "/opt/bitnami/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077"
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_CORE_LIMIT=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_RPC_AUTHENTICATION_ENABLED=false
+      - SPARK_RPC_ENCRYPTION_ENABLED=false
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=false
+      - SPARK_SSL_ENABLED=false
+    networks:
+      - livy-network
+    depends_on:
+      - spark-master
+
+  livy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: livy
+    # Puerto por defecto de la API REST de Livy
+    ports:
+      - "8998:8998"
+    environment:
+      # Estas variables de entorno pueden ser redundantes si se configuran en livy.conf, 
+      # pero a menudo son útiles para la depuración o para anular la configuración predeterminada.
+      - SPARK_HOME=/opt/spark 
+    networks:
+      - livy-network
+    depends_on:
+      - spark-master
+
+networks:
+  livy-network:
+    driver: bridge</code></pre><h3>livy.conf</h3><pre><code># livy.conf
+# Archivo de configuración para Apache Livy
+
+# Host del servidor Livy.
+# Debe configurarse a 0.0.0.0 para permitir el acceso externo desde Docker/Podman.
+livy.server.host = 0.0.0.0
+
+# Puerto del servidor Livy.
+livy.server.port = 8998
+
+# URI del Master de Spark al que Livy se conectará.
+# En una configuración de Docker Compose, 'spark-master' es el nombre del servicio.
+livy.spark.master = spark://spark-master:7077
+
+# Modo de despliegue de Spark. Puede ser 'client' o 'cluster'.
+# Para simplicidad en Docker Compose y para que el driver de Spark se ejecute dentro del contenedor Livy,
+# se usa 'client' mode.
+livy.spark.deployMode = client
+
+# Directorio de logs para Livy.
+livy.log.dir = /opt/livy/logs
+
+# Ubicación del directorio home de Spark.
+# Si no se especifica, Livy intentará encontrarlo desde las variables de entorno.
+# Ya lo configuramos dentro del Dockerfile.
+# livy.spark.home = /opt/spark
+
+# Número de segundos que una sesión inactiva será mantenida viva.
+# livy.server.session.timeout-seconds = 3600
+
+# Autenticación (opcional).
+# livy.server.auth.type = noop</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFcqRA5vIYzbmWM60C-lQIE0eEP1UYEUSOGDBtiKvCGbohXsqjApjSJtzOWA4A1V9LhHpD3kPmxaKYiJO8NGJqBEK4Snlk2lMESlsAC30oZuKD61I-QosEAHzlKc0ro8Q==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFtpmYPehR3JEFGdwV4YOH1wc-WoTx_UAwSxFx9cZdW4Uo2h7t9-6B0muixV84XoSkgrdBGYniUwuNMkLWr28Ye-cVLmv2jE9vRNkdTKflEV_HpgA==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFj0o7krB0U5tJQGU-4B2fmptJGdgeNYjcnvrnVCLVot1j1Rk20XkIP-T59v7Sjezh06RFJscPs0rCnTKJviUxocIjjdYutOEU_zzm4OX1CTOysan7DgD8htUwmgdHP0ciwaO02jRzl-er-Rww=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPbi5PD7g-V-Hr5IoBo1nBETzIBoMI-d7sNVxbjofhEIuQEMvwAunKq8dfi_CjtIF4mKcPVJjBtbVI--CJPui8X9jUsiHoJrbwp1ZXqJDK99EYOi5xYRoCkPF7Ew==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEhSApsOLkxqhQJVCgqIofwDnrq3TfZVWMXQOhOr8Hdyq3R7OdEYyQaRlZYEV6cFq9xnDV0bwzXmQPlONFBVTq8mWwnC1SuBMKhFzW98_xBby4jbaoBZ4P2Tjyk38rv0C5kwcwH76tlJpNkocpkUmiEsiI9_rk8Bhb-7abjvEIM76BDnzIpW-SKuKIo5D2y0kr-sKnBk3K_ZstlAiFnAwTgQsU=" target="_blank" rel="noopener noreferrer">statworx.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAfq8vxomWUud3Ac_Td67etwf7Q1KAmCI-GKhwsGR6NKvmBd3TAJ59C8Ghb82iHjRsDofvCxpciI2LXhAO-9EyJm4DBE6p1DdbiCx2nN6UM40ZgXJNNNS4nvDPdOYvXU3ZrlxsaRIlkj9dqPXg4r5BMWKTu6F2gugwV3Y9RwXW-BV3dMbvL4JPxz7WQJ6gct8csebRGte_Lw==" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Apache ActiveMQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Apache ActiveMQ</h1>
+    <h2>Explicación</h2><p>Esta configuración proporciona una instancia básica de Apache ActiveMQ, un popular <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de mensajes de código abierto. Ideal para desarrolladores que necesitan una cola de mensajes ligera para pruebas o entornos de desarrollo.</p><h3>Pasos a seguir:</h3><p>1.  <em></em>Crear el <code>Dockerfile</code><em></em>: Guarda el contenido proporcionado en un archivo llamado <code>Dockerfile</code> en un directorio vacío.</p><p>2.  <strong>Construir la imagen</strong>: Abre tu terminal en el mismo directorio y ejecuta el comando <code>podman build -t my-activemq-image .</code> (o <code>docker build -t my-activemq-image .</code> si usas Docker). Esto creará una imagen personalizada basada en la imagen oficial de ActiveMQ.</p><p>3.  <strong>Ejecutar el contenedor</strong>: Una vez que la imagen esté construida, ejecuta el comando <code>podman run</code> (o <code>docker run</code>) proporcionado en <code>runCommands</code>.</p><h3>Detalles de la configuración:</h3><ul><li>  <em></em><code>Dockerfile</code><em></em>: Utiliza la imagen <code>symptoma/activemq:5.18.3</code> como base, que ya incluye una instalación funcional de ActiveMQ. Expone los puertos <code>61616</code> (para conexiones de clientes como <span class="tooltip" data-tooltip-text="(Java Message Service) Una API de Java para middleware orientado a mensajes que permite a los componentes de una aplicación crear, enviar, recibir y leer mensajes.">JMS</span>, <span class="tooltip" data-tooltip-text="Protocolo de Mensajería Orientado a Texto Simple (Simple Text Oriented Messaging Protocol). Un protocolo de mensajería fácil de usar, basado en texto, similar a HTTP.">STOMP</span>, etc.) y <code>8161</code> (para la consola web de administración).</li><li>  <em></em><code>runCommands</code><em></em>: Este comando primero construye la imagen y luego inicia un contenedor en segundo plano (<code>-d</code>) llamado <code>activemq</code>. Mapea el puerto <code>61616</code> del host al <code>61616</code> del contenedor y el puerto <code>8161</code> del host al <code>8161</code> del contenedor. Esto permite que los clientes y tu navegador accedan al <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> y a la consola.</li></ul><h3>Acceso:</h3><p>Una vez que el contenedor esté en ejecución, podrás acceder a la consola web de ActiveMQ en <code>http://localhost:8161/admin</code>. Las credenciales por defecto son <code>admin</code> / <code>admin</code>.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-activemq-image . && podman run -d --name activemq -p 61616:61616 -p 8161:8161 my-activemq-image</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa una imagen base de ActiveMQ.
+# Esta imagen (symptoma/activemq) ya contiene Apache ActiveMQ preconfigurado.
+# Se utiliza la versión 5.18.3 que es una de las estables más recientes de la serie 5.x.
+FROM symptoma/activemq:5.18.3
+
+# Metadata del mantenedor (opcional, para identificar quién mantiene esta capa).
+LABEL maintainer="Tu Nombre &lt;tu.email@example.com&gt;"
+
+# Expone los puertos por defecto que usa ActiveMQ:
+# 61616: Puerto principal para conexiones de clientes (OpenWire, STOMP, MQTT, AMQP, etc.).
+# 8161:  Puerto para la consola web de administración, que permite monitorear y gestionar el broker.
+EXPOSE 61616
+EXPOSE 8161
+
+# El comando por defecto de la imagen base (symptoma/activemq) ya inicia el servidor ActiveMQ.
+# No necesitamos añadir un CMD adicional a menos que queramos sobreescribir ese comportamiento por defecto.
+# Por ejemplo, el comando CMD original de esta imagen puede ser similar a:
+# CMD ["/opt/activemq/bin/activemq", "console"]
+
+# Si se necesitara añadir configuración personalizada (ej. activemq.xml modificado):
+# Podrías copiar tu archivo de configuración aquí, por ejemplo:
+# COPY activemq.xml /opt/activemq/conf/activemq.xml
+
+# Para persistencia de datos (mensajes, colas, tópicos) o logs,
+# se recomienda montar volúmenes externos. Esto se hace en el comando 'podman run' o 'docker run'.
+# Por ejemplo, para los datos y logs de ActiveMQ:
+# VOLUME ["/opt/activemq/data", "/opt/activemq/log"]</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJEKQwJcKtaPeFYetnxFGw7K8h38nw9KC94wQwzto7fyDukhn62yMa2nn5M4ZRjejHcphqSq6dbdHB4nspQ_T1pQzRYYcG425Kiyf6MTmGj8RL0kRzREPiX2-qgDGfJMAglJJE59jmWu_jBFu_UwUhJZU=" target="_blank" rel="noopener noreferrer">tutorialspoint.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGjFekkcoA0X3_p-h9dqGckV1RSRz2SkZTWBpEl6s_jlgrxMhjHAifMCtV_9Jkrtlt6d-P3Fs7zCNG_vqe2nBIHU-Q-7f5IDyWEwW9Oaow3boFZpgSDMhEiiCoNQEHVsxMsJx2Znej3L_wix9Ej" target="_blank" rel="noopener noreferrer">openlogic.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbvLczwu1IvxhN6lNtrLybBqL5I0dxd3OpFTh_BEJgamTrRyQ-5sBqPLvA-B9zuWVqXdXmXhervIzkFcc09MSyrVSMMP9FqDHigPBy4us2eOzLhhpJrPY8tKioRhqWLpuRzH4FP1feSvis6yV6BAcTzLpjosVPjiekRyR790xyOjcwcez0Tg==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFSmuI82qH7LdndcsvOV8ZcGkSWGi9LXzeBGxvCfD5ng2jtuATVIvv2Gnm_mvS6sFQ78PVXs7YKUh5cqIC6oD97yCAt00_DZ4xCKbHKg57bJp215damHBfqa1LtxVH3knZS17bVRXLHMuraBv_GCRwJfWsnmZ7dhsFfg4SC6GB6WZZOAD1SOCS2WROPcq8zr26NLiU_HQuDDjA7zd2yTSfEIqelijlw" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFZiQL3NTM96sfew-TrEcnaTya1D0mn6XbnkY21udjBIPTRUdf6euRu_ZpqxMZA-OctubTTdcnGitDG2EpxNuzsVn6ZRuPCRkxRfLODlYRqYPvisNWeakZGSaE2naEbbpX7u1FcyQ==" target="_blank" rel="noopener noreferrer">youtube.com</a></li></ul>
+  </div>
+</body>
+</html>

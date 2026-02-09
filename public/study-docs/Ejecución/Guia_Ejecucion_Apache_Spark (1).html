@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Apache Spark</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Apache Spark</h1>
+    <h2>Explicación</h2><p>Esta guía te permite levantar una instancia básica de Apache Spark en modo distribuido (master y worker) utilizando <code>docker-compose</code>. Se basa en las imágenes oficiales de Bitnami Spark, que facilitan la configuración mediante variables de entorno.</p><p><strong>Estructura del Proyecto:</strong></p><p>Crea los siguientes archivos en una carpeta vacía:</p><ul><li>  <code>Dockerfile.master</code>: Define la imagen para el nodo master de Spark.</li><li>  <code>Dockerfile.worker</code>: Define la imagen para el nodo worker de Spark.</li><li>  <code>docker-compose.yml</code>: Orquesta los servicios del master y worker, define sus configuraciones y la red compartida.</li></ul><p><strong>Pasos:</strong></p><p>1.  <strong>Crear los archivos:</strong> Guarda el contenido proporcionado para <code>Dockerfile.master</code>, <code>Dockerfile.worker</code> y <code>docker-compose.yml</code> en sus respectivos archivos dentro del mismo directorio.</p><p>2.  <strong>Iniciar los contenedores:</strong> Ejecuta el comando <code>docker-compose up -d</code>. Esto construirá las imágenes y levantará los servicios en segundo plano.</p><p>3.  <strong>Verificar el estado:</strong> Una vez levantados, puedes acceder a la interfaz de usuario de Spark Master en <code>http://localhost:8080</code>. Allí podrás ver el estado del master y los <span class="tooltip" data-tooltip-text="Un proceso o hilo de ejecución que realiza una tarea específica, comúnmente consumiendo y procesando mensajes de una cola de trabajo de forma independiente.">workers</span> conectados.</p><p>4.  <strong>Ejecutar una aplicación Spark:</strong> Para interactuar con tu clúster Spark, puedes acceder al contenedor del master y ejecutar <code>spark-shell</code> o <code>pyspark</code>:</p><pre><code>docker exec -it spark-master spark-shell
+# O para Python
+docker exec -it spark-master pyspark</code></pre><p>    Dentro del <code>spark-shell</code> o <code>pyspark</code>, puedes ejecutar código Spark. Por ejemplo:</p><pre><code>val data = 1 to 1000
+val distData = sc.parallelize(data)
+distData.count()</code></pre><p>5.  <strong>Detener y limpiar:</strong> Cuando hayas terminado, puedes detener y eliminar los contenedores con:</p><pre><code>docker-compose down</code></pre><p>Esta configuración te proporciona un entorno Spark funcional para desarrollo y pruebas locales.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.master</h3><pre><code># Dockerfile para Spark Master
+# Utiliza la imagen oficial de Bitnami Spark, que ya viene configurada para fácil despliegue.
+FROM bitnami/spark:3.5.0
+# La imagen de Bitnami ya configura los puertos y el punto de entrada
+# basándose en variables de entorno, que se definirán en docker-compose.yml.
+# No necesitamos configurar CMD o EXPOSE aquí explícitamente si usamos las variables.</code></pre><h3>Dockerfile.worker</h3><pre><code># Dockerfile para Spark Worker
+# Utiliza la misma imagen base que el master.
+FROM bitnami/spark:3.5.0
+# Al igual que el master, la configuración del worker se manejará con variables de entorno
+# en docker-compose.yml.</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  spark-master:
+    build:
+      context: .
+      dockerfile: Dockerfile.master
+    container_name: spark-master
+    hostname: spark-master
+    ports:
+      - "8080:8080" # Spark Master UI
+      - "7077:7077" # Spark Master internal communication
+    environment:
+      # Configuración para el rol de Master
+      - SPARK_MODE=master
+      # Variables para deshabilitar la autenticación/encriptación para un setup local simple
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+    networks:
+      - spark-net
+
+  spark-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: spark-worker
+    hostname: spark-worker
+    ports:
+      - "8081:8081" # Spark Worker UI (puede ser dinámico, pero lo fijamos para este ejemplo)
+    environment:
+      # Configuración para el rol de Worker
+      - SPARK_MODE=worker
+      # URL del master para que el worker se conecte
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      # Recursos asignados al worker
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      # Variables para deshabilitar la autenticación/encriptación para un setup local simple
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+    depends_on:
+      - spark-master
+    networks:
+      - spark-net
+
+networks:
+  spark-net:
+    driver: bridge</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPmzOaOyDqp54YWf5FS2Os5RbVE2E73FFht3ZxdsMK7ZiSqGMJjidHkYvf0wuejkGkE8FvtGN0vragGuTN6QuWA-cK-1MShDzBcXvY_rVuKsHx2fcdnLwduFGo4v1XnjQOzhneahHKqnRB0J9syD4X" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0HcxwVvIbtlpNqYj-Fy_R1aJ1YN5Yr-VYGjEH0cUOz7qoM-4iau25rUj-LHjoCjEGvng3ED-gkT1t0KrKdjoIm7iIyMOaQ3rcNrDysYOehH6eR1PJXMlmdZe80IY7CxQ=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH-CeiFHU34Q4CkPlRtxTenOfPI3tluXIysheTq1xfo7mq4XdhsuICIN6e8IPEFkdWo8TmenrjLA2Um4ojDzFU3aBru9j64VPL3jDKpHpPEjzOC-FslDtQ_CUm83gSHpsS2LRB5mTMEvNlPr6aoVq1DO1fREn0JMZYXqTGzaLWxDWXpQzBTac0s_A==" target="_blank" rel="noopener noreferrer">databricks.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFD24EaZumSC7DCZjLQuQY-9ORwL3pY5U1nzxArVdrenk7Yqvm_tECoviRPRLci71JW1zEbMKDRBgPMEkX7Fbmf2GF7ZPpAP4cIzNJEiU8yfJx8AfvImpNnQUeJrxbys8_TxxC9L8CNMy9uGkEJye5Lh8NddxJU2JzK8Lwqmg==" target="_blank" rel="noopener noreferrer">databricks.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGFiIPSXmSjn6IDsjzus3CngUDUMFVXr1wkuo8iCYOQaJsJtojRaL97xemONQWY1OJ82hxF05rQBmxxd70PZgABQabWwZhx4obJz7JOAgCCXqIZIvU=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUQsiE2lsRlG4sTxLtIpvpyNyeJAWLhdj4HZFj82zyxDjgT5WT5aVnXWTODQ7NhYwIaq6ZU64MmZZIDMg6ebKY0qp3vlhIR0q6nxG6S2R7ahXs0-W2kwxV6r1cbK8Snj6e3-WagtQwlAllNwRdEoO49qGgNJiuFmTab9KD4qYV1d6qu3fvU-hwBX9oZFFD2a4mUbPr-gkN9kyY-p3ABEf7CY4KHnoVholDuEWBY49ozQ==" target="_blank" rel="noopener noreferrer">instaclustr.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG7z4si60ixjiz9tCl_GUVmqwKSqxEgBALEln15pROxedYaNbuAYrSFMCX_SAIB-O15IXbcXxYOhXat3J4BDwiK21glJJHx2u5HdRX8xfEHK1msbUudlR2Xb8-g9iUyciPg72ZROs3M3lZkb0uls12kJHIJL3uvPznhXUCjW1lwkGvxl8DmZr8ZtosVryDBJVcoylLEseeoQphZ4GoiQnq4pABMzTEcMCCBoQ==" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
+  </div>
+</body>
+</html>

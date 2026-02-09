@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Apache Airflow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Apache Airflow</h1>
+    <h2>Explicación</h2><p>Esta guía le permitirá levantar una instancia básica de Apache Airflow 2.x utilizando <code>docker-compose</code> para orquestar los diferentes componentes. La configuración incluye:</p><ul><li>  <strong>PostgreSQL</strong>: Base de datos para almacenar los metadatos de Airflow.</li><li>  <strong>Redis</strong>: Servidor de mensajería utilizado por el <code>CeleryExecutor</code> para la comunicación entre el Scheduler y los <span class="tooltip" data-tooltip-text="Un proceso o hilo de ejecución que realiza una tarea específica, comúnmente consumiendo y procesando mensajes de una cola de trabajo de forma independiente.">Workers</span>.</li><li>  <strong>Airflow Webserver</strong>: La interfaz de usuario web de Airflow.</li><li>  <strong>Airflow Scheduler</strong>: El componente que detecta los DAGs y lanza las tareas.</li><li>  <strong>Airflow Worker (Celery)</strong>: Ejecuta las tareas de los DAGs. El <code>CeleryExecutor</code> permite escalar los <span class="tooltip" data-tooltip-text="Un proceso o hilo de ejecución que realiza una tarea específica, comúnmente consumiendo y procesando mensajes de una cola de trabajo de forma independiente.">workers</span>.</li><li>  <strong>Airflow Init</strong>: Un servicio temporal que se encarga de inicializar la base de datos de Airflow y crear un usuario administrador inicial.</li></ul><h3>Pasos a seguir:</h3><p>1.  <strong>Crear los archivos de configuración</strong>: Guarde el contenido de <code>docker-compose.yml</code> y <code>.env</code> en su directorio de trabajo.</p><p>2.  <strong>Crear directorios para volúmenes</strong>: Cree las carpetas <code>dags</code>, <code>logs</code> y <code>plugins</code> en el mismo directorio donde guardó los archivos de configuración.</p><pre><code>    mkdir dags logs plugins</code></pre><ul><li>   *   <strong>dags</strong>: Aquí es donde colocará sus archivos de definición de DAGs (Python).</li><li>   *   <strong>logs</strong>: Airflow almacenará los logs de ejecución de las tareas.</li><li>   *   <strong>plugins</strong>: Para plugins personalizados de Airflow.</li></ul><p>3.  <strong>Configurar AIRFLOW_UID (Opcional pero recomendado en Linux)</strong>: El archivo <code>.env</code> establece <code>AIRFLOW_UID=50000</code>. Si está en Linux y experimenta problemas de permisos con los volúmenes montados (dags, logs, plugins), es recomendable cambiar este valor por el UID de su usuario local. Puede obtener su UID ejecutando <code>id -u</code> en su terminal y luego actualizar el <code>.env</code> con ese valor.</p><p>4.  <strong>Iniciar los servicios</strong>: Navegue al directorio donde guardó los archivos y ejecute:</p><pre><code>    docker-compose up -d</code></pre><p>    Esto levantará todos los servicios en segundo plano. El proceso de inicialización (migración de DB y creación de usuario) puede tardar unos minutos.</p><p>5.  <strong>Acceder a la Interfaz de Usuario de Airflow</strong>: Una vez que los servicios estén en funcionamiento, podrá acceder a la UI de Airflow en su navegador:</p><p>    [http://localhost:8080](http://localhost:8080)</p><p>6.  <strong>Iniciar sesión</strong>: Utilice las siguientes credenciales para iniciar sesión:</p><ul><li>   *   <strong>Usuario</strong>: <code>airflow</code></li><li>   *   <strong>Contraseña</strong>: <code>airflow</code></li></ul><p>7.  <strong>Detener y limpiar (Opcional)</strong>: Cuando desee detener los servicios y limpiar los contenedores, redes y volúmenes, ejecute:</p><pre><code>    docker-compose down -v</code></pre><p>    El <code>-v</code> eliminará también los volúmenes de datos (incluyendo los de PostgreSQL y Redis), lo que significa que perderá los metadatos de Airflow y los datos de la base de datos.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+x-airflow-common:
+  &airflow-common
+  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.8.1}
+  environment:
+    &airflow-environment
+    AIRFLOW_HOME: /opt/airflow
+    AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    AIRFLOW__CELERY__BROKER_URL: redis://:${REDIS_HOST}:6379/0
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
+    AIRFLOW__CORE__LOAD_DAGS_SMALL_FILE_AS_EXTERNAL_FILE: 'true'
+    AIRFLOW__WEBSERVER__RBAC: 'true'
+    AIRFLOW__WEBSERVER__AUTHENTICATE: 'true'
+    AIRFLOW_UID: ${AIRFLOW_UID:-50000}
+    AIRFLOW_GID: 0
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
+    - ./plugins:/opt/airflow/plugins
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:6.2-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  airflow-init:
+    &lt;&lt;: *airflow-common
+    command: &gt;
+      bash -cx '
+      airflow db migrate &&
+      airflow users create
+        --role Admin
+        --username airflow
+        --password airflow
+        --email airflow@example.com
+        --firstname Airflow
+        --lastname User
+      '
+    environment:
+      &lt;&lt;: *airflow-environment
+      _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS}
+    user: "${AIRFLOW_UID:-50000}"
+    entrypoint: /bin/bash
+    healthcheck:
+      test: ["CMD-SHELL", "exit 0"]
+      interval: 1s
+      timeout: 1s
+      retries: 1
+
+  airflow-webserver:
+    &lt;&lt;: *airflow-common
+    command: airflow webserver
+    ports:
+      - "8080:8080"
+    user: "${AIRFLOW_UID:-50000}"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:8080/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-scheduler:
+    &lt;&lt;: *airflow-common
+    command: airflow scheduler
+    user: "${AIRFLOW_UID:-50000}"
+    healthcheck:
+      test: ["CMD-SHELL", "exit 0"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-worker:
+    &lt;&lt;: *airflow-common
+    command: airflow celery worker
+    user: "${AIRFLOW_UID:-50000}"
+    healthcheck:
+      test: ["CMD-SHELL", "exit 0"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+
+volumes:
+  pgdata:
+</code></pre><h3>.env</h3><pre><code>AIRFLOW_UID=50000
+_PIP_ADDITIONAL_REQUIREMENTS=apache-airflow[celery,postgres,redis]
+POSTGRES_USER=airflow
+POSTGRES_PASSWORD=airflow
+POSTGRES_DB=airflow
+REDIS_HOST=redis
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFro5NPKiuTl3GujM5up0KW7R0fAnfvKL_ClDBOtDyoW9yUtbbIZpbe9FBXR8gx1b9QpQWSVJGFr4arHsl0APQMyqCFqUn0465gT8RZokD4IIS-XC_63sAV_tfDt0iUAcCHfEiFCKhIdz0yE9ZrDsM-bNKD5i5jNYdCFXA=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQED0mCE_w2Y6x6D_EIWsxa_dHy1-mO1SsqT2WBghaKR2lsves2gafJxCM0eN2nQ905eTljVqa9APUpRpriU0lijBuboW3ouuQkTQ3CB6KMFza5kFULQQNcJQ2PIENVPd8o6Y6Um8u-mBg3biUknJ-qH" target="_blank" rel="noopener noreferrer">astronomer.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGcvwRLS5mx2TSSO-zork9jy1-S-wahE3dw8uIfwPsGMiqutoK5HqVUk7nZKsU_6Axw0jKXY1bvio7V4VHcS3-H0WesD1figkjOaQ0MtV5YyoozLXTaL-RLO7WhBkzWb0yjq1oowQUIGy6lqHcE_YePv8qvsWa-rt8=" target="_blank" rel="noopener noreferrer">astronomer.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4nHoceh5BEggoXW9fFzpfMkzg6gyXeSsmKcGPiEnSdydKMTh1wF5FxZrHWaW1vedW9BSRnEvkBVDfdu9L7ZTLV0mlHS2VMCKamST65pg1i-6fE-ai0VMqRamJHNGBh42XRAeCjYfoH9SKNjhLuBoTxKXYRohTsfPJKt8PTyfTqSIFOHwRrXID31yInJqD5LpboXe_rbQXDA==" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgMY45koUOy_CMf7FAEnZqjdm1HjAxjqKShYWjBkflMdnU45lLbogcecZHpdivXF0VHrySIrKRQ8JuMR2QSE3dSyF_mI3YkR0LEG9XN-GRnU6_hxm2PZYvZUr7svzwx8_llqwqnNsLfRENyB_SX0TqKp5KI4KXL9J-jecF54e7eA==" target="_blank" rel="noopener noreferrer">datacamp.com</a></li></ul>
+  </div>
+</body>
+</html>

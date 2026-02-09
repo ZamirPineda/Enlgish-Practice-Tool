@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arquitectura Monolítica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Arquitectura Monolítica</h1>
+    <p>La <strong>Arquitectura Monolítica</strong> es un patrón de arquitectura de software tradicional donde todas las funcionalidades de una aplicación (interfaz de usuario, lógica de negocio, capa de acceso a datos, etc.) están construidas, empaquetadas y desplegadas como una <strong>única y indivisible unidad de servicio</strong>. Es el enfoque más común para construir aplicaciones en sus etapas iniciales.</p><p>---</p><h2>Conceptos Principales</h2><ul><li>  <strong>Unidad Única de Despliegue:</strong> Todas las partes de la aplicación se empaquetan en un solo archivo ejecutable o archivo de despliegue (como un JAR, WAR o un ejecutable binario). Para actualizar cualquier parte de la aplicación, es necesario recompilar y volver a desplegar todo el monolito.</li><li>  <strong>Acoplamiento Fuerte:</strong> Los componentes internos de la aplicación están altamente interconectados y comparten la misma base de código y el mismo proceso de ejecución. Un cambio en una parte puede tener efectos secundarios en otras.</li><li>  <strong>Base de Código Única:</strong> Toda la lógica de negocio, la interfaz de usuario y la persistencia de datos residen en un solo repositorio de código.</li><li>  <strong>Tecnología Uniforme:</strong> Generalmente, un monolito se construye con un único stack tecnológico (un lenguaje de programación, un framework, etc.) para todas sus funcionalidades.</li><li>  <strong>Comunicación en Proceso:</strong> Las diferentes funcionalidades dentro de la aplicación se comunican directamente a través de llamadas a métodos o funciones, ya que residen en el mismo proceso de memoria, lo que es muy eficiente.</li></ul><p>---</p><h2>Ventajas</h2><ul><li>  <strong>Simplicidad en el Desarrollo Inicial:</strong> Es fácil comenzar con una arquitectura monolítica. La gestión de un solo repositorio, un solo proyecto y un solo artefacto de despliegue simplifica la configuración y el inicio del desarrollo.</li><li>  <strong>Facilidad de Despliegue:</strong> Hay un solo artefacto para desplegar. Esto simplifica el proceso de <span class="tooltip" data-tooltip-text="Siglas de Integración Continua (CI) y Entrega o Despliegue Continuo (CD). Un conjunto de prácticas que automatizan las fases de desarrollo, prueba y despliegue de software.">CI/CD</span> (Integración Continua/Despliegue Continuo) en sus primeras etapas, ya que solo hay un componente a gestionar.</li><li>  <strong>Depuración más Sencilla:</strong> Al estar todo el código en un solo lugar y ejecutarse en un solo proceso, es más fácil rastrear los flujos de ejecución y depurar problemas sin preocuparse por los límites de red o los problemas de comunicación entre servicios.</li><li>  <strong>Rendimiento (Comunicación Interna):</strong> La comunicación entre los diferentes módulos es muy rápida, ya que se realiza a través de llamadas en memoria, sin la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> de la red.</li><li>  <strong>Gestión Centralizada:</strong> Un único equipo o un equipo pequeño puede gestionar toda la aplicación más fácilmente sin la sobrecarga de coordinar múltiples servicios.</li></ul><p>---</p><h2>Desventajas</h2><ul><li>  <strong>Escalabilidad Limitada e Ineficiente:</strong> Para escalar cualquier parte de la aplicación, es necesario escalar la aplicación completa. Si solo una función específica está bajo carga pesada, se deben replicar todas las funciones, consumiendo más recursos de los necesarios.</li><li>  <strong>Dificultad en el Mantenimiento y Evolución (Big Ball of Mud):</strong> A medida que la aplicación crece, la base de código se vuelve compleja y difícil de entender. Los cambios en una parte pueden tener efectos inesperados en otras, lo que dificulta el mantenimiento y la introducción de nuevas funcionalidades.</li><li>  <strong>Baja Agilidad para Equipos Grandes:</strong> Los equipos grandes pueden experimentar cuellos de botella, conflictos de código y procesos de construcción y prueba más lentos, lo que ralentiza el ciclo de desarrollo y la frecuencia de despliegues.</li><li>  <strong>Riesgo de Fracaso Único (Single Point of Failure):</strong> Si una parte del monolito falla, existe un alto riesgo de que toda la aplicación deje de funcionar, afectando a todas las funcionalidades.</li><li>  <strong>Adopción de Nuevas Tecnologías Restringida:</strong> Es difícil introducir nuevas tecnologías, lenguajes o frameworks sin reescribir una parte significativa o toda la aplicación, ya que el stack tecnológico suele ser uniforme.</li><li>  <strong>Tiempos de Arranque Lentos:</strong> A medida que el tamaño de la aplicación aumenta, el tiempo que tarda en iniciarse el monolito puede volverse considerable.</li></ul><h2>Ejemplo de Aplicación Real</h2><p>Un ejemplo detallado de la aplicación de la Arquitectura Monolítica en un escenario empresarial real:</p><p>---</p><p># Ejemplo Detallado de Arquitectura Monolítica: "GestiónIntegral" de InnovaTech S.A.</p><h2>Empresa y Escenario</h2><ul><li>  <strong>Nombre de la Empresa:</strong> InnovaTech S.A.</li><li>  <strong>Descripción del Negocio:</strong> InnovaTech S.A. es una empresa de tamaño mediano (aproximadamente 150 empleados) especializada en consultoría y desarrollo de software a medida para otras PYMES. Ofrecen servicios que van desde la implementación de ERPs, desarrollo web, hasta consultoría de procesos. Fundada hace 10 años, ha experimentado un crecimiento sostenido y orgánico.</li></ul><h2>Problema Inicial que Enfrentaba la Empresa</h2><p>Antes de la implementación de "GestiónIntegral", InnovaTech S.A. operaba con un conjunto de herramientas y procesos descentralizados y a menudo manuales:</p><p>1.  <strong>Gestión de Clientes Dispersa:</strong> La información de los clientes (contactos, historial de interacciones, contratos) se encontraba en una combinación de hojas de cálculo de Excel, un CRM liviano externo y correos electrónicos, lo que dificultaba una visión 360° del cliente.</p><p>2.  <strong>Seguimiento de Proyectos Ineficiente:</strong> El avance de los proyectos se gestionaba con herramientas de gestión de tareas simples, documentos compartidos y reuniones frecuentes. Era difícil consolidar el estado de múltiples proyectos, asignar recursos de manera óptima o prever desviaciones.</p><p>3.  <strong>Facturación y Contabilidad Desvinculada:</strong> La generación de facturas se realizaba manualmente en un software contable separado, y la vinculación con los proyectos o servicios entregados era un proceso engorroso y propenso a errores.</p><p>4.  <strong>Recursos Humanos Descentralizados:</strong> La gestión de empleados, horas trabajadas, vacaciones y rendimiento se manejaba con una combinación de archivos internos y sistemas básicos, sin integración con la carga de trabajo de los proyectos.</p><p>5.  <strong>Falta de Reportes Integrados:</strong> Generar informes para la dirección sobre ventas, rentabilidad por proyecto o utilización de recursos era un proceso manual, lento y que requería la consolidación de datos de múltiples fuentes, lo que resultaba en decisiones tardías y menos informadas.</p><p>Estos problemas generaban ineficiencia operativa, errores humanos, pérdida de oportunidades de negocio y una toma de decisiones estratégica dificultada por la falta de información consolidada y en tiempo real.</p><h2>Implementación de la Arquitectura Monolítica</h2><p>Para abordar estos desafíos, InnovaTech S.A. decidió desarrollar un sistema de gestión interna completo, al que llamaron "GestiónIntegral".</p><h3>Decisión por la Arquitectura Monolítica</h3><p>La elección de una arquitectura monolítica se basó en varias razones clave para InnovaTech S.A. en ese momento:</p><ul><li>  <strong>Rapidez de Desarrollo Inicial:</strong> Con un equipo de desarrollo interno de tamaño moderado (10-12 personas), una arquitectura monolítica permitía un inicio rápido y una entrega más ágil de un producto mínimo viable, ya que no había que preocuparse por la complejidad de la comunicación entre múltiples servicios.</li><li>  <strong>Menor Complejidad Operacional:</strong> Desplegar y operar una única aplicación es inherentemente más sencillo que gestionar un ecosistema de microservicios distribuidos, lo que reducía la carga sobre el equipo de operaciones.</li><li>  <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> del Código:</strong> Un único repositorio y base de código facilitaba la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> en el estilo de codificación, las bibliotecas utilizadas y la gestión de dependencias.</li><li>  <strong>Requerimientos de Escalabilidad Moderados:</strong> En ese momento, la empresa no anticipaba una necesidad de escalabilidad masiva o diferenciada para módulos específicos. La <span class="tooltip" data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más recursos (como CPU o RAM) a una sola máquina existente.">escalabilidad vertical</span> (más RAM/CPU en el servidor) sería suficiente para sus necesidades iniciales.</li></ul><h3>Descripción de la Arquitectura Monolítica Implementada</h3><p>"GestiónIntegral" se implementó como una <strong>única aplicación web autocontenida y desplegable</strong>, que agrupaba todas las funcionalidades bajo un mismo proceso.</p><ul><li>  <strong>Capa de Presentación (Frontend):</strong> Se utilizó un framework de desarrollo web de servidor (como Spring MVC o ASP.NET Core MVC con Razor Pages/Thymeleaf) para renderizar las interfaces de usuario directamente en el servidor. Esto significa que el código HTML, CSS y JavaScript se generaba y servía desde la misma aplicación que la lógica de negocio.</li><li>  <strong>Capa de Lógica de Negocio (Backend):</strong> Toda la lógica de negocio para los diferentes módulos (Gestión de Clientes, Proyectos, Facturación, Recursos Humanos, Reportes) residía en el mismo codebase. Las clases y métodos se invocaban directamente dentro del mismo proceso.</li><li>  <strong>Capa de Acceso a Datos:</strong> Un único módulo de acceso a datos (utilizando un ORM como Hibernate o Entity Framework) gestionaba la interacción con una base de datos relacional centralizada (ej. PostgreSQL o SQL Server). Todas las funcionalidades compartían la misma base de datos.</li><li>  <strong>Servicios Compartidos:</strong> Componentes como la autenticación de usuarios, autorización, logging, gestión de errores y configuración global eran servicios internos compartidos por todos los módulos dentro de la misma aplicación.</li></ul><h3>Tecnologías Utilizadas (Ejemplo)</h3><ul><li>  <strong>Lenguaje de Programación:</strong> Java (o C#)</li><li>  <strong>Framework Backend:</strong> Spring Boot (o ASP.NET Core)</li><li>  <strong>Base de Datos:</strong> PostgreSQL</li><li>  <strong>ORM:</strong> Spring Data JPA / Hibernate (o Entity Framework Core)</li><li>  <strong>Plantillas Frontend:</strong> Thymeleaf (o Razor Pages)</li><li>  <strong>Build Tool:</strong> Maven (o NuGet/MSBuild)</li><li>  <strong>Despliegue:</strong> Un único archivo JAR (o ejecutable .exe) desplegado en un servidor Linux (o Windows Server), posiblemente dentro de un contenedor Docker.</li></ul><h3>Proceso de Desarrollo y Despliegue</h3><ul><li>  El equipo de desarrollo trabajaba en un único repositorio de código.</li><li>  Los desarrolladores podían acceder y modificar cualquier parte de la aplicación.</li><li>  La compilación generaba un único artefacto desplegable (ej. un archivo <code>gestionintegral.jar</code>).</li><li>  El despliegue consistía en copiar este archivo al servidor, detener la versión anterior, iniciar la nueva y, si era necesario, ejecutar scripts de migración de base de datos.</li><li>  Las pruebas se realizaban sobre la aplicación completa.</li></ul><h2>Resultados y Beneficios Obtenidos</h2><p>La implementación de "GestiónIntegral" bajo una arquitectura monolítica trajo consigo varios beneficios significativos para InnovaTech S.A.:</p><p>1.  <strong>Visión Unificada y 360° del Cliente:</strong> Al consolidar toda la información en un solo sistema, los equipos de ventas, proyectos y soporte podían acceder instantáneamente al historial completo de cada cliente, mejorando la calidad del servicio y la personalización de las ofertas.</p><p>2.  <strong>Mayor Eficiencia Operacional:</strong></p><ul><li>   *   <strong>Automatización de Procesos:</strong> La integración de la gestión de proyectos con la facturación permitió automatizar la generación de muchas facturas al finalizar hitos o proyectos.</li><li>   *   <strong>Reducción de Errores:</strong> La eliminación de la duplicidad de datos y los procesos manuales disminuyó drásticamente los errores.</li><li>   *   <strong>Optimización de Recursos:</strong> La gestión integrada de recursos humanos y proyectos facilitó la asignación de personal según la carga de trabajo y las habilidades.</li></ul><p>3.  <strong>Rapidez en el Desarrollo y Despliegue Inicial:</strong> El sistema fue puesto en marcha en un tiempo récord de 8 meses, lo cual era impensable con las complejidades de un sistema distribuido. Las nuevas funcionalidades o correcciones se podían desplegar rápidamente, a menudo en cuestión de minutos.</p><p>4.  <strong>Menor Costo Inicial y de Mantenimiento:</strong> La infraestructura requerida era mínima (un servidor potente, una base de datos), y el mantenimiento de un solo codebase era más sencillo y menos costoso en comparación con múltiples microservicios.</p><p>5.  <strong>Toma de Decisiones Mejorada:</strong> La capacidad de generar informes consolidados en tiempo real (ej. paneles de control sobre el estado de ventas, rentabilidad por cliente, utilización de recursos) permitió a la dirección tomar decisiones más rápidas y basadas en datos precisos.</p><p>6.  <strong>Facilidad para el Equipo de Desarrollo:</strong> Un único codebase simplificaba la incorporación de nuevos desarrolladores y la colaboración, ya que no necesitaban entender la complejidad de múltiples servicios interconectados o patrones de comunicación distribuida.</p><p>En resumen, la arquitectura monolítica fue la elección adecuada para InnovaTech S.A. en su etapa de crecimiento, proporcionando una solución robusta y eficiente que centralizó sus operaciones, mejoró su productividad y les permitió gestionar su crecimiento de manera más efectiva, sin la complejidad y sobrecarga operacional de una arquitectura más distribuida para la cual no estaban preparados ni necesitaban en ese momento.</p><p>---</p><h2>Preguntas de Entrevista</h2><div>
+        <div class="accordion-item">
+          <p class="accordion-question">¿En una arquitectura monolítica, cómo se abordarían los desafíos de escalabilidad cuando diferentes módulos o funcionalidades de la aplicación tienen requisitos de carga y rendimiento muy dispares?</p>
+          <div class="accordion-answer"><p>Si bien un monolito escala típicamente de forma horizontal replicando toda la aplicación, cuando los requisitos de módulos son dispares, se pueden implementar soluciones como: optimización de cuellos de botella específicos del módulo (caching, optimización de consultas de base de datos), separar servicios de estado (sesiones, caché) a servicios externos, o identificar y extraer funcionalidades de alta carga a microservicios dedicados (estrategia de 'strangler fig pattern') para que escalen independientemente mientras el resto sigue monolítico.</p></div>
+        </div>
+      
+        <div class="accordion-item">
+          <p class="accordion-question">Dada la naturaleza interconectada de una arquitectura monolítica, ¿qué estrategias propondría para minimizar el riesgo y el tiempo de inactividad durante las implementaciones, especialmente para una aplicación grande y crítica?</p>
+          <div class="accordion-answer"><p>Para un monolito grande, las estrategias incluyen: un pipeline de <span class="tooltip" data-tooltip-text="Siglas de Integración Continua (CI) y Entrega o Despliegue Continuo (CD). Un conjunto de prácticas que automatizan las fases de desarrollo, prueba y despliegue de software.">CI/CD</span> robusto con pruebas automatizadas extensas (unidad, integración, regresión) para atrapar errores temprano; blue/green deployments o canary releases (si la infraestructura lo permite) para redireccionar el tráfico gradualmente y permitir un rollback rápido; feature flags para habilitar nuevas funcionalidades en producción de forma controlada; y una gestión de configuración sólida para asegurar entornos consistentes. La automatización es clave.</p></div>
+        </div>
+      
+        <div class="accordion-item">
+          <p class="accordion-question">¿Cómo afecta una arquitectura monolítica a la capacidad de adoptar nuevas tecnologías o de evolucionar las existentes dentro de diferentes componentes de la aplicación? ¿Qué implicaciones tiene esto para la mantenibilidad a largo plazo?</p>
+          <div class="accordion-answer"><p>Un monolito tiende a un 'bloqueo tecnológico' porque todo el sistema suele depender de un único stack tecnológico. Esto dificulta la introducción de nuevas tecnologías para módulos específicos sin afectar al conjunto. La evolución de componentes individuales es más lenta y riesgosa. A largo plazo, esto puede llevar a la acumulación de deuda técnica, obsolescencia del stack, y una menor capacidad para atraer talento que prefiera trabajar con tecnologías modernas, impactando negativamente la mantenibilidad y la agilidad de desarrollo.</p></div>
+        </div>
+      
+        <div class="accordion-item">
+          <p class="accordion-question">¿Cómo influye una arquitectura monolítica en la organización y colaboración de los equipos de desarrollo, especialmente a medida que el tamaño del equipo y la base de código crecen? ¿Qué desafíos surgen y cómo podrían mitigarse?</p>
+          <div class="accordion-answer"><p>Con un monolito grande, los equipos pueden enfrentarse a cuellos de botella por dependencias compartidas en el código, conflictos en el control de versiones, y una menor autonomía. Puede surgir el 'efecto de acaparamiento' de conocimiento. Para mitigar esto, se pueden establecer claros límites de dominio y propiedad de código dentro del monolito, fomentar la comunicación inter-equipo, implementar revisiones de código rigurosas, y usar herramientas de análisis estático para mantener la coherencia. A veces, la refactorización para extraer módulos a librerías internas ayuda a definir fronteras más claras.</p></div>
+        </div>
+      
+        <div class="accordion-item">
+          <p class="accordion-question">Describa los desafíos de mantener un alto grado de modularidad y facilitar la refactorización a gran escala dentro de una aplicación monolítica madura y compleja. ¿Qué técnicas pueden ayudar a abordar estos desafíos?</p>
+          <div class="accordion-answer"><p>En un monolito maduro, la modularidad tiende a degradarse debido a la interconexión de componentes, dependencias ocultas y el miedo a romper algo ('efecto telaraña'). Las refactorizaciones a gran escala son arriesgadas, consumen mucho tiempo y pueden introducir regresiones. Para abordarlo, se pueden usar técnicas como: pruebas de regresión automatizadas exhaustivas para dar confianza; herramientas de análisis de dependencias para visualizar la estructura; aplicar el 'strangler fig pattern' para aislar y reescribir funcionalidades clave; promover el diseño por dominio (DDD) para crear límites claros; y realizar pequeñas refactorizaciones continuas en lugar de grandes cambios de una sola vez.</p></div>
+        </div>
+      </div><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFI93HsU3fu28iPJfwCehGnwU7aG8l7VVkGrIvE8MFyabkxwHKEICFV-jwHPdZgzj_c8knU7yGS5qAHZLR0KUF1N8a2ZuOFeVjCAYXKUIB9lyH4ruEMo1STjFD3MM1kT2ci87SgxFP5Ex3N3EBauTUBnwxgWJIgihdRnuRcZeyLaK2h8Q==" target="_blank" rel="noopener noreferrer">chakray.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEHNt68V2dB9bAT0iMjWMcFr62XnFt69QWW-QnM828VMo8m9FneAR_iqNTfHmQKsdp0tgCIRNspPtmNZu1hDDZH6IhGKTkYXNacAv3QO_AhjMuoMKUfigUZn7AcZGXbtCEiQ0stNBYjZm1scZvCPyS3R7D8SMe8NRXVo6bh" target="_blank" rel="noopener noreferrer">initiumsoft.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQO0GBfivaDyeIwVb-sPhIB7IBYOSxUjwU4yotPbdIS5vEg4O7PyXB8Y8uMxc89TgMS0DSOoJnOw2HCR4pyMHeO52_AmXWGJUxUUwTl41ZHhmf10IyXimudo9pM1O__Ne3PYLzZmJBW671zSAz4iXI_s-XU2eM3wMD" target="_blank" rel="noopener noreferrer">pasiona.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFu7qMYVlFRtXGD75o0ztJFMARnaXb2pGNl2Xhr1ueFIymvCBb7agnRi0UYx4JhAJMaKXnSWvk9L1uU8q-66GCc0K402YZZLNFhBDa5iPupYI4MfBbqVMdKDvzpv6zVteEvy-xOBrJABEXYWzcK6_tfXrgDrlE=" target="_blank" rel="noopener noreferrer">appmaster.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEasgwTNevzizzfpDnWs5cscwGF8A8104eC5EUUKzy0UeFyi-VhlyFZUzaOv-fopksAdN_0YpkAOE5LX9Ba8_nPa_uTFQJM_qjASNg5L_smA7ObrNP1n84A05mu2VvWHeOY0T9BDLroYaqetQkdjnREVlUahqVYqvvrbufBzU46M7SVVjVGQHxwFPZPNef_Fw==" target="_blank" rel="noopener noreferrer">mentorestech.com</a></li></ul>
+  </div>
+</body>
+</html>

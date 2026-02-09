@@ -1,0 +1,588 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Oozie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Oozie</h1>
+    <h2>Explicación</h2><p>Esta guía proporciona una configuración completa para levantar una instancia básica de Apache Oozie junto con un clúster Hadoop pseudo-distribuido y una base de datos MySQL, todo gestionado con <code>docker-compose</code>. Es ideal para desarrollo y pruebas locales. La configuración incluye:</p><ul><li>  <strong>Hadoop</strong>: Un contenedor que ejecuta un clúster Hadoop pseudo-distribuido (NameNode, DataNode, ResourceManager, NodeManager, JobHistoryServer) para que Oozie pueda interactuar con HDFS y YARN.</li><li>  <strong>MySQL</strong>: Una base de datos MySQL que Oozie utiliza para almacenar la información de sus workflows, coordinadores y bundles.</li><li>  <strong>Oozie</strong>: El servidor Oozie que se conecta a Hadoop y MySQL para programar y ejecutar workflows de Big Data.</li></ul><p>Los pasos a seguir son:</p><p>1.  <strong>Guarda los archivos</strong>: Crea las siguientes carpetas y archivos en tu directorio de trabajo:</p><ul><li>   *   <code>docker-compose.yml</code></li><li>   *   <code>hadoop/Dockerfile</code></li><li>   *   <code>hadoop/core-site.xml</code></li><li>   *   <code>hadoop/hdfs-site.xml</code></li><li>   *   <code>hadoop/yarn-site.xml</code></li><li>   *   <code>hadoop/mapred-site.xml</code></li><li>   *   <code>hadoop/start-hadoop.sh</code></li><li>   *   <code>oozie/Dockerfile</code></li><li>   *   <code>oozie/oozie-site.xml</code></li><li>   *   <code>oozie/start-oozie.sh</code></li></ul><p>2.  <em></em>Ejecuta <code>docker-compose</code><em></em>: Navega hasta el directorio donde guardaste <code>docker-compose.yml</code> y ejecuta el comando de inicio.</p><p>3.  <strong>Verificación</strong>: Una vez que los contenedores estén en funcionamiento, puedes verificar su estado:</p><ul><li>   *   <strong>Hadoop NameNode UI</strong>: <code>http://localhost:9870</code></li><li>   *   <strong>Hadoop YARN ResourceManager UI</strong>: <code>http://localhost:8088</code></li><li>   *   <strong>Hadoop JobHistoryServer UI</strong>: <code>http://localhost:19888</code></li><li>   *   <strong>Oozie Web UI</strong>: <code>http://localhost:11000/oozie</code></li></ul><p>El script <code>start-hadoop.sh</code> en el contenedor Hadoop formatea el NameNode e inicia todos los demonios necesarios. El script <code>start-oozie.sh</code> espera a que MySQL y Hadoop estén disponibles, inicializa la base de datos de Oozie y luego inicia el servidor Oozie. Se han generado dinámicamente archivos de configuración de Hadoop (<code>core-site.xml</code>, <code>hdfs-site.xml</code>, <code>yarn-site.xml</code>, <code>mapred-site.xml</code>) dentro del contenedor Oozie para que actúe como cliente de Hadoop.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>hadoop/Dockerfile</h3><pre><code># Dockerfile para un clúster Hadoop pseudo-distribuido
+# Utiliza OpenJDK 11 como base
+FROM openjdk:11-jdk-slim
+
+# Instala utilidades básicas y SSH para Hadoop (aunque no lo usaremos para comunicación entre nodos, es común)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    ssh \
+    rsync \
+    net-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# Variables de entorno para Hadoop
+ENV HADOOP_VERSION=3.3.6
+ENV HADOOP_HOME=/opt/hadoop
+ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+# Descarga y configura Hadoop
+WORKDIR /opt
+RUN wget -q https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz \
+    && tar -xzf hadoop-$HADOOP_VERSION.tar.gz \
+    && mv hadoop-$HADOOP_VERSION hadoop \
+    && rm hadoop-$HADOOP_VERSION.tar.gz
+
+# Genera las claves SSH para que Hadoop pueda conectarse a sí mismo sin contraseña
+RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa \
+    && cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys \
+    && chmod 0600 ~/.ssh/authorized_keys
+
+# Copia los archivos de configuración de Hadoop
+COPY ./core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml
+COPY ./hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+COPY ./yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml
+COPY ./mapred-site.xml $HADOOP_HOME/etc/hadoop/mapred-site.xml
+# También copia el script de inicio
+COPY ./start-hadoop.sh /usr/local/bin/start-hadoop.sh
+RUN chmod +x /usr/local/bin/start-hadoop.sh
+
+# Crea directorios para HDFS
+RUN mkdir -p /opt/hadoop/data/namenode \
+           /opt/hadoop/data/datanode \
+           /opt/hadoop/logs
+
+# Puertos expuestos para los servicios de Hadoop
+EXPOSE 9870 8088 19888 9000 8032 8030 8031 8033
+
+# Establece el punto de entrada
+CMD ["/usr/local/bin/start-hadoop.sh"]</code></pre><h3>oozie/Dockerfile</h3><pre><code># Dockerfile para el servidor Oozie
+# Utiliza OpenJDK 11 como base
+FROM openjdk:11-jdk-slim
+
+# Instala utilidades básicas y `wait-for-it.sh`
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    unzip \
+    curl \
+    netcat-traditional \
+    && rm -rf /var/lib/apt/lists/*
+RUN wget -q https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -O /usr/bin/wait-for-it.sh && chmod +x /usr/bin/wait-for-it.sh
+
+# Variables de entorno para Oozie
+ENV OOZIE_VERSION=5.2.1
+ENV OOZIE_HOME=/opt/oozie
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV PATH=$PATH:$OOZIE_HOME/bin
+
+# Descarga y configura Oozie
+WORKDIR /opt
+RUN wget -q https://archive.apache.org/dist/oozie/$OOZIE_VERSION/oozie-$OOZIE_VERSION-distro.tar.gz \
+    && tar -xzf oozie-$OOZIE_VERSION-distro.tar.gz \
+    && mv oozie-$OOZIE_VERSION oozie \
+    && rm oozie-$OOZIE_VERSION-distro.tar.gz
+
+# Descarga los archivos externos de Oozie (client y ext-2.2.zip para la UI)
+# Para el cliente (librerías Hadoop utils para Oozie)
+RUN wget -q https://archive.apache.org/dist/oozie/$OOZIE_VERSION/oozie-$OOZIE_VERSION-client.tar.gz -O /tmp/oozie-client.tar.gz \
+    && mkdir -p /tmp/oozie-client \
+    && tar -xzf /tmp/oozie-client.tar.gz -C /tmp/oozie-client \
+    && cp /tmp/oozie-client/oozie-$OOZIE_VERSION/lib/oozie-hadoop-utils-*.jar $OOZIE_HOME/libext/ \
+    && rm -rf /tmp/oozie-client /tmp/oozie-client.tar.gz
+
+# Para la interfaz de usuario (ext-2.2.zip)
+RUN wget -q https://archive.cloudera.com/gplextras/ext-2.2.zip -O $OOZIE_HOME/libext/ext-2.2.zip
+
+# Descarga el conector JDBC de MySQL
+ENV MYSQL_CONNECTOR_VERSION=8.0.33
+RUN wget -q https://repo1.maven.org/maven2/mysql/mysql-connector-java/$MYSQL_CONNECTOR_VERSION/mysql-connector-java-$MYSQL_CONNECTOR_VERSION.jar -O $OOZIE_HOME/libext/mysql-connector-java.jar
+
+# Copia los archivos de configuración de Oozie
+COPY ./oozie-site.xml $OOZIE_HOME/conf/oozie-site.xml
+COPY ./start-oozie.sh /usr/local/bin/start-oozie.sh
+RUN chmod +x /usr/local/bin/start-oozie.sh
+
+# Crea un usuario 'oozie' para ejecutar el servidor
+RUN adduser --system --no-create-home oozie
+
+# Cambia la propiedad del directorio de Oozie al usuario 'oozie'
+RUN chown -R oozie:oozie $OOZIE_HOME
+
+# Define el usuario para ejecutar el comando
+USER oozie
+
+# Puertos expuestos
+EXPOSE 11000
+
+# Establece el punto de entrada
+CMD ["/usr/local/bin/start-oozie.sh"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+services:
+  hadoop:
+    build:
+      context: ./hadoop
+      dockerfile: Dockerfile
+    hostname: hadoop
+    container_name: hadoop
+    ports:
+      - "9870:9870" # HDFS NameNode UI
+      - "8088:8088" # YARN ResourceManager UI
+      - "19888:19888" # MapReduce JobHistoryServer UI
+    environment:
+      HDFS_NN_ADDR: hadoop:9000
+      YARN_RM_HOSTNAME: hadoop
+    networks:
+      - hadoop_network
+    healthcheck:
+      test: ["CMD-SHELL", "hdfs dfsadmin -report | grep 'Live datanodes' | grep '1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  mysql:
+    image: mysql:8.0
+    hostname: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ooziedb
+      MYSQL_USER: oozie
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - hadoop_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  oozie:
+    build:
+      context: ./oozie
+      dockerfile: Dockerfile
+    hostname: oozie
+    container_name: oozie
+    ports:
+      - "11000:11000" # Oozie Web UI
+    environment:
+      OOZIE_DB_HOST: mysql
+      OOZIE_DB_PORT: 3306
+      OOZIE_DB_NAME: ooziedb
+      OOZIE_DB_USER: oozie
+      OOZIE_DB_PASS: password
+      OOZIE_HDFS_NN: hdfs://hadoop:9000
+      OOZIE_YARN_RM: hadoop:8032
+    depends_on:
+      hadoop:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    networks:
+      - hadoop_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11000/oozie"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  mysql_data:
+
+networks:
+  hadoop_network:
+    driver: bridge</code></pre><h3>hadoop/core-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;fs.defaultFS&lt;/name&gt;
+        &lt;value&gt;hdfs://hadoop:9000&lt;/value&gt;
+        &lt;description&gt;The name of the default file system.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+        &lt;value&gt;/tmp/hadoop-root&lt;/value&gt;
+        &lt;description&gt;A base for other temporary directories.&lt;/description&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><h3>hadoop/hdfs-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.replication&lt;/name&gt;
+        &lt;value&gt;1&lt;/value&gt;
+        &lt;description&gt;Default block replication. The actual number of replicas can be specified when the file is created.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+        &lt;value&gt;file:///opt/hadoop/data/namenode&lt;/value&gt;
+        &lt;description&gt;The directory where the namenode stores the filesystem image.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+        &lt;value&gt;file:///opt/hadoop/data/datanode&lt;/value&gt;
+        &lt;description&gt;The directory where the datanode stores its data.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.web.authentication.simple.anonymous.allowed&lt;/name&gt;
+        &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><h3>hadoop/yarn-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;
+        &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
+        &lt;value&gt;hadoop&lt;/value&gt;
+        &lt;description&gt;The hostname of the ResourceManager.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;
+        &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;
+        &lt;value&gt;hadoop:8088&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.timeline-service.hostname&lt;/name&gt;
+        &lt;value&gt;hadoop&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><h3>hadoop/mapred-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+        &lt;value&gt;yarn&lt;/value&gt;
+        &lt;description&gt;The runtime framework for executing MapReduce jobs.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
+        &lt;value&gt;hadoop:10020&lt;/value&gt;
+        &lt;description&gt;MapReduce JobHistory Server RPC address.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
+        &lt;value&gt;hadoop:19888&lt;/value&gt;
+        &lt;description&gt;MapReduce JobHistory Server Web UI address.&lt;/description&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><h3>hadoop/start-hadoop.sh</h3><pre><code>#!/bin/bash
+# Script para iniciar los servicios de Hadoop en modo pseudo-distribuido
+
+# Configura JAVA_HOME si no está presente
+export JAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/java-11-openjdk-amd64}
+export HADOOP_HOME=/opt/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+
+# Formatea el NameNode si no está formateado
+if [ ! -d "/opt/hadoop/data/namenode/current" ]; then
+    echo "Formateando NameNode..."
+    hdfs namenode -format -force -nonInteractive
+fi
+
+# Inicia los demonios de Hadoop
+echo "Iniciando NameNode..."
+hdfs --daemon start namenode
+echo "Iniciando DataNode..."
+hdfs --daemon start datanode
+echo "Iniciando ResourceManager..."
+yarn --daemon start resourcemanager
+echo "Iniciando NodeManager..."
+yarn --daemon start nodemanager
+echo "Iniciando JobHistoryServer..."
+mapred --daemon start historyserver
+
+# Espera a que HDFS esté disponible y crea el directorio de usuario para Oozie
+echo "Esperando a que HDFS esté listo para operaciones..."
+hdfs dfs -mkdir -p /user/oozie
+hdfs dfs -chmod 777 /user/oozie # Permisos amplios para un entorno de desarrollo/prueba
+
+echo "Hadoop servicios iniciados y /user/oozie creado."
+
+# Mantén el contenedor en ejecución
+tail -f $HADOOP_HOME/logs/*</code></pre><h3>oozie/oozie-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
+&lt;configuration&gt;
+    &lt;!-- Oozie Services Configuration --&gt;
+    &lt;property&gt;
+        &lt;name&gt;oozie.service.HadoopAccessorService.hadoop.configurations&lt;/name&gt;
+        &lt;value&gt;hadoop=${OOZIE_HDFS_NN}:/opt/oozie/conf&lt;/value&gt;
+        &lt;description&gt;
+            Define los clústeres Hadoop con los que Oozie puede interactuar.
+            Formato: [ID_NAME_NODE]=[RPC_ADDRESS_NAME_NODE]:[PATH_TO_HADOOP_CONF_DIR].
+            En este caso, se usa la variable de entorno OOZIE_HDFS_NN para el NameNode y
+            /opt/oozie/conf como el directorio donde Oozie encontrará sus propias configuraciones de cliente Hadoop.
+        &lt;/description&gt;
+    &lt;/property&gt;
+
+    &lt;!-- JPA Service (Database) Configuration --&gt;
+    &lt;property&gt;
+        &lt;name&gt;oozie.service.JPAService.jdbc.driver&lt;/name&gt;
+        &lt;value&gt;com.mysql.cj.jdbc.Driver&lt;/value&gt;
+        &lt;description&gt;Clase del driver JDBC para MySQL.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;oozie.service.JPAService.jdbc.url&lt;/name&gt;
+        &lt;value&gt;jdbc:mysql://${OOZIE_DB_HOST}:${OOZIE_DB_PORT}/${OOZIE_DB_NAME}?createDatabaseIfNotExist=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true&lt;/value&gt;
+        &lt;description&gt;URL JDBC para la base de datos MySQL.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;oozie.service.JPAService.jdbc.username&lt;/name&gt;
+        &lt;value&gt;${OOZIE_DB_USER}&lt;/value&gt;
+        &lt;description&gt;Nombre de usuario para la conexión a la base de datos.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;oozie.service.JPAService.jdbc.password&lt;/name&gt;
+        &lt;value&gt;${OOZIE_DB_PASS}&lt;/value&gt;
+        &lt;description&gt;Contraseña para la conexión a la base de datos.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;oozie.service.JPAService.create.db.schema&lt;/name&gt;
+        &lt;value&gt;true&lt;/value&gt;
+        &lt;description&gt;Establece a true para crear el esquema de la DB al inicio si no existe.&lt;/description&gt;
+    &lt;/property&gt;
+
+    &lt;!-- Otras propiedades de Oozie --&gt;
+    &lt;property&gt;
+        &lt;name&gt;oozie.base.url&lt;/name&gt;
+        &lt;value&gt;http://localhost:11000/oozie&lt;/value&gt;
+        &lt;description&gt;URL base para el servidor Oozie.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;oozie.authentication.type&lt;/name&gt;
+        &lt;value&gt;simple&lt;/value&gt;
+        &lt;description&gt;Tipo de autenticación. Para pruebas locales, 'simple' es suficiente.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;oozie.service.ProxyUserService.proxyuser.oozie.hosts&lt;/name&gt;
+        &lt;value&gt;*&lt;/value&gt;
+        &lt;description&gt;Permite al usuario 'oozie' actuar como proxy para cualquier host.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;oozie.service.ProxyUserService.proxyuser.oozie.groups&lt;/name&gt;
+        &lt;value&gt;*&lt;/value&gt;
+        &lt;description&gt;Permite al usuario 'oozie' actuar como proxy para cualquier grupo.&lt;/description&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;</code></pre><h3>oozie/start-oozie.sh</h3><pre><code>#!/bin/bash
+# Script para iniciar el servidor Oozie
+
+# Esperar a que MySQL esté disponible
+echo "Esperando a que MySQL esté disponible..."
+/usr/bin/wait-for-it.sh ${OOZIE_DB_HOST}:${OOZIE_DB_PORT} --timeout=60 --strict -- echo "MySQL está listo."
+
+# Esperar a que Hadoop esté disponible (HDFS y YARN)
+echo "Esperando a que Hadoop HDFS NameNode esté disponible..."
+/usr/bin/wait-for-it.sh $(echo "${OOZIE_HDFS_NN}" | sed 's/hdfs:\/\///g') --timeout=60 --strict -- echo "HDFS NameNode está listo."
+echo "Esperando a que Hadoop YARN ResourceManager esté disponible..."
+/usr/bin/wait-for-it.sh $(echo "${OOZIE_YARN_RM}" | cut -d ':' -f 1) --port 8088 --timeout=60 --strict -- echo "YARN ResourceManager (UI) está listo."
+
+export JAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/java-11-openjdk-amd64}
+export OOZIE_HOME=/opt/oozie
+
+# Oozie necesita sus propias configuraciones de Hadoop para actuar como cliente.
+# Crearemos estos archivos dinámicamente usando las variables de entorno.
+echo "Generando configuraciones de Hadoop para Oozie..."
+
+# core-site.xml
+cat &gt; $OOZIE_HOME/conf/core-site.xml &lt;&lt;EOL
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;fs.defaultFS&lt;/name&gt;
+        &lt;value&gt;${OOZIE_HDFS_NN}&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+EOL
+
+# hdfs-site.xml (minimal)
+cat &gt; $OOZIE_HOME/conf/hdfs-site.xml &lt;&lt;EOL
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.client.use.datanode.hostname&lt;/name&gt;
+        &lt;value&gt;true&lt;/value&gt;
+        &lt;description&gt;Enable this if DataNodes are referenced by hostname from Oozie&lt;/description&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+EOL
+
+# yarn-site.xml
+cat &gt; $OOZIE_HOME/conf/yarn-site.xml &lt;&lt;EOL
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
+        &lt;value&gt;${OOZIE_YARN_RM}&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;
+        &lt;value&gt;hadoop:8088&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;
+        &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.log.server.url&lt;/name&gt;
+        &lt;value&gt;http://hadoop:19888/jobhistory/logs&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+EOL
+
+# mapred-site.xml
+cat &gt; $OOZIE_HOME/conf/mapred-site.xml &lt;&lt;EOL
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+        &lt;value&gt;yarn&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
+        &lt;value&gt;hadoop:10020&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
+        &lt;value&gt;hadoop:19888&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+EOL
+
+# Instalar y configurar la extensión de Oozie (UI y libext)
+echo "Ejecutando oozie-setup.sh para extensiones y libext..."
+$OOZIE_HOME/bin/oozie-setup.sh prepare-war -extjs
+
+# Inicializar la base de datos de Oozie
+echo "Inicializando la base de datos de Oozie..."
+# El comando 'create' con '-run' y '-force' es adecuado para un primer inicio o reinicio limpio.
+# Si la base de datos ya está inicializada, no hará nada o podría dar un error que se puede ignorar si el servidor arranca bien.
+$OOZIE_HOME/bin/ooziedb.sh create -sqlfile oozie.sql -run -force
+
+# Iniciar el servidor Oozie
+echo "Iniciando el servidor Oozie..."
+exec $OOZIE_HOME/bin/oozie.sh run</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEJKxXRmQJrsPtioE7fvM0JYM0dFC_MDH4KwSo5jaulwE9IAi7ZzoGRbwvw-mFrLOJBr_Wp0G2jXJrx_CNAcQ7_oh-LAdA6DyPyqHITnslCdqSiMUU_c1EfZn9V9bQG1IJAzgc2AuKndodRke_D1HInM0Mh1Kg3NKsNMrKyywOzZiFbKA==" target="_blank" rel="noopener noreferrer">tutorialspoint.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUKON0K-G2lM-G7X545bsS0vP9FlM0cSw_wUSRsWXBSSvIKLgOLvwZL6djO30mAlDl0CZRr0HOZ-uU7OUbxG9dqWD2yQwpwz9peSiMRzvQEbl2wIapK5nwByl0gkJuwYV4YYjeZxgxvwQC8Zc2mNvo" target="_blank" rel="noopener noreferrer">tutorialspoint.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG1HBuovMemQhORyxhVH77-TXwyn8NyYxCgKZ7hQcCHptQnJdrNelMP_Ux47c0HokQ6SHBYVZzb-1MsO61AWQZTXhTwKfG2EdPSr6vlZgiWdGKuyhJgHtAzOleRqaRNJTFOtx5F3tckLg8Jvk9j" target="_blank" rel="noopener noreferrer">edureka.co</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPOLnpLUBREeTffQpJUG_3veUf4a2j1KDdaRVAhVpPU34MX9SEVwsHoHPNibqhB-gj-TjFFXN4o4tbpl42xntnzl19AaY6frJ5rcFkmxsLpqLalcBsk9j1IfBEE5dcNOux8gMlDjx0cNqwWAwEmX8rWw==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFAX0oVGjsl1ZVVgtBDOSVr2LEr_d_F_VB9v9BXrFmhLmIeHYmkwq8HdpYu-rRGfmRuA-D5avVFeqwNHRGTj001pB-O0DzMAw52fCMbmckUXv2P8-IUsSkPSYqtUnnSZK0Lhu_eL7uDcD4Chg6hA4fK5Q==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFaNQLF_w8g19zs3ABWd04a7Lm3o4zESSWL8mSiXtzP6vfDYh1fK0OSbyFxGCHJ7RjQny33mNPbLtFLhAC5AOElvah3HOkfaTXI9ppTBgvIMT8sX5wYsRq6ufN76FIM61opvsQ2hkQ8yIo5dIC-" target="_blank" rel="noopener noreferrer">upgrad.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbpN2JUegPA3Vlu-2q-lvosQCHCu3Qk2oTtyLnzqvog9WkL9fW6pLh-UXkacyu7LUex9Ko50RZCk4lQ813rslmb5SPng7_3IdYGB7QKUa4aw_y377e_tfe8XONH6yxZ-XqSEfkCiUNilhlhujBKYZHqYiJoOLeMkYKADMIP2d_xRgW7w0=" target="_blank" rel="noopener noreferrer">oreilly.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFebntRZFV4UaJ4LTfIT58hQZy911RgPCIqcy4z0e_ad65epLXFDMOy9vIuxI9TCvBvWTlKV52qL-BLekMg70sowuoYO3AeRiPeWbp3IyR26Dy9NBoVU_w8MP50SXM_dS8M0H9syH9WXsULtYUEeur2_50HkWc_jH_WP_fSAIpfajhmoWfJfOFI6v6zeLBKOKfjhUo4zcd0" target="_blank" rel="noopener noreferrer">packtpub.com</a></li></ul>
+  </div>
+</body>
+</html>

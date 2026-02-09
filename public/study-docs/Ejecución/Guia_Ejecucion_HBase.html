@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_HBase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_HBase</h1>
+    <h2>Explicación</h2><p>Esta guía proporciona una configuración básica para ejecutar Apache HBase localmente utilizando <code>docker-compose</code> (compatible con Docker y Podman). HBase es una base de datos distribuida, no relacional (NoSQL), que se ejecuta sobre HDFS (en este caso, en modo standalone dentro del contenedor) y utiliza Apache ZooKeeper para la coordinación. La configuración incluye los siguientes componentes:</p><p>1.  <strong>ZooKeeper</strong>: Un servicio de coordinación distribuida esencial para HBase.</p><p>2.  <strong>HBase Master/RegionServer</strong>: Un único contenedor que actúa como HBase Master y RegionServer, configurado para usar el servicio de ZooKeeper local.</p><h3>Pasos para ejecutar:</h3><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio, por ejemplo, <code>hbase-setup</code>, y guarda los archivos <code>docker-compose.yml</code> y <code>Dockerfile</code> (aunque el <code>Dockerfile</code> es opcional para este setup, se incluye para cumplir el esquema y mostrar una base de personalización) en él.</p><p>2.  <strong>Inicia los contenedores</strong>: Abre una terminal en el directorio <code>hbase-setup</code> y ejecuta el comando:</p><pre><code>    docker-compose up -d</code></pre><p>    Esto iniciará el contenedor de ZooKeeper y, una vez que esté saludable, el contenedor de HBase.</p><p>3.  <strong>Verifica el estado</strong>: Una vez que los contenedores estén en ejecución, puedes acceder a la UI del HBase Master en tu navegador:</p><ul><li>   *   <strong>HBase Master UI</strong>: <code>http://localhost:16010</code></li></ul><p>4.  <strong>Accede al shell de HBase (opcional)</strong>:</p><pre><code>    docker exec -it hbase-master hbase shell</code></pre><p>    Desde el shell, puedes interactuar con HBase, por ejemplo, listar tablas con <code>list</code>.</p><p>5.  <strong>Detener los contenedores</strong>:</p><pre><code>    docker-compose down</code></pre><h3>Notas:</h3><ul><li>  Se ha optado por la imagen <code>harisekhon/hbase</code> para simplificar la configuración, ya que es una imagen robusta que empaqueta HBase de forma eficiente.</li><li>  El <code>Dockerfile</code> provisto es un ejemplo de cómo podrías extender la imagen base para añadir personalizaciones, aunque para esta guía no es estrictamente necesario construirlo.</li></ul><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para una imagen de HBase personalizada (opcional)
+# Este Dockerfile es un ejemplo de cómo podrías construir tu propia imagen de HBase
+# si necesitaras personalizaciones que no están en una imagen preconstruida.
+# Para esta guía práctica, el docker-compose.yml utiliza directamente la imagen
+# 'harisekhon/hbase' para simplificar el proceso.
+
+FROM harisekhon/hbase:latest
+
+# Este Dockerfile simplemente extiende la imagen base de Harisekhon.
+# Aquí podrías añadir tus propias configuraciones, scripts, plugins, o herramientas
+# que necesites dentro del contenedor de HBase.
+
+# Ejemplo: Añadir un script de inicio personalizado (si fuera necesario)
+# COPY custom-init.sh /usr/local/bin/
+# RUN chmod +x /usr/local/bin/custom-init.sh
+# ENTRYPOINT ["/usr/local/bin/custom-init.sh"]
+
+# Para esta configuración básica, no se requieren modificaciones adicionales.
+# La imagen 'harisekhon/hbase' ya viene con todo lo necesario.</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  zookeeper:
+    image: zookeeper:3.8.0
+    container_name: zookeeper
+    hostname: zookeeper
+    restart: unless-stopped
+    ports:
+      - "2181:2181"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888
+    healthcheck:
+      test: ["CMD-SHELL", "echo srvr | nc -w 2 localhost 2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  hbase-master:
+    image: harisekhon/hbase:latest
+    container_name: hbase-master
+    hostname: hbase-master
+    restart: unless-stopped
+    ports:
+      - "16010:16010" # UI del HBase Master
+      - "16000:16000" # Puerto RPC del HBase Master
+      - "16020:16020" # Puerto RPC del RegionServer
+      - "16030:16030" # UI del RegionServer
+    environment:
+      HBASE_ZOOKEEPER_QUORUM: zookeeper:2181
+      # Las variables de entorno para puertos son generalmente manejadas por la imagen
+      # Pero se pueden especificar si fuera necesario para override o claridad
+      # HBASE_MASTER_PORT: 16000
+      # HBASE_MASTER_WEBUI_PORT: 16010
+      # HBASE_REGIONSERVER_PORT: 16020
+      # HBASE_REGIONSERVER_WEBUI_PORT: 16030
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    volumes:
+      - hbase_data:/opt/hbase/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:16010 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  hbase_data:
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFsFVKE4Oc7tr7gLPvaNRfPSNjsjap6BzAfcGTxBNZXIQiFY0VmeQdPZ37e7sSOTOedjELv1oZkm-cWscqpY0HFKXoxxzzlfcBFk2OG8gwZVGABnnQBbKA7BAJSHvqNpQtW" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgIaIwlrAvEYzleGZRV4_HzKrGdtRsMnEXpMDmRPLCkBMGWIa4u6jCOpMmfVKWzD1f5UrQ3nCY-L5GjOYmixCfyMsdok8zZQmVufsTDZvJrklGXz2aiCgtVps6dG8=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH2XpRM0VO1FGYFl6euo_XbtFUPKUKS1GMSKvkjK35Bvh79OgHemJeYT2YG-yIpCqQklGxLnCfcgjq0h9EuHYKuCFiNHExbvYtVheQJ-gVMYX4WxWZvk9WWDRgXP_IMnPrfDS_64bNRRHKH" target="_blank" rel="noopener noreferrer">docs4dev.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGsuBtK8OTweP0S7QA9TMHnoaHe1DoXUuB4Ukyz9_xVCQhoqL8ID32r5U-UTr6DF55cRTzgA-MMiMe0GNP9MZFnclbDun2Vhi_bjWSWWDHKMhN-2MY=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExKm5UFsAfQtcqFE5bTQ4lQYt3AJcM2GiamOlm7njO3ea5DoI4jsWU9lDbo_oJhwkxPDB_aLvc8ELzs2ZCBTQK8VDjMaaNCywKoYv1hT3r4pKDQVUVj85YFB5Z5UFN0Ya56IRhNLU7tNk=" target="_blank" rel="noopener noreferrer">tutorialspoint.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFAvWI2qFGZ1uMa9Gw1t9i5fSa0sV_lwY7kacMWlWo1f9Xr8zO61yraugf0iAqCtGpotZy-xvyXuMSyz77aRa__fWIvEWTBp5lR1i5tTn8BBJYLrPpvxv7gEKlnD45ke_tWV50XUg7PzS0ixKcl4hawHmBHb3_EcHD61sNBFV9cxnGeWyI=" target="_blank" rel="noopener noreferrer">data-flair.training</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHhS37ZuDsVn6JnQAQ0-pqAwPg43uvtZgJwp6fRlJn9rDUMKIZPjmc0OkkpFiPBZ-ACkjbvcLH7WHest3_zMzRHRgBna_1qqcbTaZXUAu4nN9RYwsAtN9Y-Q5ZQ54C7veuoEElZ0nE=" target="_blank" rel="noopener noreferrer">guru99.com</a></li></ul>
+  </div>
+</body>
+</html>

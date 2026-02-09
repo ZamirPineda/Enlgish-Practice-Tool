@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Hadoop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Hadoop</h1>
+    <h2>Explicación</h2><p>Esta guía le permitirá configurar un clúster básico de Hadoop (NameNode, DataNode, ResourceManager, NodeManager y JobHistoryServer) utilizando <code>docker-compose</code> con Podman o Docker. La configuración incluye un NameNode y un DataNode para demostrar las funcionalidades principales.</p><h3>Componentes:</h3><ul><li>  <strong>Dockerfile</strong>: Prepara una imagen base con Java y Hadoop instalados. Incluye las dependencias necesarias y configura las rutas de entorno de Hadoop.</li><li>  <strong>hadoop-config/</strong>: Un directorio que contiene los archivos de configuración esenciales de Hadoop (<code>core-site.xml</code>, <code>hdfs-site.xml</code>, <code>mapred-site.xml</code>, <code>yarn-site.xml</code> y <code>hadoop-env.sh</code>). Estos archivos definen la comunicación entre los componentes del clúster y las ubicaciones de los datos.</li><li>  <strong>docker-compose.yml</strong>: Define dos servicios principales:</li><li>   *   <code>namenode</code>: El nodo maestro de HDFS, que gestiona el sistema de archivos distribuido. También ejecuta el ResourceManager de YARN (para la gestión de recursos y programación de tareas) y el JobHistoryServer de MapReduce.</li><li>   *   <code>datanode</code>: El nodo de datos de HDFS, que almacena los bloques de datos. También ejecuta el NodeManager de YARN (para ejecutar las tareas de la aplicación en el nodo).</li></ul><h3>Pasos a seguir:</h3><p>1.  <em></em>Crear el directorio <code>hadoop-config</code><em></em>: Asegúrese de crear un directorio llamado <code>hadoop-config</code> en el mismo nivel que su <code>Dockerfile</code> y <code>docker-compose.yml</code>.</p><p>2.  <strong>Copiar los archivos</strong>: Coloque los archivos <code>Dockerfile</code>, <code>docker-compose.yml</code> y todos los archivos <code>.xml</code> y <code>.sh</code> proporcionados dentro del directorio <code>hadoop-config</code> en sus respectivas ubicaciones.</p><p>3.  <strong>Construir y ejecutar</strong>: Utilice los comandos <code>docker-compose build</code> y <code>docker-compose up -d</code> para construir las imágenes y levantar los contenedores.</p><p>4.  <strong>Verificar</strong>: Una vez que los contenedores estén en funcionamiento, puede acceder a las interfaces de usuario web para verificar el estado del clúster:</p><ul><li>   *   <strong>NameNode UI</strong>: <code>http://localhost:9870</code></li><li>   *   <strong>ResourceManager UI</strong>: <code>http://localhost:8088</code></li><li>   *   <strong>MapReduce JobHistory Server UI</strong>: <code>http://localhost:19888</code></li></ul><p>5.  <strong>Ejecutar un ejemplo (opcional)</strong>:</p><ul><li>   *   Para crear un directorio HDFS y copiar un archivo: <code>docker-compose exec namenode hdfs dfs -mkdir /user && docker-compose exec namenode hdfs dfs -mkdir /user/root && docker-compose exec namenode hdfs dfs -put $HADOOP_HOME/etc/hadoop/core-site.xml /user/root/</code></li><li>   *   Para listar el archivo: <code>docker-compose exec namenode hdfs dfs -ls /user/root/</code></li><li>   *   Para ejecutar un <code>wordcount</code> de ejemplo: <code>docker-compose exec namenode hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.6.jar wordcount /user/root/core-site.xml /user/root/output</code></li><li>   *   Para ver el resultado: <code>docker-compose exec namenode hdfs dfs -cat /user/root/output/part-r-00000</code></li></ul><h2>Comandos de Ejecución</h2><pre><code>docker-compose build && docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM ubuntu:22.04
+
+# Install necessary packages (Java, SSH, Rsync, Curl, Wget, Net-tools, IP-Utils)
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jdk-headless ssh rsync curl wget net-tools iputils-ping && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set JAVA_HOME environment variable
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV PATH=$PATH:$JAVA_HOME/bin
+
+# Define Hadoop version as an argument for easier updates
+ARG HADOOP_VERSION=3.3.6
+ARG HADOOP_URL=https://dlcdn.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz
+
+# Download and extract Hadoop
+RUN wget ${HADOOP_URL} -O /tmp/hadoop.tar.gz && \
+    tar -xzvf /tmp/hadoop.tar.gz -C /opt && \
+    rm /tmp/hadoop.tar.gz
+
+# Set Hadoop environment variables
+ENV HADOOP_HOME=/opt/hadoop-${HADOOP_VERSION}
+ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+
+# Create directories for HDFS and YARN data, and temporary directories
+# These directories are critical for HDFS NameNode and DataNode operations and YARN logs/timeline. 
+# Permissions are set to allow Hadoop to write to them.
+RUN mkdir -p $HADOOP_HOME/data/dfs/namenode && \
+           mkdir -p $HADOOP_HOME/data/dfs/datanode && \
+           mkdir -p $HADOOP_HOME/data/yarn/timeline && \
+           mkdir -p $HADOOP_HOME/tmp && \
+           chmod -R 777 $HADOOP_HOME/data && \
+           chmod -R 777 $HADOOP_HOME/tmp
+
+# Set up SSH for inter-container communication (optional for basic setup, but good practice for full cluster management scripts)
+# For a single container setup with direct service commands, SSH might not be strictly necessary for starting services, 
+# but it's a common Hadoop setup step.
+RUN ssh-keygen -A && \
+    ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa && \
+    cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys && \
+    chmod 0600 ~/.ssh/authorized_keys
+
+# Expose default Hadoop ports:
+# 9870: NameNode UI (for HDFS)
+# 8088: ResourceManager UI (for YARN)
+# 19888: MapReduce JobHistory Server UI
+# 8042: NodeManager UI (for YARN)
+EXPOSE 9870 8088 19888 8042
+
+# Set the working directory to Hadoop home
+WORKDIR $HADOOP_HOME
+
+# Default command to keep the container running if no other command is specified by docker-compose
+CMD ["/bin/bash"]
+</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+
+services:
+  namenode:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: namenode
+    # Map ports for external access to UIs
+    ports:
+      - "9870:9870" # NameNode UI
+      - "8088:8088" # ResourceManager UI
+      - "19888:19888" # MapReduce JobHistory Server
+    # Mount configuration files and data volumes
+    volumes:
+      - ./hadoop-config:/opt/hadoop-3.3.6/etc/hadoop # Mount custom Hadoop configuration
+      - namenode_data:/opt/hadoop-3.3.6/data/dfs/namenode # Persistent storage for NameNode metadata
+    environment:
+      - HADOOP_VERSION=3.3.6 # Ensure consistency with Dockerfile
+    # Load additional environment variables from hadoop-env.sh
+    env_file:
+      - ./hadoop-config/hadoop-env.sh
+    # Command to format the NameNode (if not already formatted), then start NameNode, ResourceManager, and HistoryServer
+    # The `&& /bin/bash` keeps the container running after service startup
+    command: ["/bin/bash", "-c", "hdfs namenode -format -force -nonInteractive && hdfs --daemon start namenode && yarn --daemon start resourcemanager && mapred --daemon start historyserver && /bin/bash"]
+    # Healthcheck to ensure NameNode UI is reachable before dependent services start
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9870 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hadoop-net
+
+  datanode:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: datanode1
+    # Ensure NameNode is healthy before starting DataNode
+    depends_on:
+      namenode:
+        condition: service_healthy
+    # Mount configuration files and data volumes
+    volumes:
+      - ./hadoop-config:/opt/hadoop-3.3.6/etc/hadoop # Mount custom Hadoop configuration
+      - datanode_data:/opt/hadoop-3.3.6/data/dfs/datanode # Persistent storage for DataNode blocks
+    environment:
+      - HADOOP_VERSION=3.3.6 # Ensure consistency with Dockerfile
+    # Load additional environment variables from hadoop-env.sh
+    env_file:
+      - ./hadoop-config/hadoop-env.sh
+    # Command to start DataNode and NodeManager
+    command: ["/bin/bash", "-c", "hdfs --daemon start datanode && yarn --daemon start nodemanager && /bin/bash"]
+    # Expose NodeManager UI (for the single DataNode)
+    ports:
+      - "8042:8042" # NodeManager UI
+    networks:
+      - hadoop-net
+
+# Define a custom bridge network for inter-container communication
+networks:
+  hadoop-net:
+    driver: bridge
+
+# Define Docker volumes for persistent storage of HDFS data
+volumes:
+  namenode_data:
+  datanode_data:
+</code></pre><h3>hadoop-config/core-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;fs.defaultFS&lt;/name&gt;
+        &lt;value&gt;hdfs://namenode:9000&lt;/value&gt;
+        &lt;description&gt;The NameNode URI. Used by clients to connect to HDFS.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+        &lt;value&gt;/opt/hadoop-3.3.6/tmp&lt;/value&gt;
+        &lt;description&gt;A base for other temporary directories.&lt;/description&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre><h3>hadoop-config/hdfs-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+        &lt;value&gt;/opt/hadoop-3.3.6/data/dfs/namenode&lt;/value&gt;
+        &lt;description&gt;The directory where the NameNode stores the HDFS filesystem metadata.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+        &lt;value&gt;/opt/hadoop-3.3.6/data/dfs/datanode&lt;/value&gt;
+        &lt;description&gt;The directory where the DataNodes store HDFS data blocks.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.replication&lt;/name&gt;
+        &lt;value&gt;1&lt;/value&gt;
+        &lt;description&gt;Default block replication. Set to 1 for a single DataNode setup.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.web.ugi&lt;/name&gt;
+        &lt;value&gt;hadoop,hadoop&lt;/value&gt;
+        &lt;description&gt;User Group Information for web access (e.g., in UI).&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.namenode.http-address&lt;/name&gt;
+        &lt;value&gt;namenode:9870&lt;/value&gt;
+        &lt;description&gt;The address of the NameNode HTTP server.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.namenode.rpc-address&lt;/name&gt;
+        &lt;value&gt;namenode:9000&lt;/value&gt;
+        &lt;description&gt;The RPC address for clients to contact the NameNode.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.datanode.address&lt;/name&gt;
+        &lt;value&gt;0.0.0.0:9866&lt;/value&gt;
+        &lt;description&gt;The address where the DataNode daemon listens for data transfer.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.datanode.http.address&lt;/name&gt;
+        &lt;value&gt;0.0.0.0:9864&lt;/value&gt;
+        &lt;description&gt;The address where the DataNode daemon serves HTTP requests.&lt;/description&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre><h3>hadoop-config/mapred-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+        &lt;value&gt;yarn&lt;/value&gt;
+        &lt;description&gt;Specifies that MapReduce should run on YARN.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.application.classpath&lt;/name&gt;
+        &lt;value&gt;$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*:$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/yarn/*:$HADOOP_HOME/share/hadoop/yarn/lib/*&lt;/value&gt;
+        &lt;description&gt;Classpath for MapReduce applications.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
+        &lt;value&gt;namenode:10020&lt;/value&gt;
+        &lt;description&gt;The host:port for the MapReduce JobHistory Server RPC interface.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
+        &lt;value&gt;namenode:19888&lt;/value&gt;
+        &lt;description&gt;The host:port for the MapReduce JobHistory Server web UI.&lt;/description&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre><h3>hadoop-config/yarn-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+        &lt;description&gt;List of auxiliary services for NodeManager. mapreduce_shuffle is required for MapReduce.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.aux-services.mapreduce_shuffle.class&lt;/name&gt;
+        &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
+        &lt;description&gt;The class name for the MapReduce shuffle service.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
+        &lt;value&gt;namenode&lt;/value&gt;
+        &lt;description&gt;The hostname of the ResourceManager. Set to 'namenode' as it's running on the same container.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;
+        &lt;value&gt;namenode:8088&lt;/value&gt;
+        &lt;description&gt;The host:port for the ResourceManager web UI.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;
+        &lt;value&gt;true&lt;/value&gt;
+        &lt;description&gt;Enable YARN log aggregation.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;
+        &lt;value&gt;namenode:8030&lt;/value&gt;
+        &lt;description&gt;The address of the ResourceManager scheduler.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
+        &lt;value&gt;namenode:8032&lt;/value&gt;
+        &lt;description&gt;The address of the ResourceManager.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;
+        &lt;value&gt;namenode:8033&lt;/value&gt;
+        &lt;description&gt;The admin address of the ResourceManager.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.webapp.https.address&lt;/name&gt;
+        &lt;value&gt;namenode:8090&lt;/value&gt;
+        &lt;description&gt;The HTTPS address for the ResourceManager web UI.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.vmem-check-enabled&lt;/name&gt;
+        &lt;value&gt;false&lt;/value&gt;
+        &lt;description&gt;Disable virtual memory checks for NodeManager, useful in Docker for flexibility.&lt;/description&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.pmem-check-enabled&lt;/name&gt;
+        &lt;value&gt;false&lt;/value&gt;
+        &lt;description&gt;Disable physical memory checks for NodeManager, useful in Docker for flexibility.&lt;/description&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre><h3>hadoop-config/hadoop-env.sh</h3><pre><code># Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# This file contains environment variables that will be used by Hadoop scripts.
+
+# The only required environment variable is JAVA_HOME. All others are
+# optional. When running a Hadoop command, an example can be found in the
+# hadoop-env.sh.template file for all the possible variables.
+
+# The java implementation to use. This is crucial for Hadoop to run.
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+
+# The maximum amount of heap memory for the Java Virtual Machine. 
+# For small local setups, default is often fine. For larger deployments,
+# these values might need to be increased.
+# export HADOOP_HEAPSIZE_MAX="1024m"
+
+# A string representing the name of the cluster, used for display purposes.
+# export HADOOP_IDENT_STRING=$USER
+
+# Options for NameNode Java process.
+# export HADOOP_NAMENODE_OPTS="-Dhadoop.metrics.log.level=WARN"
+
+# Options for DataNode Java process.
+# export HADOOP_DATANODE_OPTS="-Dhadoop.metrics.log.level=WARN"
+
+# Options for ResourceManager Java process.
+# export HADOOP_RESOURCEMANAGER_OPTS="-Dhadoop.metrics.log.level=WARN"
+
+# Options for NodeManager Java process.
+# export HADOOP_NODEMANAGER_OPTS="-Dhadoop.metrics.log.level=WARN"
+
+# History server options for MapReduce.
+# export HADOOP_MAPRED_HISTORYSERVER_OPTS="-Dhadoop.metrics.log.level=WARN"
+
+# For debugging, uncomment the following line for more verbose logging:
+# export HADOOP_ROOT_LOGGER=INFO,console
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpIaWuVV4eh1zuXsMwT7dAfljaDZCh_XVZmyPk9sTZBa8L9OuGahkJROHpLpE8jA-8eVRSfbD3wIRzeWx3vwTsLJ7zxg0M4t4D0k612X6C_172qTqvSxZTkxzZGt0VeLru" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEP6Ft4hUy-XAnkEjK8JhYuK5v2VaDXiss9iYtw8ah7PEFRWUpI_44EOXanmfqb46pn9hxNfcpfWUNAecn8TMUd1BJqnReQK_V8zWWmlRQaoH11yIz4RCYz_kqrMNvfOdve5z-3_CLQDpYm" target="_blank" rel="noopener noreferrer">tutorialspoint.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFXHShwx0tqF4jREIKzYcbvzJ1N3fjMtdXeUczFmjrpi0cHeoI9OMx2EMWyZeuKoI6XIjre90pX3zskyKhGmJgeF-2DVN80RkeAVmwYtRjOYcvjvu_wxOwTk5o2asYp8T1AKC0LySVfCYAqIegtT8Ou" target="_blank" rel="noopener noreferrer">simplilearn.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFC5AGl5T_ynrYtCo9JlXPUEXNWvlJS6tnK4PMvrzINXWMJxJk8kUvl-tiakFFmU4l4aFOCzm6U085sQCzhF6XBS4H4XVBa-A4YDe2ETvzZxYwagA9m_TilYD6ACnKcRzpCquPRWvcm" target="_blank" rel="noopener noreferrer">igmguru.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUGoaWPtkXalWGrsFOrIJOVLFn_YwCT0rvjtCXhm9jpIG5JxS7FKp1c5lVvhAhj7TM7y7YKMtJk_LKAnOYGWCQoIgum9F13oD_1Gin5QlTRsaO49KcZy9ZFHvfdRlTCyQVkMIw-0dCzVAdKzdZMNV6xo7S7lEft8aBEg==" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE2Lj3vhEdX6DPjZ9XcvIRgbPubDrFrC8JKKcIznczJ7uT4opKglNzxFLuDkqqTpDrJDJAHtMhgufVGzV_8gA8_EICSuFl_jbbm-2k5mGL9Xsl9xqxepkb9RfuqQ_iIGYWcAH5IIjXm2pY_2pmVm1A44w7mKcv3jzKogYlm3wqTE1g=" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li></ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia_Ejecucion_Pulumi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a; /* slate-900 */
+      color: #d1d5db; /* slate-300 */
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .prose-invert {
+      --tw-prose-body: #d1d5db;
+      --tw-prose-headings: #f8fafc;
+      --tw-prose-links: #38bdf8;
+      --tw-prose-bold: #f8fafc;
+      --tw-prose-bullets: #38bdf8;
+      --tw-prose-hr: #334155;
+      --tw-prose-quotes: #f1f5f9;
+      --tw-prose-quote-borders: #334155;
+      --tw-prose-code: #f472b6;
+      --tw-prose-pre-code: #e5e7eb;
+      --tw-prose-pre-bg: #1e293b;
+    }
+    .prose-invert h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+    }
+    .prose-invert h2 {
+        border-bottom: 1px solid #334155;
+        padding-bottom: 0.5em;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+    .prose-invert h3 {
+        color: #7dd3fc;
+        margin-top: 1.6em;
+        margin-bottom: 0.8em;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+    .prose-invert code:not(pre > code) {
+      background-color: #334155;
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+    }
+    .prose-invert code::before, .prose-invert code::after { content: none !important; }
+    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
+    .prose-invert ul { padding-left: 1.25rem; }
+    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
+    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
+    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
+    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
+    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 2px dotted #38bdf8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .tooltip:hover { color: #7dd3fc; }
+    .tooltip::after {
+      content: attr(data-tooltip-text);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1e293b;
+      color: #d1d5db;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      width: 300px;
+      max-width: 80vw;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      z-index: 10;
+      border-bottom: none;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+    .accordion-item { border-bottom: 1px solid #334155; }
+    .accordion-question { font-weight: 600; }
+    .accordion-answer { padding: 1em; background-color: #1e293b; }
+  </style>
+
+</head>
+<body>
+  <div class="container prose prose-invert">
+    <h1>Guia_Ejecucion_Pulumi</h1>
+    <h2>Explicación</h2><p>Pulumi es una plataforma de Infraestructura como Código (IaC) que permite definir, desplegar y gestionar recursos de infraestructura en la nube utilizando lenguajes de programación reales. Esta guía te permitirá ejecutar el CLI de Pulumi dentro de un contenedor Docker/Podman, proporcionando un entorno aislado para tus proyectos Pulumi sin necesidad de instalar el CLI directamente en tu sistema host. A continuación, se detallan los pasos para configurar un contenedor con el CLI de Pulumi y un proyecto de ejemplo básico.</p><p><strong>Pasos a seguir:</strong></p><p>1.  <strong>Guarda los archivos:</strong> Crea los siguientes archivos en tu directorio de trabajo:</p><ul><li>   *   <code>Dockerfile</code> (contenido proporcionado)</li><li>   *   Crea una carpeta llamada <code>my-pulumi-project</code>.</li><li>   *   Dentro de <code>my-pulumi-project</code>, guarda <code>Pulumi.yaml</code>, <code>index.ts</code> y <code>.gitignore</code> (contenidos proporcionados).</li></ul><p>2.  <strong>Construye la imagen de Pulumi CLI:</strong> Ejecuta el primer comando <code>podman build</code> (o <code>docker build</code>) para crear la imagen de Docker que contendrá el CLI de Pulumi.</p><p>3.  <strong>Ejecuta el contenedor e interactúa:</strong> Ejecuta el segundo comando <code>podman run</code> (o <code>docker run</code>). Esto iniciará un contenedor interactivo, montando tu directorio local <code>my-pulumi-project</code> en <code>/app</code> dentro del contenedor. Una vez dentro del contenedor, estarás en el directorio <code>/app</code>.</p><p>4.  <strong>Inicializa y ejecuta el stack:</strong> Dentro del contenedor, ejecuta los siguientes comandos para inicializar un stack de Pulumi y previsualizar/desplegar:</p><ul><li>   *   <code>pulumi stack init dev</code></li><li>   *   <code>pulumi up --yes</code></li></ul><p>    El proyecto de ejemplo <code>index.ts</code> simplemente exporta un mensaje; no desplegará recursos en la nube. Para desplegar recursos reales (ej. en AWS, Azure, GCP), necesitarías configurar las credenciales de tu proveedor de nube y modificar <code>index.ts</code> para definir esos recursos. Las credenciales se pueden pasar como variables de entorno al contenedor o configurarse con <code>pulumi config set <proveedor>:region <region></code>.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t pulumi-cli .
+podman run -it --rm -v $(pwd)/my-pulumi-project:/app pulumi-cli bash</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM node:18-alpine
+
+# Establece las variables de entorno para que los comandos Pulumi estén disponibles en el PATH
+ENV PATH="/root/.pulumi/bin:${PATH}"
+
+# Instala el CLI de Pulumi
+# Se usa curl para descargar el script de instalación de Pulumi
+# Luego, el script se ejecuta y mueve el binario de pulumi a /root/.pulumi/bin
+RUN apk add --no-cache curl unzip \
+    && curl -fsSL https://get.pulumi.com/pulumi.sh | sh
+
+# Establece el directorio de trabajo para los proyectos Pulumi
+WORKDIR /app
+
+# COMANDOS OPCIONALES:
+# Si necesitas soporte para otros lenguajes (ej. Python), puedes instalarlos aquí.
+# RUN apk add --no-cache python3 py3-pip
+
+# Nota: Este Dockerfile no incluye ENTRYPOINT ni CMD por defecto
+# porque la intención es que el usuario interactúe con el contenedor
+# de forma interactiva (bash) y ejecute los comandos de Pulumi manualmente.
+</code></pre><h3>my-pulumi-project/Pulumi.yaml</h3><pre><code>name: my-pulumi-project
+runtime: nodejs
+description: Un proyecto mínimo de Pulumi para demostrar el uso local del CLI.</code></pre><h3>my-pulumi-project/index.ts</h3><pre><code>import * as pulumi from "@pulumi/pulumi";
+
+// Este es un programa mínimo de Pulumi en TypeScript.
+// Define una salida simple que se puede ver después de `pulumi up`.
+// No se provisionan recursos reales en la nube sin configuración adicional
+// y credenciales del proveedor de la nube.
+
+// Define un valor de configuración o una constante simple
+const greeting = "¡Hola, Pulumi desde el contenedor!";
+
+// Exporta una salida del stack. Esto se mostrará en la consola después de `pulumi up`.
+export const message = greeting;
+
+// Para desplegar recursos reales, añadirías código como el siguiente:
+/*
+import * as aws from "@pulumi/aws";
+
+const bucket = new aws.s3.Bucket("my-pulumi-bucket", {
+    acl: "private",
+    tags: {
+        Environment: "Development",
+        Project: "PulumiDemo",
+    },
+});
+
+export const bucketName = bucket.id;
+*/
+
+// Recuerda: Para cualquier despliegue de recursos en la nube,
+// necesitarías configurar tus credenciales del proveedor de la nube
+// (ej. AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION).
+// Estas credenciales se pasarían típicamente al contenedor como variables de entorno
+// o se configurarían a través de `pulumi config set aws:region us-east-1`.
+</code></pre><h3>my-pulumi-project/.gitignore</h3><pre><code># Archivos ignorados por Pulumi y Node.js
+
+# Pulumi
+.pulumi/
+Pulumi.stack.yaml
+
+# Node.js
+node_modules/
+*.log
+.DS_Store
+
+# Editor/IDE específicos
+.vscode/
+.idea/
+</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGMFvAPTrmHlqV3pEuXH2q5WAwhh3I5ZOGt3VtP3Enoy99iQQtoFm1zYzUA4MCLTaKqCai3If70MW8bVM0k-iLMsms1ErZ6gs_VxQYBK7v5NqtsbgeBop9EkcPF409ln2c3igM=" target="_blank" rel="noopener noreferrer">pulumi.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGHp0DlAM3Q_a50Y84WHGWdCyDcbetpNPuj9oK57FCxul-Rte1tvNkuq0xbJvrSmF59TqTLgBJlUXzzsdJKqPiPNRxkBNlCF4JVG0ZLVDrLfsYnWLu6SAdxIzr_7w==" target="_blank" rel="noopener noreferrer">pulumi.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtBQoc6ZnBbgtqiRAsOMR421Y4kYeqO5fXmOiXahfTN9h15c3qsqUmrVz3N654OL08LeoWj8pNQuR3KMUbBBR1Z1ygH1EK0j8_LTSmPaRFWrgohNcAElA=" target="_blank" rel="noopener noreferrer">pulumi.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEh4W6X6OPuZdsH4PiwpEYK-ZWxkH1wtowoJ77Jl5PwxhNWZOj7bq7b7a9IJiSVb2XNXLfp7h5vRjc6gZJff5MclLo5v-BwjgXumEu6IRqjjfKyIiMhJxIWOp0BA0QOl3MyCUjzk2W5j6JictPMNRlrQ4s=" target="_blank" rel="noopener noreferrer">awsfundamentals.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFb6qHqhHI2Te5spOpXjNK-fobZJ85Z_jd5oPyovKQwXKsJlNauRxRtXqoHYIlkxohaEA4eQkIIAeapqz1YbNuYW5ZUvc8dDjUG8nNa8tDMsRm6r4wq-uRjpoAE6PcmlXBs1T6i6EY=" target="_blank" rel="noopener noreferrer">youtube.com</a></li></ul>
+  </div>
+</body>
+</html>
