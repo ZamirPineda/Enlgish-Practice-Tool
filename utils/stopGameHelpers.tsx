@@ -65,7 +65,7 @@ export const CATEGORY_GROUPS: Record<GroupName, StopCategory[]> = {
     'Geography & Travel': ['Countries', 'Cities', 'Capitals', 'World Landmarks'],
     'Grammar & Language': ['Verbs', 'Modal Verbs', 'Adjectives', 'Compound Adjectives', 'Phrasal Verbs', 'Connectors', 'Emotions', 'Collocations', 'Idioms', 'Opposites & Synonyms', 'Emphasis'],
     'Professional': ['Business', 'Architecture', 'Dev Terms', 'Technology & Internet'],
-    'Nature & Science': ['Nature', 'Science', 'Animals', 'Fruits & Vegetables', 'Colors', 'Environment'],
+    'Nature & Science': ['Nature', 'Science', 'Animals', 'Fruits & Vegetables', 'Colors', 'Environment', 'Flowers', 'Flowers (Fancy)', 'Plants', 'Trees', 'Mushrooms', 'Spices & Herbs', 'Space Objects', 'Minerals & Gems'],
     'Daily Life': ['Objects', 'Clothing', 'Body Parts', 'Occupations', 'Tools', 'Household Items', 'Housing & Rooms'],
     'Media & Fun': ['Movies', 'Songs', 'Sports', 'Mythology', 'Sounds & Noise'],
     'Knowledge & Culture': ['IELTS Trends', 'Abstract Nouns', 'Culture', 'Historical Figures', 'Education & Learning', 'Philosophy & Concepts'],
@@ -83,7 +83,8 @@ export const PREDEFINED_ALL_ORDER: StopCategory[] = [
     'Health & Fitness', 'Personality Traits', 'Relationships & Social', 'Emotions',
     'Verbs', 'Adjectives', 'Phrasal Verbs', 'Collocations', 'Idioms', 'Opposites & Synonyms', 'Connectors', 'Emphasis',
     'Movies', 'Songs', 'Sports', 'Mythology',
-    'Nature', 'Science', 'Environment',
+    'Nature', 'Science', 'Environment', 'Space Objects',
+    'Flowers', 'Flowers (Fancy)', 'Plants', 'Trees', 'Mushrooms', 'Spices & Herbs', 'Minerals & Gems',
     'Business', 'Technology & Internet', 'Architecture', 'Dev Terms',
     'Education & Learning', 'IELTS Trends', 'Abstract Nouns', 'Culture', 'Historical Figures'
 ];
@@ -144,6 +145,14 @@ export const getCategoryIcon = (category: StopCategory) => {
         case 'Slang & Colloquial': return '😎';
         case 'Compound Adjectives': return '🧱';
         case 'Modal Verbs': return '🛡️';
+        case 'Flowers': return '🌸';
+        case 'Flowers (Fancy)': return '🌺';
+        case 'Plants': return '🌱';
+        case 'Trees': return '🌳';
+        case 'Mushrooms': return '🍄';
+        case 'Spices & Herbs': return '🧂';
+        case 'Space Objects': return '🌌';
+        case 'Minerals & Gems': return '💎';
         default: return '📝';
     }
 };
@@ -171,16 +180,17 @@ export const getCategoryTheme = (category: StopCategory) => {
     else if (['Countries', 'Cities', 'Capitals', 'World Landmarks'].includes(category)) {
         theme = { accentColor: 'border-emerald-500', bgGradient: 'bg-gradient-to-b from-slate-800 to-slate-900', headerGradient: 'bg-gradient-to-r from-emerald-900/40 to-slate-800', textClass: 'text-emerald-300', iconBg: 'bg-emerald-900/30 text-emerald-300', glow: 'group-hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]' };
     }
-    else if (['Nature', 'Animals', 'Fruits & Vegetables', 'Environment'].includes(category)) {
+    else if (['Nature', 'Animals', 'Fruits & Vegetables', 'Environment', 'Flowers', 'Flowers (Fancy)', 'Plants', 'Trees', 'Mushrooms'].includes(category)) {
         theme = { accentColor: 'border-lime-500', bgGradient: 'bg-gradient-to-b from-slate-800 to-slate-900', headerGradient: 'bg-gradient-to-r from-lime-900/40 to-slate-800', textClass: 'text-lime-300', iconBg: 'bg-lime-900/30 text-lime-300', glow: 'group-hover:shadow-[0_0_20px_rgba(132,204,22,0.15)]' };
     }
-    else if (['Technology & Internet', 'Business', 'Dev Terms', 'Architecture'].includes(category)) {
+    else if (['Technology & Internet', 'Business', 'Dev Terms', 'Architecture', 'Science', 'Space Objects'].includes(category)) {
         theme = { accentColor: 'border-cyan-500', bgGradient: 'bg-gradient-to-b from-slate-800 to-slate-900', headerGradient: 'bg-gradient-to-r from-cyan-900/40 to-slate-800', textClass: 'text-cyan-300', iconBg: 'bg-cyan-900/30 text-cyan-300', glow: 'group-hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]' };
     }
     else if (['Verbs', 'Adjectives', 'Phrasal Verbs', 'Idioms', 'Connectors', 'Modal Verbs'].includes(category)) {
         theme = { accentColor: 'border-sky-500', bgGradient: 'bg-gradient-to-b from-slate-800 to-slate-900', headerGradient: 'bg-gradient-to-r from-sky-900/40 to-slate-800', textClass: 'text-sky-300', iconBg: 'bg-sky-900/30 text-sky-300', glow: 'group-hover:shadow-[0_0_20px_rgba(14,165,233,0.15)]' };
     }
     else {
+        // Includes Spices & Herbs, Minerals & Gems (Orange/Amber theme fits Earth/Cooking)
         theme = { accentColor: 'border-orange-400', bgGradient: 'bg-gradient-to-b from-slate-800 to-slate-900', headerGradient: 'bg-gradient-to-r from-orange-900/40 to-slate-800', textClass: 'text-orange-300', iconBg: 'bg-orange-900/30 text-orange-300', glow: 'group-hover:shadow-[0_0_20px_rgba(249,115,22,0.15)]' };
     }
     return theme;
