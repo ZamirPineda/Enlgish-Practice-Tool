@@ -143,7 +143,10 @@ export type StopCategory =
   // NEW CHALLENGE CATEGORIES
   'Short & Rare' | 'Long & Rare' |
   // LATEST ADDITIONS
-  'Compound Adjectives' | 'Modal Verbs' | 'Rare & Literary';
+  'Compound Adjectives' | 'Modal Verbs' | 'Rare & Literary' |
+  // NEW FLORA & GEOLOGY CATEGORIES
+  'Flowers' | 'Flowers (Fancy)' | 'Plants' | 'Trees' | 'Mushrooms' |
+  'Spices & Herbs' | 'Space Objects' | 'Minerals & Gems';
 
 export interface WordFamily {
   noun?: string;

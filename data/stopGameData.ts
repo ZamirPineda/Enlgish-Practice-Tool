@@ -22,6 +22,7 @@ import { languageExtrasData } from './stop_categories/language_extras';
 import { educationData } from './stop_categories/education';
 import { vocabularyChallengeData } from './stop_categories/vocabulary_challenge';
 import { philosophyData } from './stop_categories/philosophy';
+import { floraAndGeologyData } from './stop_categories/flora_and_geology';
 
 // This file aggregates all the categorized data into the master structure used by the UI
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
@@ -86,5 +87,8 @@ alphabet.forEach(letter => {
 
         // Merge Philosophy
         ...(philosophyData[letter] || {}),
+
+        // Merge Flora & Geology (Flowers, Plants, Trees, Mushrooms, Spices, Space, Minerals)
+        ...(floraAndGeologyData[letter] || {}),
     };
 });
