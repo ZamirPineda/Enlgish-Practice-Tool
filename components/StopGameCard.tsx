@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { StopItem, WordFamily, StopCategory } from '../types';
+import { StopItem, WordFamily, StopCategory, IrregularVerb } from '../types';
 import {
     getCategoryIcon, getCategoryTheme, GroupName, CATEGORY_GROUPS, PREDEFINED_ALL_ORDER,
     getFlagUrl
 } from '../utils/stopGameHelpers';
+import { irregularVerbs } from '../data/verbs';
 
 // --- ICONS ---
 const PlayIcon = () => (
@@ -114,6 +115,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
     else if (['Cities', 'Capitals', 'World Landmarks'].includes(category) && item.country) { flagUrl = getFlagUrl(item.country); }
 
     const isIrregularVerb = category === 'Verbs' && item.tag === 'Irregular';
+    const irregularVerbData: IrregularVerb | undefined = isIrregularVerb ? irregularVerbs.find(v => v.base.toLowerCase() === item.word.toLowerCase()) : undefined;
 
     return (
         <div
@@ -166,7 +168,44 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                             </div>
                             <div className="text-xs">
                                 {(layer === 1 || isMinimalPair) && (
-                                    category === 'Verbs' ? <p className="text-sky-100">{item.definition || "Regular Verb"}</p> :
+                                    category === 'Verbs' ? (
+                                        isIrregularVerb && irregularVerbData ? (
+                                            <div className="space-y-2 mt-1">
+                                                <div className="flex items-center justify-between bg-black/20 p-1.5 rounded">
+                                                    <span className="text-[10px] uppercase font-bold text-slate-400">Past</span>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sky-100 font-medium">{irregularVerbData.past}</span>
+                                                        <button
+                                                            onClick={(e) => { e.stopPropagation(); onPlay(irregularVerbData.past.split('/')[0]); }}
+                                                            className="p-1 hover:bg-white/10 rounded-full text-sky-400 transition-colors"
+                                                            title="Play Past Tense"
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center justify-between bg-black/20 p-1.5 rounded">
+                                                    <span className="text-[10px] uppercase font-bold text-slate-400">Participle</span>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sky-100 font-medium">{irregularVerbData.participle}</span>
+                                                        <button
+                                                            onClick={(e) => { e.stopPropagation(); onPlay(irregularVerbData.participle.split('/')[0]); }}
+                                                            className="p-1 hover:bg-white/10 rounded-full text-sky-400 transition-colors"
+                                                            title="Play Participle"
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <p className="text-sky-100">{item.definition || "Regular Verb"}</p>
+                                        )
+                                    ) :
                                         <div className="space-y-1">
                                             {category === 'Minimal Pairs' && item.definition?.includes('vs.') ? (
                                                 <div className="mt-1">
