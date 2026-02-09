@@ -5,61 +5,61 @@ const CalculusView: React.FC = () => {
     const sections = [
         {
             title: "1. Reglas Generales de Operación",
-            headers: ["Regla", "Función y=f(x)", "Derivada dy/dx", "Integral ∫ f(x) dx", "Ejemplo"],
+            headers: ["Regla", "Función y=f(x)", "Derivada dy/dx", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
             rows: [
-                ["Constante", "k", "0", "kx + C", "y=7 → y'=0"],
-                ["Linealidad", "u ± v", "u' ± v'", "∫ u dx ± ∫ v dx", "(x² + x)' = 2x + 1"],
-                ["Producto", "u · v", "u'v + uv'", "∫ u dv = uv - ∫ v du", "x sin x → sin x + x cos x"],
-                ["Cociente", "u / v", "(u'v - uv') / v²", "(No hay directa)", "x/eˣ → (eˣ - xeˣ)/e²ˣ"],
-                ["Cadena", "f(g(x))", "f'(g(x)) · g'(x)", "(Sustitución)", "sin(x²) → cos(x²) · 2x"],
-                ["Teorema Fund.", "∫ₐᵇ f(x) dx", "N/A", "F(b) - F(a)", "∫₀¹ 2x dx = 1"]
+                ["Constante", "k", "0", "kx + C", "y=7 → y'=0", "∫ 7 dx = 7x + C"],
+                ["Linealidad", "u ± v", "u' ± v'", "∫ u dx ± ∫ v dx", "(x² + x)' = 2x + 1", "∫ (2x+1) dx = x² + x + C"],
+                ["Producto", "u · v", "u'v + uv'", "∫ u dv = uv - ∫ v du", "x sin x → sin x + x cos x", "∫ x eˣ dx = xeˣ - eˣ + C"],
+                ["Cociente", "u / v", "(u'v - uv') / v²", "(No hay directa)", "x/eˣ → (eˣ - xeˣ)/e²ˣ", "∫ (1/x) dx = ln|x| + C"],
+                ["Cadena", "f(g(x))", "f'(g(x)) · g'(x)", "(Sustitución)", "sin(x²) → 2x cos(x²)", "∫ 2x cos(x²) dx = sin(x²) + C"],
+                ["Teorema Fund.", "∫ₐᵇ f(x) dx", "N/A", "F(b) - F(a)", "d/dx ∫ₐˣ f(t)dt = f(x)", "∫₀¹ 2x dx = 1"]
             ]
         },
         {
             title: "2. Funciones Algebraicas y Trascendentes",
-            headers: ["Tipo", "Función f(x)", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo"],
+            headers: ["Regla", "Función f(x)", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
             rows: [
-                ["Potencia", "xⁿ", "nxⁿ⁻¹", "xⁿ⁺¹/(n+1), n ≠ -1", "x⁵ → 5x⁴"],
-                ["Inversa", "1/x", "-1/x²", "ln|x|", "y=x⁻¹ → y'=-x⁻²"],
-                ["Raíz", "√x", "1/(2√x)", "(2/3)x³/²", "y=x¹/² → y'=(1/2)x⁻¹/²"],
-                ["Exponencial", "eˣ", "eˣ", "eˣ", "e³ˣ → 3e³ˣ"],
-                ["Base a", "aˣ", "aˣ ln(a)", "aˣ/ln(a)", "2ˣ → 2ˣ ln(2)"],
-                ["Log Natural", "ln(x)", "1/x", "x ln(x) - x", "ln(x) → 1/x"],
-                ["Valor Abs.", "|x|", "x/|x|", "x|x|/2", "|x| → sgn(x)"]
+                ["Potencia", "xⁿ", "nxⁿ⁻¹", "xⁿ⁺¹/(n+1)", "x⁵ → 5x⁴", "∫ x⁴ dx = x⁵/5 + C"],
+                ["Inversa", "1/x", "-1/x²", "ln|x|", "y=x⁻¹ → y'=-x⁻²", "∫ 5/x dx = 5ln|x| + C"],
+                ["Raíz", "√x", "1/(2√x)", "(2/3)x³/²", "y=√x → y'=1/(2√x)", "∫ √x dx = (2/3)x³/² + C"],
+                ["Exponencial", "eˣ", "eˣ", "eˣ", "e³ˣ → 3e³ˣ", "∫ e³ˣ dx = (1/3)e³ˣ + C"],
+                ["Base a", "aˣ", "aˣ ln(a)", "aˣ/ln(a)", "2ˣ → 2ˣ ln(2)", "∫ 2ˣ dx = 2ˣ/ln(2) + C"],
+                ["Log Natural", "ln(x)", "1/x", "x ln(x) - x", "ln(x) → 1/x", "∫ ln(x) dx = x(ln x - 1) + C"],
+                ["Valor Abs.", "|x|", "x/|x|", "x|x|/2", "|x| → sgn(x)", "∫₋₁¹ |x| dx = 1"]
             ]
         },
         {
             title: "3. Trigonometría",
-            headers: ["Función", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada"],
+            headers: ["Regla", "Función f(x)", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
             rows: [
-                ["sin(x)", "cos(x)", "-cos(x)", "sin(3x) → 3cos(3x)"],
-                ["cos(x)", "-sin(x)", "sin(x)", "cos(x²) → -2x sin(x²)"],
-                ["tan(x)", "sec²(x)", "ln|sec(x)|", "tan(5x) → 5sec²(5x)"],
-                ["cot(x)", "-csc²(x)", "ln|sin(x)|", "cot(2x) → -2csc²(2x)"],
-                ["sec(x)", "sec(x)tan(x)", "ln|sec(x) + tan(x)|", "sec(4x) → 4sec(4x)tan(4x)"],
-                ["csc(x)", "-csc(x)cot(x)", "-ln|csc(x) + cot(x)|", "csc(x) → -csc(x)cot(x)"]
+                ["Seno", "sin(x)", "cos(x)", "-cos(x)", "sin(3x) → 3cos(3x)", "∫ sin(3x) dx = -(1/3)cos(3x) + C"],
+                ["Coseno", "cos(x)", "-sin(x)", "sin(x)", "cos(x²) → -2x sin(x²)", "∫ cos(5x) dx = (1/5)sin(5x) + C"],
+                ["Tangente", "tan(x)", "sec²(x)", "ln|sec(x)|", "tan(5x) → 5sec²(5x)", "∫ tan(2x) dx = (1/2)ln|sec(2x)| + C"],
+                ["Cotangente", "cot(x)", "-csc²(x)", "ln|sin(x)|", "cot(2x) → -2csc²(2x)", "∫ cot(3x) dx = (1/3)ln|sin(3x)| + C"],
+                ["Secante", "sec(x)", "sec(x)tan(x)", "ln|sec(x) + tan(x)|", "sec(4x) → 4sec(4x)tan(4x)", "∫ sec(x) dx = ln|sec x + tan x| + C"],
+                ["Cosecante", "csc(x)", "-csc(x)cot(x)", "-ln|csc(x) + cot(x)|", "csc(x) → -csc(x)cot(x)", "∫ csc(x) dx = -ln|csc x + cot x| + C"]
             ]
         },
         {
             title: "4. Trigonométricas Inversas",
-            headers: ["Función", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada"],
+            headers: ["Regla", "Función f(x)", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
             rows: [
-                ["arcsin(x)", "1/√(1-x²)", "x arcsin(x) + √(1-x²)", "arcsin(2x) → 2/√(1-4x²)"],
-                ["arccos(x)", "-1/√(1-x²)", "x arccos(x) - √(1-x²)", "arccos(x) → -1/√(1-x²)"],
-                ["arctan(x)", "1/(1+x²)", "x arctan(x) - (1/2)ln(1+x²)", "arctan(3x) → 3/(1+9x²)"],
-                ["arccot(x)", "-1/(1+x²)", "x arccot(x) + (1/2)ln(1+x²)", "arccot(x) → -1/(1+x²)"],
-                ["arcsec(x)", "1/(|x|√(x²-1))", "x arcsec(x) - ln|x + √(x²-1)|", "arcsec(2x) → 2/(|2x|√(4x²-1))"]
+                ["Arcoseno", "arcsin(x)", "1/√(1-x²)", "x arcsin(x) + √(1-x²)", "arcsin(2x) → 2/√(1-4x²)", "∫ arcsin(x) dx = x arcsin(x) + √(1-x²) + C"],
+                ["Arcocoseno", "arccos(x)", "-1/√(1-x²)", "x arccos(x) - √(1-x²)", "arccos(x) → -1/√(1-x²)", "∫ arccos(x) dx = x arccos(x) - √(1-x²) + C"],
+                ["Arcotangente", "arctan(x)", "1/(1+x²)", "x arctan(x) - (1/2)ln(1+x²)", "arctan(3x) → 3/(1+9x²)", "∫ arctan(x) dx = x arctan(x) - (1/2)ln(1+x²) + C"],
+                ["Arcocotangente", "arccot(x)", "-1/(1+x²)", "x arccot(x) + (1/2)ln(1+x²)", "arccot(x) → -1/(1+x²)", "∫ arccot(x) dx = x arccot(x) + (1/2)ln(1+x²) + C"],
+                ["Arcosecante", "arcsec(x)", "1/(|x|√(x²-1))", "x arcsec(x) - ln|x + √(x²-1)|", "arcsec(2x) → 2/(|2x|√(4x²-1))", "∫ arcsec(x) dx = x arcsec(x) - ln|x+√(x²-1)|+C"]
             ]
         },
         {
             title: "5. Hiperbólicas",
-            headers: ["Función", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada"],
+            headers: ["Regla", "Función f(x)", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
             rows: [
-                ["sinh(x)", "cosh(x)", "cosh(x)", "sinh(2x) → 2cosh(2x)"],
-                ["cosh(x)", "sinh(x)", "sinh(x)", "cosh(3x) → 3sinh(3x)"],
-                ["tanh(x)", "sech²(x)", "ln(cosh(x))", "tanh(x²) → 2x sech²(x²)"],
-                ["arsinh(x)", "1/√(x²+1)", "x arsinh(x) - √(x²+1)", "arsinh(x) → 1/√(x²+1)"],
-                ["artanh(x)", "1/(1-x²)", "x artanh(x) + (1/2)ln(1-x²)", "artanh(5x) → 5/(1-25x²)"]
+                ["Seno Hiperb.", "sinh(x)", "cosh(x)", "cosh(x)", "sinh(2x) → 2cosh(2x)", "∫ sinh(2x) dx = (1/2)cosh(2x) + C"],
+                ["Coseno Hiperb.", "cosh(x)", "sinh(x)", "sinh(x)", "cosh(3x) → 3sinh(3x)", "∫ cosh(3x) dx = (1/3)sinh(3x) + C"],
+                ["Tangente Hiperb.", "tanh(x)", "sech²(x)", "ln(cosh(x))", "tanh(x²) → 2x sech²(x²)", "∫ tanh(x) dx = ln(cosh x) + C"],
+                ["Arcoseno Hip.", "arsinh(x)", "1/√(x²+1)", "x arsinh(x) - √(x²+1)", "arsinh(x) → 1/√(x²+1)", "∫ arsinh(x) dx = x arsinh(x) - √(x²+1) + C"],
+                ["Arcotangente Hip.", "artanh(x)", "1/(1-x²)", "x artanh(x) + (1/2)ln(1-x²)", "artanh(5x) → 5/(1-25x²)", "∫ artanh(x) dx = x artanh(x) + 0.5ln(1-x²) + C"]
             ]
         }
     ];
@@ -86,7 +86,7 @@ const CalculusView: React.FC = () => {
                                 <thead className="bg-slate-900/50 text-slate-300 font-semibold">
                                     <tr>
                                         {section.headers.map((h, i) => (
-                                            <th key={i} className="p-3 border-b border-slate-700 min-w-[100px] whitespace-nowrap">
+                                            <th key={i} className="p-3 border-b border-slate-700 min-w-[120px] whitespace-nowrap first:min-w-[100px]">
                                                 {h}
                                             </th>
                                         ))}
@@ -96,7 +96,7 @@ const CalculusView: React.FC = () => {
                                     {section.rows.map((row, rIdx) => (
                                         <tr key={rIdx} className="hover:bg-slate-700/30 transition-colors">
                                             {row.map((cell, cIdx) => (
-                                                <td key={cIdx} className="p-3 font-mono text-slate-200">
+                                                <td key={cIdx} className={`p-3 text-slate-200 ${cIdx === 0 ? 'font-bold text-sky-200' : 'font-mono'}`}>
                                                     {cell}
                                                 </td>
                                             ))}
@@ -109,7 +109,7 @@ const CalculusView: React.FC = () => {
                 ))}
 
                 <div className="text-center text-slate-500 text-xs pt-8">
-                    Formulario basado en solicitud del usuario.
+                    Formulario actualizado con estructura completa.
                 </div>
             </div>
         </div>
