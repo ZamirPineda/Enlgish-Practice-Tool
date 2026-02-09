@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-type MathTab = 'calculus' | 'geometry';
+type MathTab = 'calculus' | 'geometry' | 'algebra';
 
 const MathView: React.FC = () => {
     const [activeTab, setActiveTab] = useState<MathTab>('calculus');
@@ -96,6 +96,45 @@ const MathView: React.FC = () => {
         }
     ];
 
+    const algebraSections = [
+        {
+            title: "1. Productos Notables y Factorización",
+            headers: ["Nombre", "Fórmula/Identidad", "Ejemplo"],
+            rows: [
+                ["Diferencia de Cuadrados", "a² - b² = (a - b)(a + b)", "x² - 9 = (x - 3)(x + 3)"],
+                ["Trinomio Cuadrado Perfecto", "(a ± b)² = a² ± 2ab + b²", "(x + 3)² = x² + 6x + 9"],
+                ["Suma de Cubos", "a³ + b³ = (a + b)(a² - ab + b²)", "x³ + 8 = (x + 2)(x² - 2x + 4)"],
+                ["Diferencia de Cubos", "a³ - b³ = (a - b)(a² + ab + b²)", "x³ - 27 = (x - 3)(x² + 3x + 9)"],
+                ["Factor Común", "ax + ay = a(x + y)", "2x² + 4x = 2x(x + 2)"],
+                ["Trinomio de la forma x²+bx+c", "x² + (a+b)x + ab = (x+a)(x+b)", "x² + 5x + 6 = (x+2)(x+3)"]
+            ]
+        },
+        {
+            title: "2. Ecuación Cuadrática",
+            headers: ["Concepto", "Fórmula", "Notas"],
+            rows: [
+                ["Fórmula General", "x = (-b ± √(b² - 4ac)) / 2a", "Para ax² + bx + c = 0"],
+                ["Discriminante (Δ)", "Δ = b² - 4ac", "Δ > 0: 2 raíces reales\nΔ = 0: 1 raíz real\nΔ < 0: Raíces complejas"],
+                ["Suma de Raíces", "x₁ + x₂ = -b/a", ""],
+                ["Producto de Raíces", "x₁ · x₂ = c/a", ""]
+            ]
+        },
+        {
+            title: "3. Leyes de Exponentes y Radicales",
+            headers: ["Regla", "Identidad", "Ejemplo"],
+            rows: [
+                ["Producto de Potencias", "aᵐ · aⁿ = aᵐ⁺ⁿ", "x² · x³ = x⁵"],
+                ["Cociente de Potencias", "aᵐ / aⁿ = aᵐ⁻ⁿ", "x⁵ / x² = x³"],
+                ["Potencia de Potencia", "(aᵐ)ⁿ = aᵐ·ⁿ", "(x²)³ = x⁶"],
+                ["Potencia de un Producto", "(ab)ⁿ = aⁿ · bⁿ", "(2x)³ = 8x³"],
+                ["Exponente Negativo", "a⁻ⁿ = 1 / aⁿ", "x⁻² = 1/x²"],
+                ["Exponente Cero", "a⁰ = 1", "5⁰ = 1 (a ≠ 0)"],
+                ["Raíz como Exponente", "ⁿ√aᵐ = aᵐ/ⁿ", "³√x² = x²/³"],
+                ["Producto de Raíces", "ⁿ√a · ⁿ√b = ⁿ√(a·b)", "√2 · √3 = √6"]
+            ]
+        }
+    ];
+
     return (
         <div className="flex-1 flex flex-col h-full overflow-hidden bg-slate-900">
             {/* Header with Tabs */}
@@ -122,6 +161,15 @@ const MathView: React.FC = () => {
                             }`}
                     >
                         📐 Geometría
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('algebra')}
+                        className={`px-4 py-2 rounded-lg font-bold text-sm transition-all ${activeTab === 'algebra'
+                            ? 'bg-violet-600 text-white shadow-lg shadow-violet-900/50'
+                            : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+                            }`}
+                    >
+                        🧮 Álgebra
                     </button>
                 </div>
             </div>
@@ -211,8 +259,51 @@ const MathView: React.FC = () => {
                     </>
                 )}
 
+                {activeTab === 'algebra' && (
+                    <>
+                        <div className="text-center mb-6">
+                            <p className="text-slate-400 text-xs md:text-sm">
+                                Factorización, Ecuaciones y Leyes de Exponentes.
+                            </p>
+                        </div>
+                        {algebraSections.map((section, idx) => (
+                            <div key={idx} className="bg-slate-800/50 rounded-xl border border-slate-700 overflow-hidden shadow-sm">
+                                <div className="bg-slate-800/80 px-4 py-3 border-b border-slate-700">
+                                    <h3 className="font-bold text-violet-400 text-lg">{section.title}</h3>
+                                </div>
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-left text-sm md:text-base border-collapse">
+                                        <thead className="bg-slate-900/50 text-slate-300 font-semibold">
+                                            <tr>
+                                                {section.headers.map((h, i) => (
+                                                    <th key={i} className="p-3 border-b border-slate-700 min-w-[150px] whitespace-nowrap">
+                                                        {h}
+                                                    </th>
+                                                ))}
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-slate-700/50">
+                                            {section.rows.map((row, rIdx) => (
+                                                <tr key={rIdx} className="hover:bg-slate-700/30 transition-colors">
+                                                    {row.map((cell, cIdx) => (
+                                                        <td key={cIdx} className={`p-3 text-slate-200 align-top ${cIdx === 0 ? 'font-bold text-violet-200' : 'font-mono whitespace-pre-wrap'}`}>
+                                                            {cell}
+                                                        </td>
+                                                    ))}
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        ))}
+                    </>
+                )}
+
                 <div className="text-center text-slate-500 text-xs pt-8">
-                    {activeTab === 'calculus' ? 'Formulario de cálculo integral y diferencial.' : 'Fórmulas geométricas esenciales.'}
+                    {activeTab === 'calculus' ? 'Formulario de cálculo integral y diferencial.' :
+                        activeTab === 'geometry' ? 'Fórmulas geométricas esenciales.' :
+                            'Fundamentos de álgebra.'}
                 </div>
             </div>
         </div>
