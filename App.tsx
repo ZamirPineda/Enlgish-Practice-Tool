@@ -8,8 +8,9 @@ import StopGameView from './components/StopGameView';
 import StudyDeckView from './components/StudyDeckView';
 import PersonalPhrasesView from './components/PersonalPhrasesView';
 import VocabularyVaultView from './components/VocabularyVaultView';
+import CalculusView from './components/CalculusView';
 
-type ViewMode = 'stop' | 'study' | 'personal' | 'vault';
+type ViewMode = 'stop' | 'study' | 'personal' | 'vault' | 'calculus';
 
 const App: React.FC = () => {
     const [currentView, setCurrentView] = useState<ViewMode>('stop');
@@ -43,6 +44,8 @@ const App: React.FC = () => {
                 return <PersonalPhrasesView onPlayAudio={playNativeTTS} />;
             case 'vault':
                 return <VocabularyVaultView onPlayWord={playNativeTTS} />;
+            case 'calculus':
+                return <CalculusView />;
             default:
                 return <StopGameView onPlayWord={playNativeTTS} isWordAudioLoading={null} onAddToVault={addToVault} />;
         }
@@ -79,6 +82,12 @@ const App: React.FC = () => {
                         className={`flex-1 md:flex-none whitespace-nowrap px-3 md:px-4 py-2 rounded-lg font-bold text-sm md:text-base transition-all ${currentView === 'vault' ? 'bg-sky-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}`}
                     >
                         🧠 Vault
+                    </button>
+                    <button
+                        onClick={() => setCurrentView('calculus')}
+                        className={`flex-1 md:flex-none whitespace-nowrap px-3 md:px-4 py-2 rounded-lg font-bold text-sm md:text-base transition-all ${currentView === 'calculus' ? 'bg-sky-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'}`}
+                    >
+                        ∫ Math
                     </button>
                 </nav>
             </header>
