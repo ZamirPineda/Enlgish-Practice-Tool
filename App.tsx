@@ -8,7 +8,7 @@ import StopGameView from './components/StopGameView';
 import StudyDeckView from './components/StudyDeckView';
 import PersonalPhrasesView from './components/PersonalPhrasesView';
 import VocabularyVaultView from './components/VocabularyVaultView';
-import CalculusView from './components/CalculusView';
+import MathView from './components/MathView';
 import StudyDocsView from './components/StudyDocsView';
 
 type ViewMode = 'stop' | 'study' | 'personal' | 'vault' | 'calculus' | 'study-docs';
@@ -46,7 +46,7 @@ const App: React.FC = () => {
             case 'vault':
                 return <VocabularyVaultView onPlayWord={playNativeTTS} />;
             case 'calculus':
-                return <CalculusView />;
+                return <MathView />;
             case 'study-docs':
                 return <StudyDocsView />;
             default:
