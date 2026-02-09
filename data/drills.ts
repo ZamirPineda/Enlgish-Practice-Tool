@@ -344,6 +344,7 @@ export const drillTopicsByLevel: DrillsByLevel = {
         { parts: [{ word: 'If she' }, { word: 'hadn\'t studied', category: 'Auxiliary' }, { word: ', she' }, { word: 'would have failed', category: 'Auxiliary' }, { word: '.' }], ipa: '/ɪf ʃi ˈhædnt ˈstʌdid ʃi wʊd hæv feɪld/', translation_es: 'Si ella no hubiera estudiado, habría reprobado.' },
         { parts: [{ word: 'We' }, { word: 'would have traveled', category: 'Auxiliary' }, { word: 'if we' }, { word: 'had had', category: 'Auxiliary' }, { word: 'money.' }], ipa: '/wi wʊd hæv ˈtrævəld ɪf wi hæd hæd ˈmʌni/', translation_es: 'Habríamos viajado si hubiéramos tenido dinero.' },
       ]
+    },
   ],
   [EnglishLevel.C1]: [
     {
