@@ -189,6 +189,75 @@ const MathView: React.FC = () => {
                     math: "= \\arcsin(\\frac{x}{3}) + C"
                 }
             ]
+        },
+        {
+            title: "Límite: Regla de L'Hôpital",
+            problem: "\\lim_{x \\to 0} \\frac{e^x - 1}{\\sin(x)}",
+            description: "Evaluar el límite que resulta en una forma indeterminada 0/0.",
+            steps: [
+                {
+                    explanation: "Evaluar el límite directamente",
+                    math: "\\frac{e^0 - 1}{\\sin(0)} = \\frac{1-1}{0} = \\frac{0}{0} \\quad (Indeterminado)"
+                },
+                {
+                    explanation: "Aplicar Regla de L'Hôpital: derivar numerador y denominador por separado",
+                    math: "\\lim_{x \\to 0} \\frac{\\frac{d}{dx}(e^x - 1)}{\\frac{d}{dx}(\\sin(x))}"
+                },
+                {
+                    explanation: "Calcular las derivadas",
+                    math: "= \\lim_{x \\to 0} \\frac{e^x}{\\cos(x)}"
+                },
+                {
+                    explanation: "Evaluar el nuevo límite",
+                    math: "= \\frac{e^0}{\\cos(0)} = \\frac{1}{1} = 1"
+                }
+            ]
+        },
+        {
+            title: "Derivada Implícita",
+            problem: "x^2 + y^2 = 25",
+            description: "Encontrar dy/dx (o y') para la ecuación de un círculo.",
+            steps: [
+                {
+                    explanation: "Derivar ambos lados respecto a x. Recordar que y es función de x, así que (y²)' = 2y·y'",
+                    math: "\\frac{d}{dx}(x^2) + \\frac{d}{dx}(y^2) = \\frac{d}{dx}(25)"
+                },
+                {
+                    explanation: "Aplicar reglas de derivación",
+                    math: "2x + 2y \\cdot y' = 0"
+                },
+                {
+                    explanation: "Despejar y'",
+                    math: "2y \\cdot y' = -2x"
+                },
+                {
+                    explanation: "Dividir por 2y",
+                    math: "y' = \\frac{-2x}{2y} = -\\frac{x}{y}"
+                }
+            ]
+        },
+        {
+            title: "Integral Definida (Área)",
+            problem: "\\int_{0}^{3} (x^2 + 1) dx",
+            description: "Calcular el área bajo la curva desde x=0 hasta x=3 usando el Teorema Fundamental.",
+            steps: [
+                {
+                    explanation: "Encontrar la antiderivada F(x)",
+                    math: "F(x) = \\int (x^2 + 1) dx = \\frac{x^3}{3} + x"
+                },
+                {
+                    explanation: "Aplicar la Regla de Barrow: F(b) - F(a)",
+                    math: "F(3) - F(0) = [\\frac{3^3}{3} + 3] - [\\frac{0^3}{3} + 0]"
+                },
+                {
+                    explanation: "Evaluar F(3)",
+                    math: "F(3) = \\frac{27}{3} + 3 = 9 + 3 = 12"
+                },
+                {
+                    explanation: "Calcular resultado final",
+                    math: "12 - 0 = 12 \\text{ unidades cuadradas}"
+                }
+            ]
         }
     ];
 
