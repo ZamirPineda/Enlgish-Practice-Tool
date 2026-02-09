@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import LatexRenderer from './LatexRenderer';
 
 type MathTab = 'calculus' | 'geometry' | 'algebra' | 'examples';
 
@@ -309,7 +310,12 @@ const MathView: React.FC = () => {
                                                 <tr key={rIdx} className="hover:bg-slate-700/30 transition-colors">
                                                     {row.map((cell, cIdx) => (
                                                         <td key={cIdx} className={`p-3 text-slate-200 ${cIdx === 0 ? 'font-bold text-sky-200' : 'font-mono'}`}>
-                                                            {cell}
+                                                            {/* Render as LaTeX if it looks like a formula (contains special chars or numbers and is not just text) */}
+                                                            {cIdx > 0 && (cell.includes('\\') || cell.includes('∫') || cell.includes('^')) ? (
+                                                                <LatexRenderer formula={cell} />
+                                                            ) : (
+                                                                cell
+                                                            )}
                                                         </td>
                                                     ))}
                                                 </tr>
@@ -391,7 +397,11 @@ const MathView: React.FC = () => {
                                                 <tr key={rIdx} className="hover:bg-slate-700/30 transition-colors">
                                                     {row.map((cell, cIdx) => (
                                                         <td key={cIdx} className={`p-3 text-slate-200 align-top ${cIdx === 0 ? 'font-bold text-violet-200' : 'font-mono whitespace-pre-wrap'}`}>
-                                                            {cell}
+                                                            {cIdx > 0 && (cell.includes('\\') || cell.includes('=') || cell.includes('^')) ? (
+                                                                <LatexRenderer formula={cell} />
+                                                            ) : (
+                                                                cell
+                                                            )}
                                                         </td>
                                                     ))}
                                                 </tr>
@@ -419,9 +429,9 @@ const MathView: React.FC = () => {
                                     </div>
                                     <div className="p-4 bg-slate-900/30 flex-1">
                                         <div className="mb-4 text-center">
-                                            <span className="text-lg font-mono text-white bg-slate-700 px-3 py-1 rounded-md inline-block">
-                                                {ex.problem}
-                                            </span>
+                                            <div className="text-lg font-mono text-white bg-slate-700 px-3 py-1 rounded-md inline-block">
+                                                <LatexRenderer formula={ex.problem} block />
+                                            </div>
                                             <p className="text-slate-400 text-sm mt-2 italic">{ex.description}</p>
                                         </div>
                                         <div className="space-y-3">
@@ -429,9 +439,9 @@ const MathView: React.FC = () => {
                                                 <div key={sIdx} className="text-sm border-l-2 border-slate-600 pl-3">
                                                     <p className="text-amber-200/80 font-semibold mb-1">Paso {sIdx + 1}:</p>
                                                     <p className="text-slate-300 mb-1">{step.explanation}</p>
-                                                    <p className="text-sky-300 font-mono bg-slate-800/50 p-1 rounded inline-block">
-                                                        {step.math}
-                                                    </p>
+                                                    <div className="text-sky-300 font-mono bg-slate-800/50 p-1 rounded inline-block">
+                                                        <LatexRenderer formula={step.math} />
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
