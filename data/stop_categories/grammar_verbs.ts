@@ -22,15 +22,15 @@ export const grammarVerbs: StopData = {
       { word: 'Admit', ipa: '/ədˈmɪt/', translation: 'Admitir' },
       { word: 'Advise', ipa: '/ədˈvaɪz/', translation: 'Aconsejar' },
       { word: 'Afford', ipa: '/əˈfɔːrd/', translation: 'Poder pagar' },
-      { word: 'Accomplish', ipa: '/əˈkʌmplɪʃ/', translation: 'Lograr' },
-      { word: 'Acknowledge', ipa: '/əkˈnɒlɪdʒ/', translation: 'Reconocer' },
-      { word: 'Adapt', ipa: '/əˈdæpt/', translation: 'Adaptar' },
-      { word: 'Advocate', ipa: '/ˈædvəkeɪt/', translation: 'Abogar' },
-      { word: 'Allege', ipa: '/əˈlɛdʒ/', translation: 'Alegar' },
-      { word: 'Analyze', ipa: '/ˈænəlaɪz/', translation: 'Analizar' },
-      { word: 'Appreciate', ipa: '/əˈpriːʃieɪt/', translation: 'Apreciar' },
-      { word: 'Approach', ipa: '/əˈproʊtʃ/', translation: 'Acercarse' },
-      { word: 'Assess', ipa: '/əˈsɛs/', translation: 'Evaluar' },
+      { word: 'Accomplish', ipa: '/əˈkʌmplɪʃ/', translation: 'Lograr', level: 'C1' },
+      { word: 'Acknowledge', ipa: '/əkˈnɒlɪdʒ/', translation: 'Reconocer', level: 'C1' },
+      { word: 'Adapt', ipa: '/əˈdæpt/', translation: 'Adaptar', level: 'B2' },
+      { word: 'Advocate', ipa: '/ˈædvəkeɪt/', translation: 'Abogar', level: 'C2' },
+      { word: 'Allege', ipa: '/əˈlɛdʒ/', translation: 'Alegar', level: 'C2' },
+      { word: 'Analyze', ipa: '/ˈænəlaɪz/', translation: 'Analizar', level: 'B2' },
+      { word: 'Appreciate', ipa: '/əˈpriːʃieɪt/', translation: 'Apreciar', level: 'B2' },
+      { word: 'Approach', ipa: '/əˈproʊtʃ/', translation: 'Acercarse', level: 'B2' },
+      { word: 'Assess', ipa: '/əˈsɛs/', translation: 'Evaluar', level: 'C1' },
       { word: 'Attempt', ipa: '/əˈtɛmpt/', translation: 'Intentar' }
     ]
   },
@@ -66,8 +66,8 @@ export const grammarVerbs: StopData = {
       { word: 'Buy', ipa: '/baɪ/', translation: 'Comprar', tag: 'Irregular', definition: 'Past: Bought • Part: Bought' },
       { word: 'Believe', ipa: '/bɪˈliːv/', translation: 'Creer' },
       { word: 'Brush', ipa: '/brʌʃ/', translation: 'Cepillar' },
-      { word: 'Balance', ipa: '/ˈbæləns/', translation: 'Equilibrar' },
-      { word: 'Ban', ipa: '/bæn/', translation: 'Prohibir' },
+      { word: 'Balance', ipa: '/ˈbæləns/', translation: 'Equilibrar', level: 'B2' },
+      { word: 'Ban', ipa: '/bæn/', translation: 'Prohibir', level: 'B2' },
       { word: 'Benefit', ipa: '/ˈbɛnɪfɪt/', translation: 'Beneficiar' },
       { word: 'Blame', ipa: '/bleɪm/', translation: 'Culpar' },
       { word: 'Boost', ipa: '/buːst/', translation: 'Impulsar' },
@@ -99,10 +99,10 @@ export const grammarVerbs: StopData = {
       { word: 'Climb', ipa: '/klaɪm/', translation: 'Escalar' },
       { word: 'Close', ipa: '/kloʊz/', translation: 'Cerrar' },
       { word: 'Collect', ipa: '/kəˈlɛkt/', translation: 'Coleccionar' },
-      { word: 'Challenge', ipa: '/ˈtʃælɪndʒ/', translation: 'Desafiar' },
-      { word: 'Claim', ipa: '/kleɪm/', translation: 'Reclamar' },
-      { word: 'Clarify', ipa: '/ˈklærɪfaɪ/', translation: 'Aclarar' },
-      { word: 'Collaborate', ipa: '/kəˈlæbəreɪt/', translation: 'Colaborar' },
+      { word: 'Challenge', ipa: '/ˈtʃælɪndʒ/', translation: 'Desafiar', level: 'B2' },
+      { word: 'Claim', ipa: '/kleɪm/', translation: 'Reclamar', level: 'B2' },
+      { word: 'Clarify', ipa: '/ˈklærɪfaɪ/', translation: 'Aclarar', level: 'C1' },
+      { word: 'Collaborate', ipa: '/kəˈlæbəreɪt/', translation: 'Colaborar', level: 'C1' },
       { word: 'Combine', ipa: '/kəmˈbaɪn/', translation: 'Combinar' },
       { word: 'Commence', ipa: '/kəˈmɛns/', translation: 'Comenzar' },
       { word: 'Compel', ipa: '/kəmˈpɛl/', translation: 'Obligar' },
@@ -140,20 +140,20 @@ export const grammarVerbs: StopData = {
       { word: 'Design', ipa: '/dɪˈzaɪn/', translation: 'Diseñar' },
       { word: 'Destroy', ipa: '/dɪˈstrɔɪ/', translation: 'Destruir' },
       { word: 'Develop', ipa: '/dɪˈvɛləp/', translation: 'Desarrollar' },
-      { word: 'Debate', ipa: '/dɪˈbeɪt/', translation: 'Debatir' },
-      { word: 'Decline', ipa: '/dɪˈklaɪn/', translation: 'Rechazar' },
+      { word: 'Debate', ipa: '/dɪˈbeɪt/', translation: 'Debatir', level: 'B2' },
+      { word: 'Decline', ipa: '/dɪˈklaɪn/', translation: 'Rechazar', level: 'C1' },
       { word: 'Define', ipa: '/dɪˈfaɪn/', translation: 'Definir' },
-      { word: 'Demonstrate', ipa: '/ˈdɛmənstreɪt/', translation: 'Demostrar' },
-      { word: 'Depict', ipa: '/dɪˈpɪkt/', translation: 'Representar' },
-      { word: 'Derive', ipa: '/dɪˈraɪv/', translation: 'Derivar' },
-      { word: 'Determine', ipa: '/dɪˈtɜːrmɪn/', translation: 'Determinar' },
-      { word: 'Devise', ipa: '/dɪˈvaɪz/', translation: 'Idear' },
-      { word: 'Diminish', ipa: '/dɪˈmɪnɪʃ/', translation: 'Disminuir' },
-      { word: 'Discuss', ipa: '/dɪˈskʌs/', translation: 'Discutir' },
-      { word: 'Display', ipa: '/dɪˈspleɪ/', translation: 'Mostrar' },
-      { word: 'Distinguish', ipa: '/dɪˈstɪŋɡwɪʃ/', translation: 'Distinguir' },
-      { word: 'Dominate', ipa: '/ˈdɒmɪneɪt/', translation: 'Dominar' },
-      { word: 'Draft', ipa: '/drɑːft/', translation: 'Redactar' }
+      { word: 'Demonstrate', ipa: '/ˈdɛmənstreɪt/', translation: 'Demostrar', level: 'B2' },
+      { word: 'Depict', ipa: '/dɪˈpɪkt/', translation: 'Representar', level: 'C1' },
+      { word: 'Derive', ipa: '/dɪˈraɪv/', translation: 'Derivar', level: 'B2' },
+      { word: 'Determine', ipa: '/dɪˈtɜːrmɪn/', translation: 'Determinar', level: 'B2' },
+      { word: 'Devise', ipa: '/dɪˈvaɪz/', translation: 'Idear', level: 'C1' },
+      { word: 'Diminish', ipa: '/dɪˈmɪnɪʃ/', translation: 'Disminuir', level: 'C1' },
+      { word: 'Discuss', ipa: '/dɪˈskʌs/', translation: 'Discutir', level: 'A2' },
+      { word: 'Display', ipa: '/dɪˈspleɪ/', translation: 'Mostrar', level: 'B1' },
+      { word: 'Distinguish', ipa: '/dɪˈstɪŋɡwɪʃ/', translation: 'Distinguir', level: 'B2' },
+      { word: 'Dominate', ipa: '/ˈdɒmɪneɪt/', translation: 'Dominar', level: 'B2' },
+      { word: 'Draft', ipa: '/drɑːft/', translation: 'Redactar', level: 'B2' }
     ]
   },
   E: {
@@ -173,15 +173,15 @@ export const grammarVerbs: StopData = {
       { word: 'Escape', ipa: '/ɪˈskeɪp/', translation: 'Escapar' },
       { word: 'Establish', ipa: '/ɪˈstæblɪʃ/', translation: 'Establecer' },
       { word: 'Estimate', ipa: '/ˈɛstɪmeɪt/', translation: 'Estimar' },
-      { word: 'Elaborate', ipa: '/ɪˈlæbəreɪt/', translation: 'Elaborar/Detallar' },
-      { word: 'Emphasize', ipa: '/ˈɛmfəsaɪz/', translation: 'Enfatizar' },
-      { word: 'Encounter', ipa: '/ɪnˈkaʊntər/', translation: 'Encontrar' },
-      { word: 'Enhance', ipa: '/ɪnˈhɑːns/', translation: 'Mejorar' },
-      { word: 'Evaluate', ipa: '/ɪˈvæljʊeɪt/', translation: 'Evaluar' },
-      { word: 'Examine', ipa: '/ɪɡˈzæmɪn/', translation: 'Examinar' },
-      { word: 'Expand', ipa: '/ɪkˈspænd/', translation: 'Expandir' },
-      { word: 'Expire', ipa: '/ɪkˈspaɪər/', translation: 'Expirar' },
-      { word: 'Expose', ipa: '/ɪkˈspoʊz/', translation: 'Exponer' }
+      { word: 'Elaborate', ipa: '/ɪˈlæbəreɪt/', translation: 'Elaborar/Detallar', level: 'C1' },
+      { word: 'Emphasize', ipa: '/ˈɛmfəsaɪz/', translation: 'Enfatizar', level: 'B2' },
+      { word: 'Encounter', ipa: '/ɪnˈkaʊntər/', translation: 'Encontrar', level: 'B2' },
+      { word: 'Enhance', ipa: '/ɪnˈhɑːns/', translation: 'Mejorar', level: 'C1' },
+      { word: 'Evaluate', ipa: '/ɪˈvæljʊeɪt/', translation: 'Evaluar', level: 'C1' },
+      { word: 'Examine', ipa: '/ɪɡˈzæmɪn/', translation: 'Examinar', level: 'B2' },
+      { word: 'Expand', ipa: '/ɪkˈspænd/', translation: 'Expandir', level: 'B2' },
+      { word: 'Expire', ipa: '/ɪkˈspaɪər/', translation: 'Expirar', level: 'C1' },
+      { word: 'Expose', ipa: '/ɪkˈspoʊz/', translation: 'Exponer', level: 'B2' }
     ]
   },
   F: {
@@ -208,11 +208,11 @@ export const grammarVerbs: StopData = {
       { word: 'Fix', ipa: '/fɪks/', translation: 'Arreglar' },
       { word: 'Follow', ipa: '/ˈfɒloʊ/', translation: 'Seguir' },
       { word: 'Force', ipa: '/fɔːrs/', translation: 'Forzar' },
-      { word: 'Facilitate', ipa: '/fəˈsɪlɪteɪt/', translation: 'Facilitar' },
-      { word: 'Feature', ipa: '/ˈfiːtʃər/', translation: 'Presentar/Incluir' },
-      { word: 'Focus', ipa: '/ˈfoʊkəs/', translation: 'Enfocar' },
-      { word: 'Formulate', ipa: '/ˈfɔːrmjʊleɪt/', translation: 'Formular' },
-      { word: 'Function', ipa: '/ˈfʌŋkʃən/', translation: 'Funcionar' }
+      { word: 'Facilitate', ipa: '/fəˈsɪlɪteɪt/', translation: 'Facilitar', level: 'C1' },
+      { word: 'Feature', ipa: '/ˈfiːtʃər/', translation: 'Presentar/Incluir', level: 'B2' },
+      { word: 'Focus', ipa: '/ˈfoʊkəs/', translation: 'Enfocar', level: 'B1' },
+      { word: 'Formulate', ipa: '/ˈfɔːrmjʊleɪt/', translation: 'Formular', level: 'C1' },
+      { word: 'Function', ipa: '/ˈfʌŋkʃən/', translation: 'Funcionar', level: 'B1' }
     ]
   },
   G: {
@@ -231,9 +231,9 @@ export const grammarVerbs: StopData = {
       { word: 'Grab', ipa: '/ɡræb/', translation: 'Agarrar' },
       { word: 'Guess', ipa: '/ɡɛs/', translation: 'Adivinar' },
       { word: 'Guide', ipa: '/ɡaɪd/', translation: 'Guiar' },
-      { word: 'Generate', ipa: '/ˈdʒɛnəreɪt/', translation: 'Generar' },
-      { word: 'Grant', ipa: '/ɡrɑːnt/', translation: 'Conceder' },
-      { word: 'Guarantee', ipa: '/ˌɡærənˈtiː/', translation: 'Garantizar' }
+      { word: 'Generate', ipa: '/ˈdʒɛnəreɪt/', translation: 'Generar', level: 'B2' },
+      { word: 'Grant', ipa: '/ɡrɑːnt/', translation: 'Conceder', level: 'B2' },
+      { word: 'Guarantee', ipa: '/ˌɡærənˈtiː/', translation: 'Garantizar', level: 'B2' }
     ]
   },
   H: {
@@ -253,9 +253,9 @@ export const grammarVerbs: StopData = {
       { word: 'Hate', ipa: '/heɪt/', translation: 'Odiar' },
       { word: 'Hope', ipa: '/hoʊp/', translation: 'Esperar' },
       { word: 'Hurry', ipa: '/ˈhʌri/', translation: 'Apurarse' },
-      { word: 'Handle', ipa: '/ˈhændl/', translation: 'Manejar' },
-      { word: 'Hesitate', ipa: '/ˈhɛzɪteɪt/', translation: 'Dudar' },
-      { word: 'Highlight', ipa: '/ˈhaɪlaɪt/', translation: 'Destacar' }
+      { word: 'Handle', ipa: '/ˈhændl/', translation: 'Manejar', level: 'B2' },
+      { word: 'Hesitate', ipa: '/ˈhɛzɪteɪt/', translation: 'Dudar', level: 'C1' },
+      { word: 'Highlight', ipa: '/ˈhaɪlaɪt/', translation: 'Destacar', level: 'B2' }
     ]
   },
   I: {
@@ -278,20 +278,26 @@ export const grammarVerbs: StopData = {
       { word: 'Introduce', ipa: '/ˌɪntrəˈdjuːs/', translation: 'Presentar' },
       { word: 'Invest', ipa: '/ɪnˈvɛst/', translation: 'Invertir' },
       { word: 'Involve', ipa: '/ɪnˈvɒlv/', translation: 'Involucrar' },
-      { word: 'Illustrate', ipa: '/ˈɪləstreɪt/', translation: 'Ilustrar' },
-      { word: 'Implement', ipa: '/ˈɪmplɪmɛnt/', translation: 'Implementar' },
-      { word: 'Imply', ipa: '/ɪmˈplaɪ/', translation: 'Implicar' },
-      { word: 'Incorporate', ipa: '/ɪnˈkɔːrpəreɪt/', translation: 'Incorporar' },
-      { word: 'Initiate', ipa: '/ɪˈnɪʃieɪt/', translation: 'Iniciar' },
-      { word: 'Inspect', ipa: '/ɪnˈspɛkt/', translation: 'Inspeccionar' },
-      { word: 'Integrate', ipa: '/ˈɪntɪɡreɪt/', translation: 'Integrar' },
-      { word: 'Interpret', ipa: '/ɪnˈtɜːrprɪt/', translation: 'Interpretar' },
-      { word: 'Investigate', ipa: '/ɪnˈvɛstɪɡeɪt/', translation: 'Investigar' },
-      { word: 'Isolate', ipa: '/ˈaɪsəleɪt/', translation: 'Aislar' }
+      { word: 'Illustrate', ipa: '/ˈɪləstreɪt/', translation: 'Ilustrar', level: 'B2' },
+      { word: 'Implement', ipa: '/ˈɪmplɪmɛnt/', translation: 'Implementar', level: 'B2' },
+      { word: 'Imply', ipa: '/ɪmˈplaɪ/', translation: 'Implicar', level: 'C1' },
+      { word: 'Incorporate', ipa: '/ɪnˈkɔːrpəreɪt/', translation: 'Incorporar', level: 'C1' },
+      { word: 'Initiate', ipa: '/ɪˈnɪʃieɪt/', translation: 'Iniciar', level: 'C1' },
+      { word: 'Inspect', ipa: '/ɪnˈspɛkt/', translation: 'Inspeccionar', level: 'B2' },
+      { word: 'Integrate', ipa: '/ˈɪntɪɡreɪt/', translation: 'Integrar', level: 'B2' },
+      { word: 'Interpret', ipa: '/ɪnˈtɜːrprɪt/', translation: 'Interpretar', level: 'B2' },
+      { word: 'Investigate', ipa: '/ɪnˈvɛstɪɡeɪt/', translation: 'Investigar', level: 'B2' },
+      { word: 'Isolate', ipa: '/ˈaɪsəleɪt/', translation: 'Aislar', level: 'B2' }
     ]
   },
   J: {
-    Verbs: [{ word: 'Jump', ipa: '/dʒʌmp/', translation: 'Saltar' }, { word: 'Jog', ipa: '/dʒɒɡ/', translation: 'Trotar' }, { word: 'Join', ipa: '/dʒɔɪn/', translation: 'Unir' }, { word: 'Judge', ipa: '/dʒʌdʒ/', translation: 'Juzgar' }, { word: 'Justify', ipa: '/ˈdʒʌstɪfaɪ/', translation: 'Justificar' }]
+    Verbs: [
+      { word: 'Jump', ipa: '/dʒʌmp/', translation: 'Saltar' },
+      { word: 'Jog', ipa: '/dʒɒɡ/', translation: 'Trotar' },
+      { word: 'Join', ipa: '/dʒɔɪn/', translation: 'Unir' },
+      { word: 'Judge', ipa: '/dʒʌdʒ/', translation: 'Juzgar' },
+      { word: 'Justify', ipa: '/ˈdʒʌstɪfaɪ/', translation: 'Justificar', level: 'B2' }
+    ]
   },
   K: {
     Verbs: [
@@ -331,10 +337,10 @@ export const grammarVerbs: StopData = {
       { word: 'Live', ipa: '/lɪv/', translation: 'Vivir' },
       { word: 'Load', ipa: '/loʊd/', translation: 'Cargar' },
       { word: 'Lock', ipa: '/lɒk/', translation: 'Cerrar con llave' },
-      { word: 'Launch', ipa: '/lɔːntʃ/', translation: 'Lanzar' },
-      { word: 'Limit', ipa: '/ˈlɪmɪt/', translation: 'Limitar' },
-      { word: 'Link', ipa: '/lɪŋk/', translation: 'Vincular' },
-      { word: 'Locate', ipa: '/loʊˈkeɪt/', translation: 'Ubicar' }
+      { word: 'Launch', ipa: '/lɔːntʃ/', translation: 'Lanzar', level: 'B2' },
+      { word: 'Limit', ipa: '/ˈlɪmɪt/', translation: 'Limitar', level: 'B2' },
+      { word: 'Link', ipa: '/lɪŋk/', translation: 'Vincular', level: 'A2' },
+      { word: 'Locate', ipa: '/loʊˈkeɪt/', translation: 'Ubicar', level: 'B1' }
     ]
   },
   M: {
@@ -350,18 +356,18 @@ export const grammarVerbs: StopData = {
       { word: 'Misunderstand', ipa: '/ˌmɪsʌndərˈstænd/', translation: 'Entender mal', tag: 'Irregular', definition: 'Past: Misunderstood • Part: Misunderstood' },
       { word: 'Mow', ipa: '/moʊ/', translation: 'Segar', tag: 'Irregular', definition: 'Past: Mowed • Part: Mown' },
       { word: 'Move', ipa: '/muːv/', translation: 'Mover' },
-      { word: 'Maintain', ipa: '/meɪnˈteɪn/', translation: 'Mantener' },
+      { word: 'Maintain', ipa: '/meɪnˈteɪn/', translation: 'Mantener', level: 'B2' },
       { word: 'Manage', ipa: '/ˈmænɪdʒ/', translation: 'Administrar' },
       { word: 'Mark', ipa: '/mɑːrk/', translation: 'Marcar' },
       { word: 'Match', ipa: '/mætʃ/', translation: 'Coincidir' },
       { word: 'Matter', ipa: '/ˈmætər/', translation: 'Importar' },
       { word: 'Measure', ipa: '/ˈmɛʒər/', translation: 'Medir' },
-      { word: 'Mention', ipa: '/ˈmɛnʃən/', translation: 'Mencionar' },
+      { word: 'Mention', ipa: '/ˈmɛnʃən/', translation: 'Mencionar', level: 'B1' },
       { word: 'Mind', ipa: '/maɪnd/', translation: 'Importar/Cuidar' },
       { word: 'Miss', ipa: '/mɪs/', translation: 'Extrañar/Perder' },
       { word: 'Mix', ipa: '/mɪks/', translation: 'Mezclar' },
-      { word: 'Monitor', ipa: '/ˈmɒnɪtər/', translation: 'Monitorear' },
-      { word: 'Motivate', ipa: '/ˈmoʊtɪveɪt/', translation: 'Motivar' }
+      { word: 'Monitor', ipa: '/ˈmɒnɪtər/', translation: 'Monitorear', level: 'B2' },
+      { word: 'Motivate', ipa: '/ˈmoʊtɪveɪt/', translation: 'Motivar', level: 'B1' }
     ]
   },
   N: {
@@ -370,12 +376,12 @@ export const grammarVerbs: StopData = {
       { word: 'Note', ipa: '/noʊt/', translation: 'Anotar/Notar' },
       { word: 'Notice', ipa: '/ˈnoʊtɪs/', translation: 'Notar/Darse cuenta' },
       { word: 'Name', ipa: '/neɪm/', translation: 'Nombrar' },
-      { word: 'Negotiate', ipa: '/nɪˈɡoʊʃieɪt/', translation: 'Negociar' },
-      { word: 'Neglect', ipa: '/nɪˈɡlɛkt/', translation: 'Descuidar' },
-      { word: 'Notify', ipa: '/ˈnoʊtɪfaɪ/', translation: 'Notificar' },
+      { word: 'Negotiate', ipa: '/nɪˈɡoʊʃieɪt/', translation: 'Negociar', level: 'C1' },
+      { word: 'Neglect', ipa: '/nɪˈɡlɛkt/', translation: 'Descuidar', level: 'C1' },
+      { word: 'Notify', ipa: '/ˈnoʊtɪfaɪ/', translation: 'Notificar', level: 'B1' },
       { word: 'Nourish', ipa: '/ˈnʌrɪʃ/', translation: 'Nutrir' },
       { word: 'Nurse', ipa: '/nɜːrs/', translation: 'Cuidar (enfermo)' },
-      { word: 'Navigate', ipa: '/ˈnævɪɡeɪt/', translation: 'Navegar' }
+      { word: 'Navigate', ipa: '/ˈnævɪɡeɪt/', translation: 'Navegar', level: 'B1' }
     ]
   },
   O: {
@@ -387,11 +393,11 @@ export const grammarVerbs: StopData = {
       { word: 'Organize', ipa: '/ˈɔːrɡənaɪz/', translation: 'Organizar' },
       { word: 'Observe', ipa: '/əbˈzɜːrv/', translation: 'Observar' },
       { word: 'Owe', ipa: '/oʊ/', translation: 'Deber' },
-      { word: 'Obtain', ipa: '/əbˈteɪn/', translation: 'Obtener' },
-      { word: 'Occupy', ipa: '/ˈɒkjʊpaɪ/', translation: 'Ocupar' },
+      { word: 'Obtain', ipa: '/əbˈteɪn/', translation: 'Obtener', level: 'B2' },
+      { word: 'Occupy', ipa: '/ˈɒkjʊpaɪ/', translation: 'Ocupar', level: 'B2' },
       { word: 'Occur', ipa: '/əˈkɜːr/', translation: 'Ocurrir' },
       { word: 'Offend', ipa: '/əˈfɛnd/', translation: 'Ofender' },
-      { word: 'Operate', ipa: '/ˈɒpəreɪt/', translation: 'Operar' },
+      { word: 'Operate', ipa: '/ˈɒpəreɪt/', translation: 'Operar', level: 'B1' },
       { word: 'Oppose', ipa: '/əˈpoʊz/', translation: 'Oponerse' },
       { word: 'Outbid', ipa: '/ˌaʊtˈbɪd/', translation: 'Pujar más', tag: 'Irregular', definition: 'Past: Outbid • Part: Outbid' },
       { word: 'Outdo', ipa: '/ˌaʊtˈduː/', translation: 'Superar', tag: 'Irregular', definition: 'Past: Outdid • Part: Outdone' },
@@ -445,22 +451,22 @@ export const grammarVerbs: StopData = {
       { word: 'Pick', ipa: '/pɪk/', translation: 'Elegir/Recoger' },
       { word: 'Plant', ipa: '/plɑːnt/', translation: 'Plantar' },
       { word: 'Point', ipa: '/pɔɪnt/', translation: 'Señalar' },
-      { word: 'Participate', ipa: '/pɑːrˈtɪsɪpeɪt/', translation: 'Participar' },
-      { word: 'Perceive', ipa: '/pərˈsiːv/', translation: 'Percibir' },
-      { word: 'Persuade', ipa: '/pərˈsweɪd/', translation: 'Persuadir' },
-      { word: 'Predict', ipa: '/prɪˈdɪkt/', translation: 'Predecir' },
-      { word: 'Preserve', ipa: '/prɪˈzɜːrv/', translation: 'Preservar' },
-      { word: 'Proceed', ipa: '/prəˈsiːd/', translation: 'Proceder' },
-      { word: 'Promote', ipa: '/prəˈmoʊt/', translation: 'Promover' },
-      { word: 'Propose', ipa: '/prəˈpoʊz/', translation: 'Proponer' },
-      { word: 'Pursue', ipa: '/pərˈsuː/', translation: 'Perseguir' }
+      { word: 'Participate', ipa: '/pɑːrˈtɪsɪpeɪt/', translation: 'Participar', level: 'B1' },
+      { word: 'Perceive', ipa: '/pərˈsiːv/', translation: 'Percibir', level: 'C1' },
+      { word: 'Persuade', ipa: '/pərˈsweɪd/', translation: 'Persuadir', level: 'B2' },
+      { word: 'Predict', ipa: '/prɪˈdɪkt/', translation: 'Predecir', level: 'B1' },
+      { word: 'Preserve', ipa: '/prɪˈzɜːrv/', translation: 'Preservar', level: 'B2' },
+      { word: 'Proceed', ipa: '/prəˈsiːd/', translation: 'Proceder', level: 'B2' },
+      { word: 'Promote', ipa: '/prəˈmoʊt/', translation: 'Promover', level: 'B1' },
+      { word: 'Propose', ipa: '/prəˈpoʊz/', translation: 'Proponer', level: 'B2' },
+      { word: 'Pursue', ipa: '/pərˈsuː/', translation: 'Perseguir', level: 'B2' }
     ]
   },
   Q: {
     Verbs: [
       { word: 'Quit', ipa: '/kwɪt/', translation: 'Renunciar/Dejar', tag: 'Irregular', definition: 'Past: Quit • Part: Quit' },
-      { word: 'Question', ipa: '/ˈkwɛstʃən/', translation: 'Cuestionar' },
-      { word: 'Qualify', ipa: '/ˈkwɒlɪfaɪ/', translation: 'Calificar' },
+      { word: 'Question', ipa: '/ˈkwɛstʃən/', translation: 'Cuestionar', level: 'B1' },
+      { word: 'Qualify', ipa: '/ˈkwɒlɪfaɪ/', translation: 'Calificar', level: 'B2' },
       { word: 'Quote', ipa: '/kwoʊt/', translation: 'Citar' },
       { word: 'Quarrel', ipa: '/ˈkwɒrəl/', translation: 'Discutir' },
       { word: 'Queue', ipa: '/kjuː/', translation: 'Hacer cola' },
@@ -499,22 +505,22 @@ export const grammarVerbs: StopData = {
       { word: 'Remember', ipa: '/rɪˈmɛmbər/', translation: 'Recordar' },
       { word: 'Rain', ipa: '/reɪn/', translation: 'Llover' },
       { word: 'Raise', ipa: '/reɪz/', translation: 'Levantar' },
-      { word: 'React', ipa: '/riˈækt/', translation: 'Reaccionar' },
-      { word: 'Realize', ipa: '/ˈriːəlaɪz/', translation: 'Darse cuenta' },
-      { word: 'Recognize', ipa: '/ˈrɛkəɡnaɪz/', translation: 'Reconocer' },
-      { word: 'Recommend', ipa: '/ˌrɛkəˈmɛnd/', translation: 'Recomendar' },
-      { word: 'Reflect', ipa: '/rɪˈflɛkt/', translation: 'Reflexionar' },
-      { word: 'Reinforce', ipa: '/ˌriːɪnˈfɔːrs/', translation: 'Reforzar' },
-      { word: 'Reject', ipa: '/rɪˈdʒɛkt/', translation: 'Rechazar' },
-      { word: 'Relate', ipa: '/rɪˈleɪt/', translation: 'Relacionar' },
-      { word: 'Rely', ipa: '/rɪˈlaɪ/', translation: 'Confiar' },
-      { word: 'Require', ipa: '/rɪˈkwaɪər/', translation: 'Requerir' },
-      { word: 'Resemble', ipa: '/rɪˈzɛmbəl/', translation: 'Parecerse a' },
-      { word: 'Resolve', ipa: '/rɪˈzɒlv/', translation: 'Resolver' },
-      { word: 'Respond', ipa: '/rɪˈspɒnd/', translation: 'Responder' },
-      { word: 'Restore', ipa: '/rɪˈstɔːr/', translation: 'Restaurar' },
-      { word: 'Retain', ipa: '/rɪˈteɪn/', translation: 'Retener' },
-      { word: 'Reveal', ipa: '/rɪˈviːl/', translation: 'Revelar' }
+      { word: 'React', ipa: '/riˈækt/', translation: 'Reaccionar', level: 'B1' },
+      { word: 'Realize', ipa: '/ˈriːəlaɪz/', translation: 'Darse cuenta', level: 'B1' },
+      { word: 'Recognize', ipa: '/ˈrɛkəɡnaɪz/', translation: 'Reconocer', level: 'B1' },
+      { word: 'Recommend', ipa: '/ˌrɛkəˈmɛnd/', translation: 'Recomendar', level: 'B1' },
+      { word: 'Reflect', ipa: '/rɪˈflɛkt/', translation: 'Reflexionar', level: 'B2' },
+      { word: 'Reinforce', ipa: '/ˌriːɪnˈfɔːrs/', translation: 'Reforzar', level: 'B2' },
+      { word: 'Reject', ipa: '/rɪˈdʒɛkt/', translation: 'Rechazar', level: 'B2' },
+      { word: 'Relate', ipa: '/rɪˈleɪt/', translation: 'Relacionar', level: 'B2' },
+      { word: 'Rely', ipa: '/rɪˈlaɪ/', translation: 'Confiar', level: 'B1' },
+      { word: 'Require', ipa: '/rɪˈkwaɪər/', translation: 'Requerir', level: 'B1' },
+      { word: 'Resemble', ipa: '/rɪˈzɛmbəl/', translation: 'Parecerse a', level: 'C1' },
+      { word: 'Resolve', ipa: '/rɪˈzɒlv/', translation: 'Resolver', level: 'B2' },
+      { word: 'Respond', ipa: '/rɪˈspɒnd/', translation: 'Responder', level: 'A2' },
+      { word: 'Restore', ipa: '/rɪˈstɔːr/', translation: 'Restaurar', level: 'B2' },
+      { word: 'Retain', ipa: '/rɪˈteɪn/', translation: 'Retener', level: 'C1' },
+      { word: 'Reveal', ipa: '/rɪˈviːl/', translation: 'Revelar', level: 'B2' }
     ]
   },
   S: {
@@ -522,7 +528,7 @@ export const grammarVerbs: StopData = {
       { word: 'Saw', ipa: '/sɔː/', translation: 'Serrar', tag: 'Irregular', definition: 'Past: Sawed • Part: Sawn/Sawed' },
       { word: 'Say', ipa: '/seɪ/', translation: 'Decir', tag: 'Irregular', definition: 'Past: Said • Part: Said' },
       { word: 'See', ipa: '/siː/', translation: 'Ver', tag: 'Irregular', definition: 'Past: Saw • Part: Seen' },
-      { word: 'Seek', ipa: '/siːk/', translation: 'Buscar', tag: 'Irregular', definition: 'Past: Sought • Part: Sought' },
+      { word: 'Seek', ipa: '/siːk/', translation: 'Buscar', tag: 'Irregular', definition: 'Past: Sought • Part: Sought', level: 'B2' },
       { word: 'Sell', ipa: '/sɛl/', translation: 'Vender', tag: 'Irregular', definition: 'Past: Sold • Part: Sold' },
       { word: 'Send', ipa: '/sɛnd/', translation: 'Enviar', tag: 'Irregular', definition: 'Past: Sent • Part: Sent' },
       { word: 'Set', ipa: '/sɛt/', translation: 'Poner/Fijar', tag: 'Irregular', definition: 'Past: Set • Part: Set' },
@@ -583,7 +589,7 @@ export const grammarVerbs: StopData = {
       { word: 'Score', ipa: '/skɔːr/', translation: 'Marcar (puntos)' },
       { word: 'Scream', ipa: '/skriːm/', translation: 'Gritar' },
       { word: 'Search', ipa: '/sɜːrtʃ/', translation: 'Buscar' },
-      { word: 'Select', ipa: '/sɪˈlɛkt/', translation: 'Seleccionar' },
+      { word: 'Select', ipa: '/sɪˈlɛkt/', translation: 'Seleccionar', level: 'A2' },
       { word: 'Serve', ipa: '/sɜːrv/', translation: 'Servir' },
       { word: 'Share', ipa: '/ʃɛər/', translation: 'Compartir' },
       { word: 'Shop', ipa: '/ʃɒp/', translation: 'Comprar' },
@@ -593,18 +599,20 @@ export const grammarVerbs: StopData = {
       { word: 'Stay', ipa: '/steɪ/', translation: 'Quedarse' },
       { word: 'Stop', ipa: '/stɒp/', translation: 'Parar' },
       { word: 'Study', ipa: '/ˈstʌdi/', translation: 'Estudiar' },
-      { word: 'Satisfy', ipa: '/ˈsætɪsfaɪ/', translation: 'Satisfacer' },
+      { word: 'Satisfy', ipa: '/ˈsætɪsfaɪ/', translation: 'Satisfacer', level: 'B2' },
       { word: 'Settle', ipa: '/ˈsɛtl/', translation: 'Establecer/Resolver' },
-      { word: 'Shift', ipa: '/ʃɪft/', translation: 'Cambiar' },
+      { word: 'Shift', ipa: '/ʃɪft/', translation: 'Cambiar', level: 'C1' },
       { word: 'Solve', ipa: '/sɒlv/', translation: 'Resolver' },
-      { word: 'Specify', ipa: '/ˈspɛsɪfaɪ/', translation: 'Especificar' },
-      { word: 'Submit', ipa: '/səbˈmɪt/', translation: 'Enviar' },
-      { word: 'Succeed', ipa: '/səkˈsiːd/', translation: 'Tener éxito' },
-      { word: 'Suggest', ipa: '/səˈdʒɛst/', translation: 'Sugerir' },
-      { word: 'Supply', ipa: '/səˈplaɪ/', translation: 'Suministrar' },
-      { word: 'Support', ipa: '/səˈpɔːrt/', translation: 'Apoyar' },
-      { word: 'Survive', ipa: '/sərˈvaɪv/', translation: 'Sobrevivir' },
-      { word: 'Sustain', ipa: '/səˈsteɪn/', translation: 'Sostener' }
+      { word: 'Specify', ipa: '/ˈspɛsɪfaɪ/', translation: 'Especificar', level: 'B2' },
+      { word: 'Submit', ipa: '/səbˈmɪt/', translation: 'Enviar', level: 'B2' },
+      { word: 'Succeed', ipa: '/səkˈsiːd/', translation: 'Tener éxito', level: 'B1' },
+      { word: 'Suggest', ipa: '/səˈdʒɛst/', translation: 'Sugerir', level: 'A2' },
+      { word: 'Supply', ipa: '/səˈplaɪ/', translation: 'Suministrar', level: 'B2' },
+      { word: 'Support', ipa: '/səˈpɔːrt/', translation: 'Apoyar', level: 'B1' },
+      { word: 'Survive', ipa: '/sərˈvaɪv/', translation: 'Sobrevivir', level: 'B2' },
+      { word: 'Sustain', ipa: '/səˈsteɪn/', translation: 'Sostener', level: 'C1' },
+      { word: 'Stimulate', ipa: '/ˈstɪmjʊleɪt/', translation: 'Estimular', level: 'B2' },
+      { word: 'Strengthen', ipa: '/ˈstrɛŋθən/', translation: 'Fortalecer', level: 'B2' }
     ]
   },
   T: {
@@ -624,15 +632,18 @@ export const grammarVerbs: StopData = {
       { word: 'Thank', ipa: '/θæŋk/', translation: 'Agradecer' },
       { word: 'Touch', ipa: '/tʌtʃ/', translation: 'Tocar' },
       { word: 'Travel', ipa: '/ˈtrævəl/', translation: 'Viajar' },
-      { word: 'Trust', ipa: '/trʌst/', translation: 'Confiar' },
+      { word: 'Trust', ipa: '/trʌst/', translation: 'Confiar', level: 'B1' },
       { word: 'Turn', ipa: '/tɜːrn/', translation: 'Girar' },
       { word: 'Type', ipa: '/taɪp/', translation: 'Escribir a máquina' },
       { word: 'Target', ipa: '/ˈtɑːrɡɪt/', translation: 'Apuntar a' },
-      { word: 'Tend', ipa: '/tɛnd/', translation: 'Tender a' },
-      { word: 'Threaten', ipa: '/ˈθrɛtn/', translation: 'Amenazar' },
-      { word: 'Transfer', ipa: '/trænsˈfɜːr/', translation: 'Transferir' },
-      { word: 'Transform', ipa: '/trænsˈfɔːrm/', translation: 'Transformar' },
-      { word: 'Treat', ipa: '/triːt/', translation: 'Tratar' }
+      { word: 'Tend', ipa: '/tɛnd/', translation: 'Tender a', level: 'B2' },
+      { word: 'Threaten', ipa: '/ˈθrɛtn/', translation: 'Amenazar', level: 'B2' },
+      { word: 'Transfer', ipa: '/trænsˈfɜːr/', translation: 'Transferir', level: 'B2' },
+      { word: 'Transform', ipa: '/trænsˈfɔːrm/', translation: 'Transformar', level: 'B2' },
+      { word: 'Treat', ipa: '/triːt/', translation: 'Tratar', level: 'B1' },
+      { word: 'Tackle', ipa: '/ˈtækəl/', translation: 'Abordar', level: 'B2' },
+      { word: 'Tolerate', ipa: '/ˈtɒləreɪt/', translation: 'Tolerar', level: 'B2' },
+      { word: 'Trigger', ipa: '/ˈtrɪɡər/', translation: 'Desencadenar', level: 'C1' }
     ]
   },
   U: {
@@ -640,12 +651,12 @@ export const grammarVerbs: StopData = {
       { word: 'Unbend', ipa: '/ʌnˈbɛnd/', translation: 'Desdoblar/Relajarse', tag: 'Irregular', definition: 'Past: Unbent • Part: Unbent' },
       { word: 'Unbind', ipa: '/ʌnˈbaɪnd/', translation: 'Desatar', tag: 'Irregular', definition: 'Past: Unbound • Part: Unbound' },
       { word: 'Underbid', ipa: '/ˌʌndərˈbɪd/', translation: 'Pujar menos', tag: 'Irregular', definition: 'Past: Underbid • Part: Underbid' },
-      { word: 'Undergo', ipa: '/ˌʌndərˈɡoʊ/', translation: 'Experimentar', tag: 'Irregular', definition: 'Past: Underwent • Part: Undergone' },
+      { word: 'Undergo', ipa: '/ˌʌndərˈɡoʊ/', translation: 'Experimentar', tag: 'Irregular', definition: 'Past: Underwent • Part: Undergone', level: 'C1' },
       { word: 'Underlie', ipa: '/ˌʌndərˈlaɪ/', translation: 'Subyacer', tag: 'Irregular', definition: 'Past: Underlay • Part: Underlain' },
       { word: 'Underpay', ipa: '/ˌʌndərˈpeɪ/', translation: 'Pagar poco', tag: 'Irregular', definition: 'Past: Underpaid • Part: Underpaid' },
       { word: 'Undersell', ipa: '/ˌʌndərˈsɛl/', translation: 'Vender más barato', tag: 'Irregular', definition: 'Past: Undersold • Part: Undersold' },
       { word: 'Understand', ipa: '/ˌʌndərˈstænd/', translation: 'Entender', tag: 'Irregular', definition: 'Past: Understood • Part: Understood' },
-      { word: 'Undertake', ipa: '/ˌʌndərˈteɪk/', translation: 'Emprender', tag: 'Irregular', definition: 'Past: Undertook • Part: Undertaken' },
+      { word: 'Undertake', ipa: '/ˌʌndərˈteɪk/', translation: 'Emprender', tag: 'Irregular', definition: 'Past: Undertook • Part: Undertaken', level: 'C1' },
       { word: 'Underwrite', ipa: '/ˌʌndərˈraɪt/', translation: 'Suscribir', tag: 'Irregular', definition: 'Past: Underwrote • Part: Underwritten' },
       { word: 'Undo', ipa: '/ʌnˈduː/', translation: 'Deshacer', tag: 'Irregular', definition: 'Past: Undid • Part: Undone' },
       { word: 'Undraw', ipa: '/ʌnˈdrɔː/', translation: 'Correr (cortina)', tag: 'Irregular', definition: 'Past: Undrew • Part: Undrawn' },
@@ -662,18 +673,30 @@ export const grammarVerbs: StopData = {
       { word: 'Uphold', ipa: '/ʌpˈhoʊld/', translation: 'Defender', tag: 'Irregular', definition: 'Past: Upheld • Part: Upheld' },
       { word: 'Upset', ipa: '/ʌpˈsɛt/', translation: 'Molestar', tag: 'Irregular', definition: 'Past: Upset • Part: Upset' },
       { word: 'Use', ipa: '/juːz/', translation: 'Usar' },
-      { word: 'Update', ipa: '/ʌpˈdeɪt/', translation: 'Actualizar' },
+      { word: 'Update', ipa: '/ʌpˈdeɪt/', translation: 'Actualizar', level: 'B1' },
       { word: 'Upload', ipa: '/ʌpˈloʊd/', translation: 'Subir (archivos)' },
-      { word: 'Unite', ipa: '/juˈnaɪt/', translation: 'Unir' },
+      { word: 'Unite', ipa: '/juˈnaɪt/', translation: 'Unir', level: 'B2' },
       { word: 'Unlock', ipa: '/ʌnˈlɒk/', translation: 'Desbloquear' },
       { word: 'Unpack', ipa: '/ʌnˈpæk/', translation: 'Desempacar' },
-      { word: 'Urge', ipa: '/ɜːrdʒ/', translation: 'Instar' },
+      { word: 'Urge', ipa: '/ɜːrdʒ/', translation: 'Instar', level: 'C1' },
       { word: 'Undermine', ipa: '/ˌʌndərˈmaɪn/', translation: 'Socavar' },
-      { word: 'Utilize', ipa: '/ˈjuːtɪlaɪz/', translation: 'Utilizar' }
+      { word: 'Utilize', ipa: '/ˈjuːtɪlaɪz/', translation: 'Utilizar', level: 'B2' }
     ]
   },
   V: {
-    Verbs: [{ word: 'Visit', ipa: '/ˈvɪzɪt/', translation: 'Visitar' }, { word: 'Value', ipa: '/ˈvæljuː/', translation: 'Valorar' }, { word: 'Vanish', ipa: '/ˈvænɪʃ/', translation: 'Desvanecerse' }, { word: 'Vary', ipa: '/ˈvɛəri/', translation: 'Variar' }, { word: 'Verify', ipa: '/ˈvɛrɪfaɪ/', translation: 'Verificar' }, { word: 'View', ipa: '/vjuː/', translation: 'Ver' }, { word: 'Vote', ipa: '/voʊt/', translation: 'Votar' }, { word: 'Volunteer', ipa: '/ˌvɒlənˈtɪər/', translation: 'Ser voluntario' }, { word: 'Validate', ipa: '/ˈvælɪdeɪt/', translation: 'Validar' }, { word: 'Violate', ipa: '/ˈvaɪəleɪt/', translation: 'Violar' }]
+    Verbs: [
+      { word: 'Visit', ipa: '/ˈvɪzɪt/', translation: 'Visitar' },
+      { word: 'Value', ipa: '/ˈvæljuː/', translation: 'Valorar', level: 'B1' },
+      { word: 'Vanish', ipa: '/ˈvænɪʃ/', translation: 'Desvanecerse', level: 'B2' },
+      { word: 'Vary', ipa: '/ˈvɛəri/', translation: 'Variar', level: 'B2' },
+      { word: 'Verify', ipa: '/ˈvɛrɪfaɪ/', translation: 'Verificar', level: 'B2' },
+      { word: 'View', ipa: '/vjuː/', translation: 'Ver' },
+      { word: 'Vote', ipa: '/voʊt/', translation: 'Votar' },
+      { word: 'Volunteer', ipa: '/ˌvɒlənˈtɪər/', translation: 'Ser voluntario' },
+      { word: 'Validate', ipa: '/ˈvælɪdeɪt/', translation: 'Validar', level: 'B2' },
+      { word: 'Violate', ipa: '/ˈvaɪəleɪt/', translation: 'Violar', level: 'B2' },
+      { word: 'Venture', ipa: '/ˈvɛntʃər/', translation: 'Aventurarse', level: 'C2' }
+    ]
   },
   W: {
     Verbs: [
@@ -686,7 +709,7 @@ export const grammarVerbs: StopData = {
       { word: 'Wet', ipa: '/wɛt/', translation: 'Mojar', tag: 'Irregular', definition: 'Past: Wet/Wetted • Part: Wet/Wetted' },
       { word: 'Win', ipa: '/wɪn/', translation: 'Ganar', tag: 'Irregular', definition: 'Past: Won • Part: Won' },
       { word: 'Wind', ipa: '/waɪnd/', translation: 'Enrollar/Dar cuerda', tag: 'Irregular', definition: 'Past: Wound • Part: Wound' },
-      { word: 'Withdraw', ipa: '/wɪðˈdrɔː/', translation: 'Retirar', tag: 'Irregular', definition: 'Past: Withdrew • Part: Withdrawn' },
+      { word: 'Withdraw', ipa: '/wɪðˈdrɔː/', translation: 'Retirar', tag: 'Irregular', definition: 'Past: Withdrew • Part: Withdrawn', level: 'C1' },
       { word: 'Withhold', ipa: '/wɪðˈhoʊld/', translation: 'Retener', tag: 'Irregular', definition: 'Past: Withheld • Part: Withheld' },
       { word: 'Withstand', ipa: '/wɪðˈstænd/', translation: 'Resistir', tag: 'Irregular', definition: 'Past: Withstood • Part: Withstood' },
       { word: 'Wring', ipa: '/rɪŋ/', translation: 'Escurrir', tag: 'Irregular', definition: 'Past: Wrung • Part: Wrung' },
@@ -698,14 +721,14 @@ export const grammarVerbs: StopData = {
       { word: 'Wash', ipa: '/wɒʃ/', translation: 'Lavar' },
       { word: 'Watch', ipa: '/wɒtʃ/', translation: 'Mirar' },
       { word: 'Wave', ipa: '/weɪv/', translation: 'Saludar/Ondear' },
-      { word: 'Weigh', ipa: '/weɪ/', translation: 'Pesar' },
+      { word: 'Weigh', ipa: '/weɪ/', translation: 'Pesar', level: 'B1' },
       { word: 'Welcome', ipa: '/ˈwɛlkəm/', translation: 'Dar la bienvenida' },
       { word: 'Whisper', ipa: '/ˈwɪspər/', translation: 'Susurrar' },
       { word: 'Wish', ipa: '/wɪʃ/', translation: 'Desear' },
       { word: 'Work', ipa: '/wɜːrk/', translation: 'Trabajar' },
       { word: 'Worry', ipa: '/ˈwʌri/', translation: 'Preocuparse' },
       { word: 'Wander', ipa: '/ˈwɒndər/', translation: 'Vagar' },
-      { word: 'Witness', ipa: '/ˈwɪtnɪs/', translation: 'Presenciar' }
+      { word: 'Witness', ipa: '/ˈwɪtnɪs/', translation: 'Presenciar', level: 'B2' }
     ]
   },
   X: {

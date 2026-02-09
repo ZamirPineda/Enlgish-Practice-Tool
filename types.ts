@@ -78,7 +78,7 @@ export interface SrsFeedback {
 // ReportCard and Message types removed as they were AI-specific
 
 // Study Deck Types
-export type AdjectiveCategory = 'Quantity' | 'Opinion' | 'Size' | 'Condition' | 'Age' | 'Shape' | 'Color' | 'Sound/texture' | 'Origin' | 'Material' | 'Purpose';
+export type AdjectiveCategory = 'Determiner' | 'Quantity' | 'Opinion' | 'Size' | 'Condition' | 'Age' | 'Shape' | 'Color' | 'Sound/texture' | 'Origin' | 'Material' | 'Purpose';
 export type PrepositionCategory = 'in' | 'on' | 'at';
 export type GrammarCategory = 'Simple Present (3rd Person)' | 'Quantifier' | 'Adverb of Frequency' | 'Demonstrative' | 'Question Word' | 'Simple Past';
 export type VerbPatternCategory = 'Verb + Gerund' | 'Verb + Infinitive';

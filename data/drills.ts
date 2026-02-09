@@ -69,6 +69,30 @@ export const drillTopicsByLevel: DrillsByLevel = {
         { parts: [{ word: 'They live' }, { word: 'in', category: 'in' }, { word: 'London.' }], ipa: '/ðeɪ lɪv ɪn ˈlʌndən/', translation_es: 'Ellos viven en Londres.' },
         { parts: [{ word: 'The picture is' }, { word: 'on', category: 'on' }, { word: 'the wall.' }], ipa: '/ðə ˈpɪktʃər ɪz ɒn ðə wɔːl/', translation_es: 'El cuadro está en la pared.' },
       ]
+    },
+    {
+      id: 'object-pronouns',
+      name: 'Object Pronouns',
+      description: 'Object pronouns receive the action of the verb. Me, you, him, her, it, us, them.',
+      examples: [
+        { parts: [{ word: 'She called' }, { word: 'me', category: 'Subject' }, { word: 'yesterday.' }], ipa: '/ʃi kɔːld miː ˈjɛstərdeɪ/', translation_es: 'Ella me llamó ayer.' },
+        { parts: [{ word: 'I saw' }, { word: 'him', category: 'Subject' }, { word: 'at the park.' }], ipa: '/aɪ sɔː hɪm æt ðə pɑːrk/', translation_es: 'Lo vi en el parque.' },
+        { parts: [{ word: 'Give' }, { word: 'her', category: 'Subject' }, { word: 'the book.' }], ipa: '/ɡɪv hɜːr ðə bʊk/', translation_es: 'Dale el libro a ella.' },
+        { parts: [{ word: 'We invited' }, { word: 'them', category: 'Subject' }, { word: 'to the party.' }], ipa: '/wi ɪnˈvaɪtɪd ðɛm tu ðə ˈpɑːrti/', translation_es: 'Los invitamos a la fiesta.' },
+        { parts: [{ word: 'He loves' }, { word: 'us', category: 'Subject' }, { word: '.' }], ipa: '/hi lʌvz ʌs/', translation_es: 'Él nos ama.' },
+      ]
+    },
+    {
+      id: 'can-cant-ability',
+      name: 'Can / Can\'t (Ability)',
+      description: 'Use "can" to express ability and "can\'t" (cannot) for inability.',
+      examples: [
+        { parts: [{ word: 'I' }, { word: 'can', category: 'Auxiliary' }, { word: 'swim very well.' }], ipa: '/aɪ kæn swɪm ˈvɛri wɛl/', translation_es: 'Puedo nadar muy bien.' },
+        { parts: [{ word: 'She' }, { word: 'can\'t', category: 'Auxiliary' }, { word: 'drive a car.' }], ipa: '/ʃi kænt draɪv ə kɑːr/', translation_es: 'Ella no puede conducir un coche.' },
+        { parts: [{ word: 'Can', category: 'Question Word' }, { word: 'you help me?' }], ipa: '/kæn ju hɛlp miː/', translation_es: '¿Puedes ayudarme?' },
+        { parts: [{ word: 'They' }, { word: 'can', category: 'Auxiliary' }, { word: 'speak three languages.' }], ipa: '/ðeɪ kæn spiːk θriː ˈlæŋɡwɪdʒɪz/', translation_es: 'Ellos pueden hablar tres idiomas.' },
+        { parts: [{ word: 'We' }, { word: 'cannot', category: 'Auxiliary' }, { word: 'wait any longer.' }], ipa: '/wi ˈkænɒt weɪt ˈɛni ˈlɒŋɡər/', translation_es: 'No podemos esperar más.' },
+      ]
     }
   ],
   [EnglishLevel.A2]: [
@@ -273,8 +297,53 @@ export const drillTopicsByLevel: DrillsByLevel = {
         { parts: [{ word: 'It\'s time to' }, { word: 'bite the bullet.', category: 'Idiom' }], ipa: '/baɪt ðə ˈbʊlɪt/', definition: 'To do something difficult or unpleasant', translation_es: 'Es hora de hacer de tripas corazón.' },
         { parts: [{ word: 'Break a leg', category: 'Idiom' }, { word: 'on your performance!' }], ipa: '/breɪk ə lɛɡ/', definition: 'Good luck', translation_es: '¡Mucha mierda (buena suerte) en tu actuación!' },
         { parts: [{ word: 'Stop' }, { word: 'beating around the bush', category: 'Idiom' }, { word: 'and tell me.' }], ipa: '/ˈbiːtɪŋ əˈraʊnd ðə bʊʃ/', definition: 'Avoiding the main topic', translation_es: 'Deja de andarte por las ramas.' },
+        { parts: [{ word: 'It was a' }, { word: 'piece of cake', category: 'Idiom' }, { word: '.' }], ipa: '/piːs əv keɪk/', definition: 'Very easy', translation_es: 'Fue pan comido.' },
+        { parts: [{ word: 'Don\'t' }, { word: 'let the cat out of the bag', category: 'Idiom' }, { word: '.' }], ipa: '/lɛt ðə kæt aʊt əv ðə bæɡ/', definition: 'Reveal a secret', translation_es: 'No reveles el secreto (no sueltes la sopa).' },
+        { parts: [{ word: 'He is' }, { word: 'under the weather', category: 'Idiom' }, { word: 'today.' }], ipa: '/ˈʌndər ðə ˈwɛðər/', definition: 'Feeling effortless/sick', translation_es: 'Él se siente mal hoy.' },
+        { parts: [{ word: 'We see' }, { word: 'eye to eye', category: 'Idiom' }, { word: 'on this.' }], ipa: '/aɪ tu aɪ/', definition: 'Agreeing with someone', translation_es: 'Estamos de acuerdo en esto.' },
+        { parts: [{ word: 'It costs an' }, { word: 'arm and a leg', category: 'Idiom' }, { word: '.' }], ipa: '/ɑːrm ənd ə lɛɡ/', definition: 'Very expensive', translation_es: 'Cuesta un ojo de la cara.' },
       ]
-    }
+    },
+    {
+      id: 'reported-speech',
+      name: 'Reported Speech',
+      description: 'When reporting what someone else said, we usually shift the tense back (Backshift).',
+      examples: [
+        {
+          comparison: [
+            { parts: [{ word: '"I am tired."' }], ipa: '', translation_es: 'Direct: "Estoy cansado."' },
+            { parts: [{ word: 'He said he' }, { word: 'was', category: 'Simple Past' }, { word: 'tired.' }], ipa: '/hi sɛd hi wɒz ˈtaɪərd/', translation_es: 'Reported: Él dijo que estaba cansado.' }
+          ]
+        },
+        {
+          comparison: [
+            { parts: [{ word: '"I will help you."' }], ipa: '', translation_es: 'Direct: "Te ayudaré."' },
+            { parts: [{ word: 'She said she' }, { word: 'would', category: 'Auxiliary' }, { word: 'help me.' }], ipa: '/ʃi sɛd ʃi wʊd hɛlp miː/', translation_es: 'Reported: Ella dijo que me ayudaría.' }
+          ]
+        },
+        {
+          comparison: [
+            { parts: [{ word: '"We have finished."' }], ipa: '', translation_es: 'Direct: "Hemos terminado."' },
+            { parts: [{ word: 'They said they' }, { word: 'had finished', category: 'Auxiliary' }, { word: '.' }], ipa: '/ðeɪ sɛd ðeɪ hæd ˈfɪnɪʃt/', translation_es: 'Reported: Ellos dijeron que habían terminado.' }
+          ]
+        },
+        {
+          comparison: [
+            { parts: [{ word: '"I can cook."' }], ipa: '', translation_es: 'Direct: "Puedo cocinar."' },
+            { parts: [{ word: 'He claimed he' }, { word: 'could', category: 'Auxiliary' }, { word: 'cook.' }], ipa: '/hi kleɪmd hi kʊd kʊk/', translation_es: 'Reported: Él afirmó que podía cocinar.' }
+          ]
+        },
+      ]
+    },
+    {
+      id: 'third-conditional',
+      name: 'Third Conditional',
+      description: 'Used for hypothetical situations in the past (regrets). If + Past Perfect, would have + V3.',
+      examples: [
+        { parts: [{ word: 'If I' }, { word: 'had known', category: 'Auxiliary' }, { word: ', I' }, { word: 'would have come', category: 'Auxiliary' }, { word: '.' }], ipa: '/ɪf aɪ hæd noʊn aɪ wʊd hæv kʌm/', translation_es: 'Si lo hubiera sabido, habría venido.' },
+        { parts: [{ word: 'If she' }, { word: 'hadn\'t studied', category: 'Auxiliary' }, { word: ', she' }, { word: 'would have failed', category: 'Auxiliary' }, { word: '.' }], ipa: '/ɪf ʃi ˈhædnt ˈstʌdid ʃi wʊd hæv feɪld/', translation_es: 'Si ella no hubiera estudiado, habría reprobado.' },
+        { parts: [{ word: 'We' }, { word: 'would have traveled', category: 'Auxiliary' }, { word: 'if we' }, { word: 'had had', category: 'Auxiliary' }, { word: 'money.' }], ipa: '/wi wʊd hæv ˈtrævəld ɪf wi hæd hæd ˈmʌni/', translation_es: 'Habríamos viajado si hubiéramos tenido dinero.' },
+      ]
   ],
   [EnglishLevel.C1]: [
     {
@@ -329,6 +398,56 @@ export const drillTopicsByLevel: DrillsByLevel = {
         { parts: [{ word: 'No sooner', category: 'Negative Adverb' }, { word: 'had', category: 'Auxiliary' }, { word: 'I', category: 'Subject' }, { word: 'arrived than it started raining.' }], ipa: '/noʊ ˈsuːnər hæd aɪ əˈraɪvd/', translation_es: 'Apenas había llegado cuando empezó a llover.' },
         { parts: [{ word: 'Seldom', category: 'Negative Adverb' }, { word: 'does', category: 'Auxiliary' }, { word: 'one', category: 'Subject' }, { word: 'find such honesty.' }], ipa: '/ˈsɛldəm dʌz wʌn faɪnd/', translation_es: 'Rara vez se encuentra tal honestidad.' },
         { parts: [{ word: 'Only then', category: 'Negative Adverb' }, { word: 'did', category: 'Auxiliary' }, { word: 'I', category: 'Subject' }, { word: 'understand the problem.' }], ipa: '/ˈoʊnli ðɛn dɪd aɪ ˌʌndərˈstænd/', translation_es: 'Solo entonces entendí el problema.' },
+      ]
+    },
+    {
+      id: 'advanced-adjective-order',
+      name: 'Advanced Adjective Order (DOSASCOMP)',
+      description: 'The strict order of adjectives in English: Determiner, Opinion, Size, Age, Shape, Color, Origin, Material, Purpose.',
+      examples: [
+        {
+          parts: [
+            { word: 'A', category: 'Determiner' },
+            { word: 'lovely', category: 'Opinion' },
+            { word: 'huge', category: 'Size' },
+            { word: 'old', category: 'Age' },
+            { word: 'round', category: 'Shape' },
+            { word: 'red', category: 'Color' },
+            { word: 'French', category: 'Origin' },
+            { word: 'wooden', category: 'Material' },
+            { word: 'sleeping', category: 'Purpose' },
+            { word: 'bag' }
+          ], ipa: '/ə ˈlʌvli hjuːdʒ oʊld raʊnd rɛd frɛntʃ ˈwʊdən ˈsliːpɪŋ bæɡ/', translation_es: 'Un saco de dormir francés, de madera (?), rojo, redondo, viejo, enorme y adorable.'
+        },
+        {
+          parts: [
+            { word: 'Those', category: 'Determiner' },
+            { word: 'three', category: 'Quantity' },
+            { word: 'expensive', category: 'Opinion' },
+            { word: 'little', category: 'Size' },
+            { word: 'new', category: 'Age' },
+            { word: 'square', category: 'Shape' },
+            { word: 'black', category: 'Color' },
+            { word: 'Italian', category: 'Origin' },
+            { word: 'leather', category: 'Material' },
+            { word: 'riding', category: 'Purpose' },
+            { word: 'boots' }
+          ], ipa: '/ðoʊz θriː ɪkˈspɛnsɪv ˈlɪtl njuː skwɛər blæk ɪˈtæliən ˈlɛðər ˈraɪdɪŋ buːts/', translation_es: 'Esas tres botas de montar de cuero italiano, negras, cuadradas, nuevas, pequeñas y caras.'
+        },
+        {
+          parts: [
+            { word: 'Her', category: 'Determiner' },
+            { word: 'beautiful', category: 'Opinion' },
+            { word: 'tiny', category: 'Size' },
+            { word: 'antique', category: 'Age' },
+            { word: 'heart-shaped', category: 'Shape' },
+            { word: 'purple', category: 'Color' },
+            { word: 'Japanese', category: 'Origin' },
+            { word: 'silk', category: 'Material' },
+            { word: 'wedding', category: 'Purpose' },
+            { word: 'kimono' }
+          ], ipa: '/hɜːr ˈbjuːtɪfʊl ˈtaɪni ænˈtiːk hɑːrt-ʃeɪpt ˈpɜːrpəl ˌdʒæpəˈniːz sɪlk ˈwɛdɪŋ kɪˈmoʊnoʊ/', translation_es: 'Su hermoso kimono de boda de seda japonesa, púrpura, con forma de corazón, antiguo y diminuto.'
+        },
       ]
     }
   ],

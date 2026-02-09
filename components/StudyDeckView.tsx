@@ -103,6 +103,29 @@ const getCategoryStyle = (category: WordCategory) => {
             return 'border-b-2 border-yellow-500/70 hover:border-yellow-500 text-yellow-200 font-semibold';
         case 'Adjectives':
             return 'border-b-2 border-cyan-500/70 hover:border-cyan-500 text-cyan-200';
+        // Adjective Order Categories
+        case 'Determiner':
+            return 'border-b-2 border-gray-400/70 hover:border-gray-300 text-gray-300';
+        case 'Quantity':
+            return 'border-b-2 border-slate-400/70 hover:border-slate-300 text-slate-200';
+        case 'Opinion':
+            return 'border-b-2 border-pink-500/70 hover:border-pink-400 text-pink-200';
+        case 'Size':
+            return 'border-b-2 border-blue-500/70 hover:border-blue-400 text-blue-200';
+        case 'Condition':
+            return 'border-b-2 border-teal-500/70 hover:border-teal-400 text-teal-200';
+        case 'Age':
+            return 'border-b-2 border-amber-500/70 hover:border-amber-400 text-amber-200';
+        case 'Shape':
+            return 'border-b-2 border-indigo-500/70 hover:border-indigo-400 text-indigo-200';
+        case 'Color':
+            return 'border-b-2 border-rose-500/70 hover:border-rose-400 text-rose-200';
+        case 'Origin':
+            return 'border-b-2 border-green-500/70 hover:border-green-400 text-green-200';
+        case 'Material':
+            return 'border-b-2 border-orange-500/70 hover:border-orange-400 text-orange-200';
+        case 'Purpose':
+            return 'border-b-2 border-violet-500/70 hover:border-violet-400 text-violet-200';
         default:
             return 'border-b border-dotted border-sky-400/50 hover:border-sky-400';
     }

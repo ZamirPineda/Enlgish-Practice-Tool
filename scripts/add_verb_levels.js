@@ -1,0 +1,74 @@
+
+const fs = require('fs');
+const path = require('path');
+
+const filePath = path.join(__dirname, '../data/stop_categories/grammar_verbs.ts');
+
+const levelMappings = {
+    // C1/C2 (Advanced - Recently Added)
+    'C1': [
+        'Accomplish', 'Acknowledge', 'Adapt', 'Advocate', 'Allege', 'Analyze', 'Appreciate', 'Approach', 'Assess', 'Attempt',
+        'Balance', 'Ban', 'Benefit', 'Blame', 'Boost', 'Bother',
+        'Challenge', 'Claim', 'Clarify', 'Collaborate', 'Combine', 'Commence', 'Compel', 'Compensate', 'Comply', 'Comprehend', 'Concentrate', 'Conduct', 'Confirm', 'Consent', 'Consider', 'Consult', 'Convince', 'Criticize',
+        'Debate', 'Decline', 'Define', 'Demonstrate', 'Depict', 'Derive', 'Determine', 'Devise', 'Diminish', 'Discuss', 'Display', 'Distinguish', 'Dominate', 'Draft',
+        'Elaborate', 'Emphasize', 'Encounter', 'Enhance', 'Evaluate', 'Examine', 'Expand', 'Expire', 'Expose',
+        'Facilitate', 'Feature', 'Focus', 'Formulate', 'Function',
+        'Generate', 'Grant', 'Guarantee',
+        'Handle', 'Hesitate', 'Highlight',
+        'Illustrate', 'Implement', 'Imply', 'Incorporate', 'Initiate', 'Inspect', 'Integrate', 'Interpret', 'Investigate', 'Isolate',
+        'Justify', 'Launch', 'Limit', 'Link', 'Locate',
+        'Maintain', 'Mention', 'Monitor', 'Motivate',
+        'Neglect', 'Negotiate',
+        'Obtain', 'Occupy', 'Operate',
+        'Participate', 'Perceive', 'Perform', 'Persuade', 'Predict', 'Preserve', 'Proceed', 'Promote', 'Propose', 'Pursue',
+        'Qualify', 'Question',
+        'React', 'Realize', 'Recognize', 'Recommend', 'Reflect', 'Reinforce', 'Reject', 'Relate', 'Rely', 'Require', 'Resemble', 'Resolve', 'Respond', 'Restore', 'Retain', 'Reveal',
+        'Satisfy', 'Select', 'Settle', 'Shift', 'Solve', 'Specify', 'Submit', 'Succeed', 'Suggest', 'Supply', 'Support', 'Survive', 'Sustain',
+        'Target', 'Tend', 'Threaten', 'Transfer', 'Transform', 'Treat',
+        'Undermine', 'Utilize', 'Validate', 'Vary', 'Verify', 'Violate',
+        'Wander', 'Weigh', 'Witness', 'Yield'
+    ],
+    // A1 (Beginner - Core)
+    'A1': [
+        'Be', 'Do', 'Go', 'Have', 'Say', 'See', 'Come', 'Get', 'Make', 'Know', 'Think', 'Take', 'Give', 'Look', 'Use', 'Find', 'Want', 'Tell', 'Put', 'Work', 'Call', 'Try', 'Ask', 'Need', 'Feel', 'Become', 'Leave', 'Learn', 'Play', 'Pay', 'Read', 'Study', 'Send', 'Live', 'Meet', 'Run', 'Stop', 'Open', 'Close', 'Walk', 'Eat', 'Drink', 'Sleep', 'Help', 'Love', 'Like', 'Buy', 'Speak', 'Write', 'Sit', 'Stand', 'Wait', 'Watch', 'Start', 'Finish', 'Understand', 'Listen'
+    ],
+    // A2 (Elementary)
+    'A2': [
+        'Agree', 'Allow', 'Answer', 'Appear', 'Arrive', 'Believe', 'Begin', 'Break', 'Bring', 'Build', 'Carry', 'Catch', 'Change', 'Check', 'Choose', 'Clean', 'Climb', 'Complete', 'Continue', 'Cook', 'Correct', 'Cost', 'Cut', 'Dance', 'Decide', 'Describe', 'Die', 'Draw', 'Drive', 'Earn', 'Enjoy', 'Enter', 'Explain', 'Fall', 'Fill', 'Fix', 'Fly', 'Follow', 'Forget', 'Grow', 'Happen', 'Hear', 'Hold', 'Hope', 'Hurt', 'Imagine', 'Improve', 'Include', 'Invite', 'Join', 'Jump', 'Keep', 'Kill', 'Laugh', 'Lend', 'Let', 'Lie', 'Lift', 'Lose', 'Offer', 'Paint', 'Pass', 'Pick', 'Plan', 'Practice', 'Prepare', 'Pull', 'Push', 'Rain', 'Remember', 'Rent', 'Repair', 'Repeat', 'Return', 'Ring', 'Save', 'Search', 'Sell', 'Share', 'Shop', 'Show', 'Sing', 'Smile', 'Spend', 'Stay', 'Steal', 'Swim', 'Teach', 'Travel', 'Turn', 'Vegetarian', 'Visit', 'Wake', 'Wash', 'Wear', 'Win', 'Worry'
+    ],
+    // B1 (Intermediate)
+    'B1': [
+        'Accept', 'Achieve', 'Act', 'Add', 'Admire', 'Admit', 'Advise', 'Afford', 'Aim', 'Announce', 'Apologize', 'Apply', 'Argue', 'Arrange', 'Arrest', 'Attack', 'Avoid', 'Beat', 'Beg', 'Behave', 'Belong', 'Blow', 'Book', 'Borrow', 'Breathe', 'Burn', 'Bury', 'Care', 'Celebrate', 'Chat', 'Claim', 'Collect', 'Compare', 'Complain', 'Connect', 'Control', 'Copy', 'Count', 'Cover', 'Create', 'Cross', 'Cry', 'Deal', 'Defend', 'Delete', 'Deliver', 'Demand', 'Depend', 'Destroy', 'Develop', 'Disagree', 'Discover', 'Discuss', 'Dislike', 'Divide', 'Double', 'Doubt', 'Dream', 'Drop', 'Dry', 'Empty', 'End', 'Exist', 'Expect', 'Experience', 'Express', 'Fail', 'Fear', 'Feed', 'Fight', 'Fit', 'Fold', 'Forgive', 'Freeze', 'Frighten', 'Guide', 'Handle', 'Hang', 'Hate', 'Hide', 'Hit', 'Hunt', 'Improve', 'Increase', 'Inform', 'Introduce', 'Invent', 'Iron', 'Joke', 'Kick', 'Kiss', 'Knock', 'Land', 'Last', 'Lay', 'Lead', 'Lend', 'Lie', 'Lift', 'Light', 'Link', 'Lock', 'Lose', 'Manage', 'Mark', 'Match', 'Matter', 'Mean', 'Measure', 'Melt', 'Miss', 'Mix', 'Move', 'Name', 'Notice', 'Number', 'Order', 'Own', 'Pack', 'Park', 'Paste', 'Perform', 'Phone', 'Plant', 'Point', 'Post', 'Pour', 'Pray', 'Prefer', 'Prepare', 'Press', 'Print', 'Produce', 'Improve'
+    ]
+};
+
+try {
+    let content = fs.readFileSync(filePath, 'utf8');
+    let count = 0;
+
+    Object.entries(levelMappings).forEach(([level, words]) => {
+        words.forEach(word => {
+            // Regex to match the word object: { word: 'Word', ... }
+            // We want to verify it doesn't already have a level tag to avoid overwrites (or maybe we do want to overwrite?)
+            // Let's assume we overwrite or add.
+
+            const regex = new RegExp(`({\\s*word:\\s*'${word}',[^}]+?)(,?\\s*level:\\s*'[^']+')?([^}]*})`, 'g');
+
+            if (regex.test(content)) {
+                content = content.replace(regex, (match, p1, p2, p3) => {
+                    // p1: start of object up to translation/ipa
+                    // p2: existing level (optional)
+                    // p3: rest of object
+                    count++;
+                    return `${p1}, level: '${level}'${p3}`;
+                });
+            }
+        });
+    });
+
+    fs.writeFileSync(filePath, content, 'utf8');
+    console.log(`✅ Updated ${count} verbs with level tags.`);
+
+} catch (err) {
+    console.error('Error:', err);
+}
