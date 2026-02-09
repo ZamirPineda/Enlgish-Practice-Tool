@@ -17,49 +17,49 @@ const CalculusView: React.FC = () => {
         },
         {
             title: "2. Funciones Algebraicas y Trascendentes",
-            headers: ["Regla", "Función f(x)", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
+            headers: ["Regla", "Función y=f(u)", "Derivada dy/dx", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
             rows: [
-                ["Potencia", "xⁿ", "nxⁿ⁻¹", "xⁿ⁺¹/(n+1)", "x⁵ → 5x⁴", "∫ x⁴ dx = x⁵/5 + C"],
-                ["Inversa", "1/x", "-1/x²", "ln|x|", "y=x⁻¹ → y'=-x⁻²", "∫ 5/x dx = 5ln|x| + C"],
-                ["Raíz", "√x", "1/(2√x)", "(2/3)x³/²", "y=√x → y'=1/(2√x)", "∫ √x dx = (2/3)x³/² + C"],
-                ["Exponencial", "eˣ", "eˣ", "eˣ", "e³ˣ → 3e³ˣ", "∫ e³ˣ dx = (1/3)e³ˣ + C"],
-                ["Base a", "aˣ", "aˣ ln(a)", "aˣ/ln(a)", "2ˣ → 2ˣ ln(2)", "∫ 2ˣ dx = 2ˣ/ln(2) + C"],
-                ["Log Natural", "ln(x)", "1/x", "x ln(x) - x", "ln(x) → 1/x", "∫ ln(x) dx = x(ln x - 1) + C"],
-                ["Valor Abs.", "|x|", "x/|x|", "x|x|/2", "|x| → sgn(x)", "∫₋₁¹ |x| dx = 1"]
+                ["Potencia", "uⁿ", "n uⁿ⁻¹ u'", "xⁿ⁺¹/(n+1)", "x⁵ → 5x⁴", "∫ x⁴ dx = x⁵/5 + C"],
+                ["Inversa", "1/u", "-u'/u²", "ln|x|", "y=x⁻¹ → y'=-x⁻²", "∫ 5/x dx = 5ln|x| + C"],
+                ["Raíz", "√u", "u'/(2√u)", "(2/3)x³/²", "y=√x → y'=1/(2√x)", "∫ √x dx = (2/3)x³/² + C"],
+                ["Exponencial", "eᵘ", "u' eᵘ", "eˣ", "e³ˣ → 3e³ˣ", "∫ e³ˣ dx = (1/3)e³ˣ + C"],
+                ["Base a", "aᵘ", "u' aᵘ ln(a)", "aˣ/ln(a)", "2ˣ → 2ˣ ln(2)", "∫ 2ˣ dx = 2ˣ/ln(2) + C"],
+                ["Log Natural", "ln(u)", "u'/u", "x ln(x) - x", "ln(x) → 1/x", "∫ ln(x) dx = x(ln x - 1) + C"],
+                ["Valor Abs.", "|u|", "u' u/|u|", "x|x|/2", "|x| → sgn(x)", "∫₋₁¹ |x| dx = 1"]
             ]
         },
         {
             title: "3. Trigonometría",
-            headers: ["Regla", "Función f(x)", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
+            headers: ["Regla", "Función y=f(u)", "Derivada dy/dx", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
             rows: [
-                ["Seno", "sin(x)", "cos(x)", "-cos(x)", "sin(3x) → 3cos(3x)", "∫ sin(3x) dx = -(1/3)cos(3x) + C"],
-                ["Coseno", "cos(x)", "-sin(x)", "sin(x)", "cos(x²) → -2x sin(x²)", "∫ cos(5x) dx = (1/5)sin(5x) + C"],
-                ["Tangente", "tan(x)", "sec²(x)", "ln|sec(x)|", "tan(5x) → 5sec²(5x)", "∫ tan(2x) dx = (1/2)ln|sec(2x)| + C"],
-                ["Cotangente", "cot(x)", "-csc²(x)", "ln|sin(x)|", "cot(2x) → -2csc²(2x)", "∫ cot(3x) dx = (1/3)ln|sin(3x)| + C"],
-                ["Secante", "sec(x)", "sec(x)tan(x)", "ln|sec(x) + tan(x)|", "sec(4x) → 4sec(4x)tan(4x)", "∫ sec(x) dx = ln|sec x + tan x| + C"],
-                ["Cosecante", "csc(x)", "-csc(x)cot(x)", "-ln|csc(x) + cot(x)|", "csc(x) → -csc(x)cot(x)", "∫ csc(x) dx = -ln|csc x + cot x| + C"]
+                ["Seno", "sin(u)", "u' cos(u)", "-cos(x)", "sin(3x) → 3cos(3x)", "∫ sin(3x) dx = -(1/3)cos(3x) + C"],
+                ["Coseno", "cos(u)", "-u' sin(u)", "sin(x)", "cos(x²) → -2x sin(x²)", "∫ cos(5x) dx = (1/5)sin(5x) + C"],
+                ["Tangente", "tan(u)", "u' sec²(u)", "ln|sec(x)|", "tan(5x) → 5sec²(5x)", "∫ tan(2x) dx = (1/2)ln|sec(2x)| + C"],
+                ["Cotangente", "cot(u)", "-u' csc²(u)", "ln|sin(x)|", "cot(2x) → -2csc²(2x)", "∫ cot(3x) dx = (1/3)ln|sin(3x)| + C"],
+                ["Secante", "sec(u)", "u' sec(u)tan(u)", "ln|sec(x) + tan(x)|", "sec(4x) → 4sec(4x)tan(4x)", "∫ sec(x) dx = ln|sec x + tan x| + C"],
+                ["Cosecante", "csc(u)", "-u' csc(u)cot(u)", "-ln|csc(x) + cot(x)|", "csc(x) → -csc(x)cot(x)", "∫ csc(x) dx = -ln|csc x + cot x| + C"]
             ]
         },
         {
             title: "4. Trigonométricas Inversas",
-            headers: ["Regla", "Función f(x)", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
+            headers: ["Regla", "Función y=f(u)", "Derivada dy/dx", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
             rows: [
-                ["Arcoseno", "arcsin(x)", "1/√(1-x²)", "x arcsin(x) + √(1-x²)", "arcsin(2x) → 2/√(1-4x²)", "∫ arcsin(x) dx = x arcsin(x) + √(1-x²) + C"],
-                ["Arcocoseno", "arccos(x)", "-1/√(1-x²)", "x arccos(x) - √(1-x²)", "arccos(x) → -1/√(1-x²)", "∫ arccos(x) dx = x arccos(x) - √(1-x²) + C"],
-                ["Arcotangente", "arctan(x)", "1/(1+x²)", "x arctan(x) - (1/2)ln(1+x²)", "arctan(3x) → 3/(1+9x²)", "∫ arctan(x) dx = x arctan(x) - (1/2)ln(1+x²) + C"],
-                ["Arcocotangente", "arccot(x)", "-1/(1+x²)", "x arccot(x) + (1/2)ln(1+x²)", "arccot(x) → -1/(1+x²)", "∫ arccot(x) dx = x arccot(x) + (1/2)ln(1+x²) + C"],
-                ["Arcosecante", "arcsec(x)", "1/(|x|√(x²-1))", "x arcsec(x) - ln|x + √(x²-1)|", "arcsec(2x) → 2/(|2x|√(4x²-1))", "∫ arcsec(x) dx = x arcsec(x) - ln|x+√(x²-1)|+C"]
+                ["Arcoseno", "arcsin(u)", "u'/√(1-u²)", "x arcsin(x) + √(1-x²)", "arcsin(2x) → 2/√(1-4x²)", "∫ arcsin(x) dx = x arcsin(x) + √(1-x²) + C"],
+                ["Arcocoseno", "arccos(u)", "-u'/√(1-u²)", "x arccos(x) - √(1-x²)", "arccos(x) → -1/√(1-x²)", "∫ arccos(x) dx = x arccos(x) - √(1-x²) + C"],
+                ["Arcotangente", "arctan(u)", "u'/(1+u²)", "x arctan(x) - (1/2)ln(1+x²)", "arctan(3x) → 3/(1+9x²)", "∫ arctan(x) dx = x arctan(x) - (1/2)ln(1+x²) + C"],
+                ["Arcocotangente", "arccot(u)", "-u'/(1+u²)", "x arccot(x) + (1/2)ln(1+x²)", "arccot(x) → -1/(1+x²)", "∫ arccot(x) dx = x arccot(x) + (1/2)ln(1+x²) + C"],
+                ["Arcosecante", "arcsec(u)", "u'/(|u|√(u²-1))", "x arcsec(x) - ln|x + √(x²-1)|", "arcsec(2x) → 2/(|2x|√(4x²-1))", "∫ arcsec(x) dx = x arcsec(x) - ln|x+√(x²-1)|+C"]
             ]
         },
         {
             title: "5. Hiperbólicas",
-            headers: ["Regla", "Función f(x)", "Derivada f'(x)", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
+            headers: ["Regla", "Función y=f(u)", "Derivada dy/dx", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
             rows: [
-                ["Seno Hiperb.", "sinh(x)", "cosh(x)", "cosh(x)", "sinh(2x) → 2cosh(2x)", "∫ sinh(2x) dx = (1/2)cosh(2x) + C"],
-                ["Coseno Hiperb.", "cosh(x)", "sinh(x)", "sinh(x)", "cosh(3x) → 3sinh(3x)", "∫ cosh(3x) dx = (1/3)sinh(3x) + C"],
-                ["Tangente Hiperb.", "tanh(x)", "sech²(x)", "ln(cosh(x))", "tanh(x²) → 2x sech²(x²)", "∫ tanh(x) dx = ln(cosh x) + C"],
-                ["Arcoseno Hip.", "arsinh(x)", "1/√(x²+1)", "x arsinh(x) - √(x²+1)", "arsinh(x) → 1/√(x²+1)", "∫ arsinh(x) dx = x arsinh(x) - √(x²+1) + C"],
-                ["Arcotangente Hip.", "artanh(x)", "1/(1-x²)", "x artanh(x) + (1/2)ln(1-x²)", "artanh(5x) → 5/(1-25x²)", "∫ artanh(x) dx = x artanh(x) + 0.5ln(1-x²) + C"]
+                ["Seno Hiperb.", "sinh(u)", "u' cosh(u)", "cosh(x)", "sinh(2x) → 2cosh(2x)", "∫ sinh(2x) dx = (1/2)cosh(2x) + C"],
+                ["Coseno Hiperb.", "cosh(u)", "u' sinh(u)", "sinh(x)", "cosh(3x) → 3sinh(3x)", "∫ cosh(3x) dx = (1/3)sinh(3x) + C"],
+                ["Tangente Hiperb.", "tanh(u)", "u' sech²(u)", "ln(cosh(x))", "tanh(x²) → 2x sech²(x²)", "∫ tanh(x) dx = ln(cosh x) + C"],
+                ["Arcoseno Hip.", "arsinh(u)", "u'/√(u²+1)", "x arsinh(x) - √(x²+1)", "arsinh(x) → 1/√(x²+1)", "∫ arsinh(x) dx = x arsinh(x) - √(x²+1) + C"],
+                ["Arcotangente Hip.", "artanh(u)", "u'/(1-u²)", "x artanh(x) + (1/2)ln(1-x²)", "artanh(5x) → 5/(1-25x²)", "∫ artanh(x) dx = x artanh(x) + 0.5ln(1-x²) + C"]
             ]
         }
     ];
@@ -71,7 +71,7 @@ const CalculusView: React.FC = () => {
                     FORMULARIO MAESTRO DE CÁLCULO
                 </h2>
                 <p className="text-slate-400 text-xs md:text-sm mt-1">
-                    Reglas, derivadas e integrales fundamentales
+                    Donde <strong>u</strong> es una función derivable de <strong>x</strong> (Regla de la Cadena).
                 </p>
             </div>
 
