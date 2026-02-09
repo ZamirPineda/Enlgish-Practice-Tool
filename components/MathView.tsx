@@ -64,6 +64,17 @@ const MathView: React.FC = () => {
                 ["Arcoseno Hip.", "arsinh(u)", "u'/√(u²+1)", "x arsinh(x) - √(x²+1)", "arsinh(x) → 1/√(x²+1)", "∫ arsinh(x) dx = x arsinh(x) - √(x²+1) + C"],
                 ["Arcotangente Hip.", "artanh(u)", "u'/(1-u²)", "x artanh(x) + (1/2)ln(1-x²)", "artanh(5x) → 5/(1-25x²)", "∫ artanh(x) dx = x artanh(x) + 0.5ln(1-x²) + C"]
             ]
+        },
+        {
+            title: "6. Técnicas de Integración",
+            headers: ["Técnica", "Fórmula / Método", "Ejemplo / Notas"],
+            rows: [
+                ["Sustitución (u)", "∫ f(g(x))g'(x)dx = ∫ f(u)du", "u = g(x) → du = g'(x)dx"],
+                ["Por Partes", "∫ u dv = uv - ∫ v du", "ILATE: Inversa, Log, Alg, Trig, Exp"],
+                ["Sustitución Trigonométrica", "√(a²-x²) → x = a sin(θ)", "√(a²+x²) → x = a tan(θ)\n√(x²-a²) → x = a sec(θ)"],
+                ["Fracciones Parciales", "P(x)/Q(x) = A/(x-a) + B/(x-b) + ...", "Para factores lineales distintos"],
+                ["Integrales de Potencias Trig.", "∫ sinᵐ(x)cosⁿ(x)dx", "Si m o n impar: separar un factor\nSi ambos pares: usar identidades de ángulo mitad"]
+            ]
         }
     ];
 
