@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,23 +121,23 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Apache Flink</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a te permitirÃ¡ desplegar una instancia bÃ¡sica de Apache Flink localmente utilizando Docker Compose. Flink es un framework y motor de procesamiento de flujos de datos distribuidos para cÃ¡lculos con estado y a gran escala.</p><p>La configuraciÃ³n incluye los siguientes componentes:</p><ul><li>  <strong>JobManager</strong>: Es el coordinador central del clÃºster de Flink. Es responsable de recibir las aplicaciones Flink, programar los trabajos y gestionar los <span class="tooltip" data-tooltip-text="En Apache Flink, los TaskManagers son los procesos de trabajo (workers) que ejecutan las tareas de un trabajo de procesamiento de datos, como los operadores, transformaciones y funciones definidas por el usuario.">TaskManagers</span>. TambiÃ©n expone la interfaz de usuario web de Flink para monitorear los trabajos.</li><li>  <strong>TaskManager</strong>: Son los trabajadores que ejecutan las tareas de procesamiento de datos, almacenan en bÃºfer y intercambian datos. Un TaskManager ejecuta uno o mÃ¡s 'task slots', que son unidades de recursos.</li></ul><p>Se utilizarÃ¡n dos <code>Dockerfiles</code> mÃ­nimos que extienden las imÃ¡genes oficiales de Flink para demostrar cÃ³mo se podrÃ­a personalizar la configuraciÃ³n, aunque para un setup bÃ¡sico no son estrictamente necesarios. El archivo <code>docker-compose.yml</code> orquestarÃ¡ el JobManager y un TaskManager, enlazÃ¡ndolos a travÃ©s de una red definida y exponiendo la UI de Flink en el puerto <code>8081</code> de tu mÃ¡quina local.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>jobmanager/Dockerfile</h3><pre><code># Dockerfile para el JobManager de Apache Flink
+    <h2>Explicación</h2><p>Esta guía te permitirá desplegar una instancia básica de Apache Flink localmente utilizando Docker Compose. Flink es un framework y motor de procesamiento de flujos de datos distribuidos para cálculos con estado y a gran escala.</p><p>La configuración incluye los siguientes componentes:</p><ul><li>  <strong>JobManager</strong>: Es el coordinador central del clúster de Flink. Es responsable de recibir las aplicaciones Flink, programar los trabajos y gestionar los <span class="tooltip" data-tooltip-text="En Apache Flink, los TaskManagers son los procesos de trabajo (workers) que ejecutan las tareas de un trabajo de procesamiento de datos, como los operadores, transformaciones y funciones definidas por el usuario.">TaskManagers</span>. También expone la interfaz de usuario web de Flink para monitorear los trabajos.</li><li>  <strong>TaskManager</strong>: Son los trabajadores que ejecutan las tareas de procesamiento de datos, almacenan en búfer y intercambian datos. Un TaskManager ejecuta uno o más 'task slots', que son unidades de recursos.</li></ul><p>Se utilizarán dos <code>Dockerfiles</code> mínimos que extienden las imágenes oficiales de Flink para demostrar cómo se podría personalizar la configuración, aunque para un setup básico no son estrictamente necesarios. El archivo <code>docker-compose.yml</code> orquestará el JobManager y un TaskManager, enlazándolos a través de una red definida y exponiendo la UI de Flink en el puerto <code>8081</code> de tu máquina local.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>jobmanager/Dockerfile</h3><pre><code># Dockerfile para el JobManager de Apache Flink
 # Utiliza la imagen oficial de Flink como base para el JobManager.
-# Este Dockerfile es mÃ­nimo; puedes aÃ±adir aquÃ­ dependencias adicionales,
-# conectores de Flink, o configuraciones especÃ­ficas si tu aplicaciÃ³n lo requiere.
+# Este Dockerfile es mínimo; puedes añadir aquí dependencias adicionales,
+# conectores de Flink, o configuraciones específicas si tu aplicación lo requiere.
 FROM flink:1.17-scala_2.12
 
-# Para un setup bÃ¡sico, la imagen oficial ya incluye todo lo necesario.
-# El ENTRYPOINT y CMD de la imagen base de Flink estÃ¡n optimizados para
-# funcionar con variables de entorno, que se configurarÃ¡n en docker-compose.yml.</code></pre><h3>taskmanager/Dockerfile</h3><pre><code># Dockerfile para el TaskManager de Apache Flink
+# Para un setup básico, la imagen oficial ya incluye todo lo necesario.
+# El ENTRYPOINT y CMD de la imagen base de Flink están optimizados para
+# funcionar con variables de entorno, que se configurarán en docker-compose.yml.</code></pre><h3>taskmanager/Dockerfile</h3><pre><code># Dockerfile para el TaskManager de Apache Flink
 # Utiliza la imagen oficial de Flink como base para el TaskManager.
-# Este Dockerfile es mÃ­nimo; puedes aÃ±adir aquÃ­ dependencias adicionales,
-# conectores de Flink, o configuraciones especÃ­ficas si tu aplicaciÃ³n lo requiere.
+# Este Dockerfile es mínimo; puedes añadir aquí dependencias adicionales,
+# conectores de Flink, o configuraciones específicas si tu aplicación lo requiere.
 FROM flink:1.17-scala_2.12
 
-# Para un setup bÃ¡sico, la imagen oficial ya incluye todo lo necesario.
-# El ENTRYPOINT y CMD de la imagen base de Flink estÃ¡n optimizados para
-# funcionar con variables de entorno, que se configurarÃ¡n en docker-compose.yml.</code></pre><h3>docker-compose.yml</h3><pre><code>version: "3.8"
+# Para un setup básico, la imagen oficial ya incluye todo lo necesario.
+# El ENTRYPOINT y CMD de la imagen base de Flink están optimizados para
+# funcionar con variables de entorno, que se configurarán en docker-compose.yml.</code></pre><h3>docker-compose.yml</h3><pre><code>version: "3.8"
 services:
   jobmanager:
     build: ./jobmanager # Usa el Dockerfile en el subdirectorio jobmanager
@@ -145,9 +145,9 @@ services:
     ports:
       - "8081:8081" # Puerto de la interfaz de usuario web de Flink
     environment:
-      # Configura la direcciÃ³n RPC del JobManager para que los TaskManagers se conecten
+      # Configura la dirección RPC del JobManager para que los TaskManagers se conecten
       - FLINK_PROPERTIES_JOBMANAGER_RPC_ADDRESS=jobmanager
-      # NÃºmero de slots de tarea por TaskManager (uno por defecto)
+      # Número de slots de tarea por TaskManager (uno por defecto)
       - FLINK_PROPERTIES_TASKMANAGER_NUMBER_OF_TASK_SLOTS=1
     volumes:
       # Monta un volumen para persistir los logs del JobManager
@@ -159,9 +159,9 @@ services:
     build: ./taskmanager # Usa el Dockerfile en el subdirectorio taskmanager
     hostname: taskmanager
     environment:
-      # Los TaskManagers deben saber cÃ³mo encontrar al JobManager
+      # Los TaskManagers deben saber cómo encontrar al JobManager
       - FLINK_PROPERTIES_JOBMANAGER_RPC_ADDRESS=jobmanager
-      # NÃºmero de slots de tarea que este TaskManager ofrecerÃ¡
+      # Número de slots de tarea que este TaskManager ofrecerá
       - FLINK_PROPERTIES_TASKMANAGER_NUMBER_OF_TASK_SLOTS=1
     volumes:
       # Monta un volumen para persistir los logs del TaskManager
@@ -174,7 +174,7 @@ services:
 
 networks:
   flink-network:
-    driver: bridge # Define una red para que los servicios puedan comunicarse entre sÃ­</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHGUkgfZM7YhthXgDgDfjMIrHzSjEEPLa8ja_iVlqE8ajvyK3jC-oylB31c3g6caA2F9paUx3mBl9acwJ4JuVeTAHdu79u2-9OuZ-yg5rrirKXZ9zi4S-v-4iDaojp6PSOvhb2dcwFJ-m9D91oo6Mw2v25lbQ7pcAXrQckWcUSbiIA3hs6EaPRAhRLp4waMBm7nBIdApPRanN6tSMXVzjAn" target="_blank" rel="noopener noreferrer">googlesource.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEwb5aZtn80K_kwaaieUm0ML-Rt0Uf4oh-Y73npli9IeXy4vuvVmQa5aIgobHbQh1rIacAL-yBg90LQdw9DFRVTlR_kwuXJoPShALd7wbRL2LwPJ781iqKBCvrgjeWlaWOiQqMf_xVI32R7iGAqdgaUp47SyBY=" target="_blank" rel="noopener noreferrer">confluent.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYZjXzEZZwX31mFxvYQ9SN1oiuEUGHUurbBsTSXwqbwN6pIHmxscyLargOqfbCdKkw1oUcWikRtr0YJyPHmEBtZwKOTlRvnc9KHuXJy4IP0ulaRv9aDsv9JqjYgxawiOr120omCt883GvdNPbnUjLU3hMZK7lsUAwzwLYNuJM=" target="_blank" rel="noopener noreferrer">confluent.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH9EK2b1gxtT9evTbWTvqikN27KNiFuRO1FtyKwsgmeybpr9T_hwpz-aki5vGdf35cnMr2w7V7CiTFUswyHGMpzbJX8A5iFxbmOIs1wHxrJ_a-jTsu4hWgIgoGz6JUPakFUBs7RgqvIokGSF3aRQ2V8zSPBMaNylTx_D6hfowAEelKiDukcWWnedkP0wcs_cxEXRya4" target="_blank" rel="noopener noreferrer">dev.to</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHU-yvOEZ0MdrYqSQ395NF5ZmmV1NRigLm1cMHAi6La4nhed9QshEKxoy3fY6GrOTf_lYhdERGlilKOJuOp746rWpNpNRxvk2qcgqIqpMRmxYLLgIktB6pP8aRhqt_pAwxTsraoV8zIeSelNfdXH0S-tafva_J4pRZ4-8x7e8OruacbvTd7nAJw1ept" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
+    driver: bridge # Define una red para que los servicios puedan comunicarse entre sí</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHGUkgfZM7YhthXgDgDfjMIrHzSjEEPLa8ja_iVlqE8ajvyK3jC-oylB31c3g6caA2F9paUx3mBl9acwJ4JuVeTAHdu79u2-9OuZ-yg5rrirKXZ9zi4S-v-4iDaojp6PSOvhb2dcwFJ-m9D91oo6Mw2v25lbQ7pcAXrQckWcUSbiIA3hs6EaPRAhRLp4waMBm7nBIdApPRanN6tSMXVzjAn" target="_blank" rel="noopener noreferrer">googlesource.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEwb5aZtn80K_kwaaieUm0ML-Rt0Uf4oh-Y73npli9IeXy4vuvVmQa5aIgobHbQh1rIacAL-yBg90LQdw9DFRVTlR_kwuXJoPShALd7wbRL2LwPJ781iqKBCvrgjeWlaWOiQqMf_xVI32R7iGAqdgaUp47SyBY=" target="_blank" rel="noopener noreferrer">confluent.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYZjXzEZZwX31mFxvYQ9SN1oiuEUGHUurbBsTSXwqbwN6pIHmxscyLargOqfbCdKkw1oUcWikRtr0YJyPHmEBtZwKOTlRvnc9KHuXJy4IP0ulaRv9aDsv9JqjYgxawiOr120omCt883GvdNPbnUjLU3hMZK7lsUAwzwLYNuJM=" target="_blank" rel="noopener noreferrer">confluent.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH9EK2b1gxtT9evTbWTvqikN27KNiFuRO1FtyKwsgmeybpr9T_hwpz-aki5vGdf35cnMr2w7V7CiTFUswyHGMpzbJX8A5iFxbmOIs1wHxrJ_a-jTsu4hWgIgoGz6JUPakFUBs7RgqvIokGSF3aRQ2V8zSPBMaNylTx_D6hfowAEelKiDukcWWnedkP0wcs_cxEXRya4" target="_blank" rel="noopener noreferrer">dev.to</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHU-yvOEZ0MdrYqSQ395NF5ZmmV1NRigLm1cMHAi6La4nhed9QshEKxoy3fY6GrOTf_lYhdERGlilKOJuOp746rWpNpNRxvk2qcgqIqpMRmxYLLgIktB6pP8aRhqt_pAwxTsraoV8zIeSelNfdXH0S-tafva_J4pRZ4-8x7e8OruacbvTd7nAJw1ept" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
   </div>
 </body>
 </html>

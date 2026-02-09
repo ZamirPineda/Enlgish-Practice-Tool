@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,19 +121,19 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Apache Spark</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a te permite levantar una instancia bÃ¡sica de Apache Spark en modo distribuido (master y worker) utilizando <code>docker-compose</code>. Se basa en las imÃ¡genes oficiales de Bitnami Spark, que facilitan la configuraciÃ³n mediante variables de entorno.</p><p><strong>Estructura del Proyecto:</strong></p><p>Crea los siguientes archivos en una carpeta vacÃ­a:</p><ul><li>  <code>Dockerfile.master</code>: Define la imagen para el nodo master de Spark.</li><li>  <code>Dockerfile.worker</code>: Define la imagen para el nodo worker de Spark.</li><li>  <code>docker-compose.yml</code>: Orquesta los servicios del master y worker, define sus configuraciones y la red compartida.</li></ul><p><strong>Pasos:</strong></p><p>1.  <strong>Crear los archivos:</strong> Guarda el contenido proporcionado para <code>Dockerfile.master</code>, <code>Dockerfile.worker</code> y <code>docker-compose.yml</code> en sus respectivos archivos dentro del mismo directorio.</p><p>2.  <strong>Iniciar los contenedores:</strong> Ejecuta el comando <code>docker-compose up -d</code>. Esto construirÃ¡ las imÃ¡genes y levantarÃ¡ los servicios en segundo plano.</p><p>3.  <strong>Verificar el estado:</strong> Una vez levantados, puedes acceder a la interfaz de usuario de Spark Master en <code>http://localhost:8080</code>. AllÃ­ podrÃ¡s ver el estado del master y los <span class="tooltip" data-tooltip-text="Un proceso o hilo de ejecuciÃ³n que realiza una tarea especÃ­fica, comÃºnmente consumiendo y procesando mensajes de una cola de trabajo de forma independiente.">workers</span> conectados.</p><p>4.  <strong>Ejecutar una aplicaciÃ³n Spark:</strong> Para interactuar con tu clÃºster Spark, puedes acceder al contenedor del master y ejecutar <code>spark-shell</code> o <code>pyspark</code>:</p><pre><code>docker exec -it spark-master spark-shell
+    <h2>Explicación</h2><p>Esta guía te permite levantar una instancia básica de Apache Spark en modo distribuido (master y worker) utilizando <code>docker-compose</code>. Se basa en las imágenes oficiales de Bitnami Spark, que facilitan la configuración mediante variables de entorno.</p><p><strong>Estructura del Proyecto:</strong></p><p>Crea los siguientes archivos en una carpeta vacía:</p><ul><li>  <code>Dockerfile.master</code>: Define la imagen para el nodo master de Spark.</li><li>  <code>Dockerfile.worker</code>: Define la imagen para el nodo worker de Spark.</li><li>  <code>docker-compose.yml</code>: Orquesta los servicios del master y worker, define sus configuraciones y la red compartida.</li></ul><p><strong>Pasos:</strong></p><p>1.  <strong>Crear los archivos:</strong> Guarda el contenido proporcionado para <code>Dockerfile.master</code>, <code>Dockerfile.worker</code> y <code>docker-compose.yml</code> en sus respectivos archivos dentro del mismo directorio.</p><p>2.  <strong>Iniciar los contenedores:</strong> Ejecuta el comando <code>docker-compose up -d</code>. Esto construirá las imágenes y levantará los servicios en segundo plano.</p><p>3.  <strong>Verificar el estado:</strong> Una vez levantados, puedes acceder a la interfaz de usuario de Spark Master en <code>http://localhost:8080</code>. Allí podrás ver el estado del master y los <span class="tooltip" data-tooltip-text="Un proceso o hilo de ejecución que realiza una tarea específica, comúnmente consumiendo y procesando mensajes de una cola de trabajo de forma independiente.">workers</span> conectados.</p><p>4.  <strong>Ejecutar una aplicación Spark:</strong> Para interactuar con tu clúster Spark, puedes acceder al contenedor del master y ejecutar <code>spark-shell</code> o <code>pyspark</code>:</p><pre><code>docker exec -it spark-master spark-shell
 # O para Python
-docker exec -it spark-master pyspark</code></pre><p>    Dentro del <code>spark-shell</code> o <code>pyspark</code>, puedes ejecutar cÃ³digo Spark. Por ejemplo:</p><pre><code>val data = 1 to 1000
+docker exec -it spark-master pyspark</code></pre><p>    Dentro del <code>spark-shell</code> o <code>pyspark</code>, puedes ejecutar código Spark. Por ejemplo:</p><pre><code>val data = 1 to 1000
 val distData = sc.parallelize(data)
-distData.count()</code></pre><p>5.  <strong>Detener y limpiar:</strong> Cuando hayas terminado, puedes detener y eliminar los contenedores con:</p><pre><code>docker-compose down</code></pre><p>Esta configuraciÃ³n te proporciona un entorno Spark funcional para desarrollo y pruebas locales.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile.master</h3><pre><code># Dockerfile para Spark Master
-# Utiliza la imagen oficial de Bitnami Spark, que ya viene configurada para fÃ¡cil despliegue.
+distData.count()</code></pre><p>5.  <strong>Detener y limpiar:</strong> Cuando hayas terminado, puedes detener y eliminar los contenedores con:</p><pre><code>docker-compose down</code></pre><p>Esta configuración te proporciona un entorno Spark funcional para desarrollo y pruebas locales.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.master</h3><pre><code># Dockerfile para Spark Master
+# Utiliza la imagen oficial de Bitnami Spark, que ya viene configurada para fácil despliegue.
 FROM bitnami/spark:3.5.0
 # La imagen de Bitnami ya configura los puertos y el punto de entrada
-# basÃ¡ndose en variables de entorno, que se definirÃ¡n en docker-compose.yml.
-# No necesitamos configurar CMD o EXPOSE aquÃ­ explÃ­citamente si usamos las variables.</code></pre><h3>Dockerfile.worker</h3><pre><code># Dockerfile para Spark Worker
+# basándose en variables de entorno, que se definirán en docker-compose.yml.
+# No necesitamos configurar CMD o EXPOSE aquí explícitamente si usamos las variables.</code></pre><h3>Dockerfile.worker</h3><pre><code># Dockerfile para Spark Worker
 # Utiliza la misma imagen base que el master.
 FROM bitnami/spark:3.5.0
-# Al igual que el master, la configuraciÃ³n del worker se manejarÃ¡ con variables de entorno
+# Al igual que el master, la configuración del worker se manejará con variables de entorno
 # en docker-compose.yml.</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
 
 services:
@@ -147,9 +147,9 @@ services:
       - "8080:8080" # Spark Master UI
       - "7077:7077" # Spark Master internal communication
     environment:
-      # ConfiguraciÃ³n para el rol de Master
+      # Configuración para el rol de Master
       - SPARK_MODE=master
-      # Variables para deshabilitar la autenticaciÃ³n/encriptaciÃ³n para un setup local simple
+      # Variables para deshabilitar la autenticación/encriptación para un setup local simple
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
       - SPARK_RPC_ENCRYPTION_ENABLED=no
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
@@ -163,16 +163,16 @@ services:
     container_name: spark-worker
     hostname: spark-worker
     ports:
-      - "8081:8081" # Spark Worker UI (puede ser dinÃ¡mico, pero lo fijamos para este ejemplo)
+      - "8081:8081" # Spark Worker UI (puede ser dinámico, pero lo fijamos para este ejemplo)
     environment:
-      # ConfiguraciÃ³n para el rol de Worker
+      # Configuración para el rol de Worker
       - SPARK_MODE=worker
       # URL del master para que el worker se conecte
       - SPARK_MASTER_URL=spark://spark-master:7077
       # Recursos asignados al worker
       - SPARK_WORKER_CORES=1
       - SPARK_WORKER_MEMORY=1G
-      # Variables para deshabilitar la autenticaciÃ³n/encriptaciÃ³n para un setup local simple
+      # Variables para deshabilitar la autenticación/encriptación para un setup local simple
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
       - SPARK_RPC_ENCRYPTION_ENABLED=no
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no

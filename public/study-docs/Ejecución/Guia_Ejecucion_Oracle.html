@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,29 +121,29 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Oracle</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a le permitirÃ¡ levantar una instancia local de Oracle Database Express Edition (XE) usando <code>gvenzl/oracle-xe</code>, una imagen Docker muy popular y fÃ¡cil de usar para entornos de desarrollo. Utilizaremos <code>docker-compose</code> para simplificar la configuraciÃ³n, la persistencia de datos y la gestiÃ³n de la base de datos. Se expondrÃ¡n los puertos <code>1521</code> para conexiones SQL y <code>8080</code> para acceder a la interfaz de APEX y SQL Developer Web.</p><h3>Pasos a seguir:</h3><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio para tu proyecto (ej. <code>oracle-xe-local</code>). Dentro de Ã©l, guarda el contenido proporcionado en los archivos <code>docker-compose.yml</code>, <code>Dockerfile</code> y <code>healthcheck.sql</code> con sus respectivos nombres.</p><p>2.  <strong>Ajusta la contraseÃ±a</strong>: Abre <code>docker-compose.yml</code> y cambia <code>your_secure_password</code> por una contraseÃ±a segura y real. Esta serÃ¡ la contraseÃ±a para los usuarios <code>SYS</code>, <code>SYSTEM</code> y <code>PDBADMIN</code>.</p><p>3.  <strong>Inicia el contenedor</strong>: Desde el directorio donde guardaste los archivos, ejecuta el comando <code>docker-compose up -d</code>.</p><p>4.  <strong>Verifica el estado</strong>: Puedes verificar el estado de los contenedores con <code>docker-compose ps</code> y los logs con <code>docker-compose logs -f oracle-xe</code>. La base de datos puede tardar unos minutos en inicializarse completamente. La comprobaciÃ³n de salud (<code>healthcheck</code>) en <code>docker-compose.yml</code> ayudarÃ¡ a confirmar que estÃ¡ lista.</p><p>5.  <strong>ConÃ©ctate a la base de datos</strong>: Una vez que el contenedor estÃ© en funcionamiento, podrÃ¡s conectarte a la base de datos utilizando un cliente SQL (como SQL Developer, DBeaver o <code>sqlplus</code>) a travÃ©s del puerto <code>1521</code> en <code>localhost</code>.</p><ul><li>   *   <strong>Host</strong>: <code>localhost</code></li><li>   *   <strong>Puerto</strong>: <code>1521</code></li><li>   *   <strong>Service Name (PDB)</strong>: <code>XEPDB1</code> (por defecto)</li><li>   *   <strong>Usuario</strong>: <code>system</code> o <code>sys</code> (con el rol <code>SYSDBA</code>)</li><li>   *   <strong>ContraseÃ±a</strong>: La que definiste en <code>ORACLE_PASSWORD</code>.</li></ul><p>6.  <strong>Acceso Web</strong>: Accede a SQL Developer Web o APEX (si estÃ¡ configurado) a travÃ©s de <code>http://localhost:8080/ords/sql-developer</code> o <code>http://localhost:8080/ords/apex</code>.</p><p>Este setup provee una base de datos Oracle XE funcional para desarrollo, con persistencia de datos y una forma sencilla de gestiÃ³n.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Dockerfile para una instancia bÃ¡sica de Oracle XE
-# Utiliza la imagen gvenzl/oracle-xe como base, que ya estÃ¡ preconfigurada para Oracle XE.
-# Esto permite una puesta en marcha rÃ¡pida sin necesidad de un Dockerfile complejo.
+    <h2>Explicación</h2><p>Esta guía le permitirá levantar una instancia local de Oracle Database Express Edition (XE) usando <code>gvenzl/oracle-xe</code>, una imagen Docker muy popular y fácil de usar para entornos de desarrollo. Utilizaremos <code>docker-compose</code> para simplificar la configuración, la persistencia de datos y la gestión de la base de datos. Se expondrán los puertos <code>1521</code> para conexiones SQL y <code>8080</code> para acceder a la interfaz de APEX y SQL Developer Web.</p><h3>Pasos a seguir:</h3><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio para tu proyecto (ej. <code>oracle-xe-local</code>). Dentro de él, guarda el contenido proporcionado en los archivos <code>docker-compose.yml</code>, <code>Dockerfile</code> y <code>healthcheck.sql</code> con sus respectivos nombres.</p><p>2.  <strong>Ajusta la contraseña</strong>: Abre <code>docker-compose.yml</code> y cambia <code>your_secure_password</code> por una contraseña segura y real. Esta será la contraseña para los usuarios <code>SYS</code>, <code>SYSTEM</code> y <code>PDBADMIN</code>.</p><p>3.  <strong>Inicia el contenedor</strong>: Desde el directorio donde guardaste los archivos, ejecuta el comando <code>docker-compose up -d</code>.</p><p>4.  <strong>Verifica el estado</strong>: Puedes verificar el estado de los contenedores con <code>docker-compose ps</code> y los logs con <code>docker-compose logs -f oracle-xe</code>. La base de datos puede tardar unos minutos en inicializarse completamente. La comprobación de salud (<code>healthcheck</code>) en <code>docker-compose.yml</code> ayudará a confirmar que está lista.</p><p>5.  <strong>Conéctate a la base de datos</strong>: Una vez que el contenedor esté en funcionamiento, podrás conectarte a la base de datos utilizando un cliente SQL (como SQL Developer, DBeaver o <code>sqlplus</code>) a través del puerto <code>1521</code> en <code>localhost</code>.</p><ul><li>   *   <strong>Host</strong>: <code>localhost</code></li><li>   *   <strong>Puerto</strong>: <code>1521</code></li><li>   *   <strong>Service Name (PDB)</strong>: <code>XEPDB1</code> (por defecto)</li><li>   *   <strong>Usuario</strong>: <code>system</code> o <code>sys</code> (con el rol <code>SYSDBA</code>)</li><li>   *   <strong>Contraseña</strong>: La que definiste en <code>ORACLE_PASSWORD</code>.</li></ul><p>6.  <strong>Acceso Web</strong>: Accede a SQL Developer Web o APEX (si está configurado) a través de <code>http://localhost:8080/ords/sql-developer</code> o <code>http://localhost:8080/ords/apex</code>.</p><p>Este setup provee una base de datos Oracle XE funcional para desarrollo, con persistencia de datos y una forma sencilla de gestión.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para una instancia básica de Oracle XE
+# Utiliza la imagen gvenzl/oracle-xe como base, que ya está preconfigurada para Oracle XE.
+# Esto permite una puesta en marcha rápida sin necesidad de un Dockerfile complejo.
 FROM gvenzl/oracle-xe:21-slim-faststart
 
 # Opcional: Define metadatos para tu imagen personalizada.
 LABEL maintainer="Tu Nombre &lt;tu.email@example.com&gt;"
 LABEL description="Imagen personalizada de Oracle XE para desarrollo local"
 
-# Puedes aÃ±adir aquÃ­ cualquier script de inicializaciÃ³n o configuraciÃ³n adicional
+# Puedes añadir aquí cualquier script de inicialización o configuración adicional
 # que desees ejecutar cuando el contenedor se inicie por primera vez.
-# Por ejemplo, para crear esquemas especÃ­ficos, usuarios o cargar datos iniciales.
-# Si necesitas scripts, colÃ³calos en el directorio ./init_scripts y descomenta la lÃ­nea
+# Por ejemplo, para crear esquemas específicos, usuarios o cargar datos iniciales.
+# Si necesitas scripts, colócalos en el directorio ./init_scripts y descomenta la línea
 # de volumen en docker-compose.yml que los mapea a /container-entrypoint-initdb.d/
 # COPY ./init_scripts/my_init_script.sql /container-entrypoint-initdb.d/
 
 # La imagen base ya expone los puertos necesarios (1521 para SQL, 8080 para APEX/SQL Developer Web).
-# No es necesario re-exponerlos aquÃ­ a menos que quieras cambiarlos o aÃ±adir otros.
+# No es necesario re-exponerlos aquí a menos que quieras cambiarlos o añadir otros.
 EXPOSE 1521
 EXPOSE 8080
 
-# El ENTRYPOINT y CMD ya estÃ¡n definidos en la imagen base para iniciar la base de datos.
-# No es necesario modificarlos para un setup bÃ¡sico.
+# El ENTRYPOINT y CMD ya están definidos en la imagen base para iniciar la base de datos.
+# No es necesario modificarlos para un setup básico.
 </code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
 
 services:
@@ -155,17 +155,17 @@ services:
       - "1521:1521" # Puerto para conexiones SQL
       - "8080:8080" # Puerto para APEX y SQL Developer Web
     environment:
-      # Establece la contraseÃ±a para los usuarios SYS, SYSTEM y PDBADMIN.
-      # Â¡CAMBIA ESTO POR UNA CONTRASEÃ‘A SEGURA Y REAL!
+      # Establece la contraseña para los usuarios SYS, SYSTEM y PDBADMIN.
+      # ¡CAMBIA ESTO POR UNA CONTRASEÑA SEGURA Y REAL!
       ORACLE_PASSWORD: "your_secure_password"
       # Opcional: Nombre del PDB (Plugable Database). Por defecto es XEPDB1.
       # ORACLE_PDB: "MYPDB"
-      # Opcional: Permite conexiones remotas (por defecto true, pero explÃ­cito es bueno).
+      # Opcional: Permite conexiones remotas (por defecto true, pero explícito es bueno).
       ORACLE_ALLOW_REMOTE: "true"
     volumes:
       - oracle_xe_data:/opt/oracle/oradata # Para persistir los datos de la base de datos
-      # Opcional: Para scripts de inicializaciÃ³n que se ejecuten al primer arranque.
-      # Descomenta la siguiente lÃ­nea y crea un directorio 'init_scripts' con tus .sql o .sh
+      # Opcional: Para scripts de inicialización que se ejecuten al primer arranque.
+      # Descomenta la siguiente línea y crea un directorio 'init_scripts' con tus .sql o .sh
       # - ./init_scripts:/container-entrypoint-initdb.d/
     restart: unless-stopped
     healthcheck:
@@ -174,7 +174,7 @@ services:
       timeout: 5s
       retries: 5
       start_period: 120s # Dar tiempo a la BD para iniciar
-      # En lugar de usar @healthcheck.sql directamente, podrÃ­amos copiarlo y ejecutarlo desde dentro del contenedor
+      # En lugar de usar @healthcheck.sql directamente, podríamos copiarlo y ejecutarlo desde dentro del contenedor
       # Si el healthcheck falla, intenta conectarte con sqlplus desde el host para diagnosticar.
 
 volumes:

@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,27 +121,27 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Crossplane</h1>
-    <h2>ExplicaciÃ³n</h2><p>Crossplane es un complemento de Kubernetes de cÃ³digo abierto que le permite aprovisionar y administrar infraestructura de nube (o cualquier recurso) desde <code>kubectl</code>. Esta guÃ­a te ayudarÃ¡ a levantar una instancia bÃ¡sica de Crossplane en un clÃºster de Kubernetes local utilizando <code>kind</code> (Kubernetes en Docker/Podman). Primero, crearemos el clÃºster local. Luego, instalaremos Crossplane a travÃ©s de Helm y desplegaremos el <code>provider-kubernetes</code>, que permite a Crossplane gestionar recursos <em>dentro del mismo clÃºster de Kubernetes</em>. Finalmente, definiremos una <code>CompositeResourceDefinition</code> (XRD) y una <code>Composition</code> para un Namespace de Kubernetes, y crearemos un <code>Composite Resource Claim</code> (XR Claim) para que Crossplane aprovisione un Namespace, demostrando su capacidad de extender Kubernetes para gestionar recursos externos o internos como si fueran nativos. Aunque <code>kind</code> utiliza contenedores Docker/Podman para crear el clÃºster, los comandos de Crossplane en sÃ­ son de <code>helm</code> y <code>kubectl</code>.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code># Paso 0: AsegÃºrate de tener kind, kubectl y helm instalados. Las instrucciones de instalaciÃ³n pueden variar segÃºn tu sistema operativo. Por ejemplo, para macOS con Homebrew:
+    <h2>Explicación</h2><p>Crossplane es un complemento de Kubernetes de código abierto que le permite aprovisionar y administrar infraestructura de nube (o cualquier recurso) desde <code>kubectl</code>. Esta guía te ayudará a levantar una instancia básica de Crossplane en un clúster de Kubernetes local utilizando <code>kind</code> (Kubernetes en Docker/Podman). Primero, crearemos el clúster local. Luego, instalaremos Crossplane a través de Helm y desplegaremos el <code>provider-kubernetes</code>, que permite a Crossplane gestionar recursos <em>dentro del mismo clúster de Kubernetes</em>. Finalmente, definiremos una <code>CompositeResourceDefinition</code> (XRD) y una <code>Composition</code> para un Namespace de Kubernetes, y crearemos un <code>Composite Resource Claim</code> (XR Claim) para que Crossplane aprovisione un Namespace, demostrando su capacidad de extender Kubernetes para gestionar recursos externos o internos como si fueran nativos. Aunque <code>kind</code> utiliza contenedores Docker/Podman para crear el clúster, los comandos de Crossplane en sí son de <code>helm</code> y <code>kubectl</code>.</p><h2>Comandos de Ejecución</h2><pre><code># Paso 0: Asegúrate de tener kind, kubectl y helm instalados. Las instrucciones de instalación pueden variar según tu sistema operativo. Por ejemplo, para macOS con Homebrew:
 # brew install kind kubectl helm
 
-# 1. Crea un clÃºster de Kubernetes local con Kind
+# 1. Crea un clúster de Kubernetes local con Kind
 # kind utiliza contenedores Docker o Podman para ejecutar los nodos de Kubernetes.
-echo "Creando un clÃºster de Kubernetes local con Kind..."
+echo "Creando un clúster de Kubernetes local con Kind..."
 kind create cluster --config kind-config.yaml
 
-# Espera a que el clÃºster de Kind estÃ© listo
-echo "Esperando que el clÃºster de Kind estÃ© listo..."
+# Espera a que el clúster de Kind esté listo
+echo "Esperando que el clúster de Kind esté listo..."
 kubeconfig_path="$(kind get kubeconfig --name crossplane-kind)"
 KUBECONFIG="${kubeconfig_path}" kubectl wait --for=condition=ready node --all --timeout=300s
 
-# 2. AÃ±ade el repositorio de Helm de Crossplane e instÃ¡lalo
-echo "Instalando Crossplane en el clÃºster..."
+# 2. Añade el repositorio de Helm de Crossplane e instálalo
+echo "Instalando Crossplane en el clúster..."
 KUBECONFIG="${kubeconfig_path}" helm repo add crossplane-stable https://charts.crossplane.io/stable
 KUBECONFIG="${kubeconfig_path}" helm repo update
 KUBECONFIG="${kubeconfig_path}" helm install crossplane crossplane-stable/crossplane --namespace crossplane-system --create-namespace --wait
 
-# 3. Verifica que los pods de Crossplane estÃ©n corriendo
-echo "Verificando la instalaciÃ³n de Crossplane..."
+# 3. Verifica que los pods de Crossplane estén corriendo
+echo "Verificando la instalación de Crossplane..."
 KUBECONFIG="${kubeconfig_path}" kubectl get pods -n crossplane-system
 
 # 4. Instala el Provider para Kubernetes
@@ -149,23 +149,23 @@ KUBECONFIG="${kubeconfig_path}" kubectl get pods -n crossplane-system
 echo "Instalando provider-kubernetes..."
 KUBECONFIG="${kubeconfig_path}" kubectl apply -f provider-kubernetes.yaml
 
-# 5. Configura el Provider para Kubernetes para que apunte al clÃºster actual
-# Usa las credenciales del Service Account de Crossplane para operar en el mismo clÃºster.
+# 5. Configura el Provider para Kubernetes para que apunte al clúster actual
+# Usa las credenciales del Service Account de Crossplane para operar en el mismo clúster.
 echo "Configurando provider-kubernetes..."
 KUBECONFIG="${kubeconfig_path}" kubectl apply -f provider-config-kubernetes.yaml
 
 # 6. Aplica la CompositeResourceDefinition (XRD) y una Composition para crear un Namespace de Kubernetes
-# Esto define un nuevo tipo de recurso abstracto 'KubernetesNamespace' y cÃ³mo se aprovisiona.
+# Esto define un nuevo tipo de recurso abstracto 'KubernetesNamespace' y cómo se aprovisiona.
 echo "Definiendo una Composition y XRD para un Namespace de Kubernetes..."
 KUBECONFIG="${kubeconfig_path}" kubectl apply -f composition-kubernetes-namespace.yaml
 
-# Espera a que la Composition y los CRDs estÃ©n listos
-echo "Esperando que la Composition y los CRDs estÃ©n listos..."
+# Espera a que la Composition y los CRDs estén listos
+echo "Esperando que la Composition y los CRDs estén listos..."
 KUBECONFIG="${kubeconfig_path}" kubectl wait --for=condition=Established crd/kubernetesnamespaces.kubernetes.crossplane.io --timeout=300s
 KUBECONFIG="${kubeconfig_path}" kubectl wait --for=condition=Established crd/xkubernetesnamespaces.kubernetes.crossplane.io --timeout=300s
 
 # 7. Crea un Composite Resource Claim (XR Claim) para provisionar el Namespace
-# Esto actÃºa como una solicitud del usuario para un Namespace.
+# Esto actúa como una solicitud del usuario para un Namespace.
 echo "Creando un Composite Resource Claim para provisionar un Namespace..."
 KUBECONFIG="${kubeconfig_path}" kubectl apply -f xr-kubernetes-namespace.yaml
 
@@ -183,7 +183,7 @@ echo "Crossplane configurado exitosamente y Namespace aprovisionado. Para limpia
 # KUBECONFIG="${kubeconfig_path}" kubectl delete providerconfig.kubernetes.crossplane.io default
 # KUBECONFIG="${kubeconfig_path}" kubectl delete provider.pkg provider-kubernetes
 # KUBECONFIG="${kubeconfig_path}" helm uninstall crossplane -n crossplane-system
-# kind delete cluster</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>kind-config.yaml</h3><pre><code>kind: Cluster
+# kind delete cluster</code></pre><h2>Archivos de Configuración</h2><h3>kind-config.yaml</h3><pre><code>kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 name: crossplane-kind
 nodes:
@@ -199,7 +199,7 @@ metadata:
   name: default
 spec:
   credentials:
-    source: InjectedIdentity # Utiliza las credenciales del Service Account del pod de Crossplane en el mismo clÃºster.</code></pre><h3>composition-kubernetes-namespace.yaml</h3><pre><code>apiVersion: apiextensions.crossplane.io/v1
+    source: InjectedIdentity # Utiliza las credenciales del Service Account del pod de Crossplane en el mismo clúster.</code></pre><h3>composition-kubernetes-namespace.yaml</h3><pre><code>apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
   name: xkubernetesnamespaces.kubernetes.crossplane.io

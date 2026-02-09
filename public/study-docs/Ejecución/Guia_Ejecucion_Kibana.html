@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,7 +121,7 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Kibana</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a le permitirÃ¡ configurar una instancia bÃ¡sica de Kibana junto con Elasticsearch utilizando Docker Compose (o Podman Compose, si lo tiene configurado). Los archivos proporcionados configuran dos servicios: Elasticsearch, que almacenarÃ¡ los datos, y Kibana, que proporcionarÃ¡ la interfaz de usuario para visualizar y explorar esos datos. La configuraciÃ³n es para un nodo Ãºnico y estÃ¡ optimizada para el desarrollo local con un uso de memoria limitado para Elasticsearch. Una vez iniciados, podrÃ¡ acceder a Kibana a travÃ©s de su navegador web.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+    <h2>Explicación</h2><p>Esta guía le permitirá configurar una instancia básica de Kibana junto con Elasticsearch utilizando Docker Compose (o Podman Compose, si lo tiene configurado). Los archivos proporcionados configuran dos servicios: Elasticsearch, que almacenará los datos, y Kibana, que proporcionará la interfaz de usuario para visualizar y explorar esos datos. La configuración es para un nodo único y está optimizada para el desarrollo local con un uso de memoria limitado para Elasticsearch. Una vez iniciados, podrá acceder a Kibana a través de su navegador web.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.6

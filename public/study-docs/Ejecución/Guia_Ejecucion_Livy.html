@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,10 +121,10 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Livy</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a le permitirÃ¡ levantar una instancia bÃ¡sica de Apache Livy con un clÃºster de Apache Spark Standalone utilizando Docker Compose. Livy es un servicio REST que permite interactuar con un clÃºster de Spark, ejecutar cÃ³digo Scala, Python o R de forma remota, enviar trabajos Spark, etc. Es ideal para aplicaciones que necesitan interactuar programÃ¡ticamente con Spark sin tener que ejecutar el cÃ³digo directamente en el clÃºster.</p><p>La configuraciÃ³n incluye:</p><ul><li>Un <strong>Spark Master</strong>: El nodo principal del clÃºster Spark.</li><li>Un <strong>Spark Worker</strong>: Un nodo trabajador que se conecta al Spark Master para ejecutar tareas.</li><li>Un <strong>Livy Server</strong>: El servicio Livy que se conecta al Spark Master.</li></ul><p><strong>Pasos para ejecutar:</strong></p><p>1.  Guarde los contenidos proporcionados en sus respectivos archivos (<code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>livy.conf</code>) en un mismo directorio.</p><p>2.  Abra una terminal en ese directorio.</p><p>3.  Ejecute el comando <code>docker-compose up -d</code> para construir la imagen de Livy y levantar todos los servicios.</p><p>4.  Una vez que los contenedores estÃ©n en funcionamiento (puede verificar con <code>docker-compose ps</code>), podrÃ¡ acceder:</p><ul><li>   -   La interfaz de usuario de Spark Master en <code>http://localhost:8080</code>.</li><li>   -   La API REST de Livy en <code>http://localhost:8998</code>.</li></ul><p><strong>Ejemplo de uso de Livy (despuÃ©s de levantar los servicios):</strong></p><p>Para crear una sesiÃ³n interactiva de Livy:</p><pre><code>curl -X POST --data '{"kind": "spark"}' -H "Content-Type: application/json" http://localhost:8998/sessions</code></pre><p>Esto devolverÃ¡ un ID de sesiÃ³n. Luego, puede enviar declaraciones a esa sesiÃ³n:</p><pre><code>curl -X POST --data '{"code": "sc.version"}' -H "Content-Type: application/json" http://localhost:8998/sessions/&lt;SESSION_ID&gt;/statements</code></pre><p>(Reemplace <code><SESSION_ID></code> con el ID devuelto en el paso anterior).</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Dockerfile para Livy
+    <h2>Explicación</h2><p>Esta guía le permitirá levantar una instancia básica de Apache Livy con un clúster de Apache Spark Standalone utilizando Docker Compose. Livy es un servicio REST que permite interactuar con un clúster de Spark, ejecutar código Scala, Python o R de forma remota, enviar trabajos Spark, etc. Es ideal para aplicaciones que necesitan interactuar programáticamente con Spark sin tener que ejecutar el código directamente en el clúster.</p><p>La configuración incluye:</p><ul><li>Un <strong>Spark Master</strong>: El nodo principal del clúster Spark.</li><li>Un <strong>Spark Worker</strong>: Un nodo trabajador que se conecta al Spark Master para ejecutar tareas.</li><li>Un <strong>Livy Server</strong>: El servicio Livy que se conecta al Spark Master.</li></ul><p><strong>Pasos para ejecutar:</strong></p><p>1.  Guarde los contenidos proporcionados en sus respectivos archivos (<code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>livy.conf</code>) en un mismo directorio.</p><p>2.  Abra una terminal en ese directorio.</p><p>3.  Ejecute el comando <code>docker-compose up -d</code> para construir la imagen de Livy y levantar todos los servicios.</p><p>4.  Una vez que los contenedores estén en funcionamiento (puede verificar con <code>docker-compose ps</code>), podrá acceder:</p><ul><li>   -   La interfaz de usuario de Spark Master en <code>http://localhost:8080</code>.</li><li>   -   La API REST de Livy en <code>http://localhost:8998</code>.</li></ul><p><strong>Ejemplo de uso de Livy (después de levantar los servicios):</strong></p><p>Para crear una sesión interactiva de Livy:</p><pre><code>curl -X POST --data '{"kind": "spark"}' -H "Content-Type: application/json" http://localhost:8998/sessions</code></pre><p>Esto devolverá un ID de sesión. Luego, puede enviar declaraciones a esa sesión:</p><pre><code>curl -X POST --data '{"code": "sc.version"}' -H "Content-Type: application/json" http://localhost:8998/sessions/&lt;SESSION_ID&gt;/statements</code></pre><p>(Reemplace <code><SESSION_ID></code> con el ID devuelto en el paso anterior).</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para Livy
 FROM openjdk:8-jdk-slim
 
-LABEL maintainer="" # Se deja vacÃ­o segÃºn la instrucciÃ³n
+LABEL maintainer="" # Se deja vacío según la instrucción
 
 ENV SPARK_VERSION=3.2.4
 ENV HADOOP_VERSION=3.2
@@ -138,7 +138,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Descarga e instala Spark
-# Spark es un prerrequisito para Livy, aunque Livy se conectarÃ¡ a un Spark Master externo.
+# Spark es un prerrequisito para Livy, aunque Livy se conectará a un Spark Master externo.
 # Las binarios de Spark deben estar disponibles dentro del contenedor Livy.
 RUN wget -qO /tmp/spark.tgz "https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" \
     && tar -xzf /tmp/spark.tgz -C /opt \
@@ -163,7 +163,7 @@ RUN mkdir -p ${LIVY_HOME}/logs
 # Expone el puerto por defecto de Livy
 EXPOSE 8998
 
-# Copia la configuraciÃ³n personalizada de Livy
+# Copia la configuración personalizada de Livy
 COPY livy.conf ${LIVY_HOME}/conf/livy.conf
 
 # Establece el comando por defecto para iniciar el servidor Livy
@@ -173,7 +173,7 @@ services:
   spark-master:
     image: bitnami/spark:3.2.4
     container_name: spark-master
-    # Puertos para la UI de Spark (8080) y la comunicaciÃ³n interna del Master (7077)
+    # Puertos para la UI de Spark (8080) y la comunicación interna del Master (7077)
     ports:
       - "8080:8080"
       - "7077:7077"
@@ -215,7 +215,7 @@ services:
       - "8998:8998"
     environment:
       # Estas variables de entorno pueden ser redundantes si se configuran en livy.conf, 
-      # pero a menudo son Ãºtiles para la depuraciÃ³n o para anular la configuraciÃ³n predeterminada.
+      # pero a menudo son útiles para la depuración o para anular la configuración predeterminada.
       - SPARK_HOME=/opt/spark 
     networks:
       - livy-network
@@ -225,7 +225,7 @@ services:
 networks:
   livy-network:
     driver: bridge</code></pre><h3>livy.conf</h3><pre><code># livy.conf
-# Archivo de configuraciÃ³n para Apache Livy
+# Archivo de configuración para Apache Livy
 
 # Host del servidor Livy.
 # Debe configurarse a 0.0.0.0 para permitir el acceso externo desde Docker/Podman.
@@ -234,8 +234,8 @@ livy.server.host = 0.0.0.0
 # Puerto del servidor Livy.
 livy.server.port = 8998
 
-# URI del Master de Spark al que Livy se conectarÃ¡.
-# En una configuraciÃ³n de Docker Compose, 'spark-master' es el nombre del servicio.
+# URI del Master de Spark al que Livy se conectará.
+# En una configuración de Docker Compose, 'spark-master' es el nombre del servicio.
 livy.spark.master = spark://spark-master:7077
 
 # Modo de despliegue de Spark. Puede ser 'client' o 'cluster'.
@@ -246,15 +246,15 @@ livy.spark.deployMode = client
 # Directorio de logs para Livy.
 livy.log.dir = /opt/livy/logs
 
-# UbicaciÃ³n del directorio home de Spark.
-# Si no se especifica, Livy intentarÃ¡ encontrarlo desde las variables de entorno.
+# Ubicación del directorio home de Spark.
+# Si no se especifica, Livy intentará encontrarlo desde las variables de entorno.
 # Ya lo configuramos dentro del Dockerfile.
 # livy.spark.home = /opt/spark
 
-# NÃºmero de segundos que una sesiÃ³n inactiva serÃ¡ mantenida viva.
+# Número de segundos que una sesión inactiva será mantenida viva.
 # livy.server.session.timeout-seconds = 3600
 
-# AutenticaciÃ³n (opcional).
+# Autenticación (opcional).
 # livy.server.auth.type = noop</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFcqRA5vIYzbmWM60C-lQIE0eEP1UYEUSOGDBtiKvCGbohXsqjApjSJtzOWA4A1V9LhHpD3kPmxaKYiJO8NGJqBEK4Snlk2lMESlsAC30oZuKD61I-QosEAHzlKc0ro8Q==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFtpmYPehR3JEFGdwV4YOH1wc-WoTx_UAwSxFx9cZdW4Uo2h7t9-6B0muixV84XoSkgrdBGYniUwuNMkLWr28Ye-cVLmv2jE9vRNkdTKflEV_HpgA==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFj0o7krB0U5tJQGU-4B2fmptJGdgeNYjcnvrnVCLVot1j1Rk20XkIP-T59v7Sjezh06RFJscPs0rCnTKJviUxocIjjdYutOEU_zzm4OX1CTOysan7DgD8htUwmgdHP0ciwaO02jRzl-er-Rww=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPbi5PD7g-V-Hr5IoBo1nBETzIBoMI-d7sNVxbjofhEIuQEMvwAunKq8dfi_CjtIF4mKcPVJjBtbVI--CJPui8X9jUsiHoJrbwp1ZXqJDK99EYOi5xYRoCkPF7Ew==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEhSApsOLkxqhQJVCgqIofwDnrq3TfZVWMXQOhOr8Hdyq3R7OdEYyQaRlZYEV6cFq9xnDV0bwzXmQPlONFBVTq8mWwnC1SuBMKhFzW98_xBby4jbaoBZ4P2Tjyk38rv0C5kwcwH76tlJpNkocpkUmiEsiI9_rk8Bhb-7abjvEIM76BDnzIpW-SKuKIo5D2y0kr-sKnBk3K_ZstlAiFnAwTgQsU=" target="_blank" rel="noopener noreferrer">statworx.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAfq8vxomWUud3Ac_Td67etwf7Q1KAmCI-GKhwsGR6NKvmBd3TAJ59C8Ghb82iHjRsDofvCxpciI2LXhAO-9EyJm4DBE6p1DdbiCx2nN6UM40ZgXJNNNS4nvDPdOYvXU3ZrlxsaRIlkj9dqPXg4r5BMWKTu6F2gugwV3Y9RwXW-BV3dMbvL4JPxz7WQJ6gct8csebRGte_Lw==" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
   </div>
 </body>

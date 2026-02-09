@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,7 +121,7 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_pgvector</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a le permitirÃ¡ configurar y ejecutar una instancia local de PostgreSQL con la extensiÃ³n <code>pgvector</code> utilizando Podman o Docker. Se crearÃ¡ una imagen de Docker personalizada que incluye la extensiÃ³n <code>pgvector</code> compilada desde su fuente, y se inicializarÃ¡ una base de datos con la extensiÃ³n habilitada y una tabla de ejemplo.</p><h3>Pasos a seguir:</h3><p>1.  <em></em>Crear el <code>Dockerfile</code>:<em></em> Este archivo (<code>Dockerfile</code>) define cÃ³mo construir la imagen de PostgreSQL con <code>pgvector</code>. Clona el repositorio de <code>pgvector</code>, lo compila y lo instala.</p><p>2.  <em></em>Crear el archivo <code>init.sql</code>:<em></em> Este script se ejecutarÃ¡ automÃ¡ticamente la primera vez que se inicie el contenedor de PostgreSQL. CrearÃ¡ una base de datos llamada <code>vectordb</code>, habilitarÃ¡ la extensiÃ³n <code>vector</code> dentro de ella y crearÃ¡ una tabla <code>items</code> con una columna <code>embedding</code> de tipo <code>vector(3)</code> junto con algunos datos de ejemplo.</p><p>3.  <strong>Construir y ejecutar el contenedor:</strong> El comando <code>runCommands</code> se encarga de estos dos pasos:</p><ul><li>   *   <code>podman build -t pgvector-db .</code>: Construye la imagen de Docker/Podman con el tag <code>pgvector-db</code> usando el <code>Dockerfile</code> en el directorio actual.</li><li>   *   <code>podman run ...</code>: Inicia un contenedor a partir de la imagen reciÃ©n creada. Mapea el puerto <code>5432</code> del host al contenedor, establece las credenciales de la base de datos (<code>pguser</code>, <code>pgpassword</code>, <code>vectordb</code>) y monta el archivo <code>init.sql</code> para la inicializaciÃ³n automÃ¡tica.</li></ul><p>Una vez que el contenedor estÃ© en funcionamiento, podrÃ¡ conectarse a la base de datos <code>vectordb</code> usando las credenciales proporcionadas y verificar que la extensiÃ³n <code>pgvector</code> estÃ© instalada y funcionando.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>podman build -t pgvector-db . && podman run --name pgvector-instance -e POSTGRES_USER=pguser -e POSTGRES_PASSWORD=pgpassword -e POSTGRES_DB=vectordb -p 5432:5432 -v "$(pwd)/init.sql:/docker-entrypoint-initdb.d/init.sql" -d pgvector-db</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Usa una imagen base de PostgreSQL. Alpine es ligera y reduce el tamaÃ±o final de la imagen.
+    <h2>Explicación</h2><p>Esta guía le permitirá configurar y ejecutar una instancia local de PostgreSQL con la extensión <code>pgvector</code> utilizando Podman o Docker. Se creará una imagen de Docker personalizada que incluye la extensión <code>pgvector</code> compilada desde su fuente, y se inicializará una base de datos con la extensión habilitada y una tabla de ejemplo.</p><h3>Pasos a seguir:</h3><p>1.  <em></em>Crear el <code>Dockerfile</code>:<em></em> Este archivo (<code>Dockerfile</code>) define cómo construir la imagen de PostgreSQL con <code>pgvector</code>. Clona el repositorio de <code>pgvector</code>, lo compila y lo instala.</p><p>2.  <em></em>Crear el archivo <code>init.sql</code>:<em></em> Este script se ejecutará automáticamente la primera vez que se inicie el contenedor de PostgreSQL. Creará una base de datos llamada <code>vectordb</code>, habilitará la extensión <code>vector</code> dentro de ella y creará una tabla <code>items</code> con una columna <code>embedding</code> de tipo <code>vector(3)</code> junto con algunos datos de ejemplo.</p><p>3.  <strong>Construir y ejecutar el contenedor:</strong> El comando <code>runCommands</code> se encarga de estos dos pasos:</p><ul><li>   *   <code>podman build -t pgvector-db .</code>: Construye la imagen de Docker/Podman con el tag <code>pgvector-db</code> usando el <code>Dockerfile</code> en el directorio actual.</li><li>   *   <code>podman run ...</code>: Inicia un contenedor a partir de la imagen recién creada. Mapea el puerto <code>5432</code> del host al contenedor, establece las credenciales de la base de datos (<code>pguser</code>, <code>pgpassword</code>, <code>vectordb</code>) y monta el archivo <code>init.sql</code> para la inicialización automática.</li></ul><p>Una vez que el contenedor esté en funcionamiento, podrá conectarse a la base de datos <code>vectordb</code> usando las credenciales proporcionadas y verificar que la extensión <code>pgvector</code> esté instalada y funcionando.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t pgvector-db . && podman run --name pgvector-instance -e POSTGRES_USER=pguser -e POSTGRES_PASSWORD=pgpassword -e POSTGRES_DB=vectordb -p 5432:5432 -v "$(pwd)/init.sql:/docker-entrypoint-initdb.d/init.sql" -d pgvector-db</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa una imagen base de PostgreSQL. Alpine es ligera y reduce el tamaño final de la imagen.
 FROM postgres:16-alpine
 
 # Instala las herramientas necesarias para compilar pgvector.
@@ -129,39 +129,39 @@ FROM postgres:16-alpine
 # git es necesario para clonar el repositorio de pgvector.
 RUN apk add --no-cache build-base postgresql-dev git
 
-# Clona el repositorio de pgvector. Usa una versiÃ³n especÃ­fica para mayor estabilidad.
-# La versiÃ³n 0.6.0 es una de las mÃ¡s recientes y estables en el momento de escribir esto.
+# Clona el repositorio de pgvector. Usa una versión específica para mayor estabilidad.
+# La versión 0.6.0 es una de las más recientes y estables en el momento de escribir esto.
 # Clona el repositorio en /usr/src/pgvector.
 RUN git clone --branch v0.6.0 https://github.com/pgvector/pgvector.git /usr/src/pgvector
 
 # Compila e instala pgvector.
-# Cambia al directorio del cÃ³digo fuente de pgvector.
+# Cambia al directorio del código fuente de pgvector.
 WORKDIR /usr/src/pgvector
-# Ejecuta 'make' para compilar la extensiÃ³n.
+# Ejecuta 'make' para compilar la extensión.
 RUN make
-# Ejecuta 'make install' para instalar la extensiÃ³n en el sistema de PostgreSQL.
+# Ejecuta 'make install' para instalar la extensión en el sistema de PostgreSQL.
 RUN make install
 
-# Limpia las herramientas de compilaciÃ³n y los archivos fuente para reducir el tamaÃ±o de la imagen.
-# Vuelve al directorio raÃ­z.
+# Limpia las herramientas de compilación y los archivos fuente para reducir el tamaño de la imagen.
+# Vuelve al directorio raíz.
 WORKDIR /
-# Elimina los paquetes de compilaciÃ³n y el repositorio git clonado.
+# Elimina los paquetes de compilación y el repositorio git clonado.
 RUN apk del build-base postgresql-dev git && \
     rm -rf /usr/src/pgvector
 
-# El puerto por defecto de PostgreSQL es 5432. Lo exponemos para la comunicaciÃ³n externa.
+# El puerto por defecto de PostgreSQL es 5432. Lo exponemos para la comunicación externa.
 EXPOSE 5432
 
-# La imagen base de PostgreSQL estÃ¡ configurada para ejecutar automÃ¡ticamente scripts
+# La imagen base de PostgreSQL está configurada para ejecutar automáticamente scripts
 # SQL o shell ubicados en /docker-entrypoint-initdb.d/ al iniciar por primera vez el contenedor.
-# Esto se utilizarÃ¡ con un volumen montado para el archivo 'init.sql'.</code></pre><h3>init.sql</h3><pre><code>-- Este script se ejecutarÃ¡ automÃ¡ticamente cuando el contenedor de PostgreSQL inicie por primera vez
+# Esto se utilizará con un volumen montado para el archivo 'init.sql'.</code></pre><h3>init.sql</h3><pre><code>-- Este script se ejecutará automáticamente cuando el contenedor de PostgreSQL inicie por primera vez
 -- gracias al mapeo de volumen a /docker-entrypoint-initdb.d/init.sql.
 
--- Se conectarÃ¡ a la base de datos 'vectordb' que se crea automÃ¡ticamente por la imagen de PostgreSQL
+-- Se conectará a la base de datos 'vectordb' que se crea automáticamente por la imagen de PostgreSQL
 -- usando la variable de entorno POSTGRES_DB.
 
--- Habilita la extensiÃ³n 'vector'. Esto harÃ¡ que los tipos de datos VECTOR estÃ©n disponibles.
--- Si la base de datos no es 'vectordb', el usuario deberÃ¡ ajustar el comando de conexiÃ³n
+-- Habilita la extensión 'vector'. Esto hará que los tipos de datos VECTOR estén disponibles.
+-- Si la base de datos no es 'vectordb', el usuario deberá ajustar el comando de conexión
 -- o especificar la base de datos con -d en psql.
 CREATE EXTENSION IF NOT EXISTS vector;
 
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS items (
     embedding vector(3) -- Define una columna para almacenar vectores de 3 dimensiones
 );
 
--- Inserta algunos datos de ejemplo si la tabla estÃ¡ vacÃ­a.
+-- Inserta algunos datos de ejemplo si la tabla está vacía.
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM items WHERE embedding = '[1,2,3]') THEN
@@ -180,15 +180,15 @@ BEGIN
 END
 $$;
 
--- Opcional: crea un Ã­ndice para bÃºsquedas de similitud (ej. usando IVFFlat).
--- Esto requiere una versiÃ³n reciente de pgvector y un tamaÃ±o mÃ­nimo de tabla para que sea eficiente.
--- Descomentar y ajustar 'lists' segÃºn el tamaÃ±o esperado de su tabla.
+-- Opcional: crea un índice para búsquedas de similitud (ej. usando IVFFlat).
+-- Esto requiere una versión reciente de pgvector y un tamaño mínimo de tabla para que sea eficiente.
+-- Descomentar y ajustar 'lists' según el tamaño esperado de su tabla.
 -- CREATE INDEX IF NOT EXISTS ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100);
 
 -- Muestra los datos insertados para verificar.
 SELECT * FROM items;
 
--- Muestra las extensiones instaladas para confirmar que 'vector' estÃ¡ presente.
+-- Muestra las extensiones instaladas para confirmar que 'vector' está presente.
 SELECT * FROM pg_extension WHERE extname = 'vector';</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWXyO5bu-qMMAO_yS-UQBwEzRLbXY1AWFUqm_9K3Ff2oMAEeT4vy5JxZ0jKTp6gTqDIS8s1WLN7KxZon71JZxFmE5ro0f7tv8va2z6mwoepqhF1VpvE3qmK0P-3f1p" target="_blank" rel="noopener noreferrer">github.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGdDLef5uxJctZh_MeHTsDrKd6HKLurrRlXMKu5WYVDHtQo6-aciGbKmXIaDG9GAcAWAw7LD3CSclDMZAslRYdkBRkP7rwhMicfpeOL0jynwHwqZhPJfcVOtnoE_iiuvxV8JIuFlMcY1HrIDMfEkEAyBASzsXKzbyUcZ_RPlKfZsm2cWgkPaxs=" target="_blank" rel="noopener noreferrer">tigerdata.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE5YPFQAILIhcSZuCxkMqcUt6qZskjxZOdBxxGX9zDwfAA6gl-UfbGztZjeMFIpGQpq3jckTSowJjd-SHZv1FOlljdQExGLnpCBQIvBDbMceldUl_eO37QTSFSZtOZxi6NJZgoFpOsgaj4kyMFDOJwVEIbBZGHxdRAf0sM5F0kFV5y4-eSadSrqRNuU" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNRdtnVi9ZAe8YVsWZkqlCID7x3_In1nc-RYLR6ZCPl9zKZqNVsqA4UwtXPUfsugrTZWTupGzGS_Dfjn7lBv38i_hA_V3vhsXeJ5sYHBFdblhyU3pXz6oG06t3Y-tU_W85jJTQhFaNtXYVhmoH" target="_blank" rel="noopener noreferrer">datacamp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE-QZhL3X4l0gu4GSKUSvH4RJAketlklBbeUuwAEetBfbLUqeAFKIH25IVkHqO98NKK7ZP8JnUT15pxfzDxU6QiGLOTYqJJc85vS0mF7aVBudJSDQvSe8eLn3er0QadPHbWXye5gGEMmPpIl2rFXv5yZ4EfKmoCcZ6iFljE" target="_blank" rel="noopener noreferrer">yugabyte.com</a></li></ul>
   </div>
 </body>

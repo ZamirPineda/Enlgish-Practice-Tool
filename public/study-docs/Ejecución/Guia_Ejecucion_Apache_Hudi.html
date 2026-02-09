@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,7 +121,7 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Apache Hudi</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a le permitirÃ¡ configurar un entorno local bÃ¡sico de Apache Hudi utilizando Spark y MinIO como almacenamiento de objetos, todo orquestado con Docker Compose. Apache Hudi es una plataforma de data lake que facilita la gestiÃ³n de datos a escala, ofreciendo capacidades de transacciones <span class="tooltip" data-tooltip-text="Un acrÃ³nimo (Atomicidad, Consistencia, Aislamiento, Durabilidad) que describe las propiedades de una transacciÃ³n de base de datos confiable. Garantiza que las transacciones sean predecibles y seguras, incluso en caso de errores.">ACID</span>, upserts, y deletes sobre formatos de archivo como Parquet o ORC.</p><p>La configuraciÃ³n incluye:</p><ul><li>  <strong>MinIO</strong>: Un servicio de almacenamiento de objetos compatible con S3, que actuarÃ¡ como nuestro data lake.</li><li>  <strong>Apache Spark</strong>: Un motor de procesamiento de datos distribuido, con una imagen de Docker personalizada que incluye las bibliotecas de Hudi necesarias para interactuar con Ã©l.</li></ul><p>Los pasos a seguir son:</p><p>1.  Guarde los contenidos proporcionados en los archivos <code>docker-compose.yml</code>, <code>Dockerfile.spark</code> y <code>hudi_example.py</code> en un mismo directorio.</p><p>2.  Construya la imagen de Spark personalizada y levante los servicios con <code>docker-compose up -d --build</code>.</p><p>3.  Una vez que los servicios estÃ©n en ejecuciÃ³n, ejecute el script de ejemplo de Hudi usando <code>spark-submit</code> dentro del contenedor <code>spark-master</code>.</p><p>4.  El script <code>hudi_example.py</code> realizarÃ¡ las siguientes operaciones:</p><ul><li>   *   CrearÃ¡ un DataFrame de muestra.</li><li>   *   EscribirÃ¡ los datos en una tabla Hudi (<code>hudi_cow_table</code>) en MinIO en modo 'Copy-on-Write' (CoW).</li><li>   *   RealizarÃ¡ una operaciÃ³n de 'upsert' (actualizar/insertar) en la tabla.</li><li>   *   LeerÃ¡ los datos de la tabla Hudi para verificar las operaciones.</li></ul><p>Una vez finalizado, puede inspeccionar los datos generados en el bucket de MinIO (accesible en <code>http://localhost:9000</code> con <code>minioadmin</code>/<code>minioadmin</code>).</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d --build && docker-compose exec spark-master spark-submit --master spark://spark-master:7077 --driver-memory 2G --executor-memory 2G --executor-cores 1 --conf "spark.serializer=org.apache.spark.serializer.KryoSerializer" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.hudi.catalog.HoodieCatalog" --conf "spark.hadoop.fs.s3a.endpoint=http://minio:9000" --conf "spark.hadoop.fs.s3a.access.key=minioadmin" --conf "spark.hadoop.fs.s3a.secret.key=minioadmin" --conf "spark.hadoop.fs.s3a.path.style.access=true" --conf "spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem" /opt/spark-apps/hudi_example.py</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile.spark</h3><pre><code>FROM apache/spark:3.3.0
+    <h2>Explicación</h2><p>Esta guía le permitirá configurar un entorno local básico de Apache Hudi utilizando Spark y MinIO como almacenamiento de objetos, todo orquestado con Docker Compose. Apache Hudi es una plataforma de data lake que facilita la gestión de datos a escala, ofreciendo capacidades de transacciones <span class="tooltip" data-tooltip-text="Un acrónimo (Atomicidad, Consistencia, Aislamiento, Durabilidad) que describe las propiedades de una transacción de base de datos confiable. Garantiza que las transacciones sean predecibles y seguras, incluso en caso de errores.">ACID</span>, upserts, y deletes sobre formatos de archivo como Parquet o ORC.</p><p>La configuración incluye:</p><ul><li>  <strong>MinIO</strong>: Un servicio de almacenamiento de objetos compatible con S3, que actuará como nuestro data lake.</li><li>  <strong>Apache Spark</strong>: Un motor de procesamiento de datos distribuido, con una imagen de Docker personalizada que incluye las bibliotecas de Hudi necesarias para interactuar con él.</li></ul><p>Los pasos a seguir son:</p><p>1.  Guarde los contenidos proporcionados en los archivos <code>docker-compose.yml</code>, <code>Dockerfile.spark</code> y <code>hudi_example.py</code> en un mismo directorio.</p><p>2.  Construya la imagen de Spark personalizada y levante los servicios con <code>docker-compose up -d --build</code>.</p><p>3.  Una vez que los servicios estén en ejecución, ejecute el script de ejemplo de Hudi usando <code>spark-submit</code> dentro del contenedor <code>spark-master</code>.</p><p>4.  El script <code>hudi_example.py</code> realizará las siguientes operaciones:</p><ul><li>   *   Creará un DataFrame de muestra.</li><li>   *   Escribirá los datos en una tabla Hudi (<code>hudi_cow_table</code>) en MinIO en modo 'Copy-on-Write' (CoW).</li><li>   *   Realizará una operación de 'upsert' (actualizar/insertar) en la tabla.</li><li>   *   Leerá los datos de la tabla Hudi para verificar las operaciones.</li></ul><p>Una vez finalizado, puede inspeccionar los datos generados en el bucket de MinIO (accesible en <code>http://localhost:9000</code> con <code>minioadmin</code>/<code>minioadmin</code>).</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d --build && docker-compose exec spark-master spark-submit --master spark://spark-master:7077 --driver-memory 2G --executor-memory 2G --executor-cores 1 --conf "spark.serializer=org.apache.spark.serializer.KryoSerializer" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.hudi.catalog.HoodieCatalog" --conf "spark.hadoop.fs.s3a.endpoint=http://minio:9000" --conf "spark.hadoop.fs.s3a.access.key=minioadmin" --conf "spark.hadoop.fs.s3a.secret.key=minioadmin" --conf "spark.hadoop.fs.s3a.path.style.access=true" --conf "spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem" /opt/spark-apps/hudi_example.py</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.spark</h3><pre><code>FROM apache/spark:3.3.0
 
 USER root
 
@@ -129,14 +129,14 @@ USER root
 ENV HUDI_SPARK_JARS_DIR /opt/spark/jars/hudi
 RUN mkdir -p ${HUDI_SPARK_JARS_DIR}
 
-# Descargar las JARs de Apache Hudi (versiÃ³n 0.13.0 compatible con Spark 3.3.0 y Scala 2.12)
+# Descargar las JARs de Apache Hudi (versión 0.13.0 compatible con Spark 3.3.0 y Scala 2.12)
 # Hudi Spark Bundle para Hudi en Spark
 RUN wget -q https://repo1.maven.org/maven2/org/apache/hudi/hudi-spark-bundle_2.12/0.13.0/hudi-spark-bundle_2.12-0.13.0.jar -P ${HUDI_SPARK_JARS_DIR}
 
-# Descargar las JARs necesarias para la conexiÃ³n S3a (MinIO)
+# Descargar las JARs necesarias para la conexión S3a (MinIO)
 # hadoop-aws para el conector S3a
 RUN wget -q https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.2/hadoop-aws-3.3.2.jar -P ${HUDI_SPARK_JARS_DIR}
-# spark-hadoop-cloud para integraciÃ³n con Hadoop Cloud (S3a)
+# spark-hadoop-cloud para integración con Hadoop Cloud (S3a)
 RUN wget -q https://repo1.maven.org/maven2/org/apache/spark/spark-hadoop-cloud_2.12/3.3.0/spark-hadoop-cloud_2.12-3.3.0.jar -P ${HUDI_SPARK_JARS_DIR}
 # aws-java-sdk-bundle para dependencias del SDK de AWS
 RUN wget -q https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.262/aws-java-sdk-bundle-1.12.262.jar -P ${HUDI_SPARK_JARS_DIR}
@@ -217,11 +217,11 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import lit
 import time
 
-# ConfiguraciÃ³n de Spark para Hudi con MinIO
+# Configuración de Spark para Hudi con MinIO
 # Las configuraciones s3a.endpoint, s3a.access.key, s3a.secret.key
-# y s3a.path.style.access ya estÃ¡n configuradas en el comando spark-submit
-# o en el entorno del contenedor, por lo que no es estrictamente necesario duplicarlas aquÃ­,
-# pero se incluyen para mayor claridad y auto-contenciÃ³n si se ejecuta de otra manera.
+# y s3a.path.style.access ya están configuradas en el comando spark-submit
+# o en el entorno del contenedor, por lo que no es estrictamente necesario duplicarlas aquí,
+# pero se incluyen para mayor claridad y auto-contención si se ejecuta de otra manera.
 
 spark = SparkSession.builder \
     .appName("Hudi MinIO Example") \
@@ -249,11 +249,11 @@ HUDI_COMMON_OPTIONS = {
     'hoodie.datasource.write.table.type': 'COPY_ON_WRITE',
     'hoodie.datasource.write.operation': 'upsert',
     'hoodie.datasource.write.precombine.field': 'timestamp',
-    'hoodie.cleaner.commits.retained': '2' # Retener solo las Ãºltimas 2 commits para demostraciÃ³n
+    'hoodie.cleaner.commits.retained': '2' # Retener solo las últimas 2 commits para demostración
 }
 
 def write_data(data_df, write_mode='append', operation='upsert'):
-    print(f"\nEscribiendo datos a Hudi (modo: {write_mode}, operaciÃ³n: {operation})...")
+    print(f"\nEscribiendo datos a Hudi (modo: {write_mode}, operación: {operation})...")
     data_df.write.format("hudi") \
         .options(**HUDI_COMMON_OPTIONS) \
         .option('hoodie.datasource.write.operation', operation) \
@@ -270,7 +270,7 @@ def read_data(query_type='snapshot'):
         .options(**hudi_read_options) \
         .load(HUDI_BASE_PATH)
     df.show(truncate=False)
-    print(f"Total de registros leÃ­dos: {df.count()}")
+    print(f"Total de registros leídos: {df.count()}")
     return df
 
 # 1. Escritura inicial de datos
@@ -293,8 +293,8 @@ upsert_data = [
 upsert_df = spark.createDataFrame(upsert_data)
 write_data(upsert_df, write_mode='append', operation='upsert')
 
-# 3. Leer datos despuÃ©s del upsert
-print("\n--- Paso 3: Leer datos despuÃ©s del Upsert ---")
+# 3. Leer datos después del upsert
+print("\n--- Paso 3: Leer datos después del Upsert ---")
 read_data().sort("uuid").show(truncate=False)
 
 # 4. Eliminar un registro (ej. Charlie)
@@ -305,8 +305,8 @@ delete_data = [
 delete_df = spark.createDataFrame(delete_data)
 write_data(delete_df, write_mode='append', operation='delete')
 
-# 5. Leer datos despuÃ©s de la eliminaciÃ³n
-print("\n--- Paso 5: Leer datos despuÃ©s de la eliminaciÃ³n ---")
+# 5. Leer datos después de la eliminación
+print("\n--- Paso 5: Leer datos después de la eliminación ---")
 read_data().sort("uuid").show(truncate=False)
 
 print("\nEjemplo de Apache Hudi completado exitosamente.")

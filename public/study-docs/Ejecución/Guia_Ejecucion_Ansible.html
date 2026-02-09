@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,11 +121,11 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Ansible</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a le permitirÃ¡ ejecutar Ansible dentro de un contenedor Podman o Docker. La configuraciÃ³n incluye un <code>Dockerfile</code> para construir una imagen ligera de Ansible, y dos archivos de soporte: <code>inventory.ini</code> para definir el inventario de hosts (en este caso, <code>localhost</code>) y <code>playbook.yml</code> que es un playbook de ejemplo que imprime un mensaje y verifica la versiÃ³n de Python. El proceso se divide en dos pasos principales: primero, construir la imagen de Docker/Podman con Ansible instalado; segundo, ejecutar un comando de Ansible desde esa imagen, montando su directorio de trabajo local para que Ansible pueda acceder a los archivos de inventario y playbook. Esto proporciona un entorno aislado y consistente para sus tareas de automatizaciÃ³n con Ansible.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>podman build -t my-ansible-runner . && podman run --rm -it -v $(pwd):/ansible my-ansible-runner ansible-playbook -i inventory.ini playbook.yml</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code>FROM python:3.9-slim-buster
+    <h2>Explicación</h2><p>Esta guía le permitirá ejecutar Ansible dentro de un contenedor Podman o Docker. La configuración incluye un <code>Dockerfile</code> para construir una imagen ligera de Ansible, y dos archivos de soporte: <code>inventory.ini</code> para definir el inventario de hosts (en este caso, <code>localhost</code>) y <code>playbook.yml</code> que es un playbook de ejemplo que imprime un mensaje y verifica la versión de Python. El proceso se divide en dos pasos principales: primero, construir la imagen de Docker/Podman con Ansible instalado; segundo, ejecutar un comando de Ansible desde esa imagen, montando su directorio de trabajo local para que Ansible pueda acceder a los archivos de inventario y playbook. Esto proporciona un entorno aislado y consistente para sus tareas de automatización con Ansible.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-ansible-runner . && podman run --rm -it -v $(pwd):/ansible my-ansible-runner ansible-playbook -i inventory.ini playbook.yml</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM python:3.9-slim-buster
 
 LABEL maintainer="Your Name &lt;your.email@example.com&gt;"
 
-# Actualizar apt-get e instalar dependencias necesarias, incluyendo sshpass y git para algunos mÃ³dulos de Ansible
+# Actualizar apt-get e instalar dependencias necesarias, incluyendo sshpass y git para algunos módulos de Ansible
 RUN apt-get update && \
     apt-get install -y --no-install-recommends sshpass git && \
     pip install --no-cache-dir ansible && \
@@ -133,11 +133,11 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Establecer el directorio de trabajo dentro del contenedor
-# AquÃ­ se montarÃ¡n sus playbooks, inventarios y roles
+# Aquí se montarán sus playbooks, inventarios y roles
 WORKDIR /ansible
 
 # Comando predeterminado al iniciar el contenedor (puede ser sobrescrito)
-# Esto mostrarÃ¡ la versiÃ³n de Ansible si el contenedor se ejecuta sin un comando especÃ­fico
+# Esto mostrará la versión de Ansible si el contenedor se ejecuta sin un comando específico
 CMD ["ansible", "--version"]</code></pre><h3>inventory.ini</h3><pre><code>[local]
 localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3</code></pre><h3>playbook.yml</h3><pre><code>---
 - name: Sample Playbook

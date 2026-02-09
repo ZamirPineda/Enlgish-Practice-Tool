@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,26 +121,26 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_CockroachDB</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a te permitirÃ¡ levantar un <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un Ãºnico sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> bÃ¡sico de 3 nodos de CockroachDB localmente utilizando <code>docker-compose</code> (o <code>podman-compose</code>). CockroachDB es una base de datos SQL distribuida, elÃ¡stica y tolerante a fallos, diseÃ±ada para la nube. Esta configuraciÃ³n simula un <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un Ãºnico sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> distribuido, lo cual es fundamental para entender sus capacidades.</p><h3>Componentes de la ConfiguraciÃ³n:</h3><p>1.  <em></em><code>Dockerfile</code><em></em>: Un archivo simple que utiliza la imagen oficial de CockroachDB. Esto permite construir una imagen personalizada si necesitaras aÃ±adir herramientas o configuraciones adicionales, aunque para este setup bÃ¡sico la imagen oficial es suficiente.</p><p>2.  <em></em><code>docker-compose.yml</code><em></em>: Este archivo define un <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un Ãºnico sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> de CockroachDB compuesto por tres nodos (<code>roach1</code>, <code>roach2</code>, <code>roach3</code>) y un servicio de inicializaciÃ³n (<code>init</code>).</p><ul><li>   *   Cada nodo de CockroachDB se ejecuta en un contenedor separado, configurado para unirse a los otros nodos y formar el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un Ãºnico sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span>.</li><li>   *   Se utilizan volÃºmenes persistentes (<code>roachX_data</code>) para asegurar que los datos no se pierdan al detener y reiniciar los contenedores.</li><li>   *   <code>roach1</code> expone los puertos <code>26257</code> (SQL) y <code>8080</code> (UI de administraciÃ³n) al host para que puedas interactuar con el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un Ãºnico sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span>.</li><li>   *   El servicio <code>init</code> se encarga de ejecutar el comando <code>cockroach init</code> una vez que todos los nodos estÃ¡n saludables, lo cual es necesario para que el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un Ãºnico sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> funcione.</li></ul><h3>Pasos a Seguir:</h3><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio <code>cockroachdb-cluster</code> y guarda el <code>Dockerfile</code> y el <code>docker-compose.yml</code> dentro de Ã©l.</p><p>2.  <strong>Levanta el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un Ãºnico sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span></strong>: Abre tu terminal en el directorio <code>cockroachdb-cluster</code> y ejecuta el comando de <code>runCommands</code>.</p><p>3.  <strong>Verifica el estado</strong>: Una vez que los contenedores estÃ©n en ejecuciÃ³n, puedes verificar su estado con <code>docker-compose ps</code>. TambiÃ©n puedes ver los logs con <code>docker-compose logs -f</code>.</p><p>4.  <strong>Accede a la UI de administraciÃ³n</strong>: Abre tu navegador web y visita <code>http://localhost:8080</code>. AquÃ­ podrÃ¡s ver el estado del <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un Ãºnico sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span>, las mÃ©tricas y la topologÃ­a.</p><p>5.  <strong>ConÃ©ctate vÃ­a SQL</strong>: Puedes conectar un cliente SQL (como <code>psql</code> o el mismo CLI de CockroachDB) al puerto <code>26257</code> del host. Por ejemplo, desde otro contenedor o instalando el CLI localmente:</p><pre><code>    docker run -it --rm --network host cockroachdb/cockroach sql --insecure --host=localhost:26257
+    <h2>Explicación</h2><p>Esta guía te permitirá levantar un <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> básico de 3 nodos de CockroachDB localmente utilizando <code>docker-compose</code> (o <code>podman-compose</code>). CockroachDB es una base de datos SQL distribuida, elástica y tolerante a fallos, diseñada para la nube. Esta configuración simula un <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> distribuido, lo cual es fundamental para entender sus capacidades.</p><h3>Componentes de la Configuración:</h3><p>1.  <em></em><code>Dockerfile</code><em></em>: Un archivo simple que utiliza la imagen oficial de CockroachDB. Esto permite construir una imagen personalizada si necesitaras añadir herramientas o configuraciones adicionales, aunque para este setup básico la imagen oficial es suficiente.</p><p>2.  <em></em><code>docker-compose.yml</code><em></em>: Este archivo define un <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> de CockroachDB compuesto por tres nodos (<code>roach1</code>, <code>roach2</code>, <code>roach3</code>) y un servicio de inicialización (<code>init</code>).</p><ul><li>   *   Cada nodo de CockroachDB se ejecuta en un contenedor separado, configurado para unirse a los otros nodos y formar el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span>.</li><li>   *   Se utilizan volúmenes persistentes (<code>roachX_data</code>) para asegurar que los datos no se pierdan al detener y reiniciar los contenedores.</li><li>   *   <code>roach1</code> expone los puertos <code>26257</code> (SQL) y <code>8080</code> (UI de administración) al host para que puedas interactuar con el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span>.</li><li>   *   El servicio <code>init</code> se encarga de ejecutar el comando <code>cockroach init</code> una vez que todos los nodos están saludables, lo cual es necesario para que el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> funcione.</li></ul><h3>Pasos a Seguir:</h3><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio <code>cockroachdb-cluster</code> y guarda el <code>Dockerfile</code> y el <code>docker-compose.yml</code> dentro de él.</p><p>2.  <strong>Levanta el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span></strong>: Abre tu terminal en el directorio <code>cockroachdb-cluster</code> y ejecuta el comando de <code>runCommands</code>.</p><p>3.  <strong>Verifica el estado</strong>: Una vez que los contenedores estén en ejecución, puedes verificar su estado con <code>docker-compose ps</code>. También puedes ver los logs con <code>docker-compose logs -f</code>.</p><p>4.  <strong>Accede a la UI de administración</strong>: Abre tu navegador web y visita <code>http://localhost:8080</code>. Aquí podrás ver el estado del <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span>, las métricas y la topología.</p><p>5.  <strong>Conéctate vía SQL</strong>: Puedes conectar un cliente SQL (como <code>psql</code> o el mismo CLI de CockroachDB) al puerto <code>26257</code> del host. Por ejemplo, desde otro contenedor o instalando el CLI localmente:</p><pre><code>    docker run -it --rm --network host cockroachdb/cockroach sql --insecure --host=localhost:26257
     # O si tienes el CLI instalado localmente:
-    cockroach sql --insecure --host=localhost:26257</code></pre><p>6.  <strong>Limpia el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un Ãºnico sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span></strong>: Para detener y eliminar todos los contenedores y los volÃºmenes de datos (eliminando los datos persistentes), ejecuta <code>docker-compose down -v</code>.</p><p><strong>Nota Importante</strong>: La configuraciÃ³n utiliza la bandera <code>--insecure</code> para simplificar el setup local. Esto significa que las comunicaciones no estÃ¡n cifradas y no hay autenticaciÃ³n. <em></em>NUNCA utilices <code>--insecure</code> en un entorno de producciÃ³n.<em></em></p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Dockerfile para una instancia de CockroachDB
+    cockroach sql --insecure --host=localhost:26257</code></pre><p>6.  <strong>Limpia el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span></strong>: Para detener y eliminar todos los contenedores y los volúmenes de datos (eliminando los datos persistentes), ejecuta <code>docker-compose down -v</code>.</p><p><strong>Nota Importante</strong>: La configuración utiliza la bandera <code>--insecure</code> para simplificar el setup local. Esto significa que las comunicaciones no están cifradas y no hay autenticación. <em></em>NUNCA utilices <code>--insecure</code> en un entorno de producción.<em></em></p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para una instancia de CockroachDB
 # Este Dockerfile utiliza la imagen oficial de CockroachDB.
-# Puedes personalizarlo si necesitas agregar herramientas o configuraciones especÃ­ficas.
+# Puedes personalizarlo si necesitas agregar herramientas o configuraciones específicas.
 
 # Usa la imagen oficial de CockroachDB.
-# Se recomienda especificar una versiÃ³n para producciÃ³n, por ejemplo, cockroachdb/cockroach:v23.2.3
+# Se recomienda especificar una versión para producción, por ejemplo, cockroachdb/cockroach:v23.2.3
 FROM cockroachdb/cockroach:latest
 
-# El ENTRYPOINT y CMD ya estÃ¡n definidos en la imagen base de CockroachDB,
+# El ENTRYPOINT y CMD ya están definidos en la imagen base de CockroachDB,
 # por lo que no es necesario redefinirlos a menos que se quiera cambiar el comportamiento por defecto.
-# La imagen base estÃ¡ optimizada para ejecutar 'cockroach start' o 'cockroach init'.
+# La imagen base está optimizada para ejecutar 'cockroach start' o 'cockroach init'.
 
 # Exponer los puertos por defecto de CockroachDB:
 # 26257 para el cliente SQL
-# 8080 para la UI de administraciÃ³n
+# 8080 para la UI de administración
 EXPOSE 26257 8080
 
-# Este Dockerfile es mÃ­nimo ya que la imagen oficial es bastante completa.
+# Este Dockerfile es mínimo ya que la imagen oficial es bastante completa.
 # Para un desarrollo local, puedes usar directamente la imagen oficial
 # o esta imagen construida a partir de ella.</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
 
@@ -151,18 +151,18 @@ services:
     container_name: roach1
     ports:
       - "26257:26257" # Puerto SQL
-      - "8080:8080"   # Puerto de la UI de administraciÃ³n
+      - "8080:8080"   # Puerto de la UI de administración
     volumes:
       - roach1_data:/cockroach/cockroach-data
     command:
       # Inicia el nodo de CockroachDB.
-      # --insecure: Para desarrollo local, no requiere certificados. NO USAR EN PRODUCCIÃ“N.
-      # --store=/cockroach/cockroach-data: Directorio donde se almacenarÃ¡n los datos.
+      # --insecure: Para desarrollo local, no requiere certificados. NO USAR EN PRODUCCIÓN.
+      # --store=/cockroach/cockroach-data: Directorio donde se almacenarán los datos.
       # --listen-addr=0.0.0.0:26257: Escucha conexiones SQL en todas las interfaces.
-      # --http-addr=0.0.0.0:8080: Escucha la UI de administraciÃ³n.
+      # --http-addr=0.0.0.0:8080: Escucha la UI de administración.
       # --join: Nodos a los que intentar unirse para formar el cluster.
-      # --advertise-addr: DirecciÃ³n que otros nodos usarÃ¡n para conectar a este nodo.
-      # --cache: Porcentaje de memoria total del contenedor para la cachÃ© de CockroachDB.
+      # --advertise-addr: Dirección que otros nodos usarán para conectar a este nodo.
+      # --cache: Porcentaje de memoria total del contenedor para la caché de CockroachDB.
       # --max-sql-memory: Porcentaje de memoria total para operaciones SQL.
       "start --insecure --store=/cockroach/cockroach-data --listen-addr=0.0.0.0:26257 --http-addr=0.0.0.0:8080 --join=roach1:26257,roach2:26257,roach3:26257 --cache=25% --max-sql-memory=25% --advertise-addr=roach1:26257"
     healthcheck:
@@ -212,8 +212,8 @@ services:
         condition: service_healthy
       roach3:
         condition: service_healthy
-    # El contenedor de inicializaciÃ³n se ejecuta y sale.
-    # Es crucial que todos los nodos estÃ©n listos y saludables antes de la inicializaciÃ³n.
+    # El contenedor de inicialización se ejecuta y sale.
+    # Es crucial que todos los nodos estén listos y saludables antes de la inicialización.
 
 volumes:
   roach1_data:

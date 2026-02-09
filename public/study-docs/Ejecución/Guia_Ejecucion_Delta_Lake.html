@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,13 +121,13 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Delta Lake</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a le permitirÃ¡ configurar una instancia local bÃ¡sica de Delta Lake utilizando Apache Spark y JupyterLab, orquestada con <code>docker-compose</code>. La configuraciÃ³n incluye:</p><ul><li>  <strong>Spark Master</strong>: El nodo principal de Apache Spark que coordina el clÃºster.</li><li>  <strong>Spark Worker</strong>: Un nodo trabajador de Spark que ejecuta tareas computacionales.</li><li>  <strong>JupyterLab con PySpark y Delta Lake</strong>: Un entorno interactivo de desarrollo donde podrÃ¡ escribir y ejecutar cÃ³digo Python (PySpark) para interactuar con Delta Lake. Este servicio se construirÃ¡ a partir de un <code>Dockerfile</code> personalizado que aÃ±ade las librerÃ­as <code>delta-spark</code> y <code>jupyterlab</code> a una imagen base de Spark.</li></ul><p>La persistencia de los datos de Delta Lake se gestionarÃ¡ mediante un volumen de Docker (<code>delta_lake_data</code>) compartido entre los servicios, asegurando que sus tablas Delta Lake no se pierdan al reiniciar los contenedores.</p><h3>Pasos para ejecutar:</h3><p>1.  <strong>Cree la estructura de archivos:</strong> Cree un directorio para su proyecto (ej. <code>delta-lake-local</code>) y dentro de Ã©l, cree una carpeta llamada <code>notebooks</code> para almacenar sus cuadernos de Jupyter. AsegÃºrese de que <code>docker-compose.yml</code> y <code>Dockerfile.spark-delta</code> estÃ©n en el directorio raÃ­z del proyecto.</p><pre><code>    mkdir delta-lake-local
+    <h2>Explicación</h2><p>Esta guía le permitirá configurar una instancia local básica de Delta Lake utilizando Apache Spark y JupyterLab, orquestada con <code>docker-compose</code>. La configuración incluye:</p><ul><li>  <strong>Spark Master</strong>: El nodo principal de Apache Spark que coordina el clúster.</li><li>  <strong>Spark Worker</strong>: Un nodo trabajador de Spark que ejecuta tareas computacionales.</li><li>  <strong>JupyterLab con PySpark y Delta Lake</strong>: Un entorno interactivo de desarrollo donde podrá escribir y ejecutar código Python (PySpark) para interactuar con Delta Lake. Este servicio se construirá a partir de un <code>Dockerfile</code> personalizado que añade las librerías <code>delta-spark</code> y <code>jupyterlab</code> a una imagen base de Spark.</li></ul><p>La persistencia de los datos de Delta Lake se gestionará mediante un volumen de Docker (<code>delta_lake_data</code>) compartido entre los servicios, asegurando que sus tablas Delta Lake no se pierdan al reiniciar los contenedores.</p><h3>Pasos para ejecutar:</h3><p>1.  <strong>Cree la estructura de archivos:</strong> Cree un directorio para su proyecto (ej. <code>delta-lake-local</code>) y dentro de él, cree una carpeta llamada <code>notebooks</code> para almacenar sus cuadernos de Jupyter. Asegúrese de que <code>docker-compose.yml</code> y <code>Dockerfile.spark-delta</code> estén en el directorio raíz del proyecto.</p><pre><code>    mkdir delta-lake-local
     cd delta-lake-local
     mkdir notebooks
-    # Cree los archivos docker-compose.yml y Dockerfile.spark-delta aquÃ­</code></pre><p>2.  <strong>Ejecute los contenedores:</strong> Abra una terminal en el directorio <code>delta-lake-local</code> y ejecute el comando proporcionado en <code>runCommands</code>.</p><p>3.  <strong>Acceda a JupyterLab:</strong> Una vez que los contenedores estÃ©n en funcionamiento, acceda a JupyterLab abriendo su navegador web y navegando a <code>http://localhost:8888</code>.</p><p>4.  <strong>Pruebe Delta Lake:</strong> Dentro de JupyterLab, cree un nuevo <code>Python 3 (PySpark)</code> notebook y pegue el siguiente cÃ³digo para probar la funcionalidad de Delta Lake:</p><pre><code>    from pyspark.sql import SparkSession
+    # Cree los archivos docker-compose.yml y Dockerfile.spark-delta aquí</code></pre><p>2.  <strong>Ejecute los contenedores:</strong> Abra una terminal en el directorio <code>delta-lake-local</code> y ejecute el comando proporcionado en <code>runCommands</code>.</p><p>3.  <strong>Acceda a JupyterLab:</strong> Una vez que los contenedores estén en funcionamiento, acceda a JupyterLab abriendo su navegador web y navegando a <code>http://localhost:8888</code>.</p><p>4.  <strong>Pruebe Delta Lake:</strong> Dentro de JupyterLab, cree un nuevo <code>Python 3 (PySpark)</code> notebook y pegue el siguiente código para probar la funcionalidad de Delta Lake:</p><pre><code>    from pyspark.sql import SparkSession
     from delta.tables import *
 
-    # Inicializa la sesiÃ³n de Spark con soporte para Delta Lake
+    # Inicializa la sesión de Spark con soporte para Delta Lake
     spark = SparkSession.builder \
         .appName("DeltaLakeQuickstart") \
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
@@ -154,7 +154,7 @@
     print("Data from Delta table:")
     df.show()
 
-    # 3. Realiza una actualizaciÃ³n (ejemplo: cambia la edad de Alice)
+    # 3. Realiza una actualización (ejemplo: cambia la edad de Alice)
     deltaTable = DeltaTable.forPath(spark, delta_table_path)
     deltaTable.update(
         condition="id = 1",
@@ -162,18 +162,18 @@
     )
     print("Updated Alice's age.")
 
-    # 4. Lee de nuevo para verificar la actualizaciÃ³n
+    # 4. Lee de nuevo para verificar la actualización
     df_updated = spark.read.format("delta").load(delta_table_path)
     print("Data after update:")
     df_updated.show()
 
-    # 5. Accede a versiones histÃ³ricas (Time Travel)
+    # 5. Accede a versiones históricas (Time Travel)
     df_version_0 = spark.read.format("delta").option("versionAsOf", 0).load(delta_table_path)
     print("Data from version 0 (before update):")
     df_version_0.show()
 
     spark.stop()
-    print("Spark Session stopped.")</code></pre><p>Para detener y limpiar los contenedores, use <code>docker-compose down</code> en el mismo directorio.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile.spark-delta</h3><pre><code># Usa una imagen base de Spark que incluya Python y Java.
+    print("Spark Session stopped.")</code></pre><p>Para detener y limpiar los contenedores, use <code>docker-compose down</code> en el mismo directorio.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.spark-delta</h3><pre><code># Usa una imagen base de Spark que incluya Python y Java.
 FROM apache/spark:3.5.0-java17
 
 # Cambia a usuario root para instalar dependencias del sistema
@@ -184,7 +184,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Instala jupyterlab y la librerÃ­a delta-spark
+# Instala jupyterlab y la librería delta-spark
 # delta-spark incluye la funcionalidad para interactuar con Delta Lake
 RUN pip install --no-cache-dir jupyterlab==3.6.5 delta-spark==2.4.0
 
@@ -195,8 +195,8 @@ USER spark
 EXPOSE 8888
 
 # Comando por defecto para JupyterLab.
-# Este comando serÃ¡ sobrescrito por docker-compose.yml para aÃ±adir la configuraciÃ³n de Spark.
-# --NotebookApp.token='' --NotebookApp.password='' permite el acceso sin token/contraseÃ±a, adecuado para desarrollo local.
+# Este comando será sobrescrito por docker-compose.yml para añadir la configuración de Spark.
+# --NotebookApp.token='' --NotebookApp.password='' permite el acceso sin token/contraseña, adecuado para desarrollo local.
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.password=''"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
 
 services:
@@ -223,7 +223,7 @@ services:
       - "8081:8081" # Interfaz de usuario del Spark Worker
     environment:
       - SPARK_MASTER_URL=spark://spark-master:7077
-      - SPARK_WORKER_CORES=1 # NÃºmero de nÃºcleos de CPU para el worker
+      - SPARK_WORKER_CORES=1 # Número de núcleos de CPU para el worker
       - SPARK_WORKER_MEMORY=1G # Cantidad de memoria RAM para el worker
     volumes:
       # Comparte el mismo volumen de datos con el master para consistencia
@@ -241,10 +241,10 @@ services:
     environment:
       - SPARK_MASTER_URL=spark://spark-master:7077
       - JUPYTER_ENABLE_LAB=yes # Habilita JupyterLab en lugar de solo Jupyter Notebook
-      # ConfiguraciÃ³n crucial para PySpark con Delta Lake:
+      # Configuración crucial para PySpark con Delta Lake:
       # --packages: Descarga el paquete Delta Lake (io.delta:delta-core_2.12:2.4.0 para Spark 3.5.0/Scala 2.12)
-      # --conf spark.sql.extensions: Registra la extensiÃ³n de Delta SparkSession
-      # --conf spark.sql.catalog.spark_catalog: Configura el catÃ¡logo de Spark para usar el catÃ¡logo de Delta
+      # --conf spark.sql.extensions: Registra la extensión de Delta SparkSession
+      # --conf spark.sql.catalog.spark_catalog: Configura el catálogo de Spark para usar el catálogo de Delta
       - PYSPARK_SUBMIT_ARGS=--packages io.delta:delta-core_2.12:2.4.0 --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" pyspark-shell
       - DELTA_LAKE_PATH=/opt/spark/work-dir/delta_lake_data # Ruta interna para los datos de Delta Lake
     volumes:

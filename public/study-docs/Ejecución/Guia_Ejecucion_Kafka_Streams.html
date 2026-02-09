@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,7 +121,7 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Kafka Streams</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a proporciona una configuraciÃ³n bÃ¡sica para ejecutar una aplicaciÃ³n Kafka Streams junto con un clÃºster de Apache Kafka (Zookeeper + <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicaciÃ³n desacoplada.">Broker</span>) usando Docker Compose. La aplicaciÃ³n de ejemplo de Kafka Streams leerÃ¡ mensajes de un tema de entrada ('streams-plaintext-input'), convertirÃ¡ el texto a mayÃºsculas y escribirÃ¡ el resultado en un tema de salida ('streams-uppercase-output').</p><p><strong>Pasos a seguir:</strong></p><p>1.  <strong>Crear los archivos:</strong> Guarda los contenidos proporcionados en sus respectivos archivos y directorios. AsegÃºrate de crear el directorio <code>src/main/java/com/example/</code> para el archivo <code>StreamApp.java</code>.</p><p>2.  <strong>Dar permisos al script:</strong> <code>chmod +x create-topics.sh</code></p><p>3.  <strong>Iniciar el clÃºster y la aplicaciÃ³n:</strong> Ejecuta <code>docker-compose up -d</code>. Esto levantarÃ¡ Zookeeper, Kafka y construirÃ¡/ejecutarÃ¡ la aplicaciÃ³n Kafka Streams.</p><p>4.  <strong>Crear temas de Kafka:</strong> Una vez que Kafka estÃ© en funcionamiento (puede tardar unos segundos), ejecuta <code>./create-topics.sh</code> para crear los temas necesarios.</p><p>5.  <strong>Probar la aplicaciÃ³n:</strong></p><ul><li>   *   EnvÃ­a un mensaje al tema de entrada: <code>docker exec -it kafka-broker kafka-console-producer.sh --broker-list localhost:9092 --topic streams-plaintext-input</code> (luego escribe tus mensajes, ej: "hello world", "Kafka Streams").</li><li>   *   Consume mensajes del tema de salida para ver el resultado: <code>docker exec -it kafka-broker kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic streams-uppercase-output --from-beginning</code></li></ul><p>6.  <strong>Ver logs de la aplicaciÃ³n Streams:</strong> <code>docker logs kafka-streams-app</code></p><p>7.  <strong>Detener la configuraciÃ³n:</strong> <code>docker-compose down</code></p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile.streams-app</h3><pre><code># Usa una imagen base de OpenJDK para compilar y ejecutar la aplicaciÃ³n Java
+    <h2>Explicación</h2><p>Esta guía proporciona una configuración básica para ejecutar una aplicación Kafka Streams junto con un clúster de Apache Kafka (Zookeeper + <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">Broker</span>) usando Docker Compose. La aplicación de ejemplo de Kafka Streams leerá mensajes de un tema de entrada ('streams-plaintext-input'), convertirá el texto a mayúsculas y escribirá el resultado en un tema de salida ('streams-uppercase-output').</p><p><strong>Pasos a seguir:</strong></p><p>1.  <strong>Crear los archivos:</strong> Guarda los contenidos proporcionados en sus respectivos archivos y directorios. Asegúrate de crear el directorio <code>src/main/java/com/example/</code> para el archivo <code>StreamApp.java</code>.</p><p>2.  <strong>Dar permisos al script:</strong> <code>chmod +x create-topics.sh</code></p><p>3.  <strong>Iniciar el clúster y la aplicación:</strong> Ejecuta <code>docker-compose up -d</code>. Esto levantará Zookeeper, Kafka y construirá/ejecutará la aplicación Kafka Streams.</p><p>4.  <strong>Crear temas de Kafka:</strong> Una vez que Kafka esté en funcionamiento (puede tardar unos segundos), ejecuta <code>./create-topics.sh</code> para crear los temas necesarios.</p><p>5.  <strong>Probar la aplicación:</strong></p><ul><li>   *   Envía un mensaje al tema de entrada: <code>docker exec -it kafka-broker kafka-console-producer.sh --broker-list localhost:9092 --topic streams-plaintext-input</code> (luego escribe tus mensajes, ej: "hello world", "Kafka Streams").</li><li>   *   Consume mensajes del tema de salida para ver el resultado: <code>docker exec -it kafka-broker kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic streams-uppercase-output --from-beginning</code></li></ul><p>6.  <strong>Ver logs de la aplicación Streams:</strong> <code>docker logs kafka-streams-app</code></p><p>7.  <strong>Detener la configuración:</strong> <code>docker-compose down</code></p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.streams-app</h3><pre><code># Usa una imagen base de OpenJDK para compilar y ejecutar la aplicación Java
 FROM openjdk:11-jdk-slim as builder
 
 # Establece el directorio de trabajo dentro del contenedor
@@ -130,26 +130,26 @@ WORKDIR /app
 # Instala Maven
 RUN apt-get update && apt-get install -y maven
 
-# Copia los archivos de configuraciÃ³n de Maven y el cÃ³digo fuente
+# Copia los archivos de configuración de Maven y el código fuente
 COPY pom.xml .
 COPY src ./src
 
-# Compila la aplicaciÃ³n usando Maven
-# --batch-mode para ejecuciÃ³n no interactiva
-# -DskipTests para saltar las pruebas durante la compilaciÃ³n
-# package para empaquetar la aplicaciÃ³n en un JAR ejecutable
+# Compila la aplicación usando Maven
+# --batch-mode para ejecución no interactiva
+# -DskipTests para saltar las pruebas durante la compilación
+# package para empaquetar la aplicación en un JAR ejecutable
 RUN mvn clean package -DskipTests
 
-# Fase de ejecuciÃ³n
+# Fase de ejecución
 FROM openjdk:11-jre-slim
 
 # Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia el JAR compilado de la fase de construcciÃ³n
+# Copia el JAR compilado de la fase de construcción
 COPY --from=builder /app/target/kafka-streams-example-1.0-SNAPSHOT.jar kafka-streams-example.jar
 
-# Define el punto de entrada para ejecutar la aplicaciÃ³n
+# Define el punto de entrada para ejecutar la aplicación
 # java -jar &lt;nombre_del_jar&gt;
 ENTRYPOINT ["java", "-jar", "kafka-streams-example.jar"]
 </code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
@@ -189,10 +189,10 @@ services:
     depends_on:
       - kafka-broker
     environment:
-      # AsegÃºrate de que la aplicaciÃ³n Kafka Streams se conecte al broker
+      # Asegúrate de que la aplicación Kafka Streams se conecte al broker
       # El broker es accesible por su nombre de servicio 'kafka-broker' dentro de la red Docker Compose.
       KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
-    # Puedes aÃ±adir mÃ¡s variables de entorno si tu aplicaciÃ³n las necesita
+    # Puedes añadir más variables de entorno si tu aplicación las necesita
     # ports:
     #   - "8080:8080" # Mapea un puerto si quieres acceder a alguna interfaz web de tu app (no aplica para este ejemplo)
 </code></pre><h3>create-topics.sh</h3><pre><code>#!/bin/bash
@@ -290,7 +290,7 @@ import java.util.Properties;
 public class StreamApp {
 
     public static void main(String[] args) {
-        // ConfiguraciÃ³n de la aplicaciÃ³n Kafka Streams
+        // Configuración de la aplicación Kafka Streams
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-uppercase-app");
         // KAFKA_BOOTSTRAP_SERVERS se inyecta como variable de entorno desde docker-compose.yml
@@ -298,22 +298,22 @@ public class StreamApp {
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
-        // Construye la topologÃ­a de la aplicaciÃ³n Kafka Streams
+        // Construye la topología de la aplicación Kafka Streams
         StreamsBuilder builder = new StreamsBuilder();
         builder.stream("streams-plaintext-input", Consumed.with(Serdes.String(), Serdes.String()))
-                .mapValues(value -&gt; value.toUpperCase()) // Convierte el valor a mayÃºsculas
+                .mapValues(value -&gt; value.toUpperCase()) // Convierte el valor a mayúsculas
                 .to("streams-uppercase-output", Produced.with(Serdes.String(), Serdes.String()));
 
         Topology topology = builder.build();
-        System.out.println(topology.describe()); // Imprime la descripciÃ³n de la topologÃ­a en los logs
+        System.out.println(topology.describe()); // Imprime la descripción de la topología en los logs
 
-        // Crea y arranca la aplicaciÃ³n Kafka Streams
+        // Crea y arranca la aplicación Kafka Streams
         KafkaStreams streams = new KafkaStreams(topology, props);
-        // Limpiar el estado local de la aplicaciÃ³n (Ãºtil para desarrollo, no para producciÃ³n)
-        // streams.cleanUp(); // Descomentar para limpiar el estado local al iniciar (Ãºtil en desarrollo)
+        // Limpiar el estado local de la aplicación (útil para desarrollo, no para producción)
+        // streams.cleanUp(); // Descomentar para limpiar el estado local al iniciar (útil en desarrollo)
         streams.start();
 
-        // AÃ±ade un hook de apagado para cerrar la aplicaciÃ³n de Streams de forma elegante
+        // Añade un hook de apagado para cerrar la aplicación de Streams de forma elegante
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     }
 }

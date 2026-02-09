@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,46 +121,46 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Vector</h1>
-    <h2>ExplicaciÃ³n</h2><h3>GuÃ­a RÃ¡pida para Ejecutar Vector Localmente</h3><p>Esta guÃ­a te permitirÃ¡ configurar y ejecutar una instancia bÃ¡sica de [Vector](https://vector.dev/), un agente de datos de observabilidad de alto rendimiento, utilizando Podman o Docker. La configuraciÃ³n provista harÃ¡ que Vector monitoree un archivo de log (<code>dummy.log</code>) en tu sistema local y envÃ­e su contenido, transformado a formato JSON, directamente a la consola (stdout) del contenedor.</p><p>#### Pasos a Seguir:</p><p>1.  <strong>Crea los archivos necesarios:</strong></p><ul><li>   *   Guarda el contenido del <code>Dockerfile</code> en un archivo llamado <code>Dockerfile</code>.</li><li>   *   Guarda el contenido de <code>vector.toml</code> en un archivo llamado <code>vector.toml</code>.</li><li>   *   Crea un directorio llamado <code>logs</code> en el mismo nivel que <code>Dockerfile</code> y <code>vector.toml</code>.</li><li>   *   Dentro del directorio <code>logs</code>, guarda el contenido de <code>logs/dummy.log</code> en un archivo llamado <code>dummy.log</code>.</li></ul><p>    La estructura de tu directorio deberÃ­a ser algo asÃ­:</p><pre><code>    . 
-    â”œâ”€â”€ Dockerfile
-    â”œâ”€â”€ vector.toml
-    â””â”€â”€ logs/
-        â””â”€â”€ dummy.log</code></pre><p>2.  <strong>Construye la imagen de Docker/Podman:</strong></p><p>    Ejecuta el primer comando de <code>runCommands</code> para construir la imagen. Puedes reemplazar <code>podman</code> con <code>docker</code> si lo prefieres.</p><p>3.  <strong>Ejecuta el contenedor de Vector:</strong></p><p>    Ejecuta el segundo comando de <code>runCommands</code> para iniciar el contenedor. Este comando iniciarÃ¡ el contenedor, montarÃ¡ tu directorio <code>logs</code> local en el contenedor y cargarÃ¡ la configuraciÃ³n de Vector.</p><p>4.  <strong>Verifica la salida:</strong></p><p>    Una vez que el contenedor estÃ© en ejecuciÃ³n, usa el siguiente comando para ver la salida de Vector:</p><pre><code>    podman logs -f vector-instance
+    <h2>Explicación</h2><h3>Guía Rápida para Ejecutar Vector Localmente</h3><p>Esta guía te permitirá configurar y ejecutar una instancia básica de [Vector](https://vector.dev/), un agente de datos de observabilidad de alto rendimiento, utilizando Podman o Docker. La configuración provista hará que Vector monitoree un archivo de log (<code>dummy.log</code>) en tu sistema local y envíe su contenido, transformado a formato JSON, directamente a la consola (stdout) del contenedor.</p><p>#### Pasos a Seguir:</p><p>1.  <strong>Crea los archivos necesarios:</strong></p><ul><li>   *   Guarda el contenido del <code>Dockerfile</code> en un archivo llamado <code>Dockerfile</code>.</li><li>   *   Guarda el contenido de <code>vector.toml</code> en un archivo llamado <code>vector.toml</code>.</li><li>   *   Crea un directorio llamado <code>logs</code> en el mismo nivel que <code>Dockerfile</code> y <code>vector.toml</code>.</li><li>   *   Dentro del directorio <code>logs</code>, guarda el contenido de <code>logs/dummy.log</code> en un archivo llamado <code>dummy.log</code>.</li></ul><p>    La estructura de tu directorio debería ser algo así:</p><pre><code>    . 
+    ├── Dockerfile
+    ├── vector.toml
+    └── logs/
+        └── dummy.log</code></pre><p>2.  <strong>Construye la imagen de Docker/Podman:</strong></p><p>    Ejecuta el primer comando de <code>runCommands</code> para construir la imagen. Puedes reemplazar <code>podman</code> con <code>docker</code> si lo prefieres.</p><p>3.  <strong>Ejecuta el contenedor de Vector:</strong></p><p>    Ejecuta el segundo comando de <code>runCommands</code> para iniciar el contenedor. Este comando iniciará el contenedor, montará tu directorio <code>logs</code> local en el contenedor y cargará la configuración de Vector.</p><p>4.  <strong>Verifica la salida:</strong></p><p>    Una vez que el contenedor esté en ejecución, usa el siguiente comando para ver la salida de Vector:</p><pre><code>    podman logs -f vector-instance
     # O si usas Docker:
-    # docker logs -f vector-instance</code></pre><p>    DeberÃ­as ver las lÃ­neas del <code>dummy.log</code> procesadas y mostradas en formato JSON.</p><p>5.  <strong>Prueba la reactividad (Opcional):</strong></p><p>    Mientras <code>podman logs -f</code> (o <code>docker logs -f</code>) estÃ¡ en ejecuciÃ³n, puedes aÃ±adir nuevas lÃ­neas al archivo <code>logs/dummy.log</code> en tu sistema host. Por ejemplo:</p><pre><code>    echo '{"timestamp": "2023-10-27T10:00:15Z", "level": "INFO", "message": "New log entry!"}' &gt;&gt; logs/dummy.log</code></pre><p>    Vector deberÃ­a detectar los cambios y mostrar las nuevas lÃ­neas en la consola del contenedor.</p><p>6.  <strong>DetÃ©n y elimina el contenedor (cuando termines):</strong></p><pre><code>    podman stop vector-instance
+    # docker logs -f vector-instance</code></pre><p>    Deberías ver las líneas del <code>dummy.log</code> procesadas y mostradas en formato JSON.</p><p>5.  <strong>Prueba la reactividad (Opcional):</strong></p><p>    Mientras <code>podman logs -f</code> (o <code>docker logs -f</code>) está en ejecución, puedes añadir nuevas líneas al archivo <code>logs/dummy.log</code> en tu sistema host. Por ejemplo:</p><pre><code>    echo '{"timestamp": "2023-10-27T10:00:15Z", "level": "INFO", "message": "New log entry!"}' &gt;&gt; logs/dummy.log</code></pre><p>    Vector debería detectar los cambios y mostrar las nuevas líneas en la consola del contenedor.</p><p>6.  <strong>Detén y elimina el contenedor (cuando termines):</strong></p><pre><code>    podman stop vector-instance
     podman rm vector-instance
     # O si usas Docker:
     # docker stop vector-instance
-    # docker rm vector-instance</code></pre><h2>Comandos de EjecuciÃ³n</h2><pre><code>podman build -t my-vector-instance . && podman run -d --name vector-instance -v $(pwd)/logs:/var/log/app my-vector-instance</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de Vector como base.
-# Se elige una versiÃ³n especÃ­fica y una variante Alpine para un tamaÃ±o mÃ¡s pequeÃ±o y eficiencia.
+    # docker rm vector-instance</code></pre><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-vector-instance . && podman run -d --name vector-instance -v $(pwd)/logs:/var/log/app my-vector-instance</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de Vector como base.
+# Se elige una versión específica y una variante Alpine para un tamaño más pequeño y eficiencia.
 FROM timberio/vector:0.35.0-alpine
 
-# Establece el directorio de trabajo dentro del contenedor donde se gestionarÃ¡n los archivos de configuraciÃ³n.
+# Establece el directorio de trabajo dentro del contenedor donde se gestionarán los archivos de configuración.
 WORKDIR /etc/vector
 
-# Copia el archivo de configuraciÃ³n de Vector `vector.toml` desde el sistema host al contenedor.
-# Este archivo define cÃ³mo Vector recolectarÃ¡, transformarÃ¡ y enrutarÃ¡ los datos.
+# Copia el archivo de configuración de Vector `vector.toml` desde el sistema host al contenedor.
+# Este archivo define cómo Vector recolectará, transformará y enrutará los datos.
 COPY vector.toml .
 
-# Crea un directorio dentro del contenedor que serÃ¡ usado para montar los logs del host.
-# Este es el directorio que la fuente 'file' en `vector.toml` monitorearÃ¡.
+# Crea un directorio dentro del contenedor que será usado para montar los logs del host.
+# Este es el directorio que la fuente 'file' en `vector.toml` monitoreará.
 RUN mkdir -p /var/log/app
 
-# Expone el puerto 8686. Aunque no es estrictamente necesario para esta configuraciÃ³n bÃ¡sica de archivo a consola,
-# es un puerto comÃºn utilizado por Vector para fuentes o destinos basados en HTTP/TCP, y una buena prÃ¡ctica para futuras extensiones.
+# Expone el puerto 8686. Aunque no es estrictamente necesario para esta configuración básica de archivo a consola,
+# es un puerto común utilizado por Vector para fuentes o destinos basados en HTTP/TCP, y una buena práctica para futuras extensiones.
 EXPOSE 8686
 
-# Comando por defecto para iniciar Vector con el archivo de configuraciÃ³n especificado.
-# Vector leerÃ¡ esta configuraciÃ³n y comenzarÃ¡ a ejecutar sus pipelines de datos.
+# Comando por defecto para iniciar Vector con el archivo de configuración especificado.
+# Vector leerá esta configuración y comenzará a ejecutar sus pipelines de datos.
 CMD ["vector", "--config", "/etc/vector/vector.toml"]</code></pre><h3>vector.toml</h3><pre><code># vector.toml
-# ConfiguraciÃ³n bÃ¡sica de Vector: Lee de un archivo local y envÃ­a a la consola.
+# Configuración básica de Vector: Lee de un archivo local y envía a la consola.
 
-# Define una fuente de tipo 'file' para monitorear y recolectar logs de una aplicaciÃ³n.
-# Vector observarÃ¡ el archivo especificado para nuevas lÃ­neas.
+# Define una fuente de tipo 'file' para monitorear y recolectar logs de una aplicación.
+# Vector observará el archivo especificado para nuevas líneas.
 [sources.my_app_logs]
   type = "file"
   # La ruta al archivo de log dentro del contenedor que Vector debe monitorear.
-  # AsegÃºrate de que este directorio `/var/log/app` se mapee desde un directorio del host
+  # Asegúrate de que este directorio `/var/log/app` se mapee desde un directorio del host
   # (por ejemplo, `./logs`) usando el comando `podman run -v` o `docker run -v`.
   include = ["/var/log/app/dummy.log"]
   # Opcional: Ajusta el intervalo de sondeo para que Vector verifique el archivo.
@@ -168,12 +168,12 @@ CMD ["vector", "--config", "/etc/vector/vector.toml"]</code></pre><h3>vector.tom
   # polling_interval_secs = 1
 
 # Define un destino de tipo 'console' para imprimir los eventos procesados por Vector.
-# Este destino enviarÃ¡ la salida directamente al stdout del contenedor.
+# Este destino enviará la salida directamente al stdout del contenedor.
 [sinks.my_console_sink]
   type = "console"
-  # Especifica quÃ© fuentes deben ser procesadas por este sink. En este caso, `my_app_logs`.
+  # Especifica qué fuentes deben ser procesadas por este sink. En este caso, `my_app_logs`.
   inputs = ["my_app_logs"]
-  # Configura la codificaciÃ³n de la salida. JSON es un formato comÃºn y legible para logs estructurados.
+  # Configura la codificación de la salida. JSON es un formato común y legible para logs estructurados.
   encoding.codec = "json"</code></pre><h3>logs/dummy.log</h3><pre><code>{"timestamp": "2023-10-27T10:00:00Z", "level": "INFO", "message": "User logged in"}
 {"timestamp": "2023-10-27T10:00:05Z", "level": "DEBUG", "message": "Processing request 123"}
 {"timestamp": "2023-10-27T10:00:10Z", "level": "ERROR", "message": "Failed to connect to database", "error_code": 500}</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE5EGSKQElLQMBHfViDOfG6LuygjjZO9CFs2ZP10yq7ZbvErR23j1wV_R_7UJh_z25w06vyQnPjIfSGJN5hVjEfXbN-XmmSwktNqj3hN3MtDBM_ROmvd9zeQKRkUdxIP14YlptaPSyEgrBMeUH_dzGP00dEs8-l8SuW-a-CDEzUpeieLtKXDHbJSFfbDA2N51aLBAGIIOHowR3_ffAp" target="_blank" rel="noopener noreferrer">domestika.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEw0v7iGXSFsPGkpK_HozvbKCnwV4btQ-2JpJsqYenF4IyVf9ZpqMZTvQFGaQnwXs24T3MQKSdaGkDsS_fYkCAVcaVBSS_cldUMARuldCPL7XkSZA==" target="_blank" rel="noopener noreferrer">vector.dev</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEDHoiNNh5wvh-puSsndOIU3QSHeMYNwBeg-W42iTe6TEUbY79mgDegMaefjXdH9dp5iHQVlLwZpwIbLyOUIPpGYv_pk7gSyeTc-wTf7I57-9qiD-WGERPfrVJcBUzKUruO7zhRePsDClfxlhiOCpML7yIy-VGf8qxbb3ZaS_RfVZApmLXPTs6I6X-_4V8oHNLg1-y1TRs=" target="_blank" rel="noopener noreferrer">vectorworks.net</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG1TWHQVUCTXJQ0akTI3KRzUio4Ex1m2JjBoEtce0NuFswqoLHjvr3DQRX9uJvsb9bmGvJpq6m9_1svPCQCub7Al_3jkDtndqnXzKbdfFkO9pjpCLwSBJeAkdavXWvbSqYQsm9fsm8=" target="_blank" rel="noopener noreferrer">youtube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYfElNxQPOGndym76WdrfHEt7Ho1h0MEsw_baIQhJ_VlE6DZH-LpQeJ2ZQ7LGMkNonPvLAMAi82icUBqgOUZVBNCPJRGX_F0pesQVvCLCmZ5nwF34I80h82zj6aAjaOYmrLEa7Bx8=" target="_blank" rel="noopener noreferrer">youtube.com</a></li></ul>

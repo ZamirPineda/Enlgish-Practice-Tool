@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,15 +121,15 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Spark Streaming</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a te permitirÃ¡ configurar y ejecutar una instancia bÃ¡sica de Spark Streaming utilizando Docker Compose. La configuraciÃ³n incluye un maestro de Spark, un trabajador de Spark y un servidor Netcat que actuarÃ¡ como fuente de datos para el streaming. Un script de Python (<code>spark_streaming_app.py</code>) consumirÃ¡ los datos del Netcat y realizarÃ¡ un simple conteo de palabras.</p><h3>Pasos para la ejecuciÃ³n:</h3><p>1.  <strong>Crear el Dockerfile y los archivos de soporte</strong>: AsegÃºrate de tener los archivos <code>Dockerfile</code>, <code>docker-compose.yml</code> y <code>spark_streaming_app.py</code> en el mismo directorio.</p><p>2.  <strong>Construir la imagen de Docker</strong>: Desde el directorio donde guardaste los archivos, ejecuta el siguiente comando para construir la imagen base de Spark:</p><pre><code>    docker build -t spark-streaming-base:latest .</code></pre><p>3.  <strong>Iniciar los servicios de Docker Compose</strong>: Una vez que la imagen estÃ© construida, puedes levantar todos los contenedores definidos en <code>docker-compose.yml</code>:</p><pre><code>    docker-compose up -d</code></pre><p>    Esto iniciarÃ¡ el maestro de Spark (accesible en <code>http://localhost:8080</code>), el trabajador de Spark (accesible en <code>http://localhost:8081</code>) y el servidor Netcat que estarÃ¡ escuchando en el puerto <code>9999</code> de tu mÃ¡quina local.</p><p>4.  <strong>Ejecutar la aplicaciÃ³n de Spark Streaming</strong>: EnvÃ­a el script de Python al maestro de Spark para que empiece a procesar el flujo de datos. Para ello, primero copia el script dentro del contenedor del maestro:</p><pre><code>    docker cp spark_streaming_app.py spark-master:/app/spark_streaming_app.py</code></pre><p>    Luego, ejecuta la aplicaciÃ³n:</p><pre><code>    docker exec -it spark-master /opt/spark/bin/spark-submit /app/spark_streaming_app.py</code></pre><p>    VerÃ¡s mensajes indicando que la aplicaciÃ³n de streaming ha comenzado y estÃ¡ esperando datos.</p><p>5.  <strong>Enviar datos al servidor Netcat</strong>: Abre una nueva terminal y envÃ­a algunos mensajes al servidor Netcat. Puedes hacer esto desde tu mÃ¡quina local (ya que el puerto 9999 estÃ¡ mapeado):</p><pre><code>    echo "hello spark streaming world" | nc localhost 9999
+    <h2>Explicación</h2><p>Esta guía te permitirá configurar y ejecutar una instancia básica de Spark Streaming utilizando Docker Compose. La configuración incluye un maestro de Spark, un trabajador de Spark y un servidor Netcat que actuará como fuente de datos para el streaming. Un script de Python (<code>spark_streaming_app.py</code>) consumirá los datos del Netcat y realizará un simple conteo de palabras.</p><h3>Pasos para la ejecución:</h3><p>1.  <strong>Crear el Dockerfile y los archivos de soporte</strong>: Asegúrate de tener los archivos <code>Dockerfile</code>, <code>docker-compose.yml</code> y <code>spark_streaming_app.py</code> en el mismo directorio.</p><p>2.  <strong>Construir la imagen de Docker</strong>: Desde el directorio donde guardaste los archivos, ejecuta el siguiente comando para construir la imagen base de Spark:</p><pre><code>    docker build -t spark-streaming-base:latest .</code></pre><p>3.  <strong>Iniciar los servicios de Docker Compose</strong>: Una vez que la imagen esté construida, puedes levantar todos los contenedores definidos en <code>docker-compose.yml</code>:</p><pre><code>    docker-compose up -d</code></pre><p>    Esto iniciará el maestro de Spark (accesible en <code>http://localhost:8080</code>), el trabajador de Spark (accesible en <code>http://localhost:8081</code>) y el servidor Netcat que estará escuchando en el puerto <code>9999</code> de tu máquina local.</p><p>4.  <strong>Ejecutar la aplicación de Spark Streaming</strong>: Envía el script de Python al maestro de Spark para que empiece a procesar el flujo de datos. Para ello, primero copia el script dentro del contenedor del maestro:</p><pre><code>    docker cp spark_streaming_app.py spark-master:/app/spark_streaming_app.py</code></pre><p>    Luego, ejecuta la aplicación:</p><pre><code>    docker exec -it spark-master /opt/spark/bin/spark-submit /app/spark_streaming_app.py</code></pre><p>    Verás mensajes indicando que la aplicación de streaming ha comenzado y está esperando datos.</p><p>5.  <strong>Enviar datos al servidor Netcat</strong>: Abre una nueva terminal y envía algunos mensajes al servidor Netcat. Puedes hacer esto desde tu máquina local (ya que el puerto 9999 está mapeado):</p><pre><code>    echo "hello spark streaming world" | nc localhost 9999
     echo "spark is awesome" | nc localhost 9999
-    echo "hello again" | nc localhost 9999</code></pre><p>6.  <strong>Observar la salida</strong>: Regresa a la terminal donde ejecutaste <code>spark-submit</code>. DeberÃ­as ver los conteos de palabras en tiempo real impresos en la consola por la aplicaciÃ³n de Spark Streaming.</p><p>7.  <strong>Detener los servicios</strong>: Para detener y eliminar todos los contenedores, ejecuta:</p><pre><code>    docker-compose down</code></pre><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Dockerfile para construir la imagen base de Spark
+    echo "hello again" | nc localhost 9999</code></pre><p>6.  <strong>Observar la salida</strong>: Regresa a la terminal donde ejecutaste <code>spark-submit</code>. Deberías ver los conteos de palabras en tiempo real impresos en la consola por la aplicación de Spark Streaming.</p><p>7.  <strong>Detener los servicios</strong>: Para detener y eliminar todos los contenedores, ejecuta:</p><pre><code>    docker-compose down</code></pre><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para construir la imagen base de Spark
 FROM openjdk:11-jre-slim
 
 # Actualizar e instalar curl y netcat-traditional (para el servidor Netcat)
 RUN apt-get update && apt-get install -y curl netcat-traditional && rm -rf /var/lib/apt/lists/*
 
-# Definir la versiÃ³n de Spark y Hadoop
+# Definir la versión de Spark y Hadoop
 ENV SPARK_VERSION=3.5.1
 ENV HADOOP_VERSION=3
 
@@ -143,11 +143,11 @@ RUN curl -o /tmp/spark.tgz https://archive.apache.org/dist/spark/spark-$SPARK_VE
 ENV SPARK_HOME=/opt/spark
 ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 
-# Exponer puertos para la interfaz de usuario del Maestro de Spark (8080), comunicaciÃ³n del Maestro (7077),
+# Exponer puertos para la interfaz de usuario del Maestro de Spark (8080), comunicación del Maestro (7077),
 # interfaz de usuario del Trabajador de Spark (8081) y otros posibles puertos.
 EXPOSE 8080 7077 8081 7000
 
-# Comando por defecto (serÃ¡ sobrescrito por docker-compose para los servicios especÃ­ficos)
+# Comando por defecto (será sobrescrito por docker-compose para los servicios específicos)
 CMD ["/opt/spark/bin/spark-shell"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
 services:
   spark-master:
@@ -156,7 +156,7 @@ services:
     hostname: spark-master
     ports:
       - "8080:8080" # Interfaz de usuario del Maestro de Spark
-      - "7077:7077" # ComunicaciÃ³n interna del Maestro de Spark
+      - "7077:7077" # Comunicación interna del Maestro de Spark
     environment:
       - SPARK_MASTER_HOST=spark-master
       - SPARK_MASTER_PORT=7077
@@ -208,31 +208,31 @@ spark.sparkContext.setLogLevel("ERROR") # Establecer nivel de log para reducir l
 
 print("Spark Session inicializada. Esperando datos del servidor Netcat...")
 
-# Crear un DataFrame que represente el flujo de lÃ­neas de entrada del servidor Netcat
-# AsegÃºrate de que 'netcat-server' sea el nombre de host y 9999 el puerto
+# Crear un DataFrame que represente el flujo de líneas de entrada del servidor Netcat
+# Asegúrate de que 'netcat-server' sea el nombre de host y 9999 el puerto
 lines = spark.readStream \
     .format("socket") \
     .option("host", "netcat-server") \
     .option("port", 9999) \
     .load()
 
-# Dividir las lÃ­neas en palabras
+# Dividir las líneas en palabras
 words = lines.select(
     explode(split(lines.value, " ")).alias("word")
 )
 
-# Generar el conteo de palabras en ejecuciÃ³n
+# Generar el conteo de palabras en ejecución
 wordCounts = words.groupBy("word").count()
 
 # Iniciar la consulta que imprime los conteos en la consola
-# Usar el modo 'complete' para esta demostraciÃ³n.
+# Usar el modo 'complete' para esta demostración.
 query = wordCounts.writeStream \
     .outputMode("complete") \
     .format("console") \
     .start()
 
 print("Consulta de streaming iniciada. Para enviar datos, usa: echo 'tu mensaje' | nc localhost 9999")
-print("Presiona Ctrl+C para detener la aplicaciÃ³n cuando hayas terminado.")
+print("Presiona Ctrl+C para detener la aplicación cuando hayas terminado.")
 
 query.awaitTermination()
 </code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4XGNYiGL6KIIIOHmS87Ha8ob8pjlwLSUtdCcKjss_vopFqP0u1F4rv9b59mOMr7_p7z-3IESZDNNVpXZIwoqh2T3ZRng26UX_lOygrCV-T9nuuLeKBdQ5D2kc1OUrlJNQC0Lbe91nPSUYwQ4StZ4SAVhPg1Ncp1OTeUvpryOg" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF57f7BTCtakgloZHw-JeT7y0Iolwew3r_KmAn9UB7T4jhwLu8Bo2PkvTZiAz0Wq6csleHInDwuVcHR9X8fYdo-Mpy5jMSpClae7-aIGeun9E3-dtWejtoN5eYOp72jXBJF8T7jDIFQ-A3DjyjIQdU3rQmwWA4=" target="_blank" rel="noopener noreferrer">databricks.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPrRkMcso8yhmfqAVnZCXozF2KdBWcdIhDHlmjBJ4FaOppwYRiZuZbnkOInoHNRL2dw2doxNF3b7amm1TLxBQvytNVRlUk2O08gl4PbTLD3_8l_Rpf5VxsMy3aDDmznSxITR3If3DIlhE_gcxGKg3oHcelTAmQhUGu_i4XxoTDmH4XuewEcPAGICk=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEu96Uh4MNIVFZRnI-5VocB7nfLA-DNP4dmSgq1_HIEDpSh3NGh3dLjNcilFIwzChUmN5XUQ26mPNOVSP0kZZ3ufAPt7Vx01Z1Bg-zsI_nHDg-fbymd9MAQC9ZJY9K53Rn9OwI27ydPC6JzYQks5-X-sQo8aJlyVkPv9B6uCxG7Kq1o_eylCw==" target="_blank" rel="noopener noreferrer">databricks.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGf0BT4K9sBuoDyC32xmvOfQRh6x31L2reLpkLZVoz48KiLVuH90MnDiL0bEZSEFwBcSNeQARX7YhwP09IjmeaQUJlv0FfgrRsOsnU4InElr1-lGChNoPIolSYfEkyGAPExHsqsFx_SdsAXGtfFXiNohVJWvs6tL0Pk9gu_2ER3wqhjRxhP" target="_blank" rel="noopener noreferrer">damavis.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHuaR5VWXqlWYqc-034DJWFXK_IoIE7AfEgemHas_4_E3NGWzVEF2sSLpDBZ60-5WyVPWB_BiuQfA13jQXnieKiP5s5OF-iqLZnQzstGkAvR74UqMF8KN6G7JDWolyf2C-U4aJM2ZjqLLu1buPb60IAvttPG4Z5SwYKzx5wMapzRgB4oiNRx9x8b_Kkpg==" target="_blank" rel="noopener noreferrer">damavis.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEN02q8SPKIRH2lhHgqzgVR0BOAE-dRp3Q0Fxba5e9odb_oEHzoJfDFBasOJZieRnogsqCvhGNLbJoArjffF3QkiunFwztFjlwUUT5lA4tUshZB6xZzz0iuepE70lduDqBxaduLeOlNdGR9nAs2EBmn7n2avV7xXLWTepncLTLeqH7Blzwl9LlTOqlONsU0yAWNJo1e9_QtNQcCb9Q=" target="_blank" rel="noopener noreferrer">microsoft.com</a></li></ul>

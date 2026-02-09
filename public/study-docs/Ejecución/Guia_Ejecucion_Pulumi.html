@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,11 +121,11 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Pulumi</h1>
-    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a le permitirÃ¡ ejecutar el CLI de Pulumi dentro de un contenedor Docker/Podman. Pulumi es una herramienta de Infraestructura como CÃ³digo (IaC) que le permite definir y gestionar su infraestructura en la nube utilizando lenguajes de programaciÃ³n. Ejecutar Pulumi en un contenedor es Ãºtil para:</p><p>1.  <strong>Aislamiento</strong>: Mantener las dependencias de Pulumi separadas de su sistema anfitriÃ³n.</p><p>2.  <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacciÃ³n llevarÃ¡ la base de datos de un estado vÃ¡lido a otro, y que cada lectura recibirÃ¡ la escritura mÃ¡s reciente o un error.">Consistencia</span></strong>: Asegurar que todos los miembros del equipo usen la misma versiÃ³n de Pulumi.</p><p>3.  <strong><span class="tooltip" data-tooltip-text="Siglas de IntegraciÃ³n Continua (CI) y Entrega o Despliegue Continuo (CD). Un conjunto de prÃ¡cticas que automatizan las fases de desarrollo, prueba y despliegue de software.">CI/CD</span></strong>: Facilita la integraciÃ³n en <span class="tooltip" data-tooltip-text="Una serie de etapas de procesamiento de datos conectadas en secuencia, donde la salida de una etapa es la entrada de la siguiente. ComÃºn en sistemas de CI/CD y procesamiento de datos.">pipelines</span> de integraciÃ³n y despliegue continuo.</p><p>La configuraciÃ³n incluye un <code>Dockerfile</code> que construye una imagen con el CLI de Pulumi y Node.js (necesario para proyectos Pulumi basados en TypeScript/JavaScript). TambiÃ©n se proporcionan un archivo <code>Pulumi.yaml</code> y un <code>index.ts</code> con un proyecto Pulumi mÃ­nimo de ejemplo que genera un UUID aleatorio, que no requiere credenciales de nube. Este proyecto sirve para demostrar que Pulumi puede ejecutarse y gestionar un recurso.</p><h3>Pasos para Ejecutar:</h3><p>1.  <strong>Crear un directorio de proyecto</strong>: Cree una carpeta vacÃ­a, por ejemplo, <code>my-pulumi-project</code>.</p><p>2.  <strong>Guardar los archivos</strong>: Coloque el <code>Dockerfile</code>, <code>Pulumi.yaml</code> y <code>index.ts</code> proporcionados dentro de este directorio.</p><p>3.  <strong>Instalar dependencias del proyecto (opcional pero recomendado)</strong>: Dentro de su directorio <code>my-pulumi-project</code>, ejecute <code>npm install @pulumi/pulumi @pulumi/random</code>. Esto crearÃ¡ el directorio <code>node_modules</code> que serÃ¡ montado en el contenedor.</p><p>4.  <strong>Obtener un Token de Acceso de Pulumi</strong>: NecesitarÃ¡ un token de acceso de Pulumi para autenticarse con el servicio de Pulumi (para gestionar estados). Puede generarlo en [app.pulumi.com](https://app.pulumi.com) en la secciÃ³n de configuraciÃ³n de su cuenta.</p><p>5.  <strong>Ejecutar los comandos</strong>: Utilice los <code>runCommands</code> proporcionados para construir la imagen y luego ejecutar el proyecto Pulumi. AsegÃºrese de reemplazar <code><your_pulumi_access_token></code> con su token real.</p><p>Una vez completado el <code>pulumi up</code>, puede ver el UUID generado ejecutando:</p><pre><code>docker run --rm -it -v "$(pwd):/app" -w /app -e PULUMI_ACCESS_TOKEN="&lt;your_pulumi_access_token&gt;" pulumi-cli stack output outputUuid</code></pre><p>Para eliminar los recursos creados (el UUID aleatorio en el servicio de Pulumi, no el UUID en sÃ­), ejecute:</p><pre><code>docker run --rm -it -v "$(pwd):/app" -w /app -e PULUMI_ACCESS_TOKEN="&lt;your_pulumi_access_token&gt;" pulumi-cli destroy --yes</code></pre><h2>Comandos de EjecuciÃ³n</h2><pre><code># Paso 1: Construir la imagen del CLI de Pulumi
+    <h2>Explicación</h2><p>Esta guía le permitirá ejecutar el CLI de Pulumi dentro de un contenedor Docker/Podman. Pulumi es una herramienta de Infraestructura como Código (IaC) que le permite definir y gestionar su infraestructura en la nube utilizando lenguajes de programación. Ejecutar Pulumi en un contenedor es útil para:</p><p>1.  <strong>Aislamiento</strong>: Mantener las dependencias de Pulumi separadas de su sistema anfitrión.</p><p>2.  <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span></strong>: Asegurar que todos los miembros del equipo usen la misma versión de Pulumi.</p><p>3.  <strong><span class="tooltip" data-tooltip-text="Siglas de Integración Continua (CI) y Entrega o Despliegue Continuo (CD). Un conjunto de prácticas que automatizan las fases de desarrollo, prueba y despliegue de software.">CI/CD</span></strong>: Facilita la integración en <span class="tooltip" data-tooltip-text="Una serie de etapas de procesamiento de datos conectadas en secuencia, donde la salida de una etapa es la entrada de la siguiente. Común en sistemas de CI/CD y procesamiento de datos.">pipelines</span> de integración y despliegue continuo.</p><p>La configuración incluye un <code>Dockerfile</code> que construye una imagen con el CLI de Pulumi y Node.js (necesario para proyectos Pulumi basados en TypeScript/JavaScript). También se proporcionan un archivo <code>Pulumi.yaml</code> y un <code>index.ts</code> con un proyecto Pulumi mínimo de ejemplo que genera un UUID aleatorio, que no requiere credenciales de nube. Este proyecto sirve para demostrar que Pulumi puede ejecutarse y gestionar un recurso.</p><h3>Pasos para Ejecutar:</h3><p>1.  <strong>Crear un directorio de proyecto</strong>: Cree una carpeta vacía, por ejemplo, <code>my-pulumi-project</code>.</p><p>2.  <strong>Guardar los archivos</strong>: Coloque el <code>Dockerfile</code>, <code>Pulumi.yaml</code> y <code>index.ts</code> proporcionados dentro de este directorio.</p><p>3.  <strong>Instalar dependencias del proyecto (opcional pero recomendado)</strong>: Dentro de su directorio <code>my-pulumi-project</code>, ejecute <code>npm install @pulumi/pulumi @pulumi/random</code>. Esto creará el directorio <code>node_modules</code> que será montado en el contenedor.</p><p>4.  <strong>Obtener un Token de Acceso de Pulumi</strong>: Necesitará un token de acceso de Pulumi para autenticarse con el servicio de Pulumi (para gestionar estados). Puede generarlo en [app.pulumi.com](https://app.pulumi.com) en la sección de configuración de su cuenta.</p><p>5.  <strong>Ejecutar los comandos</strong>: Utilice los <code>runCommands</code> proporcionados para construir la imagen y luego ejecutar el proyecto Pulumi. Asegúrese de reemplazar <code><your_pulumi_access_token></code> con su token real.</p><p>Una vez completado el <code>pulumi up</code>, puede ver el UUID generado ejecutando:</p><pre><code>docker run --rm -it -v "$(pwd):/app" -w /app -e PULUMI_ACCESS_TOKEN="&lt;your_pulumi_access_token&gt;" pulumi-cli stack output outputUuid</code></pre><p>Para eliminar los recursos creados (el UUID aleatorio en el servicio de Pulumi, no el UUID en sí), ejecute:</p><pre><code>docker run --rm -it -v "$(pwd):/app" -w /app -e PULUMI_ACCESS_TOKEN="&lt;your_pulumi_access_token&gt;" pulumi-cli destroy --yes</code></pre><h2>Comandos de Ejecución</h2><pre><code># Paso 1: Construir la imagen del CLI de Pulumi
 docker build -t pulumi-cli .
 
 # Paso 2: Ejecutar el comando 'pulumi up' para desplegar la infraestructura.
-# AsegÃºrate de reemplazar '&lt;your_pulumi_access_token&gt;' con tu token de acceso de Pulumi real.
+# Asegúrate de reemplazar '&lt;your_pulumi_access_token&gt;' con tu token de acceso de Pulumi real.
 # Este token es necesario para autenticarse con el servicio de Pulumi.
 # Puedes obtenerlo desde la consola de Pulumi en app.pulumi.com.
 # El volumen '-v "$(pwd):/app"' mapea tu directorio de proyecto local al contenedor,
@@ -135,7 +135,7 @@ docker run --rm -it \
   -w /app \
   -e PULUMI_ACCESS_TOKEN="&lt;your_pulumi_access_token&gt;" \
   pulumi-cli up --yes
-</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Dockerfile para Pulumi CLI con soporte para proyectos Node.js
+</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para Pulumi CLI con soporte para proyectos Node.js
 FROM node:18-alpine
 
 LABEL maintainer="Your Name &lt;your.email@example.com&gt;"
@@ -144,7 +144,7 @@ LABEL maintainer="Your Name &lt;your.email@example.com&gt;"
 RUN apk add --no-cache curl unzip
 
 # Descargar e instalar Pulumi CLI
-# Puedes especificar una versiÃ³n de Pulumi si lo deseas, ej: ENV PULUMI_VERSION="3.90.0"
+# Puedes especificar una versión de Pulumi si lo deseas, ej: ENV PULUMI_VERSION="3.90.0"
 ENV PULUMI_VERSION="3.90.0"
 
 RUN PULUMI_CLI_URL="https://github.com/pulumi/pulumi/releases/download/v${PULUMI_VERSION}/pulumi-v${PULUMI_VERSION}-linux-x64.tar.gz" && \
@@ -154,17 +154,17 @@ RUN PULUMI_CLI_URL="https://github.com/pulumi/pulumi/releases/download/v${PULUMI
     chmod +x /usr/local/bin/pulumi/pulumi && \
     ln -s /usr/local/bin/pulumi/pulumi /usr/local/bin/pulumi
 
-# Configurar el PATH para que el comando pulumi estÃ© disponible
+# Configurar el PATH para que el comando pulumi esté disponible
 ENV PATH="/usr/local/bin/pulumi:${PATH}"
 
 # Establecer el punto de entrada predeterminado al comando 'pulumi'
 ENTRYPOINT ["pulumi"]
 
-# Por defecto, puedes mostrar la versiÃ³n o ayuda si no se proporcionan argumentos
+# Por defecto, puedes mostrar la versión o ayuda si no se proporcionan argumentos
 CMD ["version"]
 </code></pre><h3>Pulumi.yaml</h3><pre><code>name: my-first-pulumi-project
 runtime: nodejs
-description: Un proyecto Pulumi mÃ­nimo para demostrar la ejecuciÃ³n local.
+description: Un proyecto Pulumi mínimo para demostrar la ejecución local.
 </code></pre><h3>index.ts</h3><pre><code>import * as pulumi from "@pulumi/pulumi";
 import * as random from "@pulumi/random";
 
@@ -174,7 +174,7 @@ const myRandomUuid = new random.RandomUuid("myRandomUuid");
 // Exporta el UUID generado como una salida de la pila
 export const outputUuid = myRandomUuid.id;
 
-// Para ver esta salida despuÃ©s de 'pulumi up', puedes ejecutar:
+// Para ver esta salida después de 'pulumi up', puedes ejecutar:
 // pulumi stack output outputUuid
 </code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHwC67_t43zrOWf8CMgL9PZNMxOoTLQ94QD-wZwbjA0lWmglIwIInfb_7lXo-HraeDyFmTN6UXarfNHlE6NE76agEi-3-F3zVoxdV4X8u7bBA36MevB6s7XtP1yYs3Zap8_xw==" target="_blank" rel="noopener noreferrer">pulumi.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGftxoTJA9A-vUxVNDhegR0pEtJv5_uw72i_T-RzyQiQKFQxgV5fMM2NoAY2rY-MMKp0MzJK4G5Ipxg7yNEaLcd_JuksljNhagTPES_hSnB9ITXXX30hA==" target="_blank" rel="noopener noreferrer">pulumi.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHn0fi05_6Yv9YmlV2wdrl6e8GVa0IWc5fdTqC1TLpaYvFNNvcFfSqGCuGAeAR6M2uSXiIZDsYABPx-4pLtgesA4HYG8T-shhNM9I2btQ2zj2ojVfFNmuDxyt_A" target="_blank" rel="noopener noreferrer">pulumi.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGPM8iqTc6NkWDAG3kRI51nA1BGtjw-xa-kPIPP2RbfS1BRGh8bmfo8qzJoVrhMTHhLBMpluEBcXk4-RIG-Aj6mLqayKYeCVwWPIURBLFE_5qnZLNJz6omYn1hbpwudnHS_JsjXYiDIuNiSFfVQKMtrDA==" target="_blank" rel="noopener noreferrer">awsfundamentals.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEWl_7rXMR7sNr9k-TDYCDakhy4s_t6zrOqip93vbDh232dG5qM6KWiqfCwaadKsAgi8sHCW0ctILtVt6GI2uuQ5HoAknkzufcZCQhdfvaZDZa60K8-peqf-eapCRlaBpBtEFFCFHgpmHVRATFcH9x1IfBDE8d1HOnobnB-qNgPYRttPl9XZQ9XRq2ebHEjw49SYoi8rIPKyYZs5bn2uwDXEQMoOC6iacxvpn3uwrM=" target="_blank" rel="noopener noreferrer">dev.to</a></li></ul>
   </div>

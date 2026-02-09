@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,22 +121,22 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_API Gateway</h1>
-    <h2>ExplicaciÃ³n</h2><p>Este setup utiliza Docker Compose para levantar una instancia bÃ¡sica de Kong Gateway junto con una base de datos PostgreSQL.</p><p><strong>Componentes:</strong></p><ul><li>  <em></em><code>kong-database</code><em></em>: Un contenedor PostgreSQL que actÃºa como la base de datos de configuraciÃ³n de Kong. Los datos se persisten en un volumen llamado <code>kong_data</code>.</li><li>  <em></em><code>kong</code><em></em>: El contenedor de Kong Gateway. Este servicio se construye a partir de un <code>Dockerfile</code> local que extiende la imagen oficial de Kong, demostrando cÃ³mo se podrÃ­an aÃ±adir personalizaciones (en este caso, <code>curl</code>). Kong se conecta a la base de datos <code>kong-database</code> y expone los siguientes puertos:</li><li>   *   <strong>8000 (HTTP) y 8443 (HTTPS)</strong>: Para el proxy de la API. AquÃ­ es donde los clientes harÃ¡n las solicitudes a tus APIs a travÃ©s de Kong.</li><li>   *   <strong>8001 (HTTP) y 8444 (HTTPS)</strong>: Para la API de administraciÃ³n de Kong. Esta API se utiliza para configurar Kong (aÃ±adir servicios, rutas, plugins, etc.).</li></ul><p><strong>Pasos a seguir:</strong></p><p>1.  <strong>Crear los archivos:</strong> Guarda el contenido del <code>Dockerfile</code> como <code>Dockerfile</code> y el contenido del <code>docker-compose.yml</code> como <code>docker-compose.yml</code> en el mismo directorio.</p><p>2.  <strong>Iniciar los servicios:</strong> Ejecuta el comando <code>docker-compose up -d</code> en la terminal desde el directorio donde guardaste los archivos. Esto construirÃ¡ la imagen de Kong y levantarÃ¡ ambos contenedores en segundo plano.</p><p>3.  <strong>Verificar el estado:</strong> Una vez que los contenedores estÃ©n en marcha, puedes verificar su estado con <code>docker-compose ps</code>.</p><p>4.  <strong>Configurar Kong:</strong> Puedes interactuar con la API de administraciÃ³n de Kong en <code>http://localhost:8001</code>. Por ejemplo, para verificar que Kong estÃ¡ funcionando, puedes ejecutar <code>curl -i http://localhost:8001</code>.</p><p>5.  <strong>AÃ±adir un servicio y una ruta (ejemplo):</strong></p><ul><li>   *   <strong>Crear un servicio:</strong></li></ul><pre><code>        curl -X POST http://localhost:8001/services \
+    <h2>Explicación</h2><p>Este setup utiliza Docker Compose para levantar una instancia básica de Kong Gateway junto con una base de datos PostgreSQL.</p><p><strong>Componentes:</strong></p><ul><li>  <em></em><code>kong-database</code><em></em>: Un contenedor PostgreSQL que actúa como la base de datos de configuración de Kong. Los datos se persisten en un volumen llamado <code>kong_data</code>.</li><li>  <em></em><code>kong</code><em></em>: El contenedor de Kong Gateway. Este servicio se construye a partir de un <code>Dockerfile</code> local que extiende la imagen oficial de Kong, demostrando cómo se podrían añadir personalizaciones (en este caso, <code>curl</code>). Kong se conecta a la base de datos <code>kong-database</code> y expone los siguientes puertos:</li><li>   *   <strong>8000 (HTTP) y 8443 (HTTPS)</strong>: Para el proxy de la API. Aquí es donde los clientes harán las solicitudes a tus APIs a través de Kong.</li><li>   *   <strong>8001 (HTTP) y 8444 (HTTPS)</strong>: Para la API de administración de Kong. Esta API se utiliza para configurar Kong (añadir servicios, rutas, plugins, etc.).</li></ul><p><strong>Pasos a seguir:</strong></p><p>1.  <strong>Crear los archivos:</strong> Guarda el contenido del <code>Dockerfile</code> como <code>Dockerfile</code> y el contenido del <code>docker-compose.yml</code> como <code>docker-compose.yml</code> en el mismo directorio.</p><p>2.  <strong>Iniciar los servicios:</strong> Ejecuta el comando <code>docker-compose up -d</code> en la terminal desde el directorio donde guardaste los archivos. Esto construirá la imagen de Kong y levantará ambos contenedores en segundo plano.</p><p>3.  <strong>Verificar el estado:</strong> Una vez que los contenedores estén en marcha, puedes verificar su estado con <code>docker-compose ps</code>.</p><p>4.  <strong>Configurar Kong:</strong> Puedes interactuar con la API de administración de Kong en <code>http://localhost:8001</code>. Por ejemplo, para verificar que Kong está funcionando, puedes ejecutar <code>curl -i http://localhost:8001</code>.</p><p>5.  <strong>Añadir un servicio y una ruta (ejemplo):</strong></p><ul><li>   *   <strong>Crear un servicio:</strong></li></ul><pre><code>        curl -X POST http://localhost:8001/services \
             --data 'name=my-service' \
-            --data 'url=http://httpbin.org'</code></pre><ul><li>   *   <strong>AÃ±adir una ruta al servicio:</strong></li></ul><pre><code>        curl -X POST http://localhost:8001/services/my-service/routes \
-            --data 'paths[]=/test'</code></pre><ul><li>   *   <strong>Probar la API a travÃ©s de Kong:</strong> Ahora puedes acceder a <code>http://httpbin.org</code> a travÃ©s de Kong:</li></ul><pre><code>        curl -i http://localhost:8000/test/get</code></pre><p>        DeberÃ­as ver la respuesta de <code>httpbin.org</code>.</p><p>6.  <strong>Detener y limpiar:</strong> Cuando termines, puedes detener y eliminar los contenedores y los volÃºmenes (conservando los datos de la DB) con <code>docker-compose down</code>. Para eliminar tambiÃ©n los datos persistentes, usa <code>docker-compose down -v</code>.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code>FROM kong:latest
+            --data 'url=http://httpbin.org'</code></pre><ul><li>   *   <strong>Añadir una ruta al servicio:</strong></li></ul><pre><code>        curl -X POST http://localhost:8001/services/my-service/routes \
+            --data 'paths[]=/test'</code></pre><ul><li>   *   <strong>Probar la API a través de Kong:</strong> Ahora puedes acceder a <code>http://httpbin.org</code> a través de Kong:</li></ul><pre><code>        curl -i http://localhost:8000/test/get</code></pre><p>        Deberías ver la respuesta de <code>httpbin.org</code>.</p><p>6.  <strong>Detener y limpiar:</strong> Cuando termines, puedes detener y eliminar los contenedores y los volúmenes (conservando los datos de la DB) con <code>docker-compose down</code>. Para eliminar también los datos persistentes, usa <code>docker-compose down -v</code>.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM kong:latest
 
 # Comentarios sobre el Dockerfile:
 # Este Dockerfile extiende la imagen oficial de Kong.
-# Para una configuraciÃ³n bÃ¡sica, la imagen oficial es a menudo suficiente.
-# Sin embargo, este ejemplo demuestra cÃ³mo se podrÃ­a personalizar.
-# AquÃ­, simplemente instalamos 'curl' para propÃ³sitos de depuraciÃ³n o testing dentro del contenedor.
-# En un escenario real, aquÃ­ se instalarÃ­an plugins personalizados, dependencias adicionales,
-# o se copiarÃ­an configuraciones especÃ­ficas.
+# Para una configuración básica, la imagen oficial es a menudo suficiente.
+# Sin embargo, este ejemplo demuestra cómo se podría personalizar.
+# Aquí, simplemente instalamos 'curl' para propósitos de depuración o testing dentro del contenedor.
+# En un escenario real, aquí se instalarían plugins personalizados, dependencias adicionales,
+# o se copiarían configuraciones específicas.
 
 USER root
 
-# Instalar 'curl' (ejemplo de personalizaciÃ³n)
+# Instalar 'curl' (ejemplo de personalización)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
@@ -186,7 +186,7 @@ services:
       - "8444:8444" # Admin API HTTPS
     depends_on:
       kong-database:
-        condition: service_healthy # Esperar a que la DB estÃ© saludable
+        condition: service_healthy # Esperar a que la DB esté saludable
     healthcheck:
       test: ["CMD", "kong", "health"]
       interval: 10s

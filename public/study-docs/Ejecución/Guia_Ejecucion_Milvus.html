@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -121,7 +121,7 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Milvus</h1>
-    <h2>ExplicaciÃ³n</h2><h3>ConfiguraciÃ³n de Milvus Standalone con Docker Compose</h3><p>Milvus es una base de datos vectorial de cÃ³digo abierto, diseÃ±ada para la bÃºsqueda de similitud y anÃ¡lisis de datos no estructurados. Esta guÃ­a te permitirÃ¡ levantar una instancia bÃ¡sica de Milvus en modo <em>standalone</em> utilizando Docker Compose, lo cual es ideal para entornos de desarrollo y pruebas locales.</p><p>La configuraciÃ³n incluye los siguientes componentes:</p><ul><li>  <strong>Etcd</strong>: Un almacÃ©n de clave-valor distribuido que Milvus utiliza para la gestiÃ³n de metadatos.</li><li>  <strong>MinIO</strong>: Un servidor de almacenamiento de objetos compatible con S3, empleado por Milvus para almacenar datos vectoriales e Ã­ndices de forma persistente.</li><li>  <strong>Milvus</strong>: El servidor principal de Milvus que coordina las operaciones de almacenamiento, indexaciÃ³n y bÃºsqueda de vectores.</li></ul><p><strong>Pasos a seguir:</strong></p><p>1.  Guarda el contenido proporcionado para <code>docker-compose.yml</code> en un archivo llamado <code>docker-compose.yml</code> en un directorio de tu elecciÃ³n.</p><p>2.  AsegÃºrate de tener Docker Compose (o Podman Compose) instalado en tu sistema.</p><p>3.  Abre una terminal, navega hasta el directorio donde guardaste <code>docker-compose.yml</code>.</p><p>4.  Ejecuta el comando <code>docker-compose up -d</code> para iniciar los servicios en segundo plano.</p><p>5.  Verifica el estado de los contenedores con <code>docker-compose ps</code>.</p><p>6.  Una vez que todos los contenedores estÃ©n en estado 'Up', Milvus estarÃ¡ accesible para tus aplicaciones cliente en el puerto <code>19530</code> de tu mÃ¡quina local. MinIO estarÃ¡ disponible en el puerto <code>9000</code> (API) y su consola de administraciÃ³n en el puerto <code>9001</code>.</p><p>Esta configuraciÃ³n utiliza volÃºmenes persistentes (<code>/opt/milvus/etcd</code>, <code>/opt/milvus/minio</code>, <code>/opt/milvus/milvus</code>) para asegurar que tus datos no se pierdan al reiniciar los contenedores.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>docker-compose.yml</h3><pre><code>version: '3.5'
+    <h2>Explicación</h2><h3>Configuración de Milvus Standalone con Docker Compose</h3><p>Milvus es una base de datos vectorial de código abierto, diseñada para la búsqueda de similitud y análisis de datos no estructurados. Esta guía te permitirá levantar una instancia básica de Milvus en modo <em>standalone</em> utilizando Docker Compose, lo cual es ideal para entornos de desarrollo y pruebas locales.</p><p>La configuración incluye los siguientes componentes:</p><ul><li>  <strong>Etcd</strong>: Un almacén de clave-valor distribuido que Milvus utiliza para la gestión de metadatos.</li><li>  <strong>MinIO</strong>: Un servidor de almacenamiento de objetos compatible con S3, empleado por Milvus para almacenar datos vectoriales e índices de forma persistente.</li><li>  <strong>Milvus</strong>: El servidor principal de Milvus que coordina las operaciones de almacenamiento, indexación y búsqueda de vectores.</li></ul><p><strong>Pasos a seguir:</strong></p><p>1.  Guarda el contenido proporcionado para <code>docker-compose.yml</code> en un archivo llamado <code>docker-compose.yml</code> en un directorio de tu elección.</p><p>2.  Asegúrate de tener Docker Compose (o Podman Compose) instalado en tu sistema.</p><p>3.  Abre una terminal, navega hasta el directorio donde guardaste <code>docker-compose.yml</code>.</p><p>4.  Ejecuta el comando <code>docker-compose up -d</code> para iniciar los servicios en segundo plano.</p><p>5.  Verifica el estado de los contenedores con <code>docker-compose ps</code>.</p><p>6.  Una vez que todos los contenedores estén en estado 'Up', Milvus estará accesible para tus aplicaciones cliente en el puerto <code>19530</code> de tu máquina local. MinIO estará disponible en el puerto <code>9000</code> (API) y su consola de administración en el puerto <code>9001</code>.</p><p>Esta configuración utiliza volúmenes persistentes (<code>/opt/milvus/etcd</code>, <code>/opt/milvus/minio</code>, <code>/opt/milvus/milvus</code>) para asegurar que tus datos no se pierdan al reiniciar los contenedores.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.5'
 services:
   etcd:
     container_name: milvus-etcd
@@ -139,7 +139,7 @@ services:
 
   minio:
     container_name: milvus-minio
-    image: minio/minio:RELEASE.2023-03-20T20-16-36Z # VersiÃ³n estable de MinIO
+    image: minio/minio:RELEASE.2023-03-20T20-16-36Z # Versión estable de MinIO
     environment:
       MINIO_ACCESS_KEY: minioadmin # Clave de acceso por defecto
       MINIO_SECRET_KEY: minioadmin # Clave secreta por defecto
@@ -157,15 +157,15 @@ services:
 
   milvus:
     container_name: milvus-standalone
-    image: milvusdb/milvus:v2.3.11 # Utiliza una versiÃ³n estable de Milvus
+    image: milvusdb/milvus:v2.3.11 # Utiliza una versión estable de Milvus
     command: milvus_standalone # Comando para iniciar Milvus en modo standalone
     environment:
-      ETCD_ENDPOINTS: etcd:2379 # DirecciÃ³n de Etcd
-      MINIO_ADDRESS: minio:9000 # DirecciÃ³n de MinIO
+      ETCD_ENDPOINTS: etcd:2379 # Dirección de Etcd
+      MINIO_ADDRESS: minio:9000 # Dirección de MinIO
       COMMON_STORAGETYPE: minio # Especifica MinIO como tipo de almacenamiento de objetos
     ports:
-      - "19530:19530" # Puerto principal de Milvus para comunicaciÃ³n con clientes
-      - "9091:9091"   # Puerto para mÃ©tricas de Milvus (Prometheus)
+      - "19530:19530" # Puerto principal de Milvus para comunicación con clientes
+      - "9091:9091"   # Puerto para métricas de Milvus (Prometheus)
     volumes:
       - /opt/milvus/milvus:/var/lib/milvus # Persistencia de datos para Milvus
     depends_on:
