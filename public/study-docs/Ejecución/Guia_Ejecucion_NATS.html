@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,31 +121,31 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_NATS</h1>
-    <h2>Explicación</h2><p>Esta guía le permitirá desplegar una instancia básica del servidor NATS utilizando Podman o Docker. NATS es un sistema de mensajería de alto rendimiento, ligero y escalable, diseñado para la comunicación de microservicios, <span class="tooltip" data-tooltip-text="(Internet of Things / Internet de las Cosas) La red de objetos físicos (&quot;cosas&quot;) que llevan incorporados sensores, software y otras tecnologías con el fin de conectarse e intercambiar datos con otros dispositivos y sistemas a través de Internet.">IoT</span> y la nube. Esta configuración incluye un Dockerfile que construye una imagen personalizada basada en la imagen oficial de NATS, e incorpora un archivo de configuración <code>nats.conf</code> para especificar los puertos de cliente y monitoreo. Los comandos <code>podman build</code> y <code>podman run</code> (o <code>docker build</code> y <code>docker run</code>) se utilizan para construir la imagen y levantar el contenedor, respectivamente. Una vez en ejecución, NATS estará disponible para clientes en el puerto <code>4222</code> y su interfaz de monitoreo HTTP en el puerto <code>8222</code>.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-nats-server . && podman run -d --name nats-server -p 4222:4222 -p 8222:8222 my-nats-server</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de NATS como base.
-# La imagen 'nats:latest' es adecuada para la mayoría de los casos.
+    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a le permitirÃ¡ desplegar una instancia bÃ¡sica del servidor NATS utilizando Podman o Docker. NATS es un sistema de mensajerÃ­a de alto rendimiento, ligero y escalable, diseÃ±ado para la comunicaciÃ³n de microservicios, <span class="tooltip" data-tooltip-text="(Internet of Things / Internet de las Cosas) La red de objetos fÃ­sicos (&quot;cosas&quot;) que llevan incorporados sensores, software y otras tecnologÃ­as con el fin de conectarse e intercambiar datos con otros dispositivos y sistemas a travÃ©s de Internet.">IoT</span> y la nube. Esta configuraciÃ³n incluye un Dockerfile que construye una imagen personalizada basada en la imagen oficial de NATS, e incorpora un archivo de configuraciÃ³n <code>nats.conf</code> para especificar los puertos de cliente y monitoreo. Los comandos <code>podman build</code> y <code>podman run</code> (o <code>docker build</code> y <code>docker run</code>) se utilizan para construir la imagen y levantar el contenedor, respectivamente. Una vez en ejecuciÃ³n, NATS estarÃ¡ disponible para clientes en el puerto <code>4222</code> y su interfaz de monitoreo HTTP en el puerto <code>8222</code>.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>podman build -t my-nats-server . && podman run -d --name nats-server -p 4222:4222 -p 8222:8222 my-nats-server</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de NATS como base.
+# La imagen 'nats:latest' es adecuada para la mayorÃ­a de los casos.
 FROM nats:latest
 
-# Copia el archivo de configuración personalizado al contenedor.
-# Se recomienda colocarlo en un directorio estándar como /etc/nats/.
+# Copia el archivo de configuraciÃ³n personalizado al contenedor.
+# Se recomienda colocarlo en un directorio estÃ¡ndar como /etc/nats/.
 COPY nats.conf /etc/nats/nats.conf
 
-# Expone los puertos que NATS usará.
-# 4222 es el puerto estándar para clientes NATS.
-# 8222 es el puerto para la interfaz HTTP de monitoreo y estadísticas.
+# Expone los puertos que NATS usarÃ¡.
+# 4222 es el puerto estÃ¡ndar para clientes NATS.
+# 8222 es el puerto para la interfaz HTTP de monitoreo y estadÃ­sticas.
 EXPOSE 4222
 EXPOSE 8222
 
-# Define el comando para iniciar el servidor NATS con el archivo de configuración.
-# 'nats-server -c /etc/nats/nats.conf' le indica a NATS que use nuestra configuración personalizada.
+# Define el comando para iniciar el servidor NATS con el archivo de configuraciÃ³n.
+# 'nats-server -c /etc/nats/nats.conf' le indica a NATS que use nuestra configuraciÃ³n personalizada.
 CMD ["nats-server", "-c", "/etc/nats/nats.conf"]</code></pre><h3>nats.conf</h3><pre><code># Puerto para clientes NATS.
-# Este es el puerto principal al que los clientes se conectarán.
+# Este es el puerto principal al que los clientes se conectarÃ¡n.
 port: 4222
 
-# Puerto para el servidor HTTP de monitoreo y información.
-# Accede a http://localhost:8222/varz para ver estadísticas del servidor.
+# Puerto para el servidor HTTP de monitoreo y informaciÃ³n.
+# Accede a http://localhost:8222/varz para ver estadÃ­sticas del servidor.
 http_port: 8222
 
-# Opcional: Configuración de logging (descomentar y ajustar si es necesario)
+# Opcional: ConfiguraciÃ³n de logging (descomentar y ajustar si es necesario)
 # logger {
 #   level: debug
 #   file: "/var/log/nats.log"
@@ -154,7 +154,7 @@ http_port: 8222
 #   rotate_max: 5
 # }
 
-# Opcional: Autenticación de usuario/contraseña (descomentar y ajustar si es necesario)
+# Opcional: AutenticaciÃ³n de usuario/contraseÃ±a (descomentar y ajustar si es necesario)
 # authorization {
 #   users = [
 #     { user: "admin", password: "password" }
@@ -164,3 +164,4 @@ http_port: 8222
   </div>
 </body>
 </html>
+

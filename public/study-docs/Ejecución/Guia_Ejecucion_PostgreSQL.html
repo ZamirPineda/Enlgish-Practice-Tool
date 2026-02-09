@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,24 +121,25 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_PostgreSQL</h1>
-    <h2>Explicación</h2><p>Esta guía te permitirá levantar una instancia básica de PostgreSQL usando Docker o Podman. Utilizaremos la imagen oficial de PostgreSQL y configuraremos la base de datos, el usuario y la contraseña mediante variables de entorno. Los datos de la base de datos se persistirán en un volumen, asegurando que no se pierdan al reiniciar el contenedor. Aunque no es estrictamente necesario un <code>Dockerfile</code> personalizado para una configuración básica (se puede usar la imagen oficial directamente), hemos incluido uno mínimo para demostrar la estructura. No se necesitan archivos de soporte adicionales, ya que las variables de entorno son suficientes para la configuración inicial.</p><h2>Comandos de Ejecución</h2><pre><code>docker run -d --name my-postgres -p 5432:5432 -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb -v pgdata:/var/lib/postgresql/data postgres:latest
+    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a te permitirÃ¡ levantar una instancia bÃ¡sica de PostgreSQL usando Docker o Podman. Utilizaremos la imagen oficial de PostgreSQL y configuraremos la base de datos, el usuario y la contraseÃ±a mediante variables de entorno. Los datos de la base de datos se persistirÃ¡n en un volumen, asegurando que no se pierdan al reiniciar el contenedor. Aunque no es estrictamente necesario un <code>Dockerfile</code> personalizado para una configuraciÃ³n bÃ¡sica (se puede usar la imagen oficial directamente), hemos incluido uno mÃ­nimo para demostrar la estructura. No se necesitan archivos de soporte adicionales, ya que las variables de entorno son suficientes para la configuraciÃ³n inicial.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker run -d --name my-postgres -p 5432:5432 -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb -v pgdata:/var/lib/postgresql/data postgres:latest
 
 Si usas Podman, simplemente reemplaza 'docker' por 'podman':
-podman run -d --name my-postgres -p 5432:5432 -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb -v pgdata:/var/lib/postgresql/data postgres:latest</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de PostgreSQL como base. Esto asegura que obtendremos
-# una instalación de PostgreSQL preconfigurada y lista para usar.
+podman run -d --name my-postgres -p 5432:5432 -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb -v pgdata:/var/lib/postgresql/data postgres:latest</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de PostgreSQL como base. Esto asegura que obtendremos
+# una instalaciÃ³n de PostgreSQL preconfigurada y lista para usar.
 FROM postgres:latest
 
-# Este Dockerfile es mínimo porque la imagen oficial de PostgreSQL
-# ya incluye todo lo necesario para una configuración básica.
+# Este Dockerfile es mÃ­nimo porque la imagen oficial de PostgreSQL
+# ya incluye todo lo necesario para una configuraciÃ³n bÃ¡sica.
 #
-# Opcionalmente, podrías añadir archivos SQL personalizados para inicializar
-# tu base de datos con esquemas o datos específicos al iniciar el contenedor.
+# Opcionalmente, podrÃ­as aÃ±adir archivos SQL personalizados para inicializar
+# tu base de datos con esquemas o datos especÃ­ficos al iniciar el contenedor.
 # Por ejemplo:
 # COPY init.sql /docker-entrypoint-initdb.d/
-# Cualquier archivo .sql, .sh o .gz en /docker-entrypoint-initdb.d/ será
+# Cualquier archivo .sql, .sh o .gz en /docker-entrypoint-initdb.d/ serÃ¡
 # ejecutado por la imagen oficial cuando el contenedor se inicie por primera vez.
 
-# EXPOSE 5432 (el puerto 5432 ya está expuesto por la imagen base de PostgreSQL)</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYqpht9inA3t7AMip2GnHjm8pV86Y4yliTChoB_dN8XV3_WDnSEoBFQiBrVsAF8R0LI5kEKpCKRNa5naxpaG27aem5f0PZog8rHGZAXQI0bqcjN1jkTSmCc2NiHcnxjQ==" target="_blank" rel="noopener noreferrer">neon.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQElt5OZOC7IDhSGlF9fu2MC9YvTKg4ZCcYfyQxRMtVKNhDC1oU3d2BiGlj8zIWCflfo_G2cB4_YhRGIsF8kjWHBT8GjtF4palBoAX4GDOw_GIW4DcrFiCqCOw43sAhNSU8_9EJbh-M0uGHWjy5RKH-K" target="_blank" rel="noopener noreferrer">postgresql.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeK6Yy7aPL-t_3fHdVV2qI7Rz8rtsaXq4xdFdm35hMehiqR9Rgdtq7tj4qxBiI5RQNrEnBczCKJCmL1mh3EWs7sRvehXldqPA3EdsbeB1KDCRbwu3OIFiE-YXHJcegNa3kwusaVwAIaxh8PISxos6jiI3zlBTP" target="_blank" rel="noopener noreferrer">hackr.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0wHGl0aQhloGO0IHfkbZ_jdYVL2ROGHdD0gcWX1ybBJgQ2QPssYKSzo_oQ8Mf_MxquuhwCCoKJgxR4Jqa9raQQJiR8b6ez5HoptSRbKoWJqd-A-n7GDpF6nSXFI-CMN0WgCBfD3DgT2j8a3uQzz1BZgkSazogw8UAwi8NqZnBUrTln9sLK6OYQhP7fhSyqqPbjN-oY2yL2GHzx6hxDCrLkjORFVwZHKTC3zxl" target="_blank" rel="noopener noreferrer">instaclustr.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGvkogLW9cQoltsVQl3mIwb23Yk_oYfBYtCqaXTOabkNy-mvHHp3HEsoQXUvcNKWvOHJDUx4uBHgyM1KsoH_zrHHlMptJooytavIWcoXvd5jlX8DOz1bXArODgb2TvCl2EXnCUP67N5bJtV75_anSNdQw==" target="_blank" rel="noopener noreferrer">neon.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtBHItwwRdNmtR77DqBEJjtjaHsL0SKxDOL1y5VCmEzomoe97iat83oStcH-MUHfBNiFjo46onUE6tzrys93O9Q6K9WmlXh_O3w6QuT2CS_uptB9RXwkQXrQX4KdNdtiMn6JfD8ParDwcpw7e9spxvfaoIp6HyJoTYK48GqwO1qugBb3cKENedqek73F-Z" target="_blank" rel="noopener noreferrer">dev.to</a></li></ul>
+# EXPOSE 5432 (el puerto 5432 ya estÃ¡ expuesto por la imagen base de PostgreSQL)</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYqpht9inA3t7AMip2GnHjm8pV86Y4yliTChoB_dN8XV3_WDnSEoBFQiBrVsAF8R0LI5kEKpCKRNa5naxpaG27aem5f0PZog8rHGZAXQI0bqcjN1jkTSmCc2NiHcnxjQ==" target="_blank" rel="noopener noreferrer">neon.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQElt5OZOC7IDhSGlF9fu2MC9YvTKg4ZCcYfyQxRMtVKNhDC1oU3d2BiGlj8zIWCflfo_G2cB4_YhRGIsF8kjWHBT8GjtF4palBoAX4GDOw_GIW4DcrFiCqCOw43sAhNSU8_9EJbh-M0uGHWjy5RKH-K" target="_blank" rel="noopener noreferrer">postgresql.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeK6Yy7aPL-t_3fHdVV2qI7Rz8rtsaXq4xdFdm35hMehiqR9Rgdtq7tj4qxBiI5RQNrEnBczCKJCmL1mh3EWs7sRvehXldqPA3EdsbeB1KDCRbwu3OIFiE-YXHJcegNa3kwusaVwAIaxh8PISxos6jiI3zlBTP" target="_blank" rel="noopener noreferrer">hackr.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0wHGl0aQhloGO0IHfkbZ_jdYVL2ROGHdD0gcWX1ybBJgQ2QPssYKSzo_oQ8Mf_MxquuhwCCoKJgxR4Jqa9raQQJiR8b6ez5HoptSRbKoWJqd-A-n7GDpF6nSXFI-CMN0WgCBfD3DgT2j8a3uQzz1BZgkSazogw8UAwi8NqZnBUrTln9sLK6OYQhP7fhSyqqPbjN-oY2yL2GHzx6hxDCrLkjORFVwZHKTC3zxl" target="_blank" rel="noopener noreferrer">instaclustr.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGvkogLW9cQoltsVQl3mIwb23Yk_oYfBYtCqaXTOabkNy-mvHHp3HEsoQXUvcNKWvOHJDUx4uBHgyM1KsoH_zrHHlMptJooytavIWcoXvd5jlX8DOz1bXArODgb2TvCl2EXnCUP67N5bJtV75_anSNdQw==" target="_blank" rel="noopener noreferrer">neon.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtBHItwwRdNmtR77DqBEJjtjaHsL0SKxDOL1y5VCmEzomoe97iat83oStcH-MUHfBNiFjo46onUE6tzrys93O9Q6K9WmlXh_O3w6QuT2CS_uptB9RXwkQXrQX4KdNdtiMn6JfD8ParDwcpw7e9spxvfaoIp6HyJoTYK48GqwO1qugBb3cKENedqek73F-Z" target="_blank" rel="noopener noreferrer">dev.to</a></li></ul>
   </div>
 </body>
 </html>
+

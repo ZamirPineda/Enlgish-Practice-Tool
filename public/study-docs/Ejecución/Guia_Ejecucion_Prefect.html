@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,7 +121,7 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Prefect</h1>
-    <h2>Explicación</h2><p># Configuración Básica de Prefect con Docker Compose</p><p>Esta configuración te permitirá levantar una instancia básica de Prefect 2 Server y su base de datos PostgreSQL asociada utilizando <code>docker-compose</code>. Prefect Server incluye la interfaz de usuario (UI) y la API para gestionar tus flujos de trabajo (flows) y despliegues.</p><h2>Componentes:</h2><ul><li>  <em></em><code>prefect_db</code><em></em>: Un contenedor PostgreSQL que actuará como la base de datos para Prefect. Los datos se persistirán en un volumen <code>prefect_db_data</code>.</li><li>  <em></em><code>prefect_server</code><em></em>: El contenedor principal de Prefect 2 Server. Incluye la API y la UI, y se conectará a la base de datos PostgreSQL. Expondrá el puerto <code>4200</code> para que puedas acceder a la UI desde tu navegador.</li></ul><h2>Pasos a seguir:</h2><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio, por ejemplo, <code>prefect-local</code>. Dentro de este directorio, guarda el contenido proporcionado de <code>docker-compose.yml</code>.</p><p>2.  <strong>Inicia los servicios</strong>: Abre tu terminal en el directorio <code>prefect-local</code> y ejecuta el comando <code>docker-compose up -d</code>.</p><p>3.  <strong>Accede a la UI</strong>: Una vez que los contenedores estén en funcionamiento (puede tardar un minuto para que la base de datos se inicialice y el servidor Prefect se conecte), abre tu navegador web y navega a <code>http://localhost:4200</code> para acceder a la interfaz de usuario de Prefect.</p><p>4.  <strong>Limpiar</strong>: Para detener y eliminar los contenedores y el volumen de datos, ejecuta <code>docker-compose down -v</code> en el mismo directorio.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+    <h2>ExplicaciÃ³n</h2><p># ConfiguraciÃ³n BÃ¡sica de Prefect con Docker Compose</p><p>Esta configuraciÃ³n te permitirÃ¡ levantar una instancia bÃ¡sica de Prefect 2 Server y su base de datos PostgreSQL asociada utilizando <code>docker-compose</code>. Prefect Server incluye la interfaz de usuario (UI) y la API para gestionar tus flujos de trabajo (flows) y despliegues.</p><h2>Componentes:</h2><ul><li>  <em></em><code>prefect_db</code><em></em>: Un contenedor PostgreSQL que actuarÃ¡ como la base de datos para Prefect. Los datos se persistirÃ¡n en un volumen <code>prefect_db_data</code>.</li><li>  <em></em><code>prefect_server</code><em></em>: El contenedor principal de Prefect 2 Server. Incluye la API y la UI, y se conectarÃ¡ a la base de datos PostgreSQL. ExpondrÃ¡ el puerto <code>4200</code> para que puedas acceder a la UI desde tu navegador.</li></ul><h2>Pasos a seguir:</h2><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio, por ejemplo, <code>prefect-local</code>. Dentro de este directorio, guarda el contenido proporcionado de <code>docker-compose.yml</code>.</p><p>2.  <strong>Inicia los servicios</strong>: Abre tu terminal en el directorio <code>prefect-local</code> y ejecuta el comando <code>docker-compose up -d</code>.</p><p>3.  <strong>Accede a la UI</strong>: Una vez que los contenedores estÃ©n en funcionamiento (puede tardar un minuto para que la base de datos se inicialice y el servidor Prefect se conecte), abre tu navegador web y navega a <code>http://localhost:4200</code> para acceder a la interfaz de usuario de Prefect.</p><p>4.  <strong>Limpiar</strong>: Para detener y eliminar los contenedores y el volumen de datos, ejecuta <code>docker-compose down -v</code> en el mismo directorio.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
 
 services:
   prefect_db:
@@ -145,7 +145,7 @@ services:
     environment:
       # Conecta al servidor Prefect a la base de datos
       - PREFECT_API_DATABASE_CONNECTION_URL=postgresql+asyncpg://prefect:prefect@prefect_db/prefect
-      # Configura la URL de la API que usarán los clientes y la UI
+      # Configura la URL de la API que usarÃ¡n los clientes y la UI
       - PREFECT_API_URL=http://prefect_server:4200/api
       # Permite que la API escuche en todas las interfaces de red dentro del contenedor
       - PREFECT_SERVER_API_HOST=0.0.0.0
@@ -153,7 +153,7 @@ services:
       - "4200:4200" # Expone el puerto 4200 para la UI/API de Prefect
     depends_on:
       prefect_db:
-        condition: service_healthy # Asegura que la DB esté lista antes de iniciar el servidor
+        condition: service_healthy # Asegura que la DB estÃ© lista antes de iniciar el servidor
     # Inicia el servidor Prefect escuchando en 0.0.0.0 en el puerto 4200
     command: prefect server start --host 0.0.0.0 --port 4200
 
@@ -162,3 +162,4 @@ volumes:
   </div>
 </body>
 </html>
+

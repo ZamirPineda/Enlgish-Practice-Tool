@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,14 +121,14 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Linkerd</h1>
-    <h2>Explicación</h2><p>Linkerd es un <em><span class="tooltip" data-tooltip-text="Una capa de infraestructura dedicada para gestionar la comunicación entre servicios. Proporciona funciones como el descubrimiento de servicios, el balanceo de carga, el cifrado y la observabilidad de forma desacoplada del código de la aplicación.">service mesh</span></em> ultraligero y de alto rendimiento para Kubernetes. Su función principal es añadir observabilidad, fiabilidad y seguridad a las aplicaciones de forma transparente, sin necesidad de modificar el código de la aplicación. Para funcionar, Linkerd requiere un clúster de Kubernetes.</p><p>Esta guía te permitirá "levantar" una instancia básica de Linkerd localmente utilizando Kind (Kubernetes in Docker/Podman) y el CLI de Linkerd dentro de un contenedor. Los pasos incluyen:</p><p>1.  <strong>Crear un clúster de Kubernetes local con Kind</strong>: Kind es una herramienta que ejecuta clústeres de Kubernetes utilizando contenedores Docker/Podman como nodos.</p><p>2.  <em></em>Construir un contenedor con el CLI de Linkerd y <code>kubectl</code><em></em>: Este contenedor se utilizará para interactuar con el clúster de Kind.</p><p>3.  <strong>Instalar el plano de control de Linkerd</strong>: El CLI de Linkerd desplegará los componentes necesarios (controlador, inyector de proxy, etc.) en el clúster de Kind.</p><p>4.  <strong>Desplegar una aplicación de ejemplo e inyectar el proxy de Linkerd</strong>: Se desplegará una simple aplicación <span class="tooltip" data-tooltip-text="Un servidor web de alto rendimiento, también usado comúnmente como balanceador de carga, proxy inverso y caché HTTP.">Nginx</span> y se modificará para que Linkerd inyecte su <em>sidecar proxy</em> en los pods de la aplicación, habilitando así las funcionalidades del <em>mesh</em>.</p><p><strong>Prerrequisitos:</strong></p><ul><li>  Tener <code>docker</code> o <code>podman</code> instalado y funcionando.</li><li>  Tener el CLI de <code>kind</code> instalado (puedes descargarlo desde <code>https://kind.sigs.k8s.io/docs/user/quick-start/#installation</code>).</li></ul><p>El script <code>setup.sh</code> automatiza todos estos pasos.</p><h2>Comandos de Ejecución</h2><pre><code>sh ./setup.sh</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.linkerd-cli</h3><pre><code>FROM curlimages/curl:latest as downloader
+    <h2>ExplicaciÃ³n</h2><p>Linkerd es un <em><span class="tooltip" data-tooltip-text="Una capa de infraestructura dedicada para gestionar la comunicaciÃ³n entre servicios. Proporciona funciones como el descubrimiento de servicios, el balanceo de carga, el cifrado y la observabilidad de forma desacoplada del cÃ³digo de la aplicaciÃ³n.">service mesh</span></em> ultraligero y de alto rendimiento para Kubernetes. Su funciÃ³n principal es aÃ±adir observabilidad, fiabilidad y seguridad a las aplicaciones de forma transparente, sin necesidad de modificar el cÃ³digo de la aplicaciÃ³n. Para funcionar, Linkerd requiere un clÃºster de Kubernetes.</p><p>Esta guÃ­a te permitirÃ¡ "levantar" una instancia bÃ¡sica de Linkerd localmente utilizando Kind (Kubernetes in Docker/Podman) y el CLI de Linkerd dentro de un contenedor. Los pasos incluyen:</p><p>1.  <strong>Crear un clÃºster de Kubernetes local con Kind</strong>: Kind es una herramienta que ejecuta clÃºsteres de Kubernetes utilizando contenedores Docker/Podman como nodos.</p><p>2.  <em></em>Construir un contenedor con el CLI de Linkerd y <code>kubectl</code><em></em>: Este contenedor se utilizarÃ¡ para interactuar con el clÃºster de Kind.</p><p>3.  <strong>Instalar el plano de control de Linkerd</strong>: El CLI de Linkerd desplegarÃ¡ los componentes necesarios (controlador, inyector de proxy, etc.) en el clÃºster de Kind.</p><p>4.  <strong>Desplegar una aplicaciÃ³n de ejemplo e inyectar el proxy de Linkerd</strong>: Se desplegarÃ¡ una simple aplicaciÃ³n <span class="tooltip" data-tooltip-text="Un servidor web de alto rendimiento, tambiÃ©n usado comÃºnmente como balanceador de carga, proxy inverso y cachÃ© HTTP.">Nginx</span> y se modificarÃ¡ para que Linkerd inyecte su <em>sidecar proxy</em> en los pods de la aplicaciÃ³n, habilitando asÃ­ las funcionalidades del <em>mesh</em>.</p><p><strong>Prerrequisitos:</strong></p><ul><li>  Tener <code>docker</code> o <code>podman</code> instalado y funcionando.</li><li>  Tener el CLI de <code>kind</code> instalado (puedes descargarlo desde <code>https://kind.sigs.k8s.io/docs/user/quick-start/#installation</code>).</li></ul><p>El script <code>setup.sh</code> automatiza todos estos pasos.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>sh ./setup.sh</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile.linkerd-cli</h3><pre><code>FROM curlimages/curl:latest as downloader
 
-ARG LINKERD_VERSION="stable-2.14.7" # Versión estable de Linkerd CLI
+ARG LINKERD_VERSION="stable-2.14.7" # VersiÃ³n estable de Linkerd CLI
 RUN curl -sLO "https://github.com/linkerd/linkerd2/releases/download/${LINKERD_VERSION}/linkerd2-cli-${LINKERD_VERSION}-linux-amd64" \
     && mv linkerd2-cli-${LINKERD_VERSION}-linux-amd64 /usr/local/bin/linkerd \
     && chmod +x /usr/local/bin/linkerd
 
-ARG KUBECTL_VERSION="v1.28.0" # Versión de kubectl compatible con K8s (Kind)
+ARG KUBECTL_VERSION="v1.28.0" # VersiÃ³n de kubectl compatible con K8s (Kind)
 RUN curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
     && mv kubectl /usr/local/bin/kubectl \
     && chmod +x /usr/local/bin/kubectl
@@ -136,7 +136,7 @@ RUN curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubec
 FROM alpine/git:latest # Utiliza una imagen base con bash y herramientas comunes
 LABEL maintainer="YourName &lt;your.email@example.com&gt;"
 
-# Instala bash si no está presente (alpine/git generalmente lo incluye)
+# Instala bash si no estÃ¡ presente (alpine/git generalmente lo incluye)
 RUN apk add --no-cache bash
 
 # Copia los CLIs descargados de la etapa 'downloader'
@@ -153,7 +153,7 @@ apiVersion: kind.x-k8s.io/v1alpha4
 name: linkerd-local
 nodes:
   - role: control-plane
-    # Puedes añadir mapeos de puertos si necesitas acceder a servicios del clúster
+    # Puedes aÃ±adir mapeos de puertos si necesitas acceder a servicios del clÃºster
     # directamente desde el host, por ejemplo, para una app de ejemplo:
     # extraPortMappings:
     #   - containerPort: 80
@@ -194,36 +194,36 @@ spec:
   type: ClusterIP</code></pre><h3>setup.sh</h3><pre><code>#!/bin/bash
 set -euo pipefail
 
-# --- Configuración --- #
+# --- ConfiguraciÃ³n --- #
 KIND_CLUSTER_NAME="linkerd-local"
 
-# --- Comprobación de prerrequisitos --- #
+# --- ComprobaciÃ³n de prerrequisitos --- #
 if ! command -v kind &&gt; /dev/null; then
-    echo "Error: El CLI de 'kind' no se encontró. Por favor, instálalo: https://kind.sigs.k8s.io/docs/user/quick-start/#installation"
+    echo "Error: El CLI de 'kind' no se encontrÃ³. Por favor, instÃ¡lalo: https://kind.sigs.k8s.io/docs/user/quick-start/#installation"
     exit 1
 fi
 
 CONTAINER_CLI="docker"
 if command -v podman &&gt; /dev/null; then
     CONTAINER_CLI="podman"
-    echo "Usando Podman para la gestión de contenedores."
+    echo "Usando Podman para la gestiÃ³n de contenedores."
 elif command -v docker &&gt; /dev/null; then
-    echo "Usando Docker para la gestión de contenedores."
+    echo "Usando Docker para la gestiÃ³n de contenedores."
 else
-    echo "Error: No se encontró Docker ni Podman. Por favor, instala uno de ellos."
+    echo "Error: No se encontrÃ³ Docker ni Podman. Por favor, instala uno de ellos."
     exit 1
 fi
 
-# --- 1. Crear clúster de Kind --- #
-echo "\n--- 1. Creando clúster de Kind '$KIND_CLUSTER_NAME' ... ---"
+# --- 1. Crear clÃºster de Kind --- #
+echo "\n--- 1. Creando clÃºster de Kind '$KIND_CLUSTER_NAME' ... ---"
 if ! kind get clusters | grep -q "^$KIND_CLUSTER_NAME$"; then
     kind create cluster --name "$KIND_CLUSTER_NAME" --config kind-config.yaml
-    echo "Clúster '$KIND_CLUSTER_NAME' creado exitosamente."
+    echo "ClÃºster '$KIND_CLUSTER_NAME' creado exitosamente."
 else
-    echo "El clúster Kind '$KIND_CLUSTER_NAME' ya existe. Saltando la creación."
+    echo "El clÃºster Kind '$KIND_CLUSTER_NAME' ya existe. Saltando la creaciÃ³n."
 fi
 
-# Asegura que kubectl use el contexto del clúster Kind
+# Asegura que kubectl use el contexto del clÃºster Kind
 kubectl config use "kind-$KIND_CLUSTER_NAME"
 
 # --- 2. Construir imagen Docker del CLI de Linkerd --- #
@@ -232,14 +232,14 @@ $CONTAINER_CLI build -t linkerd-cli -f Dockerfile.linkerd-cli .
 echo "Imagen 'linkerd-cli' construida exitosamente."
 
 # --- 3. Instalar Linkerd y desplegar app de ejemplo --- #
-echo "\n--- 3. Instalando Linkerd y desplegando aplicación de ejemplo... ---"
+echo "\n--- 3. Instalando Linkerd y desplegando aplicaciÃ³n de ejemplo... ---"
 
-# Obtener el kubeconfig del clúster Kind y guardarlo temporalmente
+# Obtener el kubeconfig del clÃºster Kind y guardarlo temporalmente
 KIND_KUBECONFIG_CONTENT=$(kind get kubeconfig --name "$KIND_CLUSTER_NAME")
 echo "$KIND_KUBECONFIG_CONTENT" &gt; /tmp/kind-kubeconfig.yml
 chmod 600 /tmp/kind-kubeconfig.yml # Asegurar permisos adecuados
 
-# Ejecutar el contenedor del CLI de Linkerd para interactuar con el clúster
+# Ejecutar el contenedor del CLI de Linkerd para interactuar con el clÃºster
 $CONTAINER_CLI run --rm \
     -v /tmp/kind-kubeconfig.yml:/app/kubeconfig.yml \
     -v "$(pwd)":/app/project \
@@ -249,30 +249,31 @@ $CONTAINER_CLI run --rm \
         linkerd check --pre; \
         echo '  - Instalando plano de control de Linkerd...'; \
         linkerd install | kubectl apply -f -; \
-        echo '  - Esperando a que el plano de control de Linkerd esté listo...'; \
+        echo '  - Esperando a que el plano de control de Linkerd estÃ© listo...'; \
         linkerd check --wait; \
-        echo '  - Desplegando aplicación de ejemplo (nginx)...'; \
+        echo '  - Desplegando aplicaciÃ³n de ejemplo (nginx)...'; \
         kubectl apply -f /app/project/sample-app.yaml; \
-        echo '  - Inyectando proxy de Linkerd en la aplicación de ejemplo...'; \
+        echo '  - Inyectando proxy de Linkerd en la aplicaciÃ³n de ejemplo...'; \
         linkerd inject /app/project/sample-app.yaml | kubectl apply -f -; \
-        echo '  - Esperando a que la aplicación de ejemplo esté lista e inyectada...'; \
+        echo '  - Esperando a que la aplicaciÃ³n de ejemplo estÃ© lista e inyectada...'; \
         kubectl rollout status deployment/nginx-deployment -n default --timeout=300s; \
-        echo '  - Comprobación final de Linkerd...'; \
+        echo '  - ComprobaciÃ³n final de Linkerd...'; \
         linkerd check; \
     "
 
 # Limpiar archivo kubeconfig temporal
 rm /tmp/kind-kubeconfig.yml
 
-echo "\n--- Instalación de Linkerd y la aplicación de ejemplo completada exitosamente. ---"
+echo "\n--- InstalaciÃ³n de Linkerd y la aplicaciÃ³n de ejemplo completada exitosamente. ---"
 
 # --- Pasos Siguientes --- #
 echo "\n--- Pasos Siguientes ---"
 echo "Puedes explorar el dashboard de Linkerd ejecutando:"
 echo "  $CONTAINER_CLI run --rm -v /tmp/kind-kubeconfig.yml:/app/kubeconfig.yml -e KUBECONFIG=/app/kubeconfig.yml linkerd-cli linkerd dashboard"
 echo "O, si tienes el CLI de Linkerd instalado en tu host: 'linkerd dashboard'"
-echo "Para limpiar el clúster de Kind, ejecuta: 'kind delete cluster --name $KIND_CLUSTER_NAME'"
+echo "Para limpiar el clÃºster de Kind, ejecuta: 'kind delete cluster --name $KIND_CLUSTER_NAME'"
 </code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE3xWwT5dPXi5-bo4JRvdsgrEZ9mDcsKhER78SkUZhUdEn8oO7i5wdM7HkrmZ2ganw1y-I7HuESziwMXiflJUF2CwM_I3PPjNXnyQFSFokanfhMt3gCmnXOcWo8WA9K0sf7gYM=" target="_blank" rel="noopener noreferrer">linkerd.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH7WTJTTBOGE-agQR-Fx5DF7OewhXzc_qgh5YKKAbR9dnawMVDk1B-t146GBy3KHnBGjToM6jlZaSk6Irf5EUPO2j2vg-S-Ex4t4liY2A9omvQM1c2t3mseOnRdhlk9Ju0ceuo=" target="_blank" rel="noopener noreferrer">linkerd.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQv_Ge0voyGmOum_AxvSdeS0HN3GZYBAewxzT9IHk4mlTq42KrJzf9UOnYjoaBD-mkdH8-gCsIKflCae6cdZXyMR5e5QquqtaCxEl1iyz7932h0wNgwG1a" target="_blank" rel="noopener noreferrer">cozykube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiNNRprL8ieo4AMOJp_ZQYFA-6PdX2Q8St08iFzJWcVz5GeukV6kbCvCZRHLwj2I07hiEvrzLey3HGAeRTIBbGwOKyGJuhVlNgO3sS-cepqnpRAJ2Uu44p9qHz8OZd3tA2FxAPoiuqbLVhBZ0DvtcMgZEX5qHnaFaGWqF9Q8RJWbbb2T2vzseA6G3Mr-s9YSVMz4FbGpdgtCDk" target="_blank" rel="noopener noreferrer">digitalocean.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFp-pWBmwcq3r64ZocmLLeC1FEeXJVIkw0sHbG1SCRwJWl3ahGIdhdl17AQf2GrMnQtgCnlYsuwkG-jugjj5qz2hDMlUv4QOWWmHqwWssGoXhkjWJ2LTDwDBl88KKJEYvBporc-mk00GFWl01br3NTr2ZTQPJs3Q61NfWs9BQ==" target="_blank" rel="noopener noreferrer">platform9.com</a></li></ul>
   </div>
 </body>
 </html>
+

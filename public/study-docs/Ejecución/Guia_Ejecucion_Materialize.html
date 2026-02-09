@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,20 +121,21 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Materialize</h1>
-    <h2>Explicación</h2><p>Esta guía te permitirá levantar una instancia básica de Materialize localmente. Materialize es una base de datos de streaming que te permite crear vistas materializadas en tiempo real a partir de diversas fuentes de datos (Kafka, PostgreSQL, etc.).</p><h3>Pasos para ejecutar:</h3><p>1.  <strong>Guarda los archivos:</strong> Crea un directorio, por ejemplo, <code>materialize-setup</code>, y guarda el <code>Dockerfile</code> proporcionado dentro de él.</p><p>2.  <strong>Construye la imagen:</strong> Abre una terminal en el directorio <code>materialize-setup</code> y ejecuta el siguiente comando para construir la imagen de Podman/Docker. Este paso es necesario ya que estamos proporcionando un <code>Dockerfile</code> para demostrar la estructura, aunque Materialize también se puede ejecutar directamente desde su imagen oficial.</p><pre><code>    podman build -t my-materialize .
+    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a te permitirÃ¡ levantar una instancia bÃ¡sica de Materialize localmente. Materialize es una base de datos de streaming que te permite crear vistas materializadas en tiempo real a partir de diversas fuentes de datos (Kafka, PostgreSQL, etc.).</p><h3>Pasos para ejecutar:</h3><p>1.  <strong>Guarda los archivos:</strong> Crea un directorio, por ejemplo, <code>materialize-setup</code>, y guarda el <code>Dockerfile</code> proporcionado dentro de Ã©l.</p><p>2.  <strong>Construye la imagen:</strong> Abre una terminal en el directorio <code>materialize-setup</code> y ejecuta el siguiente comando para construir la imagen de Podman/Docker. Este paso es necesario ya que estamos proporcionando un <code>Dockerfile</code> para demostrar la estructura, aunque Materialize tambiÃ©n se puede ejecutar directamente desde su imagen oficial.</p><pre><code>    podman build -t my-materialize .
     # o si usas Docker:
-    # docker build -t my-materialize .</code></pre><p>3.  <strong>Inicia el contenedor:</strong> Una vez construida la imagen, puedes iniciar el contenedor de Materialize con el comando <code>runCommands</code> que se proporciona a continuación.</p><p>4.  <strong>Conéctate a Materialize:</strong> Materialize expone una interfaz de cliente compatible con PostgreSQL en el puerto 6875. Puedes conectarte usando cualquier cliente PostgreSQL (como <code>psql</code>):</p><pre><code>    psql -h localhost -p 6875 -U materialize</code></pre><p>    (La contraseña no es necesaria por defecto para el usuario <code>materialize</code> en una instalación básica).</p><p>Este setup te dará una instancia de Materialize lista para recibir datos y ejecutar consultas SQL en tiempo real.</p><h2>Comandos de Ejecución</h2><pre><code>podman run --rm -p 6875:6875 --name materialize-instance my-materialize</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Utiliza la imagen oficial de Materialize como base.
-# Esto garantiza que tenemos la última versión estable de Materialize.
+    # docker build -t my-materialize .</code></pre><p>3.  <strong>Inicia el contenedor:</strong> Una vez construida la imagen, puedes iniciar el contenedor de Materialize con el comando <code>runCommands</code> que se proporciona a continuaciÃ³n.</p><p>4.  <strong>ConÃ©ctate a Materialize:</strong> Materialize expone una interfaz de cliente compatible con PostgreSQL en el puerto 6875. Puedes conectarte usando cualquier cliente PostgreSQL (como <code>psql</code>):</p><pre><code>    psql -h localhost -p 6875 -U materialize</code></pre><p>    (La contraseÃ±a no es necesaria por defecto para el usuario <code>materialize</code> en una instalaciÃ³n bÃ¡sica).</p><p>Este setup te darÃ¡ una instancia de Materialize lista para recibir datos y ejecutar consultas SQL en tiempo real.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>podman run --rm -p 6875:6875 --name materialize-instance my-materialize</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Utiliza la imagen oficial de Materialize como base.
+# Esto garantiza que tenemos la Ãºltima versiÃ³n estable de Materialize.
 FROM materialize/materialize:v0.25.1
 
 # El puerto 6875 es el puerto SQL por defecto de Materialize.
-# Aunque Materialize ya lo expone internamente, es una buena práctica documentarlo.
+# Aunque Materialize ya lo expone internamente, es una buena prÃ¡ctica documentarlo.
 EXPOSE 6875
 
-# Materialize inicia automáticamente su servicio cuando el contenedor arranca.
-# No necesitamos un comando CMD o ENTRYPOINT explícito aquí, ya que la imagen base ya lo proporciona.
+# Materialize inicia automÃ¡ticamente su servicio cuando el contenedor arranca.
+# No necesitamos un comando CMD o ENTRYPOINT explÃ­cito aquÃ­, ya que la imagen base ya lo proporciona.
 # Por defecto, Materialize se ejecuta en modo standalone, escuchando conexiones SQL.
 </code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAaQnbu_Xzg89fINEU5wOr9XzwTL1IiC2ijxoF53lArIW5UPkbKpr7WMqppZsHEq7EN1q-TmgbB96i0L-AKlaiK8OVZ_Toxl4FKgVsc9jABUP5Dpom2TIvJfgzDoZ6F2niGO_uBlNjv3q0" target="_blank" rel="noopener noreferrer">materializecss.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH0A5q0FG00kF67NzM2SSMtyn_m5UZuTZL_jsbyTfNycUbO-5FN9h3vZs-nIr9xJjH_FzAb1EKvZRAF6Lw7GHlAS172co_o5TQ-hh7UL0PJ2ovNS-xGhw==" target="_blank" rel="noopener noreferrer">materializecss.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0JjDtBvjxF_G2VuGBPD9DEwQnAp6MEt98IA9PT-wp4_xCW2jY3XMxNn6UHp1pW1xzuJcrRcAF2vXxrpjgFXVWFPYAhsvHCqYjvlIQxC-w40Yck9wkHw==" target="_blank" rel="noopener noreferrer">materializeweb.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGKunqyMrDRIpo769rUYOktafNyM8yN2T4_mjAxXCFQbWnrV_WYRftfzfRBrGdIB-BsmKK-_bq5BhNNZelxNCOxf11Q0cTGIFsljYSMUxWD27wPbEM4hr1AV0ZTI5CuCGoFYMMH_2Mg08vThYVp7Epn4MqzpAeRFOgBm6w26JcvW8pKujJWkYq1Xu_XFSVmyL6u" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEhrVGhOlpZjl0J8as3f9_pwqR3ML4zTY_G9Bz_8Fp_7RSlQa5lCOCeywyMO47_lphhb7ZtcPJNlJWodYUK9m0D4uamy9I-oq-UnfbiL3JL9YAIdw3OfL_OQoT46cZnwbLCKRkzrDr1j9vT8JfmRqj0dSpoNUSkkCbR0ALFzoNfhtbj" target="_blank" rel="noopener noreferrer">dev.to</a></li></ul>
   </div>
 </body>
 </html>
+

@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,11 +121,11 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Kong</h1>
-    <h2>Explicación</h2><p>Esta guía te permitirá levantar una instancia básica de Kong Gateway con PostgreSQL como base de datos usando <code>docker-compose</code>. Kong es un <span class="tooltip" data-tooltip-text="Un servidor que actúa como punto de entrada único para un grupo de microservicios. Agrega las respuestas de varios servicios y las devuelve al cliente, simplificando la comunicación del lado del cliente.">API Gateway</span> y una plataforma de gestión de microservicios que te permite gestionar, autenticar y monitorizar tus APIs y microservicios.nn<strong>Pasos para la configuración y ejecución:</strong>nn1.  <em></em>Guarda el archivo <code>docker-compose.yml</code><em></em>: Crea un archivo llamado <code>docker-compose.yml</code> en un directorio de tu elección y copia el contenido proporcionado en la sección <code>supportFiles</code>.nn2.  <strong>Inicia los servicios</strong>: Abre tu terminal en el mismo directorio donde guardaste <code>docker-compose.yml</code> y ejecuta el comando <code>docker-compose up -d</code>. Esto iniciará los contenedores de PostgreSQL y Kong en segundo plano.nn3.  <strong>Espera a que los servicios estén listos</strong>: Los servicios de <code>kong-database</code> y <code>kong-gateway</code> tienen <code>healthchecks</code> configurados, lo que significa que <code>docker-compose</code> esperará a que PostgreSQL esté listo antes de iniciar Kong, y a que Kong esté listo antes de considerarlo saludable. Esto puede tomar unos segundos.nn4.  <strong>Inicializa la base de datos de Kong</strong>: Una vez que los contenedores estén funcionando, necesitas ejecutar las migraciones de la base de datos de Kong. Ejecuta el siguiente comando para inicializar el esquema de la base de datos dentro del contenedor de Kong:n    <code>docker-compose exec kong-gateway kong migrations bootstrap</code>nn5.  <strong>Verifica la instalación</strong>:n    *   Puedes acceder a la <strong>Admin API de Kong</strong> en <code>http://localhost:8001</code>.n    *   El <strong>Proxy de Kong</strong> (donde tus APIs estarán expuestas) estará disponible en <code>http://localhost:8000</code> para HTTP y <code>https://localhost:8443</code> para HTTPS.nnPara detener los servicios, simplemente ejecuta <code>docker-compose down</code> en el mismo directorio.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: "3.9"
+    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a te permitirÃ¡ levantar una instancia bÃ¡sica de Kong Gateway con PostgreSQL como base de datos usando <code>docker-compose</code>. Kong es un <span class="tooltip" data-tooltip-text="Un servidor que actÃºa como punto de entrada Ãºnico para un grupo de microservicios. Agrega las respuestas de varios servicios y las devuelve al cliente, simplificando la comunicaciÃ³n del lado del cliente.">API Gateway</span> y una plataforma de gestiÃ³n de microservicios que te permite gestionar, autenticar y monitorizar tus APIs y microservicios.nn<strong>Pasos para la configuraciÃ³n y ejecuciÃ³n:</strong>nn1.  <em></em>Guarda el archivo <code>docker-compose.yml</code><em></em>: Crea un archivo llamado <code>docker-compose.yml</code> en un directorio de tu elecciÃ³n y copia el contenido proporcionado en la secciÃ³n <code>supportFiles</code>.nn2.  <strong>Inicia los servicios</strong>: Abre tu terminal en el mismo directorio donde guardaste <code>docker-compose.yml</code> y ejecuta el comando <code>docker-compose up -d</code>. Esto iniciarÃ¡ los contenedores de PostgreSQL y Kong en segundo plano.nn3.  <strong>Espera a que los servicios estÃ©n listos</strong>: Los servicios de <code>kong-database</code> y <code>kong-gateway</code> tienen <code>healthchecks</code> configurados, lo que significa que <code>docker-compose</code> esperarÃ¡ a que PostgreSQL estÃ© listo antes de iniciar Kong, y a que Kong estÃ© listo antes de considerarlo saludable. Esto puede tomar unos segundos.nn4.  <strong>Inicializa la base de datos de Kong</strong>: Una vez que los contenedores estÃ©n funcionando, necesitas ejecutar las migraciones de la base de datos de Kong. Ejecuta el siguiente comando para inicializar el esquema de la base de datos dentro del contenedor de Kong:n    <code>docker-compose exec kong-gateway kong migrations bootstrap</code>nn5.  <strong>Verifica la instalaciÃ³n</strong>:n    *   Puedes acceder a la <strong>Admin API de Kong</strong> en <code>http://localhost:8001</code>.n    *   El <strong>Proxy de Kong</strong> (donde tus APIs estarÃ¡n expuestas) estarÃ¡ disponible en <code>http://localhost:8000</code> para HTTP y <code>https://localhost:8443</code> para HTTPS.nnPara detener los servicios, simplemente ejecuta <code>docker-compose down</code> en el mismo directorio.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>docker-compose.yml</h3><pre><code>version: "3.9"
 
 services:
   kong-database:
-    image: postgres:9.6 # Versión estable de PostgreSQL
+    image: postgres:9.6 # VersiÃ³n estable de PostgreSQL
     container_name: kong-database
     environment:
       POSTGRES_DB: kong
@@ -149,16 +149,16 @@ services:
       KONG_PG_USER: kong
       KONG_PG_PASSWORD: kong
       KONG_PG_DATABASE: kong
-      KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl # Puertos para la API de administración de Kong
-      KONG_PROXY_LISTEN: 0.0.0.0:8000, 0.0.0.0:8443 ssl # Puertos para el proxy de Kong (tráfico de API)
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl # Puertos para la API de administraciÃ³n de Kong
+      KONG_PROXY_LISTEN: 0.0.0.0:8000, 0.0.0.0:8443 ssl # Puertos para el proxy de Kong (trÃ¡fico de API)
     ports:
-      - "8000:8000/tcp" # Mapeo para el tráfico HTTP del proxy
-      - "8443:8443/tcp" # Mapeo para el tráfico HTTPS del proxy
+      - "8000:8000/tcp" # Mapeo para el trÃ¡fico HTTP del proxy
+      - "8443:8443/tcp" # Mapeo para el trÃ¡fico HTTPS del proxy
       - "8001:8001/tcp" # Mapeo para la Admin API HTTP
       - "8444:8444/tcp" # Mapeo para la Admin API HTTPS
     depends_on:
       kong-database:
-        condition: service_healthy # Asegura que la base de datos esté saludable antes de iniciar Kong
+        condition: service_healthy # Asegura que la base de datos estÃ© saludable antes de iniciar Kong
     restart: on-failure
     healthcheck:
       test: ["CMD-SHELL", "kong health"]
@@ -171,3 +171,4 @@ volumes:
   </div>
 </body>
 </html>
+

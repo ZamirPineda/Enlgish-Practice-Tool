@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,7 +121,7 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Elasticsearch</h1>
-    <h2>Explicación</h2><p>Esta guía proporciona una configuración básica para ejecutar Elasticsearch y Kibana localmente utilizando Docker Compose (compatible con Podman Compose).</p><h3>Archivos incluidos:</h3><ul><li>  <code>docker-compose.yml</code>: Define dos servicios:</li><li>   *   <strong>Elasticsearch</strong>: La base de datos de búsqueda y analítica. Está configurado como un clúster de un solo nodo para desarrollo local. Se le asigna 1GB de memoria JVM y se deshabilita la seguridad X-Pack para facilitar el acceso. Se mapean los puertos 9200 (HTTP) y 9300 (transporte).</li><li>   *   <strong>Kibana</strong>: La interfaz de usuario para visualizar y gestionar los datos de Elasticsearch. Se mapea al puerto 5601.</li></ul><h3>Pasos a seguir:</h3><p>1.  <strong>Requisito previo para Elasticsearch</strong>: Elasticsearch requiere una configuración específica del sistema operativo anfitrión. Asegúrate de que <code>vm.max_map_count</code> sea al menos <code>262144</code>. Puedes verificarlo con <code>sysctl vm.max_map_count</code> y establecerlo con <code>sudo sysctl -w vm.max_map_count=262144</code>.</p><p>2.  Guarda el contenido de <code>docker-compose.yml</code> en un archivo con ese nombre en tu directorio de trabajo.</p><p>3.  Abre una terminal en el mismo directorio.</p><p>4.  Ejecuta el comando <code>docker-compose up -d</code> (o <code>podman-compose up -d</code> si usas Podman Compose) para iniciar los contenedores.</p><p>5.  Espera unos minutos a que los servicios se inicien completamente.</p><p>6.  Una vez levantados, puedes acceder a:</p><ul><li>   *   <strong>Elasticsearch</strong>: <code>http://localhost:9200</code> (Verifica su estado con <code>http://localhost:9200/_cat/health?v</code>)</li><li>   *   <strong>Kibana</strong>: <code>http://localhost:5601</code></li></ul><h3>Para detener los servicios:</h3><p>En el mismo directorio, ejecuta <code>docker-compose down</code> (o <code>podman-compose down</code>). Esto detendrá y eliminará los contenedores, pero conservará los volúmenes de datos a menos que uses <code>docker-compose down -v</code>.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a proporciona una configuraciÃ³n bÃ¡sica para ejecutar Elasticsearch y Kibana localmente utilizando Docker Compose (compatible con Podman Compose).</p><h3>Archivos incluidos:</h3><ul><li>  <code>docker-compose.yml</code>: Define dos servicios:</li><li>   *   <strong>Elasticsearch</strong>: La base de datos de bÃºsqueda y analÃ­tica. EstÃ¡ configurado como un clÃºster de un solo nodo para desarrollo local. Se le asigna 1GB de memoria JVM y se deshabilita la seguridad X-Pack para facilitar el acceso. Se mapean los puertos 9200 (HTTP) y 9300 (transporte).</li><li>   *   <strong>Kibana</strong>: La interfaz de usuario para visualizar y gestionar los datos de Elasticsearch. Se mapea al puerto 5601.</li></ul><h3>Pasos a seguir:</h3><p>1.  <strong>Requisito previo para Elasticsearch</strong>: Elasticsearch requiere una configuraciÃ³n especÃ­fica del sistema operativo anfitriÃ³n. AsegÃºrate de que <code>vm.max_map_count</code> sea al menos <code>262144</code>. Puedes verificarlo con <code>sysctl vm.max_map_count</code> y establecerlo con <code>sudo sysctl -w vm.max_map_count=262144</code>.</p><p>2.  Guarda el contenido de <code>docker-compose.yml</code> en un archivo con ese nombre en tu directorio de trabajo.</p><p>3.  Abre una terminal en el mismo directorio.</p><p>4.  Ejecuta el comando <code>docker-compose up -d</code> (o <code>podman-compose up -d</code> si usas Podman Compose) para iniciar los contenedores.</p><p>5.  Espera unos minutos a que los servicios se inicien completamente.</p><p>6.  Una vez levantados, puedes acceder a:</p><ul><li>   *   <strong>Elasticsearch</strong>: <code>http://localhost:9200</code> (Verifica su estado con <code>http://localhost:9200/_cat/health?v</code>)</li><li>   *   <strong>Kibana</strong>: <code>http://localhost:5601</code></li></ul><h3>Para detener los servicios:</h3><p>En el mismo directorio, ejecuta <code>docker-compose down</code> (o <code>podman-compose down</code>). Esto detendrÃ¡ y eliminarÃ¡ los contenedores, pero conservarÃ¡ los volÃºmenes de datos a menos que uses <code>docker-compose down -v</code>.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
 
 services:
   elasticsearch:
@@ -170,3 +170,4 @@ volumes:
   </div>
 </body>
 </html>
+

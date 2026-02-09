@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,16 +121,16 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Terraform</h1>
-    <h2>Explicación</h2><p>Esta guía te permitirá configurar y ejecutar Terraform localmente utilizando Podman (o Docker) para gestionar tu infraestructura como código. Crearemos una imagen de contenedor personalizada que incluirá la CLI de Terraform. Luego, ejecutaremos comandos de Terraform dentro de este contenedor, montando tu directorio de trabajo local para que puedas interactuar con tus archivos <code>.tf</code>.</p><p><strong>Pasos a seguir:</strong></p><p>1.  Guarda el contenido del <code>Dockerfile</code> y <code>main.tf</code> en el mismo directorio local.</p><p>2.  Asegúrate de tener Podman (o Docker) instalado y funcionando.</p><p>3.  Asegúrate de tener tus credenciales de AWS configuradas en tu entorno local (ej. exportando <code>AWS_ACCESS_KEY_ID</code> y <code>AWS_SECRET_ACCESS_KEY</code> o configurando el archivo <code>~/.aws/credentials</code>).</p><p>4.  Ejecuta el comando <code>podman build</code> para construir la imagen de Terraform.</p><p>5.  Ejecuta los comandos <code>podman run</code> para inicializar, planificar y aplicar tu configuración de Terraform. </p><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-terraform-cli .
+    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a te permitirÃ¡ configurar y ejecutar Terraform localmente utilizando Podman (o Docker) para gestionar tu infraestructura como cÃ³digo. Crearemos una imagen de contenedor personalizada que incluirÃ¡ la CLI de Terraform. Luego, ejecutaremos comandos de Terraform dentro de este contenedor, montando tu directorio de trabajo local para que puedas interactuar con tus archivos <code>.tf</code>.</p><p><strong>Pasos a seguir:</strong></p><p>1.  Guarda el contenido del <code>Dockerfile</code> y <code>main.tf</code> en el mismo directorio local.</p><p>2.  AsegÃºrate de tener Podman (o Docker) instalado y funcionando.</p><p>3.  AsegÃºrate de tener tus credenciales de AWS configuradas en tu entorno local (ej. exportando <code>AWS_ACCESS_KEY_ID</code> y <code>AWS_SECRET_ACCESS_KEY</code> o configurando el archivo <code>~/.aws/credentials</code>).</p><p>4.  Ejecuta el comando <code>podman build</code> para construir la imagen de Terraform.</p><p>5.  Ejecuta los comandos <code>podman run</code> para inicializar, planificar y aplicar tu configuraciÃ³n de Terraform. </p><h2>Comandos de EjecuciÃ³n</h2><pre><code>podman build -t my-terraform-cli .
 podman run --rm -it -v "$(pwd):/app" -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -w /app my-terraform-cli init
 podman run --rm -it -v "$(pwd):/app" -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -w /app my-terraform-cli plan
-# Para aplicar los cambios (¡procede con precaución en entornos reales!)
+# Para aplicar los cambios (Â¡procede con precauciÃ³n en entornos reales!)
 # podman run --rm -it -v "$(pwd):/app" -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -w /app my-terraform-cli apply
 # Para destruir los recursos creados
-# podman run --rm -it -v "$(pwd):/app" -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -w /app my-terraform-cli destroy</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa una imagen base ligera de Alpine Linux
+# podman run --rm -it -v "$(pwd):/app" -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -w /app my-terraform-cli destroy</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Usa una imagen base ligera de Alpine Linux
 FROM alpine:latest
 
-# Define la versión de Terraform a instalar
+# Define la versiÃ³n de Terraform a instalar
 ARG TERRAFORM_VERSION="1.8.0"
 
 # Instala dependencias para descargar y descomprimir Terraform
@@ -141,26 +141,26 @@ RUN curl -LO "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terr
     unzip "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -d /usr/local/bin/ && \
     rm "terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
 
-# Verifica la instalación y muestra la versión de Terraform
+# Verifica la instalaciÃ³n y muestra la versiÃ³n de Terraform
 RUN terraform version
 
 # Establece el punto de entrada por defecto para el contenedor. 
 # Esto significa que cuando ejecutes `podman run my-terraform-cli &lt;comando&gt;`, 
-# el contenedor ejecutará `terraform &lt;comando&gt;`.
+# el contenedor ejecutarÃ¡ `terraform &lt;comando&gt;`.
 ENTRYPOINT ["terraform"]
 
 # Define un comando por defecto si no se proporciona ninguno
 CMD ["--help"]</code></pre><h3>main.tf</h3><pre><code># Define el proveedor de AWS
-# Asegúrate de haber configurado tus credenciales de AWS en tu entorno local
+# AsegÃºrate de haber configurado tus credenciales de AWS en tu entorno local
 # (ej. variables de entorno AWS_ACCESS_KEY_ID y AWS_SECRET_ACCESS_KEY)
 provider "aws" {
-  region = "us-east-1" # Puedes cambiar la región según tu preferencia
+  region = "us-east-1" # Puedes cambiar la regiÃ³n segÃºn tu preferencia
 }
 
 # Crea un bucket S3 de ejemplo
 resource "aws_s3_bucket" "example_bucket" {
-  # ¡Importante!: El nombre del bucket S3 debe ser globalmente único en AWS.
-  # Cámbialo por uno que sea único para ti (ej. combinando tu nombre y un sufijo aleatorio).
+  # Â¡Importante!: El nombre del bucket S3 debe ser globalmente Ãºnico en AWS.
+  # CÃ¡mbialo por uno que sea Ãºnico para ti (ej. combinando tu nombre y un sufijo aleatorio).
   bucket = "my-unique-terraform-bucket-yourname-1234"
   acl    = "private"
 
@@ -179,3 +179,4 @@ output "bucket_name" {
   </div>
 </body>
 </html>
+

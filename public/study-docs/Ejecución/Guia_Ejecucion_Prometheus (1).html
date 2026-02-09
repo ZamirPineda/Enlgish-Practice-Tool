@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,33 +121,34 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Prometheus</h1>
-    <h2>Explicación</h2><p>Esta guía le permitirá levantar una instancia básica de Prometheus localmente usando Podman o Docker. Se construirá una imagen de contenedor personalizada que incluirá un archivo de configuración mínimo (<code>prometheus.yml</code>). Esta configuración instruye a Prometheus para que se monitoree a sí mismo, exponiendo su interfaz web y métricas en el puerto <code>9090</code> de su máquina local. Una vez iniciado, podrá acceder a la UI de Prometheus en <code>http://localhost:9090</code>.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-prometheus . && podman run -d -p 9090:9090 --name prometheus-instance my-prometheus</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de Prometheus como base. Puedes especificar una versión específica, por ejemplo, prom/prometheus:v2.47.1
+    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a le permitirÃ¡ levantar una instancia bÃ¡sica de Prometheus localmente usando Podman o Docker. Se construirÃ¡ una imagen de contenedor personalizada que incluirÃ¡ un archivo de configuraciÃ³n mÃ­nimo (<code>prometheus.yml</code>). Esta configuraciÃ³n instruye a Prometheus para que se monitoree a sÃ­ mismo, exponiendo su interfaz web y mÃ©tricas en el puerto <code>9090</code> de su mÃ¡quina local. Una vez iniciado, podrÃ¡ acceder a la UI de Prometheus en <code>http://localhost:9090</code>.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>podman build -t my-prometheus . && podman run -d -p 9090:9090 --name prometheus-instance my-prometheus</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de Prometheus como base. Puedes especificar una versiÃ³n especÃ­fica, por ejemplo, prom/prometheus:v2.47.1
 FROM prom/prometheus:latest
 
-# Copia el archivo de configuración de Prometheus en el directorio de configuración del contenedor.
-# Asegúrate de que 'prometheus.yml' esté en el mismo directorio que este Dockerfile.
+# Copia el archivo de configuraciÃ³n de Prometheus en el directorio de configuraciÃ³n del contenedor.
+# AsegÃºrate de que 'prometheus.yml' estÃ© en el mismo directorio que este Dockerfile.
 COPY prometheus.yml /etc/prometheus/prometheus.yml
 
 # Expone el puerto por defecto de Prometheus para que sea accesible desde fuera del contenedor.
 EXPOSE 9090
 
-# Define el comando de inicio para Prometheus, apuntando a nuestro archivo de configuración.
-# También especificamos una ruta para el almacenamiento de TSDB (Time Series Database).
+# Define el comando de inicio para Prometheus, apuntando a nuestro archivo de configuraciÃ³n.
+# TambiÃ©n especificamos una ruta para el almacenamiento de TSDB (Time Series Database).
 CMD ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus"]</code></pre><h3>prometheus.yml</h3><pre><code>global:
-  # Establece el intervalo global en el que Prometheus intentará extraer métricas de sus objetivos.
+  # Establece el intervalo global en el que Prometheus intentarÃ¡ extraer mÃ©tricas de sus objetivos.
   scrape_interval: 15s 
-  # Etiquetas opcionales que se adjuntarán a todas las series temporales de este Prometheus.
+  # Etiquetas opcionales que se adjuntarÃ¡n a todas las series temporales de este Prometheus.
   external_labels:
     monitor: 'local-prometheus'
 
 # Lista de configuraciones de scraping.
 scrape_configs:
-  # Un 'job' representa una colección de objetivos que se tratan como un grupo lógico.
+  # Un 'job' representa una colecciÃ³n de objetivos que se tratan como un grupo lÃ³gico.
   - job_name: 'prometheus'
-    # Configuración estática para los objetivos de este job.
-    # Aquí, Prometheus se configurará para extraer métricas de sí mismo.
+    # ConfiguraciÃ³n estÃ¡tica para los objetivos de este job.
+    # AquÃ­, Prometheus se configurarÃ¡ para extraer mÃ©tricas de sÃ­ mismo.
     static_configs:
-      - targets: ['localhost:9090'] # El propio Prometheus expone sus métricas en este puerto por defecto.</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE_CwYdI_PvaiGxLGB6GYbZuRrHcRuxOxuSdmkqtgAdYtuBHkUWXh5x4y7BCAmnbRxngmXzMo3vBqtOPM4Ypra5EDntn05kR9wPO5iW9MjKDceEKkeAgVJZ3A-0Lbmr9XP5xeYEafNjwqt_DHcuy29Q308CYgmOQ_I=" target="_blank" rel="noopener noreferrer">prometheus.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfIIHHevvi8Zf2uX757k7Yy017ERORWqMfX1SdW9udssbe0_wAcbTouiVAO71GfTdUZMFiihPWWpQbfX5gfa9-paze1UWihS2VjFK10Kresmy7CsiIf7cdAVmO7MVlDreJYxfxUXsB7EGk0YNtclf2mVkieqk=" target="_blank" rel="noopener noreferrer">prometheus.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSJX-WhaDWDP-Xui6_0a4QAjMm9lHjiyTR0lPPMVWQOothaxroLGUMxcB0lVCssaNu8BWEeNYtyzzwlcwmgPqe17sj1LgmiaDIGS9uVs9MKI_-KUyy3AsA6YHNFD2nxWImPRM57SvGYJUkQxE7MQ==" target="_blank" rel="noopener noreferrer">signoz.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiDhMGVjWE5rOwKkKbevH7SFs-btUDJ_xc4Y8-wJGzGFHXzxcnycxL7PU91920R-selDcuOrRsBccBz99Mi_k2MlhYfqSUvv8W_dpL-R7j2OI_V_KJXVGEMZLFC3JdCbTCBbXZKcnQim9PEHYIiq4om7iDWvYDVjLDFw==" target="_blank" rel="noopener noreferrer">betterstack.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQELH3SxA1gHl-eYMd10zMmS86EZ79VF2kE3UmnXq-R_TfVCArxQuVia49SJ_LTXINzf8tPZsMngZKV4gB9ktTrdNccASxo28HWvChmrUD9IUUG7aPHw5FdNjJXmbwREBHGL8nWUk4T6XEXOrykMJdppxmzcWKmTpAdU6Zxgc6M=" target="_blank" rel="noopener noreferrer">netdevops.it</a></li></ul>
+      - targets: ['localhost:9090'] # El propio Prometheus expone sus mÃ©tricas en este puerto por defecto.</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE_CwYdI_PvaiGxLGB6GYbZuRrHcRuxOxuSdmkqtgAdYtuBHkUWXh5x4y7BCAmnbRxngmXzMo3vBqtOPM4Ypra5EDntn05kR9wPO5iW9MjKDceEKkeAgVJZ3A-0Lbmr9XP5xeYEafNjwqt_DHcuy29Q308CYgmOQ_I=" target="_blank" rel="noopener noreferrer">prometheus.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfIIHHevvi8Zf2uX757k7Yy017ERORWqMfX1SdW9udssbe0_wAcbTouiVAO71GfTdUZMFiihPWWpQbfX5gfa9-paze1UWihS2VjFK10Kresmy7CsiIf7cdAVmO7MVlDreJYxfxUXsB7EGk0YNtclf2mVkieqk=" target="_blank" rel="noopener noreferrer">prometheus.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSJX-WhaDWDP-Xui6_0a4QAjMm9lHjiyTR0lPPMVWQOothaxroLGUMxcB0lVCssaNu8BWEeNYtyzzwlcwmgPqe17sj1LgmiaDIGS9uVs9MKI_-KUyy3AsA6YHNFD2nxWImPRM57SvGYJUkQxE7MQ==" target="_blank" rel="noopener noreferrer">signoz.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiDhMGVjWE5rOwKkKbevH7SFs-btUDJ_xc4Y8-wJGzGFHXzxcnycxL7PU91920R-selDcuOrRsBccBz99Mi_k2MlhYfqSUvv8W_dpL-R7j2OI_V_KJXVGEMZLFC3JdCbTCBbXZKcnQim9PEHYIiq4om7iDWvYDVjLDFw==" target="_blank" rel="noopener noreferrer">betterstack.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQELH3SxA1gHl-eYMd10zMmS86EZ79VF2kE3UmnXq-R_TfVCArxQuVia49SJ_LTXINzf8tPZsMngZKV4gB9ktTrdNccASxo28HWvChmrUD9IUUG7aPHw5FdNjJXmbwREBHGL8nWUk4T6XEXOrykMJdppxmzcWKmTpAdU6Zxgc6M=" target="_blank" rel="noopener noreferrer">netdevops.it</a></li></ul>
   </div>
 </body>
 </html>
+

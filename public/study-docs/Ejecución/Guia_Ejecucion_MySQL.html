@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,29 +121,29 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_MySQL</h1>
-    <h2>Explicación</h2><p>Esta configuración te permitirá levantar una instancia básica de MySQL 8.0 usando <code>docker-compose</code> (compatible con Podman Compose). Incluye:</p><ul><li><strong>Persistencia de datos</strong>: Utiliza un volumen nombrado para asegurar que tus datos no se pierdan al reiniciar o eliminar el contenedor.</li><li><strong>Base de datos y usuario inicial</strong>: Se configura una base de datos <code>test_db</code> y un usuario <code>test_user</code> con contraseña <code>test_password</code> automáticamente al iniciar.</li><li><strong>Inicialización de esquema</strong>: Un archivo <code>init.sql</code> se ejecuta automáticamente la primera vez que la base de datos es creada, creando una tabla de ejemplo.</li><li><strong>Acceso externo</strong>: El puerto 3306 del contenedor se mapea al puerto 3306 de tu máquina local, permitiéndote conectar con cualquier cliente MySQL.</li></ul><p><strong>Pasos:</strong></p><p>1.  Asegúrate de tener Docker Compose (o Podman Compose) instalado.</p><p>2.  Crea un directorio para tu proyecto.</p><p>3.  Crea los archivos <code>docker-compose.yml</code>, <code>Dockerfile</code> (opcional, pero incluido para cumplir el esquema, ya que <code>docker-compose</code> puede usar la imagen directamente) e <code>init.sql</code> con el contenido proporcionado.</p><p>4.  Navega a ese directorio en tu terminal.</p><p>5.  Ejecuta el comando <code>docker-compose up -d</code>.</p><p>6.  Para verificar el estado, usa <code>docker-compose ps</code>.</p><p>7.  Para conectar, puedes usar: <code>mysql -h 127.0.0.1 -P 3306 -u test_user -p</code> (la contraseña es <code>test_password</code>).</p><p>8.  Para detener y eliminar los contenedores y el volumen (borrando los datos), usa <code>docker-compose down -v</code>.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de MySQL 8.0 como base.
+    <h2>ExplicaciÃ³n</h2><p>Esta configuraciÃ³n te permitirÃ¡ levantar una instancia bÃ¡sica de MySQL 8.0 usando <code>docker-compose</code> (compatible con Podman Compose). Incluye:</p><ul><li><strong>Persistencia de datos</strong>: Utiliza un volumen nombrado para asegurar que tus datos no se pierdan al reiniciar o eliminar el contenedor.</li><li><strong>Base de datos y usuario inicial</strong>: Se configura una base de datos <code>test_db</code> y un usuario <code>test_user</code> con contraseÃ±a <code>test_password</code> automÃ¡ticamente al iniciar.</li><li><strong>InicializaciÃ³n de esquema</strong>: Un archivo <code>init.sql</code> se ejecuta automÃ¡ticamente la primera vez que la base de datos es creada, creando una tabla de ejemplo.</li><li><strong>Acceso externo</strong>: El puerto 3306 del contenedor se mapea al puerto 3306 de tu mÃ¡quina local, permitiÃ©ndote conectar con cualquier cliente MySQL.</li></ul><p><strong>Pasos:</strong></p><p>1.  AsegÃºrate de tener Docker Compose (o Podman Compose) instalado.</p><p>2.  Crea un directorio para tu proyecto.</p><p>3.  Crea los archivos <code>docker-compose.yml</code>, <code>Dockerfile</code> (opcional, pero incluido para cumplir el esquema, ya que <code>docker-compose</code> puede usar la imagen directamente) e <code>init.sql</code> con el contenido proporcionado.</p><p>4.  Navega a ese directorio en tu terminal.</p><p>5.  Ejecuta el comando <code>docker-compose up -d</code>.</p><p>6.  Para verificar el estado, usa <code>docker-compose ps</code>.</p><p>7.  Para conectar, puedes usar: <code>mysql -h 127.0.0.1 -P 3306 -u test_user -p</code> (la contraseÃ±a es <code>test_password</code>).</p><p>8.  Para detener y eliminar los contenedores y el volumen (borrando los datos), usa <code>docker-compose down -v</code>.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de MySQL 8.0 como base.
 # Este Dockerfile es simple ya que la imagen oficial ya viene configurada.
 FROM mysql:8.0
 
-# No se necesitan pasos adicionales para una configuración básica,
-# ya que las variables de entorno y los volúmenes se manejan a través de docker-compose.yml
-# y la imagen oficial ya soporta scripts de inicialización en /docker-entrypoint-initdb.d</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+# No se necesitan pasos adicionales para una configuraciÃ³n bÃ¡sica,
+# ya que las variables de entorno y los volÃºmenes se manejan a travÃ©s de docker-compose.yml
+# y la imagen oficial ya soporta scripts de inicializaciÃ³n en /docker-entrypoint-initdb.d</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
 
 services:
   db:
     image: mysql:8.0
     container_name: mysql_basic_instance
     environment:
-      MYSQL_ROOT_PASSWORD: root_password_segura # Contraseña para el usuario 'root'
+      MYSQL_ROOT_PASSWORD: root_password_segura # ContraseÃ±a para el usuario 'root'
       MYSQL_DATABASE: test_db                 # Nombre de la base de datos a crear
       MYSQL_USER: test_user                   # Nombre de usuario para la base de datos
-      MYSQL_PASSWORD: test_password           # Contraseña para el usuario
+      MYSQL_PASSWORD: test_password           # ContraseÃ±a para el usuario
     ports:
-      - "3306:3306" # Mapea el puerto 3306 del contenedor al 3306 de la máquina local
+      - "3306:3306" # Mapea el puerto 3306 del contenedor al 3306 de la mÃ¡quina local
     volumes:
       - mysql_data:/var/lib/mysql         # Volumen nombrado para persistir los datos
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro # Ejecuta init.sql en el primer inicio
-    restart: always # Asegura que el contenedor se reinicie automáticamente
+    restart: always # Asegura que el contenedor se reinicie automÃ¡ticamente
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u$$MYSQL_USER", "-p$$MYSQL_PASSWORD"]
       interval: 10s
@@ -151,7 +151,7 @@ services:
       retries: 5
 
 volumes:
-  mysql_data: # Define el volumen nombrado</code></pre><h3>init.sql</h3><pre><code>-- Script de inicialización de la base de datos MySQL
+  mysql_data: # Define el volumen nombrado</code></pre><h3>init.sql</h3><pre><code>-- Script de inicializaciÃ³n de la base de datos MySQL
 
 -- Selecciona la base de datos
 USE test_db;
@@ -171,3 +171,4 @@ INSERT INTO users (name, email) VALUES ('Charlie Brown', 'charlie.brown@example.
   </div>
 </body>
 </html>
+

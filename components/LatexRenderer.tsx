@@ -29,7 +29,7 @@ const LatexRenderer: React.FC<LatexRendererProps> = ({ formula, className = "", 
         }
     }, [formula, block]);
 
-    return <span ref={containerRef} className={`${className} font-serif`} />;
+    return <span ref={containerRef} className={`${className} font-serif block max-w-full overflow-x-auto`} />;
 };
 
 export default LatexRenderer;

@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,33 +121,34 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Apache ActiveMQ</h1>
-    <h2>Explicación</h2><p>Esta configuración proporciona una instancia básica de Apache ActiveMQ, un popular <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de mensajes de código abierto. Ideal para desarrolladores que necesitan una cola de mensajes ligera para pruebas o entornos de desarrollo.</p><h3>Pasos a seguir:</h3><p>1.  <em></em>Crear el <code>Dockerfile</code><em></em>: Guarda el contenido proporcionado en un archivo llamado <code>Dockerfile</code> en un directorio vacío.</p><p>2.  <strong>Construir la imagen</strong>: Abre tu terminal en el mismo directorio y ejecuta el comando <code>podman build -t my-activemq-image .</code> (o <code>docker build -t my-activemq-image .</code> si usas Docker). Esto creará una imagen personalizada basada en la imagen oficial de ActiveMQ.</p><p>3.  <strong>Ejecutar el contenedor</strong>: Una vez que la imagen esté construida, ejecuta el comando <code>podman run</code> (o <code>docker run</code>) proporcionado en <code>runCommands</code>.</p><h3>Detalles de la configuración:</h3><ul><li>  <em></em><code>Dockerfile</code><em></em>: Utiliza la imagen <code>symptoma/activemq:5.18.3</code> como base, que ya incluye una instalación funcional de ActiveMQ. Expone los puertos <code>61616</code> (para conexiones de clientes como <span class="tooltip" data-tooltip-text="(Java Message Service) Una API de Java para middleware orientado a mensajes que permite a los componentes de una aplicación crear, enviar, recibir y leer mensajes.">JMS</span>, <span class="tooltip" data-tooltip-text="Protocolo de Mensajería Orientado a Texto Simple (Simple Text Oriented Messaging Protocol). Un protocolo de mensajería fácil de usar, basado en texto, similar a HTTP.">STOMP</span>, etc.) y <code>8161</code> (para la consola web de administración).</li><li>  <em></em><code>runCommands</code><em></em>: Este comando primero construye la imagen y luego inicia un contenedor en segundo plano (<code>-d</code>) llamado <code>activemq</code>. Mapea el puerto <code>61616</code> del host al <code>61616</code> del contenedor y el puerto <code>8161</code> del host al <code>8161</code> del contenedor. Esto permite que los clientes y tu navegador accedan al <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> y a la consola.</li></ul><h3>Acceso:</h3><p>Una vez que el contenedor esté en ejecución, podrás acceder a la consola web de ActiveMQ en <code>http://localhost:8161/admin</code>. Las credenciales por defecto son <code>admin</code> / <code>admin</code>.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-activemq-image . && podman run -d --name activemq -p 61616:61616 -p 8161:8161 my-activemq-image</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa una imagen base de ActiveMQ.
+    <h2>ExplicaciÃ³n</h2><p>Esta configuraciÃ³n proporciona una instancia bÃ¡sica de Apache ActiveMQ, un popular <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicaciÃ³n desacoplada.">broker</span> de mensajes de cÃ³digo abierto. Ideal para desarrolladores que necesitan una cola de mensajes ligera para pruebas o entornos de desarrollo.</p><h3>Pasos a seguir:</h3><p>1.  <em></em>Crear el <code>Dockerfile</code><em></em>: Guarda el contenido proporcionado en un archivo llamado <code>Dockerfile</code> en un directorio vacÃ­o.</p><p>2.  <strong>Construir la imagen</strong>: Abre tu terminal en el mismo directorio y ejecuta el comando <code>podman build -t my-activemq-image .</code> (o <code>docker build -t my-activemq-image .</code> si usas Docker). Esto crearÃ¡ una imagen personalizada basada en la imagen oficial de ActiveMQ.</p><p>3.  <strong>Ejecutar el contenedor</strong>: Una vez que la imagen estÃ© construida, ejecuta el comando <code>podman run</code> (o <code>docker run</code>) proporcionado en <code>runCommands</code>.</p><h3>Detalles de la configuraciÃ³n:</h3><ul><li>  <em></em><code>Dockerfile</code><em></em>: Utiliza la imagen <code>symptoma/activemq:5.18.3</code> como base, que ya incluye una instalaciÃ³n funcional de ActiveMQ. Expone los puertos <code>61616</code> (para conexiones de clientes como <span class="tooltip" data-tooltip-text="(Java Message Service) Una API de Java para middleware orientado a mensajes que permite a los componentes de una aplicaciÃ³n crear, enviar, recibir y leer mensajes.">JMS</span>, <span class="tooltip" data-tooltip-text="Protocolo de MensajerÃ­a Orientado a Texto Simple (Simple Text Oriented Messaging Protocol). Un protocolo de mensajerÃ­a fÃ¡cil de usar, basado en texto, similar a HTTP.">STOMP</span>, etc.) y <code>8161</code> (para la consola web de administraciÃ³n).</li><li>  <em></em><code>runCommands</code><em></em>: Este comando primero construye la imagen y luego inicia un contenedor en segundo plano (<code>-d</code>) llamado <code>activemq</code>. Mapea el puerto <code>61616</code> del host al <code>61616</code> del contenedor y el puerto <code>8161</code> del host al <code>8161</code> del contenedor. Esto permite que los clientes y tu navegador accedan al <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicaciÃ³n desacoplada.">broker</span> y a la consola.</li></ul><h3>Acceso:</h3><p>Una vez que el contenedor estÃ© en ejecuciÃ³n, podrÃ¡s acceder a la consola web de ActiveMQ en <code>http://localhost:8161/admin</code>. Las credenciales por defecto son <code>admin</code> / <code>admin</code>.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>podman build -t my-activemq-image . && podman run -d --name activemq -p 61616:61616 -p 8161:8161 my-activemq-image</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Usa una imagen base de ActiveMQ.
 # Esta imagen (symptoma/activemq) ya contiene Apache ActiveMQ preconfigurado.
-# Se utiliza la versión 5.18.3 que es una de las estables más recientes de la serie 5.x.
+# Se utiliza la versiÃ³n 5.18.3 que es una de las estables mÃ¡s recientes de la serie 5.x.
 FROM symptoma/activemq:5.18.3
 
-# Metadata del mantenedor (opcional, para identificar quién mantiene esta capa).
+# Metadata del mantenedor (opcional, para identificar quiÃ©n mantiene esta capa).
 LABEL maintainer="Tu Nombre &lt;tu.email@example.com&gt;"
 
 # Expone los puertos por defecto que usa ActiveMQ:
 # 61616: Puerto principal para conexiones de clientes (OpenWire, STOMP, MQTT, AMQP, etc.).
-# 8161:  Puerto para la consola web de administración, que permite monitorear y gestionar el broker.
+# 8161:  Puerto para la consola web de administraciÃ³n, que permite monitorear y gestionar el broker.
 EXPOSE 61616
 EXPOSE 8161
 
 # El comando por defecto de la imagen base (symptoma/activemq) ya inicia el servidor ActiveMQ.
-# No necesitamos añadir un CMD adicional a menos que queramos sobreescribir ese comportamiento por defecto.
+# No necesitamos aÃ±adir un CMD adicional a menos que queramos sobreescribir ese comportamiento por defecto.
 # Por ejemplo, el comando CMD original de esta imagen puede ser similar a:
 # CMD ["/opt/activemq/bin/activemq", "console"]
 
-# Si se necesitara añadir configuración personalizada (ej. activemq.xml modificado):
-# Podrías copiar tu archivo de configuración aquí, por ejemplo:
+# Si se necesitara aÃ±adir configuraciÃ³n personalizada (ej. activemq.xml modificado):
+# PodrÃ­as copiar tu archivo de configuraciÃ³n aquÃ­, por ejemplo:
 # COPY activemq.xml /opt/activemq/conf/activemq.xml
 
-# Para persistencia de datos (mensajes, colas, tópicos) o logs,
-# se recomienda montar volúmenes externos. Esto se hace en el comando 'podman run' o 'docker run'.
+# Para persistencia de datos (mensajes, colas, tÃ³picos) o logs,
+# se recomienda montar volÃºmenes externos. Esto se hace en el comando 'podman run' o 'docker run'.
 # Por ejemplo, para los datos y logs de ActiveMQ:
 # VOLUME ["/opt/activemq/data", "/opt/activemq/log"]</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJEKQwJcKtaPeFYetnxFGw7K8h38nw9KC94wQwzto7fyDukhn62yMa2nn5M4ZRjejHcphqSq6dbdHB4nspQ_T1pQzRYYcG425Kiyf6MTmGj8RL0kRzREPiX2-qgDGfJMAglJJE59jmWu_jBFu_UwUhJZU=" target="_blank" rel="noopener noreferrer">tutorialspoint.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGjFekkcoA0X3_p-h9dqGckV1RSRz2SkZTWBpEl6s_jlgrxMhjHAifMCtV_9Jkrtlt6d-P3Fs7zCNG_vqe2nBIHU-Q-7f5IDyWEwW9Oaow3boFZpgSDMhEiiCoNQEHVsxMsJx2Znej3L_wix9Ej" target="_blank" rel="noopener noreferrer">openlogic.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbvLczwu1IvxhN6lNtrLybBqL5I0dxd3OpFTh_BEJgamTrRyQ-5sBqPLvA-B9zuWVqXdXmXhervIzkFcc09MSyrVSMMP9FqDHigPBy4us2eOzLhhpJrPY8tKioRhqWLpuRzH4FP1feSvis6yV6BAcTzLpjosVPjiekRyR790xyOjcwcez0Tg==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFSmuI82qH7LdndcsvOV8ZcGkSWGi9LXzeBGxvCfD5ng2jtuATVIvv2Gnm_mvS6sFQ78PVXs7YKUh5cqIC6oD97yCAt00_DZ4xCKbHKg57bJp215damHBfqa1LtxVH3knZS17bVRXLHMuraBv_GCRwJfWsnmZ7dhsFfg4SC6GB6WZZOAD1SOCS2WROPcq8zr26NLiU_HQuDDjA7zd2yTSfEIqelijlw" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFZiQL3NTM96sfew-TrEcnaTya1D0mn6XbnkY21udjBIPTRUdf6euRu_ZpqxMZA-OctubTTdcnGitDG2EpxNuzsVn6ZRuPCRkxRfLODlYRqYPvisNWeakZGSaE2naEbbpX7u1FcyQ==" target="_blank" rel="noopener noreferrer">youtube.com</a></li></ul>
   </div>
 </body>
 </html>
+

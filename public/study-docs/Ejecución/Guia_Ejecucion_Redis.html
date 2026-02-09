@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,30 +121,30 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Redis</h1>
-    <h2>Explicación</h2><p>Esta guía te permitirá levantar una instancia básica de Redis localmente usando Podman o Docker. Incluye un Dockerfile sencillo para construir la imagen y un archivo de configuración básico <code>redis.conf</code> para personalizar la instancia, junto con los comandos necesarios para construir y ejecutar el contenedor. Redis es un almacén de datos en memoria de código abierto, utilizado como base de datos, caché y bróker de mensajes.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-redis . && podman run -d -p 6379:6379 --name my-redis -v $(pwd)/redis.conf:/usr/local/etc/redis/redis.conf my-redis redis-server /usr/local/etc/redis/redis.conf</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Utiliza la imagen oficial de Redis como base.
-# Esto asegura que tenemos una instalación estable y bien mantenida de Redis.
+    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a te permitirÃ¡ levantar una instancia bÃ¡sica de Redis localmente usando Podman o Docker. Incluye un Dockerfile sencillo para construir la imagen y un archivo de configuraciÃ³n bÃ¡sico <code>redis.conf</code> para personalizar la instancia, junto con los comandos necesarios para construir y ejecutar el contenedor. Redis es un almacÃ©n de datos en memoria de cÃ³digo abierto, utilizado como base de datos, cachÃ© y brÃ³ker de mensajes.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>podman build -t my-redis . && podman run -d -p 6379:6379 --name my-redis -v $(pwd)/redis.conf:/usr/local/etc/redis/redis.conf my-redis redis-server /usr/local/etc/redis/redis.conf</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code># Utiliza la imagen oficial de Redis como base.
+# Esto asegura que tenemos una instalaciÃ³n estable y bien mantenida de Redis.
 FROM redis:latest
 
 # El puerto 6379 es el puerto por defecto de Redis.
-# EXPOSE es solo una documentación, el mapeo de puertos real se hace al ejecutar el contenedor.
+# EXPOSE es solo una documentaciÃ³n, el mapeo de puertos real se hace al ejecutar el contenedor.
 EXPOSE 6379
 
-# CMD ya está definido en la imagen base de Redis para ejecutar 'redis-server'.
+# CMD ya estÃ¡ definido en la imagen base de Redis para ejecutar 'redis-server'.
 # No necesitamos sobrescribirlo a menos que queramos pasar argumentos por defecto.
-# En este caso, pasaremos la configuración personalizada al ejecutar el contenedor.</code></pre><h3>redis.conf</h3><pre><code># Archivo de configuración básico para Redis.
-# Puedes personalizar este archivo según tus necesidades.
+# En este caso, pasaremos la configuraciÃ³n personalizada al ejecutar el contenedor.</code></pre><h3>redis.conf</h3><pre><code># Archivo de configuraciÃ³n bÃ¡sico para Redis.
+# Puedes personalizar este archivo segÃºn tus necesidades.
 
-# Puerto en el que Redis escuchará las conexiones.
+# Puerto en el que Redis escucharÃ¡ las conexiones.
 port 6379
 
 # No ejecutar como daemon. Esto es ideal para contenedores, ya que el proceso principal debe estar en primer plano.
 daemonize no
 
 # Activar la persistencia AOF (Append Only File).
-# AOF registra cada operación de escritura que el servidor recibe.
+# AOF registra cada operaciÃ³n de escritura que el servidor recibe.
 appendonly yes
 
-# Especifica la política de persistencia RDB (Redis Database).
+# Especifica la polÃ­tica de persistencia RDB (Redis Database).
 # Guarda el conjunto de datos en el disco cada 900 segundos (15 minutos) si al menos 1 clave ha cambiado.
 save 900 1
 # Guarda el conjunto de datos en el disco cada 300 segundos (5 minutos) si al menos 10 claves han cambiado.
@@ -152,12 +152,12 @@ save 300 10
 # Guarda el conjunto de datos en el disco cada 60 segundos si al menos 10000 claves han cambiado.
 save 60 10000
 
-# Establece un límite máximo de memoria para Redis.
-# Si se alcanza este límite, Redis intentará liberar memoria según la política de 'maxmemory-policy'.
+# Establece un lÃ­mite mÃ¡ximo de memoria para Redis.
+# Si se alcanza este lÃ­mite, Redis intentarÃ¡ liberar memoria segÃºn la polÃ­tica de 'maxmemory-policy'.
 maxmemory 256mb
 
-# Política de desalojo de claves cuando se alcanza 'maxmemory'.
-# 'noeviction': Devuelve errores en las operaciones de escritura cuando la memoria está llena.
+# PolÃ­tica de desalojo de claves cuando se alcanza 'maxmemory'.
+# 'noeviction': Devuelve errores en las operaciones de escritura cuando la memoria estÃ¡ llena.
 maxmemory-policy noeviction
 
 # Configura el nivel de verbosidad del log de Redis. Puede ser debug, verbose, notice, warning.
@@ -165,3 +165,4 @@ loglevel notice</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https
   </div>
 </body>
 </html>
+

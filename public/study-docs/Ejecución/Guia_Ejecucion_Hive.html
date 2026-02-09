@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,11 +121,11 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Hive</h1>
-    <h2>Explicación</h2><p>Esta guía configura una instancia básica de Apache Hive utilizando <code>docker-compose</code>. La configuración incluye dos servicios principales:</p><p>1.  <em></em><code>db</code><em></em>: Un contenedor de PostgreSQL que actuará como la base de datos para el Metastore de Hive. Esto asegura la persistencia de los metadatos de Hive.</p><p>2.  <em></em><code>hive</code><em></em>: Un contenedor de Hive (basado en la imagen de Bitnami) que ejecutará tanto el servicio Metastore de Hive como el HiveServer2. El servicio Hive Metastore se conectará a la base de datos PostgreSQL.</p><p>El servicio Metastore se encargará de almacenar el esquema de la base de datos y la información de la tabla. El HiveServer2 permitirá a los clientes (como Beeline, o herramientas de BI) conectarse a Hive y ejecutar consultas SQL.</p><p><strong>Pasos para ejecutar:</strong></p><p>1.  Guarda el contenido del <code>docker-compose.yml</code> en un archivo llamado <code>docker-compose.yml</code> en tu directorio de trabajo.</p><p>2.  Abre una terminal en ese directorio.</p><p>3.  Ejecuta el comando provisto en <code>runCommands</code> para levantar los servicios.</p><p>4.  Una vez que los servicios estén corriendo, puedes conectarte a HiveServer2 usando la herramienta <code>beeline</code> (que generalmente viene incluida con la instalación de Hive o puedes encontrarla dentro del contenedor de Hive).</p><p>    Para conectarte desde tu máquina local (si tienes <code>beeline</code> instalado):</p><pre><code>    beeline -u "jdbc:hive2://localhost:10000/default" -n hive -p hivepassword</code></pre><p>    Para conectarte desde dentro del contenedor de <code>hive</code> (si no tienes <code>beeline</code> localmente):</p><pre><code>    docker exec -it &lt;nombre_o_id_del_contenedor_hive&gt; beeline -u "jdbc:hive2://localhost:10000/default" -n hive -p hivepassword</code></pre><p>    (Puedes obtener el nombre o ID del contenedor <code>hive</code> con <code>docker ps</code>)</p><p>    Una vez conectado, puedes ejecutar comandos SQL como:</p><pre><code>    SHOW DATABASES;
+    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a configura una instancia bÃ¡sica de Apache Hive utilizando <code>docker-compose</code>. La configuraciÃ³n incluye dos servicios principales:</p><p>1.  <em></em><code>db</code><em></em>: Un contenedor de PostgreSQL que actuarÃ¡ como la base de datos para el Metastore de Hive. Esto asegura la persistencia de los metadatos de Hive.</p><p>2.  <em></em><code>hive</code><em></em>: Un contenedor de Hive (basado en la imagen de Bitnami) que ejecutarÃ¡ tanto el servicio Metastore de Hive como el HiveServer2. El servicio Hive Metastore se conectarÃ¡ a la base de datos PostgreSQL.</p><p>El servicio Metastore se encargarÃ¡ de almacenar el esquema de la base de datos y la informaciÃ³n de la tabla. El HiveServer2 permitirÃ¡ a los clientes (como Beeline, o herramientas de BI) conectarse a Hive y ejecutar consultas SQL.</p><p><strong>Pasos para ejecutar:</strong></p><p>1.  Guarda el contenido del <code>docker-compose.yml</code> en un archivo llamado <code>docker-compose.yml</code> en tu directorio de trabajo.</p><p>2.  Abre una terminal en ese directorio.</p><p>3.  Ejecuta el comando provisto en <code>runCommands</code> para levantar los servicios.</p><p>4.  Una vez que los servicios estÃ©n corriendo, puedes conectarte a HiveServer2 usando la herramienta <code>beeline</code> (que generalmente viene incluida con la instalaciÃ³n de Hive o puedes encontrarla dentro del contenedor de Hive).</p><p>    Para conectarte desde tu mÃ¡quina local (si tienes <code>beeline</code> instalado):</p><pre><code>    beeline -u "jdbc:hive2://localhost:10000/default" -n hive -p hivepassword</code></pre><p>    Para conectarte desde dentro del contenedor de <code>hive</code> (si no tienes <code>beeline</code> localmente):</p><pre><code>    docker exec -it &lt;nombre_o_id_del_contenedor_hive&gt; beeline -u "jdbc:hive2://localhost:10000/default" -n hive -p hivepassword</code></pre><p>    (Puedes obtener el nombre o ID del contenedor <code>hive</code> con <code>docker ps</code>)</p><p>    Una vez conectado, puedes ejecutar comandos SQL como:</p><pre><code>    SHOW DATABASES;
     CREATE DATABASE my_test_db;
     USE my_test_db;
     CREATE TABLE my_table (id INT, name STRING);
-    SHOW TABLES;</code></pre><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '2'
+    SHOW TABLES;</code></pre><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>docker-compose.yml</h3><pre><code>version: '2'
 
 volumes:
   postgresql_data:
@@ -171,3 +171,4 @@ services:
   </div>
 </body>
 </html>
+

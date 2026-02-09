@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,14 +121,14 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Apigee</h1>
-    <h2>Explicación</h2><p>Apigee es una plataforma de gestión de API robusta. Dada su complejidad y naturaleza típicamente en la nube o en entornos empresariales, levantar una "instancia básica" completa de Apigee Edge o Apigee X localmente con Docker o Podman no es una tarea sencilla ni se proporciona un método oficial y ligero para ello. Sin embargo, el <strong>Apigee Edge Microgateway</strong> (Microgateway) es un componente ligero que permite implementar proxies de API localmente, aplicando políticas de Apigee y enrutando tráfico a backends. Esta guía te permitirá levantar una instancia local del Microgateway en modo <em>standalone</em>, lo que significa que no se conectará a una instancia de Apigee Edge/X completa, sino que cargará sus definiciones de proxy desde archivos locales. Es la forma más práctica de obtener una experiencia "Apigee" básica y local.</p><p>Esta configuración utilizará <code>docker-compose</code> para orquestar el Microgateway:</p><p>1.  <em></em><code>Dockerfile</code><em></em>: Construye una imagen de Node.js, instala globalmente <code>apigee-microgateway</code> y copia los archivos de configuración y proxy.</p><p>2.  <em></em><code>docker-compose.yml</code><em></em>: Define el servicio <code>apigee-microgateway</code>, construyendo la imagen desde el <code>Dockerfile</code> local, mapeando el puerto <code>8000</code> y montando los archivos de configuración.</p><p>3.  <em></em><code>config.yaml</code><em></em>: Archivo de configuración principal del Microgateway. Define el puerto y una sección <code>management</code> básica, aunque no se use en modo standalone.</p><p>4.  <em></em><code>default.yaml</code><em></em>: Define un proxy de API simple (<code>/my-proxy</code>) que enruta las solicitudes a <code>https://httpbin.org/get</code>. Esto te permitirá probar que el Microgateway está funcionando.</p><p><strong>Pasos para ejecutar:</strong></p><p>1.  Guarda los archivos <code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>config.yaml</code> y <code>default.yaml</code> en un mismo directorio.</p><p>2.  Abre tu terminal en ese directorio.</p><p>3.  Ejecuta el comando <code>docker-compose up -d</code> para construir la imagen y levantar el contenedor.</p><p>4.  Una vez que el contenedor esté en ejecución (puedes verificar con <code>docker-compose ps</code>), puedes probar el proxy accediendo a <code>http://localhost:8000/my-proxy</code> en tu navegador o con <code>curl</code>.</p><p>Para detener y eliminar los contenedores, ejecuta <code>docker-compose down</code>.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM node:18-alpine
+    <h2>ExplicaciÃ³n</h2><p>Apigee es una plataforma de gestiÃ³n de API robusta. Dada su complejidad y naturaleza tÃ­picamente en la nube o en entornos empresariales, levantar una "instancia bÃ¡sica" completa de Apigee Edge o Apigee X localmente con Docker o Podman no es una tarea sencilla ni se proporciona un mÃ©todo oficial y ligero para ello. Sin embargo, el <strong>Apigee Edge Microgateway</strong> (Microgateway) es un componente ligero que permite implementar proxies de API localmente, aplicando polÃ­ticas de Apigee y enrutando trÃ¡fico a backends. Esta guÃ­a te permitirÃ¡ levantar una instancia local del Microgateway en modo <em>standalone</em>, lo que significa que no se conectarÃ¡ a una instancia de Apigee Edge/X completa, sino que cargarÃ¡ sus definiciones de proxy desde archivos locales. Es la forma mÃ¡s prÃ¡ctica de obtener una experiencia "Apigee" bÃ¡sica y local.</p><p>Esta configuraciÃ³n utilizarÃ¡ <code>docker-compose</code> para orquestar el Microgateway:</p><p>1.  <em></em><code>Dockerfile</code><em></em>: Construye una imagen de Node.js, instala globalmente <code>apigee-microgateway</code> y copia los archivos de configuraciÃ³n y proxy.</p><p>2.  <em></em><code>docker-compose.yml</code><em></em>: Define el servicio <code>apigee-microgateway</code>, construyendo la imagen desde el <code>Dockerfile</code> local, mapeando el puerto <code>8000</code> y montando los archivos de configuraciÃ³n.</p><p>3.  <em></em><code>config.yaml</code><em></em>: Archivo de configuraciÃ³n principal del Microgateway. Define el puerto y una secciÃ³n <code>management</code> bÃ¡sica, aunque no se use en modo standalone.</p><p>4.  <em></em><code>default.yaml</code><em></em>: Define un proxy de API simple (<code>/my-proxy</code>) que enruta las solicitudes a <code>https://httpbin.org/get</code>. Esto te permitirÃ¡ probar que el Microgateway estÃ¡ funcionando.</p><p><strong>Pasos para ejecutar:</strong></p><p>1.  Guarda los archivos <code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>config.yaml</code> y <code>default.yaml</code> en un mismo directorio.</p><p>2.  Abre tu terminal en ese directorio.</p><p>3.  Ejecuta el comando <code>docker-compose up -d</code> para construir la imagen y levantar el contenedor.</p><p>4.  Una vez que el contenedor estÃ© en ejecuciÃ³n (puedes verificar con <code>docker-compose ps</code>), puedes probar el proxy accediendo a <code>http://localhost:8000/my-proxy</code> en tu navegador o con <code>curl</code>.</p><p>Para detener y eliminar los contenedores, ejecuta <code>docker-compose down</code>.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile</h3><pre><code>FROM node:18-alpine
 
 WORKDIR /app
 
 # Instala Apigee Edge Microgateway globalmente
 RUN npm install -g apigee-microgateway
 
-# Copia los archivos de configuración del Microgateway
+# Copia los archivos de configuraciÃ³n del Microgateway
 COPY config.yaml .
 COPY default.yaml .
 
@@ -136,7 +136,7 @@ COPY default.yaml .
 EXPOSE 8000
 
 # Inicia Apigee Edge Microgateway en modo standalone
-# '-c config.yaml' especifica el archivo de configuración del Microgateway.
+# '-c config.yaml' especifica el archivo de configuraciÃ³n del Microgateway.
 # '--proxyDir /app' le dice al Microgateway que busque las definiciones de proxy
 # (como default.yaml) en el directorio actual.
 CMD ["sh", "-c", "edgemicro start -c config.yaml --proxyDir /app"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
@@ -148,13 +148,13 @@ services:
     ports:
       - "8000:8000" # Mapea el puerto del host al puerto del contenedor
     volumes:
-      # Monta los archivos de configuración para que el contenedor los pueda usar
+      # Monta los archivos de configuraciÃ³n para que el contenedor los pueda usar
       - ./config.yaml:/app/config.yaml
       - ./default.yaml:/app/default.yaml
     # El comando para iniciar el microgateway, tal como se especifica en el Dockerfile
     command: sh -c "edgemicro start -c config.yaml --proxyDir /app"
-    restart: always # Asegura que el contenedor se reinicie si falla</code></pre><h3>config.yaml</h3><pre><code># Archivo de configuración para Apigee Edge Microgateway en modo standalone
-# Este archivo define los ajustes básicos para el Microgateway.
+    restart: always # Asegura que el contenedor se reinicie si falla</code></pre><h3>config.yaml</h3><pre><code># Archivo de configuraciÃ³n para Apigee Edge Microgateway en modo standalone
+# Este archivo define los ajustes bÃ¡sicos para el Microgateway.
 
 runtime:
   # Un ID de cluster para la instancia del Microgateway
@@ -162,33 +162,33 @@ runtime:
   # logLevel: info # Descomentar para cambiar el nivel de log
 
 gateway:
-  # El puerto en el que el Microgateway escuchará las solicitudes entrantes
+  # El puerto en el que el Microgateway escucharÃ¡ las solicitudes entrantes
   port: 8000
   # plugins:
   #   dir: /app/plugins # Directorio donde se pueden encontrar los plugins
-  #   sequence:        # Secuencia de ejecución de plugins
+  #   sequence:        # Secuencia de ejecuciÃ³n de plugins
   #     - cors
 
-# Sección de gestión (management) - Requerida aunque no se use en modo standalone.
-# La URL puede ser un marcador de posición, ya que no nos conectamos a una instancia de Apigee Edge.
+# SecciÃ³n de gestiÃ³n (management) - Requerida aunque no se use en modo standalone.
+# La URL puede ser un marcador de posiciÃ³n, ya que no nos conectamos a una instancia de Apigee Edge.
 management:
   url: http://localhost:8080/v1
   virtualHosts:
-    - default # Nombre del host virtual predeterminado</code></pre><h3>default.yaml</h3><pre><code># Definición de proxy para Apigee Edge Microgateway en modo standalone
-# Este archivo define cómo el Microgateway manejará las solicitudes para una API específica.
+    - default # Nombre del host virtual predeterminado</code></pre><h3>default.yaml</h3><pre><code># DefiniciÃ³n de proxy para Apigee Edge Microgateway en modo standalone
+# Este archivo define cÃ³mo el Microgateway manejarÃ¡ las solicitudes para una API especÃ­fica.
 
 proxy:
-  # Nombre único para este proxy
+  # Nombre Ãºnico para este proxy
   name: my-simple-proxy
-  # La ruta base de la API que este proxy manejará. Las solicitudes a /my-proxy/* serán enrutadas.
+  # La ruta base de la API que este proxy manejarÃ¡. Las solicitudes a /my-proxy/* serÃ¡n enrutadas.
   base_path: /my-proxy
-  # Configuración del endpoint de destino (backend) para este proxy
+  # ConfiguraciÃ³n del endpoint de destino (backend) para este proxy
   target_endpoint:
     name: default # Nombre del endpoint de destino
-    url: https://httpbin.org/get # URL del servicio backend al que se enrutarán las solicitudes
+    url: https://httpbin.org/get # URL del servicio backend al que se enrutarÃ¡n las solicitudes
 
-# Opcional: Aquí se pueden aplicar políticas de Microgateway.
-# Por ejemplo, para añadir un encabezado de solicitud:
+# Opcional: AquÃ­ se pueden aplicar polÃ­ticas de Microgateway.
+# Por ejemplo, para aÃ±adir un encabezado de solicitud:
 # policies:
 #   request:
 #     - assign-message:
@@ -206,3 +206,4 @@ proxy:
   </div>
 </body>
 </html>
+

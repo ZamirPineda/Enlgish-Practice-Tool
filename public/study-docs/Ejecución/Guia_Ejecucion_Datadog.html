@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,7 +121,7 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Datadog</h1>
-    <h2>Explicación</h2><p>Esta configuración proporciona una instancia básica de Datadog Agent junto con una aplicación Flask de ejemplo, lo que permite observar cómo el agente recopila métricas, logs y trazas de una aplicación y las envía a Datadog HQ. Deberás reemplazar <code>YOUR_DATADOG_API_KEY</code> con tu clave API real de Datadog y <code>datadoghq.com</code> con el sitio de Datadog correcto (ej., <code>eu.datadoghq.com</code>). La aplicación Flask incluye la biblioteca <code>ddtrace</code> para instrumentación automática de APM y envía métricas personalizadas vía DogStatsD.</p><h3>Pasos a seguir:</h3><p>1.  <strong>Guarda los archivos:</strong> Crea una carpeta y guarda <code>docker-compose.yml</code>, <code>Dockerfile.app</code>, <code>app.py</code> y <code>requirements.txt</code> en ella.</p><p>2.  <strong>Obtén tu API Key de Datadog:</strong> Visita [Datadog](https://app.datadoghq.com/account/settings#api) para obtener tu clave API.</p><p>3.  <em></em>Actualiza <code>docker-compose.yml</code>:<em></em> Reemplaza <code>YOUR_DATADOG_API_KEY</code> con tu clave API.</p><p>4.  <strong>Ejecuta los contenedores:</strong> Abre una terminal en la carpeta donde guardaste los archivos y ejecuta el comando en <code>runCommands</code>.</p><p>5.  <strong>Verifica en Datadog:</strong> Después de unos minutos, deberías ver métricas, logs y trazas de la aplicación <code>my-flask-app</code> en tu cuenta de Datadog.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.app</h3><pre><code>FROM python:3.9-slim-buster
+    <h2>ExplicaciÃ³n</h2><p>Esta configuraciÃ³n proporciona una instancia bÃ¡sica de Datadog Agent junto con una aplicaciÃ³n Flask de ejemplo, lo que permite observar cÃ³mo el agente recopila mÃ©tricas, logs y trazas de una aplicaciÃ³n y las envÃ­a a Datadog HQ. DeberÃ¡s reemplazar <code>YOUR_DATADOG_API_KEY</code> con tu clave API real de Datadog y <code>datadoghq.com</code> con el sitio de Datadog correcto (ej., <code>eu.datadoghq.com</code>). La aplicaciÃ³n Flask incluye la biblioteca <code>ddtrace</code> para instrumentaciÃ³n automÃ¡tica de APM y envÃ­a mÃ©tricas personalizadas vÃ­a DogStatsD.</p><h3>Pasos a seguir:</h3><p>1.  <strong>Guarda los archivos:</strong> Crea una carpeta y guarda <code>docker-compose.yml</code>, <code>Dockerfile.app</code>, <code>app.py</code> y <code>requirements.txt</code> en ella.</p><p>2.  <strong>ObtÃ©n tu API Key de Datadog:</strong> Visita [Datadog](https://app.datadoghq.com/account/settings#api) para obtener tu clave API.</p><p>3.  <em></em>Actualiza <code>docker-compose.yml</code>:<em></em> Reemplaza <code>YOUR_DATADOG_API_KEY</code> con tu clave API.</p><p>4.  <strong>Ejecuta los contenedores:</strong> Abre una terminal en la carpeta donde guardaste los archivos y ejecuta el comando en <code>runCommands</code>.</p><p>5.  <strong>Verifica en Datadog:</strong> DespuÃ©s de unos minutos, deberÃ­as ver mÃ©tricas, logs y trazas de la aplicaciÃ³n <code>my-flask-app</code> en tu cuenta de Datadog.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>Dockerfile.app</h3><pre><code>FROM python:3.9-slim-buster
 
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
@@ -130,13 +130,13 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia la aplicación Flask
+# Copia la aplicaciÃ³n Flask
 COPY app.py .
 
-# Expone el puerto que usará la aplicación
+# Expone el puerto que usarÃ¡ la aplicaciÃ³n
 EXPOSE 5000
 
-# Comando para ejecutar la aplicación
+# Comando para ejecutar la aplicaciÃ³n
 CMD ["python", "app.py"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
 services:
   flask-app:
@@ -149,14 +149,14 @@ services:
     environment:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0
-      # Configuración de ddtrace para APM y métricas personalizadas
+      # ConfiguraciÃ³n de ddtrace para APM y mÃ©tricas personalizadas
       - DD_AGENT_HOST=datadog-agent
       - DD_TRACE_AGENT_HOSTNAME=datadog-agent
       - DD_SERVICE=my-flask-app
       - DD_ENV=local
       - DD_VERSION=1.0.0
       - DD_LOGS_INJECTION=true
-    # Labels para la autodetección de Datadog (logs y http_check)
+    # Labels para la autodetecciÃ³n de Datadog (logs y http_check)
     labels:
       com.datadoghq.ad.logs: '[{"source": "flask", "service": "my-flask-app"}]'
       com.datadoghq.ad.check_names: '["http_check"]'
@@ -181,7 +181,7 @@ services:
       - "8125:8125/udp" # Para DogStatsD
       - "8126:8126/tcp" # Para APM
     volumes:
-      # Permite al agente recolectar métricas del host y logs de contenedores
+      # Permite al agente recolectar mÃ©tricas del host y logs de contenedores
       - /var/run/docker.sock:/var/run/docker.sock:ro  # Usar /run/podman/podman.sock para Podman
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
@@ -200,14 +200,14 @@ from ddtrace import tracer
 from datadog import DogStatsd
 import time
 
-# Configuración de logging
+# ConfiguraciÃ³n de logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Inicializa Flask
 app = Flask(__name__)
 
-# Inicializa DogStatsd para métricas personalizadas
+# Inicializa DogStatsd para mÃ©tricas personalizadas
 statsd = DogStatsd(host=os.getenv('DD_AGENT_HOST', 'localhost'), port=8125)
 
 # Decorador para trazas de Datadog APM
@@ -230,7 +230,7 @@ def hello_world():
 
 @app.route('/metrics')
 def metrics_endpoint():
-    logger.warning("Solicitud a endpoint de métricas. Esto podría ser un problema si no está monitorizado correctamente.")
+    logger.warning("Solicitud a endpoint de mÃ©tricas. Esto podrÃ­a ser un problema si no estÃ¡ monitorizado correctamente.")
     statsd.increment('my_flask_app.requests.total', tags=['endpoint:/metrics'])
     statsd.gauge('my_flask_app.current_users', 10, tags=['region:us-east'])
     return jsonify({"status": "ok", "message": "Metrics exposed (simulated)"})
@@ -242,3 +242,4 @@ python-dogstatsd</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="http
   </div>
 </body>
 </html>
+

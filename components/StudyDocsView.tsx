@@ -42,14 +42,18 @@ const StudyDocsView: React.FC = () => {
         setExpandedFolders(newExpanded);
     };
 
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    // Toggle sidebar on mobile
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
     const handleFileSelect = (path: string) => {
-        // Encode the path components to handle special characters in URL
-        // But the path from index.json is relative. content is served statically.
-        // We need to make sure we encode URI properly.
-        // The path in JSON is like "Folder/File.html"
-        // We need "/study-docs/Folder/File.html"
         const encodedPath = path.split('/').map(encodeURIComponent).join('/');
         setSelectedFile(`./study-docs/${encodedPath}`);
+        // Auto-close sidebar on mobile when a file is selected
+        if (window.innerWidth < 768) {
+            setIsSidebarOpen(false);
+        }
     };
 
     // Filter logic
@@ -115,14 +119,25 @@ const StudyDocsView: React.FC = () => {
     if (error) return <div className="p-8 text-center text-red-400">{error}</div>;
 
     return (
-        <div className="flex h-full overflow-hidden">
+        <div className="flex h-full overflow-hidden relative">
+            {/* Mobile Toggle Button */}
+            <button
+                onClick={toggleSidebar}
+                className="md:hidden absolute top-4 left-4 z-50 p-2 bg-slate-800 text-white rounded-lg shadow-lg"
+            >
+                {isSidebarOpen ? '✕' : '☰'}
+            </button>
+
             {/* Sidebar */}
-            <div className="w-80 flex-shrink-0 border-r border-slate-700 bg-slate-800/30 flex flex-col">
-                <div className="p-4 border-b border-slate-700">
+            <div className={`
+                absolute md:relative z-40 h-full w-80 bg-slate-900 md:bg-slate-800/30 border-r border-slate-700 flex flex-col transition-transform duration-300 ease-in-out
+                ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+            `}>
+                <div className="p-4 border-b border-slate-700 mt-12 md:mt-0">
                     <input
                         type="text"
                         placeholder="Search docs..."
-                        className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1 text-sm text-slate-200 focus:outline-none focus:border-sky-500 transition-colors"
+                        className="w-full bg-slate-950 md:bg-slate-900 border border-slate-700 rounded px-3 py-1 text-sm text-slate-200 focus:outline-none focus:border-sky-500 transition-colors"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -134,8 +149,16 @@ const StudyDocsView: React.FC = () => {
                 </div>
             </div>
 
+            {/* Overlay for mobile when sidebar is open */}
+            {isSidebarOpen && (
+                <div
+                    className="absolute inset-0 z-30 bg-black/50 md:hidden"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
+
             {/* Main Content */}
-            <div className="flex-1 bg-white h-full relative">
+            <div className="flex-1 bg-white h-full relative w-full">
                 {selectedFile ? (
                     <iframe
                         src={selectedFile}
@@ -145,7 +168,7 @@ const StudyDocsView: React.FC = () => {
                     />
                 ) : (
                     <div className="flex items-center justify-center h-full bg-slate-900 text-slate-500">
-                        <div className="text-center">
+                        <div className="text-center p-4">
                             <div className="text-4xl mb-4">📚</div>
                             <p>Select a document to start reading</p>
                         </div>

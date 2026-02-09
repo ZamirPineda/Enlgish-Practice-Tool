@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #0f172a; /* slate-900 */
       color: #d1d5db; /* slate-300 */
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
       line-height: 1.6;
     }
     .container {
@@ -121,11 +121,11 @@
 <body>
   <div class="container prose prose-invert">
     <h1>Guia_Ejecucion_Oozie</h1>
-    <h2>Explicación</h2><p>Esta guía proporciona una configuración completa para levantar una instancia básica de Apache Oozie junto con un clúster Hadoop pseudo-distribuido y una base de datos MySQL, todo gestionado con <code>docker-compose</code>. Es ideal para desarrollo y pruebas locales. La configuración incluye:</p><ul><li>  <strong>Hadoop</strong>: Un contenedor que ejecuta un clúster Hadoop pseudo-distribuido (NameNode, DataNode, ResourceManager, NodeManager, JobHistoryServer) para que Oozie pueda interactuar con HDFS y YARN.</li><li>  <strong>MySQL</strong>: Una base de datos MySQL que Oozie utiliza para almacenar la información de sus workflows, coordinadores y bundles.</li><li>  <strong>Oozie</strong>: El servidor Oozie que se conecta a Hadoop y MySQL para programar y ejecutar workflows de Big Data.</li></ul><p>Los pasos a seguir son:</p><p>1.  <strong>Guarda los archivos</strong>: Crea las siguientes carpetas y archivos en tu directorio de trabajo:</p><ul><li>   *   <code>docker-compose.yml</code></li><li>   *   <code>hadoop/Dockerfile</code></li><li>   *   <code>hadoop/core-site.xml</code></li><li>   *   <code>hadoop/hdfs-site.xml</code></li><li>   *   <code>hadoop/yarn-site.xml</code></li><li>   *   <code>hadoop/mapred-site.xml</code></li><li>   *   <code>hadoop/start-hadoop.sh</code></li><li>   *   <code>oozie/Dockerfile</code></li><li>   *   <code>oozie/oozie-site.xml</code></li><li>   *   <code>oozie/start-oozie.sh</code></li></ul><p>2.  <em></em>Ejecuta <code>docker-compose</code><em></em>: Navega hasta el directorio donde guardaste <code>docker-compose.yml</code> y ejecuta el comando de inicio.</p><p>3.  <strong>Verificación</strong>: Una vez que los contenedores estén en funcionamiento, puedes verificar su estado:</p><ul><li>   *   <strong>Hadoop NameNode UI</strong>: <code>http://localhost:9870</code></li><li>   *   <strong>Hadoop YARN ResourceManager UI</strong>: <code>http://localhost:8088</code></li><li>   *   <strong>Hadoop JobHistoryServer UI</strong>: <code>http://localhost:19888</code></li><li>   *   <strong>Oozie Web UI</strong>: <code>http://localhost:11000/oozie</code></li></ul><p>El script <code>start-hadoop.sh</code> en el contenedor Hadoop formatea el NameNode e inicia todos los demonios necesarios. El script <code>start-oozie.sh</code> espera a que MySQL y Hadoop estén disponibles, inicializa la base de datos de Oozie y luego inicia el servidor Oozie. Se han generado dinámicamente archivos de configuración de Hadoop (<code>core-site.xml</code>, <code>hdfs-site.xml</code>, <code>yarn-site.xml</code>, <code>mapred-site.xml</code>) dentro del contenedor Oozie para que actúe como cliente de Hadoop.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>hadoop/Dockerfile</h3><pre><code># Dockerfile para un clúster Hadoop pseudo-distribuido
+    <h2>ExplicaciÃ³n</h2><p>Esta guÃ­a proporciona una configuraciÃ³n completa para levantar una instancia bÃ¡sica de Apache Oozie junto con un clÃºster Hadoop pseudo-distribuido y una base de datos MySQL, todo gestionado con <code>docker-compose</code>. Es ideal para desarrollo y pruebas locales. La configuraciÃ³n incluye:</p><ul><li>  <strong>Hadoop</strong>: Un contenedor que ejecuta un clÃºster Hadoop pseudo-distribuido (NameNode, DataNode, ResourceManager, NodeManager, JobHistoryServer) para que Oozie pueda interactuar con HDFS y YARN.</li><li>  <strong>MySQL</strong>: Una base de datos MySQL que Oozie utiliza para almacenar la informaciÃ³n de sus workflows, coordinadores y bundles.</li><li>  <strong>Oozie</strong>: El servidor Oozie que se conecta a Hadoop y MySQL para programar y ejecutar workflows de Big Data.</li></ul><p>Los pasos a seguir son:</p><p>1.  <strong>Guarda los archivos</strong>: Crea las siguientes carpetas y archivos en tu directorio de trabajo:</p><ul><li>   *   <code>docker-compose.yml</code></li><li>   *   <code>hadoop/Dockerfile</code></li><li>   *   <code>hadoop/core-site.xml</code></li><li>   *   <code>hadoop/hdfs-site.xml</code></li><li>   *   <code>hadoop/yarn-site.xml</code></li><li>   *   <code>hadoop/mapred-site.xml</code></li><li>   *   <code>hadoop/start-hadoop.sh</code></li><li>   *   <code>oozie/Dockerfile</code></li><li>   *   <code>oozie/oozie-site.xml</code></li><li>   *   <code>oozie/start-oozie.sh</code></li></ul><p>2.  <em></em>Ejecuta <code>docker-compose</code><em></em>: Navega hasta el directorio donde guardaste <code>docker-compose.yml</code> y ejecuta el comando de inicio.</p><p>3.  <strong>VerificaciÃ³n</strong>: Una vez que los contenedores estÃ©n en funcionamiento, puedes verificar su estado:</p><ul><li>   *   <strong>Hadoop NameNode UI</strong>: <code>http://localhost:9870</code></li><li>   *   <strong>Hadoop YARN ResourceManager UI</strong>: <code>http://localhost:8088</code></li><li>   *   <strong>Hadoop JobHistoryServer UI</strong>: <code>http://localhost:19888</code></li><li>   *   <strong>Oozie Web UI</strong>: <code>http://localhost:11000/oozie</code></li></ul><p>El script <code>start-hadoop.sh</code> en el contenedor Hadoop formatea el NameNode e inicia todos los demonios necesarios. El script <code>start-oozie.sh</code> espera a que MySQL y Hadoop estÃ©n disponibles, inicializa la base de datos de Oozie y luego inicia el servidor Oozie. Se han generado dinÃ¡micamente archivos de configuraciÃ³n de Hadoop (<code>core-site.xml</code>, <code>hdfs-site.xml</code>, <code>yarn-site.xml</code>, <code>mapred-site.xml</code>) dentro del contenedor Oozie para que actÃºe como cliente de Hadoop.</p><h2>Comandos de EjecuciÃ³n</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de ConfiguraciÃ³n</h2><h3>hadoop/Dockerfile</h3><pre><code># Dockerfile para un clÃºster Hadoop pseudo-distribuido
 # Utiliza OpenJDK 11 como base
 FROM openjdk:11-jdk-slim
 
-# Instala utilidades básicas y SSH para Hadoop (aunque no lo usaremos para comunicación entre nodos, es común)
+# Instala utilidades bÃ¡sicas y SSH para Hadoop (aunque no lo usaremos para comunicaciÃ³n entre nodos, es comÃºn)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     ssh \
@@ -146,17 +146,17 @@ RUN wget -q https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION
     && mv hadoop-$HADOOP_VERSION hadoop \
     && rm hadoop-$HADOOP_VERSION.tar.gz
 
-# Genera las claves SSH para que Hadoop pueda conectarse a sí mismo sin contraseña
+# Genera las claves SSH para que Hadoop pueda conectarse a sÃ­ mismo sin contraseÃ±a
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa \
     && cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys \
     && chmod 0600 ~/.ssh/authorized_keys
 
-# Copia los archivos de configuración de Hadoop
+# Copia los archivos de configuraciÃ³n de Hadoop
 COPY ./core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml
 COPY ./hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 COPY ./yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml
 COPY ./mapred-site.xml $HADOOP_HOME/etc/hadoop/mapred-site.xml
-# También copia el script de inicio
+# TambiÃ©n copia el script de inicio
 COPY ./start-hadoop.sh /usr/local/bin/start-hadoop.sh
 RUN chmod +x /usr/local/bin/start-hadoop.sh
 
@@ -173,7 +173,7 @@ CMD ["/usr/local/bin/start-hadoop.sh"]</code></pre><h3>oozie/Dockerfile</h3><pre
 # Utiliza OpenJDK 11 como base
 FROM openjdk:11-jdk-slim
 
-# Instala utilidades básicas y `wait-for-it.sh`
+# Instala utilidades bÃ¡sicas y `wait-for-it.sh`
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     unzip \
@@ -196,7 +196,7 @@ RUN wget -q https://archive.apache.org/dist/oozie/$OOZIE_VERSION/oozie-$OOZIE_VE
     && rm oozie-$OOZIE_VERSION-distro.tar.gz
 
 # Descarga los archivos externos de Oozie (client y ext-2.2.zip para la UI)
-# Para el cliente (librerías Hadoop utils para Oozie)
+# Para el cliente (librerÃ­as Hadoop utils para Oozie)
 RUN wget -q https://archive.apache.org/dist/oozie/$OOZIE_VERSION/oozie-$OOZIE_VERSION-client.tar.gz -O /tmp/oozie-client.tar.gz \
     && mkdir -p /tmp/oozie-client \
     && tar -xzf /tmp/oozie-client.tar.gz -C /tmp/oozie-client \
@@ -210,7 +210,7 @@ RUN wget -q https://archive.cloudera.com/gplextras/ext-2.2.zip -O $OOZIE_HOME/li
 ENV MYSQL_CONNECTOR_VERSION=8.0.33
 RUN wget -q https://repo1.maven.org/maven2/mysql/mysql-connector-java/$MYSQL_CONNECTOR_VERSION/mysql-connector-java-$MYSQL_CONNECTOR_VERSION.jar -O $OOZIE_HOME/libext/mysql-connector-java.jar
 
-# Copia los archivos de configuración de Oozie
+# Copia los archivos de configuraciÃ³n de Oozie
 COPY ./oozie-site.xml $OOZIE_HOME/conf/oozie-site.xml
 COPY ./start-oozie.sh /usr/local/bin/start-oozie.sh
 RUN chmod +x /usr/local/bin/start-oozie.sh
@@ -391,12 +391,12 @@ networks:
 &lt;/configuration&gt;</code></pre><h3>hadoop/start-hadoop.sh</h3><pre><code>#!/bin/bash
 # Script para iniciar los servicios de Hadoop en modo pseudo-distribuido
 
-# Configura JAVA_HOME si no está presente
+# Configura JAVA_HOME si no estÃ¡ presente
 export JAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/java-11-openjdk-amd64}
 export HADOOP_HOME=/opt/hadoop
 export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
-# Formatea el NameNode si no está formateado
+# Formatea el NameNode si no estÃ¡ formateado
 if [ ! -d "/opt/hadoop/data/namenode/current" ]; then
     echo "Formateando NameNode..."
     hdfs namenode -format -force -nonInteractive
@@ -414,14 +414,14 @@ yarn --daemon start nodemanager
 echo "Iniciando JobHistoryServer..."
 mapred --daemon start historyserver
 
-# Espera a que HDFS esté disponible y crea el directorio de usuario para Oozie
-echo "Esperando a que HDFS esté listo para operaciones..."
+# Espera a que HDFS estÃ© disponible y crea el directorio de usuario para Oozie
+echo "Esperando a que HDFS estÃ© listo para operaciones..."
 hdfs dfs -mkdir -p /user/oozie
 hdfs dfs -chmod 777 /user/oozie # Permisos amplios para un entorno de desarrollo/prueba
 
 echo "Hadoop servicios iniciados y /user/oozie creado."
 
-# Mantén el contenedor en ejecución
+# MantÃ©n el contenedor en ejecuciÃ³n
 tail -f $HADOOP_HOME/logs/*</code></pre><h3>oozie/oozie-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
 &lt;configuration&gt;
@@ -430,10 +430,10 @@ tail -f $HADOOP_HOME/logs/*</code></pre><h3>oozie/oozie-site.xml</h3><pre><code>
         &lt;name&gt;oozie.service.HadoopAccessorService.hadoop.configurations&lt;/name&gt;
         &lt;value&gt;hadoop=${OOZIE_HDFS_NN}:/opt/oozie/conf&lt;/value&gt;
         &lt;description&gt;
-            Define los clústeres Hadoop con los que Oozie puede interactuar.
+            Define los clÃºsteres Hadoop con los que Oozie puede interactuar.
             Formato: [ID_NAME_NODE]=[RPC_ADDRESS_NAME_NODE]:[PATH_TO_HADOOP_CONF_DIR].
             En este caso, se usa la variable de entorno OOZIE_HDFS_NN para el NameNode y
-            /opt/oozie/conf como el directorio donde Oozie encontrará sus propias configuraciones de cliente Hadoop.
+            /opt/oozie/conf como el directorio donde Oozie encontrarÃ¡ sus propias configuraciones de cliente Hadoop.
         &lt;/description&gt;
     &lt;/property&gt;
 
@@ -451,12 +451,12 @@ tail -f $HADOOP_HOME/logs/*</code></pre><h3>oozie/oozie-site.xml</h3><pre><code>
     &lt;property&gt;
         &lt;name&gt;oozie.service.JPAService.jdbc.username&lt;/name&gt;
         &lt;value&gt;${OOZIE_DB_USER}&lt;/value&gt;
-        &lt;description&gt;Nombre de usuario para la conexión a la base de datos.&lt;/description&gt;
+        &lt;description&gt;Nombre de usuario para la conexiÃ³n a la base de datos.&lt;/description&gt;
     &lt;/property&gt;
     &lt;property&gt;
         &lt;name&gt;oozie.service.JPAService.jdbc.password&lt;/name&gt;
         &lt;value&gt;${OOZIE_DB_PASS}&lt;/value&gt;
-        &lt;description&gt;Contraseña para la conexión a la base de datos.&lt;/description&gt;
+        &lt;description&gt;ContraseÃ±a para la conexiÃ³n a la base de datos.&lt;/description&gt;
     &lt;/property&gt;
     &lt;property&gt;
         &lt;name&gt;oozie.service.JPAService.create.db.schema&lt;/name&gt;
@@ -473,7 +473,7 @@ tail -f $HADOOP_HOME/logs/*</code></pre><h3>oozie/oozie-site.xml</h3><pre><code>
     &lt;property&gt;
         &lt;name&gt;oozie.authentication.type&lt;/name&gt;
         &lt;value&gt;simple&lt;/value&gt;
-        &lt;description&gt;Tipo de autenticación. Para pruebas locales, 'simple' es suficiente.&lt;/description&gt;
+        &lt;description&gt;Tipo de autenticaciÃ³n. Para pruebas locales, 'simple' es suficiente.&lt;/description&gt;
     &lt;/property&gt;
     &lt;property&gt;
         &lt;name&gt;oozie.service.ProxyUserService.proxyuser.oozie.hosts&lt;/name&gt;
@@ -488,21 +488,21 @@ tail -f $HADOOP_HOME/logs/*</code></pre><h3>oozie/oozie-site.xml</h3><pre><code>
 &lt;/configuration&gt;</code></pre><h3>oozie/start-oozie.sh</h3><pre><code>#!/bin/bash
 # Script para iniciar el servidor Oozie
 
-# Esperar a que MySQL esté disponible
-echo "Esperando a que MySQL esté disponible..."
-/usr/bin/wait-for-it.sh ${OOZIE_DB_HOST}:${OOZIE_DB_PORT} --timeout=60 --strict -- echo "MySQL está listo."
+# Esperar a que MySQL estÃ© disponible
+echo "Esperando a que MySQL estÃ© disponible..."
+/usr/bin/wait-for-it.sh ${OOZIE_DB_HOST}:${OOZIE_DB_PORT} --timeout=60 --strict -- echo "MySQL estÃ¡ listo."
 
-# Esperar a que Hadoop esté disponible (HDFS y YARN)
-echo "Esperando a que Hadoop HDFS NameNode esté disponible..."
-/usr/bin/wait-for-it.sh $(echo "${OOZIE_HDFS_NN}" | sed 's/hdfs:\/\///g') --timeout=60 --strict -- echo "HDFS NameNode está listo."
-echo "Esperando a que Hadoop YARN ResourceManager esté disponible..."
-/usr/bin/wait-for-it.sh $(echo "${OOZIE_YARN_RM}" | cut -d ':' -f 1) --port 8088 --timeout=60 --strict -- echo "YARN ResourceManager (UI) está listo."
+# Esperar a que Hadoop estÃ© disponible (HDFS y YARN)
+echo "Esperando a que Hadoop HDFS NameNode estÃ© disponible..."
+/usr/bin/wait-for-it.sh $(echo "${OOZIE_HDFS_NN}" | sed 's/hdfs:\/\///g') --timeout=60 --strict -- echo "HDFS NameNode estÃ¡ listo."
+echo "Esperando a que Hadoop YARN ResourceManager estÃ© disponible..."
+/usr/bin/wait-for-it.sh $(echo "${OOZIE_YARN_RM}" | cut -d ':' -f 1) --port 8088 --timeout=60 --strict -- echo "YARN ResourceManager (UI) estÃ¡ listo."
 
 export JAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/java-11-openjdk-amd64}
 export OOZIE_HOME=/opt/oozie
 
 # Oozie necesita sus propias configuraciones de Hadoop para actuar como cliente.
-# Crearemos estos archivos dinámicamente usando las variables de entorno.
+# Crearemos estos archivos dinÃ¡micamente usando las variables de entorno.
 echo "Generando configuraciones de Hadoop para Oozie..."
 
 # core-site.xml
@@ -570,14 +570,14 @@ cat &gt; $OOZIE_HOME/conf/mapred-site.xml &lt;&lt;EOL
 &lt;/configuration&gt;
 EOL
 
-# Instalar y configurar la extensión de Oozie (UI y libext)
+# Instalar y configurar la extensiÃ³n de Oozie (UI y libext)
 echo "Ejecutando oozie-setup.sh para extensiones y libext..."
 $OOZIE_HOME/bin/oozie-setup.sh prepare-war -extjs
 
 # Inicializar la base de datos de Oozie
 echo "Inicializando la base de datos de Oozie..."
 # El comando 'create' con '-run' y '-force' es adecuado para un primer inicio o reinicio limpio.
-# Si la base de datos ya está inicializada, no hará nada o podría dar un error que se puede ignorar si el servidor arranca bien.
+# Si la base de datos ya estÃ¡ inicializada, no harÃ¡ nada o podrÃ­a dar un error que se puede ignorar si el servidor arranca bien.
 $OOZIE_HOME/bin/ooziedb.sh create -sqlfile oozie.sql -run -force
 
 # Iniciar el servidor Oozie
@@ -586,3 +586,4 @@ exec $OOZIE_HOME/bin/oozie.sh run</code></pre><h2>Recursos y Tutoriales</h2><ul>
   </div>
 </body>
 </html>
+
