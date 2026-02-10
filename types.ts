@@ -250,3 +250,40 @@ export interface IPASound {
   }[];
   similar?: string[]; // Array of symbols that are often confused with this one
 }
+
+// Math Types
+export interface MathRow {
+  col1: string; // e.g., "Function"
+  col2: string; // e.g., "Derivative"
+  col3?: string; // e.g., "Integral" or "Example"
+  col4?: string;
+  col5?: string;
+  isHeader?: boolean;
+}
+
+export interface MathSection {
+  title: string;
+  headers: string[];
+  rows: string[][]; // Array of string arrays matching headers
+}
+
+export interface MathTopic {
+  id: string;
+  title: string;
+  description: string;
+  sections: MathSection[];
+}
+
+// Solved Examples Type
+export interface MathStep {
+  explanation: string;
+  math: string;
+}
+
+export interface SolvedProblem {
+  title: string;
+  problem: string; // LaTeX
+  description: string;
+  steps: MathStep[];
+}
+
