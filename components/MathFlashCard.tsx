@@ -53,12 +53,19 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({ strategy, rows, onExit })
             {/* Card Container */}
             <div
                 className="w-full relative aspect-video cursor-pointer perspective-1000 group"
+                style={{ perspective: '1000px' }}
                 onClick={() => !isFlipped && setIsFlipped(true)}
             >
-                <div className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? 'rotate-y-180' : ''}`}>
+                <div
+                    className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? 'rotate-y-180' : ''}`}
+                    style={{ transformStyle: 'preserve-3d', transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+                >
 
                     {/* Front */}
-                    <div className="absolute w-full h-full backface-hidden bg-slate-800 rounded-2xl border-2 border-slate-600 shadow-2xl flex flex-col items-center justify-center p-8 text-center hover:border-sky-500 transition-colors">
+                    <div
+                        className="absolute w-full h-full backface-hidden bg-slate-800 rounded-2xl border-2 border-slate-600 shadow-2xl flex flex-col items-center justify-center p-8 text-center hover:border-sky-500 transition-colors"
+                        style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+                    >
                         <h3 className="text-slate-400 text-lg mb-4 font-semibold uppercase tracking-wider">Pregunta</h3>
                         <div className="text-2xl md:text-4xl text-white font-mono">
                             {/* Check if question contains latex logic or just text */}
@@ -68,7 +75,10 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({ strategy, rows, onExit })
                     </div>
 
                     {/* Back */}
-                    <div className="absolute w-full h-full backface-hidden bg-slate-900 rounded-2xl border-2 border-emerald-600 shadow-2xl flex flex-col items-center justify-center p-8 text-center rotate-y-180">
+                    <div
+                        className="absolute w-full h-full backface-hidden bg-slate-900 rounded-2xl border-2 border-emerald-600 shadow-2xl flex flex-col items-center justify-center p-8 text-center rotate-y-180"
+                        style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+                    >
                         <h3 className="text-emerald-400 text-lg mb-4 font-semibold uppercase tracking-wider">Respuesta</h3>
                         <div className="text-2xl md:text-4xl text-white font-mono mb-8">
                             <LatexRenderer formula={answerText} block />
