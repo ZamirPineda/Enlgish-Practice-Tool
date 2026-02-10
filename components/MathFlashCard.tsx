@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { MathRow, MathStudyStrategy } from '../types';
-import 'katex/dist/katex.min.css';
 import LatexRenderer from './LatexRenderer';
 
 interface MathFlashCardProps {
