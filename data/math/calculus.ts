@@ -15,6 +15,22 @@ export const calculusTopic: MathTopic = {
                 ["Cociente", "u / v", "(u'v - uv') / v²", "(No hay directa)", "x/eˣ → (eˣ - xeˣ)/e²ˣ", "∫ (1/x) dx = ln|x| + C"],
                 ["Cadena", "f(g(x))", "f'(g(x)) · g'(x)", "(Sustitución)", "sin(x²) → 2x cos(x²)", "∫ 2x cos(x²) dx = sin(x²) + C"],
                 ["Teorema Fund.", "∫ₐᵇ f(x) dx", "N/A", "F(b) - F(a)", "d/dx ∫ₐˣ f(t)dt = f(x)", "∫₀¹ 2x dx = 1"]
+            ],
+            studyStrategies: [
+                {
+                    id: 'calc-general-deriv',
+                    name: 'Practicar Derivadas Básicas',
+                    questionTemplate: 'Calcula la derivada de: {col1}',
+                    questionColumnIndex: 1, // Función
+                    answerColumnIndex: 2 // Derivada
+                },
+                {
+                    id: 'calc-general-integ',
+                    name: 'Practicar Integrales Básicas',
+                    questionTemplate: 'Calcula la integral de: {col1}',
+                    questionColumnIndex: 1, // Función
+                    answerColumnIndex: 3 // Integral
+                }
             ]
         },
         {
@@ -40,6 +56,22 @@ export const calculusTopic: MathTopic = {
                 ["Cotangente", "cot(u)", "-u' csc²(u)", "ln|sin(x)|", "cot(2x) → -2csc²(2x)", "∫ cot(3x) dx = (1/3)ln|sin(3x)| + C"],
                 ["Secante", "sec(u)", "u' sec(u)tan(u)", "ln|sec(x) + tan(x)|", "sec(4x) → 4sec(4x)tan(4x)", "∫ sec(x) dx = ln|sec x + tan x| + C"],
                 ["Cosecante", "csc(u)", "-u' csc(u)cot(u)", "-ln|csc(x) + cot(x)|", "csc(x) → -csc(x)cot(x)", "∫ csc(x) dx = -ln|csc x + cot x| + C"]
+            ],
+            studyStrategies: [
+                {
+                    id: 'calc-trig-deriv',
+                    name: 'Derivadas Trigonométricas',
+                    questionTemplate: 'Derivada de: {col1}',
+                    questionColumnIndex: 1,
+                    answerColumnIndex: 2
+                },
+                {
+                    id: 'calc-trig-integ',
+                    name: 'Integrales Trigonométricas',
+                    questionTemplate: 'Integral de: {col1}',
+                    questionColumnIndex: 1,
+                    answerColumnIndex: 3
+                }
             ]
         },
         {

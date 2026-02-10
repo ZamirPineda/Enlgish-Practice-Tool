@@ -261,10 +261,20 @@ export interface MathRow {
   isHeader?: boolean;
 }
 
+// Newly added types for Math
+export interface MathStudyStrategy {
+  id: string; // e.g., 'derivative-mastery'
+  name: string; // e.g., "Practice Derivatives"
+  questionTemplate: string; // "Find the derivative of: {col:1}"
+  answerColumnIndex: number; // 2 (where dy/dx is)
+  questionColumnIndex: number; // 1 (where f(u) is)
+}
+
 export interface MathSection {
   title: string;
   headers: string[];
   rows: string[][]; // Array of string arrays matching headers
+  studyStrategies?: MathStudyStrategy[];
 }
 
 export interface MathTopic {

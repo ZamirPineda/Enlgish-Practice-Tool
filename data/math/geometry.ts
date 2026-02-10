@@ -17,6 +17,15 @@ export const geometryTopic: MathTopic = {
                 ["Círculo", "A = π · r²\nP = 2 · π · r", "r: radio, d: diámetro (d=2r)"],
                 ["Elipse", "A = π · a · b\nP ≈ π[3(a+b) - √((3a+b)(a+3b))]", "a: semieje mayor, b: semieje menor"],
                 ["Rombo", "A = (D · d) / 2\nP = 4l", "D: diagonal mayor, d: diagonal menor"]
+            ],
+            studyStrategies: [
+                {
+                    id: 'geo-areas-2d',
+                    name: 'Fórmulas de Áreas y Perímetros',
+                    questionTemplate: '¿Fórmulas para: {col0}?',
+                    questionColumnIndex: 0,
+                    answerColumnIndex: 1
+                }
             ]
         },
         {
