@@ -31,17 +31,33 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({ strategy, rows, onExit })
     if (randomizedRows.length === 0) return <div>Loading...</div>;
 
     const currentrow = randomizedRows[currentCardIndex];
-    // Create question text by replacing {colX} placeholders
-    const questionText = strategy.questionTemplate.replace(
-        /\{col(\d+)\}/g,
-        (_, colIndex) => currentrow[parseInt(colIndex)]
-    );
+
+    // Parse the template to mix Text and LaTeX
+    const renderQuestion = () => {
+        const parts = strategy.questionTemplate.split(/(\{col\d+\})/g);
+        return parts.map((part, idx) => {
+            const match = part.match(/\{col(\d+)\}/);
+            if (match) {
+                const colIndex = parseInt(match[1]);
+                const cellContent = currentrow[colIndex];
+                return (
+                    <span key={idx} className="mx-2 inline-block">
+                        <LatexRenderer formula={cellContent} />
+                    </span>
+                );
+            }
+            // Render text parts
+            if (!part.trim()) return null;
+            return <span key={idx} className="font-sans text-slate-300 mx-1">{part}</span>;
+        });
+    };
+
     const answerText = currentrow[strategy.answerColumnIndex];
 
     return (
         <div className="flex flex-col items-center justify-center p-6 h-full max-w-2xl mx-auto">
 
-            {/* Header / Progress */}
+            {/* ... Header ... */}
             <div className="w-full flex justify-between items-center mb-6 text-slate-400 text-sm">
                 <span>{strategy.name}</span>
                 <span>{currentCardIndex + 1} / {randomizedRows.length}</span>
@@ -67,9 +83,8 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({ strategy, rows, onExit })
                         style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                     >
                         <h3 className="text-slate-400 text-lg mb-4 font-semibold uppercase tracking-wider">Pregunta</h3>
-                        <div className="text-2xl md:text-4xl text-white font-mono">
-                            {/* Check if question contains latex logic or just text */}
-                            <LatexRenderer formula={questionText} block />
+                        <div className="flex flex-wrap justify-center items-center gap-2 text-xl md:text-3xl text-white font-medium max-w-full overflow-hidden break-words">
+                            {renderQuestion()}
                         </div>
                         <p className="absolute bottom-6 text-slate-500 text-sm animate-pulse">Haz click para ver la respuesta</p>
                     </div>
