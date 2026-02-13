@@ -6,6 +6,18 @@ export const calculusTopic: MathTopic = {
     description: 'Formulario de cálculo integral y diferencial.',
     sections: [
         {
+            title: "0. Repaso de Álgebra (Leyes de Exponentes)",
+            headers: ["Regla", "Fórmula", "Ejemplo"],
+            rows: [
+                ["Producto de Potencias", "a^n \\cdot a^m = a^{n+m}", "x^2 \\cdot x^3 = x^5"],
+                ["Cociente de Potencias", "\\frac{a^n}{a^m} = a^{n-m}", "\\frac{x^5}{x^2} = x^3"],
+                ["Potencia de Potencia", "(a^n)^m = a^{n \\cdot m}", "(x^2)^3 = x^6"],
+                ["Potencia de un Producto", "(ab)^n = a^n b^n", "(2x)^3 = 8x^3"],
+                ["Exponente Negativo", "a^{-n} = \\frac{1}{a^n}", "x^{-2} = \\frac{1}{x^2}"],
+                ["Raíz como Potencia", "\\sqrt[n]{a} = a^{1/n}", "\\sqrt{x} = x^{1/2}"]
+            ]
+        },
+        {
             title: "1. Reglas Generales de Operación",
             headers: ["Regla", "Función y=f(u)", "Derivada dy/dx", "Integral ∫ f(x) dx", "Ejemplo Derivada", "Ejemplo Integral"],
             rows: [
