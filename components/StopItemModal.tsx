@@ -57,7 +57,7 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({ item, category, on
                             <p className="text-slate-300 text-lg font-medium italic">{item.translation}</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="p-2 bg-black/20 hover:bg-black/40 rounded-full text-white/70 hover:text-white transition-colors">
+                    <button onClick={onClose} className="p-2 bg-black/20 hover:bg-black/40 rounded-full text-white/70 hover:text-white transition-colors" aria-label="Close modal">
                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                 </div>
