@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MathRow, MathStudyStrategy } from '../types';
 import LatexRenderer from './LatexRenderer';
+import { shuffle } from '../utils/arrayUtils';
 
 interface MathFlashCardProps {
     strategy: MathStudyStrategy;
@@ -15,7 +16,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({ strategy, rows, onExit })
 
     // Initialize/Shuffle cards
     useEffect(() => {
-        const shuffled = [...rows].sort(() => Math.random() - 0.5);
+        const shuffled = shuffle(rows);
         setRandomizedRows(shuffled);
         setCurrentCardIndex(0);
         setIsFlipped(false);
