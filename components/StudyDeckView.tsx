@@ -63,7 +63,7 @@ interface StudyDeckViewProps {
     onAddToVault: (word: string, definition: string) => void;
 }
 
-const getFullTextFromParts = (parts: WordPart[]) => parts.map(p => p.word).join(' ');
+export const getFullTextFromParts = (parts: WordPart[]) => parts.map(p => p.word).join(' ');
 
 
 const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: boolean, onReveal?: () => void }) => {
