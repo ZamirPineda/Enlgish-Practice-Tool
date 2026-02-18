@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { EnglishLevel, DrillExample, WordPart, WordCategory } from '../types';
 import { drillTopicsByLevel } from '../data/drills';
 import ToggleSwitch from './ToggleSwitch';
+import { shuffle } from '../utils/arrayUtils';
 
 const PlayIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -200,11 +201,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
         if (selectedTopic) {
             let examples = [...selectedTopic.examples];
             if (isShuffled) {
-                // Simple Fisher-Yates shuffle
-                for (let i = examples.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [examples[i], examples[j]] = [examples[j], examples[i]];
-                }
+                examples = shuffle(examples);
             }
             setDisplayExamples(examples);
         }
