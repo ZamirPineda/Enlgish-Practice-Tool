@@ -154,6 +154,15 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
             });
 
             if (isShuffled) {
+                // Simple Fisher-Yates shuffle
+                for (let i = examples.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [examples[i], examples[j]] = [examples[j], examples[i]];
+                }
+                return precalculated;
+            });
+
+            if (isShuffled) {
                 examples = shuffle(examples);
             }
             setDisplayExamples(examples);
