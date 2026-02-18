@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { EnglishLevel, DrillExample, WordPart, WordCategory } from '../types';
 import { drillTopicsByLevel } from '../data/drills';
 import { getCategoryStyle } from '../utils/categoryStyles';
+import { getFullTextFromParts } from '../utils/textUtils';
 import ToggleSwitch from './ToggleSwitch';
 
 const PlayIcon = () => (
@@ -62,9 +63,6 @@ interface StudyDeckViewProps {
     isWordAudioLoading: string | null;
     onAddToVault: (word: string, definition: string) => void;
 }
-
-const getFullTextFromParts = (parts: WordPart[]) => parts.map(p => p.word).join(' ');
-
 
 const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: boolean, onReveal?: () => void }) => {
     if (isHidden) {
