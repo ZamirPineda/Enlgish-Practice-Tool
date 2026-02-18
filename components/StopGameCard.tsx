@@ -179,6 +179,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                                                             onClick={(e) => { e.stopPropagation(); onPlay(irregularVerbData.past.split('/')[0]); }}
                                                             className="p-1 hover:bg-white/10 rounded-full text-sky-400 transition-colors"
                                                             title="Play Past Tense"
+                                                            aria-label={`Listen to past tense: ${irregularVerbData.past}`}
                                                         >
                                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
@@ -194,6 +195,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                                                             onClick={(e) => { e.stopPropagation(); onPlay(irregularVerbData.participle.split('/')[0]); }}
                                                             className="p-1 hover:bg-white/10 rounded-full text-sky-400 transition-colors"
                                                             title="Play Participle"
+                                                            aria-label={`Listen to participle: ${irregularVerbData.participle}`}
                                                         >
                                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
@@ -218,6 +220,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                                                                     key={w}
                                                                     onClick={(e) => { e.stopPropagation(); onPlay(w); }}
                                                                     className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-indigo-500/20 hover:bg-indigo-500/40 border border-indigo-500/30 text-indigo-200 text-xs font-medium transition-all"
+                                                                    aria-label={`Listen to compare: ${w}`}
                                                                 >
                                                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.414z" clipRule="evenodd" /></svg>
                                                                     {w}
@@ -250,13 +253,13 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
 
                 {/* Actions */}
                 <div className="flex items-center gap-1 self-start mt-1">
-                    <button onClick={() => onPlay(item.word)} disabled={isAudioLoading} className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-700 text-sky-400 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50" title="Listen">
+                    <button onClick={() => onPlay(item.word)} disabled={isAudioLoading} className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-700 text-sky-400 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50" title="Listen" aria-label={`Listen to ${item.word}`}>
                         {isAudioLoading ? <Spinner /> : <PlayIcon />}
                     </button>
-                    <button onClick={() => onPractice(item.word)} className={`h-8 w-8 flex items-center justify-center rounded-full transition-colors ${isPracticing ? 'bg-red-500 text-white animate-pulse' : 'bg-slate-700 text-purple-400 hover:bg-purple-500 hover:text-white'}`} title="Practice">
+                    <button onClick={() => onPractice(item.word)} className={`h-8 w-8 flex items-center justify-center rounded-full transition-colors ${isPracticing ? 'bg-red-500 text-white animate-pulse' : 'bg-slate-700 text-purple-400 hover:bg-purple-500 hover:text-white'}`} title="Practice" aria-label={`Practice pronunciation for ${item.word}`}>
                         <MicrophoneIcon active={isPracticing} />
                     </button>
-                    <button onClick={() => onSave(item.word, item.definition || item.translation)} disabled={isSaved} className={`h-8 w-8 flex items-center justify-center rounded-full transition-colors ${isSaved ? 'bg-emerald-900/30 text-emerald-400' : 'bg-slate-700 text-emerald-400 hover:bg-emerald-500 hover:text-white'}`} title="Save">
+                    <button onClick={() => onSave(item.word, item.definition || item.translation)} disabled={isSaved} className={`h-8 w-8 flex items-center justify-center rounded-full transition-colors ${isSaved ? 'bg-emerald-900/30 text-emerald-400' : 'bg-slate-700 text-emerald-400 hover:bg-emerald-500 hover:text-white'}`} title="Save" aria-label={isSaved ? `Already saved ${item.word}` : `Save ${item.word} to vault`}>
                         <SaveIcon saved={isSaved} />
                     </button>
                 </div>
