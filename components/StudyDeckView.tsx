@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { EnglishLevel, DrillExample, WordPart, WordCategory } from '../types';
 import { drillTopicsByLevel } from '../data/drills';
 import { getCategoryStyle } from '../utils/categoryStyles';
+import { getFullTextFromParts } from '../utils/textUtils';
 import ToggleSwitch from './ToggleSwitch';
 
 const PlayIcon = () => (
