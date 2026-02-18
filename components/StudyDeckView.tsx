@@ -159,11 +159,6 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                     const j = Math.floor(Math.random() * (i + 1));
                     [examples[i], examples[j]] = [examples[j], examples[i]];
                 }
-                return precalculated;
-            });
-
-            if (isShuffled) {
-                examples = shuffle(examples);
             }
             setDisplayExamples(examples);
         }
@@ -313,7 +308,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                             className="h-9 w-9 flex items-center justify-center rounded-full bg-slate-700 text-slate-300 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50"
                                                             aria-label={`Listen to "${textA}"`}
                                                         >
-                                                            {isWordAudioLoading === textA ? <LoadingSpinner /> : <PlayIcon />}
+                                                            {isWordAudioLoading === textA ? <WordAudioSpinner /> : <PlayIcon />}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -340,7 +335,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                             disabled={!!isWordAudioLoading}
                                                             className="h-9 w-9 flex items-center justify-center rounded-full bg-slate-700 text-slate-300 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50"
                                                         >
-                                                            {isWordAudioLoading === textB ? <LoadingSpinner /> : <PlayIcon />}
+                                                            {isWordAudioLoading === textB ? <WordAudioSpinner /> : <PlayIcon />}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -420,7 +415,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                         aria-label={`Listen to "${fullText}"`}
                                                         title={isPracticeMode && !isRevealed ? "Listen for a hint" : "Listen"}
                                                     >
-                                                        {isWordAudioLoading === fullText ? <LoadingSpinner /> : <PlayIcon />}
+                                                        {isWordAudioLoading === fullText ? <WordAudioSpinner /> : <PlayIcon />}
                                                     </button>
                                                 </div>
                                             </div>
