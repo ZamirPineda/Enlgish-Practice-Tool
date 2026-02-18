@@ -136,6 +136,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({ onPlayWord, isWordAudio
                     onClick={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
                     className="absolute top-2 right-2 p-1.5 bg-slate-800 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 z-50 border border-slate-700 shadow-sm transition-all"
                     title={isHeaderCollapsed ? "Expand Header" : "Collapse Header"}
+                    aria-label={isHeaderCollapsed ? "Expand header" : "Collapse header"}
                 >
                     {isHeaderCollapsed ? <ChevronDownIcon /> : <ChevronUpIcon />}
                 </button>
@@ -181,9 +182,10 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({ onPlayWord, isWordAudio
                                     value={browseFilter}
                                     onChange={(e) => setBrowseFilter(e.target.value)}
                                     className="w-full bg-slate-800 border border-slate-700 text-white text-sm rounded-xl pl-10 pr-8 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
+                                    aria-label="Search vocabulary"
                                 />
                                 {browseFilter && (
-                                    <button onClick={() => setBrowseFilter('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white">
+                                    <button onClick={() => setBrowseFilter('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white" aria-label="Clear search">
                                         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                                     </button>
                                 )}
@@ -194,6 +196,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({ onPlayWord, isWordAudio
                                 onClick={() => setShowSavedOnly(!showSavedOnly)}
                                 className={`p-2.5 rounded-xl border transition-all ${showSavedOnly ? 'bg-pink-600 border-pink-500 text-white' : 'bg-slate-800 border-slate-700 text-slate-400 hover:text-pink-400'}`}
                                 title="Show Saved Only"
+                                aria-label={showSavedOnly ? "Show all words" : "Show saved words only"}
                             >
                                 <HeartIcon solid={showSavedOnly} />
                             </button>
@@ -202,6 +205,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({ onPlayWord, isWordAudio
                                 onClick={handleRandomPick}
                                 className="p-2.5 rounded-xl border bg-gradient-to-r from-sky-600 to-purple-600 border-transparent text-white hover:opacity-90 transition-all shadow-lg shadow-purple-500/20"
                                 title="Surprise Me!"
+                                aria-label="Surprise me with a random word"
                             >
                                 <SparklesIcon />
                             </button>
