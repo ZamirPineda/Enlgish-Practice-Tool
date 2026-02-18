@@ -1,3 +1,37 @@
+
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { calculateSrsData, createNewSrsItem } from './srs';
+import { SrsVocabularyItem } from '../types';
+
+describe('createNewSrsItem', () => {
+    const MOCK_TODAY = new Date('2024-02-20T00:00:00.000Z');
+
+    beforeEach(() => {
+        vi.useFakeTimers();
+        vi.setSystemTime(MOCK_TODAY);
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    it('creates a new item with correct defaults', () => {
+        const word = 'example';
+        const definition = 'a representative form or pattern';
+
+        const result = createNewSrsItem(word, definition);
+
+        expect(result).toEqual({
+            word,
+            definition,
+            repetition: 0,
+            efactor: 2.5,
+            interval: 0,
+            nextReviewDate: '2024-02-20',
+            status: 'new',
+        });
+    });
+});
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { getDueReviewWords } from './srs';
 import { SrsVocabularyItem } from '../types';
