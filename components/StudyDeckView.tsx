@@ -62,6 +62,13 @@ interface StudyDeckViewProps {
     onAddToVault: (word: string, definition: string) => void;
 }
 
+interface DisplayExample extends DrillExample {
+    uniqueKey: string;
+    fullText?: string;
+    textA?: string;
+    textB?: string;
+}
+
 const getFullTextFromParts = (parts: WordPart[]) => parts.map(p => p.word).join(' ');
 
 const getCategoryStyle = (category: WordCategory) => {
@@ -177,7 +184,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
 
     // Handling Shuffle
     const [isShuffled, setIsShuffled] = useState(false);
-    const [displayExamples, setDisplayExamples] = useState<DrillExample[]>([]);
+    const [displayExamples, setDisplayExamples] = useState<DisplayExample[]>([]);
 
     // Reset state when topic or level changes
     useEffect(() => {
@@ -198,7 +205,21 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
     // Update display items when topic or shuffle changes
     useEffect(() => {
         if (selectedTopic) {
-            let examples = [...selectedTopic.examples];
+            let examples: DisplayExample[] = selectedTopic.examples.map((example, index) => {
+                const precalculated: DisplayExample = { ...example, uniqueKey: '' };
+                if (example.parts) {
+                    precalculated.fullText = getFullTextFromParts(example.parts);
+                    precalculated.uniqueKey = `ex-${index}-${precalculated.fullText}`;
+                } else if (example.comparison) {
+                    precalculated.textA = getFullTextFromParts(example.comparison[0].parts);
+                    precalculated.textB = getFullTextFromParts(example.comparison[1].parts);
+                    precalculated.uniqueKey = `ex-${index}-${precalculated.textA}-${precalculated.textB}`;
+                } else {
+                    precalculated.uniqueKey = `ex-${index}`;
+                }
+                return precalculated;
+            });
+
             if (isShuffled) {
                 // Simple Fisher-Yates shuffle
                 for (let i = examples.length - 1; i > 0; i--) {
@@ -307,8 +328,8 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
 
                         <div className="space-y-4">
                             {displayExamples.map((example, index) => {
-                                // Unique ID for this item based on content to handle shuffle rendering
-                                const uniqueKey = example.parts ? getFullTextFromParts(example.parts) : `ex-${index}`;
+                                // Unique ID for this item pre-calculated to handle shuffle rendering and performance
+                                const uniqueKey = example.uniqueKey;
                                 const isRevealed = revealedIndices.has(index);
 
                                 // Section Header (Skip if shuffled to avoid confusion)
@@ -325,8 +346,8 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                 // Minimal Pair Card
                                 if (example.comparison) {
                                     const [itemA, itemB] = example.comparison;
-                                    const textA = getFullTextFromParts(itemA.parts);
-                                    const textB = getFullTextFromParts(itemB.parts);
+                                    const textA = example.textA || '';
+                                    const textB = example.textB || '';
 
                                     return (
                                         <div key={uniqueKey} className="bg-slate-800 p-4 rounded-lg border border-slate-700/50">
@@ -392,7 +413,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
 
                                 // Standard Card
                                 if (example.parts) {
-                                    const fullText = getFullTextFromParts(example.parts);
+                                    const fullText = example.fullText || '';
                                     const isSaved = savedItems.has(fullText);
 
                                     return (
