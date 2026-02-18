@@ -5,11 +5,18 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Get source from environment variable or default to G:\Estudio
+// Get source from environment variable
 // This allows flexibility for testing or different environments
-const SOURCE_DIR = process.env.STUDIO_PATH || 'G:\\Estudio';
+const SOURCE_DIR = process.env.STUDIO_PATH;
 const DEST_DIR = path.resolve(__dirname, '../public/study-docs');
 const INDEX_FILE = path.join(DEST_DIR, 'index.json');
+
+// Check if source directory is provided
+if (!SOURCE_DIR) {
+    console.error('Error: STUDIO_PATH environment variable is not set.');
+    console.error('Please set STUDIO_PATH to the directory containing the study documents.');
+    process.exit(1);
+}
 
 console.log(`Source Directory: ${SOURCE_DIR}`);
 console.log(`Destination Directory: ${DEST_DIR}`);

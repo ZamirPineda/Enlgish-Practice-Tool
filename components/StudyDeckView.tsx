@@ -1,9 +1,10 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
-import { EnglishLevel, DrillExample, WordPart, WordCategory } from '../types';
+import { EnglishLevel, DrillExample, WordPart } from '../types';
 import { drillTopicsByLevel } from '../data/drills';
 import { getCategoryStyle } from '../utils/categoryStyles';
+import { getFullTextFromParts } from '../utils/textUtils';
 import ToggleSwitch from './ToggleSwitch';
+import { shuffle } from '../utils/arrayUtils';
 
 const PlayIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -63,8 +64,12 @@ interface StudyDeckViewProps {
     onAddToVault: (word: string, definition: string) => void;
 }
 
-export const getFullTextFromParts = (parts: WordPart[]) => parts.map(p => p.word).join(' ');
-
+interface DisplayExample extends DrillExample {
+    uniqueKey: string;
+    fullText?: string;
+    textA?: string;
+    textB?: string;
+}
 
 const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: boolean, onReveal?: () => void }) => {
     if (isHidden) {
@@ -112,7 +117,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
 
     // Handling Shuffle
     const [isShuffled, setIsShuffled] = useState(false);
-    const [displayExamples, setDisplayExamples] = useState<DrillExample[]>([]);
+    const [displayExamples, setDisplayExamples] = useState<DisplayExample[]>([]);
 
     // Reset state when topic or level changes
     useEffect(() => {
@@ -133,13 +138,23 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
     // Update display items when topic or shuffle changes
     useEffect(() => {
         if (selectedTopic) {
-            let examples = [...selectedTopic.examples];
-            if (isShuffled) {
-                // Simple Fisher-Yates shuffle
-                for (let i = examples.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [examples[i], examples[j]] = [examples[j], examples[i]];
+            let examples: DisplayExample[] = selectedTopic.examples.map((example, index) => {
+                const precalculated: DisplayExample = { ...example, uniqueKey: '' };
+                if (example.parts) {
+                    precalculated.fullText = getFullTextFromParts(example.parts);
+                    precalculated.uniqueKey = `ex-${index}-${precalculated.fullText}`;
+                } else if (example.comparison) {
+                    precalculated.textA = getFullTextFromParts(example.comparison[0].parts);
+                    precalculated.textB = getFullTextFromParts(example.comparison[1].parts);
+                    precalculated.uniqueKey = `ex-${index}-${precalculated.textA}-${precalculated.textB}`;
+                } else {
+                    precalculated.uniqueKey = `ex-${index}`;
                 }
+                return precalculated;
+            });
+
+            if (isShuffled) {
+                examples = shuffle(examples);
             }
             setDisplayExamples(examples);
         }
@@ -242,8 +257,8 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
 
                         <div className="space-y-4">
                             {displayExamples.map((example, index) => {
-                                // Unique ID for this item based on content to handle shuffle rendering
-                                const uniqueKey = example.parts ? getFullTextFromParts(example.parts) : `ex-${index}`;
+                                // Unique ID for this item pre-calculated to handle shuffle rendering and performance
+                                const uniqueKey = example.uniqueKey;
                                 const isRevealed = revealedIndices.has(index);
 
                                 // Section Header (Skip if shuffled to avoid confusion)
@@ -260,8 +275,8 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                 // Minimal Pair Card
                                 if (example.comparison) {
                                     const [itemA, itemB] = example.comparison;
-                                    const textA = getFullTextFromParts(itemA.parts);
-                                    const textB = getFullTextFromParts(itemB.parts);
+                                    const textA = example.textA || '';
+                                    const textB = example.textB || '';
 
                                     return (
                                         <div key={uniqueKey} className="bg-slate-800 p-4 rounded-lg border border-slate-700/50">
@@ -289,7 +304,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                             className="h-9 w-9 flex items-center justify-center rounded-full bg-slate-700 text-slate-300 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50"
                                                             aria-label={`Listen to "${textA}"`}
                                                         >
-                                                            {isWordAudioLoading === textA ? <WordAudioSpinner /> : <PlayIcon />}
+                                                            {isWordAudioLoading === textA ? <LoadingSpinner /> : <PlayIcon />}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -316,7 +331,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                             disabled={!!isWordAudioLoading}
                                                             className="h-9 w-9 flex items-center justify-center rounded-full bg-slate-700 text-slate-300 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50"
                                                         >
-                                                            {isWordAudioLoading === textB ? <WordAudioSpinner /> : <PlayIcon />}
+                                                            {isWordAudioLoading === textB ? <LoadingSpinner /> : <PlayIcon />}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -327,7 +342,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
 
                                 // Standard Card
                                 if (example.parts) {
-                                    const fullText = getFullTextFromParts(example.parts);
+                                    const fullText = example.fullText || '';
                                     const isSaved = savedItems.has(fullText);
 
                                     return (
@@ -396,7 +411,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                         aria-label={`Listen to "${fullText}"`}
                                                         title={isPracticeMode && !isRevealed ? "Listen for a hint" : "Listen"}
                                                     >
-                                                        {isWordAudioLoading === fullText ? <WordAudioSpinner /> : <PlayIcon />}
+                                                        {isWordAudioLoading === fullText ? <LoadingSpinner /> : <PlayIcon />}
                                                     </button>
                                                 </div>
                                             </div>
