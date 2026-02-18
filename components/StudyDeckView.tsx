@@ -2,6 +2,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { EnglishLevel, DrillExample, WordPart, WordCategory } from '../types';
 import { drillTopicsByLevel } from '../data/drills';
+import { getCategoryStyle } from '../utils/categoryStyles';
 import ToggleSwitch from './ToggleSwitch';
 
 const PlayIcon = () => (
@@ -64,72 +65,6 @@ interface StudyDeckViewProps {
 
 const getFullTextFromParts = (parts: WordPart[]) => parts.map(p => p.word).join(' ');
 
-const getCategoryStyle = (category: WordCategory) => {
-    switch (category) {
-        case 'Simple Present (3rd Person)':
-        case 'Simple Past':
-            return 'border-b border-dotted border-green-400/50 hover:border-green-400';
-        case 'Verb + Gerund':
-        case 'Verb + Infinitive':
-            return 'border-b border-dotted border-purple-400/50 hover:border-purple-400';
-        case 'Idiom':
-            return 'border-b border-dotted border-amber-400/50 hover:border-amber-400';
-        case 'Negative Adverb':
-            return 'border-b border-dotted border-red-400/50 hover:border-red-400';
-        case 'Auxiliary':
-            return 'border-b border-dotted border-pink-400/50 hover:border-pink-400';
-        case 'Subject':
-            return 'border-b border-dotted border-indigo-400/50 hover:border-indigo-400';
-        case 'Quantifier':
-            return 'border-b border-dotted border-fuchsia-400/50 hover:border-fuchsia-400 text-fuchsia-100';
-        case 'Adverb of Frequency':
-            return 'border-b border-dotted border-orange-400/50 hover:border-orange-400 text-orange-100';
-        case 'Demonstrative':
-            return 'border-b border-dotted border-blue-400/50 hover:border-blue-400 text-blue-100';
-        case 'Question Word':
-            return 'border-b border-dotted border-teal-400/50 hover:border-teal-400 text-teal-100';
-        // IELTS Categories
-        case 'Trend Verb':
-            return 'border-b-2 border-red-500/70 hover:border-red-500 text-red-200 font-semibold';
-        case 'Trend Adjective':
-            return 'border-b-2 border-orange-500/70 hover:border-orange-500 text-orange-200';
-        case 'Environmental Term':
-            return 'border-b-2 border-emerald-500/70 hover:border-emerald-500 text-emerald-200 font-semibold';
-        case 'Academic Noun':
-            return 'border-b-2 border-indigo-500/70 hover:border-indigo-500 text-indigo-200 font-serif italic';
-        case 'Cultural Concept':
-            return 'border-b-2 border-purple-500/70 hover:border-purple-500 text-purple-200 font-serif';
-        case 'Connectors':
-            return 'border-b-2 border-yellow-500/70 hover:border-yellow-500 text-yellow-200 font-semibold';
-        case 'Adjectives':
-            return 'border-b-2 border-cyan-500/70 hover:border-cyan-500 text-cyan-200';
-        // Adjective Order Categories
-        case 'Determiner':
-            return 'border-b-2 border-gray-400/70 hover:border-gray-300 text-gray-300';
-        case 'Quantity':
-            return 'border-b-2 border-slate-400/70 hover:border-slate-300 text-slate-200';
-        case 'Opinion':
-            return 'border-b-2 border-pink-500/70 hover:border-pink-400 text-pink-200';
-        case 'Size':
-            return 'border-b-2 border-blue-500/70 hover:border-blue-400 text-blue-200';
-        case 'Condition':
-            return 'border-b-2 border-teal-500/70 hover:border-teal-400 text-teal-200';
-        case 'Age':
-            return 'border-b-2 border-amber-500/70 hover:border-amber-400 text-amber-200';
-        case 'Shape':
-            return 'border-b-2 border-indigo-500/70 hover:border-indigo-400 text-indigo-200';
-        case 'Color':
-            return 'border-b-2 border-rose-500/70 hover:border-rose-400 text-rose-200';
-        case 'Origin':
-            return 'border-b-2 border-green-500/70 hover:border-green-400 text-green-200';
-        case 'Material':
-            return 'border-b-2 border-orange-500/70 hover:border-orange-400 text-orange-200';
-        case 'Purpose':
-            return 'border-b-2 border-violet-500/70 hover:border-violet-400 text-violet-200';
-        default:
-            return 'border-b border-dotted border-sky-400/50 hover:border-sky-400';
-    }
-};
 
 const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: boolean, onReveal?: () => void }) => {
     if (isHidden) {
