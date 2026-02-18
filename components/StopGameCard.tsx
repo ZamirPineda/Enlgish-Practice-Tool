@@ -5,32 +5,7 @@ import {
     getFlagUrl
 } from '../utils/stopGameHelpers';
 import { irregularVerbs } from '../data/verbs';
-
-// --- ICONS ---
-const PlayIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-    </svg>
-);
-
-const Spinner = () => (
-    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-    </svg>
-);
-
-const MicrophoneIcon = ({ active }: { active: boolean }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${active ? 'text-white' : 'text-slate-400'}`} viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
-    </svg>
-);
-
-const SaveIcon = ({ saved }: { saved: boolean }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${saved ? 'text-emerald-400' : 'text-slate-400'}`} viewBox="0 0 20 20" fill="currentColor">
-        <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
-    </svg>
-);
+import { PlayIcon, LoadingSpinner, MicrophoneIcon, SaveIcon, ChevronDownIcon, SpeakerWaveIcon } from './Icons';
 
 
 const getLevelBadgeColor = (level: string) => {
@@ -67,7 +42,7 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
         <div className="mt-3 border-t border-slate-700/50 pt-2">
             <button onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }} className="text-[10px] uppercase font-bold text-slate-400 hover:text-sky-300 flex items-center gap-1 transition-colors">
                 {isOpen ? 'Hide Family' : 'Show Family 👨‍👩‍👧‍👦'}
-                <svg className={`w-3 h-3 transform transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                <ChevronDownIcon className={`w-3 h-3 transform transition-transform ${isOpen ? 'rotate-180' : ''}`} />
             </button>
             {isOpen && (
                 <div className="mt-2 grid grid-cols-2 gap-2 text-xs bg-slate-900/40 p-2 rounded animate-fade-in">
@@ -179,10 +154,9 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                                                             onClick={(e) => { e.stopPropagation(); onPlay(irregularVerbData.past.split('/')[0]); }}
                                                             className="p-1 hover:bg-white/10 rounded-full text-sky-400 transition-colors"
                                                             title="Play Past Tense"
+                                                            aria-label={`Listen to past tense: ${irregularVerbData.past}`}
                                                         >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                                                            </svg>
+                                                            <PlayIcon className="h-4 w-4" />
                                                         </button>
                                                     </div>
                                                 </div>
@@ -194,10 +168,9 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                                                             onClick={(e) => { e.stopPropagation(); onPlay(irregularVerbData.participle.split('/')[0]); }}
                                                             className="p-1 hover:bg-white/10 rounded-full text-sky-400 transition-colors"
                                                             title="Play Participle"
+                                                            aria-label={`Listen to participle: ${irregularVerbData.participle}`}
                                                         >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                                                            </svg>
+                                                            <PlayIcon className="h-4 w-4" />
                                                         </button>
                                                     </div>
                                                 </div>
@@ -218,8 +191,9 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                                                                     key={w}
                                                                     onClick={(e) => { e.stopPropagation(); onPlay(w); }}
                                                                     className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-indigo-500/20 hover:bg-indigo-500/40 border border-indigo-500/30 text-indigo-200 text-xs font-medium transition-all"
+                                                                    aria-label={`Listen to compare: ${w}`}
                                                                 >
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                                                                    <SpeakerWaveIcon className="h-3 w-3" />
                                                                     {w}
                                                                 </button>
                                                             );
@@ -250,14 +224,14 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
 
                 {/* Actions */}
                 <div className="flex items-center gap-1 self-start mt-1">
-                    <button onClick={() => onPlay(item.word)} disabled={isAudioLoading} className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-700 text-sky-400 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50" title="Listen">
-                        {isAudioLoading ? <Spinner /> : <PlayIcon />}
+                    <button onClick={() => onPlay(item.word)} disabled={isAudioLoading} className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-700 text-sky-400 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50" title="Listen" aria-label={`Listen to ${item.word}`}>
+                        {isAudioLoading ? <LoadingSpinner /> : <PlayIcon />}
                     </button>
-                    <button onClick={() => onPractice(item.word)} className={`h-8 w-8 flex items-center justify-center rounded-full transition-colors ${isPracticing ? 'bg-red-500 text-white animate-pulse' : 'bg-slate-700 text-purple-400 hover:bg-purple-500 hover:text-white'}`} title="Practice">
-                        <MicrophoneIcon active={isPracticing} />
+                    <button onClick={() => onPractice(item.word)} className={`h-8 w-8 flex items-center justify-center rounded-full transition-colors ${isPracticing ? 'bg-red-500 text-white animate-pulse' : 'bg-slate-700 text-purple-400 hover:bg-purple-500 hover:text-white'}`} title="Practice" aria-label={`Practice pronunciation for ${item.word}`}>
+                        <MicrophoneIcon className={`h-5 w-5 ${isPracticing ? 'text-white' : 'text-slate-400'}`} />
                     </button>
-                    <button onClick={() => onSave(item.word, item.definition || item.translation)} disabled={isSaved} className={`h-8 w-8 flex items-center justify-center rounded-full transition-colors ${isSaved ? 'bg-emerald-900/30 text-emerald-400' : 'bg-slate-700 text-emerald-400 hover:bg-emerald-500 hover:text-white'}`} title="Save">
-                        <SaveIcon saved={isSaved} />
+                    <button onClick={() => onSave(item.word, item.definition || item.translation)} disabled={isSaved} className={`h-8 w-8 flex items-center justify-center rounded-full transition-colors ${isSaved ? 'bg-emerald-900/30 text-emerald-400' : 'bg-slate-700 text-emerald-400 hover:bg-emerald-500 hover:text-white'}`} title="Save" aria-label={isSaved ? `Already saved ${item.word}` : `Save ${item.word} to vault`}>
+                        <SaveIcon className={`h-5 w-5 ${isSaved ? 'text-emerald-400' : 'text-slate-400'}`} />
                     </button>
                 </div>
             </div>

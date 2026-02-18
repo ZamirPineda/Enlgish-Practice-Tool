@@ -1,7 +1,8 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
-import { EnglishLevel, DrillExample, WordPart, WordCategory } from '../types';
+import { EnglishLevel, DrillExample, WordPart } from '../types';
 import { drillTopicsByLevel } from '../data/drills';
+import { getCategoryStyle } from '../utils/categoryStyles';
+import { getFullTextFromParts } from '../utils/textUtils';
 import ToggleSwitch from './ToggleSwitch';
 import { shuffle } from '../utils/arrayUtils';
 
@@ -63,74 +64,15 @@ interface StudyDeckViewProps {
     onAddToVault: (word: string, definition: string) => void;
 }
 
+interface DisplayExample extends DrillExample {
+    uniqueKey: string;
+    fullText?: string;
+    textA?: string;
+    textB?: string;
+}
+
 const getFullTextFromParts = (parts: WordPart[]) => parts.map(p => p.word).join(' ');
 
-const getCategoryStyle = (category: WordCategory) => {
-    switch (category) {
-        case 'Simple Present (3rd Person)':
-        case 'Simple Past':
-            return 'border-b border-dotted border-green-400/50 hover:border-green-400';
-        case 'Verb + Gerund':
-        case 'Verb + Infinitive':
-            return 'border-b border-dotted border-purple-400/50 hover:border-purple-400';
-        case 'Idiom':
-            return 'border-b border-dotted border-amber-400/50 hover:border-amber-400';
-        case 'Negative Adverb':
-            return 'border-b border-dotted border-red-400/50 hover:border-red-400';
-        case 'Auxiliary':
-            return 'border-b border-dotted border-pink-400/50 hover:border-pink-400';
-        case 'Subject':
-            return 'border-b border-dotted border-indigo-400/50 hover:border-indigo-400';
-        case 'Quantifier':
-            return 'border-b border-dotted border-fuchsia-400/50 hover:border-fuchsia-400 text-fuchsia-100';
-        case 'Adverb of Frequency':
-            return 'border-b border-dotted border-orange-400/50 hover:border-orange-400 text-orange-100';
-        case 'Demonstrative':
-            return 'border-b border-dotted border-blue-400/50 hover:border-blue-400 text-blue-100';
-        case 'Question Word':
-            return 'border-b border-dotted border-teal-400/50 hover:border-teal-400 text-teal-100';
-        // IELTS Categories
-        case 'Trend Verb':
-            return 'border-b-2 border-red-500/70 hover:border-red-500 text-red-200 font-semibold';
-        case 'Trend Adjective':
-            return 'border-b-2 border-orange-500/70 hover:border-orange-500 text-orange-200';
-        case 'Environmental Term':
-            return 'border-b-2 border-emerald-500/70 hover:border-emerald-500 text-emerald-200 font-semibold';
-        case 'Academic Noun':
-            return 'border-b-2 border-indigo-500/70 hover:border-indigo-500 text-indigo-200 font-serif italic';
-        case 'Cultural Concept':
-            return 'border-b-2 border-purple-500/70 hover:border-purple-500 text-purple-200 font-serif';
-        case 'Connectors':
-            return 'border-b-2 border-yellow-500/70 hover:border-yellow-500 text-yellow-200 font-semibold';
-        case 'Adjectives':
-            return 'border-b-2 border-cyan-500/70 hover:border-cyan-500 text-cyan-200';
-        // Adjective Order Categories
-        case 'Determiner':
-            return 'border-b-2 border-gray-400/70 hover:border-gray-300 text-gray-300';
-        case 'Quantity':
-            return 'border-b-2 border-slate-400/70 hover:border-slate-300 text-slate-200';
-        case 'Opinion':
-            return 'border-b-2 border-pink-500/70 hover:border-pink-400 text-pink-200';
-        case 'Size':
-            return 'border-b-2 border-blue-500/70 hover:border-blue-400 text-blue-200';
-        case 'Condition':
-            return 'border-b-2 border-teal-500/70 hover:border-teal-400 text-teal-200';
-        case 'Age':
-            return 'border-b-2 border-amber-500/70 hover:border-amber-400 text-amber-200';
-        case 'Shape':
-            return 'border-b-2 border-indigo-500/70 hover:border-indigo-400 text-indigo-200';
-        case 'Color':
-            return 'border-b-2 border-rose-500/70 hover:border-rose-400 text-rose-200';
-        case 'Origin':
-            return 'border-b-2 border-green-500/70 hover:border-green-400 text-green-200';
-        case 'Material':
-            return 'border-b-2 border-orange-500/70 hover:border-orange-400 text-orange-200';
-        case 'Purpose':
-            return 'border-b-2 border-violet-500/70 hover:border-violet-400 text-violet-200';
-        default:
-            return 'border-b border-dotted border-sky-400/50 hover:border-sky-400';
-    }
-};
 
 const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: boolean, onReveal?: () => void }) => {
     if (isHidden) {
@@ -178,7 +120,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
 
     // Handling Shuffle
     const [isShuffled, setIsShuffled] = useState(false);
-    const [displayExamples, setDisplayExamples] = useState<DrillExample[]>([]);
+    const [displayExamples, setDisplayExamples] = useState<DisplayExample[]>([]);
 
     // Reset state when topic or level changes
     useEffect(() => {
@@ -199,7 +141,21 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
     // Update display items when topic or shuffle changes
     useEffect(() => {
         if (selectedTopic) {
-            let examples = [...selectedTopic.examples];
+            let examples: DisplayExample[] = selectedTopic.examples.map((example, index) => {
+                const precalculated: DisplayExample = { ...example, uniqueKey: '' };
+                if (example.parts) {
+                    precalculated.fullText = getFullTextFromParts(example.parts);
+                    precalculated.uniqueKey = `ex-${index}-${precalculated.fullText}`;
+                } else if (example.comparison) {
+                    precalculated.textA = getFullTextFromParts(example.comparison[0].parts);
+                    precalculated.textB = getFullTextFromParts(example.comparison[1].parts);
+                    precalculated.uniqueKey = `ex-${index}-${precalculated.textA}-${precalculated.textB}`;
+                } else {
+                    precalculated.uniqueKey = `ex-${index}`;
+                }
+                return precalculated;
+            });
+
             if (isShuffled) {
                 examples = shuffle(examples);
             }
@@ -304,8 +260,8 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
 
                         <div className="space-y-4">
                             {displayExamples.map((example, index) => {
-                                // Unique ID for this item based on content to handle shuffle rendering
-                                const uniqueKey = example.parts ? getFullTextFromParts(example.parts) : `ex-${index}`;
+                                // Unique ID for this item pre-calculated to handle shuffle rendering and performance
+                                const uniqueKey = example.uniqueKey;
                                 const isRevealed = revealedIndices.has(index);
 
                                 // Section Header (Skip if shuffled to avoid confusion)
@@ -322,8 +278,8 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                 // Minimal Pair Card
                                 if (example.comparison) {
                                     const [itemA, itemB] = example.comparison;
-                                    const textA = getFullTextFromParts(itemA.parts);
-                                    const textB = getFullTextFromParts(itemB.parts);
+                                    const textA = example.textA || '';
+                                    const textB = example.textB || '';
 
                                     return (
                                         <div key={uniqueKey} className="bg-slate-800 p-4 rounded-lg border border-slate-700/50">
@@ -351,7 +307,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                             className="h-9 w-9 flex items-center justify-center rounded-full bg-slate-700 text-slate-300 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50"
                                                             aria-label={`Listen to "${textA}"`}
                                                         >
-                                                            {isWordAudioLoading === textA ? <WordAudioSpinner /> : <PlayIcon />}
+                                                            {isWordAudioLoading === textA ? <LoadingSpinner /> : <PlayIcon />}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -378,7 +334,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                             disabled={!!isWordAudioLoading}
                                                             className="h-9 w-9 flex items-center justify-center rounded-full bg-slate-700 text-slate-300 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50"
                                                         >
-                                                            {isWordAudioLoading === textB ? <WordAudioSpinner /> : <PlayIcon />}
+                                                            {isWordAudioLoading === textB ? <LoadingSpinner /> : <PlayIcon />}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -389,7 +345,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
 
                                 // Standard Card
                                 if (example.parts) {
-                                    const fullText = getFullTextFromParts(example.parts);
+                                    const fullText = example.fullText || '';
                                     const isSaved = savedItems.has(fullText);
 
                                     return (
@@ -458,7 +414,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                         aria-label={`Listen to "${fullText}"`}
                                                         title={isPracticeMode && !isRevealed ? "Listen for a hint" : "Listen"}
                                                     >
-                                                        {isWordAudioLoading === fullText ? <WordAudioSpinner /> : <PlayIcon />}
+                                                        {isWordAudioLoading === fullText ? <LoadingSpinner /> : <PlayIcon />}
                                                     </button>
                                                 </div>
                                             </div>
