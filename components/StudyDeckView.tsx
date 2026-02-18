@@ -71,6 +71,8 @@ interface DisplayExample extends DrillExample {
     textB?: string;
 }
 
+const getFullTextFromParts = (parts: WordPart[]) => parts.map(p => p.word).join(' ');
+
 
 const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: boolean, onReveal?: () => void }) => {
     if (isHidden) {
