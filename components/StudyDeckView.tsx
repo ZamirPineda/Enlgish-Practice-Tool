@@ -1,10 +1,10 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
-import { EnglishLevel, DrillExample, WordPart, WordCategory } from '../types';
+import { EnglishLevel, DrillExample, WordPart } from '../types';
 import { drillTopicsByLevel } from '../data/drills';
 import { getCategoryStyle } from '../utils/categoryStyles';
 import { getFullTextFromParts } from '../utils/textUtils';
 import ToggleSwitch from './ToggleSwitch';
+import { shuffle } from '../utils/arrayUtils';
 
 const PlayIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -70,9 +70,6 @@ interface DisplayExample extends DrillExample {
     textA?: string;
     textB?: string;
 }
-
-const getFullTextFromParts = (parts: WordPart[]) => parts.map(p => p.word).join(' ');
-
 
 const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: boolean, onReveal?: () => void }) => {
     if (isHidden) {
@@ -162,6 +159,11 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                     const j = Math.floor(Math.random() * (i + 1));
                     [examples[i], examples[j]] = [examples[j], examples[i]];
                 }
+                return precalculated;
+            });
+
+            if (isShuffled) {
+                examples = shuffle(examples);
             }
             setDisplayExamples(examples);
         }
@@ -311,7 +313,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                             className="h-9 w-9 flex items-center justify-center rounded-full bg-slate-700 text-slate-300 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50"
                                                             aria-label={`Listen to "${textA}"`}
                                                         >
-                                                            {isWordAudioLoading === textA ? <WordAudioSpinner /> : <PlayIcon />}
+                                                            {isWordAudioLoading === textA ? <LoadingSpinner /> : <PlayIcon />}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -338,7 +340,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                             disabled={!!isWordAudioLoading}
                                                             className="h-9 w-9 flex items-center justify-center rounded-full bg-slate-700 text-slate-300 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50"
                                                         >
-                                                            {isWordAudioLoading === textB ? <WordAudioSpinner /> : <PlayIcon />}
+                                                            {isWordAudioLoading === textB ? <LoadingSpinner /> : <PlayIcon />}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -418,7 +420,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                                                         aria-label={`Listen to "${fullText}"`}
                                                         title={isPracticeMode && !isRevealed ? "Listen for a hint" : "Listen"}
                                                     >
-                                                        {isWordAudioLoading === fullText ? <WordAudioSpinner /> : <PlayIcon />}
+                                                        {isWordAudioLoading === fullText ? <LoadingSpinner /> : <PlayIcon />}
                                                     </button>
                                                 </div>
                                             </div>
