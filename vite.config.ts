@@ -2,6 +2,7 @@
 import path from "path";
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, ".", "");
@@ -10,7 +11,24 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       host: "0.0.0.0",
     },
-    plugins: [react()],
+    plugins: [
+      react(),
+      VitePWA({
+        registerType: "autoUpdate",
+        includeAssets: [],
+        manifest: {
+          name: "English Practice Pal",
+          short_name: "English Pal",
+          description:
+            "English study tool with vocabulary and spaced repetition",
+          start_url: "/Enlgish-Practice-Tool/",
+          scope: "/Enlgish-Practice-Tool/",
+          display: "standalone",
+          background_color: "#0f172a",
+          theme_color: "#0284c7",
+        },
+      }),
+    ],
     test: {
       globals: true,
       environment: "jsdom",

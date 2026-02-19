@@ -68,6 +68,12 @@ npm run preview
 
 > El proyecto está preparado para GitHub Pages con base `/Enlgish-Practice-Tool/`.
 
+## Persistencia y estudio offline
+
+- El progreso del **Vocabulary Vault** (deck + streaks) se guarda en `localStorage`.
+- El tab **Backup & Sync** permite exportar/importar backup en formato **JSON**.
+- La app incluye configuración **PWA** (`vite-plugin-pwa`) para habilitar modo offline tras instalar/visitar la app.
+
 ## Tests y lint
 
 ### Tests
