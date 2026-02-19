@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.3.0...english-practice-pal-v1.4.0) (2026-02-19)
+
+
+### Features
+
+* improve modal accessibility and keyboard navigation ([cddfade](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/cddfade3247bc9542cca9392f0e82736befcf5ad))
+
 ## [1.3.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.2.0...english-practice-pal-v1.3.0) (2026-02-19)
 
 
