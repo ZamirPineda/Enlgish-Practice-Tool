@@ -32,7 +32,11 @@ describe("Base UI components", () => {
     expect(screen.getByText("Visible")).toBeInTheDocument();
     fireEvent.click(screen.getByText("Visible"));
     expect(onClose).toHaveBeenCalledTimes(0);
-    fireEvent.click(screen.getByRole("dialog").parentElement!);
+    const backdrop = screen.getByRole("dialog").parentElement;
+    expect(backdrop).not.toBeNull();
+    if (backdrop) {
+      fireEvent.click(backdrop);
+    }
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 

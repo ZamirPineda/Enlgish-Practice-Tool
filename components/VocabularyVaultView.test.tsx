@@ -193,7 +193,7 @@ describe("VocabularyVaultView flows", () => {
     alertSpy.mockRestore();
   });
 
-  test("atajo /: focuses collection search input", () => {
+  test("shortcut /: focuses collection search input", () => {
     render(
       <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
     );
@@ -204,7 +204,7 @@ describe("VocabularyVaultView flows", () => {
     expect(screen.getByLabelText("Search vault words")).toHaveFocus();
   });
 
-  test("enter: confirms save action in add word modal", () => {
+  test("Enter: confirms save action in add word modal", () => {
     render(
       <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
     );
