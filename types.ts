@@ -1,32 +1,31 @@
-
 export enum EnglishLevel {
-  A1 = 'A1 (Beginner)',
-  A2 = 'A2 (Elementary)',
-  B1 = 'B1 (Intermediate)',
-  B2 = 'B2 (Upper-Intermediate)',
-  C1 = 'C1 (Advanced)',
-  C2 = 'C2 (Proficient)',
+  A1 = "A1 (Beginner)",
+  A2 = "A2 (Elementary)",
+  B1 = "B1 (Intermediate)",
+  B2 = "B2 (Upper-Intermediate)",
+  C1 = "C1 (Advanced)",
+  C2 = "C2 (Proficient)",
 }
 
 export enum PracticeMode {
-  Conversation = 'General Conversation',
-  TargetedGrammar = 'Targeted Grammar Practice',
-  StructuredPractice = 'Structured Practice',
-  RolePlayOrderingFood = 'Role Play: Ordering Food',
-  RolePlayJobInterview = 'Role Play: Job Interview',
-  CustomScenario = 'Custom Scenario (Roleplay)',
-  ExamPreparation = 'Exam Preparation (Oral Quiz)',
-  VocabularyTravel = 'Vocabulary: Travel',
-  SpeakingPractice = 'Speaking Practice',
-  StudyDeck = 'Study Deck',
-  StopGame = 'STOP Game (Vocabulary)',
-  VerbDrills = 'Irregular Verbs Drill',
-  PersonalPhrases = 'My Personal Scripts',
-  ReadingPractice = 'Reading Practice (Monologue) 📖',
-  ImageDescription = 'Describe the Image',
-  LiveDebate = 'Live Debate (Real-time)',
-  IPAMaster = 'IPA Master (Pronunciation) 🗣️',
-  VocabularyVault = 'Vocabulary Vault (Memorization) 🧠',
+  Conversation = "General Conversation",
+  TargetedGrammar = "Targeted Grammar Practice",
+  StructuredPractice = "Structured Practice",
+  RolePlayOrderingFood = "Role Play: Ordering Food",
+  RolePlayJobInterview = "Role Play: Job Interview",
+  CustomScenario = "Custom Scenario (Roleplay)",
+  ExamPreparation = "Exam Preparation (Oral Quiz)",
+  VocabularyTravel = "Vocabulary: Travel",
+  SpeakingPractice = "Speaking Practice",
+  StudyDeck = "Study Deck",
+  StopGame = "STOP Game (Vocabulary)",
+  VerbDrills = "Irregular Verbs Drill",
+  PersonalPhrases = "My Personal Scripts",
+  ReadingPractice = "Reading Practice (Monologue) 📖",
+  ImageDescription = "Describe the Image",
+  LiveDebate = "Live Debate (Real-time)",
+  IPAMaster = "IPA Master (Pronunciation) 🗣️",
+  VocabularyVault = "Vocabulary Vault (Memorization) 🧠",
 }
 
 export interface CustomScenarioConfig {
@@ -41,7 +40,6 @@ export interface Topic {
 }
 
 export type TopicsByLevel = Partial<Record<EnglishLevel, Topic[]>>;
-
 
 export interface PronunciationFeedback {
   word: string;
@@ -63,8 +61,9 @@ export interface SrsVocabularyItem {
   repetition: number;
   efactor: number;
   interval: number;
+  lapses?: number;
   nextReviewDate: string; // YYYY-MM-DD
-  status: 'new' | 'learning' | 'mastered';
+  status: "new" | "learning" | "mastered";
 }
 
 // This is the structure the AI will return
@@ -78,17 +77,52 @@ export interface SrsFeedback {
 // ReportCard and Message types removed as they were AI-specific
 
 // Study Deck Types
-export type AdjectiveCategory = 'Determiner' | 'Quantity' | 'Opinion' | 'Size' | 'Condition' | 'Age' | 'Shape' | 'Color' | 'Sound/texture' | 'Origin' | 'Material' | 'Purpose';
-export type PrepositionCategory = 'in' | 'on' | 'at';
-export type GrammarCategory = 'Simple Present (3rd Person)' | 'Quantifier' | 'Adverb of Frequency' | 'Demonstrative' | 'Question Word' | 'Simple Past';
-export type VerbPatternCategory = 'Verb + Gerund' | 'Verb + Infinitive';
-export type IdiomCategory = 'Idiom';
-export type SentenceStructureCategory = 'Negative Adverb' | 'Auxiliary' | 'Subject';
+export type AdjectiveCategory =
+  | "Determiner"
+  | "Quantity"
+  | "Opinion"
+  | "Size"
+  | "Condition"
+  | "Age"
+  | "Shape"
+  | "Color"
+  | "Sound/texture"
+  | "Origin"
+  | "Material"
+  | "Purpose";
+export type PrepositionCategory = "in" | "on" | "at";
+export type GrammarCategory =
+  | "Simple Present (3rd Person)"
+  | "Quantifier"
+  | "Adverb of Frequency"
+  | "Demonstrative"
+  | "Question Word"
+  | "Simple Past";
+export type VerbPatternCategory = "Verb + Gerund" | "Verb + Infinitive";
+export type IdiomCategory = "Idiom";
+export type SentenceStructureCategory =
+  | "Negative Adverb"
+  | "Auxiliary"
+  | "Subject";
 // New IELTS Categories
-export type IeltsCategory = 'Trend Verb' | 'Trend Adjective' | 'Trend Noun' | 'Environmental Term' | 'Academic Noun' | 'Cultural Concept';
+export type IeltsCategory =
+  | "Trend Verb"
+  | "Trend Adjective"
+  | "Trend Noun"
+  | "Environmental Term"
+  | "Academic Noun"
+  | "Cultural Concept";
 
-export type AdvancedCategory = 'Connectors' | 'Adjectives';
-export type WordCategory = AdjectiveCategory | PrepositionCategory | GrammarCategory | VerbPatternCategory | IdiomCategory | SentenceStructureCategory | IeltsCategory | AdvancedCategory;
+export type AdvancedCategory = "Connectors" | "Adjectives";
+export type WordCategory =
+  | AdjectiveCategory
+  | PrepositionCategory
+  | GrammarCategory
+  | VerbPatternCategory
+  | IdiomCategory
+  | SentenceStructureCategory
+  | IeltsCategory
+  | AdvancedCategory;
 
 export interface WordPart {
   word: string;
@@ -100,9 +134,10 @@ export interface DrillExample {
   ipa?: string;
   definition?: string; // For phrasal verbs
   translation_es?: string; // For Spanish translation
-  comparison?: [ // For minimal pairs
-    { parts: WordPart[]; ipa: string, translation_es: string },
-    { parts: WordPart[]; ipa: string, translation_es: string }
+  comparison?: [
+    // For minimal pairs
+    { parts: WordPart[]; ipa: string; translation_es: string },
+    { parts: WordPart[]; ipa: string; translation_es: string },
   ];
 }
 
@@ -117,36 +152,78 @@ export type DrillsByLevel = Partial<Record<EnglishLevel, DrillTopic[]>>;
 
 // STOP Game Types
 export type StopCategory =
-  'Countries' | 'Cities' | 'Capitals' |
-  'Fruits & Vegetables' | // Renamed from Fruits
-  'Colors' | 'Verbs' |
-  'Animals' | 'Adjectives' | 'Objects' | 'Movies' | 'Songs' |
-  'Body Parts' | 'Clothing' | 'Occupations' |
-  'Tools' | 'Phrasal Verbs' | 'Sports' | 'Connectors' |
-  'Emotions' | 'Nature' | 'Science' | 'Business' |
+  | "Countries"
+  | "Cities"
+  | "Capitals"
+  | "Fruits & Vegetables" // Renamed from Fruits
+  | "Colors"
+  | "Verbs"
+  | "Animals"
+  | "Adjectives"
+  | "Objects"
+  | "Movies"
+  | "Songs"
+  | "Body Parts"
+  | "Clothing"
+  | "Occupations"
+  | "Tools"
+  | "Phrasal Verbs"
+  | "Sports"
+  | "Connectors"
+  | "Emotions"
+  | "Nature"
+  | "Science"
+  | "Business"
   // New Daily Life Additions
-  'Household Items' | 'Housing & Rooms' |
+  | "Household Items"
+  | "Housing & Rooms"
   // New Advanced Categories
-  'IELTS Trends' | 'Environment' | 'Culture' | 'Emphasis' |
+  | "IELTS Trends"
+  | "Environment"
+  | "Culture"
+  | "Emphasis"
   // Specialized Categories
-  'Architecture' | 'Dev Terms' | 'Abstract Nouns' | 'Mythology' |
+  | "Architecture"
+  | "Dev Terms"
+  | "Abstract Nouns"
+  | "Mythology"
   // New Landmark Category
-  'World Landmarks' |
+  | "World Landmarks"
   // New History Category
-  'Historical Figures' |
+  | "Historical Figures"
   // NEW CATEGORIES ADDED
-  'Food & Drinks' | 'Health & Fitness' | 'Technology & Internet' |
-  'Personality Traits' | 'Education & Learning' | 'Relationships & Social' |
-  'Collocations' | 'Idioms' | 'Opposites & Synonyms' | 'False Friends' | 'Minimal Pairs' |
+  | "Food & Drinks"
+  | "Health & Fitness"
+  | "Technology & Internet"
+  | "Personality Traits"
+  | "Education & Learning"
+  | "Relationships & Social"
+  | "Collocations"
+  | "Idioms"
+  | "Opposites & Synonyms"
+  | "False Friends"
+  | "Minimal Pairs"
   // NEW CREATIVE CATEGORIES
-  'Compound Words' | 'Sounds & Noise' | 'Philosophy & Concepts' | 'Slang & Colloquial' |
+  | "Compound Words"
+  | "Sounds & Noise"
+  | "Philosophy & Concepts"
+  | "Slang & Colloquial"
   // NEW CHALLENGE CATEGORIES
-  'Short & Rare' | 'Long & Rare' |
+  | "Short & Rare"
+  | "Long & Rare"
   // LATEST ADDITIONS
-  'Compound Adjectives' | 'Modal Verbs' | 'Rare & Literary' |
+  | "Compound Adjectives"
+  | "Modal Verbs"
+  | "Rare & Literary"
   // NEW FLORA & GEOLOGY CATEGORIES
-  'Flowers' | 'Flowers (Fancy)' | 'Plants' | 'Trees' | 'Mushrooms' |
-  'Spices & Herbs' | 'Space Objects' | 'Minerals & Gems';
+  | "Flowers"
+  | "Flowers (Fancy)"
+  | "Plants"
+  | "Trees"
+  | "Mushrooms"
+  | "Spices & Herbs"
+  | "Space Objects"
+  | "Minerals & Gems";
 
 export interface WordFamily {
   noun?: string;
@@ -159,7 +236,7 @@ export interface StopItem {
   word: string;
   ipa: string;
   translation: string;
-  level?: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'; // Word difficulty level
+  level?: "A1" | "A2" | "B1" | "B2" | "C1" | "C2"; // Word difficulty level
   definition?: string; // Basic context/usage (Layer 1)
   examSentence?: string; // Advanced Context (Layer 2)
   example?: string; // Alternative for example sentence
@@ -237,7 +314,7 @@ export interface IPASound {
   name: string;
   description: string;
   mouthPosition: string;
-  category: 'Vowel' | 'Consonant' | 'Diphthong';
+  category: "Vowel" | "Consonant" | "Diphthong";
   examples: {
     word: string;
     ipa: string;
@@ -296,4 +373,3 @@ export interface SolvedProblem {
   description: string;
   steps: MathStep[];
 }
-

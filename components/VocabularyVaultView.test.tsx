@@ -97,4 +97,89 @@ describe("VocabularyVaultView flows", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("1 of 2 words started")).toBeInTheDocument();
   });
+
+  test("streak: increments streak after completing daily review", async () => {
+    localStorage.setItem(
+      "vocab-vault-progress",
+      JSON.stringify({
+        currentStreak: 2,
+        bestStreak: 2,
+        totalReviews: 10,
+        lastReviewDate: today,
+      }),
+    );
+    localStorage.setItem(
+      "vocab-vault-deck",
+      JSON.stringify({
+        hello: {
+          word: "hello",
+          definition: "a greeting",
+          repetition: 0,
+          efactor: 2.5,
+          interval: 0,
+          lapses: 0,
+          nextReviewDate: today,
+          status: "new",
+        },
+      }),
+    );
+
+    render(<VocabularyVaultView onPlayWord={vi.fn()} />);
+    fireEvent.click(screen.getByRole("button", { name: "Review Now (1)" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Show Answer" }));
+    fireEvent.click(screen.getByRole("button", { name: "Got it! 🚀" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("2 day streak · best 2")).toBeInTheDocument();
+    });
+
+    const savedProgress = JSON.parse(
+      localStorage.getItem("vocab-vault-progress") || "{}",
+    );
+    expect(savedProgress.totalReviews).toBe(11);
+  });
+
+  test("import: restores deck and streak progress from JSON backup", async () => {
+    const alertSpy = vi.spyOn(window, "alert").mockImplementation(() => {});
+    render(<VocabularyVaultView onPlayWord={vi.fn()} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Backup & Sync 🔄" }));
+    fireEvent.change(screen.getByPlaceholderText("Paste code here..."), {
+      target: {
+        value: JSON.stringify({
+          deck: {
+            focus: {
+              word: "focus",
+              definition: "to concentrate",
+              repetition: 1,
+              efactor: 2.5,
+              interval: 1,
+              lapses: 0,
+              nextReviewDate: today,
+              status: "learning",
+            },
+          },
+          progress: {
+            currentStreak: 4,
+            bestStreak: 7,
+            totalReviews: 21,
+            lastReviewDate: today,
+          },
+        }),
+      },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "RESTORE VAULT" }));
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: "Review Now (1)" }),
+      ).toBeInTheDocument();
+    });
+    const savedProgress = JSON.parse(
+      localStorage.getItem("vocab-vault-progress") || "{}",
+    );
+    expect(savedProgress.currentStreak).toBe(4);
+    expect(savedProgress.bestStreak).toBe(7);
+    alertSpy.mockRestore();
+  });
 });
