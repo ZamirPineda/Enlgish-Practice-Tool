@@ -4,6 +4,7 @@ import { playNativeTTS } from "./utils/audioUtils";
 import { createNewSrsItem } from "./utils/srs";
 import { SrsVocabularyItem } from "./types";
 import { APP_VERSION } from "./utils/appVersion";
+import { AppSettings, loadSettings, saveSettings } from "./utils/settingsStore";
 
 // Views
 const StopGameView = lazy(() => import("./components/StopGameView"));
@@ -17,6 +18,7 @@ const VocabularyVaultView = lazy(
 const MathView = lazy(() => import("./components/MathView"));
 const StudyDocsView = lazy(() => import("./components/StudyDocsView"));
 const StatsView = lazy(() => import("./components/StatsView"));
+const SettingsView = lazy(() => import("./components/SettingsView"));
 
 const NavItem = ({
   to,
@@ -29,17 +31,42 @@ const NavItem = ({
     to={to}
     className={({ isActive }) =>
       `flex-1 md:flex-none whitespace-nowrap px-3 md:px-4 py-2 rounded-lg font-bold text-sm md:text-base transition-all ${
-        isActive
-          ? "bg-sky-600 text-white shadow-md"
-          : "bg-slate-700 text-slate-300 hover:bg-slate-600"
+        isActive ? "shadow-md" : ""
       }`
     }
+    style={({ isActive }) => ({
+      backgroundColor: isActive
+        ? "var(--color-accent)"
+        : "var(--color-surface-hover)",
+      color: isActive
+        ? "var(--color-text-primary)"
+        : "var(--color-text-secondary)",
+    })}
   >
     {children}
   </NavLink>
 );
 
 const App: React.FC = () => {
+  const [settings, setSettings] = React.useState<AppSettings>(() =>
+    loadSettings(),
+  );
+
+  React.useEffect(() => {
+    document.documentElement.dataset.theme = settings.theme;
+    document.documentElement.dataset.reducedMotion = settings.reducedMotion
+      ? "reduce"
+      : "no-preference";
+    saveSettings(settings);
+  }, [settings]);
+
+  const handleSettingsChange = React.useCallback(
+    (updates: Partial<AppSettings>) => {
+      setSettings((previous) => ({ ...previous, ...updates }));
+    },
+    [],
+  );
+
   // Vocabulary Vault Logic (Kept for compatibility with StopGame/StudyDeck)
   const addToVault = (word: string, definition: string) => {
     try {
@@ -62,8 +89,20 @@ const App: React.FC = () => {
 
   return (
     <HashRouter>
-      <div className="h-screen flex flex-col bg-slate-900 text-white overflow-hidden font-sans">
-        <header className="p-4 bg-slate-800 border-b border-slate-700 flex flex-wrap justify-between items-center gap-4 z-10 shadow-lg">
+      <div
+        className="h-screen flex flex-col overflow-hidden font-sans"
+        style={{
+          backgroundColor: "var(--color-bg)",
+          color: "var(--color-text-primary)",
+        }}
+      >
+        <header
+          className="p-4 border-b flex flex-wrap justify-between items-center gap-4 z-10 shadow-lg"
+          style={{
+            backgroundColor: "var(--color-surface-1)",
+            borderColor: "var(--color-border)",
+          }}
+        >
           <h1 className="text-lg md:text-xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent truncate">
             ENGLISH PAL
           </h1>
@@ -76,14 +115,19 @@ const App: React.FC = () => {
             <NavItem to="/stats">📊 Stats</NavItem>
             <NavItem to="/calculus">∫ Math</NavItem>
             <NavItem to="/docs">📖 Docs</NavItem>
+            <NavItem to="/settings">⚙️ Settings</NavItem>
           </nav>
         </header>
 
-        <main className="flex-1 flex flex-col min-h-0 bg-slate-900/50 relative">
+        <main
+          className="flex-1 flex flex-col min-h-0 relative"
+          style={{ backgroundColor: "var(--color-surface-2)" }}
+        >
           <Suspense
             fallback={
               <div
-                className="flex-1 flex items-center justify-center text-slate-300"
+                className="flex-1 flex items-center justify-center"
+                style={{ color: "var(--color-text-secondary)" }}
                 role="status"
               >
                 Loading section...
@@ -98,6 +142,7 @@ const App: React.FC = () => {
                   <StopGameView
                     onPlayWord={playNativeTTS}
                     isWordAudioLoading={null}
+                    ttsAutoPlay={settings.ttsAutoPlay}
                     onAddToVault={addToVault}
                   />
                 }
@@ -118,15 +163,36 @@ const App: React.FC = () => {
               />
               <Route
                 path="/vault"
-                element={<VocabularyVaultView onPlayWord={playNativeTTS} />}
+                element={
+                  <VocabularyVaultView
+                    onPlayWord={playNativeTTS}
+                    confirmDialogsEnabled={settings.confirmDialogs}
+                  />
+                }
               />
               <Route path="/stats" element={<StatsView />} />
               <Route path="/calculus" element={<MathView />} />
               <Route path="/docs" element={<StudyDocsView />} />
+              <Route
+                path="/settings"
+                element={
+                  <SettingsView
+                    settings={settings}
+                    onSettingsChange={handleSettingsChange}
+                  />
+                }
+              />
             </Routes>
           </Suspense>
         </main>
-        <footer className="px-4 py-2 text-xs text-slate-400 border-t border-slate-800">
+        <footer
+          className="px-4 py-2 text-xs border-t"
+          style={{
+            color: "var(--color-text-muted)",
+            borderColor: "var(--color-border)",
+            backgroundColor: "var(--color-surface-1)",
+          }}
+        >
           About · v{APP_VERSION}
         </footer>
       </div>
