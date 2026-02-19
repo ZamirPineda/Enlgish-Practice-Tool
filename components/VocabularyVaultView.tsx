@@ -283,6 +283,17 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     }
   };
 
+  const handleImportSample = () => {
+    const sampleDeck = starterKits.highFrequency.slice(0, 12).reduce(
+      (acc, item) => {
+        acc[item.word] = createNewSrsItem(item.word, item.definition);
+        return acc;
+      },
+      {} as Record<string, SrsVocabularyItem>,
+    );
+    setDeck(sampleDeck);
+  };
+
   const handleImportFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -473,83 +484,115 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
 
         {activeTab === "collection" && (
           <div className="animate-fade-in space-y-6">
-            <div className="relative flex-1 mb-8">
-              <Input
-                id="vault-search-input"
-                type="text"
-                placeholder="Search by word, definition or tag..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="px-6 py-3"
-                aria-label="Search vault words"
-              />
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">
-                🔍
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-20">
-              {filteredCollection.map((item) => (
-                <div
-                  key={item.word}
-                  className="bg-slate-800 border border-slate-700 p-5 rounded-2xl hover:shadow-2xl transition-all group relative flex flex-col"
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-xl font-black text-white">
-                        {item.word}
-                      </h3>
-                      <button
-                        onClick={() => onPlayWord(item.word)}
-                        className="text-slate-500 hover:text-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded"
-                        aria-label={`Listen to ${item.word}`}
-                      >
-                        <PlayIcon className="h-4 w-4" />
-                      </button>
-                      <SpeechPracticeButton
-                        targetText={item.word}
-                        onCorrect={() => {
-                          // Optional: Mark as reviewed or just show fun animation
-                          // confetti?
-                        }}
-                      />
-                    </div>
-                    <button
-                      onClick={() => handleDelete(item.word)}
-                      className="opacity-0 group-hover:opacity-100 p-2 hover:bg-red-500/10 rounded-lg transition-all focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
-                      aria-label={`Delete ${item.word}`}
-                    >
-                      <TrashIcon />
-                    </button>
-                  </div>
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {item.partOfSpeech && (
-                      <Badge className="uppercase">{item.partOfSpeech}</Badge>
-                    )}
-                    {item.tags?.map((tag) => (
-                      <Badge key={tag} variant="accent">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  <p className="text-slate-400 text-sm mb-4 line-clamp-2 italic flex-1">
-                    "{item.definition}"
-                  </p>
-                  <div className="flex justify-between items-center text-[10px] font-black uppercase text-slate-500">
-                    <span>Strength</span>
-                    <span
-                      className={
-                        item.status === "mastered"
-                          ? "text-emerald-500"
-                          : "text-sky-500"
-                      }
-                    >
-                      {item.status}
-                    </span>
-                  </div>
-                  <MemoryBar interval={item.interval} />
+            {totalInDeck === 0 ? (
+              <Card className="p-8 text-center">
+                <h2 className="text-2xl font-black text-white mb-2">
+                  Your Vault is empty
+                </h2>
+                <p className="text-slate-400 text-sm mb-6">
+                  Import sample / Add first word
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button
+                    onClick={handleImportSample}
+                    variant="secondary"
+                    size="lg"
+                  >
+                    Import sample
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      resetAddForm();
+                      setIsAddOpen(true);
+                    }}
+                    variant="primary"
+                    size="lg"
+                  >
+                    Add first word
+                  </Button>
                 </div>
-              ))}
-            </div>
+              </Card>
+            ) : (
+              <div className="relative flex-1 mb-8">
+                <Input
+                  id="vault-search-input"
+                  type="text"
+                  placeholder="Search by word, definition or tag..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="px-6 py-3"
+                  aria-label="Search vault words"
+                />
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">
+                  🔍
+                </div>
+              </div>
+            )}
+            {totalInDeck > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-20">
+                {filteredCollection.map((item) => (
+                  <div
+                    key={item.word}
+                    className="bg-slate-800 border border-slate-700 p-5 rounded-2xl hover:shadow-2xl transition-all group relative flex flex-col"
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-xl font-black text-white">
+                          {item.word}
+                        </h3>
+                        <button
+                          onClick={() => onPlayWord(item.word)}
+                          className="text-slate-500 hover:text-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded"
+                          aria-label={`Listen to ${item.word}`}
+                        >
+                          <PlayIcon className="h-4 w-4" />
+                        </button>
+                        <SpeechPracticeButton
+                          targetText={item.word}
+                          onCorrect={() => {
+                            // Optional: Mark as reviewed or just show fun animation
+                            // confetti?
+                          }}
+                        />
+                      </div>
+                      <button
+                        onClick={() => handleDelete(item.word)}
+                        className="opacity-0 group-hover:opacity-100 p-2 hover:bg-red-500/10 rounded-lg transition-all focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+                        aria-label={`Delete ${item.word}`}
+                      >
+                        <TrashIcon />
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-1 mb-3">
+                      {item.partOfSpeech && (
+                        <Badge className="uppercase">{item.partOfSpeech}</Badge>
+                      )}
+                      {item.tags?.map((tag) => (
+                        <Badge key={tag} variant="accent">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    <p className="text-slate-400 text-sm mb-4 line-clamp-2 italic flex-1">
+                      "{item.definition}"
+                    </p>
+                    <div className="flex justify-between items-center text-[10px] font-black uppercase text-slate-500">
+                      <span>Strength</span>
+                      <span
+                        className={
+                          item.status === "mastered"
+                            ? "text-emerald-500"
+                            : "text-sky-500"
+                        }
+                      >
+                        {item.status}
+                      </span>
+                    </div>
+                    <MemoryBar interval={item.interval} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

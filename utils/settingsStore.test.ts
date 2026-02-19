@@ -20,6 +20,7 @@ describe("settingsStore", () => {
       reducedMotion: true,
       ttsAutoPlay: true,
       confirmDialogs: true,
+      hasCompletedOnboarding: false,
     });
   });
 
@@ -31,6 +32,7 @@ describe("settingsStore", () => {
         reducedMotion: false,
         ttsAutoPlay: false,
         confirmDialogs: false,
+        hasCompletedOnboarding: true,
       }),
     );
 
@@ -39,6 +41,7 @@ describe("settingsStore", () => {
       reducedMotion: false,
       ttsAutoPlay: false,
       confirmDialogs: false,
+      hasCompletedOnboarding: true,
     });
   });
 
@@ -53,6 +56,7 @@ describe("settingsStore", () => {
       reducedMotion: true,
       ttsAutoPlay: false,
       confirmDialogs: true,
+      hasCompletedOnboarding: true,
     });
 
     expect(localStorage.setItem).toHaveBeenCalledWith(
@@ -62,6 +66,7 @@ describe("settingsStore", () => {
         reducedMotion: true,
         ttsAutoPlay: false,
         confirmDialogs: true,
+        hasCompletedOnboarding: true,
       }),
     );
   });

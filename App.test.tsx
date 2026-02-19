@@ -57,4 +57,24 @@ describe("App route lazy loading", () => {
     expect(await screen.findByText("Vault mock view")).toBeInTheDocument();
     expect(screen.getByText(`About · v${APP_VERSION}`)).toBeInTheDocument();
   });
+
+  test("shows onboarding on first run and hides it when completed", async () => {
+    render(<App />);
+
+    expect(
+      await screen.findByText("Add words to your Vault"),
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    expect(screen.getByText("Start a review session")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    fireEvent.click(screen.getByRole("button", { name: "Let's go" }));
+
+    expect(
+      screen.queryByText("Add words to your Vault"),
+    ).not.toBeInTheDocument();
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      "app-settings",
+      expect.stringContaining('"hasCompletedOnboarding":true'),
+    );
+  });
 });
