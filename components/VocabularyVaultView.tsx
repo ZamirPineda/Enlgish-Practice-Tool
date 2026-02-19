@@ -135,6 +135,27 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     localStorage.setItem(VAULT_PROGRESS_KEY, JSON.stringify(progress));
   }, [progress]);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (activeTab !== "collection" || event.key !== "/") return;
+      const target = event.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.tagName === "SELECT" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      event.preventDefault();
+      document.getElementById("vault-search-input")?.focus();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeTab]);
+
   const deckList = useMemo(
     () => Object.values(deck) as SrsVocabularyItem[],
     [deck],
@@ -195,6 +216,15 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       definition: newDef,
       originalContext: newContext,
     });
+  };
+
+  const handleAddFormKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === "Enter" && newWord.trim() && newDef.trim()) {
+      event.preventDefault();
+      handleSaveFromModal();
+    }
   };
 
   const handleDelete = (word: string) => {
@@ -445,11 +475,13 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           <div className="animate-fade-in space-y-6">
             <div className="relative flex-1 mb-8">
               <Input
+                id="vault-search-input"
                 type="text"
                 placeholder="Search by word, definition or tag..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="px-6 py-3"
+                aria-label="Search vault words"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">
                 🔍
@@ -468,7 +500,8 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       </h3>
                       <button
                         onClick={() => onPlayWord(item.word)}
-                        className="text-slate-500 hover:text-sky-400"
+                        className="text-slate-500 hover:text-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded"
+                        aria-label={`Listen to ${item.word}`}
                       >
                         <PlayIcon className="h-4 w-4" />
                       </button>
@@ -482,7 +515,8 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     </div>
                     <button
                       onClick={() => handleDelete(item.word)}
-                      className="opacity-0 group-hover:opacity-100 p-2 hover:bg-red-500/10 rounded-lg transition-all"
+                      className="opacity-0 group-hover:opacity-100 p-2 hover:bg-red-500/10 rounded-lg transition-all focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+                      aria-label={`Delete ${item.word}`}
                     >
                       <TrashIcon />
                     </button>
@@ -581,6 +615,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 type="text"
                 value={newWord}
                 onChange={(e) => setNewWord(e.target.value)}
+                onKeyDown={handleAddFormKeyDown}
                 className="flex-1 p-3"
                 placeholder="e.g. Ubiquitous"
               />
@@ -595,6 +630,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               type="text"
               value={newContext}
               onChange={(e) => setNewContext(e.target.value)}
+              onKeyDown={handleAddFormKeyDown}
               className="p-3 text-sm text-slate-300"
               placeholder="Where did you see it? e.g. 'The wifi was ubiquitous in the city.'"
             />

@@ -48,15 +48,37 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Focus the modal container on mount for accessibility
-    if (modalRef.current) {
-      modalRef.current.focus();
-    }
+    const modalElement = modalRef.current;
+    if (!modalElement) return;
+    const focusableSelector =
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusables = Array.from(
+      modalElement.querySelectorAll<HTMLElement>(focusableSelector),
+    );
+    (focusables[0] || modalElement).focus();
 
-    // Handle Escape key to close modal
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const currentFocusable = Array.from(
+        modalElement.querySelectorAll<HTMLElement>(focusableSelector),
+      );
+      if (currentFocusable.length === 0) {
+        e.preventDefault();
+        modalElement.focus();
+        return;
+      }
+      const first = currentFocusable[0];
+      const last = currentFocusable[currentFocusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     };
 
@@ -110,7 +132,7 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 bg-black/20 hover:bg-black/40 rounded-full text-white/70 hover:text-white transition-colors"
+            className="p-2 bg-black/20 hover:bg-black/40 rounded-full text-white/70 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
             aria-label="Close modal"
           >
             <svg

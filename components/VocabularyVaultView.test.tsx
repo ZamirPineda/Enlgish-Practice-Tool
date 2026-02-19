@@ -192,4 +192,34 @@ describe("VocabularyVaultView flows", () => {
     expect(savedProgress.bestStreak).toBe(7);
     alertSpy.mockRestore();
   });
+
+  test("shortcut /: focuses collection search input", () => {
+    render(
+      <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: /My Collection/i }));
+
+    fireEvent.keyDown(window, { key: "/" });
+
+    expect(screen.getByLabelText("Search vault words")).toHaveFocus();
+  });
+
+  test("Enter: confirms save action in add word modal", () => {
+    render(
+      <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "+ Add Word" }));
+    fireEvent.change(screen.getByPlaceholderText("e.g. Ubiquitous"), {
+      target: { value: "testword" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Meaning, Example, etc."), {
+      target: { value: "a sample definition" },
+    });
+    fireEvent.keyDown(screen.getByPlaceholderText("e.g. Ubiquitous"), {
+      key: "Enter",
+    });
+
+    expect(screen.queryByText("Add New Word")).not.toBeInTheDocument();
+  });
 });
