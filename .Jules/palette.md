@@ -5,3 +5,7 @@
 ## 2026-02-27 - [Modal & Media Control Accessibility]
 **Learning:** Critical navigation (Close Modal) and media controls (Play Audio) often miss `aria-label` when using SVG icons. This blocks screen reader users from basic interactions.
 **Action:** Default to checking `StopItemModal` and `ReviewSession` patterns for similar unlabelled controls in future audits.
+
+## 2026-03-01 - [Modal Accessibility Pattern]
+**Learning:** Custom modals (e.g., `StopItemModal`, `CustomScenarioModal`) consistently lack `role="dialog"`, `aria-modal`, focus management, and Escape key handling, making them inaccessible.
+**Action:** When implementing or fixing modals, always add `role="dialog"`, `aria-modal="true"`, focus the container on mount, and handle Escape key to close.

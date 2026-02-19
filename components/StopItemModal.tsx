@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StopItem, WordFamily } from '../types';
 import { getCategoryTheme, getCategoryIcon, getFlagUrl } from '../utils/stopGameHelpers';
 
@@ -34,10 +34,35 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({ item, category, on
 
     const countryName = category === 'Countries' ? item.word : item.country;
     const flagUrl = getFlagUrl(countryName);
+
+    const modalRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        // Focus the modal container on mount for accessibility
+        if (modalRef.current) {
+            modalRef.current.focus();
+        }
+
+        // Handle Escape key to close modal
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [onClose]);
+
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in" onClick={onClose}>
             <div
-                className={`w-full max-w-lg bg-slate-900 border-2 ${theme.borderColor} rounded-2xl shadow-2xl overflow-hidden relative transform transition-all scale-100`}
+                ref={modalRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-title"
+                tabIndex={-1}
+                className={`w-full max-w-lg bg-slate-900 border-2 ${theme.borderColor} rounded-2xl shadow-2xl overflow-hidden relative transform transition-all scale-100 outline-none`}
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}
@@ -51,7 +76,7 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({ item, category, on
                             )}
                         </span>
                         <div>
-                            <h2 className={`text-3xl font-black text-white tracking-tight ${theme.textClass}`}>
+                            <h2 id="modal-title" className={`text-3xl font-black text-white tracking-tight ${theme.textClass}`}>
                                 {item.word}
                             </h2>
                             <p className="text-slate-300 text-lg font-medium italic">{item.translation}</p>
