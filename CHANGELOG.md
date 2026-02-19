@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.2.0...english-practice-pal-v1.3.0) (2026-02-19)
+
+
+### Features
+
+* add settings page with persisted app preferences ([fb1a8b5](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/fb1a8b5cbd77b373fedd264665a1fce0ed190ad9))
+
 ## [1.2.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.1.0...english-practice-pal-v1.2.0) (2026-02-19)
 
 
