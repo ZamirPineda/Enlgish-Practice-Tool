@@ -192,8 +192,25 @@ Verifica que el despliegue use la base `/Enlgish-Practice-Tool/` (ya configurada
 - Agregar script de lint (`npm run lint`) y reglas compartidas.
 - Corregir y estabilizar la suite de tests existente.
 - Documentar flujos de datos de cada módulo (STOP, Deck, Vault, Docs).
-- Añadir guía de release/versionado.
+- Refinar guía de release/versionado.
 - Incorporar CI de tests en pull requests.
+
+## Conventional Commits (requerido para releases automáticos)
+
+Este repositorio usa **Release Please**. Para que el changelog, el bump de versión y el GitHub Release se generen automáticamente, los commits a `main` deben seguir Conventional Commits:
+
+- `feat: ...` para nuevas funcionalidades
+- `fix: ...` para correcciones
+- `chore: ...`, `docs: ...`, `refactor: ...` para cambios internos
+- Usa `!` o un bloque `BREAKING CHANGE:` cuando haya cambios incompatibles
+
+Ejemplos:
+
+```text
+feat: add timer to study deck
+fix: correct vocabulary streak reset on import
+feat!: replace old stop game scoring model
+```
 
 ## Cómo contribuir
 
