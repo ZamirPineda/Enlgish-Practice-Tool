@@ -70,9 +70,13 @@ class GlobalErrorBoundary extends React.Component<Props, State> {
                 Report issue
               </button>
             </div>
-            <p className="text-xs text-slate-400 mt-4">
-              {this.state.copied ? "Copied report to clipboard." : "Version"}:{" "}
-              {APP_VERSION}
+            {this.state.copied ? (
+              <p className="text-xs text-emerald-300 mt-4">
+                Copied report to clipboard.
+              </p>
+            ) : null}
+            <p className="text-xs text-slate-400 mt-1">
+              Version: {APP_VERSION}
             </p>
           </div>
         </div>

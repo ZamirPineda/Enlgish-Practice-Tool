@@ -3,6 +3,8 @@ import { APP_VERSION } from "./appVersion";
 const LOG_PREFIX = `[EnglishPal v${APP_VERSION}]`;
 const originalConsoleError = console.error.bind(console);
 let isGlobalLoggingInstalled = false;
+let errorHandler: ((event: ErrorEvent) => void) | null = null;
+let rejectionHandler: ((event: PromiseRejectionEvent) => void) | null = null;
 
 const errorToString = (error: unknown): string => {
   if (error instanceof Error)
@@ -53,15 +55,28 @@ export const installGlobalErrorLogging = () => {
     originalConsoleError(LOG_PREFIX, ...args);
   };
 
-  window.addEventListener("error", (event) => {
+  errorHandler = (event) => {
     logError("window.error", event.error ?? event.message, {
       filename: event.filename,
       lineno: event.lineno,
       colno: event.colno,
     });
-  });
+  };
+  window.addEventListener("error", errorHandler);
 
-  window.addEventListener("unhandledrejection", (event) => {
+  rejectionHandler = (event) => {
     logError("window.unhandledrejection", event.reason);
-  });
+  };
+  window.addEventListener("unhandledrejection", rejectionHandler);
+};
+
+export const uninstallGlobalErrorLogging = () => {
+  if (!isGlobalLoggingInstalled) return;
+  isGlobalLoggingInstalled = false;
+  console.error = originalConsoleError;
+  if (errorHandler) window.removeEventListener("error", errorHandler);
+  if (rejectionHandler)
+    window.removeEventListener("unhandledrejection", rejectionHandler);
+  errorHandler = null;
+  rejectionHandler = null;
 };
