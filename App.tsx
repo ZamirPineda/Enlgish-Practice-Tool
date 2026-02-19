@@ -20,6 +20,21 @@ const StudyDocsView = lazy(() => import("./components/StudyDocsView"));
 const StatsView = lazy(() => import("./components/StatsView"));
 const SettingsView = lazy(() => import("./components/SettingsView"));
 
+const ONBOARDING_STEPS = [
+  {
+    title: "Add words to your Vault",
+    description: "Open Vault and tap + Add Word to save vocabulary fast.",
+  },
+  {
+    title: "Start a review session",
+    description: "In Vault, press Review Now to practice due cards.",
+  },
+  {
+    title: "Keep backups ready",
+    description: "Use Vault → Backup & Sync to export or import your data.",
+  },
+];
+
 const NavItem = ({
   to,
   children,
@@ -51,6 +66,7 @@ const App: React.FC = () => {
   const [settings, setSettings] = React.useState<AppSettings>(() =>
     loadSettings(),
   );
+  const [onboardingStep, setOnboardingStep] = React.useState(0);
 
   React.useEffect(() => {
     document.documentElement.dataset.theme = settings.theme;
@@ -66,6 +82,10 @@ const App: React.FC = () => {
     },
     [],
   );
+  const closeOnboarding = React.useCallback(() => {
+    setOnboardingStep(0);
+    handleSettingsChange({ hasCompletedOnboarding: true });
+  }, [handleSettingsChange]);
 
   // Vocabulary Vault Logic (Kept for compatibility with StopGame/StudyDeck)
   const addToVault = (word: string, definition: string) => {
@@ -195,6 +215,44 @@ const App: React.FC = () => {
         >
           About · v{APP_VERSION}
         </footer>
+        {!settings.hasCompletedOnboarding && (
+          <div className="absolute inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
+              <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
+                Quick start · {onboardingStep + 1}/{ONBOARDING_STEPS.length}
+              </p>
+              <h2 className="mt-2 text-2xl font-black text-white">
+                {ONBOARDING_STEPS[onboardingStep].title}
+              </h2>
+              <p className="mt-3 text-sm text-slate-300">
+                {ONBOARDING_STEPS[onboardingStep].description}
+              </p>
+              <div className="mt-6 flex gap-2">
+                <button
+                  onClick={closeOnboarding}
+                  className="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 text-sm font-bold"
+                >
+                  Skip
+                </button>
+                {onboardingStep < ONBOARDING_STEPS.length - 1 ? (
+                  <button
+                    onClick={() => setOnboardingStep((step) => step + 1)}
+                    className="ml-auto px-4 py-2 rounded-lg bg-sky-500 text-slate-900 text-sm font-black"
+                  >
+                    Next
+                  </button>
+                ) : (
+                  <button
+                    onClick={closeOnboarding}
+                    className="ml-auto px-4 py-2 rounded-lg bg-emerald-400 text-slate-900 text-sm font-black"
+                  >
+                    Let’s go
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </HashRouter>
   );

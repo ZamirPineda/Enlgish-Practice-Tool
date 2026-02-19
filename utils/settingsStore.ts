@@ -3,6 +3,7 @@ export interface AppSettings {
   reducedMotion: boolean;
   ttsAutoPlay: boolean;
   confirmDialogs: boolean;
+  hasCompletedOnboarding: boolean;
 }
 
 const SETTINGS_KEY = "app-settings";
@@ -32,6 +33,10 @@ const normalizeSettings = (input: unknown): AppSettings => {
       typeof parsed.ttsAutoPlay === "boolean" ? parsed.ttsAutoPlay : true,
     confirmDialogs:
       typeof parsed.confirmDialogs === "boolean" ? parsed.confirmDialogs : true,
+    hasCompletedOnboarding:
+      typeof parsed.hasCompletedOnboarding === "boolean"
+        ? parsed.hasCompletedOnboarding
+        : false,
   };
 };
 

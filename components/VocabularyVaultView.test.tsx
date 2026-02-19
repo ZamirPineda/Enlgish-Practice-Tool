@@ -194,6 +194,21 @@ describe("VocabularyVaultView flows", () => {
   });
 
   test("shortcut /: focuses collection search input", () => {
+    localStorage.setItem(
+      "vocab-vault-deck",
+      JSON.stringify({
+        hello: {
+          word: "hello",
+          definition: "a greeting",
+          repetition: 0,
+          efactor: 2.5,
+          interval: 0,
+          nextReviewDate: today,
+          status: "new",
+        },
+      }),
+    );
+
     render(
       <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
     );
@@ -221,5 +236,33 @@ describe("VocabularyVaultView flows", () => {
     });
 
     expect(screen.queryByText("Add New Word")).not.toBeInTheDocument();
+  });
+
+  test("empty vault: shows import sample and add first word CTAs", () => {
+    render(
+      <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: /My Collection/i }));
+
+    expect(screen.getByText("Your Vault is empty")).toBeInTheDocument();
+    expect(
+      screen.getByText("Import sample / Add first word"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Import sample" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Add first word" }),
+    ).toBeInTheDocument();
+  });
+
+  test("empty vault: import sample fills the collection", async () => {
+    render(
+      <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: /My Collection/i }));
+    fireEvent.click(screen.getByRole("button", { name: "Import sample" }));
+
+    expect(await screen.findByText("Acknowledge")).toBeInTheDocument();
   });
 });
