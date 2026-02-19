@@ -134,7 +134,7 @@ npm audit --audit-level=high
 
 - Se revisaron los workflows existentes (`ci.yml`, `deploy.yml`, `preview.yml`, `release-please.yml`, `security-audit.yml`) para aplicar principio de **mínimo privilegio**:
   - `ci.yml`: `contents: read`.
-  - `preview.yml`: se redujo a `contents: read` + `issues: write` (solo para publicar/actualizar comentario en PR).
+  - `preview.yml`: `contents: read` + `pull-requests: write` (solo para publicar/actualizar comentario en PR).
   - `release-please.yml`: `contents: write` + `pull-requests: write` (necesario para crear release PRs y tags).
   - `deploy.yml`: `contents: read`, `pages: write`, `id-token: write` (deploy a GitHub Pages).
   - `security-audit.yml`: `contents: read`.
