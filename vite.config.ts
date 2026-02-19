@@ -16,6 +16,9 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         registerType: "autoUpdate",
         includeAssets: [],
+        workbox: {
+          maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        },
         manifest: {
           name: "English Practice Pal",
           short_name: "English Pal",
