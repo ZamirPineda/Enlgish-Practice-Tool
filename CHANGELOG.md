@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.1.0...english-practice-pal-v1.2.0) (2026-02-19)
+
+
+### Features
+
+* add design tokens and base UI components with partial screen refactor ([b799a48](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/b799a48496a695bb38160662e80e8fde64800511))
+
 ## [1.1.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.0.0...english-practice-pal-v1.1.0) (2026-02-19)
 
 
