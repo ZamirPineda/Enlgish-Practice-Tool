@@ -23,6 +23,10 @@ vi.mock("./components/VocabularyVaultView", () => ({
   default: () => <div>Vault mock view</div>,
 }));
 
+vi.mock("./components/StatsView", () => ({
+  default: () => <div>Stats mock view</div>,
+}));
+
 vi.mock("./components/MathView", () => ({
   default: () => <div>Math mock view</div>,
 }));

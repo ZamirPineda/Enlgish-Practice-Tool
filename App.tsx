@@ -16,6 +16,7 @@ const VocabularyVaultView = lazy(
 );
 const MathView = lazy(() => import("./components/MathView"));
 const StudyDocsView = lazy(() => import("./components/StudyDocsView"));
+const StatsView = lazy(() => import("./components/StatsView"));
 
 const NavItem = ({
   to,
@@ -72,6 +73,7 @@ const App: React.FC = () => {
             <NavItem to="/study">📚 Study Deck</NavItem>
             <NavItem to="/personal">👤 Scripts</NavItem>
             <NavItem to="/vault">🧠 Vault</NavItem>
+            <NavItem to="/stats">📊 Stats</NavItem>
             <NavItem to="/calculus">∫ Math</NavItem>
             <NavItem to="/docs">📖 Docs</NavItem>
           </nav>
@@ -118,6 +120,7 @@ const App: React.FC = () => {
                 path="/vault"
                 element={<VocabularyVaultView onPlayWord={playNativeTTS} />}
               />
+              <Route path="/stats" element={<StatsView />} />
               <Route path="/calculus" element={<MathView />} />
               <Route path="/docs" element={<StudyDocsView />} />
             </Routes>
