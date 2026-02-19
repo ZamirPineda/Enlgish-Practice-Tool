@@ -100,7 +100,7 @@ Coincidencias encontradas en documentación/ejemplos (placeholders):
 - **Resueltas (high):**
   - `minimatch < 10.2.1` (ReDoS, GHSA-3ppc-4f35-3m26)
 - **Pendientes (moderate, no bloquean el check de CI actual):**
-  - `ajv < 8.18.0` vía `@eslint/eslintrc` en ESLint 8 (`npm audit` reporta *No fix available* sin saltar a ESLint 10).
+  - `ajv < 8.18.0` vía `@eslint/eslintrc` en ESLint 8 (`npm audit` reporta _No fix available_ sin saltar a ESLint 10).
 
 ### Cambios aplicados
 
@@ -129,3 +129,18 @@ Coincidencias encontradas en documentación/ejemplos (placeholders):
 npm ci
 npm audit --audit-level=high
 ```
+
+## 8) Hardening de GitHub Actions (2026-02-19)
+
+- Se revisaron los workflows existentes (`ci.yml`, `deploy.yml`, `preview.yml`, `release-please.yml`, `security-audit.yml`) para aplicar principio de **mínimo privilegio**:
+  - `ci.yml`: `contents: read`.
+  - `preview.yml`: se redujo a `contents: read` + `issues: write` (solo para publicar/actualizar comentario en PR).
+  - `release-please.yml`: `contents: write` + `pull-requests: write` (necesario para crear release PRs y tags).
+  - `deploy.yml`: `contents: read`, `pages: write`, `id-token: write` (deploy a GitHub Pages).
+  - `security-audit.yml`: `contents: read`.
+- Se hizo pin de actions a **commit SHA** para mitigar riesgos de supply chain por tags mutables:
+  - `actions/checkout`, `actions/setup-node`, `actions/cache`, `actions/upload-artifact`,
+    `actions/configure-pages`, `actions/upload-pages-artifact`, `actions/deploy-pages`,
+    `actions/github-script`, `pnpm/action-setup`, `googleapis/release-please-action`,
+    `gitleaks/gitleaks-action`.
+- Se confirmó que no se utiliza `pull_request_target`; se mantiene `pull_request` en workflows de PR para evitar ejecución con permisos elevados sobre código no confiable.
