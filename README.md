@@ -88,11 +88,26 @@ npm run test:ci
 npm run lint
 ```
 
+### Formato (Prettier)
+
+```bash
+npm run format
+```
+
 ### Typecheck
 
 ```bash
 npm run typecheck
 ```
+
+### Pre-commit (Husky + lint-staged)
+
+Al instalar dependencias (`npm install`) se activa Husky vía script `prepare`.
+
+En cada commit, el hook `pre-commit` ejecuta `lint-staged` sobre archivos staged:
+
+- `prettier --write --ignore-unknown` en todos los archivos staged.
+- `eslint --fix --max-warnings=0` en `*.ts` y `*.tsx` staged.
 
 ## Variables de entorno y configuración
 
@@ -100,10 +115,10 @@ No existe un archivo `.env` versionado en el repo actualmente.
 
 ### Variables detectadas
 
-| Variable | Dónde se usa | Requerida | Descripción |
-|---|---|---|---|
-| `GEMINI_API_KEY` | `vite.config.ts` | Opcional (a nivel build) | Se inyecta en `process.env.API_KEY` y `process.env.GEMINI_API_KEY` para el código cliente. |
-| `STUDIO_PATH` | `scripts/import-study-docs.js` | Sí (solo para ese script) | Ruta fuente para copiar documentos hacia `public/study-docs`. |
+| Variable         | Dónde se usa                   | Requerida                 | Descripción                                                                                |
+| ---------------- | ------------------------------ | ------------------------- | ------------------------------------------------------------------------------------------ |
+| `GEMINI_API_KEY` | `vite.config.ts`               | Opcional (a nivel build)  | Se inyecta en `process.env.API_KEY` y `process.env.GEMINI_API_KEY` para el código cliente. |
+| `STUDIO_PATH`    | `scripts/import-study-docs.js` | Sí (solo para ese script) | Ruta fuente para copiar documentos hacia `public/study-docs`.                              |
 
 ### Ejemplo de `.env.local` (sin secretos)
 
