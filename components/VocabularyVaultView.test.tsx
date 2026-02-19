@@ -22,7 +22,9 @@ describe("VocabularyVaultView flows", () => {
       }),
     );
 
-    render(<VocabularyVaultView onPlayWord={vi.fn()} />);
+    render(
+      <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
+    );
 
     fireEvent.click(screen.getByRole("button", { name: "Review Now (1)" }));
 
@@ -46,7 +48,9 @@ describe("VocabularyVaultView flows", () => {
       }),
     );
 
-    render(<VocabularyVaultView onPlayWord={vi.fn()} />);
+    render(
+      <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
+    );
 
     fireEvent.click(screen.getByRole("button", { name: "Review Now (1)" }));
     fireEvent.click(await screen.findByRole("button", { name: "Show Answer" }));
@@ -90,7 +94,9 @@ describe("VocabularyVaultView flows", () => {
       }),
     );
 
-    render(<VocabularyVaultView onPlayWord={vi.fn()} />);
+    render(
+      <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
+    );
 
     expect(
       screen.getByRole("button", { name: "Review Now (1)" }),
@@ -124,7 +130,9 @@ describe("VocabularyVaultView flows", () => {
       }),
     );
 
-    render(<VocabularyVaultView onPlayWord={vi.fn()} />);
+    render(
+      <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
+    );
     fireEvent.click(screen.getByRole("button", { name: "Review Now (1)" }));
     fireEvent.click(await screen.findByRole("button", { name: "Show Answer" }));
     fireEvent.click(screen.getByRole("button", { name: "Got it! 🚀" }));
@@ -141,7 +149,9 @@ describe("VocabularyVaultView flows", () => {
 
   test("import: restores deck and streak progress from JSON backup", async () => {
     const alertSpy = vi.spyOn(window, "alert").mockImplementation(() => {});
-    render(<VocabularyVaultView onPlayWord={vi.fn()} />);
+    render(
+      <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
+    );
 
     fireEvent.click(screen.getByRole("button", { name: "Backup & Sync 🔄" }));
     fireEvent.change(screen.getByPlaceholderText("Paste code here..."), {

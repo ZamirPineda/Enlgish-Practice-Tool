@@ -17,6 +17,7 @@ import Modal from "./ui/Modal";
 
 interface VocabularyVaultViewProps {
   onPlayWord: (text: string) => void;
+  confirmDialogsEnabled: boolean;
 }
 
 interface VaultProgress {
@@ -81,6 +82,7 @@ const MemoryBar = ({ interval }: { interval: number }) => {
 
 const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   onPlayWord,
+  confirmDialogsEnabled,
 }) => {
   const [deck, setDeck] = useState<Record<string, SrsVocabularyItem>>({});
   const [isReviewing, setIsReviewing] = useState(false);
@@ -196,7 +198,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   };
 
   const handleDelete = (word: string) => {
-    if (confirm(`Remove "${word}"?`)) {
+    if (!confirmDialogsEnabled || confirm(`Remove "${word}"?`)) {
       const newDeck = { ...deck };
       delete newDeck[word];
       setDeck(newDeck);
