@@ -72,13 +72,15 @@ jobs:
         run: ${{ steps.pm.outputs.manager }} run lint
 
       - name: Test
-        shell: bash
-        run: |
-          if grep -q "coverage" vite.config.ts; then
-            ${{ steps.pm.outputs.manager }} run test:ci -- --coverage
-          else
-            ${{ steps.pm.outputs.manager }} run test:ci
-          fi
+        run: ${{ steps.pm.outputs.manager }} run test:ci -- --coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage
+          if-no-files-found: error
 
       - name: Build
         run: ${{ steps.pm.outputs.manager }} run build
