@@ -26,14 +26,14 @@ interface StopGameBrowseProps {
   onAddToVault: (word: string, definition: string) => void;
 }
 
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
 const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
   onPlayWord,
   isWordAudioLoading,
   ttsAutoPlay,
   onAddToVault,
 }) => {
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-
   // Browse State
   const [selectedLetter, setSelectedLetter] = useState<string>("A");
   const [selectedGroup, setSelectedGroup] = useState<GroupName>("All");
@@ -109,6 +109,48 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
     setExpandedCategories({});
     setShowSavedOnly(false); // Reset saved filter on letter change
   }, [selectedLetter, selectedGroup]);
+
+  useEffect(() => {
+    const isEditableTarget = (target: EventTarget | null) => {
+      const element = target as HTMLElement | null;
+      if (!element) return false;
+      return (
+        element.tagName === "INPUT" ||
+        element.tagName === "TEXTAREA" ||
+        element.tagName === "SELECT" ||
+        element.isContentEditable
+      );
+    };
+
+    const findNextAvailableLetter = (step: 1 | -1) => {
+      let index = ALPHABET.indexOf(selectedLetter);
+      for (let i = 0; i < ALPHABET.length; i += 1) {
+        index = (index + step + ALPHABET.length) % ALPHABET.length;
+        const letter = ALPHABET[index];
+        if (stopGameData[letter]) return letter;
+      }
+      return selectedLetter;
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "/" && !isEditableTarget(event.target)) {
+        event.preventDefault();
+        document.getElementById("stopgame-search-input")?.focus();
+        return;
+      }
+      if (isEditableTarget(event.target)) return;
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        setSelectedLetter(findNextAvailableLetter(1));
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        setSelectedLetter(findNextAvailableLetter(-1));
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedLetter]);
 
   const toggleCategory = (category: string) => {
     setExpandedCategories((prev) => ({
@@ -203,7 +245,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
         {/* Collapse Toggle Button - Always visible, high z-index */}
         <button
           onClick={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
-          className="absolute top-2 right-2 p-1.5 bg-slate-800 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 z-50 border border-slate-700 shadow-sm transition-all"
+          className="absolute top-2 right-2 p-1.5 bg-slate-800 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 z-50 border border-slate-700 shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
           title={isHeaderCollapsed ? "Expand Header" : "Collapse Header"}
           aria-label={isHeaderCollapsed ? "Expand header" : "Collapse header"}
         >
@@ -248,6 +290,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                   <SearchIcon />
                 </div>
                 <input
+                  id="stopgame-search-input"
                   type="text"
                   placeholder={`Search in '${selectedLetter}'...`}
                   value={browseFilter}
@@ -258,7 +301,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                 {browseFilter && (
                   <button
                     onClick={() => setBrowseFilter("")}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded"
                     aria-label="Clear search"
                   >
                     <svg
@@ -281,7 +324,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
               {/* New Discovery Buttons */}
               <button
                 onClick={() => setShowSavedOnly(!showSavedOnly)}
-                className={`p-2.5 rounded-xl border transition-all ${showSavedOnly ? "bg-pink-600 border-pink-500 text-white" : "bg-slate-800 border-slate-700 text-slate-400 hover:text-pink-400"}`}
+                className={`p-2.5 rounded-xl border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 ${showSavedOnly ? "bg-pink-600 border-pink-500 text-white" : "bg-slate-800 border-slate-700 text-slate-400 hover:text-pink-400"}`}
                 title="Show Saved Only"
                 aria-label={
                   showSavedOnly ? "Show all words" : "Show saved words only"
@@ -292,7 +335,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
 
               <button
                 onClick={handleRandomPick}
-                className="p-2.5 rounded-xl border bg-gradient-to-r from-sky-600 to-purple-600 border-transparent text-white hover:opacity-90 transition-all shadow-lg shadow-purple-500/20"
+                className="p-2.5 rounded-xl border bg-gradient-to-r from-sky-600 to-purple-600 border-transparent text-white hover:opacity-90 transition-all shadow-lg shadow-purple-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"
                 title="Surprise Me!"
                 aria-label="Surprise me with a random word"
               >
@@ -309,7 +352,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
           {/* Letters */}
           <div className="overflow-x-auto scrollbar-hide pb-2">
             <div className="flex gap-1 min-w-max px-2">
-              {alphabet.map((letter) => {
+              {ALPHABET.map((letter) => {
                 const hasData = !!stopGameData[letter];
                 const isSelected = selectedLetter === letter;
                 return (

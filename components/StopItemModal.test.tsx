@@ -1,76 +1,76 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { StopItemModal } from './StopItemModal';
-import { StopItem } from '../types';
-import { describe, test, expect, vi } from 'vitest';
-import React from 'react';
+import { render, screen, fireEvent } from "@testing-library/react";
+import { StopItemModal } from "./StopItemModal";
+import { StopItem } from "../types";
+import { describe, test, expect, vi } from "vitest";
+import React from "react";
 
 const mockItem: StopItem = {
-    word: 'test',
-    ipa: 'test',
-    translation: 'test',
-    definition: 'test definition'
+  word: "test",
+  ipa: "test",
+  translation: "test",
+  definition: "test definition",
 };
 
-describe('StopItemModal Accessibility', () => {
-    test('close button has accessible label', () => {
-        render(
-            <StopItemModal
-                item={mockItem}
-                category="General"
-                onClose={vi.fn()}
-                onPlay={vi.fn()}
-            />
-        );
+describe("StopItemModal Accessibility", () => {
+  test("close button has accessible label", () => {
+    render(
+      <StopItemModal
+        item={mockItem}
+        category="General"
+        onClose={vi.fn()}
+        onPlay={vi.fn()}
+      />,
+    );
 
-        const button = screen.getByRole('button', { name: /close/i });
-        expect(button).toBeInTheDocument();
-    });
+    const button = screen.getByRole("button", { name: /close/i });
+    expect(button).toBeInTheDocument();
+  });
 
-    test('has correct dialog role and labels', () => {
-        render(
-            <StopItemModal
-                item={mockItem}
-                category="General"
-                onClose={vi.fn()}
-                onPlay={vi.fn()}
-            />
-        );
+  test("has correct dialog role and labels", () => {
+    render(
+      <StopItemModal
+        item={mockItem}
+        category="General"
+        onClose={vi.fn()}
+        onPlay={vi.fn()}
+      />,
+    );
 
-        const dialog = screen.getByRole('dialog');
-        expect(dialog).toBeInTheDocument();
-        expect(dialog).toHaveAttribute('aria-modal', 'true');
-        expect(dialog).toHaveAttribute('aria-labelledby', 'modal-title');
+    const dialog = screen.getByRole("dialog");
+    expect(dialog).toBeInTheDocument();
+    expect(dialog).toHaveAttribute("aria-modal", "true");
+    expect(dialog).toHaveAttribute("aria-labelledby", "modal-title");
 
-        const title = dialog.querySelector('#modal-title');
-        expect(title).toHaveTextContent('test');
-    });
+    const title = dialog.querySelector("#modal-title");
+    expect(title).toHaveTextContent("test");
+  });
 
-    test('focus moves to dialog on mount', () => {
-        render(
-            <StopItemModal
-                item={mockItem}
-                category="General"
-                onClose={vi.fn()}
-                onPlay={vi.fn()}
-            />
-        );
+  test("focus moves to first focusable control on mount", () => {
+    render(
+      <StopItemModal
+        item={mockItem}
+        category="General"
+        onClose={vi.fn()}
+        onPlay={vi.fn()}
+      />,
+    );
 
-        const dialog = screen.getByRole('dialog');
-        expect(document.activeElement).toBe(dialog);
-    });
+    const closeButton = screen.getByRole("button", { name: /close/i });
+    expect(document.activeElement).toBe(closeButton);
+  });
 
-    test('closes on Escape key', () => {
-        const onCloseMock = vi.fn();
-        render(
-            <StopItemModal
-                item={mockItem}
-                category="General"
-                onClose={onCloseMock}
-                onPlay={vi.fn()}
-            />
-        );
+  test("closes on Escape key", () => {
+    const onCloseMock = vi.fn();
+    render(
+      <StopItemModal
+        item={mockItem}
+        category="General"
+        onClose={onCloseMock}
+        onPlay={vi.fn()}
+      />,
+    );
 
-        fireEvent.keyDown(window, { key: 'Escape' });
-        expect(onCloseMock).toHaveBeenCalledTimes(1);
-    });
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(onCloseMock).toHaveBeenCalledTimes(1);
+  });
 });
