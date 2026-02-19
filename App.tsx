@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { HashRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
+import { useRegisterSW } from "virtual:pwa-register/react";
 import { playNativeTTS } from "./utils/audioUtils";
 import { createNewSrsItem } from "./utils/srs";
 import { SrsVocabularyItem } from "./types";
@@ -67,6 +68,10 @@ const App: React.FC = () => {
     loadSettings(),
   );
   const [onboardingStep, setOnboardingStep] = React.useState(0);
+  const {
+    needRefresh: [needRefresh],
+    updateServiceWorker,
+  } = useRegisterSW();
 
   React.useEffect(() => {
     document.documentElement.dataset.theme = settings.theme;
@@ -215,6 +220,19 @@ const App: React.FC = () => {
         >
           About · v{APP_VERSION}
         </footer>
+        {needRefresh && (
+          <div className="absolute bottom-4 right-4 z-50 rounded-xl border border-sky-400 bg-slate-900/95 p-3 shadow-2xl">
+            <p className="text-sm font-semibold text-slate-100">
+              Update available
+            </p>
+            <button
+              onClick={() => updateServiceWorker(true)}
+              className="mt-2 rounded-lg bg-sky-500 px-3 py-1.5 text-sm font-bold text-slate-900"
+            >
+              Refresh
+            </button>
+          </div>
+        )}
         {!settings.hasCompletedOnboarding && (
           <div className="absolute inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">

@@ -4,6 +4,17 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
 import { APP_VERSION } from "./utils/appVersion";
 
+const mockUpdateServiceWorker = vi.fn();
+let mockNeedRefresh = false;
+
+vi.mock("virtual:pwa-register/react", () => ({
+  useRegisterSW: () => ({
+    needRefresh: [mockNeedRefresh, vi.fn()],
+    offlineReady: [false, vi.fn()],
+    updateServiceWorker: mockUpdateServiceWorker,
+  }),
+}));
+
 vi.mock("./components/StopGameView", async () => {
   await new Promise((resolve) => setTimeout(resolve, 30));
   return {
@@ -38,6 +49,8 @@ vi.mock("./components/StudyDocsView", () => ({
 describe("App route lazy loading", () => {
   beforeEach(() => {
     window.location.hash = "#/";
+    mockNeedRefresh = false;
+    mockUpdateServiceWorker.mockReset();
   });
 
   test("shows fallback while lazy route loads", async () => {
@@ -76,5 +89,14 @@ describe("App route lazy loading", () => {
       "app-settings",
       expect.stringContaining('"hasCompletedOnboarding":true'),
     );
+  });
+
+  test("shows update banner and refresh action when new version is available", async () => {
+    mockNeedRefresh = true;
+    render(<App />);
+
+    expect(await screen.findByText("Update available")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
+    expect(mockUpdateServiceWorker).toHaveBeenCalledWith(true);
   });
 });
