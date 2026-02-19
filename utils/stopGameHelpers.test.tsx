@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getCategoryIcon } from './stopGameHelpers';
+import { getCategoryIcon, getFlagUrl } from './stopGameHelpers';
 import { StopCategory } from '../types';
 
 describe('getCategoryIcon', () => {
@@ -27,7 +27,8 @@ describe('getCategoryIcon', () => {
          // Casting to unknown then StopCategory to bypass TS checks for testing runtime behavior
          const unknownCategory = 'Completely Unknown Category' as unknown as StopCategory;
          expect(getCategoryIcon(unknownCategory)).toBe('📝');
-import { getFlagUrl } from './stopGameHelpers';
+    });
+});
 
 describe('getFlagUrl', () => {
     it('returns the correct flag URL for a valid country name', () => {

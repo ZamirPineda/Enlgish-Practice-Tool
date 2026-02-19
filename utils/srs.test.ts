@@ -1,7 +1,6 @@
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { calculateSrsData, getDueReviewItems } from './srs';
-import { calculateSrsData, createNewSrsItem } from './srs';
+import { calculateSrsData, createNewSrsItem, getDueReviewItems, getDueReviewWords } from './srs';
 import { SrsVocabularyItem } from '../types';
 
 describe('createNewSrsItem', () => {
@@ -33,9 +32,6 @@ describe('createNewSrsItem', () => {
         });
     });
 });
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { getDueReviewWords } from './srs';
-import { SrsVocabularyItem } from '../types';
 
 // Helper to create a partial SRS item
 const createItem = (word: string, nextReviewDate: string): SrsVocabularyItem => ({
@@ -108,10 +104,7 @@ describe('getDueReviewWords', () => {
       // @ts-ignore
       expect(getDueReviewWords(undefined)).toEqual([]);
   });
-
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { calculateSrsData } from './srs';
-import { SrsVocabularyItem } from '../types';
+});
 
 describe('calculateSrsData', () => {
     // Mock the date to ensure deterministic results
@@ -178,7 +171,7 @@ describe('calculateSrsData', () => {
         });
 
         it('keeps status as "mastered" if already mastered', () => {
-            const item = { ...createBaseItem(), status: 'mastered', repetition: 5, interval: 20 };
+            const item: SrsVocabularyItem = { ...createBaseItem(), status: 'mastered', repetition: 5, interval: 20 };
             const result = calculateSrsData(item, true);
 
             expect(result.status).toBe('mastered');
@@ -201,7 +194,7 @@ describe('calculateSrsData', () => {
         });
 
         it('downgrades status from "mastered" to "learning"', () => {
-            const item = { ...createBaseItem(), status: 'mastered', repetition: 5, interval: 20 };
+            const item: SrsVocabularyItem = { ...createBaseItem(), status: 'mastered', repetition: 5, interval: 20 };
             const result = calculateSrsData(item, false);
 
             expect(result.status).toBe('learning');
@@ -234,9 +227,7 @@ describe('getDueReviewItems', () => {
     });
 
     it('returns empty array if deck is undefined or null', () => {
-        // @ts-expect-error testing invalid input
         expect(getDueReviewItems(null)).toEqual([]);
-        // @ts-expect-error testing invalid input
         expect(getDueReviewItems(undefined)).toEqual([]);
     });
 
@@ -288,7 +279,6 @@ describe('getDueReviewItems', () => {
             'valid': createItem('valid', '2023-01-01'),
             'invalid': null, // Simulate potential corrupted data
         };
-        // @ts-expect-error testing corrupted data
         const result = getDueReviewItems(deck);
 
         expect(result).toHaveLength(1);

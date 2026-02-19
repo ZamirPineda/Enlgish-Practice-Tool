@@ -1,6 +1,6 @@
 
 import { describe, it, expect } from 'vitest';
-import { getFullTextFromParts } from '../StudyDeckView';
+import { getFullTextFromParts } from '../../utils/textUtils';
 import { WordPart } from '../../types';
 
 describe('getFullTextFromParts', () => {
