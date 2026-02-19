@@ -58,7 +58,6 @@ const CheckIcon = () => (
 );
 
 interface StudyDeckViewProps {
-    level: EnglishLevel;
     onPlayWord: (word: string) => void;
     isWordAudioLoading: string | null;
     onAddToVault: (word: string, definition: string) => void;
@@ -76,7 +75,15 @@ const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: 
         return (
             <div
                 onClick={onReveal}
-                className="group cursor-pointer select-none rounded-lg bg-slate-700/50 p-3 border border-slate-600 border-dashed hover:bg-slate-700 hover:border-sky-500 transition-all relative overflow-hidden"
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        if (onReveal) onReveal();
+                    }
+                }}
+                tabIndex={0}
+                role="button"
+                className="group cursor-pointer select-none rounded-lg bg-slate-700/50 p-3 border border-slate-600 border-dashed hover:bg-slate-700 hover:border-sky-500 transition-all relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
                 <div className="absolute inset-0 flex items-center justify-center z-10 opacity-0 group-hover:opacity-100 transition-opacity">
                     <span className="bg-slate-900/80 text-sky-400 px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2">
@@ -108,7 +115,60 @@ const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: 
     );
 };
 
-const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWordAudioLoading, onAddToVault }) => {
+interface DisplayExample extends DrillExample {
+    uniqueKey: string;
+    fullText?: string;
+    textA?: string;
+    textB?: string;
+}
+
+const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: boolean, onReveal?: () => void }) => {
+    if (isHidden) {
+        return (
+            <div
+                onClick={onReveal}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        if (onReveal) onReveal();
+                    }
+                }}
+                tabIndex={0}
+                role="button"
+                className="group cursor-pointer select-none rounded-lg bg-slate-700/50 p-3 border border-slate-600 border-dashed hover:bg-slate-700 hover:border-sky-500 transition-all relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-sky-500"
+            >
+                <div className="absolute inset-0 flex items-center justify-center z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="bg-slate-900/80 text-sky-400 px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2">
+                        <EyeIcon /> Click to Reveal
+                    </span>
+                </div>
+                <p className="text-lg text-transparent bg-slate-600/20 blur-sm font-medium leading-relaxed truncate" aria-hidden="true">
+                    {parts.map(p => p.word).join(' ')}
+                </p>
+            </div>
+        );
+    }
+
+    return (
+        <p className="text-lg text-white font-medium leading-relaxed">
+            {parts.map((part, i) =>
+                part.category ? (
+                    <span key={i} className={`relative group cursor-pointer transition-colors ${getCategoryStyle(part.category)}`}>
+                        {part.word}
+                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-2 py-1 bg-slate-900 text-white text-xs font-bold rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border border-slate-600 shadow-lg">
+                            {part.category}
+                        </span>
+                    </span>
+                ) : (
+                    <span key={i}>{part.word}</span>
+                )
+            ).reduce((prev, curr) => <>{prev} {curr}</>)}
+        </p>
+    );
+};
+
+const StudyDeckView: React.FC<StudyDeckViewProps> = ({ onPlayWord, isWordAudioLoading, onAddToVault }) => {
+    const [level, setLevel] = useState<EnglishLevel>(EnglishLevel.B1);
     const topicsForLevel = useMemo(() => drillTopicsByLevel[level] || [], [level]);
     const [selectedTopicId, setSelectedTopicId] = useState<string | null>(topicsForLevel.length > 0 ? topicsForLevel[0].id : null);
     const [isPracticeMode, setIsPracticeMode] = useState(false);
@@ -183,9 +243,29 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
         setSavedItems(prev => new Set(prev).add(phrase));
     };
 
+    // If no topics, show empty state (omitted code for brevity if not changed, but I need to include it if I'm replacing the whole component or block)
+    // Actually, I am replacing the Props and the beginning of the component.
+
+    // ... (helper functions are fine)
+
     if (topicsForLevel.length === 0) {
         return (
-            <div className="flex-1 flex items-center justify-center text-center p-4">
+            <div className="flex-1 flex flex-col items-center justify-center text-center p-4">
+                <div className="mb-6">
+                    <label htmlFor="level-select-empty" className="block text-sm font-medium text-slate-300 mb-2">
+                        Select Level:
+                    </label>
+                    <select
+                        id="level-select-empty"
+                        value={level}
+                        onChange={(e) => setLevel(e.target.value as EnglishLevel)}
+                        className="bg-slate-700 border border-slate-600 text-white text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5"
+                    >
+                        {Object.values(EnglishLevel).map((l) => (
+                            <option key={l} value={l}>{l}</option>
+                        ))}
+                    </select>
+                </div>
                 <div className="bg-slate-800 p-8 rounded-lg">
                     <h2 className="text-xl font-semibold text-slate-300">No Study Decks Available</h2>
                     <p className="text-slate-400 mt-2">There are no study decks for the {level} level yet. Please check back later!</p>
@@ -197,10 +277,29 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
     return (
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
             <div className="max-w-4xl mx-auto">
+                {/* Level Select */}
+                <div className="mb-6 flex justify-center">
+                    <div className="inline-flex items-center gap-2 bg-slate-800 p-2 rounded-lg border border-slate-700">
+                        <label htmlFor="level-select" className="text-sm font-bold text-slate-400">
+                            Level:
+                        </label>
+                        <select
+                            id="level-select"
+                            value={level}
+                            onChange={(e) => setLevel(e.target.value as EnglishLevel)}
+                            className="bg-slate-700 border-none text-sky-400 font-bold text-lg focus:ring-0 cursor-pointer hover:text-sky-300 transition-colors py-0 pl-2 pr-8"
+                        >
+                            {Object.values(EnglishLevel).map((l) => (
+                                <option key={l} value={l}>{l}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-6">
                     <div className="w-full md:w-auto flex-1">
                         {topicsForLevel.length > 1 && (
-                            <div className="mb-2">
+                            <div className="mb-2"> // ... rest of the code
                                 <label htmlFor="study-topic-select" className="block text-sm font-medium text-slate-300 mb-1">
                                     Select Study Topic:
                                 </label>
@@ -428,13 +527,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({ level, onPlayWord, isWord
                     </div>
                 )}
             </div>
-            <style>{`
-            @keyframes fade-in {
-                from { opacity: 0; transform: translateY(5px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
-        `}</style>
+
         </div>
     );
 };
