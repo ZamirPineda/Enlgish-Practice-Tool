@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.0.0...english-practice-pal-v1.1.0) (2026-02-19)
+
+
+### Features
+
+* add stats screen with progress metrics ([9b86135](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/9b86135ba1ec8f9dc659fc4dec31ef0a687738e3))
+
 ## 1.0.0 (2026-02-19)
 
 
