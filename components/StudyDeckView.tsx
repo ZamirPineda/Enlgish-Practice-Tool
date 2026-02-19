@@ -115,57 +115,7 @@ const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: 
     );
 };
 
-interface DisplayExample extends DrillExample {
-    uniqueKey: string;
-    fullText?: string;
-    textA?: string;
-    textB?: string;
-}
 
-const Sentence = ({ parts, isHidden, onReveal }: { parts: WordPart[], isHidden: boolean, onReveal?: () => void }) => {
-    if (isHidden) {
-        return (
-            <div
-                onClick={onReveal}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        if (onReveal) onReveal();
-                    }
-                }}
-                tabIndex={0}
-                role="button"
-                className="group cursor-pointer select-none rounded-lg bg-slate-700/50 p-3 border border-slate-600 border-dashed hover:bg-slate-700 hover:border-sky-500 transition-all relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-sky-500"
-            >
-                <div className="absolute inset-0 flex items-center justify-center z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="bg-slate-900/80 text-sky-400 px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2">
-                        <EyeIcon /> Click to Reveal
-                    </span>
-                </div>
-                <p className="text-lg text-transparent bg-slate-600/20 blur-sm font-medium leading-relaxed truncate" aria-hidden="true">
-                    {parts.map(p => p.word).join(' ')}
-                </p>
-            </div>
-        );
-    }
-
-    return (
-        <p className="text-lg text-white font-medium leading-relaxed">
-            {parts.map((part, i) =>
-                part.category ? (
-                    <span key={i} className={`relative group cursor-pointer transition-colors ${getCategoryStyle(part.category)}`}>
-                        {part.word}
-                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-2 py-1 bg-slate-900 text-white text-xs font-bold rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border border-slate-600 shadow-lg">
-                            {part.category}
-                        </span>
-                    </span>
-                ) : (
-                    <span key={i}>{part.word}</span>
-                )
-            ).reduce((prev, curr) => <>{prev} {curr}</>)}
-        </p>
-    );
-};
 
 const StudyDeckView: React.FC<StudyDeckViewProps> = ({ onPlayWord, isWordAudioLoading, onAddToVault }) => {
     const [level, setLevel] = useState<EnglishLevel>(EnglishLevel.B1);
