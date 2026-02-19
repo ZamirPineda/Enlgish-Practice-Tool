@@ -9,6 +9,11 @@ import {
 import ReviewSession from "./ReviewSession";
 import SpeechPracticeButton from "./SpeechPracticeButton";
 import { PlayIcon, TrashIcon } from "./Icons";
+import Button from "./ui/Button";
+import Card from "./ui/Card";
+import Badge from "./ui/Badge";
+import Input from "./ui/Input";
+import Modal from "./ui/Modal";
 
 interface VocabularyVaultViewProps {
   onPlayWord: (text: string) => void;
@@ -317,35 +322,39 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             </nav>
           </div>
           <div className="flex gap-3 w-full md:w-auto">
-            <button
+            <Button
               onClick={() => {
                 resetAddForm();
                 setIsAddOpen(true);
               }}
-              className="flex-1 md:flex-none bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-2xl border border-slate-700 transition-all flex items-center justify-center gap-2"
+              size="lg"
+              variant="secondary"
+              className="flex-1 md:flex-none flex items-center justify-center gap-2"
             >
               + Add Word
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => {
                 setReviewItems(dueItems);
                 setCurrentIndex(0);
                 setIsReviewing(true);
               }}
               disabled={dueItems.length === 0}
-              className={`flex-1 md:flex-none py-3 px-8 rounded-2xl font-black transition-all shadow-2xl flex items-center justify-center gap-3 ${dueItems.length > 0 ? "bg-sky-600 hover:bg-sky-500 text-white scale-105" : "bg-slate-800 text-slate-500 cursor-not-allowed"}`}
+              size="lg"
+              variant={dueItems.length > 0 ? "primary" : "secondary"}
+              className={`flex-1 md:flex-none font-black flex items-center justify-center gap-3 ${dueItems.length > 0 ? "scale-105" : ""}`}
             >
               {dueItems.length > 0
                 ? `Review Now (${dueItems.length})`
                 : "All caught up!"}
-            </button>
+            </Button>
           </div>
         </div>
 
         {activeTab === "study" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-in">
             <div className="lg:col-span-1 space-y-6">
-              <div className="bg-slate-800 border border-slate-700 rounded-3xl p-6 shadow-xl">
+              <Card elevated>
                 <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6">
                   Learning Pulse
                 </h3>
@@ -382,7 +391,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     {progress.bestStreak}
                   </p>
                 </div>
-              </div>
+              </Card>
               <div className="bg-gradient-to-br from-amber-600/10 to-orange-600/10 border border-amber-500/20 rounded-3xl p-6">
                 <h4 className="text-amber-400 font-bold text-sm mb-2 flex items-center gap-2">
                   💡 Zamir's Study Tip
@@ -433,12 +442,12 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
         {activeTab === "collection" && (
           <div className="animate-fade-in space-y-6">
             <div className="relative flex-1 mb-8">
-              <input
+              <Input
                 type="text"
                 placeholder="Search by word, definition or tag..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-2xl px-6 py-3 text-white focus:ring-2 focus:ring-sky-500 outline-none"
+                className="px-6 py-3"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">
                 🔍
@@ -478,17 +487,12 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   </div>
                   <div className="flex flex-wrap gap-1 mb-3">
                     {item.partOfSpeech && (
-                      <span className="text-[10px] bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded border border-slate-600 uppercase">
-                        {item.partOfSpeech}
-                      </span>
+                      <Badge className="uppercase">{item.partOfSpeech}</Badge>
                     )}
                     {item.tags?.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[10px] bg-sky-900/30 text-sky-400 px-1.5 py-0.5 rounded border border-sky-800/30"
-                      >
+                      <Badge key={tag} variant="accent">
                         {tag}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
                   <p className="text-slate-400 text-sm mb-4 line-clamp-2 italic flex-1">
@@ -515,21 +519,24 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
 
         {activeTab === "sync" && (
           <div className="animate-fade-in space-y-10 max-w-2xl mx-auto py-8">
-            <section className="bg-slate-800 border border-slate-700 rounded-3xl p-8 shadow-xl">
+            <Card className="p-8" elevated>
               <h2 className="text-2xl font-black text-white mb-2">
                 Export Vault
               </h2>
               <p className="text-slate-400 text-sm mb-6">
                 Download a JSON backup with your deck and streak progress.
               </p>
-              <button
+              <Button
                 onClick={handleExport}
-                className="w-full py-4 rounded-2xl font-black transition-all bg-sky-600 hover:bg-sky-500 text-white"
+                variant="primary"
+                size="lg"
+                fullWidth
+                className="font-black"
               >
                 DOWNLOAD JSON BACKUP
-              </button>
-            </section>
-            <section className="bg-slate-800 border border-slate-700 rounded-3xl p-8 shadow-xl">
+              </Button>
+            </Card>
+            <Card className="p-8" elevated>
               <h2 className="text-2xl font-black text-white mb-2">
                 Import Vault
               </h2>
@@ -545,83 +552,84 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 placeholder="Paste code here..."
                 className="w-full h-32 bg-slate-900 border border-slate-700 rounded-2xl p-4 text-slate-300 text-xs font-mono mb-4 focus:ring-2 focus:ring-amber-500 outline-none"
               />
-              <button
+              <Button
                 onClick={handleImport}
                 disabled={!importText.trim()}
-                className="w-full py-4 bg-slate-700 hover:bg-slate-600 disabled:opacity-30 text-white rounded-2xl font-black"
+                variant="secondary"
+                size="lg"
+                fullWidth
+                className="font-black"
               >
                 RESTORE VAULT
-              </button>
-            </section>
+              </Button>
+            </Card>
           </div>
         )}
       </div>
 
-      {isAddOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-[70] animate-fade-in">
-          <div className="bg-slate-800 rounded-3xl p-8 w-full max-w-md border border-slate-700 shadow-2xl">
-            <h2 className="text-2xl font-black text-white mb-4">
-              Add New Word
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">
-                  Word to learn
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={newWord}
-                    onChange={(e) => setNewWord(e.target.value)}
-                    className="flex-1 bg-slate-900 border border-slate-700 rounded-xl p-3 text-white outline-none focus:ring-2 focus:ring-sky-500"
-                    placeholder="e.g. Ubiquitous"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">
-                  Context / Source Sentence (Optional)
-                </label>
-                <input
-                  type="text"
-                  value={newContext}
-                  onChange={(e) => setNewContext(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm text-slate-300 outline-none focus:ring-2 focus:ring-sky-500"
-                  placeholder="Where did you see it? e.g. 'The wifi was ubiquitous in the city.'"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">
-                  Definition & Notes
-                </label>
-                <textarea
-                  value={newDef}
-                  onChange={(e) => setNewDef(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white outline-none focus:ring-2 focus:ring-sky-500 h-24"
-                  placeholder="Meaning, Example, etc."
-                />
-              </div>
-            </div>
-            <div className="flex gap-3 mt-8">
-              <button
-                onClick={() => setIsAddOpen(false)}
-                className="flex-1 py-3 text-slate-400 font-bold hover:text-white transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                disabled={!newWord || !newDef}
-                onClick={handleSaveFromModal}
-                className="flex-1 bg-sky-600 hover:bg-sky-500 text-white font-bold py-3 rounded-2xl disabled:opacity-30 transition-all"
-              >
-                Save Word
-              </button>
+      <Modal isOpen={isAddOpen} onClose={() => setIsAddOpen(false)}>
+        <h2 className="text-2xl font-black text-white mb-4">Add New Word</h2>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">
+              Word to learn
+            </label>
+            <div className="flex gap-2">
+              <Input
+                type="text"
+                value={newWord}
+                onChange={(e) => setNewWord(e.target.value)}
+                className="flex-1 p-3"
+                placeholder="e.g. Ubiquitous"
+              />
             </div>
           </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">
+              Context / Source Sentence (Optional)
+            </label>
+            <Input
+              type="text"
+              value={newContext}
+              onChange={(e) => setNewContext(e.target.value)}
+              className="p-3 text-sm text-slate-300"
+              placeholder="Where did you see it? e.g. 'The wifi was ubiquitous in the city.'"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">
+              Definition & Notes
+            </label>
+            <textarea
+              value={newDef}
+              onChange={(e) => setNewDef(e.target.value)}
+              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white outline-none focus:ring-2 focus:ring-sky-500 h-24"
+              placeholder="Meaning, Example, etc."
+            />
+          </div>
         </div>
-      )}
+        <div className="flex gap-3 mt-8">
+          <Button
+            onClick={() => setIsAddOpen(false)}
+            variant="ghost"
+            size="lg"
+            className="flex-1"
+          >
+            Cancel
+          </Button>
+          <Button
+            disabled={!newWord || !newDef}
+            onClick={handleSaveFromModal}
+            variant="primary"
+            size="lg"
+            className="flex-1"
+          >
+            Save Word
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
