@@ -91,4 +91,41 @@ Coincidencias encontradas en documentación/ejemplos (placeholders):
 ## 6) Notas de validación
 
 - Build verificado: `npm run build` ✅
-- Tests actuales del repositorio: existen fallos preexistentes no relacionados con esta tarea de seguridad.
+- Tests verificados: `npm run test:ci` ✅
+
+## 7) Actualización de remediation (2026-02-19)
+
+### Vulnerabilidades abordadas en este PR
+
+- **Resueltas (high):**
+  - `minimatch < 10.2.1` (ReDoS, GHSA-3ppc-4f35-3m26)
+- **Pendientes (moderate, no bloquean el check de CI actual):**
+  - `ajv < 8.18.0` vía `@eslint/eslintrc` en ESLint 8 (`npm audit` reporta *No fix available* sin saltar a ESLint 10).
+
+### Cambios aplicados
+
+1. Se mantuvo ESLint en major compatible (**8.x**) para evitar breaking changes innecesarios.
+2. Se agregó `overrides` en `package.json` para forzar versión segura transitiva:
+
+```json
+"overrides": {
+  "minimatch": "^10.2.1"
+}
+```
+
+3. Se regeneró `package-lock.json`.
+
+### Resultado verificado
+
+- `npm audit --audit-level=high` ✅ **exit code 0** (sin high/critical).
+- `npm run lint` ✅
+- `npm run typecheck` ✅
+- `npm run test:ci` ✅
+- `npm run build` ✅
+
+### Reproducción local
+
+```bash
+npm ci
+npm audit --audit-level=high
+```

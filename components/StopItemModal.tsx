@@ -62,7 +62,7 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({ item, category, on
                 aria-modal="true"
                 aria-labelledby="modal-title"
                 tabIndex={-1}
-                className={`w-full max-w-lg bg-slate-900 border-2 ${theme.borderColor} rounded-2xl shadow-2xl overflow-hidden relative transform transition-all scale-100 outline-none`}
+                className={`w-full max-w-lg bg-slate-900 border-2 ${theme.accentColor} rounded-2xl shadow-2xl overflow-hidden relative transform transition-all scale-100 outline-none`}
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}

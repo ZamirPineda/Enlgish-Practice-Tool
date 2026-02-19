@@ -79,12 +79,20 @@ npm test
 Para ejecución no interactiva (útil en CI/local):
 
 ```bash
-npm test -- --run
+npm run test:ci
 ```
 
 ### Lint
 
-Actualmente **no hay script de lint** en `package.json` (pendiente).
+```bash
+npm run lint
+```
+
+### Typecheck
+
+```bash
+npm run typecheck
+```
 
 ## Variables de entorno y configuración
 
