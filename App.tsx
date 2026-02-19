@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import { playNativeTTS } from './utils/audioUtils';
 import { createNewSrsItem } from './utils/srs';
 import { SrsVocabularyItem } from './types';
 
 // Views
-import StopGameView from './components/StopGameView';
-import StudyDeckView from './components/StudyDeckView';
-import PersonalPhrasesView from './components/PersonalPhrasesView';
-import VocabularyVaultView from './components/VocabularyVaultView';
-import MathView from './components/MathView';
-import StudyDocsView from './components/StudyDocsView';
+const StopGameView = lazy(() => import('./components/StopGameView'));
+const StudyDeckView = lazy(() => import('./components/StudyDeckView'));
+const PersonalPhrasesView = lazy(() => import('./components/PersonalPhrasesView'));
+const VocabularyVaultView = lazy(() => import('./components/VocabularyVaultView'));
+const MathView = lazy(() => import('./components/MathView'));
+const StudyDocsView = lazy(() => import('./components/StudyDocsView'));
 
 const NavItem = ({ to, children }: { to: string, children: React.ReactNode }) => (
     <NavLink
@@ -62,15 +62,17 @@ const App: React.FC = () => {
                 </header>
 
                 <main className="flex-1 flex flex-col min-h-0 bg-slate-900/50 relative">
-                    <Routes>
-                        <Route path="/" element={<Navigate to="/stop" replace />} />
-                        <Route path="/stop" element={<StopGameView onPlayWord={playNativeTTS} isWordAudioLoading={null} onAddToVault={addToVault} />} />
-                        <Route path="/study" element={<StudyDeckView onPlayWord={playNativeTTS} isWordAudioLoading={null} onAddToVault={addToVault} />} />
-                        <Route path="/personal" element={<PersonalPhrasesView onPlayAudio={playNativeTTS} />} />
-                        <Route path="/vault" element={<VocabularyVaultView onPlayWord={playNativeTTS} />} />
-                        <Route path="/calculus" element={<MathView />} />
-                        <Route path="/docs" element={<StudyDocsView />} />
-                    </Routes>
+                    <Suspense fallback={<div className="flex-1 flex items-center justify-center text-slate-300" role="status">Loading section...</div>}>
+                        <Routes>
+                            <Route path="/" element={<Navigate to="/stop" replace />} />
+                            <Route path="/stop" element={<StopGameView onPlayWord={playNativeTTS} isWordAudioLoading={null} onAddToVault={addToVault} />} />
+                            <Route path="/study" element={<StudyDeckView onPlayWord={playNativeTTS} isWordAudioLoading={null} onAddToVault={addToVault} />} />
+                            <Route path="/personal" element={<PersonalPhrasesView onPlayAudio={playNativeTTS} />} />
+                            <Route path="/vault" element={<VocabularyVaultView onPlayWord={playNativeTTS} />} />
+                            <Route path="/calculus" element={<MathView />} />
+                            <Route path="/docs" element={<StudyDocsView />} />
+                        </Routes>
+                    </Suspense>
                 </main>
             </div>
         </HashRouter>
