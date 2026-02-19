@@ -67,7 +67,7 @@ describe("App route lazy loading", () => {
     fireEvent.click(screen.getByRole("button", { name: "Next" }));
     expect(screen.getByText("Start a review session")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Next" }));
-    fireEvent.click(screen.getByRole("button", { name: "Let's go" }));
+    fireEvent.click(screen.getByRole("button", { name: "Let’s go" }));
 
     expect(
       screen.queryByText("Add words to your Vault"),

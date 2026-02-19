@@ -246,7 +246,7 @@ const App: React.FC = () => {
                     onClick={closeOnboarding}
                     className="ml-auto px-4 py-2 rounded-lg bg-emerald-400 text-slate-900 text-sm font-black"
                   >
-                    Let&apos;s go
+                    Let’s go
                   </button>
                 )}
               </div>
