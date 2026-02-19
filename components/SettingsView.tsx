@@ -29,7 +29,8 @@ const SettingsView: React.FC<SettingsViewProps> = ({
             <div>
               <label
                 htmlFor="theme-select"
-                className="block text-sm font-bold text-slate-300 mb-2"
+                className="block text-sm font-bold mb-2"
+                style={{ color: "var(--color-text-secondary)" }}
               >
                 Theme
               </label>
