@@ -53,8 +53,10 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
   } | null>(null);
 
   // Practice State
-  const [practiceWord, setPracticeWord] = useState<string | null>(null);
+  const [practiceWord, setPracticeWord] = useState<StopItem | null>(null);
   const [practiceFeedback, setPracticeFeedback] = useState<string | null>(null);
+  // Add state to hold the 'frozen' transcript for feedback display even after mic stops
+  const [frozenTranscript, setFrozenTranscript] = useState<string | null>(null);
   const [isPracticing, setIsPracticing] = useState(false);
   const [savedWords, setSavedWords] = useState<Set<string>>(new Set());
 
@@ -162,40 +164,89 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
   // --- PRACTICE & SPEECH ---
   const handleSpeechResult = (transcript: string) => {
     if (practiceWord && isPracticing) {
-      const cleanTranscript = transcript
+      // Hyphen normalization: treat hyphens as spaces
+      const normalizedTranscript = (transcript || "").replace(/-/g, " ");
+      const normalizedTarget = (practiceWord.word || "").replace(/-/g, " ");
+
+      const cleanTranscript = normalizedTranscript
         .toLowerCase()
         .replace(/[^a-z0-9 ]/g, "")
         .trim();
-      const cleanTarget = practiceWord
+      const cleanTarget = normalizedTarget
         .toLowerCase()
         .replace(/[^a-z0-9 ]/g, "")
         .trim();
-      if (
+
+      if (!cleanTranscript) return;
+
+      const isMatch =
         cleanTranscript.includes(cleanTarget) ||
-        cleanTarget.includes(cleanTranscript)
-      ) {
-        setPracticeFeedback("Correct! 🎉");
-        setIsPracticing(false);
+        cleanTarget.includes(cleanTranscript);
+
+      if (isMatch) {
+        // SUCCESS: Freeze the transcript, stop listening, show success, then close.
+        setFrozenTranscript(transcript);
         abortListening();
+        setPracticeFeedback("Correct! 🎉");
+
+        // Auto-add to Vault on successful practice
+        if (onAddToVault && practiceWord) {
+          handleSaveWord(
+            practiceWord.word,
+            practiceWord.definition || practiceWord.translation,
+          );
+        }
+
+        setTimeout(() => {
+          setIsPracticing(false);
+          setPracticeWord(null);
+          setPracticeFeedback(null);
+          setFrozenTranscript(null);
+        }, 5000);
       } else {
-        setPracticeFeedback(`You said: "${transcript}". Try again!`);
-        setIsPracticing(false);
+        // INCORRECT / PARTIAL
+        // We do NOT stop listening. We just update the feedback message if it's clearly wrong?
+        // Or better, just let the transcript show what they said.
+        // If we want "Incorrect" text, we can show it but NOT stop.
+        // This way the user can correct themselves: "Ba... Ban... Banana!"
+        // And the transcript will update live.
+        // We only show "Incorrect" if the transcript is substantial length?
+        // Or just always show "Keep trying..."?
+        // User liked "Incorrect. Try again!". Let's use that but NOT stop.
+
+        setPracticeFeedback("Incorrect. Keep trying...");
       }
     }
   };
 
-  const { startListening, abortListening, micState, interimTranscript } =
-    useSpeechRecognition(handleSpeechResult);
+  const {
+    startListening,
+    abortListening,
+    micState,
+    interimTranscript,
+    finalTranscript,
+  } = useSpeechRecognition(handleSpeechResult);
 
-  const handlePracticeClick = (word: string) => {
-    if (isPracticing && practiceWord === word) {
+  const handlePracticeClick = (item: StopItem) => {
+    // If clicking same word that is currently active (Closing or Retrying)
+    if (isPracticing && practiceWord?.word === item.word) {
+      // Just close/reset everything.
+      // User can click again to restart.
       abortListening();
       setIsPracticing(false);
-      setPracticeFeedback("Stopped.");
-    } else {
-      if (isPracticing) abortListening();
-      setPracticeWord(word);
+      setPracticeWord(null);
       setPracticeFeedback(null);
+      setFrozenTranscript(null);
+    } else {
+      // Switching to a new word or starting fresh
+      if (isPracticing) {
+        abortListening();
+        setIsPracticing(false);
+      }
+
+      setPracticeWord(item);
+      setPracticeFeedback(null);
+      setFrozenTranscript(null);
       setIsPracticing(true);
       setTimeout(() => startListening(), 50);
     }
@@ -499,15 +550,18 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                           category={category}
                           theme={theme}
                           onPlay={onPlayWord}
-                          onPractice={handlePracticeClick}
+                          onPractice={() => handlePracticeClick(item)}
                           onSave={handleSaveWord}
                           isAudioLoading={isWordAudioLoading === item.word}
                           isPracticing={
-                            practiceWord === item.word && isPracticing
+                            practiceWord?.word === item.word && isPracticing
                           }
                           isSaved={savedWords.has(item.word)}
                           micState={micState}
-                          transcript={interimTranscript}
+                          transcript={
+                            frozenTranscript ||
+                            (finalTranscript || "") + (interimTranscript || "")
+                          }
                           feedback={practiceFeedback}
                           onDetailClick={
                             isStudyMode

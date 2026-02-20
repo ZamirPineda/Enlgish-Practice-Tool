@@ -12,6 +12,7 @@ export const useSpeechRecognition = (
     "off" | "listening" | "paused" | "not-supported"
   >("off");
   const [interimTranscript, setInterimTranscript] = useState("");
+  const [finalTranscript, setFinalTranscript] = useState(""); // Add state for final transcript
   const recognitionRef = useRef<any | null>(null);
   const transcriptBufferRef = useRef<string>("");
   const lastDeliveredTranscriptRef = useRef<string>("");
@@ -74,6 +75,7 @@ export const useSpeechRecognition = (
 
       if (fullFinal) {
         transcriptBufferRef.current += " " + fullFinal;
+        setFinalTranscript((prev) => prev + " " + fullFinal); // Update state on meaningful change
         deliverTranscript();
       }
     };
@@ -84,6 +86,9 @@ export const useSpeechRecognition = (
       if (isComponentMounted.current) {
         setMicState("off");
         setInterimTranscript("");
+        // We do NOT clear finalTranscript here if we want it to persist?
+        // But the button logic often relies on aborted/stopped states.
+        // Let's decide: If mic stops, finalTranscript is what we have.
       }
     };
 
@@ -125,6 +130,7 @@ export const useSpeechRecognition = (
     transcriptBufferRef.current = "";
     lastDeliveredTranscriptRef.current = "";
     setInterimTranscript("");
+    setFinalTranscript(""); // Reset on start
 
     try {
       recognition.start();
@@ -153,6 +159,23 @@ export const useSpeechRecognition = (
       } catch (e) {}
       setMicState("off");
       setInterimTranscript("");
+      // Don't clear finalTranscript here if we want it to persist for UI
+      // But clearing buffer is important for next round?
+      // Yes, abort means total reset usually.
+      // But user wants to SEE the result after incorrect attempt if stopped.
+      // If we stop manually, we want to see it.
+      // So wait, if we abort, do we clear UI?
+      // Usually, `startListening` clears UI.
+      // So let's NOT clear `finalTranscript` here, just stop recording.
+      // But `transcriptBufferRef` should probably be cleared for logic purposes?
+      // Actually no, if we resume, we might want to continue?
+      // No, resume usually means start fresh.
+      // Let's clear buffer but keep state for display?
+      // Or relies on component state?
+      // Component state (StopGameBrowse) handles `frozenTranscript`.
+      // Hook should be clean.
+      // So let's clear it here to be safe and let component manage persistence.
+      setFinalTranscript("");
       transcriptBufferRef.current = "";
       lastDeliveredTranscriptRef.current = "";
     }
@@ -161,6 +184,7 @@ export const useSpeechRecognition = (
   return {
     micState,
     interimTranscript,
+    finalTranscript, // Export this
     startListening,
     stopListening,
     abortListening,
