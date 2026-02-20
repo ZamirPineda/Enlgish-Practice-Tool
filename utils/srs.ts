@@ -1,6 +1,7 @@
 import { SrsVocabularyItem } from "../types";
 
 const INITIAL_EFACTOR = 2.5;
+const INTERVAL_FUZZ_PERCENT = 0.05;
 
 /**
  * Calculates the next review data for an SRS item based on the SM-2 algorithm.
@@ -23,6 +24,9 @@ export function calculateSrsData(
     } else {
       interval = Math.round(item.interval * item.efactor);
     }
+    const intervalMultiplier =
+      1 + (Math.random() * 2 - 1) * INTERVAL_FUZZ_PERCENT;
+    interval = Math.max(1, Math.round(interval * intervalMultiplier));
 
     const quality = 5;
     const efactor = Math.max(

@@ -117,13 +117,16 @@ describe("getDueReviewWords", () => {
 describe("calculateSrsData", () => {
   // Mock the date to ensure deterministic results
   const MOCK_TODAY = new Date("2023-01-01T00:00:00.000Z");
+  let randomSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     vi.useFakeTimers();
     vi.setSystemTime(MOCK_TODAY);
+    randomSpy = vi.spyOn(Math, "random").mockReturnValue(0.5);
   });
 
   afterEach(() => {
+    randomSpy.mockRestore();
     vi.useRealTimers();
   });
 
@@ -173,6 +176,34 @@ describe("calculateSrsData", () => {
       expect(result.interval).toBe(16); // Math.round(6 * 2.6) = 16
       // 2023-01-01 + 16 days = 2023-01-17
       expect(result.nextReviewDate).toBe("2023-01-17");
+    });
+
+    it("applies positive fuzzing to spread review dates", () => {
+      randomSpy.mockReturnValue(1);
+      const item = {
+        ...createBaseItem(),
+        repetition: 2,
+        interval: 20,
+        efactor: 2,
+      };
+      const result = calculateSrsData(item, true);
+
+      expect(result.interval).toBe(42); // Math.round(40 * 1.05) = 42
+      expect(result.nextReviewDate).toBe("2023-02-12");
+    });
+
+    it("applies negative fuzzing to spread review dates", () => {
+      randomSpy.mockReturnValue(0);
+      const item = {
+        ...createBaseItem(),
+        repetition: 2,
+        interval: 20,
+        efactor: 2,
+      };
+      const result = calculateSrsData(item, true);
+
+      expect(result.interval).toBe(38); // Math.round(40 * 0.95) = 38
+      expect(result.nextReviewDate).toBe("2023-02-08");
     });
 
     it('transitions status to "mastered" when interval > 14', () => {
