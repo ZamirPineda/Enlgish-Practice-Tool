@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.10.0...english-practice-pal-v1.11.0) (2026-02-20)
+
+
+### Features
+
+* add fuzzing to SRS interval calculation ([9d2ef0c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/9d2ef0c7fddc2b765bccba34944f35e05c484055))
+
 ## [1.10.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.9.0...english-practice-pal-v1.10.0) (2026-02-20)
 
 
