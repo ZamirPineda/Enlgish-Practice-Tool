@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.12.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.11.0...english-practice-pal-v1.12.0) (2026-02-20)
+
+
+### Features
+
+* add 20 advanced phrasal verbs to stop game data ([6d8813f](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/6d8813ff7260d49e12f6c7cc78fc8c1b18e6dba9))
+
+
+### Bug Fixes
+
+* refine advanced phrasal verb entries and validations ([2cb42e5](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/2cb42e53d076c954b2fd7e0dacd8dc155e664191))
+
 ## [1.11.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.10.0...english-practice-pal-v1.11.0) (2026-02-20)
 
 
