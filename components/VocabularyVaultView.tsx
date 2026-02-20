@@ -229,9 +229,30 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
 
   const handleDelete = (word: string) => {
     if (!confirmDialogsEnabled || confirm(`Remove "${word}"?`)) {
-      const newDeck = { ...deck };
-      delete newDeck[word];
-      setDeck(newDeck);
+      setDeck((prevDeck) => {
+        const newDeck = { ...prevDeck };
+        // Try deleting by the exact word passed
+        if (newDeck[word]) {
+          delete newDeck[word];
+        } else {
+          // Fallback: search for keys that match physically if there is some mismatch
+          // or try trimming?
+          const trimmed = word.trim();
+          if (newDeck[trimmed]) {
+            delete newDeck[trimmed];
+          } else {
+            // Debug: Log if we can't find it
+            console.warn("Could not find word in deck to delete:", word);
+            // Is it possible the key is different?
+            // Let's look for a key whose lowercase matches?
+            const foundKey = Object.keys(newDeck).find(
+              (k) => k.toLowerCase() === word.toLowerCase(),
+            );
+            if (foundKey) delete newDeck[foundKey];
+          }
+        }
+        return newDeck;
+      });
     }
   };
 
