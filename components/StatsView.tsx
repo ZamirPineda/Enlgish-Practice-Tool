@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { SrsVocabularyItem } from "../types";
 import { calculateStatsMetrics, VaultProgress } from "../utils/statsMetrics";
+import Heatmap from "./Heatmap";
 
 const VAULT_DECK_KEY = "vocab-vault-deck";
 const VAULT_PROGRESS_KEY = "vocab-vault-progress";
@@ -119,6 +120,11 @@ const StatsView: React.FC = () => {
                   : `${metrics.estimatedStudyMinutes} min`}
               </p>
             </section>
+
+            <Heatmap
+              deck={deck}
+              progress={{ ...DEFAULT_PROGRESS, ...progress }}
+            />
           </>
         )}
       </div>
