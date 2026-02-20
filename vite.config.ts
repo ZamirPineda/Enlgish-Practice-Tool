@@ -6,6 +6,7 @@ import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, ".", "");
+  const basePath = "/Enlgish-Practice-Tool/";
   return {
     server: {
       port: 3000,
@@ -15,20 +16,53 @@ export default defineConfig(({ mode }) => {
       react(),
       VitePWA({
         registerType: "autoUpdate",
-        includeAssets: [],
+        includeAssets: [
+          "favicon.ico",
+          "apple-touch-icon.png",
+          "pwa-192x192.png",
+          "pwa-512x512.png",
+          "pwa-192x192-maskable.png",
+          "pwa-512x512-maskable.png",
+          "offline.html",
+        ],
         workbox: {
           maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+          navigateFallback: `${basePath}offline.html`,
         },
         manifest: {
           name: "English Practice Pal",
           short_name: "English Pal",
           description:
             "English study tool with vocabulary and spaced repetition",
-          start_url: "/Enlgish-Practice-Tool/",
-          scope: "/Enlgish-Practice-Tool/",
+          start_url: basePath,
+          scope: basePath,
           display: "standalone",
           background_color: "#0f172a",
           theme_color: "#0284c7",
+          icons: [
+            {
+              src: "pwa-192x192.png",
+              sizes: "192x192",
+              type: "image/png",
+            },
+            {
+              src: "pwa-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
+            },
+            {
+              src: "pwa-192x192-maskable.png",
+              sizes: "192x192",
+              type: "image/png",
+              purpose: "maskable",
+            },
+            {
+              src: "pwa-512x512-maskable.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "maskable",
+            },
+          ],
         },
       }),
     ],
@@ -57,7 +91,7 @@ export default defineConfig(({ mode }) => {
         process.env.npm_package_version ?? "dev",
       ),
     },
-    base: "/Enlgish-Practice-Tool/",
+    base: basePath,
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "."),
