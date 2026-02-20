@@ -11,7 +11,12 @@ let docsTreePromise: Promise<void> | null = null;
 const loadDocsTree = () => {
   if (docsTreePromise) return docsTreePromise;
 
-  docsTreePromise = fetch(`${import.meta.env.BASE_URL}study-docs/index.json`)
+  const docsIndexUrl = new URL(
+    "study-docs/index.json",
+    `${self.location.origin}${import.meta.env.BASE_URL}`,
+  ).toString();
+
+  docsTreePromise = fetch(docsIndexUrl)
     .then((response) => {
       if (!response.ok) throw new Error("Failed to load index");
       return response.json() as Promise<FileNode[]>;
@@ -42,9 +47,7 @@ const filterNodes = (nodes: FileNode[], searchTerm: string): FileNode[] => {
     .filter(Boolean) as FileNode[];
 };
 
-self.onmessage = async (
-  event: MessageEvent<{ term?: string }>,
-): Promise<void> => {
+self.onmessage = async (event: MessageEvent<{ term?: string }>) => {
   try {
     await loadDocsTree();
     const normalizedTerm = event.data.term?.trim().toLowerCase() ?? "";
