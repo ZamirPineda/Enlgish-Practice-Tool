@@ -1541,12 +1541,12 @@ export const phrasalVerbsData: StopData = {
         writingSwap: "Circulate",
       },
       {
-        word: "Get around to",
-        ipa: "/ɡɛt əˈraʊnd tuː/",
+        word: "Get round to",
+        ipa: "/ɡɛt raʊnd tuː/",
         translation: "Encontrar tiempo para",
         level: "C1",
         definition: "To finally do something.",
-        examSentence: "I'll get around to it.",
+        examSentence: "I'll get round to it.",
         writingSwap: "Find time for",
       },
       {
@@ -2771,8 +2771,8 @@ export const phrasalVerbsData: StopData = {
         writingSwap: "Plan",
       },
       {
-        word: "Measure up",
-        ipa: "/ˈmɛʒər ʌp/",
+        word: "Measure up to",
+        ipa: "/ˈmɛʒər ʌp tuː/",
         translation: "Dar la talla",
         level: "C1",
         definition: "To meet standards.",
@@ -2950,8 +2950,8 @@ export const phrasalVerbsData: StopData = {
         writingSwap: "Choose",
       },
       {
-        word: "Opt out",
-        ipa: "/ɒpt aʊt/",
+        word: "Opt out of",
+        ipa: "/ɒpt aʊt əv/",
         translation: "Excluirse",
         level: "C1",
         definition: "To choose not to.",
@@ -2999,8 +2999,8 @@ export const phrasalVerbsData: StopData = {
         writingSwap: "Decease",
       },
       {
-        word: "Pass off",
-        ipa: "/pɑːs ɔːf/",
+        word: "Pass off as",
+        ipa: "/pɑːs ɔːf æz/",
         translation: "Hacer pasar por",
         level: "C2",
         definition: "To fake identity.",
