@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.7.0...english-practice-pal-v1.8.0) (2026-02-20)
+
+
+### Features
+
+* **a11y:** add accessible labels to Vocabulary Vault add word modal ([5801758](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/58017582a7ce30b255bf632f17f4cbe9cd3c0224))
+
 ## [1.7.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.6.0...english-practice-pal-v1.7.0) (2026-02-20)
 
 
