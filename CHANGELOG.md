@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.6.0...english-practice-pal-v1.7.0) (2026-02-20)
+
+
+### Features
+
+* add playwright e2e tests and CI integration ([5970006](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/5970006bdcbd52bb8f328f2a37e29c8c15c874aa))
+
 ## [1.6.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.5.0...english-practice-pal-v1.6.0) (2026-02-20)
 
 
