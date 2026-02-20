@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.8.0...english-practice-pal-v1.9.0) (2026-02-20)
+
+
+### Features
+
+* **stats:** add yearly review heatmap to stats view ([3430914](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/34309148e87c06d1731624f7f128255c29d3b6de))
+
 ## [1.8.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.7.0...english-practice-pal-v1.8.0) (2026-02-20)
 
 
