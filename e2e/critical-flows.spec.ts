@@ -1,0 +1,99 @@
+import { expect, test, type Page } from "@playwright/test";
+
+const COMPLETED_ONBOARDING_SETTINGS = {
+  theme: "dark",
+  reducedMotion: true,
+  ttsAutoPlay: true,
+  confirmDialogs: true,
+  hasCompletedOnboarding: true,
+};
+
+const openApp = async (page: Page, deck?: Record<string, unknown>) => {
+  await page.goto("/");
+  await page.evaluate(
+    ({ settings, seededDeck }) => {
+      window.localStorage.setItem("app-settings", JSON.stringify(settings));
+      if (seededDeck) {
+        window.localStorage.setItem(
+          "vocab-vault-deck",
+          JSON.stringify(seededDeck),
+        );
+      } else {
+        window.localStorage.removeItem("vocab-vault-deck");
+      }
+      window.localStorage.removeItem("vocab-vault-progress");
+    },
+    { settings: COMPLETED_ONBOARDING_SETTINGS, seededDeck: deck },
+  );
+  await page.reload();
+};
+
+test("loads app and navigates main routes", async ({ page }) => {
+  await openApp(page);
+  await expect(page.getByText("STOP Game Library")).toBeVisible();
+
+  await page.getByRole("link", { name: /study deck/i }).click();
+  await expect(page).toHaveURL(/#\/study/);
+  await expect(page.getByText("Practice Mode")).toBeVisible();
+
+  await page.getByRole("link", { name: /vault/i }).click();
+  await expect(page).toHaveURL(/#\/vault/);
+  await expect(
+    page.getByRole("heading", { name: "Vocabulary Vault" }),
+  ).toBeVisible();
+});
+
+test("adds item to Vault and keeps it after reload", async ({ page }) => {
+  await openApp(page);
+  await page.getByRole("link", { name: /vault/i }).click();
+  await page.getByRole("button", { name: "+ Add Word" }).click();
+
+  await page.getByPlaceholder("e.g. Ubiquitous").fill("E2E Persistence Word");
+  await page
+    .getByPlaceholder("Meaning, Example, etc.")
+    .fill("Word created by e2e test");
+  await page.getByRole("button", { name: "Save Word" }).click();
+
+  await page.getByRole("button", { name: /my collection/i }).click();
+  await expect(page.getByText("E2E Persistence Word")).toBeVisible();
+  await page.waitForFunction(() =>
+    (window.localStorage.getItem("vocab-vault-deck") || "").includes(
+      "E2E Persistence Word",
+    ),
+  );
+
+  await page.reload();
+  await page.waitForFunction(() =>
+    (window.localStorage.getItem("vocab-vault-deck") || "").includes(
+      "E2E Persistence Word",
+    ),
+  );
+});
+
+test("starts review session and completes 3 steps", async ({ page }) => {
+  await openApp(page);
+  await page.getByRole("link", { name: /vault/i }).click();
+  const starterKit = page
+    .locator("section")
+    .filter({ hasText: "High-Frequency Starter Kit" });
+  for (let i = 0; i < 3; i += 1) {
+    await starterKit.getByRole("button", { name: "+" }).first().click();
+  }
+  await expect(
+    page.getByRole("button", { name: "Review Now (3)" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Review Now (3)" }).click();
+
+  for (let step = 1; step <= 3; step += 1) {
+    await expect(page.getByText(`Review ${step} / 3`)).toBeVisible();
+    await page.getByRole("button", { name: "Show Answer" }).click();
+    await page.getByRole("button", { name: "Got it! 🚀" }).click();
+  }
+
+  await expect(
+    page.getByRole("heading", { name: "Vocabulary Vault" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "All caught up!" }),
+  ).toBeVisible();
+});
