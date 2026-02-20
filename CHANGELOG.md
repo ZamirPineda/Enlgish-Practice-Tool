@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.10.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.9.0...english-practice-pal-v1.10.0) (2026-02-20)
+
+
+### Features
+
+* move StudyDocs search to web worker ([82fa57a](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/82fa57a8c290de19a58ce1853c49b8e0d3bad7a8))
+
+
+### Bug Fixes
+
+* harden worker docs index URL resolution ([3290aac](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/3290aac3445e1a2d18ff3646b6e2830a4b623620))
+
 ## [1.9.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.8.0...english-practice-pal-v1.9.0) (2026-02-20)
 
 
