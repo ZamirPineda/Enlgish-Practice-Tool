@@ -27,6 +27,9 @@ describe("GlobalErrorBoundary", () => {
     fireEvent.click(screen.getByRole("button", { name: "Report issue" }));
     await waitFor(() => expect(writeText).toHaveBeenCalledTimes(1));
     expect(writeText.mock.calls[0][0]).toContain("build=");
+    expect(writeText.mock.calls[0][0]).toContain("route=");
+    expect(writeText.mock.calls[0][0]).toContain("userAgent=");
+    expect(writeText.mock.calls[0][0]).toContain("recentLogs:");
 
     consoleSpy.mockRestore();
   });
