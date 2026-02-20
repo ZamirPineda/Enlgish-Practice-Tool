@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.5.0...english-practice-pal-v1.6.0) (2026-02-20)
+
+
+### Features
+
+* harden CSP and add SRI for external assets ([2a4503a](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/2a4503a64d29e89048ecc14da809c6f5926af5cd))
+
 ## [1.5.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.4.0...english-practice-pal-v1.5.0) (2026-02-20)
 
 
