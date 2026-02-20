@@ -41,6 +41,7 @@ describe("StatsView", () => {
     );
 
     expect(screen.getByText("Totales: 1")).toBeInTheDocument();
+    expect(screen.getByText("Repaso anual")).toBeInTheDocument();
     expect(screen.queryByText("No data yet")).not.toBeInTheDocument();
   });
 });
