@@ -80,19 +80,6 @@ const advancedPhrasalVerbsData: StopData = {
       },
     ],
   },
-  F: {
-    "Phrasal Verbs": [
-      {
-        word: "Faze out",
-        ipa: "/feɪz aʊt/",
-        translation: "Desconcertar",
-        level: "C2",
-        definition: "To unsettle or disturb someone emotionally.",
-        examSentence:
-          "Unexpected questions never faze out experienced negotiators.",
-      },
-    ],
-  },
   G: {
     "Phrasal Verbs": [
       {
@@ -205,6 +192,15 @@ const advancedPhrasalVerbsData: StopData = {
         definition:
           "To turn one success or advantage into another opportunity.",
         examSentence: "She parlayed her internship into a full-time position.",
+      },
+      {
+        word: "Phase out",
+        ipa: "/feɪz aʊt/",
+        translation: "Eliminar gradualmente",
+        level: "C2",
+        definition: "To gradually stop using or producing something.",
+        examSentence:
+          "The company plans to phase out single-use plastic packaging.",
       },
       {
         word: "Pass off as",

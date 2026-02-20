@@ -6,7 +6,7 @@ const newAdvancedPhrasalVerbs = [
   "Come in for",
   "Double down on",
   "Edge out",
-  "Faze out",
+  "Phase out",
   "Get round to",
   "Hammer out",
   "Harken back to",
