@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.12.0...english-practice-pal-v1.13.0) (2026-02-20)
+
+
+### Features
+
+* add advanced phrasal verbs for P R and T ([e18394e](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/e18394ee3f5849d6fcbf78ba0ff82f96a4c74452))
+
 ## [1.12.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.11.0...english-practice-pal-v1.12.0) (2026-02-20)
 
 
