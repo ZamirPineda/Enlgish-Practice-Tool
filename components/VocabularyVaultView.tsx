@@ -650,11 +650,15 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
         <h2 className="text-2xl font-black text-white mb-4">Add New Word</h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">
+            <label
+              htmlFor="new-word-input"
+              className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1"
+            >
               Word to learn
             </label>
             <div className="flex gap-2">
               <Input
+                id="new-word-input"
                 type="text"
                 value={newWord}
                 onChange={(e) => setNewWord(e.target.value)}
@@ -666,10 +670,14 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">
+            <label
+              htmlFor="new-context-input"
+              className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1"
+            >
               Context / Source Sentence (Optional)
             </label>
             <Input
+              id="new-context-input"
               type="text"
               value={newContext}
               onChange={(e) => setNewContext(e.target.value)}
@@ -680,10 +688,14 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">
+            <label
+              htmlFor="new-def-input"
+              className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1"
+            >
               Definition & Notes
             </label>
             <textarea
+              id="new-def-input"
               value={newDef}
               onChange={(e) => setNewDef(e.target.value)}
               className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white outline-none focus:ring-2 focus:ring-sky-500 h-24"

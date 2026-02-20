@@ -225,13 +225,13 @@ describe("VocabularyVaultView flows", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "+ Add Word" }));
-    fireEvent.change(screen.getByPlaceholderText("e.g. Ubiquitous"), {
+    fireEvent.change(screen.getByLabelText("Word to learn"), {
       target: { value: "testword" },
     });
-    fireEvent.change(screen.getByPlaceholderText("Meaning, Example, etc."), {
+    fireEvent.change(screen.getByLabelText("Definition & Notes"), {
       target: { value: "a sample definition" },
     });
-    fireEvent.keyDown(screen.getByPlaceholderText("e.g. Ubiquitous"), {
+    fireEvent.keyDown(screen.getByLabelText("Word to learn"), {
       key: "Enter",
     });
 
