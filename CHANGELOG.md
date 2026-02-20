@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.4.0...english-practice-pal-v1.5.0) (2026-02-20)
+
+
+### Features
+
+* improve PWA assets offline fallback and update prompt ([ac24cc5](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/ac24cc58e73cc2666a5a2524bda3641b102eb1fb))
+
 ## [1.4.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.3.0...english-practice-pal-v1.4.0) (2026-02-19)
 
 
