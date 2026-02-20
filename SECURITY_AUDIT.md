@@ -144,3 +144,19 @@ npm audit --audit-level=high
     `actions/github-script`, `pnpm/action-setup`, `googleapis/release-please-action`,
     `gitleaks/gitleaks-action`.
 - Se confirmó que no se utiliza `pull_request_target`; se mantiene `pull_request` en workflows de PR para evitar ejecución con permisos elevados sobre código no confiable.
+
+## 9) Hardening de CSP y recursos externos (2026-02-20)
+
+- Se redujo la política CSP en `index.html` eliminando orígenes/directivas no necesarios:
+  - `script-src`: se eliminó `'unsafe-inline'` y también `https://aistudiocdn.com` / `https://www.gstatic.com` (no se usan como scripts en el build actual).
+  - `style-src`: se eliminó `https://fonts.googleapis.com`.
+  - `font-src`: se eliminó `https://fonts.gstatic.com`.
+  - `connect-src`: se eliminó `https://aistudiocdn.com`.
+- Se agregaron directivas defensivas adicionales:
+  - `object-src 'none'`
+  - `base-uri 'self'`
+- Se eliminó el bloque inline `importmap` (no era necesario para el flujo Vite con bundles locales).
+- Se eliminó el bloque inline de configuración de Tailwind y se migró la animación `fade-in` a CSS estático para permitir quitar `'unsafe-inline'` en `script-src`.
+- Se agregó SRI (`integrity` + `crossorigin="anonymous"`) a recursos externos versionados de KaTeX (`katex.min.css` y `katex.min.js`).
+- Se mantiene `'unsafe-eval'` en `script-src` porque el runtime de `https://cdn.tailwindcss.com` lo requiere para generar utilidades en cliente. Quitarla rompería estilos en runtime sin una migración mayor a Tailwind precompilado localmente.
+- Se mantiene `'unsafe-inline'` en `style-src` por uso actual de estilos inline en componentes React (`style={...}`), lo que requeriría refactor amplio para eliminarla sin romper UI.
