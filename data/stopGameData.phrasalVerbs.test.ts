@@ -24,6 +24,8 @@ const newAdvancedPhrasalVerbs = [
   "Wean off",
 ];
 
+const newlyAddedAdvancedPhrasalVerbs = ["Pare down", "Ratchet up", "Tee up"];
+
 describe("stopGameData advanced phrasal verbs", () => {
   it("includes all 20 new advanced phrasal verbs", () => {
     const allPhrasalVerbs = Object.values(stopGameData)
@@ -58,6 +60,17 @@ describe("stopGameData advanced phrasal verbs", () => {
       expect(entry?.definition).toBeTruthy();
       expect(entry?.examSentence).toBeTruthy();
       expect(["C1", "C2"]).toContain(entry?.level);
+    }
+  });
+
+  it("includes the newly added B2/C1/C2 phrasal verbs without duplicates", () => {
+    const allPhrasalVerbs = Object.values(stopGameData)
+      .flatMap((categories) => categories["Phrasal Verbs"] ?? [])
+      .map((item) => item.word);
+
+    for (const word of newlyAddedAdvancedPhrasalVerbs) {
+      expect(allPhrasalVerbs).toContain(word);
+      expect(allPhrasalVerbs.filter((value) => value === word)).toHaveLength(1);
     }
   });
 });
