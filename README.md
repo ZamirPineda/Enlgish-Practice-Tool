@@ -88,6 +88,13 @@ Para ejecución no interactiva (útil en CI/local):
 npm run test:ci
 ```
 
+Pruebas end-to-end (Playwright):
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
 ### Lint
 
 ```bash

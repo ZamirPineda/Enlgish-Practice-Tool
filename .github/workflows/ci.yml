@@ -74,6 +74,24 @@ jobs:
       - name: Test
         run: ${{ steps.pm.outputs.manager }} run test:ci -- --coverage
 
+      - name: Install Playwright browsers
+        if: github.event_name == 'pull_request'
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E tests
+        if: github.event_name == 'pull_request'
+        run: ${{ steps.pm.outputs.manager }} run test:e2e
+
+      - name: Upload Playwright artifacts
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: playwright-artifacts
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+
       - name: Upload coverage report
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
