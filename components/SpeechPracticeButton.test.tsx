@@ -23,6 +23,7 @@ describe("SpeechPracticeButton", () => {
       return {
         micState: "off",
         interimTranscript: "",
+        finalTranscript: "",
         startListening,
         stopListening,
         abortListening: vi.fn(),
