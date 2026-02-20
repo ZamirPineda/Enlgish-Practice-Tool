@@ -9,6 +9,9 @@ interface HeatmapProps {
 
 const DAYS = 365;
 const DAY_MS = 86400000;
+const DAYS_IN_WEEK = 7;
+const LOW_INTENSITY_THRESHOLD = 0.34;
+const MEDIUM_INTENSITY_THRESHOLD = 0.67;
 
 const toDateKey = (value: number): string =>
   new Date(value).toISOString().split("T")[0];
@@ -22,8 +25,8 @@ const parseDate = (value: unknown): number | null => {
 const getIntensityClass = (count: number, maxCount: number): string => {
   if (count <= 0 || maxCount <= 0) return "bg-slate-700";
   const ratio = count / maxCount;
-  if (ratio < 0.34) return "bg-emerald-900";
-  if (ratio < 0.67) return "bg-emerald-700";
+  if (ratio < LOW_INTENSITY_THRESHOLD) return "bg-emerald-900";
+  if (ratio < MEDIUM_INTENSITY_THRESHOLD) return "bg-emerald-700";
   return "bg-emerald-500";
 };
 
@@ -42,10 +45,11 @@ const Heatmap: React.FC<HeatmapProps> = ({ deck, progress }) => {
     };
 
     Object.values(deck || {}).forEach((item) => {
-      const dynamicItem = item as SrsVocabularyItem & Record<string, unknown>;
+      const itemWithOptionalFields = item as SrsVocabularyItem &
+        Record<string, unknown>;
       const explicitReviewTime =
-        parseDate(dynamicItem.reviewedAt) ??
-        parseDate(dynamicItem.lastReviewedAt);
+        parseDate(itemWithOptionalFields.reviewedAt) ??
+        parseDate(itemWithOptionalFields.lastReviewedAt);
 
       if (explicitReviewTime !== null) {
         addCount(explicitReviewTime);
@@ -87,7 +91,8 @@ const Heatmap: React.FC<HeatmapProps> = ({ deck, progress }) => {
         Repaso anual
       </h2>
       <div
-        className="grid grid-flow-col grid-rows-7 gap-1 overflow-x-auto pb-1"
+        className="grid grid-flow-col gap-1 overflow-x-auto pb-1"
+        style={{ gridTemplateRows: `repeat(${DAYS_IN_WEEK}, minmax(0, 1fr))` }}
         aria-label="Heatmap de repaso"
       >
         {days.map((day) => (
