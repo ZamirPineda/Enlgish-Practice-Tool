@@ -27,6 +27,7 @@ describe("SpeechPracticeButton", () => {
         startListening,
         stopListening,
         abortListening: vi.fn(),
+        resetTranscript: vi.fn(),
       };
     });
   });
