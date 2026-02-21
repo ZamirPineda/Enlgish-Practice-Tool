@@ -167,6 +167,22 @@ export const calculusTopic: MathTopic = {
           "∫₋₁¹ |x| dx = 1",
         ],
       ],
+      studyStrategies: [
+        {
+          id: "calc-alg-deriv",
+          name: "Derivadas Algebraicas",
+          questionTemplate: "Derivada de: {col1}",
+          questionColumnIndex: 1,
+          answerColumnIndex: 2,
+        },
+        {
+          id: "calc-alg-integ",
+          name: "Integrales Algebraicas",
+          questionTemplate: "Integral de: {col1}",
+          questionColumnIndex: 1,
+          answerColumnIndex: 3,
+        },
+      ],
     },
     {
       title: "3. Trigonometría",
@@ -297,6 +313,22 @@ export const calculusTopic: MathTopic = {
           "∫ arcsec(x) dx = x arcsec(x) - ln|x+√(x²-1)|+C",
         ],
       ],
+      studyStrategies: [
+        {
+          id: "calc-inv-trig-deriv",
+          name: "Derivadas Trig. Inversas",
+          questionTemplate: "Derivada de: {col1}",
+          questionColumnIndex: 1,
+          answerColumnIndex: 2,
+        },
+        {
+          id: "calc-inv-trig-integ",
+          name: "Integrales Trig. Inversas",
+          questionTemplate: "Integral de: {col1}",
+          questionColumnIndex: 1,
+          answerColumnIndex: 3,
+        },
+      ],
     },
     {
       title: "5. Hiperbólicas",
@@ -350,6 +382,22 @@ export const calculusTopic: MathTopic = {
           "∫ artanh(x) dx = x artanh(x) + 0.5ln(1-x²) + C",
         ],
       ],
+      studyStrategies: [
+        {
+          id: "calc-hyp-deriv",
+          name: "Derivadas Hiperbólicas",
+          questionTemplate: "Derivada de: {col1}",
+          questionColumnIndex: 1,
+          answerColumnIndex: 2,
+        },
+        {
+          id: "calc-hyp-integ",
+          name: "Integrales Hiperbólicas",
+          questionTemplate: "Integral de: {col1}",
+          questionColumnIndex: 1,
+          answerColumnIndex: 3,
+        },
+      ],
     },
     {
       title: "6. Técnicas de Integración",
@@ -401,6 +449,15 @@ export const calculusTopic: MathTopic = {
         ["\\int \\csc x \\cot x \\, dx", "-\\csc x + C"],
         ["\\int \\frac{1}{x^2 + 1} \\, dx", "\\tan^{-1} x + C"],
         ["\\int \\frac{1}{\\sqrt{1 - x^2}} \\, dx", "\\sin^{-1} x + C"],
+      ],
+      studyStrategies: [
+        {
+          id: "calc-direct-integ",
+          name: "Integrales Directas",
+          questionTemplate: "Resuelve: {col0}",
+          questionColumnIndex: 0,
+          answerColumnIndex: 1,
+        },
       ],
     },
   ],

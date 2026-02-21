@@ -36,7 +36,7 @@ const LatexRenderer: React.FC<LatexRendererProps> = ({
   return (
     <span
       ref={containerRef}
-      className={`${className} font-serif ${block ? "block" : "inline-block"} max-w-full overflow-x-auto`}
+      className={`${className} font-serif ${block ? "block text-center" : "inline-block"} max-w-full overflow-x-auto`}
     />
   );
 };

@@ -20,7 +20,8 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
   // Initialize/Shuffle cards
   useEffect(() => {
-    const shuffled = shuffle(rows);
+    // Shuffle and limit to 50 questions max
+    const shuffled = shuffle(rows).slice(0, 50);
     setRandomizedRows(shuffled);
     setCurrentCardIndex(0);
     setIsFlipped(false);
@@ -31,6 +32,20 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setTimeout(() => {
       setCurrentCardIndex((prev) => (prev + 1) % randomizedRows.length);
     }, 150); // slight delay for smooth transition
+  };
+
+  const handlePrev = () => {
+    // When going back, show the answer side first (since we likely just saw it)
+    setIsFlipped(true);
+    setTimeout(() => {
+      setCurrentCardIndex(
+        (prev) => (prev - 1 + randomizedRows.length) % randomizedRows.length,
+      );
+    }, 150);
+  };
+
+  const handleFlip = () => {
+    setIsFlipped(!isFlipped);
   };
 
   if (randomizedRows.length === 0) return <div>Loading...</div>;
@@ -46,17 +61,20 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         const colIndex = parseInt(match[1]);
         const cellContent = currentrow[colIndex];
         return (
-          <span key={idx} className="mx-2 inline-block">
-            <LatexRenderer formula={cellContent} />
-          </span>
+          <div key={idx} className="my-2 w-full flex justify-center">
+            <LatexRenderer formula={cellContent} block />
+          </div>
         );
       }
       // Render text parts
       if (!part.trim()) return null;
       return (
-        <span key={idx} className="font-sans text-slate-300 mx-1">
+        <div
+          key={idx}
+          className="font-sans text-slate-300 my-1 text-center w-full"
+        >
           {part}
-        </span>
+        </div>
       );
     });
   };
@@ -81,9 +99,9 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative aspect-video cursor-pointer perspective-1000 group"
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
         style={{ perspective: "1000px" }}
-        onClick={() => !isFlipped && setIsFlipped(true)}
+        onClick={handleFlip}
       >
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
@@ -103,11 +121,11 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
             <h3 className="text-slate-400 text-lg mb-4 font-semibold uppercase tracking-wider shrink-0">
               Pregunta
             </h3>
-            <div className="flex-1 flex flex-wrap justify-center items-center gap-2 text-xl md:text-3xl text-white font-medium max-w-full overflow-y-auto break-words w-full">
+            <div className="flex-1 flex flex-col justify-center items-center gap-2 text-xl md:text-3xl text-white font-medium max-w-full overflow-y-auto break-words w-full">
               {renderQuestion()}
             </div>
             <p className="text-slate-500 text-sm animate-pulse mt-4 shrink-0">
-              Haz click para ver la respuesta
+              Haz click para girar (ver respuesta/pregunta)
             </p>
           </div>
 
@@ -123,11 +141,20 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
             <h3 className="text-emerald-400 text-lg mb-4 font-semibold uppercase tracking-wider shrink-0">
               Respuesta
             </h3>
-            <div className="flex-1 flex items-center justify-center text-2xl md:text-4xl text-white font-mono w-full overflow-y-auto">
+            <div className="flex-1 flex flex-col items-center justify-center text-2xl md:text-4xl text-white font-mono w-full overflow-y-auto">
               <LatexRenderer formula={answerText} block />
             </div>
 
             <div className="flex gap-4 w-full px-8 justify-center mt-4 shrink-0">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                }}
+                className="bg-slate-700 hover:bg-slate-600 text-white px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px]"
+              >
+                Anterior
+              </button>
               <button
                 onClick={(e) => {
                   e.stopPropagation();

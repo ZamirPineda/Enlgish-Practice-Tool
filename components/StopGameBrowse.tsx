@@ -3,6 +3,7 @@ import { stopGameData } from "../data/stopGameData";
 import { StopCategory, StopItem } from "../types";
 import { StopGameCard } from "./StopGameCard";
 import { StopItemModal } from "./StopItemModal";
+import { StopGamePlay } from "./StopGamePlay";
 import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
 import {
   ChevronDownIcon,
@@ -45,8 +46,10 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
 
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
 
-  // Study Mode State
-  const [isStudyMode, setIsStudyMode] = useState(false);
+  // View Mode State
+  const [viewMode, setViewMode] = useState<"browse" | "study" | "game">(
+    "browse",
+  );
   const [selectedItemForModal, setSelectedItemForModal] = useState<{
     item: StopItem;
     category: string;
@@ -320,19 +323,25 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
             </div>
 
             <div className="flex gap-2 w-full md:w-auto items-center">
-              {/* STUDY MODE TOGGLE */}
+              {/* VIEW MODE TOGGLE */}
               <div className="flex items-center gap-2 bg-slate-800 p-1 rounded-xl border border-slate-700 mr-2">
                 <button
-                  onClick={() => setIsStudyMode(false)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${!isStudyMode ? "bg-slate-700 text-white shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
+                  onClick={() => setViewMode("browse")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "browse" ? "bg-slate-700 text-white shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
                 >
                   <DiceIcon /> Browse
                 </button>
                 <button
-                  onClick={() => setIsStudyMode(true)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${isStudyMode ? "bg-sky-600 text-white shadow-lg shadow-sky-500/20" : "text-slate-400 hover:text-slate-200"}`}
+                  onClick={() => setViewMode("study")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "study" ? "bg-sky-600 text-white shadow-lg shadow-sky-500/20" : "text-slate-400 hover:text-slate-200"}`}
                 >
                   <BookIcon /> Study
+                </button>
+                <button
+                  onClick={() => setViewMode("game")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "game" ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20" : "text-slate-400 hover:text-slate-200"}`}
+                >
+                  <SparklesIcon /> Game
                 </button>
               </div>
 
@@ -397,212 +406,219 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
         </div>
 
         {/* Row 2: Letters & Filters combined in a denser layout (Always Visible) */}
-        <div
-          className={`max-w-7xl mx-auto px-2 transition-all duration-300 ${isHeaderCollapsed ? "pt-1" : "pt-2"}`}
-        >
-          {/* Letters */}
-          <div className="overflow-x-auto scrollbar-hide pb-2">
-            <div className="flex gap-1 min-w-max px-2">
-              {ALPHABET.map((letter) => {
-                const hasData = !!stopGameData[letter];
-                const isSelected = selectedLetter === letter;
-                return (
-                  <button
-                    key={letter}
-                    onClick={() => hasData && setSelectedLetter(letter)}
-                    disabled={!hasData}
-                    className={`
-                                        h-9 w-8 rounded-md font-bold text-sm transition-all flex items-center justify-center border-b-2 relative overflow-hidden
-                                        ${
-                                          isSelected
-                                            ? "bg-sky-500 border-sky-400 text-white shadow-[0_0_15px_rgba(14,165,233,0.5)] scale-105"
-                                            : hasData
-                                              ? "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white hover:border-slate-500"
-                                              : "bg-slate-800/30 border-transparent text-slate-700 cursor-not-allowed"
-                                        }
-                                    `}
-                  >
-                    {letter}
-                    {isSelected && (
-                      <span className="absolute bottom-0 left-0 w-full h-1 bg-white/30 animate-pulse"></span>
-                    )}
-                  </button>
-                );
-              })}
+        {viewMode !== "game" && (
+          <div
+            className={`max-w-7xl mx-auto px-2 transition-all duration-300 ${isHeaderCollapsed ? "pt-1" : "pt-2"}`}
+          >
+            {/* Letters */}
+            <div className="overflow-x-auto scrollbar-hide pb-2">
+              <div className="flex gap-1 min-w-max px-2">
+                {ALPHABET.map((letter) => {
+                  const hasData = !!stopGameData[letter];
+                  const isSelected = selectedLetter === letter;
+                  return (
+                    <button
+                      key={letter}
+                      onClick={() => hasData && setSelectedLetter(letter)}
+                      disabled={!hasData}
+                      className={`
+                                          h-9 w-8 rounded-md font-bold text-sm transition-all flex items-center justify-center border-b-2 relative overflow-hidden
+                                          ${
+                                            isSelected
+                                              ? "bg-sky-500 border-sky-400 text-white shadow-[0_0_15px_rgba(14,165,233,0.5)] scale-105"
+                                              : hasData
+                                                ? "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white hover:border-slate-500"
+                                                : "bg-slate-800/30 border-transparent text-slate-700 cursor-not-allowed"
+                                          }
+                                      `}
+                    >
+                      {letter}
+                      {isSelected && (
+                        <span className="absolute bottom-0 left-0 w-full h-1 bg-white/30 animate-pulse"></span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          {/* Categories */}
-          <div className="overflow-x-auto scrollbar-hide py-2 border-t border-slate-800">
-            <div className="flex gap-2 min-w-max px-2">
-              {(Object.keys(CATEGORY_GROUPS) as GroupName[]).map((group) => {
-                const isSelected = selectedGroup === group;
-                return (
-                  <button
-                    key={group}
-                    onClick={() => setSelectedGroup(group)}
-                    className={`
-                                        px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all whitespace-nowrap border
-                                        ${
-                                          isSelected
-                                            ? "bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-500/20 scale-105"
-                                            : "bg-slate-800 border-slate-700 text-slate-500 hover:border-slate-500 hover:text-slate-300 hover:bg-slate-700"
-                                        }
-                                    `}
-                  >
-                    {group}
-                  </button>
-                );
-              })}
+            {/* Categories */}
+            <div className="overflow-x-auto scrollbar-hide py-2 border-t border-slate-800">
+              <div className="flex gap-2 min-w-max px-2">
+                {(Object.keys(CATEGORY_GROUPS) as GroupName[]).map((group) => {
+                  const isSelected = selectedGroup === group;
+                  return (
+                    <button
+                      key={group}
+                      onClick={() => setSelectedGroup(group)}
+                      className={`
+                                          px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all whitespace-nowrap border
+                                          ${
+                                            isSelected
+                                              ? "bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-500/20 scale-105"
+                                              : "bg-slate-800 border-slate-700 text-slate-500 hover:border-slate-500 hover:text-slate-300 hover:bg-slate-700"
+                                          }
+                                      `}
+                    >
+                      {group}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-900/50">
-        <div className="max-w-7xl mx-auto pb-20">
-          {currentData ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-fade-in">
-              {visibleCategories.map((category) => {
-                const items = filteredCategoryData[category] || [];
+      {viewMode === "game" ? (
+        <StopGamePlay onPlayWord={onPlayWord} onAddToVault={onAddToVault} />
+      ) : (
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-900/50">
+          <div className="max-w-7xl mx-auto pb-20">
+            {currentData ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-fade-in">
+                {visibleCategories.map((category) => {
+                  const items = filteredCategoryData[category] || [];
 
-                // If user is filtering and the result is empty, we MIGHT want to hide it to reduce clutter.
-                // However, to satisfy "visual stability" when changing letters, we will render the ghost card
-                // UNLESS we are in "All" mode where showing 50 empty cards is annoying.
-                const isEmpty = items.length === 0;
-                if (isEmpty && selectedGroup === "All" && !browseFilter)
-                  return null;
+                  // If user is filtering and the result is empty, we MIGHT want to hide it to reduce clutter.
+                  // However, to satisfy "visual stability" when changing letters, we will render the ghost card
+                  // UNLESS we are in "All" mode where showing 50 empty cards is annoying.
+                  const isEmpty = items.length === 0;
+                  if (isEmpty && selectedGroup === "All" && !browseFilter)
+                    return null;
 
-                // If searching/filtering, hide empty results to show only matches
-                if (isEmpty && (browseFilter || showSavedOnly)) return null;
+                  // If searching/filtering, hide empty results to show only matches
+                  if (isEmpty && (browseFilter || showSavedOnly)) return null;
 
-                const displayLimit = 6;
-                const isExpanded = expandedCategories[category];
-                const visibleItems = isExpanded
-                  ? items
-                  : items.slice(0, displayLimit);
-                const hiddenCount = items.length - displayLimit;
-                const hasMore = items.length > displayLimit;
+                  const displayLimit = 6;
+                  const isExpanded = expandedCategories[category];
+                  const visibleItems = isExpanded
+                    ? items
+                    : items.slice(0, displayLimit);
+                  const hiddenCount = items.length - displayLimit;
+                  const hasMore = items.length > displayLimit;
 
-                const theme = getCategoryTheme(category);
+                  const theme = getCategoryTheme(category);
 
-                // Ghost Card Styling (for empty categories)
-                if (isEmpty) {
+                  // Ghost Card Styling (for empty categories)
+                  if (isEmpty) {
+                    return (
+                      <div
+                        key={category}
+                        id={`cat-${category}`}
+                        className={`rounded-2xl border-2 border-dashed border-slate-800 bg-slate-900/20 flex flex-col h-full opacity-60`}
+                      >
+                        <div
+                          className={`px-5 py-4 flex items-center justify-between border-b border-transparent`}
+                        >
+                          <div className="flex items-center gap-3 grayscale">
+                            <span
+                              className={`text-2xl w-10 h-10 flex items-center justify-center rounded-lg bg-slate-800`}
+                            >
+                              {getCategoryIcon(category)}
+                            </span>
+                            <h3 className={`font-bold text-lg text-slate-600`}>
+                              {category}
+                            </h3>
+                          </div>
+                        </div>
+                        <div className="flex-1 p-6 flex items-center justify-center text-slate-700 text-sm italic font-medium">
+                          No {category.toLowerCase()} starting with '
+                          {selectedLetter}'
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  // Normal Card Styling
+                  const cardClass = `rounded-2xl border-t-4 ${theme.accentColor} bg-slate-800 border-x border-b border-slate-700/50 overflow-hidden flex flex-col h-full shadow-lg transition-all duration-300 hover:-translate-y-1 ${theme.glow} group`;
+                  const headerClass = `${theme.headerGradient} px-5 py-4 flex items-center justify-between border-b border-white/5`;
+                  const titleClass = `font-black text-lg ${theme.textClass} tracking-wide drop-shadow-sm`;
+
                   return (
                     <div
                       key={category}
                       id={`cat-${category}`}
-                      className={`rounded-2xl border-2 border-dashed border-slate-800 bg-slate-900/20 flex flex-col h-full opacity-60`}
+                      className={cardClass}
                     >
-                      <div
-                        className={`px-5 py-4 flex items-center justify-between border-b border-transparent`}
-                      >
-                        <div className="flex items-center gap-3 grayscale">
+                      <div className={headerClass}>
+                        <div className="flex items-center gap-3">
                           <span
-                            className={`text-2xl w-10 h-10 flex items-center justify-center rounded-lg bg-slate-800`}
+                            className={`text-2xl w-10 h-10 flex items-center justify-center rounded-lg shadow-inner ${theme.iconBg}`}
                           >
                             {getCategoryIcon(category)}
                           </span>
-                          <h3 className={`font-bold text-lg text-slate-600`}>
-                            {category}
-                          </h3>
+                          <h3 className={titleClass}>{category}</h3>
                         </div>
+                        <span className="text-xs font-bold text-slate-400 bg-slate-900/30 px-2.5 py-1 rounded-lg border border-white/5 min-w-[2rem] text-center backdrop-blur-sm">
+                          {items.length}
+                        </span>
                       </div>
-                      <div className="flex-1 p-6 flex items-center justify-center text-slate-700 text-sm italic font-medium">
-                        No {category.toLowerCase()} starting with '
-                        {selectedLetter}'
+                      <div
+                        className={`p-4 flex-1 flex flex-col gap-3 ${theme.bgGradient}`}
+                      >
+                        {visibleItems.map((item, idx) => (
+                          <StopGameCard
+                            key={idx}
+                            item={item}
+                            category={category}
+                            theme={theme}
+                            onPlay={onPlayWord}
+                            onPractice={() => handlePracticeClick(item)}
+                            onSave={handleSaveWord}
+                            isAudioLoading={isWordAudioLoading === item.word}
+                            isPracticing={
+                              practiceWord?.word === item.word && isPracticing
+                            }
+                            isSaved={savedWords.has(item.word)}
+                            micState={micState}
+                            transcript={
+                              frozenTranscript ||
+                              (finalTranscript || "") +
+                                (interimTranscript || "")
+                            }
+                            feedback={practiceFeedback}
+                            onDetailClick={
+                              viewMode === "study"
+                                ? (item) =>
+                                    setSelectedItemForModal({ item, category })
+                                : undefined
+                            }
+                          />
+                        ))}
                       </div>
+                      {hasMore && (
+                        <button
+                          onClick={() => toggleCategory(category)}
+                          className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 border-t border-slate-700/50"
+                        >
+                          {isExpanded ? (
+                            <>
+                              <span>Collapse</span>
+                              <ChevronUpIcon />
+                            </>
+                          ) : (
+                            <>
+                              <span>Show {hiddenCount} More</span>
+                              <ChevronDownIcon />
+                            </>
+                          )}
+                        </button>
+                      )}
                     </div>
                   );
-                }
-
-                // Normal Card Styling
-                const cardClass = `rounded-2xl border-t-4 ${theme.accentColor} bg-slate-800 border-x border-b border-slate-700/50 overflow-hidden flex flex-col h-full shadow-lg transition-all duration-300 hover:-translate-y-1 ${theme.glow} group`;
-                const headerClass = `${theme.headerGradient} px-5 py-4 flex items-center justify-between border-b border-white/5`;
-                const titleClass = `font-black text-lg ${theme.textClass} tracking-wide drop-shadow-sm`;
-
-                return (
-                  <div
-                    key={category}
-                    id={`cat-${category}`}
-                    className={cardClass}
-                  >
-                    <div className={headerClass}>
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`text-2xl w-10 h-10 flex items-center justify-center rounded-lg shadow-inner ${theme.iconBg}`}
-                        >
-                          {getCategoryIcon(category)}
-                        </span>
-                        <h3 className={titleClass}>{category}</h3>
-                      </div>
-                      <span className="text-xs font-bold text-slate-400 bg-slate-900/30 px-2.5 py-1 rounded-lg border border-white/5 min-w-[2rem] text-center backdrop-blur-sm">
-                        {items.length}
-                      </span>
-                    </div>
-                    <div
-                      className={`p-4 flex-1 flex flex-col gap-3 ${theme.bgGradient}`}
-                    >
-                      {visibleItems.map((item, idx) => (
-                        <StopGameCard
-                          key={idx}
-                          item={item}
-                          category={category}
-                          theme={theme}
-                          onPlay={onPlayWord}
-                          onPractice={() => handlePracticeClick(item)}
-                          onSave={handleSaveWord}
-                          isAudioLoading={isWordAudioLoading === item.word}
-                          isPracticing={
-                            practiceWord?.word === item.word && isPracticing
-                          }
-                          isSaved={savedWords.has(item.word)}
-                          micState={micState}
-                          transcript={
-                            frozenTranscript ||
-                            (finalTranscript || "") + (interimTranscript || "")
-                          }
-                          feedback={practiceFeedback}
-                          onDetailClick={
-                            isStudyMode
-                              ? (item) =>
-                                  setSelectedItemForModal({ item, category })
-                              : undefined
-                          }
-                        />
-                      ))}
-                    </div>
-                    {hasMore && (
-                      <button
-                        onClick={() => toggleCategory(category)}
-                        className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 border-t border-slate-700/50"
-                      >
-                        {isExpanded ? (
-                          <>
-                            <span>Collapse</span>
-                            <ChevronUpIcon />
-                          </>
-                        ) : (
-                          <>
-                            <span>Show {hiddenCount} More</span>
-                            <ChevronDownIcon />
-                          </>
-                        )}
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-64 text-slate-500">
-              <p className="text-xl">
-                No words loaded for letter {selectedLetter} yet.
-              </p>
-            </div>
-          )}
+                })}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center h-64 text-slate-500">
+                <p className="text-xl">
+                  No words loaded for letter {selectedLetter} yet.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {selectedItemForModal && (
         <StopItemModal

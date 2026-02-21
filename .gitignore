@@ -29,3 +29,7 @@ test-results
 *.njsproj
 *.sln
 *.sw?
+
+# Temporary utility scripts
+check_latex.cjs
+generate_vocab.py
