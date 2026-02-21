@@ -52,7 +52,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     type: "success" | "error";
     message: string;
   } | null>(null);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(30);
 
   // Timer Countdown Effect
   useEffect(() => {
@@ -144,7 +144,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setFeedback(null);
     // Important: clear the transcript to avoid "ghost" words from previous rounds appearing
     resetTranscript();
-    setTimeLeft(20); // Reset Timer
+    setTimeLeft(30); // Reset Timer
     playGameSound("start");
   };
 
@@ -464,7 +464,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-800/50">
             <div
               className={`h-full transition-all duration-1000 linear ${timeLeft <= 5 ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.7)]" : "bg-emerald-400"}`}
-              style={{ width: `${(timeLeft / 20) * 100}%` }}
+              style={{ width: `${(timeLeft / 30) * 100}%` }}
             />
           </div>
 
