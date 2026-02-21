@@ -7,6 +7,7 @@ const SpeechRecognition =
 export const useSpeechRecognition = (
   onTranscriptReady: (transcript: string, accuracyScore?: number) => void,
   targetText?: string,
+  options: { continuousResults?: boolean } = { continuousResults: true },
 ) => {
   const [micState, setMicState] = useState<
     "off" | "listening" | "paused" | "not-supported"
@@ -18,6 +19,7 @@ export const useSpeechRecognition = (
   const lastDeliveredTranscriptRef = useRef<string>("");
   const isComponentMounted = useRef(true);
   const targetTextRef = useRef(targetText);
+  const optionsRef = useRef(options);
 
   const onTranscriptReadyRef = useRef(onTranscriptReady);
   useEffect(() => {
@@ -26,6 +28,9 @@ export const useSpeechRecognition = (
   useEffect(() => {
     targetTextRef.current = targetText;
   }, [targetText]);
+  useEffect(() => {
+    optionsRef.current = options;
+  }, [options]);
 
   useEffect(() => {
     if (!SpeechRecognition) {
@@ -47,11 +52,15 @@ export const useSpeechRecognition = (
 
     const deliverTranscript = () => {
       const finalTranscript = transcriptBufferRef.current.trim();
+      if (!finalTranscript) return;
+
+      // Allow delivering the same transcript again if continuousResults is false (for retrying same word)
       if (
-        !finalTranscript ||
+        optionsRef.current.continuousResults &&
         finalTranscript === lastDeliveredTranscriptRef.current
       )
         return;
+
       const accuracyScore = targetTextRef.current
         ? getTextAccuracyScore(finalTranscript, targetTextRef.current)
         : undefined;
@@ -63,6 +72,8 @@ export const useSpeechRecognition = (
       let currentInterim = "";
       let fullFinal = "";
 
+      // In continuous mode, the results array grows. We only care about the NEW final results.
+      // event.resultIndex tells us where the new results begin.
       for (let i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
           fullFinal += event.results[i][0].transcript;
@@ -74,9 +85,25 @@ export const useSpeechRecognition = (
       setInterimTranscript(currentInterim);
 
       if (fullFinal) {
-        transcriptBufferRef.current += " " + fullFinal;
-        setFinalTranscript((prev) => prev + " " + fullFinal); // Update state on meaningful change
-        deliverTranscript();
+        const cleanedFinal = fullFinal.trim();
+        if (!cleanedFinal) return;
+
+        if (optionsRef.current.continuousResults) {
+          // Append mode
+          transcriptBufferRef.current = (
+            transcriptBufferRef.current +
+            " " +
+            cleanedFinal
+          ).trim();
+          setFinalTranscript((prev) => (prev + " " + cleanedFinal).trim());
+          deliverTranscript();
+        } else {
+          // Replace mode (for single words/phrases)
+          // Even if continuous recognition is on, we only want the LATEST phrase
+          transcriptBufferRef.current = cleanedFinal;
+          setFinalTranscript(cleanedFinal);
+          deliverTranscript();
+        }
       }
     };
 
@@ -85,28 +112,27 @@ export const useSpeechRecognition = (
       deliverTranscript();
       if (isComponentMounted.current) {
         setMicState("off");
-        setInterimTranscript("");
-        // We do NOT clear finalTranscript here if we want it to persist?
-        // But the button logic often relies on aborted/stopped states.
-        // Let's decide: If mic stops, finalTranscript is what we have.
       }
     };
 
     recognition.onerror = (event: any) => {
+      console.warn("Speech Recognition Error:", event.error);
+
       // 'no-speech' is common if the user is thinking. Don't alert.
       if (event.error === "no-speech") {
+        // Even if no speech, the session often ends, so we let onend handle the state reset
         return;
       }
-      // 'aborted' happens when we stop it manually.
       if (event.error === "aborted") {
         return;
       }
 
-      console.warn("Speech Recognition Error:", event.error);
+      if (isComponentMounted.current) {
+        setMicState("off");
+      }
 
       if (event.error === "not-allowed") {
         alert("Microphone access denied. Please enable permissions.");
-        setMicState("off");
       }
     };
 
@@ -130,17 +156,20 @@ export const useSpeechRecognition = (
     transcriptBufferRef.current = "";
     lastDeliveredTranscriptRef.current = "";
     setInterimTranscript("");
-    setFinalTranscript(""); // Reset on start
+    setFinalTranscript("");
 
     try {
       recognition.start();
+      setMicState("listening");
     } catch (error) {
-      // If it's already started, just ensure state reflects it.
-      // If it was aborting, we might need a retry, but usually relying on button click is safer.
       console.log(
         "Start called but recognition might be active or busy:",
         error,
       );
+      // If we get an error here, the state might be desynced.
+      // Force it to match reality (or at least retry safely next click)
+      // Usually "DOMException: Failed to execute 'start' on 'SpeechRecognition': recognition has already started."
+      setMicState("listening"); // Assume it's working if it says already started
     }
   }, []);
 
@@ -148,7 +177,13 @@ export const useSpeechRecognition = (
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
-      } catch (e) {}
+        // Force state update immediately for better UI usage,
+        // though onend will also fire.
+        setMicState("off");
+      } catch (e) {
+        console.warn("Stop failed:", e);
+        setMicState("off");
+      }
     }
   }, []);
 
@@ -181,12 +216,20 @@ export const useSpeechRecognition = (
     }
   }, []);
 
+  const resetTranscript = useCallback(() => {
+    transcriptBufferRef.current = "";
+    lastDeliveredTranscriptRef.current = "";
+    setInterimTranscript("");
+    setFinalTranscript("");
+  }, []);
+
   return {
     micState,
     interimTranscript,
-    finalTranscript, // Export this
+    finalTranscript,
     startListening,
     stopListening,
     abortListening,
+    resetTranscript,
   };
 };
