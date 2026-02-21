@@ -3,7 +3,7 @@ import { CATEGORY_GROUPS } from "../utils/stopGameHelpers";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-const categoryCounts = {};
+const categoryCounts: Record<string, number> = {};
 
 // Initialize counts
 Object.values(CATEGORY_GROUPS)
