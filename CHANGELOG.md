@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.13.1](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.13.0...english-practice-pal-v1.13.1) (2026-02-21)
+
+
+### Bug Fixes
+
+* restore lost vocabulary in Body Parts/Objects and merge new terms. feat: update math components and add StopGamePlay ([7b0858a](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/7b0858a6e3802ebd99be81d6a86f8d748eb68b36))
+* type error in category count script ([3a4a7e3](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/3a4a7e38427a711f9dafe8c6ed530545f9ef0d73))
+
 ## [1.13.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.12.0...english-practice-pal-v1.13.0) (2026-02-20)
 
 
