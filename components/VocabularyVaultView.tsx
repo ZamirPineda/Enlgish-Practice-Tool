@@ -59,6 +59,21 @@ const updateVaultProgress = (
   };
 };
 
+const normalizeDeck = (deck: Record<string, SrsVocabularyItem>) => {
+  const normalized: Record<string, SrsVocabularyItem> = {};
+  Object.values(deck).forEach((item) => {
+    if (!item || !item.word) return;
+    const key = item.word.trim().toLowerCase();
+    if (
+      !normalized[key] ||
+      (item.repetition || 0) > (normalized[key].repetition || 0)
+    ) {
+      normalized[key] = item;
+    }
+  });
+  return normalized;
+};
+
 const MemoryBar = ({ interval }: { interval: number }) => {
   const percentage = Math.min(100, (interval / 30) * 100);
   const color =
@@ -84,15 +99,33 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   onPlayWord,
   confirmDialogsEnabled,
 }) => {
-  const [deck, setDeck] = useState<Record<string, SrsVocabularyItem>>({});
+  const [deck, setDeck] = useState<Record<string, SrsVocabularyItem>>(() => {
+    try {
+      const saved = localStorage.getItem("vocab-vault-deck");
+      return saved
+        ? normalizeDeck(JSON.parse(saved) as Record<string, SrsVocabularyItem>)
+        : {};
+    } catch (e) {
+      console.error("Failed to load deck from storage", e);
+      return {};
+    }
+  });
   const [isReviewing, setIsReviewing] = useState(false);
   const [activeTab, setActiveTab] = useState<"study" | "collection" | "sync">(
     "study",
   );
   const [searchTerm, setSearchTerm] = useState("");
-  const [progress, setProgress] = useState<VaultProgress>(
-    DEFAULT_VAULT_PROGRESS,
-  );
+  const [progress, setProgress] = useState<VaultProgress>(() => {
+    try {
+      const saved = localStorage.getItem(VAULT_PROGRESS_KEY);
+      return saved
+        ? { ...DEFAULT_VAULT_PROGRESS, ...JSON.parse(saved) }
+        : DEFAULT_VAULT_PROGRESS;
+    } catch (e) {
+      console.error("Failed to load progress from storage", e);
+      return DEFAULT_VAULT_PROGRESS;
+    }
+  });
 
   const [importText, setImportText] = useState("");
 
@@ -104,28 +137,6 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
 
   const [reviewItems, setReviewItems] = useState<SrsVocabularyItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("vocab-vault-deck");
-    const savedProgress = localStorage.getItem(VAULT_PROGRESS_KEY);
-    if (saved) {
-      try {
-        setDeck(JSON.parse(saved));
-      } catch (e) {
-        console.error("Failed to parse deck", e);
-      }
-    }
-    if (savedProgress) {
-      try {
-        setProgress({
-          ...DEFAULT_VAULT_PROGRESS,
-          ...JSON.parse(savedProgress),
-        });
-      } catch (e) {
-        console.error("Failed to parse progress", e);
-      }
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("vocab-vault-deck", JSON.stringify(deck));
@@ -185,13 +196,13 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     tags?: string[];
     originalContext?: string;
   }) => {
-    const wordKey = item.word.trim();
+    const wordKey = item.word.trim().toLowerCase();
     if (deck[wordKey]) {
       alert("Word already in your vault!");
       return;
     }
     const newItem = {
-      ...createNewSrsItem(wordKey, item.definition.trim()),
+      ...createNewSrsItem(item.word.trim(), item.definition.trim()),
       ipa: item.ipa,
       example: item.example,
       partOfSpeech: item.partOfSpeech,
@@ -307,7 +318,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const handleImportSample = () => {
     const sampleDeck = starterKits.highFrequency.slice(0, 12).reduce(
       (acc, item) => {
-        acc[item.word] = createNewSrsItem(item.word, item.definition);
+        acc[item.word.trim().toLowerCase()] = createNewSrsItem(
+          item.word,
+          item.definition,
+        );
         return acc;
       },
       {} as Record<string, SrsVocabularyItem>,
@@ -327,7 +341,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const handleReviewComplete = (wasCorrect: boolean) => {
     const item = reviewItems[currentIndex];
     const updatedItem = calculateSrsData(item, wasCorrect);
-    setDeck((prev) => ({ ...prev, [item.word]: updatedItem }));
+    setDeck((prev) => ({
+      ...prev,
+      [item.word.trim().toLowerCase()]: updatedItem,
+    }));
     setProgress((prev) =>
       updateVaultProgress(prev, new Date().toISOString().split("T")[0]),
     );
@@ -489,10 +506,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         </div>
                         <button
                           onClick={() => handleAddToDeck(item)}
-                          disabled={!!deck[item.word]}
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${deck[item.word] ? "bg-emerald-500/20 text-emerald-500" : "bg-slate-800 text-slate-500 hover:bg-sky-600 hover:text-white"}`}
+                          disabled={!!deck[item.word.toLowerCase()]}
+                          className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${deck[item.word.toLowerCase()] ? "bg-emerald-500/20 text-emerald-500" : "bg-slate-800 text-slate-500 hover:bg-sky-600 hover:text-white"}`}
                         >
-                          {deck[item.word] ? "✓" : "+"}
+                          {deck[item.word.toLowerCase()] ? "✓" : "+"}
                         </button>
                       </div>
                     </div>
