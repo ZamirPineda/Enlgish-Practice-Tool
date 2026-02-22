@@ -29,6 +29,11 @@ interface StopGameBrowseProps {
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
+const seededRandom = (seed: number) => {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
+
 const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
   onPlayWord,
   isWordAudioLoading,
@@ -50,6 +55,10 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
   const [viewMode, setViewMode] = useState<"browse" | "study" | "game">(
     "browse",
   );
+  const [studyRevealAll, setStudyRevealAll] = useState(false);
+  const [isShuffled, setIsShuffled] = useState(false);
+  const [shuffleSeed, setShuffleSeed] = useState(1);
+  const [studyAutoPlay, setStudyAutoPlay] = useState(true);
   const [selectedItemForModal, setSelectedItemForModal] = useState<{
     item: StopItem;
     category: string;
@@ -104,16 +113,47 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
         if (showSavedOnly) {
           items = items.filter((i) => savedWords.has(i.word));
         }
+        if (isShuffled && viewMode === "study") {
+          items = [...items].sort((a, b) => {
+            const hashA = a.word
+              .split("")
+              .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            const hashB = b.word
+              .split("")
+              .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            return (
+              seededRandom(hashA + shuffleSeed) -
+              seededRandom(hashB + shuffleSeed)
+            );
+          });
+        }
       }
       result[category] = items;
     });
     return result;
-  }, [visibleCategories, currentData, browseFilter, showSavedOnly, savedWords]);
+  }, [
+    visibleCategories,
+    currentData,
+    browseFilter,
+    showSavedOnly,
+    savedWords,
+    isShuffled,
+    shuffleSeed,
+    viewMode,
+  ]);
 
   useEffect(() => {
     setExpandedCategories({});
     setShowSavedOnly(false); // Reset saved filter on letter change
   }, [selectedLetter, selectedGroup]);
+
+  useEffect(() => {
+    if (viewMode === "study" || viewMode === "game") {
+      setIsHeaderCollapsed(true);
+    } else {
+      setIsHeaderCollapsed(false);
+    }
+  }, [viewMode]);
 
   useEffect(() => {
     const isEditableTarget = (target: EventTarget | null) => {
@@ -144,6 +184,36 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
         return;
       }
       if (isEditableTarget(event.target)) return;
+
+      if (viewMode === "study") {
+        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+          const cards = Array.from(
+            document.querySelectorAll(".study-card"),
+          ) as HTMLElement[];
+          if (cards.length > 0) {
+            const currentIndex = cards.findIndex(
+              (card) =>
+                card === document.activeElement ||
+                card.contains(document.activeElement),
+            );
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
+              const nextIndex =
+                currentIndex >= 0 && currentIndex < cards.length - 1
+                  ? currentIndex + 1
+                  : 0;
+              cards[nextIndex].focus();
+            } else if (event.key === "ArrowUp") {
+              event.preventDefault();
+              const prevIndex =
+                currentIndex > 0 ? currentIndex - 1 : cards.length - 1;
+              cards[prevIndex].focus();
+            }
+          }
+          return;
+        }
+      }
+
       if (event.key === "ArrowRight") {
         event.preventDefault();
         setSelectedLetter(findNextAvailableLetter(1));
@@ -155,7 +225,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedLetter]);
+  }, [selectedLetter, viewMode]);
 
   const toggleCategory = (category: string) => {
     setExpandedCategories((prev) => ({
@@ -345,6 +415,43 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                 </button>
               </div>
 
+              {viewMode === "study" && (
+                <>
+                  <button
+                    onClick={() => {
+                      setIsShuffled(!isShuffled);
+                      if (!isShuffled) setShuffleSeed((s) => s + 1);
+                    }}
+                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${isShuffled ? "bg-purple-600 border-purple-500 text-white shadow-lg shadow-purple-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:text-purple-400"}`}
+                    title={isShuffled ? "Unshuffle" : "Shuffle Words"}
+                  >
+                    {isShuffled ? "🔀 Shuffled" : "🔀 Shuffle"}
+                  </button>
+                  <button
+                    onClick={() => setStudyAutoPlay(!studyAutoPlay)}
+                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${studyAutoPlay ? "bg-sky-600 border-sky-500 text-white shadow-lg shadow-sky-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:text-sky-400"}`}
+                    title={
+                      studyAutoPlay
+                        ? "Disable Auto-play Audio"
+                        : "Enable Auto-play Audio"
+                    }
+                  >
+                    {studyAutoPlay ? "🔊 Auto-play" : "🔈 Muted"}
+                  </button>
+                  <button
+                    onClick={() => setStudyRevealAll(!studyRevealAll)}
+                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${studyRevealAll ? "bg-amber-600 border-amber-500 text-white shadow-lg shadow-amber-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:text-amber-400"}`}
+                    title={
+                      studyRevealAll
+                        ? "Hide All Translations"
+                        : "Reveal All Translations"
+                    }
+                  >
+                    {studyRevealAll ? "Hide All" : "Reveal All"}
+                  </button>
+                </>
+              )}
+
               <div className="relative w-full md:w-64 group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
                   <SearchIcon />
@@ -406,7 +513,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
         </div>
 
         {/* Row 2: Letters & Filters combined in a denser layout (Always Visible) */}
-        {viewMode !== "game" && (
+        {viewMode === "browse" && (
           <div
             className={`max-w-7xl mx-auto px-2 transition-all duration-300 ${isHeaderCollapsed ? "pt-1" : "pt-2"}`}
           >
@@ -476,7 +583,9 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-900/50">
           <div className="max-w-7xl mx-auto pb-20">
             {currentData ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-fade-in">
+              <div
+                className={`grid ${viewMode === "study" ? "grid-cols-1 max-w-3xl mx-auto" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"} gap-6 animate-fade-in`}
+              >
                 {visibleCategories.map((category) => {
                   const items = filteredCategoryData[category] || [];
 
@@ -578,6 +687,9 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                                 (interimTranscript || "")
                             }
                             feedback={practiceFeedback}
+                            isStudyMode={viewMode === "study"}
+                            studyRevealAll={studyRevealAll}
+                            studyAutoPlay={studyAutoPlay}
                             onDetailClick={
                               viewMode === "study"
                                 ? (item) =>

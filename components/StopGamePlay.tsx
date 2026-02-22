@@ -48,6 +48,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
   const [showSummary, setShowSummary] = useState(false);
   const [hint, setHint] = useState<string | null>(null);
+  const [difficulty, setDifficulty] = useState<15 | 30 | 60>(30);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
     message: string;
@@ -144,7 +145,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setFeedback(null);
     // Important: clear the transcript to avoid "ghost" words from previous rounds appearing
     resetTranscript();
-    setTimeLeft(30); // Reset Timer
+    setTimeLeft(difficulty); // Reset Timer
     playGameSound("start");
   };
 
@@ -258,13 +259,24 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
     if (isCorrect) {
       playGameSound("correct");
-      setScore((s) => s + 1);
+
+      // Calculate combo multiplier based on current streak
+      // 0-2 streak: 1x, 3-4 streak: 2x, 5+ streak: 3x
+      const multiplier = currentStreak >= 5 ? 3 : currentStreak >= 3 ? 2 : 1;
+      const pointsEarned = 1 * multiplier;
+
+      setScore((s) => s + pointsEarned);
       setCurrentStreak((prev) => {
         const next = prev + 1;
         setBestStreak((b) => Math.max(b, next));
         return next;
       });
-      setFeedback({ type: "success", message: "Correct! +1 point" });
+
+      const comboMessage = multiplier > 1 ? ` (Combo x${multiplier}!)` : "";
+      setFeedback({
+        type: "success",
+        message: `Correct! +${pointsEarned} point${pointsEarned > 1 ? "s" : ""}${comboMessage}`,
+      });
       onPlayWord(inputValue.trim());
 
       setGameStats((prev) => ({
@@ -316,6 +328,32 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             </select>
           </div>
 
+          <div className="space-y-2 text-left">
+            <label className="text-sm font-bold text-slate-300">
+              Difficulty (Time per word)
+            </label>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setDifficulty(60)}
+                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 60 ? "bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700"}`}
+              >
+                Relaxed (60s)
+              </button>
+              <button
+                onClick={() => setDifficulty(30)}
+                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 30 ? "bg-sky-600 border-sky-500 text-white shadow-lg shadow-sky-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700"}`}
+              >
+                Normal (30s)
+              </button>
+              <button
+                onClick={() => setDifficulty(15)}
+                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 15 ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700"}`}
+              >
+                Hard (15s)
+              </button>
+            </div>
+          </div>
+
           <Button
             onClick={startGame}
             variant="primary"
@@ -334,25 +372,75 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     : null;
 
   if (showSummary) {
+    const gradeInfo = (() => {
+      if (score >= 50)
+        return {
+          grade: "S",
+          color: "text-fuchsia-400",
+          message: "Vocabulary Master!",
+        };
+      if (score >= 30)
+        return {
+          grade: "A",
+          color: "text-emerald-400",
+          message: "Excellent Work!",
+        };
+      if (score >= 15)
+        return { grade: "B", color: "text-sky-400", message: "Great Job!" };
+      if (score >= 5)
+        return { grade: "C", color: "text-amber-400", message: "Good Effort!" };
+      return {
+        grade: "D",
+        color: "text-slate-400",
+        message: "Keep Practicing!",
+      };
+    })();
+
     return (
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-900/50 flex flex-col items-center justify-center">
-        <Card className="max-w-2xl w-full p-6 text-center space-y-6">
-          <h2 className="text-3xl font-bold text-white mb-6">Game Summary</h2>
+        <Card className="max-w-2xl w-full p-8 text-center space-y-8 animate-fade-in shadow-2xl border-t-4 border-sky-500">
+          <div>
+            <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-2">
+              Game Complete!
+            </h2>
+            <p className="text-slate-400 text-lg">{gradeInfo.message}</p>
+          </div>
+
+          <div className="flex justify-center items-center gap-8 py-4">
+            <div className="text-center">
+              <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">
+                Rank
+              </div>
+              <div
+                className={`text-7xl font-black ${gradeInfo.color} drop-shadow-lg animate-bounce`}
+              >
+                {gradeInfo.grade}
+              </div>
+            </div>
+          </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            <div className="bg-slate-800 p-4 rounded-xl">
-              <div className="text-sm text-slate-400">Total Score</div>
-              <div className="text-2xl font-bold text-emerald-400">{score}</div>
+            <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 hover:bg-slate-800 transition-colors">
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                Total Score
+              </div>
+              <div className="text-3xl font-black text-emerald-400">
+                {score}
+              </div>
             </div>
-            <div className="bg-slate-800 p-4 rounded-xl">
-              <div className="text-sm text-slate-400">Best Streak</div>
-              <div className="text-2xl font-bold text-amber-400">
+            <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 hover:bg-slate-800 transition-colors">
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                Best Streak
+              </div>
+              <div className="text-3xl font-black text-amber-400">
                 🔥 {bestStreak}
               </div>
             </div>
-            <div className="bg-slate-800 p-4 rounded-xl">
-              <div className="text-sm text-slate-400">Accuracy</div>
-              <div className="text-2xl font-bold text-blue-400">
+            <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 hover:bg-slate-800 transition-colors">
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                Accuracy
+              </div>
+              <div className="text-3xl font-black text-blue-400">
                 {gameStats.correct + gameStats.incorrect > 0
                   ? Math.round(
                       (gameStats.correct /
@@ -363,9 +451,11 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                 %
               </div>
             </div>
-            <div className="bg-slate-800 p-4 rounded-xl">
-              <div className="text-sm text-slate-400">Words Learned</div>
-              <div className="text-2xl font-bold text-purple-400">
+            <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 hover:bg-slate-800 transition-colors">
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                Words Seen
+              </div>
+              <div className="text-3xl font-black text-purple-400">
                 {gameStats.history.length}
               </div>
             </div>
@@ -445,7 +535,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             </div>
             {currentStreak > 1 && (
               <div className="text-sm font-bold text-amber-400 animate-pulse">
-                🔥 {currentStreak} Streak!
+                🔥 {currentStreak} Streak!{" "}
+                {currentStreak >= 5 ? "(3x)" : currentStreak >= 3 ? "(2x)" : ""}
               </div>
             )}
           </div>
@@ -457,23 +548,26 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           </button>
         </div>
 
-        <Card
-          className={`p-8 text-center border-t-4 ${theme?.accentColor || "border-sky-500"} relative overflow-hidden`}
-        >
-          {/* Timer Progress Bar */}
-          <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-800/50">
-            <div
-              className={`h-full transition-all duration-1000 linear ${timeLeft <= 5 ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.7)]" : "bg-emerald-400"}`}
-              style={{ width: `${(timeLeft / 30) * 100}%` }}
-            />
-          </div>
+        {/* Enhanced Timer Progress Bar */}
+        <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden shadow-inner">
+          <div
+            className={`h-full transition-all duration-1000 linear rounded-full ${timeLeft <= 5 ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.7)] animate-pulse" : timeLeft <= 15 ? "bg-amber-400" : "bg-emerald-400"}`}
+            style={{ width: `${(timeLeft / difficulty) * 100}%` }}
+          />
+        </div>
 
-          <div className="space-y-8">
+        <Card
+          className={`p-8 text-center border-t-4 ${theme?.accentColor || "border-sky-500"} relative overflow-hidden shadow-2xl`}
+        >
+          <div
+            key={`${currentLetter}-${currentCategory}`}
+            className="space-y-8 animate-fade-in"
+          >
             <div>
               <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">
                 Letter
               </div>
-              <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-400 drop-shadow-lg">
+              <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-400 drop-shadow-lg transform transition-transform hover:scale-110">
                 {currentLetter}
               </div>
             </div>
@@ -482,13 +576,13 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
               <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">
                 Category
               </div>
-              <div className="flex items-center justify-center gap-3">
-                <span className="text-3xl">
+              <div className="flex items-center justify-center gap-3 bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+                <span className="text-4xl animate-bounce">
                   {currentCategory &&
                     getCategoryIcon(currentCategory as StopCategory)}
                 </span>
                 <h3
-                  className={`text-2xl font-bold ${theme?.textClass || "text-white"}`}
+                  className={`text-3xl font-bold ${theme?.textClass || "text-white"}`}
                 >
                   {currentCategory}
                 </h3>

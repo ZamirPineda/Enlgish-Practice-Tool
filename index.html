@@ -39,6 +39,14 @@
         animation: fade-in 0.3s ease-out forwards;
       }
 
+      /* Prevent scrollbars inside math formulas */
+      .katex-display {
+        overflow: visible !important;
+      }
+      .katex {
+        overflow: visible !important;
+      }
+
       :root {
         --color-bg: #0f172a;
         --color-surface-1: #1e293b;

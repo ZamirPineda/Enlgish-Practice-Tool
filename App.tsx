@@ -68,10 +68,46 @@ const App: React.FC = () => {
     loadSettings(),
   );
   const [onboardingStep, setOnboardingStep] = React.useState(0);
+  const [isOffline, setIsOffline] = React.useState(!navigator.onLine);
+  const [deferredPrompt, setDeferredPrompt] = React.useState<any>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+
   const {
     needRefresh: [needRefresh],
     updateServiceWorker,
   } = useRegisterSW();
+
+  React.useEffect(() => {
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt,
+      );
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") {
+      setDeferredPrompt(null);
+    }
+  };
 
   React.useEffect(() => {
     document.documentElement.dataset.theme = settings.theme;
@@ -122,17 +158,79 @@ const App: React.FC = () => {
         }}
       >
         <header
-          className="p-4 border-b flex flex-wrap justify-between items-center gap-4 z-10 shadow-lg"
+          className="p-4 border-b flex flex-wrap justify-between items-center gap-4 z-50 shadow-lg relative"
           style={{
             backgroundColor: "var(--color-surface-1)",
             borderColor: "var(--color-border)",
           }}
         >
-          <h1 className="text-lg md:text-xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent truncate">
-            ENGLISH PAL
-          </h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-lg md:text-xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent truncate">
+              ENGLISH PAL
+            </h1>
+            {isOffline && (
+              <span className="px-2 py-0.5 bg-red-500/20 text-red-400 text-xs font-bold rounded-full flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse"></span>
+                Offline
+              </span>
+            )}
+          </div>
 
-          <nav className="flex gap-2 overflow-x-auto pb-1 md:pb-0 w-full md:w-auto">
+          <div className="flex items-center gap-3">
+            {deferredPrompt && (
+              <button
+                onClick={handleInstallClick}
+                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-sky-500/20 text-sky-400 hover:bg-sky-500/30 rounded-lg text-sm font-bold transition-colors"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                Install App
+              </button>
+            )}
+
+            {/* Mobile Menu Toggle */}
+            <button
+              className="md:hidden p-2 text-slate-300 hover:bg-slate-800 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {isMobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex gap-2 w-full md:w-auto">
             <NavItem to="/stop">🎮 STOP Game</NavItem>
             <NavItem to="/study">📚 Study Deck</NavItem>
             <NavItem to="/personal">👤 Scripts</NavItem>
@@ -142,6 +240,46 @@ const App: React.FC = () => {
             <NavItem to="/docs">📖 Docs</NavItem>
             <NavItem to="/settings">⚙️ Settings</NavItem>
           </nav>
+
+          {/* Mobile Navigation Drawer */}
+          {isMobileMenuOpen && (
+            <div className="absolute top-full left-0 right-0 bg-slate-900 border-b border-slate-800 shadow-2xl md:hidden flex flex-col p-4 gap-2 z-50">
+              {deferredPrompt && (
+                <button
+                  onClick={handleInstallClick}
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-sky-500/20 text-sky-400 rounded-xl text-sm font-bold mb-2"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    />
+                  </svg>
+                  Install App to Home Screen
+                </button>
+              )}
+              <div
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex flex-col gap-2"
+              >
+                <NavItem to="/stop">🎮 STOP Game</NavItem>
+                <NavItem to="/study">📚 Study Deck</NavItem>
+                <NavItem to="/personal">👤 Scripts</NavItem>
+                <NavItem to="/vault">🧠 Vault</NavItem>
+                <NavItem to="/stats">📊 Stats</NavItem>
+                <NavItem to="/calculus">∫ Math</NavItem>
+                <NavItem to="/docs">📖 Docs</NavItem>
+                <NavItem to="/settings">⚙️ Settings</NavItem>
+              </div>
+            </div>
+          )}
         </header>
 
         <main

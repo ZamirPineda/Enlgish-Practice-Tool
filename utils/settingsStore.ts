@@ -2,6 +2,7 @@ export interface AppSettings {
   theme: "dark" | "light";
   reducedMotion: boolean;
   ttsAutoPlay: boolean;
+  ttsSpeed: number;
   confirmDialogs: boolean;
   hasCompletedOnboarding: boolean;
 }
@@ -31,6 +32,7 @@ const normalizeSettings = (input: unknown): AppSettings => {
         : getSystemReducedMotionPreference(),
     ttsAutoPlay:
       typeof parsed.ttsAutoPlay === "boolean" ? parsed.ttsAutoPlay : true,
+    ttsSpeed: typeof parsed.ttsSpeed === "number" ? parsed.ttsSpeed : 0.9,
     confirmDialogs:
       typeof parsed.confirmDialogs === "boolean" ? parsed.confirmDialogs : true,
     hasCompletedOnboarding:

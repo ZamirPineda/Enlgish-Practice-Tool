@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StopItem, WordFamily, StopCategory, IrregularVerb } from "../types";
 import {
   getCategoryIcon,
@@ -51,6 +51,9 @@ interface StopGameCardProps {
   transcript: string;
   feedback: string | null;
   onDetailClick?: (item: StopItem) => void;
+  isStudyMode?: boolean;
+  studyRevealAll?: boolean;
+  studyAutoPlay?: boolean;
 }
 
 const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
@@ -201,8 +204,16 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
   transcript,
   feedback,
   onDetailClick,
+  isStudyMode = false,
+  studyRevealAll = false,
+  studyAutoPlay = true,
 }) => {
   const [layer, setLayer] = useState(1);
+  const [isRevealed, setIsRevealed] = useState(false);
+
+  useEffect(() => {
+    setIsRevealed(false);
+  }, [studyRevealAll]);
 
   // Determine Logic for Layers
   const isVerbOrAdjective = ["Verbs", "Adjectives"].includes(category);
@@ -259,10 +270,28 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
       )
     : undefined;
 
+  const handleCardClick = () => {
+    if (isStudyMode && !studyRevealAll && !isRevealed) {
+      setIsRevealed(true);
+      if (studyAutoPlay) {
+        onPlay(item.word);
+      }
+    } else if (onDetailClick) {
+      onDetailClick(item);
+    }
+  };
+
   return (
     <div
-      onClick={() => onDetailClick && onDetailClick(item)}
-      className={`flex flex-col group bg-slate-900/40 p-2.5 rounded-lg border transition-all hover:bg-slate-800 hover:shadow-lg ${theme.glow} ${isPracticing ? "border-sky-500/50 bg-slate-800" : isSaved ? "border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.1)]" : "border-transparent hover:border-slate-600"} ${onDetailClick ? "cursor-pointer hover:scale-[1.02]" : ""}`}
+      onClick={handleCardClick}
+      onKeyDown={(e) => {
+        if (isStudyMode && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          handleCardClick();
+        }
+      }}
+      tabIndex={isStudyMode ? 0 : undefined}
+      className={`study-card flex flex-col group bg-slate-900/40 p-2.5 rounded-lg border transition-all hover:bg-slate-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500 ${theme.glow} ${isPracticing ? "border-sky-500/50 bg-slate-800" : isSaved ? "border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.1)]" : "border-transparent hover:border-slate-600"} ${onDetailClick || (isStudyMode && !studyRevealAll && !isRevealed) ? "cursor-pointer hover:scale-[1.02]" : ""}`}
     >
       <div className="flex items-center justify-between">
         <div className="min-w-0 pr-2 flex-1">
@@ -313,9 +342,31 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
             <span className="text-cyan-400 font-mono text-xs tracking-wide">
               {item.ipa}
             </span>
-            {item.translation && (
-              <span className="text-slate-400 text-xs italic truncate max-w-full">
-                • {item.translation}
+            {(item.translation ||
+              (isStudyMode && !studyRevealAll && !isRevealed)) && (
+              <span
+                className={`text-xs italic truncate max-w-full transition-all duration-300 ${isStudyMode && !studyRevealAll && !isRevealed ? "text-slate-500 bg-slate-800 border border-slate-700 rounded px-2 py-0.5 cursor-pointer hover:bg-slate-700 hover:text-slate-300" : "text-slate-400"}`}
+                onClick={(e) => {
+                  if (isStudyMode && !studyRevealAll) {
+                    e.stopPropagation();
+                    const willReveal = !isRevealed;
+                    setIsRevealed(willReveal);
+                    if (willReveal && studyAutoPlay) {
+                      onPlay(item.word);
+                    }
+                  }
+                }}
+                title={
+                  isStudyMode && !studyRevealAll && !isRevealed
+                    ? "Click to reveal details"
+                    : ""
+                }
+              >
+                {isStudyMode && !studyRevealAll && !isRevealed
+                  ? "Reveal Details"
+                  : item.translation
+                    ? `• ${item.translation}`
+                    : ""}
               </span>
             )}
           </div>
@@ -370,7 +421,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
           </div>
 
           {/* Interactive Layers (Definitions/Examples) */}
-          {showCardLayout ? (
+          {showCardLayout && (!isStudyMode || studyRevealAll || isRevealed) ? (
             <div
               onClick={handleToggleLayer}
               className={`mt-2 p-2 rounded cursor-pointer transition-all duration-300 relative group/layer ${isMinimalPair ? "bg-indigo-900/20 border border-indigo-500/20 cursor-default" : layer === 1 ? "bg-sky-900/20 border border-sky-500/20" : layer === 2 ? "bg-emerald-900/20 border border-emerald-500/20" : "bg-purple-900/20 border border-purple-500/20"}`}
@@ -514,13 +565,17 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                 )}
               </div>
             </div>
-          ) : item.definition ? (
+          ) : item.definition &&
+            (!isStudyMode || studyRevealAll || isRevealed) ? (
             <p className="text-xs text-slate-400 mt-2 pt-2 border-t border-slate-700/50 italic leading-tight">
               {item.definition}
             </p>
           ) : null}
 
-          {item.wordFamily && <WordFamilyViewer family={item.wordFamily} />}
+          {item.wordFamily &&
+            (!isStudyMode || studyRevealAll || isRevealed) && (
+              <WordFamilyViewer family={item.wordFamily} />
+            )}
         </div>
 
         {/* Actions */}

@@ -1,4 +1,5 @@
 // Audio Utilities - Cleaned up for static deployment
+import { loadSettings } from "./settingsStore";
 
 // Play text using the browser's native SpeechSynthesis API
 export function playNativeTTS(text: string) {
@@ -11,9 +12,10 @@ export function playNativeTTS(text: string) {
   window.speechSynthesis.cancel();
 
   const speak = () => {
+    const settings = loadSettings();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";
-    utterance.rate = 0.9; // Slightly slower for better clarity
+    utterance.rate = settings.ttsSpeed; // Use user's preferred speed
 
     // Attempt to use a high-quality voice if available
     const voices = window.speechSynthesis.getVoices();

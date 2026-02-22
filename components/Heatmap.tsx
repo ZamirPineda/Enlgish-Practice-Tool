@@ -86,12 +86,9 @@ const Heatmap: React.FC<HeatmapProps> = ({ deck, progress }) => {
   );
 
   return (
-    <section className="bg-slate-800 border border-slate-700 rounded-2xl p-5">
-      <h2 className="text-sm uppercase text-slate-400 font-bold mb-3">
-        Repaso anual
-      </h2>
+    <div className="w-full max-w-full">
       <div
-        className="grid grid-flow-col gap-1 overflow-x-auto pb-1"
+        className="grid grid-flow-col gap-1 overflow-x-auto pb-2"
         style={{ gridTemplateRows: `repeat(${DAYS_IN_WEEK}, minmax(0, 1fr))` }}
         aria-label="Heatmap de repaso"
       >
@@ -104,8 +101,18 @@ const Heatmap: React.FC<HeatmapProps> = ({ deck, progress }) => {
           />
         ))}
       </div>
-      <p className="mt-3 text-xs text-slate-400">Últimos 365 días</p>
-    </section>
+      <div className="flex justify-between items-center mt-3 text-xs text-slate-400">
+        <p>Últimos 365 días</p>
+        <div className="flex items-center gap-2">
+          <span>Menos</span>
+          <div className="w-3 h-3 rounded-sm bg-slate-700"></div>
+          <div className="w-3 h-3 rounded-sm bg-emerald-900"></div>
+          <div className="w-3 h-3 rounded-sm bg-emerald-700"></div>
+          <div className="w-3 h-3 rounded-sm bg-emerald-500"></div>
+          <span>Más</span>
+        </div>
+      </div>
+    </div>
   );
 };
 

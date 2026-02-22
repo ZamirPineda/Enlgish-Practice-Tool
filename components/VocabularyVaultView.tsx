@@ -133,6 +133,19 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const [newWord, setNewWord] = useState("");
   const [newContext, setNewContext] = useState("");
   const [newDef, setNewDef] = useState("");
+  const [newTags, setNewTags] = useState("");
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [editingWordKey, setEditingWordKey] = useState<string | null>(null);
+  const [editWord, setEditWord] = useState("");
+  const [editContext, setEditContext] = useState("");
+  const [editDef, setEditDef] = useState("");
+  const [editTags, setEditTags] = useState("");
+
+  const [sortBy, setSortBy] = useState<"alphabetical" | "strength" | "newest">(
+    "alphabetical",
+  );
+
   // Removed generatedData logic as AI is gone
 
   const [reviewItems, setReviewItems] = useState<SrsVocabularyItem[]>([]);
@@ -174,18 +187,32 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const dueItems = useMemo(() => getDueReviewItems(deck), [deck]);
 
   const filteredCollection = useMemo(() => {
-    return deckList
-      .filter(
-        (item) =>
-          item.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.definition.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (item.tags &&
-            item.tags.some((tag) =>
-              tag.toLowerCase().includes(searchTerm.toLowerCase()),
-            )),
-      )
-      .sort((a, b) => a.word.localeCompare(b.word));
-  }, [deckList, searchTerm]);
+    let filtered = deckList.filter(
+      (item) =>
+        item.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.definition.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (item.tags &&
+          item.tags.some((tag) =>
+            tag.toLowerCase().includes(searchTerm.toLowerCase()),
+          )),
+    );
+
+    if (sortBy === "alphabetical") {
+      filtered = filtered.sort((a, b) => a.word.localeCompare(b.word));
+    } else if (sortBy === "strength") {
+      filtered = filtered.sort((a, b) => b.interval - a.interval);
+    } else if (sortBy === "newest") {
+      // We don't have a creation date, but we can sort by nextReviewDate or just reverse alphabetical as a fallback
+      // Let's sort by nextReviewDate descending (newest added usually have nextReviewDate = today)
+      filtered = filtered.sort(
+        (a, b) =>
+          new Date(b.nextReviewDate).getTime() -
+          new Date(a.nextReviewDate).getTime(),
+      );
+    }
+
+    return filtered;
+  }, [deckList, searchTerm, sortBy]);
 
   const handleAddToDeck = (item: {
     word: string;
@@ -218,6 +245,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     setNewWord("");
     setNewContext("");
     setNewDef("");
+    setNewTags("");
   };
 
   const handleSaveFromModal = () => {
@@ -226,7 +254,51 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       word: newWord,
       definition: newDef,
       originalContext: newContext,
+      tags: newTags
+        .split(",")
+        .map((t) => t.trim())
+        .filter((t) => t),
     });
+  };
+
+  const handleEditWord = (wordKey: string) => {
+    const item = deck[wordKey];
+    if (!item) return;
+    setEditingWordKey(wordKey);
+    setEditWord(item.word);
+    setEditDef(item.definition);
+    setEditContext(item.originalContext || "");
+    setEditTags(item.tags ? item.tags.join(", ") : "");
+    setIsEditOpen(true);
+  };
+
+  const handleSaveEdit = () => {
+    if (!editingWordKey || !deck[editingWordKey]) return;
+
+    const updatedItem = {
+      ...deck[editingWordKey],
+      word: editWord,
+      definition: editDef,
+      originalContext: editContext,
+      tags: editTags
+        .split(",")
+        .map((t) => t.trim())
+        .filter((t) => t),
+    };
+
+    setDeck((prev) => {
+      const newDeck = { ...prev };
+      // If the word itself changed, we need to update the key
+      const newKey = editWord.trim().toLowerCase();
+      if (newKey !== editingWordKey) {
+        delete newDeck[editingWordKey];
+      }
+      newDeck[newKey] = updatedItem;
+      return newDeck;
+    });
+
+    setIsEditOpen(false);
+    setEditingWordKey(null);
   };
 
   const handleAddFormKeyDown = (
@@ -368,10 +440,11 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   }
 
   const masteredCount = deckList.filter((i) => i.status === "mastered").length;
-  const learningCount = deckList.filter((i) => i.status !== "new").length;
+  const newCount = deckList.filter((i) => i.status === "new").length;
+  const learningCount = deckList.filter((i) => i.status === "learning").length;
   const totalInDeck = deckList.length;
   const progressPercent =
-    totalInDeck > 0 ? (learningCount / totalInDeck) * 100 : 0;
+    totalInDeck > 0 ? ((learningCount + masteredCount) / totalInDeck) * 100 : 0;
 
   return (
     <div className="flex-1 overflow-y-auto bg-slate-900 p-4 sm:p-8">
@@ -458,14 +531,52 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       </span>
                     </div>
                   </div>
-                  <div className="h-4 w-full bg-slate-900/50 rounded-full p-1 border border-slate-700 overflow-hidden">
-                    <div
-                      className="bg-sky-500 h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(14,165,233,0.5)]"
-                      style={{ width: `${progressPercent}%` }}
-                    ></div>
+
+                  {/* Detailed Stats Breakdown */}
+                  <div className="pt-4 border-t border-slate-800">
+                    <div className="flex justify-between text-xs font-bold uppercase mb-2">
+                      <span className="text-slate-500">New: {newCount}</span>
+                      <span className="text-sky-500">
+                        Learning: {learningCount}
+                      </span>
+                      <span className="text-emerald-500">
+                        Mastered: {masteredCount}
+                      </span>
+                    </div>
+                    <div className="h-4 w-full bg-slate-900/50 rounded-full p-1 border border-slate-700 flex overflow-hidden gap-0.5">
+                      {totalInDeck > 0 ? (
+                        <>
+                          <div
+                            className="bg-slate-600 h-full rounded-l-full transition-all duration-1000"
+                            style={{
+                              width: `${(newCount / totalInDeck) * 100}%`,
+                            }}
+                            title={`New: ${newCount}`}
+                          ></div>
+                          <div
+                            className="bg-sky-500 h-full transition-all duration-1000 shadow-[0_0_10px_rgba(14,165,233,0.5)]"
+                            style={{
+                              width: `${(learningCount / totalInDeck) * 100}%`,
+                            }}
+                            title={`Learning: ${learningCount}`}
+                          ></div>
+                          <div
+                            className="bg-emerald-500 h-full rounded-r-full transition-all duration-1000 shadow-[0_0_10px_rgba(16,185,129,0.5)]"
+                            style={{
+                              width: `${(masteredCount / totalInDeck) * 100}%`,
+                            }}
+                            title={`Mastered: ${masteredCount}`}
+                          ></div>
+                        </>
+                      ) : (
+                        <div className="bg-slate-800 h-full w-full rounded-full"></div>
+                      )}
+                    </div>
                   </div>
+
                   <p className="text-[10px] text-center text-slate-500 font-bold uppercase tracking-widest">
-                    {learningCount} of {totalInDeck} words started
+                    {learningCount + masteredCount} of {totalInDeck} words
+                    started
                   </p>
                   <p className="text-[10px] text-center text-amber-400 font-bold uppercase tracking-widest">
                     {progress.currentStreak} day streak · best{" "}
@@ -567,6 +678,31 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               </div>
             )}
             {totalInDeck > 0 && (
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+                <div className="text-sm text-slate-400">
+                  Showing {filteredCollection.length} of {totalInDeck} words
+                </div>
+                <div className="flex items-center gap-2">
+                  <label
+                    htmlFor="sort-select"
+                    className="text-xs font-bold text-slate-500 uppercase"
+                  >
+                    Sort by:
+                  </label>
+                  <select
+                    id="sort-select"
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as any)}
+                    className="bg-slate-800 border border-slate-700 text-white text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block p-2 outline-none"
+                  >
+                    <option value="alphabetical">Alphabetical (A-Z)</option>
+                    <option value="strength">Memory Strength</option>
+                    <option value="newest">Needs Review First</option>
+                  </select>
+                </div>
+              </div>
+            )}
+            {totalInDeck > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-20">
                 {filteredCollection.map((item) => (
                   <div
@@ -593,13 +729,37 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           }}
                         />
                       </div>
-                      <button
-                        onClick={() => handleDelete(item.word)}
-                        className="opacity-0 group-hover:opacity-100 p-2 hover:bg-red-500/10 rounded-lg transition-all focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
-                        aria-label={`Delete ${item.word}`}
-                      >
-                        <TrashIcon />
-                      </button>
+                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
+                        <button
+                          onClick={() =>
+                            handleEditWord(item.word.trim().toLowerCase())
+                          }
+                          className="p-2 hover:bg-sky-500/10 text-slate-400 hover:text-sky-400 rounded-lg focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+                          aria-label={`Edit ${item.word}`}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          onClick={() => handleDelete(item.word)}
+                          className="p-2 hover:bg-red-500/10 text-slate-400 hover:text-red-400 rounded-lg focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+                          aria-label={`Delete ${item.word}`}
+                        >
+                          <TrashIcon />
+                        </button>
+                      </div>
                     </div>
                     <div className="flex flex-wrap gap-1 mb-3">
                       {item.partOfSpeech && (
@@ -740,6 +900,24 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               placeholder="Meaning, Example, etc."
             />
           </div>
+
+          <div>
+            <label
+              htmlFor="new-tags-input"
+              className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1"
+            >
+              Tags (comma separated)
+            </label>
+            <Input
+              id="new-tags-input"
+              type="text"
+              value={newTags}
+              onChange={(e) => setNewTags(e.target.value)}
+              onKeyDown={handleAddFormKeyDown}
+              className="p-3 text-sm text-slate-300"
+              placeholder="e.g. Business, Slang, Idiom"
+            />
+          </div>
         </div>
         <div className="flex gap-3 mt-8">
           <Button
@@ -758,6 +936,93 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             className="flex-1"
           >
             Save Word
+          </Button>
+        </div>
+      </Modal>
+
+      <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)}>
+        <h2 className="text-2xl font-black text-white mb-4">Edit Word</h2>
+        <div className="space-y-4">
+          <div>
+            <label
+              htmlFor="edit-word-input"
+              className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1"
+            >
+              Word
+            </label>
+            <Input
+              id="edit-word-input"
+              type="text"
+              value={editWord}
+              onChange={(e) => setEditWord(e.target.value)}
+              className="w-full p-3"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="edit-context-input"
+              className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1"
+            >
+              Context / Source Sentence
+            </label>
+            <Input
+              id="edit-context-input"
+              type="text"
+              value={editContext}
+              onChange={(e) => setEditContext(e.target.value)}
+              className="p-3 text-sm text-slate-300"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="edit-def-input"
+              className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1"
+            >
+              Definition & Notes
+            </label>
+            <textarea
+              id="edit-def-input"
+              value={editDef}
+              onChange={(e) => setEditDef(e.target.value)}
+              className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white outline-none focus:ring-2 focus:ring-sky-500 h-24"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="edit-tags-input"
+              className="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1"
+            >
+              Tags (comma separated)
+            </label>
+            <Input
+              id="edit-tags-input"
+              type="text"
+              value={editTags}
+              onChange={(e) => setEditTags(e.target.value)}
+              className="p-3 text-sm text-slate-300"
+            />
+          </div>
+        </div>
+        <div className="flex gap-3 mt-8">
+          <Button
+            onClick={() => setIsEditOpen(false)}
+            variant="ghost"
+            size="lg"
+            className="flex-1"
+          >
+            Cancel
+          </Button>
+          <Button
+            disabled={!editWord || !editDef}
+            onClick={handleSaveEdit}
+            variant="primary"
+            size="lg"
+            className="flex-1"
+          >
+            Save Changes
           </Button>
         </div>
       </Modal>

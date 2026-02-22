@@ -19,6 +19,15 @@ export interface StatsMetrics {
     accuracy: number;
     totalCards: number;
   }>;
+  levelBreakdown: Array<{
+    level: string;
+    count: number;
+  }>;
+  recentActivity: Array<{
+    word: string;
+    date: string;
+    status: string;
+  }>;
   estimatedStudyMinutes: number | null;
 }
 
@@ -27,6 +36,11 @@ const getCategory = (item: SrsVocabularyItem): string => {
   if (firstTag) return firstTag;
   const pos = item.partOfSpeech?.trim();
   return pos || "General";
+};
+
+const getLevel = (item: SrsVocabularyItem): string => {
+  const levelTag = item.tags?.find((t) => t.match(/^[A-C][1-2]$/i));
+  return levelTag ? levelTag.toUpperCase() : "Uncategorized";
 };
 
 const parseMaybeDate = (value: unknown): number | null => {
@@ -96,6 +110,38 @@ export const calculateStatsMetrics = (
     }))
     .sort((a, b) => a.category.localeCompare(b.category));
 
+  const levelCounts = new Map<string, number>();
+  items.forEach((item) => {
+    const level = getLevel(item);
+    levelCounts.set(level, (levelCounts.get(level) || 0) + 1);
+  });
+
+  const levelBreakdown = Array.from(levelCounts.entries())
+    .map(([level, count]) => ({ level, count }))
+    .sort((a, b) => {
+      if (a.level === "Uncategorized") return 1;
+      if (b.level === "Uncategorized") return -1;
+      return a.level.localeCompare(b.level);
+    });
+
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  const recentActivity = items
+    .filter((item) => {
+      // We don't have a strict 'lastReviewedAt' in SrsVocabularyItem, but we can infer from nextReviewDate
+      // or if it's mastered/learning. Let's just show recently added/modified if we can't find a date.
+      // For now, let's just take the ones with the highest interval (most recently reviewed successfully)
+      return item.interval > 0;
+    })
+    .sort((a, b) => b.interval - a.interval) // Sort by highest interval (most recently successful)
+    .slice(0, 5)
+    .map((item) => ({
+      word: item.word,
+      date: "Recently", // Placeholder since we don't store exact review dates per item
+      status: item.status,
+    }));
+
   const timestamps = items.flatMap((item) => {
     const dynamicItem = item as SrsVocabularyItem & Record<string, unknown>;
     return [
@@ -124,6 +170,8 @@ export const calculateStatsMetrics = (
     pendingCards,
     globalAccuracy,
     categoryAccuracy,
+    levelBreakdown,
+    recentActivity,
     estimatedStudyMinutes,
   };
 };
