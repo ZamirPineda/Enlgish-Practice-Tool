@@ -13,3 +13,7 @@
 ## 2026-03-02 - [Form Accessibility in Modals]
 **Learning:** Input fields within modals (like "Add New Word") often rely on visual layout for labeling and lack explicit `htmlFor`/`id` associations, failing accessibility checks.
 **Action:** Always verify form inputs have programmatically associated labels using `htmlFor` and `id`, and enforce this by testing with `getByLabelText`.
+
+## 2026-03-03 - [Custom Toggle Accessibility Pattern]
+**Learning:** Custom toggle buttons implemented with `div`s and CSS classes often lack semantic meaning, making them invisible to screen readers.
+**Action:** Always add `role="switch"`, `aria-checked`, and `aria-label` to custom toggle buttons, and ensure inner decorative elements have `aria-hidden="true"`.

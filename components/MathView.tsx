@@ -204,10 +204,14 @@ const MathView: React.FC = () => {
                 setIsStudyMode(!isStudyMode);
                 setSelectedStrategy(null);
               }}
-              className={`w-12 h-6 rounded-full transition-colors flex items-center px-1 ${isStudyMode ? "bg-amber-500" : "bg-slate-700"}`}
+              className={`w-12 h-6 rounded-full transition-colors flex items-center px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 ${isStudyMode ? "bg-amber-500" : "bg-slate-700"}`}
+              role="switch"
+              aria-checked={isStudyMode}
+              aria-label="Modo práctica"
             >
               <div
                 className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${isStudyMode ? "translate-x-6" : "translate-x-0"}`}
+                aria-hidden="true"
               />
             </button>
 
