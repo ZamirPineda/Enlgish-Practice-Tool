@@ -120,7 +120,7 @@ const StatsView: React.FC = () => {
           </h1>
         </div>
 
-        {metrics.totalCards === 0 && (
+        {metrics.totalCards === 0 ? (
           <section className="bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center">
             <h2 className="text-white text-2xl font-black mb-3">No data yet</h2>
             <p className="text-slate-400 mb-6 max-w-md mx-auto">
@@ -131,12 +131,10 @@ const StatsView: React.FC = () => {
               to="/vault"
               className="inline-flex px-6 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 transition-colors text-slate-900 font-black"
             >
-              Start First Session
+              Start first session
             </Link>
           </section>
-        )}
-
-        {metrics.totalCards > 0 && (
+        ) : (
           <>
             {/* Top KPI Cards */}
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

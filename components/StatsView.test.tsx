@@ -40,8 +40,9 @@ describe("StatsView", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText("Totales: 1")).toBeInTheDocument();
-    expect(screen.getByText("Repaso anual")).toBeInTheDocument();
+    expect(screen.getByText("Total Cards")).toBeInTheDocument();
+    expect(screen.getByText("1")).toBeInTheDocument();
+    expect(screen.getByText("Global Accuracy")).toBeInTheDocument();
     expect(screen.queryByText("No data yet")).not.toBeInTheDocument();
   });
 });
