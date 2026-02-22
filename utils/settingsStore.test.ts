@@ -19,6 +19,7 @@ describe("settingsStore", () => {
       theme: "dark",
       reducedMotion: true,
       ttsAutoPlay: true,
+      ttsSpeed: 0.9,
       confirmDialogs: true,
       hasCompletedOnboarding: false,
     });
@@ -31,6 +32,7 @@ describe("settingsStore", () => {
         theme: "light",
         reducedMotion: false,
         ttsAutoPlay: false,
+        ttsSpeed: 1.2,
         confirmDialogs: false,
         hasCompletedOnboarding: true,
       }),
@@ -40,6 +42,7 @@ describe("settingsStore", () => {
       theme: "light",
       reducedMotion: false,
       ttsAutoPlay: false,
+      ttsSpeed: 1.2,
       confirmDialogs: false,
       hasCompletedOnboarding: true,
     });
@@ -55,6 +58,7 @@ describe("settingsStore", () => {
       theme: "light",
       reducedMotion: true,
       ttsAutoPlay: false,
+      ttsSpeed: 1.0,
       confirmDialogs: true,
       hasCompletedOnboarding: true,
     });
@@ -65,6 +69,7 @@ describe("settingsStore", () => {
         theme: "light",
         reducedMotion: true,
         ttsAutoPlay: false,
+        ttsSpeed: 1.0,
         confirmDialogs: true,
         hasCompletedOnboarding: true,
       }),
