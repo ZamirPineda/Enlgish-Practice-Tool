@@ -23,89 +23,38 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      @keyframes fade-in {
-        from {
-          opacity: 0;
-          transform: translateY(5px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .animate-fade-in {
-        animation: fade-in 0.3s ease-out forwards;
-      }
-
-      /* Prevent scrollbars inside math formulas */
-      .katex-display {
-        overflow: visible !important;
-      }
-      .katex {
-        overflow: visible !important;
-      }
-
-      :root {
-        --color-bg: #0f172a;
-        --color-surface-1: #1e293b;
-        --color-surface-2: #0f172a;
-        --color-surface-hover: #334155;
-        --color-border: #334155;
-        --color-text-primary: #f8fafc;
-        --color-text-secondary: #cbd5e1;
-        --color-text-muted: #94a3b8;
-        --color-accent: #0284c7;
-        --color-accent-hover: #0ea5e9;
-        --color-success: #059669;
-        --color-success-hover: #10b981;
-        --color-focus: #38bdf8;
-        --space-1: 0.25rem;
-        --space-2: 0.5rem;
-        --space-3: 0.75rem;
-        --space-4: 1rem;
-        --space-6: 1.5rem;
-        --space-8: 2rem;
-        --radius-sm: 0.375rem;
-        --radius-md: 0.625rem;
-        --radius-lg: 0.875rem;
-        --radius-xl: 1.25rem;
-        --shadow-sm: 0 1px 2px rgba(2, 6, 23, 0.35);
-        --shadow-md: 0 10px 25px rgba(2, 6, 23, 0.35);
-        --font-sans:
-          Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-          sans-serif;
-        --text-xs: 0.75rem;
-        --text-sm: 0.875rem;
-        --text-md: 1rem;
-        --text-lg: 1.125rem;
-      }
-      :root[data-theme="light"] {
-        --color-bg: #f8fafc;
-        --color-surface-1: #ffffff;
-        --color-surface-2: #e2e8f0;
-        --color-surface-hover: #cbd5e1;
-        --color-border: #cbd5e1;
-        --color-text-primary: #0f172a;
-        --color-text-secondary: #334155;
-        --color-text-muted: #64748b;
-        --color-accent: #0284c7;
-        --color-accent-hover: #0369a1;
-      }
-      :root[data-reduced-motion="reduce"] * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-
-      body {
-        font-family: var(--font-sans);
-        background-color: var(--color-bg);
-        color: var(--color-text-primary);
-      }
-    </style>
+    <script>
+      tailwind.config = {
+        darkMode: ["class", '[data-theme="dark"]'],
+        theme: {
+          extend: {
+            colors: {
+              background: "var(--color-bg)",
+              surface: {
+                1: "var(--color-surface-1)",
+                2: "var(--color-surface-2)",
+                hover: "var(--color-surface-hover)",
+              },
+              border: "var(--color-border)",
+              text: {
+                primary: "var(--color-text-primary)",
+                secondary: "var(--color-text-secondary)",
+                muted: "var(--color-text-muted)",
+              },
+              accent: {
+                DEFAULT: "var(--color-accent)",
+                hover: "var(--color-accent-hover)",
+              },
+              success: {
+                DEFAULT: "var(--color-success)",
+                hover: "var(--color-success-hover)",
+              },
+              focus: "var(--color-focus)",
+            },
+          },
+        },
+      };
+    </script>
   </head>
 
   <body>

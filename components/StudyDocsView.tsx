@@ -17,6 +17,7 @@ const StudyDocsView: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [copiedLink, setCopiedLink] = useState(false);
+  const [zenMode, setZenMode] = useState(false);
   const workerRef = useRef<Worker | null>(null);
 
   useEffect(() => {
@@ -208,6 +209,7 @@ const StudyDocsView: React.FC = () => {
         className={`
                 absolute md:relative z-40 h-full w-80 bg-slate-900 md:bg-slate-800/30 border-r border-slate-700 flex flex-col transition-transform duration-300 ease-in-out
                 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+                ${zenMode ? "hidden md:hidden" : ""}
             `}
       >
         <div className="p-4 border-b border-slate-700 mt-12 md:mt-0">
@@ -279,7 +281,9 @@ const StudyDocsView: React.FC = () => {
       )}
 
       {/* Main Content */}
-      <div className="flex-1 bg-slate-900 h-full relative w-full flex flex-col">
+      <div
+        className={`flex-1 bg-slate-900 h-full relative w-full flex flex-col transition-all duration-300 ${zenMode ? "max-w-4xl mx-auto shadow-2xl" : ""}`}
+      >
         {selectedFile ? (
           <>
             {/* Document Toolbar */}
@@ -301,6 +305,27 @@ const StudyDocsView: React.FC = () => {
                 {decodeURIComponent(selectedFile.split("/").pop() || "")}
               </div>
               <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setZenMode(!zenMode)}
+                  className={`p-1.5 rounded-md transition-colors flex items-center gap-1.5 text-xs font-medium ${zenMode ? "bg-sky-500/20 text-sky-400" : "text-slate-400 hover:text-sky-400 hover:bg-slate-700/50"}`}
+                  title="Toggle Zen Mode"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+                    />
+                  </svg>
+                  <span className="hidden sm:inline">Zen Mode</span>
+                </button>
                 <button
                   onClick={handleCopyLink}
                   className="p-1.5 text-slate-400 hover:text-sky-400 hover:bg-slate-700/50 rounded-md transition-colors flex items-center gap-1.5 text-xs font-medium relative"

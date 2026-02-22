@@ -6,8 +6,10 @@ import { createNewSrsItem } from "./utils/srs";
 import { SrsVocabularyItem } from "./types";
 import { APP_VERSION } from "./utils/appVersion";
 import { AppSettings, loadSettings, saveSettings } from "./utils/settingsStore";
+import { ToastContainer, toast } from "./components/ui/Toast";
 
 // Views
+const HomeView = lazy(() => import("./components/HomeView"));
 const StopGameView = lazy(() => import("./components/StopGameView"));
 const StudyDeckView = lazy(() => import("./components/StudyDeckView"));
 const PersonalPhrasesView = lazy(
@@ -39,27 +41,105 @@ const ONBOARDING_STEPS = [
 const NavItem = ({
   to,
   children,
+  onClick,
 }: {
   to: string;
   children: React.ReactNode;
+  onClick?: () => void;
+}) => (
+  <NavLink
+    to={to}
+    onClick={onClick}
+    className={({ isActive }) =>
+      `flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg font-bold text-sm md:text-base transition-all ${
+        isActive
+          ? "shadow-md bg-accent text-text-primary"
+          : "bg-transparent hover:bg-surface-hover text-text-secondary"
+      }`
+    }
+  >
+    {children}
+  </NavLink>
+);
+
+const NavGroup = ({
+  title,
+  icon,
+  children,
+}: {
+  title: string;
+  icon: string;
+  children: React.ReactNode;
+}) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => setIsOpen(false), 150);
+  };
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <button
+        className={`flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg font-bold text-sm md:text-base transition-all ${
+          isOpen
+            ? "bg-surface-hover text-text-primary"
+            : "bg-transparent hover:bg-surface-hover text-text-secondary"
+        }`}
+      >
+        <span>{icon}</span>
+        {title}
+        <svg
+          className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+      {isOpen && (
+        <div className="absolute top-full left-0 mt-1 w-48 bg-surface-1 border border-border rounded-xl shadow-xl py-2 z-50 flex flex-col gap-1">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const MobileNavItem = ({
+  to,
+  icon,
+  label,
+}: {
+  to: string;
+  icon: string;
+  label: string;
 }) => (
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `flex-1 md:flex-none whitespace-nowrap px-3 md:px-4 py-2 rounded-lg font-bold text-sm md:text-base transition-all ${
-        isActive ? "shadow-md" : ""
+      `flex flex-col items-center justify-center w-16 h-14 rounded-xl transition-all ${
+        isActive ? "text-accent" : "text-text-secondary hover:text-text-primary"
       }`
     }
-    style={({ isActive }) => ({
-      backgroundColor: isActive
-        ? "var(--color-accent)"
-        : "var(--color-surface-hover)",
-      color: isActive
-        ? "var(--color-text-primary)"
-        : "var(--color-text-secondary)",
-    })}
   >
-    {children}
+    <span className="text-xl mb-1">{icon}</span>
+    <span className="text-[10px] font-bold">{label}</span>
   </NavLink>
 );
 
@@ -138,32 +218,24 @@ const App: React.FC = () => {
 
       // Simple duplicate check normalization
       const key = word.toLowerCase().trim();
-      if (deck[key]) return;
+      if (deck[key]) {
+        toast.info(`"${word}" is already in your Vault.`);
+        return;
+      }
 
       deck[key] = createNewSrsItem(word, definition);
       localStorage.setItem("vocab-vault-deck", JSON.stringify(deck));
-      console.log(`Word added to vault: ${word}`);
+      toast.success(`Added "${word}" to Vault!`);
     } catch (e) {
       console.error("Error saving to vault", e);
+      toast.error("Failed to save word.");
     }
   };
 
   return (
     <HashRouter>
-      <div
-        className="h-screen flex flex-col overflow-hidden font-sans"
-        style={{
-          backgroundColor: "var(--color-bg)",
-          color: "var(--color-text-primary)",
-        }}
-      >
-        <header
-          className="p-4 border-b flex flex-wrap justify-between items-center gap-4 z-50 shadow-lg relative"
-          style={{
-            backgroundColor: "var(--color-surface-1)",
-            borderColor: "var(--color-border)",
-          }}
-        >
+      <div className="h-screen flex flex-col overflow-hidden font-sans bg-background text-text-primary">
+        <header className="p-4 border-b flex flex-wrap justify-between items-center gap-4 z-50 shadow-lg relative bg-surface-1 border-border">
           <div className="flex items-center gap-3">
             <h1 className="text-lg md:text-xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent truncate">
               ENGLISH PAL
@@ -177,6 +249,16 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2 bg-slate-800/50 px-3 py-1.5 rounded-full border border-slate-700/50">
+              <div className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
+              <span className="text-xs font-bold text-slate-300">Lvl 1</span>
+              <div className="w-24 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-sky-400 to-emerald-400 w-1/3"></div>
+              </div>
+              <span className="text-[10px] font-black text-slate-500">
+                350 XP
+              </span>
+            </div>
             {deferredPrompt && (
               <button
                 onClick={handleInstallClick}
@@ -198,99 +280,35 @@ const App: React.FC = () => {
                 Install App
               </button>
             )}
-
-            {/* Mobile Menu Toggle */}
-            <button
-              className="md:hidden p-2 text-slate-300 hover:bg-slate-800 rounded-lg transition-colors"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {isMobileMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-2 w-full md:w-auto">
-            <NavItem to="/stop">🎮 STOP Game</NavItem>
-            <NavItem to="/study">📚 Study Deck</NavItem>
-            <NavItem to="/personal">👤 Scripts</NavItem>
-            <NavItem to="/vault">🧠 Vault</NavItem>
-            <NavItem to="/stats">📊 Stats</NavItem>
-            <NavItem to="/calculus">∫ Math</NavItem>
-            <NavItem to="/docs">📖 Docs</NavItem>
-            <NavItem to="/settings">⚙️ Settings</NavItem>
+            <NavItem to="/">🏠 Home</NavItem>
+            <NavGroup title="Aprender" icon="📚">
+              <NavItem to="/vault">🧠 Vault</NavItem>
+              <NavItem to="/study">📚 Study Deck</NavItem>
+              <NavItem to="/personal">👤 Scripts</NavItem>
+            </NavGroup>
+            <NavGroup title="Jugar" icon="🎮">
+              <NavItem to="/stop">🎮 STOP Game</NavItem>
+            </NavGroup>
+            <NavGroup title="Herramientas" icon="🛠️">
+              <NavItem to="/calculus">∫ Math</NavItem>
+              <NavItem to="/docs">📖 Docs</NavItem>
+            </NavGroup>
+            <NavGroup title="Perfil" icon="👤">
+              <NavItem to="/stats">📊 Stats</NavItem>
+              <NavItem to="/settings">⚙️ Settings</NavItem>
+            </NavGroup>
           </nav>
-
-          {/* Mobile Navigation Drawer */}
-          {isMobileMenuOpen && (
-            <div className="absolute top-full left-0 right-0 bg-slate-900 border-b border-slate-800 shadow-2xl md:hidden flex flex-col p-4 gap-2 z-50">
-              {deferredPrompt && (
-                <button
-                  onClick={handleInstallClick}
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-sky-500/20 text-sky-400 rounded-xl text-sm font-bold mb-2"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                  Install App to Home Screen
-                </button>
-              )}
-              <div
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex flex-col gap-2"
-              >
-                <NavItem to="/stop">🎮 STOP Game</NavItem>
-                <NavItem to="/study">📚 Study Deck</NavItem>
-                <NavItem to="/personal">👤 Scripts</NavItem>
-                <NavItem to="/vault">🧠 Vault</NavItem>
-                <NavItem to="/stats">📊 Stats</NavItem>
-                <NavItem to="/calculus">∫ Math</NavItem>
-                <NavItem to="/docs">📖 Docs</NavItem>
-                <NavItem to="/settings">⚙️ Settings</NavItem>
-              </div>
-            </div>
-          )}
         </header>
 
-        <main
-          className="flex-1 flex flex-col min-h-0 relative"
-          style={{ backgroundColor: "var(--color-surface-2)" }}
-        >
+        <main className="flex-1 flex flex-col min-h-0 relative bg-surface-2">
           <Suspense
             fallback={
               <div
-                className="flex-1 flex items-center justify-center"
-                style={{ color: "var(--color-text-secondary)" }}
+                className="flex-1 flex items-center justify-center text-text-secondary"
                 role="status"
               >
                 Loading section...
@@ -298,7 +316,7 @@ const App: React.FC = () => {
             }
           >
             <Routes>
-              <Route path="/" element={<Navigate to="/stop" replace />} />
+              <Route path="/" element={<HomeView />} />
               <Route
                 path="/stop"
                 element={
@@ -348,16 +366,18 @@ const App: React.FC = () => {
             </Routes>
           </Suspense>
         </main>
-        <footer
-          className="px-4 py-2 text-xs border-t"
-          style={{
-            color: "var(--color-text-muted)",
-            borderColor: "var(--color-border)",
-            backgroundColor: "var(--color-surface-1)",
-          }}
-        >
+        <footer className="hidden md:block px-4 py-2 text-xs border-t bg-surface-1 border-border text-text-muted">
           About · v{APP_VERSION}
         </footer>
+
+        {/* Mobile Bottom Navigation */}
+        <nav className="md:hidden flex items-center justify-around bg-surface-1 border-t border-border pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-1 px-2 z-50">
+          <MobileNavItem to="/" icon="🏠" label="Home" />
+          <MobileNavItem to="/vault" icon="🧠" label="Vault" />
+          <MobileNavItem to="/stop" icon="🎮" label="STOP" />
+          <MobileNavItem to="/settings" icon="👤" label="Perfil" />
+        </nav>
+
         {needRefresh && (
           <div className="absolute bottom-4 right-4 z-50 rounded-xl border border-sky-400 bg-slate-900/95 p-3 shadow-2xl">
             <p className="text-sm font-semibold text-slate-100">
@@ -409,6 +429,7 @@ const App: React.FC = () => {
             </div>
           </div>
         )}
+        <ToastContainer />
       </div>
     </HashRouter>
   );

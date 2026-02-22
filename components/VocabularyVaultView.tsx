@@ -145,6 +145,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const [sortBy, setSortBy] = useState<"alphabetical" | "strength" | "newest">(
     "alphabetical",
   );
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   // Removed generatedData logic as AI is gone
 
@@ -682,34 +683,86 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 <div className="text-sm text-slate-400">
                   Showing {filteredCollection.length} of {totalInDeck} words
                 </div>
-                <div className="flex items-center gap-2">
-                  <label
-                    htmlFor="sort-select"
-                    className="text-xs font-bold text-slate-500 uppercase"
-                  >
-                    Sort by:
-                  </label>
-                  <select
-                    id="sort-select"
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as any)}
-                    className="bg-slate-800 border border-slate-700 text-white text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block p-2 outline-none"
-                  >
-                    <option value="alphabetical">Alphabetical (A-Z)</option>
-                    <option value="strength">Memory Strength</option>
-                    <option value="newest">Needs Review First</option>
-                  </select>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 bg-slate-800 p-1 rounded-lg border border-slate-700">
+                    <button
+                      onClick={() => setViewMode("grid")}
+                      className={`p-1.5 rounded-md transition-colors ${viewMode === "grid" ? "bg-slate-700 text-sky-400" : "text-slate-500 hover:text-slate-300"}`}
+                      title="Grid View"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => setViewMode("list")}
+                      className={`p-1.5 rounded-md transition-colors ${viewMode === "list" ? "bg-slate-700 text-sky-400" : "text-slate-500 hover:text-slate-300"}`}
+                      title="List View"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 6h16M4 12h16M4 18h16"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <label
+                      htmlFor="sort-select"
+                      className="text-xs font-bold text-slate-500 uppercase"
+                    >
+                      Sort by:
+                    </label>
+                    <select
+                      id="sort-select"
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value as any)}
+                      className="bg-slate-800 border border-slate-700 text-white text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block p-2 outline-none"
+                    >
+                      <option value="alphabetical">Alphabetical (A-Z)</option>
+                      <option value="strength">Memory Strength</option>
+                      <option value="newest">Needs Review First</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             )}
             {totalInDeck > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-20">
+              <div
+                className={
+                  viewMode === "grid"
+                    ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-20"
+                    : "flex flex-col gap-3 pb-20"
+                }
+              >
                 {filteredCollection.map((item) => (
                   <div
                     key={item.word}
-                    className="bg-slate-800 border border-slate-700 p-5 rounded-2xl hover:shadow-2xl transition-all group relative flex flex-col"
+                    className={`bg-slate-800 border border-slate-700 p-5 rounded-2xl hover:shadow-2xl transition-all group relative flex ${viewMode === "grid" ? "flex-col" : "flex-row items-center gap-6"}`}
                   >
-                    <div className="flex justify-between items-start mb-2">
+                    <div
+                      className={`flex justify-between items-start ${viewMode === "grid" ? "mb-2" : "flex-1"}`}
+                    >
                       <div className="flex items-center gap-2">
                         <h3 className="text-xl font-black text-white">
                           {item.word}
@@ -723,13 +776,83 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         </button>
                         <SpeechPracticeButton
                           targetText={item.word}
-                          onCorrect={() => {
-                            // Optional: Mark as reviewed or just show fun animation
-                            // confetti?
-                          }}
+                          onCorrect={() => {}}
                         />
                       </div>
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
+                      {viewMode === "grid" && (
+                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
+                          <button
+                            onClick={() =>
+                              handleEditWord(item.word.trim().toLowerCase())
+                            }
+                            className="p-2 hover:bg-sky-500/10 text-slate-400 hover:text-sky-400 rounded-lg focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+                            aria-label={`Edit ${item.word}`}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={() => handleDelete(item.word)}
+                            className="p-2 hover:bg-red-500/10 text-slate-400 hover:text-red-400 rounded-lg focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+                            aria-label={`Delete ${item.word}`}
+                          >
+                            <TrashIcon />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    <div
+                      className={`${viewMode === "grid" ? "flex flex-wrap gap-1 mb-3" : "hidden"}`}
+                    >
+                      {item.partOfSpeech && (
+                        <Badge className="uppercase">{item.partOfSpeech}</Badge>
+                      )}
+                      {item.tags?.map((tag) => (
+                        <Badge key={tag} variant="accent">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    <p
+                      className={`text-slate-400 text-sm italic ${viewMode === "grid" ? "mb-4 line-clamp-2 flex-1" : "flex-1 line-clamp-1"}`}
+                    >
+                      "{item.definition}"
+                    </p>
+
+                    <div
+                      className={`${viewMode === "grid" ? "w-full" : "w-48 flex flex-col justify-center"}`}
+                    >
+                      <div className="flex justify-between items-center text-[10px] font-black uppercase text-slate-500">
+                        <span>Strength</span>
+                        <span
+                          className={
+                            item.status === "mastered"
+                              ? "text-emerald-500"
+                              : "text-sky-500"
+                          }
+                        >
+                          {item.status}
+                        </span>
+                      </div>
+                      <MemoryBar interval={item.interval} />
+                    </div>
+
+                    {viewMode === "list" && (
+                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all ml-4">
                         <button
                           onClick={() =>
                             handleEditWord(item.word.trim().toLowerCase())
@@ -760,33 +883,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           <TrashIcon />
                         </button>
                       </div>
-                    </div>
-                    <div className="flex flex-wrap gap-1 mb-3">
-                      {item.partOfSpeech && (
-                        <Badge className="uppercase">{item.partOfSpeech}</Badge>
-                      )}
-                      {item.tags?.map((tag) => (
-                        <Badge key={tag} variant="accent">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <p className="text-slate-400 text-sm mb-4 line-clamp-2 italic flex-1">
-                      "{item.definition}"
-                    </p>
-                    <div className="flex justify-between items-center text-[10px] font-black uppercase text-slate-500">
-                      <span>Strength</span>
-                      <span
-                        className={
-                          item.status === "mastered"
-                            ? "text-emerald-500"
-                            : "text-sky-500"
-                        }
-                      >
-                        {item.status}
-                      </span>
-                    </div>
-                    <MemoryBar interval={item.interval} />
+                    )}
                   </div>
                 ))}
               </div>

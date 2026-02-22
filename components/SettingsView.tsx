@@ -13,35 +13,23 @@ const SettingsView: React.FC<SettingsViewProps> = ({
   onSettingsChange,
 }) => {
   return (
-    <div
-      className="flex-1 overflow-y-auto p-4 sm:p-6"
-      style={{ backgroundColor: "var(--color-surface-2)" }}
-    >
+    <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-surface-2">
       <div className="max-w-3xl mx-auto space-y-4">
         <Card className="p-5 sm:p-6">
-          <h2
-            className="text-2xl font-bold mb-4"
-            style={{ color: "var(--color-text-primary)" }}
-          >
+          <h2 className="text-2xl font-bold mb-4 text-text-primary">
             Settings
           </h2>
           <div className="space-y-5">
             <div>
               <label
                 htmlFor="theme-select"
-                className="block text-sm font-bold mb-2"
-                style={{ color: "var(--color-text-secondary)" }}
+                className="block text-sm font-bold mb-2 text-text-secondary"
               >
                 Theme
               </label>
               <select
                 id="theme-select"
-                className="w-full rounded-lg border px-3 py-2"
-                style={{
-                  backgroundColor: "var(--color-surface-1)",
-                  borderColor: "var(--color-border)",
-                  color: "var(--color-text-primary)",
-                }}
+                className="w-full rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary"
                 value={settings.theme}
                 onChange={(event) =>
                   onSettingsChange({

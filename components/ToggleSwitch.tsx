@@ -21,23 +21,15 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
           onChange={(e) => onChange(e.target.checked)}
         />
         <div
-          className="block w-10 h-6 rounded-full transition-colors"
-          style={{
-            backgroundColor: checked
-              ? "var(--color-accent)"
-              : "var(--color-surface-hover)",
-          }}
+          className={`block w-10 h-6 rounded-full transition-colors ${
+            checked ? "bg-accent" : "bg-surface-hover"
+          }`}
         ></div>
         <div
           className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${checked ? "transform translate-x-4" : ""}`}
         ></div>
       </div>
-      <div
-        className="ml-3 text-sm font-bold"
-        style={{ color: "var(--color-text-secondary)" }}
-      >
-        {label}
-      </div>
+      <div className="ml-3 text-sm font-bold text-text-secondary">{label}</div>
     </label>
   );
 };
