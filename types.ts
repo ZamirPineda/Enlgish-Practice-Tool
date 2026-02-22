@@ -97,7 +97,16 @@ export type GrammarCategory =
   | "Adverb of Frequency"
   | "Demonstrative"
   | "Question Word"
-  | "Simple Past";
+  | "Simple Past"
+  | "Present Simple Passive"
+  | "Past Simple Passive"
+  | "Present Continuous Passive"
+  | "Past Continuous Passive"
+  | "Future Continuous Passive"
+  | "Present Perfect Passive"
+  | "Past Perfect Passive"
+  | "Future Perfect Passive"
+  | "Modal Passive";
 export type VerbPatternCategory = "Verb + Gerund" | "Verb + Infinitive";
 export type IdiomCategory = "Idiom";
 export type SentenceStructureCategory =
@@ -214,6 +223,11 @@ export type StopCategory =
   // LATEST ADDITIONS
   | "Compound Adjectives"
   | "Modal Verbs"
+  | "Adverbs"
+  | "Phrasal Nouns"
+  | "Homophones"
+  | "Proverbs"
+  | "Interjections"
   | "Rare & Literary"
   // NEW FLORA & GEOLOGY CATEGORIES
   | "Flowers"
