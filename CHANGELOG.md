@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.13.1...english-practice-pal-v1.14.0) (2026-02-22)
+
+
+### Features
+
+* Add Grammar & Language categories with expanded data (Adverbs, Homophones, Interjections, etc.) ([32d0058](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/32d0058b470cb83acc0496669ede731afa31832d))
+
 ## [1.13.1](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.13.0...english-practice-pal-v1.13.1) (2026-02-21)
 
 
