@@ -83,6 +83,10 @@ const NavGroup = ({
     timeoutRef.current = setTimeout(() => setIsOpen(false), 150);
   };
 
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div
       className="relative"
@@ -90,6 +94,7 @@ const NavGroup = ({
       onMouseLeave={handleMouseLeave}
     >
       <button
+        onClick={handleClick}
         className={`flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg font-bold text-sm md:text-base transition-all ${
           isOpen
             ? "bg-surface-hover text-text-primary"
@@ -249,20 +254,22 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-2 bg-slate-800/50 px-3 py-1.5 rounded-full border border-slate-700/50">
+            <div className="hidden md:flex items-center gap-2 bg-surface-2 px-3 py-1.5 rounded-full border border-border">
               <div className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
-              <span className="text-xs font-bold text-slate-300">Lvl 1</span>
-              <div className="w-24 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+              <span className="text-xs font-bold text-text-secondary">
+                Lvl 1
+              </span>
+              <div className="w-24 h-1.5 bg-border rounded-full overflow-hidden">
                 <div className="h-full bg-gradient-to-r from-sky-400 to-emerald-400 w-1/3"></div>
               </div>
-              <span className="text-[10px] font-black text-slate-500">
+              <span className="text-[10px] font-black text-text-secondary">
                 350 XP
               </span>
             </div>
             {deferredPrompt && (
               <button
                 onClick={handleInstallClick}
-                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-sky-500/20 text-sky-400 hover:bg-sky-500/30 rounded-lg text-sm font-bold transition-colors"
+                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-sky-500/20 text-sky-600 dark:text-sky-400 hover:bg-sky-500/30 rounded-lg text-sm font-bold transition-colors"
               >
                 <svg
                   className="w-4 h-4"
@@ -280,10 +287,39 @@ const App: React.FC = () => {
                 Install App
               </button>
             )}
+
+            {/* Mobile Menu Toggle */}
+            <button
+              className="md:hidden p-2 text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {isMobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-2 w-full md:w-auto">
+          <nav className="hidden md:flex flex-wrap gap-2 w-full md:w-auto">
             <NavItem to="/">🏠 Home</NavItem>
             <NavGroup title="Aprender" icon="📚">
               <NavItem to="/vault">🧠 Vault</NavItem>
@@ -302,6 +338,42 @@ const App: React.FC = () => {
               <NavItem to="/settings">⚙️ Settings</NavItem>
             </NavGroup>
           </nav>
+
+          {/* Mobile Navigation Drawer */}
+          {isMobileMenuOpen && (
+            <div className="absolute top-full left-0 right-0 bg-surface-1 border-b border-border shadow-2xl md:hidden flex flex-col p-4 gap-2 z-50">
+              {deferredPrompt && (
+                <button
+                  onClick={handleInstallClick}
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-sky-500/20 text-sky-400 rounded-xl text-sm font-bold mb-2"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    />
+                  </svg>
+                  Install App to Home Screen
+                </button>
+              )}
+              <div
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex flex-col gap-2"
+              >
+                <NavItem to="/study">📚 Study Deck</NavItem>
+                <NavItem to="/personal">👤 Scripts</NavItem>
+                <NavItem to="/calculus">∫ Math</NavItem>
+                <NavItem to="/docs">📖 Docs</NavItem>
+              </div>
+            </div>
+          )}
         </header>
 
         <main className="flex-1 flex flex-col min-h-0 relative bg-surface-2">
