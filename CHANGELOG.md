@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.16.0...english-practice-pal-v1.17.0) (2026-02-23)
+
+
+### Features
+
+* refactor modals ([c959b20](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/c959b20d0d581a0a56c0ea79ce7d029f4845e66a))
+
 ## [1.16.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.15.0...english-practice-pal-v1.16.0) (2026-02-23)
 
 
