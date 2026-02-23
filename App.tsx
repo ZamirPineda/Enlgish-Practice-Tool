@@ -250,6 +250,12 @@ const App: React.FC = () => {
   return (
     <HashRouter>
       <div className="h-screen flex flex-col overflow-hidden font-sans bg-background text-text-primary">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-surface-1 focus:text-text-primary focus:rounded-lg focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-accent focus:font-bold"
+        >
+          Skip to main content
+        </a>
         <header className="p-4 border-b flex flex-wrap justify-between items-center gap-4 z-50 shadow-lg relative bg-surface-1 border-border">
           <div className="flex items-center gap-3">
             <h1 className="text-lg md:text-xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent truncate">
@@ -387,7 +393,11 @@ const App: React.FC = () => {
           )}
         </header>
 
-        <main className="flex-1 flex flex-col min-h-0 relative bg-surface-2">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex-1 flex flex-col min-h-0 relative bg-surface-2"
+        >
           <Suspense
             fallback={
               <div

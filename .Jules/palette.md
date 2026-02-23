@@ -17,3 +17,7 @@
 ## 2026-03-03 - [Custom Toggle Accessibility Pattern]
 **Learning:** Custom toggle buttons implemented with `div`s and CSS classes often lack semantic meaning, making them invisible to screen readers.
 **Action:** Always add `role="switch"`, `aria-checked`, and `aria-label` to custom toggle buttons, and ensure inner decorative elements have `aria-hidden="true"`.
+
+## 2026-03-05 - [Skip to Content Link]
+**Learning:** The application lacked a "Skip to Content" link, forcing keyboard users to tab through the entire navigation menu on every page load.
+**Action:** Added a `Skip to main content` link at the top of `App.tsx` that targets the main content area. Future layouts must preserve this structure.

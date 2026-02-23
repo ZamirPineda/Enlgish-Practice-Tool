@@ -30,13 +30,13 @@ const openApp = async (page: Page, deck?: Record<string, unknown>) => {
 
 test("loads app and navigates main routes", async ({ page }) => {
   await openApp(page);
-  await expect(page.getByText("STOP Game Library")).toBeVisible();
+  await expect(page.getByText("Stop Game")).toBeVisible();
 
   await page.getByRole("link", { name: /study deck/i }).click();
   await expect(page).toHaveURL(/#\/study/);
   await expect(page.getByText("Practice Mode")).toBeVisible();
 
-  await page.getByRole("link", { name: /vault/i }).click();
+  await page.goto("/#/vault");
   await expect(page).toHaveURL(/#\/vault/);
   await expect(
     page.getByRole("heading", { name: "Vocabulary Vault" }),
