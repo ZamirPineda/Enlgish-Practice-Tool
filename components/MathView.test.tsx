@@ -12,6 +12,10 @@ vi.mock("./MathFlashCard", () => ({
   default: () => <div>MathFlashCard Mock</div>,
 }));
 
+vi.mock("./MathGameView", () => ({
+  default: () => <div>MathGameView Mock</div>,
+}));
+
 describe("MathView Accessibility", () => {
   test("toggle button has correct role and attributes", () => {
     render(<MathView />);
@@ -30,5 +34,13 @@ describe("MathView Accessibility", () => {
     fireEvent.click(toggleButton);
 
     expect(toggleButton).toHaveAttribute("aria-checked", "true");
+  });
+
+  test("game tab renders Math game view", () => {
+    render(<MathView />);
+
+    fireEvent.click(screen.getByRole("tab", { name: /Juego/i }));
+
+    expect(screen.getByText("MathGameView Mock")).toBeInTheDocument();
   });
 });

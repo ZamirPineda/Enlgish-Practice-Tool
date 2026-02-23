@@ -8,9 +8,10 @@ import {
 } from "../data/math";
 import { MathTopic, SolvedProblem } from "../types";
 
-type MathTab = "calculus" | "geometry" | "algebra" | "examples";
-
 import MathFlashCard from "./MathFlashCard";
+import MathGameView from "./MathGameView";
+
+type MathTab = "calculus" | "geometry" | "algebra" | "examples" | "game";
 
 const SearchIcon = () => (
   <svg
@@ -319,35 +320,37 @@ const MathView: React.FC = () => {
           </h2>
 
           {/* Toggle Switch */}
-          <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2">
-            <span
-              className={`text-xs font-bold ${isStudyMode ? "text-text-muted" : "text-text-primary"}`}
-            >
-              Leer
-            </span>
+          {activeTab !== "game" && (
+            <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2">
+              <span
+                className={`text-xs font-bold ${isStudyMode ? "text-text-muted" : "text-text-primary"}`}
+              >
+                Leer
+              </span>
 
-            <button
-              onClick={() => {
-                setIsStudyMode(!isStudyMode);
-                setSelectedStrategy(null);
-              }}
-              className={`w-12 h-6 rounded-full transition-colors active:scale-[0.98] flex items-center px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 ${isStudyMode ? "bg-amber-500" : "bg-surface-hover"}`}
-              role="switch"
-              aria-checked={isStudyMode}
-              aria-label="Modo práctica"
-            >
-              <div
-                className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${isStudyMode ? "translate-x-6" : "translate-x-0"}`}
-                aria-hidden="true"
-              />
-            </button>
+              <button
+                onClick={() => {
+                  setIsStudyMode(!isStudyMode);
+                  setSelectedStrategy(null);
+                }}
+                className={`w-12 h-6 rounded-full transition-colors active:scale-[0.98] flex items-center px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 ${isStudyMode ? "bg-amber-500" : "bg-surface-hover"}`}
+                role="switch"
+                aria-checked={isStudyMode}
+                aria-label="Modo práctica"
+              >
+                <div
+                  className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${isStudyMode ? "translate-x-6" : "translate-x-0"}`}
+                  aria-hidden="true"
+                />
+              </button>
 
-            <span
-              className={`text-xs font-bold ${isStudyMode ? "text-amber-500" : "text-text-muted"}`}
-            >
-              Practicar
-            </span>
-          </div>
+              <span
+                className={`text-xs font-bold ${isStudyMode ? "text-amber-500" : "text-text-muted"}`}
+              >
+                Practicar
+              </span>
+            </div>
+          )}
         </div>
 
         <div
@@ -403,13 +406,28 @@ const MathView: React.FC = () => {
           >
             💡 Ejemplos
           </button>
+          <button
+            onClick={() => {
+              setActiveTab("game");
+              setIsStudyMode(false);
+            }}
+            role="tab"
+            aria-selected={activeTab === "game"}
+            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none whitespace-nowrap ${
+              activeTab === "game"
+                ? "bg-rose-600 text-white shadow-lg shadow-rose-900/50"
+                : "bg-surface-2 text-text-muted hover:bg-surface-hover hover:text-text-primary"
+            }`}
+          >
+            🎮 Juego
+          </button>
         </div>
       </div>
 
       {/* Content Area */}
       <div className="flex-1 flex overflow-hidden">
         {/* Quick Navigation Sidebar (Desktop only) */}
-        {!isStudyMode && activeTab !== "examples" && (
+        {!isStudyMode && activeTab !== "examples" && activeTab !== "game" && (
           <div className="hidden lg:block w-64 bg-surface-1 border-r border-border p-4 overflow-y-auto">
             <h3 className="text-xs font-black text-text-muted uppercase tracking-widest mb-4">
               Quick Navigation
@@ -438,7 +456,7 @@ const MathView: React.FC = () => {
 
         <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 md:p-6 space-y-8 pb-24 md:pb-20 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
           {/* Search Bar */}
-          {!isStudyMode && activeTab !== "examples" && (
+          {!isStudyMode && activeTab !== "examples" && activeTab !== "game" && (
             <div className="relative max-w-2xl mx-auto mb-8">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-text-muted">
                 <SearchIcon />
@@ -487,6 +505,8 @@ const MathView: React.FC = () => {
                   </button>
                 </div>
               ))}
+
+            {activeTab === "game" && <MathGameView />}
           </div>
         </div>
       </div>
