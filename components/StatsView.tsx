@@ -148,11 +148,11 @@ const StatsView: React.FC = () => {
                   </h2>
                   <p className="text-white text-3xl font-black">
                     {metrics.currentStreak}{" "}
-                    <span className="text-sm font-normal text-slate-500">
+                    <span className="text-sm font-normal text-slate-400">
                       days
                     </span>
                   </p>
-                  <p className="text-slate-500 text-xs mt-1">
+                  <p className="text-slate-400 text-xs mt-1">
                     Best: {metrics.bestStreak} days
                   </p>
                 </div>
@@ -169,7 +169,7 @@ const StatsView: React.FC = () => {
                   <p className="text-white text-3xl font-black">
                     {metrics.totalCards}
                   </p>
-                  <p className="text-slate-500 text-xs mt-1">
+                  <p className="text-slate-400 text-xs mt-1">
                     <span className="text-emerald-400">
                       {metrics.learnedCards} learned
                     </span>{" "}
@@ -213,11 +213,11 @@ const StatsView: React.FC = () => {
                     {metrics.estimatedStudyMinutes === null
                       ? "--"
                       : metrics.estimatedStudyMinutes}{" "}
-                    <span className="text-sm font-normal text-slate-500">
+                    <span className="text-sm font-normal text-slate-400">
                       min
                     </span>
                   </p>
-                  <p className="text-slate-500 text-xs mt-1">
+                  <p className="text-slate-400 text-xs mt-1">
                     Total time spent
                   </p>
                 </div>
@@ -309,7 +309,7 @@ const StatsView: React.FC = () => {
                         >
                           <div>
                             <p className="text-white font-bold">{item.word}</p>
-                            <p className="text-xs text-slate-500">
+                            <p className="text-xs text-slate-400">
                               {item.date}
                             </p>
                           </div>

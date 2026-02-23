@@ -80,7 +80,7 @@ const NavGroup = ({
   };
 
   const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => setIsOpen(false), 150);
+    timeoutRef.current = setTimeout(() => setIsOpen(false), 300);
   };
 
   const handleClick = () => {
@@ -139,12 +139,22 @@ const MobileNavItem = ({
     to={to}
     className={({ isActive }) =>
       `flex flex-col items-center justify-center w-16 h-14 rounded-xl transition-all ${
-        isActive ? "text-accent" : "text-text-secondary hover:text-text-primary"
+        isActive
+          ? "text-accent bg-accent/10"
+          : "text-text-secondary hover:text-text-primary hover:bg-surface-hover"
       }`
     }
   >
-    <span className="text-xl mb-1">{icon}</span>
-    <span className="text-[10px] font-bold">{label}</span>
+    {({ isActive }) => (
+      <>
+        <span
+          className={`text-xl mb-1 transition-transform ${isActive ? "scale-110" : ""}`}
+        >
+          {icon}
+        </span>
+        <span className="text-[10px] font-bold">{label}</span>
+      </>
+    )}
   </NavLink>
 );
 
@@ -292,6 +302,7 @@ const App: React.FC = () => {
             <button
               className="md:hidden p-2 text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             >
               <svg
                 className="w-6 h-6"

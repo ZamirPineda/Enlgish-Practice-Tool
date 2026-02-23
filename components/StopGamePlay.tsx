@@ -631,6 +631,11 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                       ? "Stop Listening"
                       : "Start Listening"
                   }
+                  aria-label={
+                    micState === "listening"
+                      ? "Stop Listening"
+                      : "Start Listening"
+                  }
                 >
                   {micState === "listening" ? (
                     <svg
@@ -690,6 +695,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                   className="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed relative group"
                   disabled={feedback !== null}
                   title="Get a hint (-5s)"
+                  aria-label="Get a hint (-5s)"
                 >
                   💡
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">

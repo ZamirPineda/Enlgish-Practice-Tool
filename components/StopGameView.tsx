@@ -16,8 +16,8 @@ const StopGameView: React.FC<StopGameViewProps> = ({
   onAddToVault,
 }) => {
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden bg-slate-900">
-      <div className="flex-shrink-0 bg-slate-900 border-b border-slate-700/50 p-4 text-center">
+    <div className="flex-1 flex flex-col h-full overflow-hidden bg-[var(--color-bg)]">
+      <div className="flex-shrink-0 bg-[var(--color-surface-1)] border-b border-[var(--color-border)] p-4 text-center">
         <Card className="mx-auto max-w-2xl py-4 px-6">
           <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">
             STOP Game Library

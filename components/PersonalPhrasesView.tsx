@@ -319,7 +319,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                             <h3 className="text-lg font-semibold text-white mt-1">
                               "{script.question}"
                             </h3>
-                            <p className="text-xs text-slate-500 mt-1">
+                            <p className="text-xs text-slate-400 mt-1">
                               Context: {script.context}
                             </p>
                           </div>
@@ -357,6 +357,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                                   }}
                                   className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-700 rounded-md transition-colors"
                                   title="Listen"
+                                  aria-label={`Listen to formal response: ${script.formal}`}
                                 >
                                   <PlayIcon />
                                 </button>
@@ -408,6 +409,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                                   }}
                                   className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-700 rounded-md transition-colors"
                                   title="Listen"
+                                  aria-label={`Listen to casual response: ${script.casual}`}
                                 >
                                   <PlayIcon />
                                 </button>

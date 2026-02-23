@@ -192,15 +192,15 @@ const Sentence = ({
         }}
         tabIndex={0}
         role="button"
-        className="group cursor-pointer select-none rounded-lg bg-slate-700/50 p-3 border border-slate-600 border-dashed hover:bg-slate-700 hover:border-sky-500 transition-all relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-sky-500"
+        className="group cursor-pointer select-none rounded-lg bg-[var(--color-surface-2)] p-3 border border-[var(--color-border)] border-dashed hover:bg-[var(--color-surface-hover)] hover:border-[var(--color-accent)] transition-all relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-[var(--color-focus)]"
       >
         <div className="absolute inset-0 flex items-center justify-center z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-          <span className="bg-slate-900/80 text-sky-400 px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2">
+          <span className="bg-[var(--color-surface-1)]/80 text-[var(--color-accent)] px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2 backdrop-blur-sm">
             <EyeIcon /> Click to Reveal
           </span>
         </div>
         <p
-          className="text-lg text-transparent bg-slate-600/20 blur-sm font-medium leading-relaxed truncate"
+          className="text-lg text-transparent bg-[var(--color-text-muted)]/20 blur-sm font-medium leading-relaxed truncate"
           aria-hidden="true"
         >
           {parts.map((p) => p.word).join(" ")}
@@ -210,7 +210,7 @@ const Sentence = ({
   }
 
   return (
-    <p className="text-lg text-white font-medium leading-relaxed">
+    <p className="text-lg text-[var(--color-text-primary)] font-medium leading-relaxed">
       {parts
         .map((part, i) =>
           part.category ? (
@@ -219,7 +219,7 @@ const Sentence = ({
               className={`relative group cursor-pointer transition-colors ${getCategoryStyle(part.category)}`}
             >
               {part.word}
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-2 py-1 bg-slate-900 text-white text-xs font-bold rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border border-slate-600 shadow-lg">
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-2 py-1 bg-[var(--color-surface-1)] text-[var(--color-text-primary)] text-xs font-bold rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border border-[var(--color-border)] shadow-lg">
                 {part.category}
               </span>
             </span>
@@ -482,7 +482,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
         <div className="mb-6">
           <label
             htmlFor="level-select-empty"
-            className="block text-sm font-medium text-slate-300 mb-2"
+            className="block text-sm font-medium text-[var(--color-text-secondary)] mb-2"
           >
             Select Level:
           </label>
@@ -490,7 +490,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
             id="level-select-empty"
             value={level}
             onChange={(e) => setLevel(e.target.value as EnglishLevel)}
-            className="bg-slate-700 border border-slate-600 text-white text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5"
+            className="bg-[var(--color-surface-1)] border border-[var(--color-border)] text-[var(--color-text-primary)] text-sm rounded-lg focus:ring-[var(--color-focus)] focus:border-[var(--color-focus)] block w-full p-2.5"
           >
             {Object.values(EnglishLevel).map((l) => (
               <option key={l} value={l}>
@@ -499,11 +499,11 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
             ))}
           </select>
         </div>
-        <div className="bg-slate-800 p-8 rounded-lg">
-          <h2 className="text-xl font-semibold text-slate-300">
+        <div className="bg-[var(--color-surface-1)] p-8 rounded-lg border border-[var(--color-border)]">
+          <h2 className="text-xl font-semibold text-[var(--color-text-primary)]">
             No Study Decks Available
           </h2>
-          <p className="text-slate-400 mt-2">
+          <p className="text-[var(--color-text-secondary)] mt-2">
             There are no study decks for the {level} level yet. Please check
             back later!
           </p>
@@ -517,10 +517,10 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
       <div className="max-w-4xl mx-auto">
         {/* Level Select */}
         <div className="mb-6 flex justify-center">
-          <div className="inline-flex items-center gap-2 bg-slate-800 p-2 rounded-lg border border-slate-700">
+          <div className="inline-flex items-center gap-2 bg-[var(--color-surface-1)] p-2 rounded-lg border border-[var(--color-border)]">
             <label
               htmlFor="level-select"
-              className="text-sm font-bold text-slate-400"
+              className="text-sm font-bold text-[var(--color-text-secondary)]"
             >
               Level:
             </label>
@@ -528,7 +528,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
               id="level-select"
               value={level}
               onChange={(e) => setLevel(e.target.value as EnglishLevel)}
-              className="bg-slate-700 border-none text-sky-400 font-bold text-lg focus:ring-0 cursor-pointer hover:text-sky-300 transition-colors py-0 pl-2 pr-8"
+              className="bg-transparent border-none text-[var(--color-accent)] font-bold text-lg focus:ring-0 cursor-pointer hover:text-[var(--color-accent-hover)] transition-colors py-0 pl-2 pr-8"
             >
               {Object.values(EnglishLevel).map((l) => (
                 <option key={l} value={l}>
@@ -545,7 +545,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
               <div className="mb-2">
                 <label
                   htmlFor="study-topic-select"
-                  className="block text-sm font-medium text-slate-300 mb-1"
+                  className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1"
                 >
                   Select Study Topic:
                 </label>
@@ -553,7 +553,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                   id="study-topic-select"
                   value={selectedTopicId ?? ""}
                   onChange={(e) => setSelectedTopicId(e.target.value)}
-                  className="bg-slate-700 border border-slate-600 text-white text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5"
+                  className="bg-[var(--color-surface-1)] border border-[var(--color-border)] text-[var(--color-text-primary)] text-sm rounded-lg focus:ring-[var(--color-focus)] focus:border-[var(--color-focus)] block w-full p-2.5"
                 >
                   {topicsForLevel.map((topic) => (
                     <option key={topic.id} value={topic.id}>
@@ -614,7 +614,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
 
             <Card className="p-3 flex items-center gap-3 shadow-sm flex-1 md:flex-initial justify-center rounded-lg">
               <div
-                className={`p-2 rounded-full ${isPracticeMode ? "bg-sky-500/20 text-sky-400" : "bg-slate-700 text-slate-400"}`}
+                className={`p-2 rounded-full ${isPracticeMode ? "bg-[var(--color-accent)]/20 text-[var(--color-accent)]" : "bg-[var(--color-surface-2)] text-[var(--color-text-muted)]"}`}
               >
                 {isPracticeMode ? <EyeOffIcon /> : <EyeIcon />}
               </div>
@@ -633,7 +633,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
           <div className="animate-fade-in">
             {isPracticeMode && (
               <div className="mb-6">
-                <div className="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                <div className="flex justify-between text-xs font-bold text-[var(--color-text-secondary)] mb-1">
                   <span>Progress</span>
                   <span>
                     {revealedIndices.size} /{" "}
@@ -644,9 +644,9 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                     }
                   </span>
                 </div>
-                <div className="w-full bg-slate-800 rounded-full h-2.5">
+                <div className="w-full bg-[var(--color-surface-1)] rounded-full h-2.5">
                   <div
-                    className="bg-sky-500 h-2.5 rounded-full transition-all duration-500"
+                    className="bg-[var(--color-accent)] h-2.5 rounded-full transition-all duration-500"
                     style={{ width: `${progressPercentage}%` }}
                   ></div>
                 </div>
@@ -655,10 +655,10 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
 
             <div className="flex justify-between items-start mb-6">
               <div>
-                <h1 className="text-3xl font-bold text-white mb-2">
+                <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2">
                   {selectedTopic.name}
                 </h1>
-                <p className="text-slate-400 max-w-2xl">
+                <p className="text-[var(--color-text-secondary)] max-w-2xl">
                   {selectedTopic.description}
                 </p>
               </div>
@@ -683,7 +683,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                     .trim();
                   return (
                     <div key={uniqueKey} className="pt-6 pb-2">
-                      <h2 className="text-xl font-semibold text-sky-300 border-b-2 border-sky-300/20 pb-2">
+                      <h2 className="text-xl font-semibold text-[var(--color-accent)] border-b-2 border-[var(--color-accent)]/20 pb-2">
                         {title}
                       </h2>
                     </div>
@@ -699,12 +699,12 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                   const renderMinimalPairContent = (isFront: boolean) => (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 h-full">
                       {/* Item A */}
-                      <div className="flex flex-col justify-between gap-2 border-b md:border-b-0 md:border-r border-slate-700 pb-3 md:pb-0 md:pr-4 h-full">
+                      <div className="flex flex-col justify-between gap-2 border-b md:border-b-0 md:border-r border-[var(--color-border)] pb-3 md:pb-0 md:pr-4 h-full">
                         <div className="flex-1">
                           {isFront ? (
                             <div className="mb-3">
                               {itemA.translation_es && (
-                                <p className="text-emerald-400 font-medium text-lg mb-2">
+                                <p className="text-[var(--color-success)] font-medium text-lg mb-2">
                                   {itemA.translation_es}
                                 </p>
                               )}
@@ -717,11 +717,11 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                           ) : (
                             <>
                               <Sentence parts={itemA.parts} isHidden={false} />
-                              <p className="text-cyan-300 font-mono text-sm tracking-wider mt-1">
+                              <p className="text-cyan-600 dark:text-cyan-300 font-mono text-sm tracking-wider mt-1">
                                 {itemA.ipa}
                               </p>
                               {itemA.translation_es && (
-                                <p className="text-slate-400 text-sm mt-1 italic">
+                                <p className="text-[var(--color-text-secondary)] text-sm mt-1 italic">
                                   {itemA.translation_es}
                                 </p>
                               )}
@@ -735,7 +735,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                               onPlayWord(textA);
                             }}
                             disabled={!!isWordAudioLoading}
-                            className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-sky-600 text-white hover:bg-sky-500" : "bg-slate-700 text-slate-300 hover:bg-sky-500 hover:text-white"}`}
+                            className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)]" : "bg-[var(--color-surface-2)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)] hover:text-white"}`}
                             aria-label={`Listen to "${textA}"`}
                           >
                             {isWordAudioLoading === textA ? (
@@ -753,7 +753,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                           {isFront ? (
                             <div className="mb-3">
                               {itemB.translation_es && (
-                                <p className="text-emerald-400 font-medium text-lg mb-2">
+                                <p className="text-[var(--color-success)] font-medium text-lg mb-2">
                                   {itemB.translation_es}
                                 </p>
                               )}
@@ -766,11 +766,11 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                           ) : (
                             <>
                               <Sentence parts={itemB.parts} isHidden={false} />
-                              <p className="text-cyan-300 font-mono text-sm tracking-wider mt-1">
+                              <p className="text-cyan-600 dark:text-cyan-300 font-mono text-sm tracking-wider mt-1">
                                 {itemB.ipa}
                               </p>
                               {itemB.translation_es && (
-                                <p className="text-slate-400 text-sm mt-1 italic">
+                                <p className="text-[var(--color-text-secondary)] text-sm mt-1 italic">
                                   {itemB.translation_es}
                                 </p>
                               )}
@@ -784,7 +784,8 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                               onPlayWord(textB);
                             }}
                             disabled={!!isWordAudioLoading}
-                            className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-sky-600 text-white hover:bg-sky-500" : "bg-slate-700 text-slate-300 hover:bg-sky-500 hover:text-white"}`}
+                            className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)]" : "bg-[var(--color-surface-2)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)] hover:text-white"}`}
+                            aria-label={`Listen to "${textB}"`}
                           >
                             {isWordAudioLoading === textB ? (
                               <WordAudioSpinner />
@@ -820,7 +821,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                       >
                         {/* Front (Hidden State) */}
                         <div
-                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] p-4 rounded-lg border transition-all duration-300 cursor-pointer ${autoPlayIndex === index ? "ring-2 ring-sky-500 bg-slate-800/80" : "bg-slate-800/50 border-sky-500/30 ring-1 ring-sky-500/20 hover:bg-slate-800/70"}`}
+                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] p-4 rounded-lg border transition-all duration-300 cursor-pointer ${autoPlayIndex === index ? "ring-2 ring-[var(--color-focus)] bg-[var(--color-surface-2)]" : "bg-[var(--color-surface-1)] border-[var(--color-accent)]/30 ring-1 ring-[var(--color-accent)]/20 hover:bg-[var(--color-surface-hover)]"}`}
                           onClick={() => {
                             if (isPracticeMode && !isRevealed) {
                               handleReveal(index);
@@ -832,7 +833,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
 
                         {/* Back (Revealed State) */}
                         <div
-                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] [transform:rotateX(180deg)] p-4 rounded-lg border transition-all duration-300 ${autoPlayIndex === index ? "ring-2 ring-sky-500 bg-slate-800/80" : "bg-slate-800 border-slate-700/50"}`}
+                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] [transform:rotateX(180deg)] p-4 rounded-lg border transition-all duration-300 ${autoPlayIndex === index ? "ring-2 ring-[var(--color-focus)] bg-[var(--color-surface-2)]" : "bg-[var(--color-surface-1)] border-[var(--color-border)]"}`}
                         >
                           {renderMinimalPairContent(false)}
                         </div>
@@ -852,12 +853,12 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                         {isFront ? (
                           <div>
                             {example.translation_es && (
-                              <p className="text-emerald-400 font-semibold text-xl mb-3">
+                              <p className="text-[var(--color-success)] font-semibold text-xl mb-3">
                                 {example.translation_es}
                               </p>
                             )}
                             {example.definition && !example.translation_es && (
-                              <p className="text-yellow-300 text-lg mb-3 italic">
+                              <p className="text-amber-500 dark:text-yellow-300 text-lg mb-3 italic">
                                 "{example.definition}"
                               </p>
                             )}
@@ -871,19 +872,19 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                           <div>
                             <Sentence parts={example.parts} isHidden={false} />
                             <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 items-baseline">
-                              <p className="text-cyan-300 font-mono text-sm tracking-wider">
+                              <p className="text-cyan-600 dark:text-cyan-300 font-mono text-sm tracking-wider">
                                 {example.ipa}
                               </p>
                               {example.translation_es && (
-                                <p className="text-slate-400 text-sm italic">
+                                <p className="text-[var(--color-text-secondary)] text-sm italic">
                                   {example.translation_es}
                                 </p>
                               )}
                             </div>
                             {example.definition && (
-                              <div className="mt-2 pt-2 border-t border-slate-700/50">
-                                <p className="text-sm text-yellow-300/90">
-                                  <span className="font-semibold text-yellow-200">
+                              <div className="mt-2 pt-2 border-t border-[var(--color-border)]">
+                                <p className="text-sm text-amber-600 dark:text-yellow-300/90">
+                                  <span className="font-semibold text-amber-700 dark:text-yellow-200">
                                     Meaning:
                                   </span>{" "}
                                   {example.definition}
@@ -904,8 +905,13 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                                 example.translation_es || example.definition,
                               );
                             }}
-                            className={`h-10 w-10 flex items-center justify-center rounded-full transition-colors ${isSaved ? "text-emerald-400 bg-emerald-900/20" : "text-slate-500 hover:text-white hover:bg-slate-700"}`}
+                            className={`h-10 w-10 flex items-center justify-center rounded-full transition-colors ${isSaved ? "text-[var(--color-success)] bg-[var(--color-success)]/20" : "text-[var(--color-text-secondary)] hover:text-white hover:bg-[var(--color-surface-hover)]"}`}
                             title={
+                              isSaved
+                                ? "Saved to Vault"
+                                : "Save to Vocabulary Vault"
+                            }
+                            aria-label={
                               isSaved
                                 ? "Saved to Vault"
                                 : "Save to Vocabulary Vault"
@@ -920,10 +926,10 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                           !isFront &&
                           example.translation_es && (
                             <div className="relative group hidden sm:block">
-                              <div className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-700/50 text-slate-300 cursor-help">
+                              <div className="h-10 w-10 flex items-center justify-center rounded-full bg-[var(--color-surface-2)] text-[var(--color-text-secondary)] cursor-help">
                                 <TranslateIcon />
                               </div>
-                              <div className="absolute bottom-full right-0 mb-2 w-max max-w-xs px-3 py-1.5 bg-slate-900 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border border-slate-600 shadow-lg">
+                              <div className="absolute bottom-full right-0 mb-2 w-max max-w-xs px-3 py-1.5 bg-[var(--color-surface-1)] text-[var(--color-text-primary)] text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border border-[var(--color-border)] shadow-lg">
                                 {example.translation_es}
                               </div>
                             </div>
@@ -937,8 +943,8 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                           className={`h-10 w-10 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed
                                                       ${
                                                         isFront
-                                                          ? "bg-sky-600 text-white hover:bg-sky-500 shadow-lg shadow-sky-500/20"
-                                                          : "bg-slate-700/50 text-slate-300 hover:bg-sky-500 hover:text-white"
+                                                          ? "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] shadow-lg shadow-[var(--color-accent)]/20"
+                                                          : "bg-[var(--color-surface-2)] text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)] hover:text-white"
                                                       }
                                                   `}
                           aria-label={`Listen to "${fullText}"`}
@@ -977,7 +983,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                       >
                         {/* Front (Hidden State) */}
                         <div
-                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] p-4 rounded-lg border transition-all duration-300 cursor-pointer ${autoPlayIndex === index ? "ring-2 ring-sky-500 bg-slate-800/80" : "bg-slate-800/50 border-sky-500/30 ring-1 ring-sky-500/20 hover:bg-slate-800/70"}`}
+                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] p-4 rounded-lg border transition-all duration-300 cursor-pointer ${autoPlayIndex === index ? "ring-2 ring-[var(--color-focus)] bg-[var(--color-surface-2)]" : "bg-[var(--color-surface-1)] border-[var(--color-accent)]/30 ring-1 ring-[var(--color-accent)]/20 hover:bg-[var(--color-surface-hover)]"}`}
                           onClick={() => {
                             if (isPracticeMode && !isRevealed) {
                               handleReveal(index);
@@ -989,7 +995,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
 
                         {/* Back (Revealed State) */}
                         <div
-                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] [transform:rotateX(180deg)] p-4 rounded-lg border transition-all duration-300 ${autoPlayIndex === index ? "ring-2 ring-sky-500 bg-slate-800/80" : "bg-slate-800 border-slate-700/50"}`}
+                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] [transform:rotateX(180deg)] p-4 rounded-lg border transition-all duration-300 ${autoPlayIndex === index ? "ring-2 ring-[var(--color-focus)] bg-[var(--color-surface-2)]" : "bg-[var(--color-surface-1)] border-[var(--color-border)]"}`}
                         >
                           {renderCardContent(false)}
                         </div>

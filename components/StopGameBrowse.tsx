@@ -394,22 +394,22 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
 
             <div className="flex gap-2 w-full md:w-auto items-center">
               {/* VIEW MODE TOGGLE */}
-              <div className="flex items-center gap-2 bg-slate-800 p-1 rounded-xl border border-slate-700 mr-2">
+              <div className="flex items-center gap-2 bg-[var(--color-surface-1)] p-1 rounded-xl border border-[var(--color-border)] mr-2">
                 <button
                   onClick={() => setViewMode("browse")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "browse" ? "bg-slate-700 text-white shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "browse" ? "bg-[var(--color-surface-2)] text-[var(--color-text-primary)] shadow-sm" : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}
                 >
                   <DiceIcon /> Browse
                 </button>
                 <button
                   onClick={() => setViewMode("study")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "study" ? "bg-sky-600 text-white shadow-lg shadow-sky-500/20" : "text-slate-400 hover:text-slate-200"}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "study" ? "bg-[var(--color-accent)] text-white shadow-lg shadow-[var(--color-accent)]/20" : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}
                 >
                   <BookIcon /> Study
                 </button>
                 <button
                   onClick={() => setViewMode("game")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "game" ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20" : "text-slate-400 hover:text-slate-200"}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "game" ? "bg-[var(--color-success)] text-white shadow-lg shadow-[var(--color-success)]/20" : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}
                 >
                   <SparklesIcon /> Game
                 </button>
@@ -422,14 +422,14 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       setIsShuffled(!isShuffled);
                       if (!isShuffled) setShuffleSeed((s) => s + 1);
                     }}
-                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${isShuffled ? "bg-purple-600 border-purple-500 text-white shadow-lg shadow-purple-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:text-purple-400"}`}
+                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${isShuffled ? "bg-purple-600 border-purple-500 text-white shadow-lg shadow-purple-500/20" : "bg-[var(--color-surface-1)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-purple-400"}`}
                     title={isShuffled ? "Unshuffle" : "Shuffle Words"}
                   >
                     {isShuffled ? "🔀 Shuffled" : "🔀 Shuffle"}
                   </button>
                   <button
                     onClick={() => setStudyAutoPlay(!studyAutoPlay)}
-                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${studyAutoPlay ? "bg-sky-600 border-sky-500 text-white shadow-lg shadow-sky-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:text-sky-400"}`}
+                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${studyAutoPlay ? "bg-[var(--color-accent)] border-[var(--color-accent)] text-white shadow-lg shadow-[var(--color-accent)]/20" : "bg-[var(--color-surface-1)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"}`}
                     title={
                       studyAutoPlay
                         ? "Disable Auto-play Audio"
@@ -440,7 +440,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                   </button>
                   <button
                     onClick={() => setStudyRevealAll(!studyRevealAll)}
-                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${studyRevealAll ? "bg-amber-600 border-amber-500 text-white shadow-lg shadow-amber-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:text-amber-400"}`}
+                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${studyRevealAll ? "bg-amber-600 border-amber-500 text-white shadow-lg shadow-amber-500/20" : "bg-[var(--color-surface-1)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-amber-400"}`}
                     title={
                       studyRevealAll
                         ? "Hide All Translations"
@@ -453,7 +453,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
               )}
 
               <div className="relative w-full md:w-64 group">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[var(--color-text-secondary)]">
                   <SearchIcon />
                 </div>
                 <input
@@ -462,13 +462,13 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                   placeholder={`Search in '${selectedLetter}'...`}
                   value={browseFilter}
                   onChange={(e) => setBrowseFilter(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-700 text-white text-sm rounded-xl pl-10 pr-8 py-2.5 focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
+                  className="w-full bg-[var(--color-surface-1)] border border-[var(--color-border)] text-[var(--color-text-primary)] text-sm rounded-xl pl-10 pr-8 py-2.5 focus:ring-2 focus:ring-[var(--color-focus)] focus:border-transparent transition-all"
                   aria-label="Search vocabulary"
                 />
                 {browseFilter && (
                   <button
                     onClick={() => setBrowseFilter("")}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] rounded"
                     aria-label="Clear search"
                   >
                     <svg
@@ -491,7 +491,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
               {/* New Discovery Buttons */}
               <button
                 onClick={() => setShowSavedOnly(!showSavedOnly)}
-                className={`p-2.5 rounded-xl border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 ${showSavedOnly ? "bg-pink-600 border-pink-500 text-white" : "bg-slate-800 border-slate-700 text-slate-400 hover:text-pink-400"}`}
+                className={`p-2.5 rounded-xl border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 ${showSavedOnly ? "bg-pink-600 border-pink-500 text-white" : "bg-[var(--color-surface-1)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-pink-400"}`}
                 title="Show Saved Only"
                 aria-label={
                   showSavedOnly ? "Show all words" : "Show saved words only"
@@ -532,10 +532,10 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                                           h-9 w-8 rounded-md font-bold text-sm transition-all flex items-center justify-center border-b-2 relative overflow-hidden
                                           ${
                                             isSelected
-                                              ? "bg-sky-500 border-sky-400 text-white shadow-[0_0_15px_rgba(14,165,233,0.5)] scale-105"
+                                              ? "bg-[var(--color-accent)] border-[var(--color-accent-hover)] text-white shadow-[0_0_15px_rgba(14,165,233,0.5)] scale-105"
                                               : hasData
-                                                ? "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white hover:border-slate-500"
-                                                : "bg-slate-800/30 border-transparent text-slate-700 cursor-not-allowed"
+                                                ? "bg-[var(--color-surface-1)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-text-muted)]"
+                                                : "bg-[var(--color-surface-1)]/30 border-transparent text-[var(--color-text-muted)] cursor-not-allowed"
                                           }
                                       `}
                     >
@@ -550,7 +550,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
             </div>
 
             {/* Categories */}
-            <div className="overflow-x-auto scrollbar-hide py-2 border-t border-slate-800">
+            <div className="overflow-x-auto scrollbar-hide py-2 border-t border-[var(--color-border)]">
               <div className="flex gap-2 min-w-max px-2">
                 {(Object.keys(CATEGORY_GROUPS) as GroupName[]).map((group) => {
                   const isSelected = selectedGroup === group;
@@ -562,8 +562,8 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                                           px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all whitespace-nowrap border
                                           ${
                                             isSelected
-                                              ? "bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-500/20 scale-105"
-                                              : "bg-slate-800 border-slate-700 text-slate-500 hover:border-slate-500 hover:text-slate-300 hover:bg-slate-700"
+                                              ? "bg-[var(--color-success)] border-[var(--color-success-hover)] text-white shadow-lg shadow-[var(--color-success)]/20 scale-105"
+                                              : "bg-[var(--color-surface-1)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)]"
                                           }
                                       `}
                     >
@@ -580,7 +580,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
       {viewMode === "game" ? (
         <StopGamePlay onPlayWord={onPlayWord} onAddToVault={onAddToVault} />
       ) : (
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-900/50">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[var(--color-surface-2)]/50">
           <div className="max-w-7xl mx-auto pb-20">
             {currentData ? (
               <div
@@ -615,23 +615,25 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       <div
                         key={category}
                         id={`cat-${category}`}
-                        className={`rounded-2xl border-2 border-dashed border-slate-800 bg-slate-900/20 flex flex-col h-full opacity-60`}
+                        className={`rounded-2xl border-2 border-dashed border-[var(--color-border)] bg-[var(--color-surface-1)]/20 flex flex-col h-full opacity-60`}
                       >
                         <div
                           className={`px-5 py-4 flex items-center justify-between border-b border-transparent`}
                         >
                           <div className="flex items-center gap-3 grayscale">
                             <span
-                              className={`text-2xl w-10 h-10 flex items-center justify-center rounded-lg bg-slate-800`}
+                              className={`text-2xl w-10 h-10 flex items-center justify-center rounded-lg bg-[var(--color-surface-2)]`}
                             >
                               {getCategoryIcon(category)}
                             </span>
-                            <h3 className={`font-bold text-lg text-slate-600`}>
+                            <h3
+                              className={`font-bold text-lg text-[var(--color-text-muted)]`}
+                            >
                               {category}
                             </h3>
                           </div>
                         </div>
-                        <div className="flex-1 p-6 flex items-center justify-center text-slate-700 text-sm italic font-medium">
+                        <div className="flex-1 p-6 flex items-center justify-center text-[var(--color-text-muted)] text-sm italic font-medium">
                           No {category.toLowerCase()} starting with '
                           {selectedLetter}'
                         </div>
@@ -640,7 +642,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                   }
 
                   // Normal Card Styling
-                  const cardClass = `rounded-2xl border-t-4 ${theme.accentColor} bg-slate-800 border-x border-b border-slate-700/50 overflow-hidden flex flex-col h-full shadow-lg transition-all duration-300 hover:-translate-y-1 ${theme.glow} group`;
+                  const cardClass = `rounded-2xl border-t-4 ${theme.accentColor} bg-[var(--color-surface-1)] border-x border-b border-[var(--color-border)]/50 overflow-hidden flex flex-col h-full shadow-lg transition-all duration-300 hover:-translate-y-1 ${theme.glow} group`;
                   const headerClass = `${theme.headerGradient} px-5 py-4 flex items-center justify-between border-b border-white/5`;
                   const titleClass = `font-black text-lg ${theme.textClass} tracking-wide drop-shadow-sm`;
 
@@ -659,7 +661,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                           </span>
                           <h3 className={titleClass}>{category}</h3>
                         </div>
-                        <span className="text-xs font-bold text-slate-400 bg-slate-900/30 px-2.5 py-1 rounded-lg border border-white/5 min-w-[2rem] text-center backdrop-blur-sm">
+                        <span className="text-xs font-bold text-[var(--color-text-secondary)] bg-[var(--color-surface-2)]/30 px-2.5 py-1 rounded-lg border border-white/5 min-w-[2rem] text-center backdrop-blur-sm">
                           {items.length}
                         </span>
                       </div>
@@ -702,7 +704,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       {hasMore && (
                         <button
                           onClick={() => toggleCategory(category)}
-                          className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 border-t border-slate-700/50"
+                          className="w-full py-3 bg-[var(--color-surface-1)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] text-xs font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 border-t border-[var(--color-border)]/50"
                         >
                           {isExpanded ? (
                             <>
@@ -722,7 +724,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                 })}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center h-64 text-slate-500">
+              <div className="flex flex-col items-center justify-center h-64 text-[var(--color-text-secondary)]">
                 <p className="text-xl">
                   No words loaded for letter {selectedLetter} yet.
                 </p>

@@ -91,7 +91,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         </span>
         <button
           onClick={onExit}
-          className="text-slate-500 hover:text-white transition-colors"
+          className="text-slate-400 hover:text-white transition-colors"
         >
           ✕ Salir
         </button>
@@ -112,36 +112,36 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         >
           {/* Front */}
           <div
-            className="absolute w-full h-full backface-hidden bg-slate-800 rounded-2xl border-2 border-slate-600 shadow-2xl flex flex-col items-center p-8 text-center hover:border-sky-500 transition-colors"
+            className="absolute w-full h-full backface-hidden bg-[var(--color-surface-1)] rounded-2xl border-2 border-[var(--color-border)] shadow-2xl flex flex-col items-center p-8 text-center hover:border-[var(--color-accent)] transition-colors"
             style={{
               backfaceVisibility: "hidden",
               WebkitBackfaceVisibility: "hidden",
             }}
           >
-            <h3 className="text-slate-400 text-lg mb-4 font-semibold uppercase tracking-wider shrink-0">
+            <h3 className="text-[var(--color-text-secondary)] text-lg mb-4 font-semibold uppercase tracking-wider shrink-0">
               Pregunta
             </h3>
-            <div className="flex-1 flex flex-col justify-center items-center gap-2 text-xl md:text-3xl text-white font-medium max-w-full overflow-y-auto break-words w-full">
+            <div className="flex-1 flex flex-col justify-center items-center gap-2 text-xl md:text-3xl text-[var(--color-text-primary)] font-medium max-w-full overflow-y-auto break-words w-full">
               {renderQuestion()}
             </div>
-            <p className="text-slate-500 text-sm animate-pulse mt-4 shrink-0">
+            <p className="text-[var(--color-text-muted)] text-sm animate-pulse mt-4 shrink-0">
               Haz click para girar (ver respuesta/pregunta)
             </p>
           </div>
 
           {/* Back */}
           <div
-            className="absolute w-full h-full backface-hidden bg-slate-900 rounded-2xl border-2 border-emerald-600 shadow-2xl flex flex-col items-center p-8 text-center rotate-y-180"
+            className="absolute w-full h-full backface-hidden bg-[var(--color-surface-2)] rounded-2xl border-2 border-[var(--color-success)] shadow-2xl flex flex-col items-center p-8 text-center rotate-y-180"
             style={{
               backfaceVisibility: "hidden",
               WebkitBackfaceVisibility: "hidden",
               transform: "rotateY(180deg)",
             }}
           >
-            <h3 className="text-emerald-400 text-lg mb-4 font-semibold uppercase tracking-wider shrink-0">
+            <h3 className="text-[var(--color-success)] text-lg mb-4 font-semibold uppercase tracking-wider shrink-0">
               Respuesta
             </h3>
-            <div className="flex-1 flex flex-col items-center justify-center text-2xl md:text-4xl text-white font-mono w-full overflow-y-auto">
+            <div className="flex-1 flex flex-col items-center justify-center text-2xl md:text-4xl text-[var(--color-text-primary)] font-mono w-full overflow-y-auto">
               <LatexRenderer formula={answerText} block />
             </div>
 
@@ -151,7 +151,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handlePrev();
                 }}
-                className="bg-slate-700 hover:bg-slate-600 text-white px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px]"
+                className="bg-[var(--color-surface-1)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-primary)] px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-[var(--color-border)]"
               >
                 Anterior
               </button>
@@ -160,7 +160,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handleNext();
                 }}
-                className="bg-slate-700 hover:bg-slate-600 text-white px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px]"
+                className="bg-[var(--color-surface-1)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-primary)] px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-[var(--color-border)]"
               >
                 Siguiente
               </button>
@@ -171,7 +171,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Stats / Motivation */}
       <div className="mt-8 text-center">
-        <p className="text-slate-500 text-sm">
+        <p className="text-slate-400 text-sm">
           Ganarás XP al completar la sesión (Próximamente)
         </p>
       </div>

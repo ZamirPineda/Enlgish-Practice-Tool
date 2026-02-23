@@ -187,19 +187,19 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
                 </h3>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div className="p-2 bg-slate-800 rounded border border-slate-700">
-                    <div className="text-xs text-slate-500 mb-1">Base</div>
+                    <div className="text-xs text-slate-400 mb-1">Base</div>
                     <div className="font-bold text-white text-lg">
                       {item.word}
                     </div>
                   </div>
                   <div className="p-2 bg-slate-800 rounded border border-slate-700">
-                    <div className="text-xs text-slate-500 mb-1">Past (V2)</div>
+                    <div className="text-xs text-slate-400 mb-1">Past (V2)</div>
                     <div className="font-bold text-amber-400 text-lg">
                       {verbForms.past || "-"}
                     </div>
                   </div>
                   <div className="p-2 bg-slate-800 rounded border border-slate-700">
-                    <div className="text-xs text-slate-500 mb-1">
+                    <div className="text-xs text-slate-400 mb-1">
                       Participle (V3)
                     </div>
                     <div className="font-bold text-emerald-400 text-lg">
@@ -264,7 +264,7 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
                           key={pos}
                           className="flex justify-between items-center bg-slate-900/50 px-3 py-2 rounded"
                         >
-                          <span className="text-xs font-bold text-slate-500 uppercase">
+                          <span className="text-xs font-bold text-slate-400 uppercase">
                             {pos}
                           </span>
                           <span className="text-sky-300 font-medium">

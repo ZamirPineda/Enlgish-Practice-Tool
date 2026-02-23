@@ -43,6 +43,7 @@ const SlideOver: React.FC<SlideOverProps> = ({
             <button
               onClick={onClose}
               className="text-text-secondary hover:text-text-primary hover:bg-surface-2 p-2 rounded-lg transition-colors"
+              aria-label="Close panel"
             >
               <svg
                 className="w-6 h-6"

@@ -122,7 +122,10 @@ const HomeView: React.FC = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Link to="/vault" className="group block">
-              <Card className="h-full p-6 border-t-4 border-accent hover:-translate-y-1 hover:shadow-xl hover:shadow-accent/10 transition-all duration-300 bg-surface-1">
+              <Card
+                interactive
+                className="h-full p-6 border-t-4 border-accent bg-surface-1"
+              >
                 <div className="mb-4 text-accent group-hover:scale-110 transition-transform origin-left">
                   <Library className="w-10 h-10" />
                 </div>
@@ -137,7 +140,10 @@ const HomeView: React.FC = () => {
             </Link>
 
             <Link to="/stop" className="group block">
-              <Card className="h-full p-6 border-t-4 border-emerald-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 bg-surface-1">
+              <Card
+                interactive
+                className="h-full p-6 border-t-4 border-emerald-500 bg-surface-1"
+              >
                 <div className="mb-4 text-emerald-500 group-hover:scale-110 transition-transform origin-left">
                   <Gamepad2 className="w-10 h-10" />
                 </div>
@@ -151,7 +157,10 @@ const HomeView: React.FC = () => {
             </Link>
 
             <Link to="/study" className="group block">
-              <Card className="h-full p-6 border-t-4 border-purple-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 bg-surface-1">
+              <Card
+                interactive
+                className="h-full p-6 border-t-4 border-purple-500 bg-surface-1"
+              >
                 <div className="mb-4 text-purple-500 group-hover:scale-110 transition-transform origin-left">
                   <BookOpen className="w-10 h-10" />
                 </div>

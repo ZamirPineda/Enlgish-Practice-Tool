@@ -107,7 +107,7 @@ const StudyDocsView: React.FC = () => {
               style={{ paddingLeft: `${level * 12 + 8}px` }}
               onClick={() => toggleFolder(node.path)}
             >
-              <span className="mr-2 text-slate-500 group-hover:text-sky-400 transition-colors">
+              <span className="mr-2 text-slate-400 group-hover:text-sky-400 transition-colors">
                 <svg
                   className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
                   fill="none"
@@ -163,7 +163,7 @@ const StudyDocsView: React.FC = () => {
             onClick={() => handleFileSelect(node.path)}
           >
             <span
-              className={`mr-2 ${isSelected ? "text-sky-400" : "text-slate-500 group-hover:text-slate-400"}`}
+              className={`mr-2 ${isSelected ? "text-sky-400" : "text-slate-400 group-hover:text-slate-300"}`}
             >
               <svg
                 className="w-4 h-4"
@@ -200,6 +200,7 @@ const StudyDocsView: React.FC = () => {
       <button
         onClick={toggleSidebar}
         className="md:hidden absolute top-4 left-4 z-50 p-2 bg-slate-800 text-white rounded-lg shadow-lg"
+        aria-label={isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
       >
         {isSidebarOpen ? "✕" : "☰"}
       </button>
@@ -221,6 +222,7 @@ const StudyDocsView: React.FC = () => {
               onClick={() => setExpandedFolders(new Set())}
               className="text-xs text-slate-400 hover:text-sky-400 transition-colors flex items-center gap-1"
               title="Collapse All Folders"
+              aria-label="Collapse All Folders"
             >
               <svg
                 className="w-3 h-3"
@@ -240,7 +242,7 @@ const StudyDocsView: React.FC = () => {
           </div>
           <div className="relative">
             <svg
-              className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
+              className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -265,7 +267,7 @@ const StudyDocsView: React.FC = () => {
           {fileTree.length > 0 ? (
             renderTree(fileTree)
           ) : (
-            <div className="text-center text-slate-500 py-4 text-sm">
+            <div className="text-center text-slate-400 py-4 text-sm">
               No matches found
             </div>
           )}
@@ -309,6 +311,7 @@ const StudyDocsView: React.FC = () => {
                   onClick={() => setZenMode(!zenMode)}
                   className={`p-1.5 rounded-md transition-colors flex items-center gap-1.5 text-xs font-medium ${zenMode ? "bg-sky-500/20 text-sky-400" : "text-slate-400 hover:text-sky-400 hover:bg-slate-700/50"}`}
                   title="Toggle Zen Mode"
+                  aria-label="Toggle Zen Mode"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -330,6 +333,7 @@ const StudyDocsView: React.FC = () => {
                   onClick={handleCopyLink}
                   className="p-1.5 text-slate-400 hover:text-sky-400 hover:bg-slate-700/50 rounded-md transition-colors flex items-center gap-1.5 text-xs font-medium relative"
                   title="Copy Link"
+                  aria-label="Copy Link"
                 >
                   {copiedLink ? (
                     <svg
@@ -398,7 +402,7 @@ const StudyDocsView: React.FC = () => {
             </div>
           </>
         ) : (
-          <div className="flex items-center justify-center h-full bg-slate-900 text-slate-500">
+          <div className="flex items-center justify-center h-full bg-slate-900 text-slate-400">
             <div className="text-center p-4">
               <div className="text-4xl mb-4">📚</div>
               <p>Select a document to start reading</p>

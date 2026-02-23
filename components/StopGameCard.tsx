@@ -76,7 +76,7 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
         <div className="mt-2 grid grid-cols-2 gap-2 text-xs bg-slate-900/40 p-2 rounded animate-fade-in">
           {family.noun && (
             <div>
-              <span className="text-slate-500 font-bold block text-[9px] uppercase">
+              <span className="text-slate-400 font-bold block text-[9px] uppercase">
                 Noun
               </span>
               <span className="text-white">{family.noun}</span>
@@ -84,7 +84,7 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
           )}
           {family.verb && (
             <div>
-              <span className="text-slate-500 font-bold block text-[9px] uppercase">
+              <span className="text-slate-400 font-bold block text-[9px] uppercase">
                 Verb
               </span>
               <span className="text-white">{family.verb}</span>
@@ -92,7 +92,7 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
           )}
           {family.adj && (
             <div>
-              <span className="text-slate-500 font-bold block text-[9px] uppercase">
+              <span className="text-slate-400 font-bold block text-[9px] uppercase">
                 Adj
               </span>
               <span className="text-white">{family.adj}</span>
@@ -100,7 +100,7 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
           )}
           {family.adv && (
             <div>
-              <span className="text-slate-500 font-bold block text-[9px] uppercase">
+              <span className="text-slate-400 font-bold block text-[9px] uppercase">
                 Adv
               </span>
               <span className="text-white">{family.adv}</span>
@@ -121,7 +121,7 @@ const FeedbackDisplay = ({
 }) => {
   if (!transcript)
     return (
-      <span className="text-slate-500 italic text-sm">Say "{target}"...</span>
+      <span className="text-slate-400 italic text-sm">Say "{target}"...</span>
     );
 
   const normalizedTarget = target.toLowerCase();
@@ -162,7 +162,7 @@ const FeedbackDisplay = ({
   return (
     <div className="flex flex-col gap-2 mt-2">
       <div>
-        <div className="text-[10px] uppercase font-bold text-slate-500 mb-1">
+        <div className="text-[10px] uppercase font-bold text-slate-400 mb-1">
           Target Match
         </div>
         <div className="font-mono text-lg tracking-wider bg-black/40 p-2 rounded border border-slate-700/50 flex flex-wrap">
@@ -171,7 +171,7 @@ const FeedbackDisplay = ({
       </div>
 
       <div>
-        <div className="text-[10px] uppercase font-bold text-slate-500 mb-1">
+        <div className="text-[10px] uppercase font-bold text-slate-400 mb-1">
           Heard
         </div>
         <div className="text-sm font-medium text-white break-words bg-slate-900/50 p-2 rounded border border-slate-600/50">
@@ -345,7 +345,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
             {(item.translation ||
               (isStudyMode && !studyRevealAll && !isRevealed)) && (
               <span
-                className={`text-xs italic truncate max-w-full transition-all duration-300 ${isStudyMode && !studyRevealAll && !isRevealed ? "text-slate-500 bg-slate-800 border border-slate-700 rounded px-2 py-0.5 cursor-pointer hover:bg-slate-700 hover:text-slate-300" : "text-slate-400"}`}
+                className={`text-xs italic truncate max-w-full transition-all duration-300 ${isStudyMode && !studyRevealAll && !isRevealed ? "text-slate-400 bg-slate-800 border border-slate-700 rounded px-2 py-0.5 cursor-pointer hover:bg-slate-700 hover:text-slate-300" : "text-slate-400"}`}
                 onClick={(e) => {
                   if (isStudyMode && !studyRevealAll) {
                     e.stopPropagation();
@@ -404,7 +404,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
               </span>
             )}
             {item.genre && (
-              <span className="text-[9px] uppercase font-bold text-slate-500 border border-slate-600 px-1.5 py-0.5 rounded">
+              <span className="text-[9px] uppercase font-bold text-slate-400 border border-slate-600 px-1.5 py-0.5 rounded">
                 {item.genre}
               </span>
             )}
@@ -414,7 +414,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
               </span>
             )}
             {item.production && (
-              <span className="text-[9px] text-slate-500">
+              <span className="text-[9px] text-slate-400">
                 ({item.production})
               </span>
             )}
@@ -441,7 +441,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                         : "Formal Swap"}
                 </span>
                 {maxLayers > 1 && (
-                  <span className="text-[9px] text-slate-500 opacity-0 group-hover/layer:opacity-100 transition-opacity">
+                  <span className="text-[9px] text-slate-400 opacity-0 group-hover/layer:opacity-100 transition-opacity">
                     Flip ⟳
                   </span>
                 )}
@@ -506,7 +506,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                       {category === "Minimal Pairs" &&
                       item.definition?.includes("vs.") ? (
                         <div className="mt-1">
-                          <p className="text-[10px] text-slate-500 font-bold uppercase mb-1">
+                          <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">
                             Compare vs:
                           </p>
                           <div className="flex flex-wrap gap-2">

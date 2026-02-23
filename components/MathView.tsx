@@ -142,7 +142,7 @@ const MathView: React.FC = () => {
                   </button>
                 ))}
               {topic.sections.every((s) => !s.studyStrategies) && (
-                <p className="text-slate-500 italic text-sm">
+                <p className="text-slate-400 italic text-sm">
                   No hay modos de estudio disponibles para este tema aún.
                 </p>
               )}
@@ -214,8 +214,9 @@ const MathView: React.FC = () => {
                                   {isFormula && (
                                     <button
                                       onClick={() => handleCopy(cell)}
-                                      className="opacity-0 group-hover:opacity-100 p-1.5 text-slate-500 hover:text-white hover:bg-slate-600 rounded-md transition-all"
+                                      className="opacity-0 group-hover:opacity-100 p-1.5 text-slate-400 hover:text-white hover:bg-slate-600 rounded-md transition-all"
                                       title="Copy LaTeX"
+                                      aria-label="Copy LaTeX"
                                     >
                                       {copiedFormula === cell ? (
                                         <CheckIcon />
@@ -237,7 +238,7 @@ const MathView: React.FC = () => {
             ))
           : // STUDY MODE: Placeholder if no strategy selected
             !selectedStrategy && (
-              <div className="flex flex-col items-center justify-center py-20 text-slate-500">
+              <div className="flex flex-col items-center justify-center py-20 text-slate-400">
                 <div className="text-4xl mb-4">👈</div>
                 <p>Selecciona una opción arriba para empezar a practicar</p>
               </div>
@@ -296,7 +297,7 @@ const MathView: React.FC = () => {
 
   if (selectedStrategy && isStudyMode) {
     return (
-      <div className="flex-1 flex flex-col h-full bg-slate-900">
+      <div className="flex-1 flex flex-col h-full bg-[var(--color-bg)]">
         <MathFlashCard
           strategy={selectedStrategy.strategy}
           rows={selectedStrategy.rows}
@@ -307,9 +308,9 @@ const MathView: React.FC = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden bg-slate-900">
+    <div className="flex-1 flex flex-col h-full overflow-hidden bg-[var(--color-bg)]">
       {/* Header with Tabs */}
-      <div className="flex-shrink-0 bg-slate-900 border-b border-slate-700/50 p-4 text-center">
+      <div className="flex-shrink-0 bg-[var(--color-surface-1)] border-b border-[var(--color-border)] p-4 text-center">
         <div className="flex items-center justify-center relative mb-4">
           <h2 className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500 font-mono tracking-tight">
             FORMULARIO MATEMÁTICO
@@ -396,7 +397,7 @@ const MathView: React.FC = () => {
         {/* Quick Navigation Sidebar (Desktop only) */}
         {!isStudyMode && activeTab !== "examples" && (
           <div className="hidden lg:block w-64 bg-slate-900/80 border-r border-slate-800 p-4 overflow-y-auto">
-            <h3 className="text-xs font-black text-slate-500 uppercase tracking-widest mb-4">
+            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">
               Quick Navigation
             </h3>
             <div className="space-y-1">
@@ -458,7 +459,7 @@ const MathView: React.FC = () => {
               (!isStudyMode ? (
                 renderExamples(solvedExamples)
               ) : (
-                <div className="text-center py-20 text-slate-500">
+                <div className="text-center py-20 text-slate-400">
                   <p>
                     El modo práctica para ejemplos completos estará disponible
                     pronto.
