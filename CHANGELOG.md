@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.16.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.15.0...english-practice-pal-v1.16.0) (2026-02-23)
+
+
+### Features
+
+* **a11y:** add skip to main content link ([6694941](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/66949410a3ad153c8b606b03f1034e4573c3fa9d))
+
+
+### Bug Fixes
+
+* **e2e:** update home page text assertion and vault link selector ([1461357](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/1461357ccb16ea6e2b779fb2b4c8b322e89ce510))
+
 ## [1.15.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.14.0...english-practice-pal-v1.15.0) (2026-02-23)
 
 
