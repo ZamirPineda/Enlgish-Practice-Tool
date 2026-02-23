@@ -1,5 +1,12 @@
 import React, { Suspense, lazy } from "react";
-import { HashRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
+import {
+  HashRouter,
+  Routes,
+  Route,
+  NavLink,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import { playNativeTTS } from "./utils/audioUtils";
 import { createNewSrsItem } from "./utils/srs";
@@ -46,21 +53,48 @@ const NavItem = ({
   to: string;
   children: React.ReactNode;
   onClick?: () => void;
-}) => (
-  <NavLink
-    to={to}
-    onClick={onClick}
-    className={({ isActive }) =>
-      `flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 min-h-[44px] rounded-lg font-bold text-sm md:text-base transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${
-        isActive
-          ? "shadow-md bg-accent text-white"
-          : "bg-transparent hover:bg-surface-hover text-text-secondary"
-      }`
+}) => {
+  const location = useLocation();
+
+  const isQueryMatch = React.useMemo(() => {
+    const [targetPathname, targetSearch = ""] = to.split("?");
+
+    if (location.pathname !== targetPathname) {
+      return false;
     }
-  >
-    {children}
-  </NavLink>
-);
+
+    if (!targetSearch) {
+      return true;
+    }
+
+    const targetParams = new URLSearchParams(targetSearch);
+    const currentParams = new URLSearchParams(location.search);
+
+    for (const [key, value] of targetParams.entries()) {
+      if (currentParams.get(key) !== value) {
+        return false;
+      }
+    }
+
+    return true;
+  }, [location.pathname, location.search, to]);
+
+  return (
+    <NavLink
+      to={to}
+      onClick={onClick}
+      className={() =>
+        `flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 min-h-[44px] rounded-lg font-bold text-sm md:text-base transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${
+          isQueryMatch
+            ? "shadow-md bg-accent text-white"
+            : "bg-transparent hover:bg-surface-hover text-text-secondary"
+        }`
+      }
+    >
+      {children}
+    </NavLink>
+  );
+};
 
 const NavGroup = ({
   title,
