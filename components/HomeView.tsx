@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { SrsVocabularyItem } from "../types";
 import { calculateStatsMetrics, VaultProgress } from "../utils/statsMetrics";
 import Card from "./ui/Card";
+import ViewToolbar from "./ui/ViewToolbar";
 import {
   Flame,
   Inbox,
@@ -54,42 +55,45 @@ const HomeView: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 animate-fade-in">
+    <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-24 sm:pb-8 animate-fade-in">
       <div className="max-w-5xl mx-auto space-y-8">
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <h1 className="text-4xl font-black text-text-primary tracking-tight mb-2">
-              {greeting}! 👋
-            </h1>
-            <p className="text-text-secondary text-lg">
-              Ready to improve your English today?
-            </p>
-          </div>
-          <div className="flex items-center gap-4 bg-surface-1 p-4 rounded-2xl border border-border shadow-sm">
-            <div className="text-center">
-              <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
-                Streak
+        <ViewToolbar
+          left={
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-black text-text-primary tracking-tight mb-1">
+                {greeting}! 👋
+              </h1>
+              <p className="text-text-secondary text-sm sm:text-lg">
+                Ready to improve your English today?
+              </p>
+            </div>
+          }
+          right={
+            <div className="flex items-center gap-3 bg-surface-2 p-3 rounded-xl border border-border shadow-sm w-full md:w-auto justify-between md:justify-start">
+              <div className="text-center min-w-[5rem]">
+                <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
+                  Streak
+                </div>
+                <div className="text-xl sm:text-2xl font-black text-orange-500 flex items-center justify-center gap-1">
+                  <Flame
+                    className={`w-5 h-5 sm:w-6 sm:h-6 ${metrics.currentStreak > 0 ? "text-orange-500 fill-orange-500 animate-pulse" : "text-text-muted"}`}
+                  />
+                  {metrics.currentStreak}
+                </div>
               </div>
-              <div className="text-2xl font-black text-orange-500 flex items-center gap-1">
-                <Flame
-                  className={`w-6 h-6 ${metrics.currentStreak > 0 ? "text-orange-500 fill-orange-500 animate-pulse" : "text-text-muted"}`}
-                />
-                {metrics.currentStreak}
+              <div className="w-px h-10 bg-border"></div>
+              <div className="text-center min-w-[5rem]">
+                <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
+                  Pending
+                </div>
+                <div className="text-xl sm:text-2xl font-black text-accent flex items-center justify-center gap-1">
+                  <Inbox className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
+                  {metrics.pendingCards}
+                </div>
               </div>
             </div>
-            <div className="w-px h-10 bg-border"></div>
-            <div className="text-center">
-              <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
-                Pending
-              </div>
-              <div className="text-2xl font-black text-accent flex items-center gap-1">
-                <Inbox className="w-6 h-6 text-accent" />
-                {metrics.pendingCards}
-              </div>
-            </div>
-          </div>
-        </div>
+          }
+        />
 
         {/* Dynamic CTA */}
         {metrics.pendingCards > 0 && (

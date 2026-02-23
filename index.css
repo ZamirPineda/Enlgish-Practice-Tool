@@ -11,7 +11,7 @@
     --color-border: #334155;
     --color-text-primary: #f8fafc;
     --color-text-secondary: #cbd5e1;
-    --color-text-muted: #94a3b8;
+    --color-text-muted: #a7b6cb;
     --color-accent: #38bdf8;
     --color-accent-hover: #0ea5e9;
     --color-success: #10b981;
@@ -42,7 +42,7 @@
     --color-border: #cbd5e1;
     --color-text-primary: #0f172a;
     --color-text-secondary: #334155;
-    --color-text-muted: #64748b;
+    --color-text-muted: #52627a;
     --color-accent: #0ea5e9;
     --color-accent-hover: #0284c7;
   }
@@ -58,6 +58,18 @@
     font-family: var(--font-sans);
     background-color: var(--color-bg);
     color: var(--color-text-primary);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
   }
 }
 

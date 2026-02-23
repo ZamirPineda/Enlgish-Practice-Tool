@@ -21,9 +21,9 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "px-3 py-1.5 text-xs rounded-md",
-  md: "px-4 py-2.5 text-sm rounded-lg",
-  lg: "px-6 py-3 text-sm rounded-xl",
+  sm: "min-h-[36px] px-3 py-1.5 text-xs rounded-md",
+  md: "min-h-[44px] px-4 py-2 text-sm rounded-lg",
+  lg: "min-h-[48px] px-5 sm:px-6 py-2.5 text-sm rounded-xl",
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -37,7 +37,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type={type}
-      className={`font-semibold transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-focus disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${sizeStyles[size]} ${fullWidth ? "w-full" : ""} ${className}`.trim()}
+      className={`font-semibold transition-all duration-200 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-focus disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${sizeStyles[size]} ${fullWidth ? "w-full" : ""} ${className}`.trim()}
       {...props}
     />
   );

@@ -1,9 +1,11 @@
 import React, { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { stopGameData } from "../data/stopGameData";
 import { StopCategory, StopItem } from "../types";
 import { StopGameCard } from "./StopGameCard";
 import { StopItemModal } from "./StopItemModal";
 import { StopGamePlay } from "./StopGamePlay";
+import ViewToolbar from "./ui/ViewToolbar";
 import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
 import {
   ChevronDownIcon,
@@ -11,8 +13,6 @@ import {
   SearchIcon,
   HeartIcon,
   SparklesIcon,
-  BookIcon,
-  DiceIcon,
   getCategoryIcon,
   getCategoryTheme,
   GroupName,
@@ -49,12 +49,15 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
   const [browseFilter, setBrowseFilter] = useState("");
   const [showSavedOnly, setShowSavedOnly] = useState(false);
 
-  const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
-
   // View Mode State
-  const [viewMode, setViewMode] = useState<"browse" | "study" | "game">(
-    "browse",
-  );
+  const [searchParams] = useSearchParams();
+  const searchMode = searchParams.get("mode") as
+    | "browse"
+    | "study"
+    | "game"
+    | null;
+  const viewMode = searchMode || "browse";
+
   const [studyRevealAll, setStudyRevealAll] = useState(false);
   const [isShuffled, setIsShuffled] = useState(false);
   const [shuffleSeed, setShuffleSeed] = useState(1);
@@ -146,14 +149,6 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
     setExpandedCategories({});
     setShowSavedOnly(false); // Reset saved filter on letter change
   }, [selectedLetter, selectedGroup]);
-
-  useEffect(() => {
-    if (viewMode === "study" || viewMode === "game") {
-      setIsHeaderCollapsed(true);
-    } else {
-      setIsHeaderCollapsed(false);
-    }
-  }, [viewMode]);
 
   useEffect(() => {
     const isEditableTarget = (target: EventTarget | null) => {
@@ -364,162 +359,128 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
 
   return (
     <>
-      {/* COMPACT HEADER WITH COLLAPSE TOGGLE */}
-      <div className="flex-shrink-0 bg-slate-900 border-b border-slate-700 z-10 shadow-md relative transition-all duration-300">
-        {/* Collapse Toggle Button - Always visible, high z-index */}
-        <button
-          onClick={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
-          className="absolute top-2 right-2 p-1.5 bg-slate-800 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 z-50 border border-slate-700 shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
-          title={isHeaderCollapsed ? "Expand Header" : "Collapse Header"}
-          aria-label={isHeaderCollapsed ? "Expand header" : "Collapse header"}
-        >
-          {isHeaderCollapsed ? <ChevronDownIcon /> : <ChevronUpIcon />}
-        </button>
-
-        {/* Row 1: Title & Search (Collapsible) */}
-        <div
-          className={`overflow-hidden transition-all duration-500 ease-in-out ${isHeaderCollapsed ? "max-h-0 opacity-0" : "max-h-40 opacity-100"}`}
-        >
-          <div className="max-w-7xl mx-auto p-4 pb-2 flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="flex items-center gap-3 w-full md:w-auto">
-              <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-                <span className="text-3xl">📚</span> Vocabulary Library
-              </h2>
-              {currentData && (
-                <span className="bg-slate-800 text-slate-400 px-2 py-1 rounded text-xs border border-slate-700 font-mono whitespace-nowrap">
-                  {Object.values(currentData).flat().length} words
+      {/* UNIFIED VIEW TOOLBAR */}
+      <div className="flex-shrink-0 bg-[var(--color-surface-1)] border-b border-[var(--color-border)] z-30 relative shadow-sm">
+        <div className="max-w-7xl mx-auto px-2 py-1.5">
+          <ViewToolbar
+            className="border-none rounded-lg p-0 bg-transparent"
+            left={
+              <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+                <span className="text-xs font-bold text-[var(--color-text-secondary)] uppercase tracking-wider flex items-center gap-2 whitespace-nowrap">
+                  <span className="text-lg">🛑</span>{" "}
+                  {viewMode === "browse"
+                    ? "Dictionary"
+                    : viewMode === "study"
+                      ? "Flashcards"
+                      : "Game"}
                 </span>
-              )}
-            </div>
 
-            <div className="flex gap-2 w-full md:w-auto items-center">
-              {/* VIEW MODE TOGGLE */}
-              <div className="flex items-center gap-2 bg-[var(--color-surface-1)] p-1 rounded-xl border border-[var(--color-border)] mr-2">
-                <button
-                  onClick={() => setViewMode("browse")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "browse" ? "bg-[var(--color-surface-2)] text-[var(--color-text-primary)] shadow-sm" : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}
-                >
-                  <DiceIcon /> Browse
-                </button>
-                <button
-                  onClick={() => setViewMode("study")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "study" ? "bg-[var(--color-accent)] text-white shadow-lg shadow-[var(--color-accent)]/20" : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}
-                >
-                  <BookIcon /> Study
-                </button>
-                <button
-                  onClick={() => setViewMode("game")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${viewMode === "game" ? "bg-[var(--color-success)] text-white shadow-lg shadow-[var(--color-success)]/20" : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}
-                >
-                  <SparklesIcon /> Game
-                </button>
-              </div>
-
-              {viewMode === "study" && (
-                <>
-                  <button
-                    onClick={() => {
-                      setIsShuffled(!isShuffled);
-                      if (!isShuffled) setShuffleSeed((s) => s + 1);
-                    }}
-                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${isShuffled ? "bg-purple-600 border-purple-500 text-white shadow-lg shadow-purple-500/20" : "bg-[var(--color-surface-1)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-purple-400"}`}
-                    title={isShuffled ? "Unshuffle" : "Shuffle Words"}
-                  >
-                    {isShuffled ? "🔀 Shuffled" : "🔀 Shuffle"}
-                  </button>
-                  <button
-                    onClick={() => setStudyAutoPlay(!studyAutoPlay)}
-                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${studyAutoPlay ? "bg-[var(--color-accent)] border-[var(--color-accent)] text-white shadow-lg shadow-[var(--color-accent)]/20" : "bg-[var(--color-surface-1)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"}`}
-                    title={
-                      studyAutoPlay
-                        ? "Disable Auto-play Audio"
-                        : "Enable Auto-play Audio"
-                    }
-                  >
-                    {studyAutoPlay ? "🔊 Auto-play" : "🔈 Muted"}
-                  </button>
-                  <button
-                    onClick={() => setStudyRevealAll(!studyRevealAll)}
-                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-2 mr-2 ${studyRevealAll ? "bg-amber-600 border-amber-500 text-white shadow-lg shadow-amber-500/20" : "bg-[var(--color-surface-1)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-amber-400"}`}
-                    title={
-                      studyRevealAll
-                        ? "Hide All Translations"
-                        : "Reveal All Translations"
-                    }
-                  >
-                    {studyRevealAll ? "Hide All" : "Reveal All"}
-                  </button>
-                </>
-              )}
-
-              <div className="relative w-full md:w-64 group">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[var(--color-text-secondary)]">
-                  <SearchIcon />
-                </div>
-                <input
-                  id="stopgame-search-input"
-                  type="text"
-                  placeholder={`Search in '${selectedLetter}'...`}
-                  value={browseFilter}
-                  onChange={(e) => setBrowseFilter(e.target.value)}
-                  className="w-full bg-[var(--color-surface-1)] border border-[var(--color-border)] text-[var(--color-text-primary)] text-sm rounded-xl pl-10 pr-8 py-2.5 focus:ring-2 focus:ring-[var(--color-focus)] focus:border-transparent transition-all"
-                  aria-label="Search vocabulary"
-                />
-                {browseFilter && (
-                  <button
-                    onClick={() => setBrowseFilter("")}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] rounded"
-                    aria-label="Clear search"
-                  >
-                    <svg
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                {viewMode !== "game" && currentData && (
+                  <span className="bg-[var(--color-surface-2)] text-[var(--color-text-muted)] px-2 py-1 rounded-lg text-xs font-mono border border-[var(--color-border)] whitespace-nowrap flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]"></span>
+                    {Object.values(currentData).flat().length}
+                  </span>
                 )}
               </div>
+            }
+            right={
+              <>
+                {viewMode === "study" && (
+                  <div className="flex gap-1">
+                    <button
+                      onClick={() => {
+                        setIsShuffled(!isShuffled);
+                        if (!isShuffled) setShuffleSeed((s) => s + 1);
+                      }}
+                      className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${isShuffled ? "bg-purple-600 border-purple-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-purple-400"}`}
+                      title={isShuffled ? "Unshuffle" : "Shuffle Words"}
+                    >
+                      🔀
+                    </button>
+                    <button
+                      onClick={() => setStudyAutoPlay(!studyAutoPlay)}
+                      className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${studyAutoPlay ? "bg-[var(--color-accent)] border-[var(--color-accent)] text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"}`}
+                    >
+                      {studyAutoPlay ? "🔊" : "🔈"}
+                    </button>
+                    <button
+                      onClick={() => setStudyRevealAll(!studyRevealAll)}
+                      className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${studyRevealAll ? "bg-amber-600 border-amber-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-amber-400"}`}
+                    >
+                      {studyRevealAll ? "Hide" : "Reveal"}
+                    </button>
+                  </div>
+                )}
 
-              {/* New Discovery Buttons */}
-              <button
-                onClick={() => setShowSavedOnly(!showSavedOnly)}
-                className={`p-2.5 rounded-xl border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 ${showSavedOnly ? "bg-pink-600 border-pink-500 text-white" : "bg-[var(--color-surface-1)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-pink-400"}`}
-                title="Show Saved Only"
-                aria-label={
-                  showSavedOnly ? "Show all words" : "Show saved words only"
-                }
-              >
-                <HeartIcon solid={showSavedOnly} />
-              </button>
+                {viewMode !== "game" && (
+                  <>
+                    <div className="relative w-full md:w-52 group flex-1 md:flex-none">
+                      <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-[var(--color-text-secondary)]">
+                        <SearchIcon />
+                      </div>
+                      <input
+                        id="stopgame-search-input"
+                        type="text"
+                        placeholder="Search..."
+                        value={browseFilter}
+                        onChange={(e) => setBrowseFilter(e.target.value)}
+                        className="w-full min-h-[36px] bg-[var(--color-surface-2)] border border-[var(--color-border)] text-[var(--color-text-primary)] text-xs rounded-lg pl-8 pr-6 py-1.5 focus:ring-1 focus:ring-[var(--color-focus)] focus:border-transparent transition-all placeholder-[var(--color-text-muted)]"
+                        aria-label="Search vocabulary"
+                      />
+                      {browseFilter && (
+                        <button
+                          onClick={() => setBrowseFilter("")}
+                          className="absolute right-1 top-1/2 -translate-y-1/2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] rounded-full p-0.5 hover:bg-[var(--color-surface-hover)]"
+                        >
+                          <svg
+                            className="h-3 w-3"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
 
-              <button
-                onClick={handleRandomPick}
-                className="p-2.5 rounded-xl border bg-gradient-to-r from-sky-600 to-purple-600 border-transparent text-white hover:opacity-90 transition-all shadow-lg shadow-purple-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"
-                title="Surprise Me!"
-                aria-label="Surprise me with a random word"
-              >
-                <SparklesIcon />
-              </button>
-            </div>
-          </div>
+                    <button
+                      onClick={() => setShowSavedOnly(!showSavedOnly)}
+                      className={`p-1.5 min-h-[36px] min-w-[36px] rounded-lg border transition-all ${showSavedOnly ? "bg-pink-600 border-pink-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-pink-400"}`}
+                      title="Show Saved Only"
+                    >
+                      <HeartIcon solid={showSavedOnly} />
+                    </button>
+
+                    <button
+                      onClick={handleRandomPick}
+                      className="p-1.5 min-h-[36px] min-w-[36px] rounded-lg border bg-gradient-to-r from-sky-600 to-purple-600 border-transparent text-white hover:opacity-90 transition-all shadow-sm"
+                      title="Surprise Me!"
+                    >
+                      <SparklesIcon />
+                    </button>
+                  </>
+                )}
+              </>
+            }
+          />
         </div>
+      </div>
 
-        {/* Row 2: Letters & Filters combined in a denser layout (Always Visible) */}
-        {viewMode === "browse" && (
-          <div
-            className={`max-w-7xl mx-auto px-2 transition-all duration-300 ${isHeaderCollapsed ? "pt-1" : "pt-2"}`}
-          >
+      {/* Row 2: Letters & Filters (Always Visible in Browse Mode) */}
+      {viewMode === "browse" && (
+        <div
+          className={`flex-shrink-0 bg-[var(--color-surface-1)] border-b border-[var(--color-border)] z-20 shadow-sm relative transition-all duration-300 py-1 sm:py-2`}
+        >
+          <div className="max-w-7xl mx-auto px-2">
             {/* Letters */}
-            <div className="overflow-x-auto scrollbar-hide pb-2">
-              <div className="flex gap-1 min-w-max px-2">
+            <div className="overflow-x-auto overflow-y-hidden scrollbar-hide pb-1 sm:pb-2">
+              <div className="flex gap-0.5 sm:gap-1 min-w-max px-1">
                 {ALPHABET.map((letter) => {
                   const hasData = !!stopGameData[letter];
                   const isSelected = selectedLetter === letter;
@@ -529,7 +490,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       onClick={() => hasData && setSelectedLetter(letter)}
                       disabled={!hasData}
                       className={`
-                                          h-9 w-8 rounded-md font-bold text-sm transition-all flex items-center justify-center border-b-2 relative overflow-hidden
+                                          min-h-[36px] min-w-[32px] sm:h-9 sm:w-8 rounded-md font-bold text-xs sm:text-sm transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none flex items-center justify-center border-b-2 relative overflow-hidden
                                           ${
                                             isSelected
                                               ? "bg-[var(--color-accent)] border-[var(--color-accent-hover)] text-white shadow-[0_0_15px_rgba(14,165,233,0.5)] scale-105"
@@ -550,8 +511,8 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
             </div>
 
             {/* Categories */}
-            <div className="overflow-x-auto scrollbar-hide py-2 border-t border-[var(--color-border)]">
-              <div className="flex gap-2 min-w-max px-2">
+            <div className="overflow-x-auto overflow-y-hidden scrollbar-hide pt-1 sm:pt-2 border-t border-[var(--color-border)]">
+              <div className="flex gap-1.5 sm:gap-2 min-w-max px-1">
                 {(Object.keys(CATEGORY_GROUPS) as GroupName[]).map((group) => {
                   const isSelected = selectedGroup === group;
                   return (
@@ -559,7 +520,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       key={group}
                       onClick={() => setSelectedGroup(group)}
                       className={`
-                                          px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all whitespace-nowrap border
+                                          min-h-[36px] px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none whitespace-nowrap border
                                           ${
                                             isSelected
                                               ? "bg-[var(--color-success)] border-[var(--color-success-hover)] text-white shadow-lg shadow-[var(--color-success)]/20 scale-105"
@@ -574,13 +535,13 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {viewMode === "game" ? (
         <StopGamePlay onPlayWord={onPlayWord} onAddToVault={onAddToVault} />
       ) : (
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[var(--color-surface-2)]/50">
+        <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 bg-[var(--color-surface-2)]/50">
           <div className="max-w-7xl mx-auto pb-20">
             {currentData ? (
               <div

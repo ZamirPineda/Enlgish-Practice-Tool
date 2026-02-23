@@ -51,7 +51,7 @@ const NavItem = ({
     to={to}
     onClick={onClick}
     className={({ isActive }) =>
-      `flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg font-bold text-sm md:text-base transition-all ${
+      `flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 min-h-[44px] rounded-lg font-bold text-sm md:text-base transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${
         isActive
           ? "shadow-md bg-accent text-white"
           : "bg-transparent hover:bg-surface-hover text-text-secondary"
@@ -87,6 +87,13 @@ const NavGroup = ({
     setIsOpen(!isOpen);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "Escape") {
+      setIsOpen(false);
+      event.currentTarget.blur();
+    }
+  };
+
   return (
     <div
       className="relative"
@@ -95,11 +102,14 @@ const NavGroup = ({
     >
       <button
         onClick={handleClick}
-        className={`flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg font-bold text-sm md:text-base transition-all ${
+        onKeyDown={handleKeyDown}
+        className={`flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 min-h-[44px] rounded-lg font-bold text-sm md:text-base transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${
           isOpen
             ? "bg-surface-hover text-text-primary"
             : "bg-transparent hover:bg-surface-hover text-text-secondary"
         }`}
+        aria-expanded={isOpen}
+        aria-haspopup="menu"
       >
         <span>{icon}</span>
         {title}
@@ -138,7 +148,7 @@ const MobileNavItem = ({
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `flex flex-col items-center justify-center w-16 h-14 rounded-xl transition-all ${
+      `flex flex-col items-center justify-center w-16 h-16 rounded-xl transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${
         isActive
           ? "text-accent bg-accent/10"
           : "text-text-secondary hover:text-text-primary hover:bg-surface-hover"
@@ -196,7 +206,12 @@ const App: React.FC = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      toast.info(
+        "Install is not available right now. Open this app in a supported browser and use Add to Home Screen.",
+      );
+      return;
+    }
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === "accepted") {
@@ -211,6 +226,19 @@ const App: React.FC = () => {
       : "no-preference";
     saveSettings(settings);
   }, [settings]);
+
+  React.useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [isMobileMenuOpen]);
 
   const handleSettingsChange = React.useCallback(
     (updates: Partial<AppSettings>) => {
@@ -249,14 +277,14 @@ const App: React.FC = () => {
 
   return (
     <HashRouter>
-      <div className="h-screen flex flex-col overflow-hidden font-sans bg-background text-text-primary">
+      <div className="h-[100dvh] min-h-[100dvh] flex flex-col overflow-hidden font-sans bg-background text-text-primary">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-surface-1 focus:text-text-primary focus:rounded-lg focus:shadow-xl focus:outline-none focus:ring-2 focus:ring-accent focus:font-bold"
         >
           Skip to main content
         </a>
-        <header className="p-4 border-b flex flex-wrap justify-between items-center gap-4 z-50 shadow-lg relative bg-surface-1 border-border">
+        <header className="sticky top-0 p-3 sm:p-4 border-b flex flex-wrap justify-between items-center gap-3 sm:gap-4 z-50 shadow-lg relative bg-surface-1/95 backdrop-blur border-border">
           <div className="flex items-center gap-3">
             <h1 className="text-lg md:text-xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent truncate">
               ENGLISH PAL
@@ -278,37 +306,38 @@ const App: React.FC = () => {
               <div className="w-24 h-1.5 bg-border rounded-full overflow-hidden">
                 <div className="h-full bg-gradient-to-r from-sky-400 to-emerald-400 w-1/3"></div>
               </div>
-              <span className="text-[10px] font-black text-text-secondary">
+              <span className="text-xs font-black text-text-secondary">
                 350 XP
               </span>
             </div>
-            {deferredPrompt && (
-              <button
-                onClick={handleInstallClick}
-                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-sky-500/20 text-sky-600 dark:text-sky-400 hover:bg-sky-500/30 rounded-lg text-sm font-bold transition-colors"
+            <button
+              onClick={handleInstallClick}
+              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-sky-500/20 text-sky-600 dark:text-sky-400 hover:bg-sky-500/30 rounded-lg text-sm font-bold transition-colors"
+              aria-label="Install app"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-                Install App
-              </button>
-            )}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              Install App
+            </button>
 
             {/* Mobile Menu Toggle */}
             <button
               className="md:hidden p-2 text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-nav-drawer"
             >
               <svg
                 className="w-6 h-6"
@@ -336,7 +365,10 @@ const App: React.FC = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex flex-wrap gap-2 w-full md:w-auto">
+          <nav
+            className="hidden md:flex flex-wrap gap-2 w-full md:w-auto"
+            aria-label="Main navigation"
+          >
             <NavItem to="/">🏠 Home</NavItem>
             <NavGroup title="Aprender" icon="📚">
               <NavItem to="/vault">🧠 Vault</NavItem>
@@ -344,7 +376,9 @@ const App: React.FC = () => {
               <NavItem to="/personal">👤 Scripts</NavItem>
             </NavGroup>
             <NavGroup title="Jugar" icon="🎮">
-              <NavItem to="/stop">🎮 STOP Game</NavItem>
+              <NavItem to="/stop?mode=browse">🎲 Browse</NavItem>
+              <NavItem to="/stop?mode=study">📚 Study</NavItem>
+              <NavItem to="/stop?mode=game">🎮 Game</NavItem>
             </NavGroup>
             <NavGroup title="Herramientas" icon="🛠️">
               <NavItem to="/calculus">∫ Math</NavItem>
@@ -363,36 +397,57 @@ const App: React.FC = () => {
                 className="fixed inset-0 bg-black/50 z-40 md:hidden"
                 onClick={() => setIsMobileMenuOpen(false)}
               />
-              <div className="absolute top-full left-0 right-0 bg-surface-1 border-b border-border shadow-2xl md:hidden flex flex-col p-4 gap-2 z-50">
-                {deferredPrompt && (
-                  <button
-                    onClick={handleInstallClick}
-                    className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-accent/20 text-accent rounded-xl text-sm font-bold mb-2 transition-colors hover:bg-accent/30"
+              <div
+                id="mobile-nav-drawer"
+                className="absolute top-full left-0 right-0 bg-surface-1 border-b border-border shadow-2xl md:hidden flex flex-col p-4 gap-2 z-50 max-h-[calc(100dvh-4.25rem)] overflow-y-auto"
+                role="dialog"
+                aria-label="Mobile navigation"
+                aria-modal="true"
+              >
+                <button
+                  onClick={handleInstallClick}
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-accent/20 text-accent rounded-xl text-sm font-bold mb-2 transition-colors hover:bg-accent/30"
+                  aria-label="Install app to home screen"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                      />
-                    </svg>
-                    Install App to Home Screen
-                  </button>
-                )}
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    />
+                  </svg>
+                  Install App to Home Screen
+                </button>
                 <div
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="flex flex-col gap-2"
                 >
-                  <NavItem to="/study">📚 Study Deck</NavItem>
+                  <NavItem to="/">🏠 Home</NavItem>
+                  <NavItem to="/vault">🧠 Vault</NavItem>
+                  {/* Use a dropdown-like structure or just links for STOP modes on mobile drawer to match desktop */}
+                  <div className="pl-4 border-l-2 border-surface-2 ml-2 flex flex-col gap-2">
+                    <span className="text-xs font-bold text-text-secondary uppercase tracking-widest pl-2 pt-2">
+                      STOP Game Modes
+                    </span>
+                    <NavItem to="/stop?mode=browse">
+                      🎲 Browse Dictionary
+                    </NavItem>
+                    <NavItem to="/stop?mode=study">📚 Flashcards</NavItem>
+                    <NavItem to="/stop?mode=game">🎮 Play Game</NavItem>
+                  </div>
+
+                  <NavItem to="/study">📚 Review Deck</NavItem>
                   <NavItem to="/personal">👤 Scripts</NavItem>
                   <NavItem to="/calculus">∫ Math</NavItem>
                   <NavItem to="/docs">📖 Docs</NavItem>
+                  <NavItem to="/stats">📊 Stats</NavItem>
+                  <NavItem to="/settings">⚙️ Settings</NavItem>
                 </div>
               </div>
             </>
@@ -402,7 +457,7 @@ const App: React.FC = () => {
         <main
           id="main-content"
           tabIndex={-1}
-          className="flex-1 flex flex-col min-h-0 relative bg-background"
+          className="flex-1 flex flex-col min-h-0 relative bg-background pb-[calc(env(safe-area-inset-bottom)+5rem)] md:pb-0"
         >
           <Suspense
             fallback={
@@ -470,15 +525,18 @@ const App: React.FC = () => {
         </footer>
 
         {/* Mobile Bottom Navigation */}
-        <nav className="md:hidden flex items-center justify-around bg-surface-1 border-t border-border pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-1 px-2 z-50">
+        <nav
+          className="md:hidden sticky bottom-0 flex items-center justify-around bg-surface-1/95 backdrop-blur border-t border-border pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-1 px-2 z-50"
+          aria-label="Bottom navigation"
+        >
           <MobileNavItem to="/" icon="🏠" label="Home" />
           <MobileNavItem to="/vault" icon="🧠" label="Vault" />
-          <MobileNavItem to="/stop" icon="🎮" label="STOP" />
+          <MobileNavItem to="/stop?mode=game" icon="🎮" label="STOP" />
           <MobileNavItem to="/settings" icon="👤" label="Perfil" />
         </nav>
 
         {needRefresh && (
-          <div className="absolute bottom-4 right-4 z-50 rounded-xl border border-accent bg-surface-1 p-3 shadow-2xl">
+          <div className="absolute right-4 bottom-[calc(env(safe-area-inset-bottom)+5.5rem)] md:bottom-4 z-50 rounded-xl border border-accent bg-surface-1 p-3 shadow-2xl">
             <p className="text-sm font-semibold text-text-primary">
               Update available
             </p>

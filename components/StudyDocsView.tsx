@@ -102,10 +102,13 @@ const StudyDocsView: React.FC = () => {
         const isExpanded = expandedFolders.has(node.path) || searchTerm !== "";
         return (
           <div key={node.path} className="select-none">
-            <div
-              className={`flex items-center py-1.5 px-2 hover:bg-slate-700/50 cursor-pointer text-slate-300 transition-colors rounded-md mx-1 my-0.5 group ${level === 0 ? "font-medium text-slate-200" : "text-sm"}`}
+            <button
+              type="button"
+              className={`w-full text-left flex items-center py-1.5 px-2 min-h-[36px] hover:bg-slate-700/50 text-slate-300 transition-colors active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none rounded-md mx-1 my-0.5 group ${level === 0 ? "font-medium text-slate-200" : "text-sm"}`}
               style={{ paddingLeft: `${level * 12 + 8}px` }}
               onClick={() => toggleFolder(node.path)}
+              aria-expanded={isExpanded}
+              aria-controls={`docs-folder-${node.path.replace(/[^a-z0-9]/gi, "-")}`}
             >
               <span className="mr-2 text-slate-400 group-hover:text-sky-400 transition-colors">
                 <svg
@@ -138,9 +141,12 @@ const StudyDocsView: React.FC = () => {
                 </svg>
               </span>
               <span className="truncate">{node.name}</span>
-            </div>
+            </button>
             {isExpanded && node.children && (
-              <div className="border-l border-slate-700/30 ml-4 mt-0.5">
+              <div
+                id={`docs-folder-${node.path.replace(/[^a-z0-9]/gi, "-")}`}
+                className="border-l border-slate-700/30 ml-4 mt-0.5"
+              >
                 {renderTree(node.children, level + 1)}
               </div>
             )}
@@ -151,9 +157,10 @@ const StudyDocsView: React.FC = () => {
           encodeURIComponent(node.name).replace(/%26/g, "&"),
         );
         return (
-          <div
+          <button
+            type="button"
             key={node.path}
-            className={`flex items-center py-1.5 px-2 cursor-pointer transition-all rounded-md mx-1 my-0.5 text-sm group
+            className={`w-full text-left flex items-center py-1.5 px-2 min-h-[36px] transition-all rounded-md mx-1 my-0.5 text-sm group active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none
               ${
                 isSelected
                   ? "bg-sky-500/10 text-sky-300 font-medium border-l-2 border-sky-500"
@@ -161,6 +168,7 @@ const StudyDocsView: React.FC = () => {
               }`}
             style={{ paddingLeft: `${level * 12 + 8}px` }}
             onClick={() => handleFileSelect(node.path)}
+            aria-current={isSelected ? "page" : undefined}
           >
             <span
               className={`mr-2 ${isSelected ? "text-sky-400" : "text-slate-400 group-hover:text-slate-300"}`}
@@ -180,7 +188,7 @@ const StudyDocsView: React.FC = () => {
               </svg>
             </span>
             <span className="truncate">{node.name}</span>
-          </div>
+          </button>
         );
       }
     });
@@ -199,7 +207,7 @@ const StudyDocsView: React.FC = () => {
       {/* Mobile Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className="md:hidden absolute top-4 left-4 z-50 p-2 bg-slate-800 text-white rounded-lg shadow-lg"
+        className="md:hidden absolute top-4 left-4 z-50 min-h-[44px] min-w-[44px] p-2 bg-slate-800 text-white rounded-lg shadow-lg active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none"
         aria-label={isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
       >
         {isSidebarOpen ? "✕" : "☰"}
@@ -220,7 +228,7 @@ const StudyDocsView: React.FC = () => {
             </h2>
             <button
               onClick={() => setExpandedFolders(new Set())}
-              className="text-xs text-slate-400 hover:text-sky-400 transition-colors flex items-center gap-1"
+              className="text-xs text-slate-400 hover:text-sky-400 transition-colors active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none rounded-md px-1 py-1 flex items-center gap-1"
               title="Collapse All Folders"
               aria-label="Collapse All Folders"
             >
@@ -257,13 +265,13 @@ const StudyDocsView: React.FC = () => {
             <input
               type="text"
               placeholder="Search docs..."
-              className="w-full bg-slate-950 md:bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all"
+              className="w-full min-h-[44px] bg-slate-950 md:bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500 transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto overflow-x-hidden p-2">
+        <div className="flex-1 overflow-y-auto overscroll-y-contain overflow-x-hidden p-2">
           {fileTree.length > 0 ? (
             renderTree(fileTree)
           ) : (
@@ -309,7 +317,7 @@ const StudyDocsView: React.FC = () => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setZenMode(!zenMode)}
-                  className={`p-1.5 rounded-md transition-colors flex items-center gap-1.5 text-xs font-medium ${zenMode ? "bg-sky-500/20 text-sky-400" : "text-slate-400 hover:text-sky-400 hover:bg-slate-700/50"}`}
+                  className={`p-1.5 min-h-[36px] rounded-md transition-colors active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none flex items-center gap-1.5 text-xs font-medium ${zenMode ? "bg-sky-500/20 text-sky-400" : "text-slate-400 hover:text-sky-400 hover:bg-slate-700/50"}`}
                   title="Toggle Zen Mode"
                   aria-label="Toggle Zen Mode"
                 >
@@ -331,7 +339,7 @@ const StudyDocsView: React.FC = () => {
                 </button>
                 <button
                   onClick={handleCopyLink}
-                  className="p-1.5 text-slate-400 hover:text-sky-400 hover:bg-slate-700/50 rounded-md transition-colors flex items-center gap-1.5 text-xs font-medium relative"
+                  className="p-1.5 min-h-[36px] text-slate-400 hover:text-sky-400 hover:bg-slate-700/50 rounded-md transition-colors active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none flex items-center gap-1.5 text-xs font-medium relative"
                   title="Copy Link"
                   aria-label="Copy Link"
                 >
@@ -372,7 +380,7 @@ const StudyDocsView: React.FC = () => {
                   href={selectedFile}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-1.5 text-slate-400 hover:text-sky-400 hover:bg-slate-700/50 rounded-md transition-colors flex items-center gap-1.5 text-xs font-medium"
+                  className="p-1.5 min-h-[36px] text-slate-400 hover:text-sky-400 hover:bg-slate-700/50 rounded-md transition-colors active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none flex items-center gap-1.5 text-xs font-medium"
                   title="Open in New Tab"
                 >
                   <svg
@@ -392,7 +400,7 @@ const StudyDocsView: React.FC = () => {
                 </a>
               </div>
             </div>
-            <div className="flex-1 bg-white overflow-hidden">
+            <div className="flex-1 bg-white overflow-hidden overscroll-y-contain">
               <iframe
                 src={selectedFile}
                 className="w-full h-full border-none"

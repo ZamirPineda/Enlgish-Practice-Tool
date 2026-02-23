@@ -16,6 +16,11 @@ const SlideOver: React.FC<SlideOverProps> = ({
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!isOpen) return;
+    panelRef.current?.focus();
+  }, [isOpen]);
+
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) {
         onClose();
@@ -27,6 +32,8 @@ const SlideOver: React.FC<SlideOverProps> = ({
 
   if (!isOpen) return null;
 
+  const titleId = `slideover-title-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+
   return (
     <div className="fixed inset-0 z-[80] overflow-hidden">
       <div
@@ -36,13 +43,19 @@ const SlideOver: React.FC<SlideOverProps> = ({
       <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
         <div
           ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
+          tabIndex={-1}
           className="w-screen max-w-md transform transition-transform duration-300 ease-in-out translate-x-0 bg-surface-1 border-l border-border shadow-2xl flex flex-col"
         >
           <div className="flex items-center justify-between p-6 border-b border-border">
-            <h2 className="text-xl font-black text-text-primary">{title}</h2>
+            <h2 id={titleId} className="text-xl font-black text-text-primary">
+              {title}
+            </h2>
             <button
               onClick={onClose}
-              className="text-text-secondary hover:text-text-primary hover:bg-surface-2 p-2 rounded-lg transition-colors"
+              className="text-text-secondary hover:text-text-primary hover:bg-surface-2 p-2 rounded-lg transition-colors active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
               aria-label="Close panel"
             >
               <svg

@@ -13,7 +13,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({
   onSettingsChange,
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-background">
+    <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-24 sm:pb-8 bg-background">
       <div className="max-w-3xl mx-auto space-y-4">
         <Card className="p-5 sm:p-6 bg-surface-1">
           <h2 className="text-2xl font-bold mb-4 text-text-primary">
@@ -29,7 +29,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({
               </label>
               <select
                 id="theme-select"
-                className="w-full rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary"
+                className="w-full min-h-[44px] rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-focus"
                 value={settings.theme}
                 onChange={(event) =>
                   onSettingsChange({

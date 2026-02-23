@@ -60,10 +60,18 @@ export const ToastContainer: React.FC = () => {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
+    <div
+      className="fixed right-3 sm:right-4 bottom-[calc(env(safe-area-inset-bottom)+5rem)] md:bottom-4 z-50 flex flex-col gap-2 pointer-events-none"
+      role="region"
+      aria-label="Notifications"
+      aria-live="polite"
+      aria-atomic="false"
+    >
       {toasts.map((t) => (
         <div
           key={t.id}
+          role={t.type === "error" ? "alert" : "status"}
+          aria-live={t.type === "error" ? "assertive" : "polite"}
           className={`animate-fade-in flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border pointer-events-auto transition-all transform hover:scale-105 ${
             t.type === "success"
               ? "bg-emerald-900/90 border-emerald-500/50 text-emerald-100"
@@ -79,6 +87,7 @@ export const ToastContainer: React.FC = () => {
           <button
             onClick={() => toastManager.remove(t.id)}
             className="ml-2 text-current opacity-50 hover:opacity-100 transition-opacity"
+            aria-label="Dismiss notification"
           >
             ✕
           </button>

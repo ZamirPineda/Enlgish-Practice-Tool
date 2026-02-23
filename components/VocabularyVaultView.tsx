@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { SrsVocabularyItem } from "../types";
 import { starterKits } from "../data/vocabularyVault";
 import {
@@ -15,6 +15,7 @@ import Badge from "./ui/Badge";
 import Input from "./ui/Input";
 import Modal from "./ui/Modal";
 import SlideOver from "./ui/SlideOver";
+import ViewToolbar from "./ui/ViewToolbar";
 
 interface VocabularyVaultViewProps {
   onPlayWord: (text: string) => void;
@@ -152,6 +153,8 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
 
   const [reviewItems, setReviewItems] = useState<SrsVocabularyItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobileActionsVisible, setIsMobileActionsVisible] = useState(true);
+  const lastScrollTopRef = useRef(0);
 
   useEffect(() => {
     localStorage.setItem("vocab-vault-deck", JSON.stringify(deck));
@@ -455,64 +458,92 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const totalInDeck = deckList.length;
   const progressPercent =
     totalInDeck > 0 ? ((learningCount + masteredCount) / totalInDeck) * 100 : 0;
+  const showMobileActions = isMobileActionsVisible && !isAddOpen && !isEditOpen;
+
+  const handleContainerScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const currentScrollTop = event.currentTarget.scrollTop;
+    const delta = currentScrollTop - lastScrollTopRef.current;
+
+    if (currentScrollTop < 24) {
+      setIsMobileActionsVisible(true);
+    } else if (delta > 8) {
+      setIsMobileActionsVisible(false);
+    } else if (delta < -8) {
+      setIsMobileActionsVisible(true);
+    }
+
+    lastScrollTopRef.current = currentScrollTop;
+  };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8">
+    <div
+      className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-24 sm:pb-8"
+      onScroll={handleContainerScroll}
+    >
       <div className="max-w-5xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10 border-b border-border pb-8">
-          <div>
-            <h1 className="text-5xl font-black text-text-primary tracking-tighter mb-4">
-              Vocabulary Vault
-            </h1>
-            <nav className="flex bg-surface-2 p-1.5 rounded-xl border border-border w-full md:w-auto shadow-inner">
-              <button
-                onClick={() => setActiveTab("study")}
-                className={`flex-1 md:flex-none px-5 py-2.5 text-xs font-bold uppercase tracking-widest rounded-lg transition-all ${activeTab === "study" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
-              >
-                Daily Study
-              </button>
-              <button
-                onClick={() => setActiveTab("collection")}
-                className={`flex-1 md:flex-none px-5 py-2.5 text-xs font-bold uppercase tracking-widest rounded-lg transition-all ${activeTab === "collection" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
-              >
-                My Collection ({totalInDeck})
-              </button>
-              <button
-                onClick={() => setActiveTab("sync")}
-                className={`flex-1 md:flex-none px-5 py-2.5 text-xs font-bold uppercase tracking-widest rounded-lg transition-all ${activeTab === "sync" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
-              >
-                Backup & Sync 🔄
-              </button>
-            </nav>
-          </div>
-          <div className="flex gap-3 w-full md:w-auto">
-            <Button
-              onClick={() => {
-                resetAddForm();
-                setIsAddOpen(true);
-              }}
-              size="lg"
-              variant="secondary"
-              className="flex-1 md:flex-none flex items-center justify-center gap-2"
-            >
-              + Add Word
-            </Button>
-            <Button
-              onClick={() => {
-                setReviewItems(dueItems);
-                setCurrentIndex(0);
-                setIsReviewing(true);
-              }}
-              disabled={dueItems.length === 0}
-              size="lg"
-              variant={dueItems.length > 0 ? "primary" : "secondary"}
-              className={`flex-1 md:flex-none font-black flex items-center justify-center gap-3 ${dueItems.length > 0 ? "scale-105" : ""}`}
-            >
-              {dueItems.length > 0
-                ? `Review Now (${dueItems.length})`
-                : "All caught up!"}
-            </Button>
-          </div>
+        <div className="mb-8">
+          <ViewToolbar
+            left={
+              <div>
+                <h1 className="text-3xl sm:text-5xl font-black text-text-primary tracking-tighter mb-3 sm:mb-4">
+                  Vocabulary Vault
+                </h1>
+                <nav className="flex bg-surface-2 p-1.5 rounded-xl border border-border w-full md:w-auto shadow-inner">
+                  <button
+                    onClick={() => setActiveTab("study")}
+                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${activeTab === "study" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                    aria-pressed={activeTab === "study"}
+                  >
+                    Daily Study
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("collection")}
+                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${activeTab === "collection" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                    aria-pressed={activeTab === "collection"}
+                  >
+                    My Collection ({totalInDeck})
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("sync")}
+                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${activeTab === "sync" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                    aria-pressed={activeTab === "sync"}
+                  >
+                    Backup & Sync 🔄
+                  </button>
+                </nav>
+              </div>
+            }
+            right={
+              <div className="flex gap-3 w-full md:w-auto">
+                <Button
+                  onClick={() => {
+                    resetAddForm();
+                    setIsAddOpen(true);
+                  }}
+                  size="lg"
+                  variant="secondary"
+                  className="flex-1 md:flex-none flex items-center justify-center gap-2 min-h-[44px]"
+                >
+                  + Add Word
+                </Button>
+                <Button
+                  onClick={() => {
+                    setReviewItems(dueItems);
+                    setCurrentIndex(0);
+                    setIsReviewing(true);
+                  }}
+                  disabled={dueItems.length === 0}
+                  size="lg"
+                  variant={dueItems.length > 0 ? "primary" : "secondary"}
+                  className={`flex-1 md:flex-none font-black flex items-center justify-center gap-3 min-h-[44px] ${dueItems.length > 0 ? "scale-105" : ""}`}
+                >
+                  {dueItems.length > 0
+                    ? `Review Now (${dueItems.length})`
+                    : "All caught up!"}
+                </Button>
+              </div>
+            }
+          />
         </div>
 
         {activeTab === "study" && (
@@ -974,6 +1005,37 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             </Card>
           </div>
         )}
+      </div>
+
+      <div
+        className={`md:hidden fixed left-3 right-3 bottom-[calc(env(safe-area-inset-bottom)+5.25rem)] z-40 transition-all duration-200 ${showMobileActions ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0 pointer-events-none"}`}
+      >
+        <div className="bg-surface-1/95 backdrop-blur border border-border rounded-xl p-2 shadow-xl flex gap-2">
+          <Button
+            onClick={() => {
+              resetAddForm();
+              setIsAddOpen(true);
+            }}
+            size="md"
+            variant="secondary"
+            className="flex-1"
+          >
+            + Add
+          </Button>
+          <Button
+            onClick={() => {
+              setReviewItems(dueItems);
+              setCurrentIndex(0);
+              setIsReviewing(true);
+            }}
+            disabled={dueItems.length === 0}
+            size="md"
+            variant={dueItems.length > 0 ? "primary" : "secondary"}
+            className="flex-1"
+          >
+            {dueItems.length > 0 ? `Review (${dueItems.length})` : "No Due"}
+          </Button>
+        </div>
       </div>
 
       <SlideOver

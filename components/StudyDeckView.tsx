@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { EnglishLevel, DrillExample, WordPart } from "../types";
 import { drillTopicsByLevel } from "../data/drills";
 import { getCategoryStyle } from "../utils/categoryStyles";
@@ -8,6 +8,7 @@ import { shuffle } from "../utils/arrayUtils";
 import Button from "./ui/Button";
 import Card from "./ui/Card";
 import Badge from "./ui/Badge";
+import ViewToolbar from "./ui/ViewToolbar";
 
 import {
   PlayIcon,
@@ -169,6 +170,8 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
   // Auto-Play State
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [autoPlayIndex, setAutoPlayIndex] = useState(-1);
+  const [isMobileActionsVisible, setIsMobileActionsVisible] = useState(true);
+  const lastScrollTopRef = useRef(0);
 
   // Reset state when topic or level changes
   useEffect(() => {
@@ -419,121 +422,139 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
     );
   }
 
+  const handleContainerScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const currentScrollTop = event.currentTarget.scrollTop;
+    const delta = currentScrollTop - lastScrollTopRef.current;
+
+    if (currentScrollTop < 24) {
+      setIsMobileActionsVisible(true);
+    } else if (delta > 8) {
+      setIsMobileActionsVisible(false);
+    } else if (delta < -8) {
+      setIsMobileActionsVisible(true);
+    }
+
+    lastScrollTopRef.current = currentScrollTop;
+  };
+
   return (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+    <div
+      className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 lg:p-8 pb-24 sm:pb-8"
+      onScroll={handleContainerScroll}
+    >
       <div className="max-w-4xl mx-auto">
-        {/* Level Select */}
-        <div className="mb-6 flex justify-center">
-          <div className="inline-flex items-center gap-2 bg-[var(--color-surface-1)] p-2 rounded-lg border border-[var(--color-border)]">
-            <label
-              htmlFor="level-select"
-              className="text-sm font-bold text-[var(--color-text-secondary)]"
-            >
-              Level:
-            </label>
-            <select
-              id="level-select"
-              value={level}
-              onChange={(e) => setLevel(e.target.value as EnglishLevel)}
-              className="bg-transparent border-none text-[var(--color-accent)] font-bold text-lg focus:ring-0 cursor-pointer hover:text-[var(--color-accent-hover)] transition-colors py-0 pl-2 pr-8"
-            >
-              {Object.values(EnglishLevel).map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        <div className="mb-6">
+          <ViewToolbar
+            left={
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 bg-[var(--color-surface-2)] p-2 rounded-lg border border-[var(--color-border)]">
+                  <label
+                    htmlFor="level-select"
+                    className="text-xs sm:text-sm font-bold text-[var(--color-text-secondary)]"
+                  >
+                    Level:
+                  </label>
+                  <select
+                    id="level-select"
+                    value={level}
+                    onChange={(e) => setLevel(e.target.value as EnglishLevel)}
+                    className="bg-transparent border-none text-[var(--color-accent)] font-bold text-base sm:text-lg focus:ring-0 cursor-pointer hover:text-[var(--color-accent-hover)] transition-colors py-0 pl-2 pr-8"
+                  >
+                    {Object.values(EnglishLevel).map((l) => (
+                      <option key={l} value={l}>
+                        {l}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-6">
-          <div className="w-full md:w-auto flex-1">
-            {topicsForLevel.length > 1 && (
-              <div className="mb-2">
-                <label
-                  htmlFor="study-topic-select"
-                  className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1"
+                {topicsForLevel.length > 1 && (
+                  <div>
+                    <label
+                      htmlFor="study-topic-select"
+                      className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1"
+                    >
+                      Select Study Topic:
+                    </label>
+                    <select
+                      id="study-topic-select"
+                      value={selectedTopicId ?? ""}
+                      onChange={(e) => setSelectedTopicId(e.target.value)}
+                      className="bg-[var(--color-surface-2)] border border-[var(--color-border)] text-[var(--color-text-primary)] text-sm rounded-lg focus:ring-[var(--color-focus)] focus:border-[var(--color-focus)] block w-full md:min-w-[20rem] p-2.5"
+                    >
+                      {topicsForLevel.map((topic) => (
+                        <option key={topic.id} value={topic.id}>
+                          {topic.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+            }
+            right={
+              <>
+                {isPracticeMode && (
+                  <Button
+                    onClick={handleRevealAll}
+                    size="md"
+                    variant="secondary"
+                    className="flex items-center gap-2 min-h-[44px]"
+                    title={
+                      revealedIndices.size === displayExamples.length
+                        ? "Hide All"
+                        : "Reveal All"
+                    }
+                  >
+                    <span className="text-sm font-bold">
+                      {revealedIndices.size === displayExamples.length
+                        ? "Hide All"
+                        : "Reveal All"}
+                    </span>
+                  </Button>
+                )}
+
+                <Button
+                  onClick={toggleAutoPlay}
+                  size="md"
+                  variant={isAutoPlaying ? "primary" : "secondary"}
+                  className={`flex items-center gap-2 min-h-[44px] ${isAutoPlaying ? "shadow-md bg-sky-600 hover:bg-sky-500" : ""}`}
+                  title={isAutoPlaying ? "Stop Auto-Play" : "Start Auto-Play"}
                 >
-                  Select Study Topic:
-                </label>
-                <select
-                  id="study-topic-select"
-                  value={selectedTopicId ?? ""}
-                  onChange={(e) => setSelectedTopicId(e.target.value)}
-                  className="bg-[var(--color-surface-1)] border border-[var(--color-border)] text-[var(--color-text-primary)] text-sm rounded-lg focus:ring-[var(--color-focus)] focus:border-[var(--color-focus)] block w-full p-2.5"
+                  {isAutoPlaying ? <PauseIcon /> : <PlayIcon />}
+                  <span className="text-sm font-bold">
+                    {isAutoPlaying ? "Stop" : "Auto-Play"}
+                  </span>
+                </Button>
+
+                <Button
+                  onClick={() => setIsShuffled(!isShuffled)}
+                  size="md"
+                  variant={isShuffled ? "primary" : "secondary"}
+                  className={`flex items-center gap-2 min-h-[44px] ${isShuffled ? "shadow-md" : ""}`}
+                  title="Shuffle Deck"
                 >
-                  {topicsForLevel.map((topic) => (
-                    <option key={topic.id} value={topic.id}>
-                      {topic.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-          </div>
+                  <ShuffleIcon />
+                  <span className="text-sm font-bold">Shuffle</span>
+                </Button>
 
-          <div className="flex gap-2 w-full md:w-auto">
-            {isPracticeMode && (
-              <Button
-                onClick={handleRevealAll}
-                size="md"
-                variant="secondary"
-                className="flex items-center gap-2"
-                title={
-                  revealedIndices.size === displayExamples.length
-                    ? "Hide All"
-                    : "Reveal All"
-                }
-              >
-                <span className="text-sm font-bold hidden sm:inline">
-                  {revealedIndices.size === displayExamples.length
-                    ? "Hide All"
-                    : "Reveal All"}
-                </span>
-              </Button>
-            )}
-
-            <Button
-              onClick={toggleAutoPlay}
-              size="md"
-              variant={isAutoPlaying ? "primary" : "secondary"}
-              className={`flex items-center gap-2 ${isAutoPlaying ? "shadow-md bg-sky-600 hover:bg-sky-500" : ""}`}
-              title={isAutoPlaying ? "Stop Auto-Play" : "Start Auto-Play"}
-            >
-              {isAutoPlaying ? <PauseIcon /> : <PlayIcon />}
-              <span className="text-sm font-bold hidden sm:inline">
-                {isAutoPlaying ? "Stop" : "Auto-Play"}
-              </span>
-            </Button>
-
-            <Button
-              onClick={() => setIsShuffled(!isShuffled)}
-              size="md"
-              variant={isShuffled ? "primary" : "secondary"}
-              className={`flex items-center gap-2 ${isShuffled ? "shadow-md" : ""}`}
-              title="Shuffle Deck"
-            >
-              <ShuffleIcon />
-              <span className="text-sm font-bold hidden sm:inline">
-                Shuffle
-              </span>
-            </Button>
-
-            <Card className="p-3 flex items-center gap-3 shadow-sm flex-1 md:flex-initial justify-center rounded-lg">
-              <div
-                className={`p-2 rounded-full ${isPracticeMode ? "bg-[var(--color-accent)]/20 text-[var(--color-accent)]" : "bg-[var(--color-surface-2)] text-[var(--color-text-muted)]"}`}
-              >
-                {isPracticeMode ? <EyeOffIcon /> : <EyeIcon />}
-              </div>
-              <div>
-                <ToggleSwitch
-                  label="Practice Mode"
-                  checked={isPracticeMode}
-                  onChange={togglePracticeMode}
-                />
-              </div>
-            </Card>
-          </div>
+                <Card className="p-3 flex items-center gap-3 shadow-sm justify-center rounded-lg min-h-[44px]">
+                  <div
+                    className={`p-2 rounded-full ${isPracticeMode ? "bg-[var(--color-accent)]/20 text-[var(--color-accent)]" : "bg-[var(--color-surface-2)] text-[var(--color-text-muted)]"}`}
+                  >
+                    {isPracticeMode ? <EyeOffIcon /> : <EyeIcon />}
+                  </div>
+                  <div>
+                    <ToggleSwitch
+                      label="Practice Mode"
+                      checked={isPracticeMode}
+                      onChange={togglePracticeMode}
+                    />
+                  </div>
+                </Card>
+              </>
+            }
+          />
         </div>
 
         {selectedTopic && (
@@ -915,6 +936,29 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
             </div>
           </div>
         )}
+
+        <div
+          className={`md:hidden fixed left-3 right-3 bottom-[calc(env(safe-area-inset-bottom)+5.25rem)] z-40 transition-all duration-200 ${isMobileActionsVisible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0 pointer-events-none"}`}
+        >
+          <div className="bg-surface-1/95 backdrop-blur border border-border rounded-xl p-2 shadow-xl flex gap-2">
+            <Button
+              onClick={toggleAutoPlay}
+              size="md"
+              variant={isAutoPlaying ? "primary" : "secondary"}
+              className="flex-1"
+            >
+              {isAutoPlaying ? "Stop" : "Auto-Play"}
+            </Button>
+            <Button
+              onClick={() => togglePracticeMode(!isPracticeMode)}
+              size="md"
+              variant={isPracticeMode ? "primary" : "secondary"}
+              className="flex-1"
+            >
+              {isPracticeMode ? "Practice On" : "Practice Off"}
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
