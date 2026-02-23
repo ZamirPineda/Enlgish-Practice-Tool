@@ -53,7 +53,7 @@ const NavItem = ({
     className={({ isActive }) =>
       `flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 rounded-lg font-bold text-sm md:text-base transition-all ${
         isActive
-          ? "shadow-md bg-accent text-text-primary"
+          ? "shadow-md bg-accent text-white"
           : "bg-transparent hover:bg-surface-hover text-text-secondary"
       }`
     }
@@ -358,45 +358,51 @@ const App: React.FC = () => {
 
           {/* Mobile Navigation Drawer */}
           {isMobileMenuOpen && (
-            <div className="absolute top-full left-0 right-0 bg-surface-1 border-b border-border shadow-2xl md:hidden flex flex-col p-4 gap-2 z-50">
-              {deferredPrompt && (
-                <button
-                  onClick={handleInstallClick}
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-sky-500/20 text-sky-400 rounded-xl text-sm font-bold mb-2"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                  Install App to Home Screen
-                </button>
-              )}
+            <>
               <div
+                className="fixed inset-0 bg-black/50 z-40 md:hidden"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex flex-col gap-2"
-              >
-                <NavItem to="/study">📚 Study Deck</NavItem>
-                <NavItem to="/personal">👤 Scripts</NavItem>
-                <NavItem to="/calculus">∫ Math</NavItem>
-                <NavItem to="/docs">📖 Docs</NavItem>
+              />
+              <div className="absolute top-full left-0 right-0 bg-surface-1 border-b border-border shadow-2xl md:hidden flex flex-col p-4 gap-2 z-50">
+                {deferredPrompt && (
+                  <button
+                    onClick={handleInstallClick}
+                    className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-accent/20 text-accent rounded-xl text-sm font-bold mb-2 transition-colors hover:bg-accent/30"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                      />
+                    </svg>
+                    Install App to Home Screen
+                  </button>
+                )}
+                <div
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex flex-col gap-2"
+                >
+                  <NavItem to="/study">📚 Study Deck</NavItem>
+                  <NavItem to="/personal">👤 Scripts</NavItem>
+                  <NavItem to="/calculus">∫ Math</NavItem>
+                  <NavItem to="/docs">📖 Docs</NavItem>
+                </div>
               </div>
-            </div>
+            </>
           )}
         </header>
 
         <main
           id="main-content"
           tabIndex={-1}
-          className="flex-1 flex flex-col min-h-0 relative bg-surface-2"
+          className="flex-1 flex flex-col min-h-0 relative bg-background"
         >
           <Suspense
             fallback={
@@ -472,48 +478,48 @@ const App: React.FC = () => {
         </nav>
 
         {needRefresh && (
-          <div className="absolute bottom-4 right-4 z-50 rounded-xl border border-sky-400 bg-slate-900/95 p-3 shadow-2xl">
-            <p className="text-sm font-semibold text-slate-100">
+          <div className="absolute bottom-4 right-4 z-50 rounded-xl border border-accent bg-surface-1 p-3 shadow-2xl">
+            <p className="text-sm font-semibold text-text-primary">
               Update available
             </p>
             <button
               onClick={() => updateServiceWorker(true)}
-              className="mt-2 rounded-lg bg-sky-500 px-3 py-1.5 text-sm font-bold text-slate-900"
+              className="mt-2 rounded-lg bg-accent hover:bg-accent-hover px-3 py-1.5 text-sm font-bold text-white transition-colors"
             >
               Refresh
             </button>
           </div>
         )}
         {!settings.hasCompletedOnboarding && (
-          <div className="absolute inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
-              <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
+          <div className="absolute inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="w-full max-w-md rounded-2xl border border-border bg-surface-1 p-6 shadow-2xl">
+              <p className="text-xs font-bold uppercase tracking-widest text-accent">
                 Quick start · {onboardingStep + 1}/{ONBOARDING_STEPS.length}
               </p>
-              <h2 className="mt-2 text-2xl font-black text-white">
+              <h2 className="mt-2 text-2xl font-black text-text-primary">
                 {ONBOARDING_STEPS[onboardingStep].title}
               </h2>
-              <p className="mt-3 text-sm text-slate-300">
+              <p className="mt-3 text-sm text-text-secondary">
                 {ONBOARDING_STEPS[onboardingStep].description}
               </p>
               <div className="mt-6 flex gap-2">
                 <button
                   onClick={closeOnboarding}
-                  className="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 text-sm font-bold"
+                  className="px-4 py-2 rounded-lg bg-surface-2 hover:bg-surface-hover text-text-primary text-sm font-bold transition-colors"
                 >
                   Skip
                 </button>
                 {onboardingStep < ONBOARDING_STEPS.length - 1 ? (
                   <button
                     onClick={() => setOnboardingStep((step) => step + 1)}
-                    className="ml-auto px-4 py-2 rounded-lg bg-sky-500 text-slate-900 text-sm font-black"
+                    className="ml-auto px-4 py-2 rounded-lg bg-accent hover:bg-accent-hover text-white text-sm font-black transition-colors"
                   >
                     Next
                   </button>
                 ) : (
                   <button
                     onClick={closeOnboarding}
-                    className="ml-auto px-4 py-2 rounded-lg bg-emerald-400 text-slate-900 text-sm font-black"
+                    className="ml-auto px-4 py-2 rounded-lg bg-success hover:bg-success-hover text-white text-sm font-black transition-colors"
                   >
                     Let’s go
                   </button>

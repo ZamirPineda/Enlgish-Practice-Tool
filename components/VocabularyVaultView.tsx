@@ -597,10 +597,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 </div>
               </Card>
               <div className="bg-gradient-to-br from-amber-600/10 to-orange-600/10 border border-amber-500/20 rounded-3xl p-6">
-                <h4 className="text-amber-400 font-bold text-sm mb-2 flex items-center gap-2">
+                <h4 className="text-amber-500 font-bold text-sm mb-2 flex items-center gap-2">
                   💡 Zamir's Study Tip
                 </h4>
-                <p className="text-slate-400 text-xs leading-relaxed">
+                <p className="text-text-secondary text-xs leading-relaxed">
                   Add whole sentences as "Context" to help you remember how to
                   use the word!
                 </p>
@@ -609,7 +609,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
 
             <div className="lg:col-span-2 space-y-12">
               <section>
-                <h2 className="text-xl font-black text-white mb-6 flex items-center gap-3">
+                <h2 className="text-xl font-black text-text-primary mb-6 flex items-center gap-3">
                   🚀 High-Frequency Starter Kit
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

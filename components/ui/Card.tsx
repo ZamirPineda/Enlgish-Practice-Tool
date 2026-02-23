@@ -14,7 +14,7 @@ const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <div
-      className={`bg-[var(--color-surface-1)] border border-border rounded-[var(--radius-xl)] p-6 ${elevated ? "shadow-[var(--shadow-md)]" : ""} ${interactive ? "hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer" : ""} ${className}`.trim()}
+      className={`bg-surface-1 border border-border rounded-2xl p-6 ${elevated ? "shadow-md" : ""} ${interactive ? "hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer" : ""} ${className}`.trim()}
       {...props}
     >
       {children}

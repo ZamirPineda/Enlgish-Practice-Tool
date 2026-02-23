@@ -308,22 +308,24 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
   if (!isPlaying) {
     return (
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-900/50 flex flex-col items-center justify-center">
-        <Card className="max-w-md w-full p-6 text-center space-y-6">
-          <h2 className="text-2xl font-bold text-white">Stop Game Challenge</h2>
-          <p className="text-slate-400">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-background flex flex-col items-center justify-center">
+        <Card className="max-w-md w-full p-6 text-center space-y-6 bg-surface-1">
+          <h2 className="text-2xl font-bold text-text-primary">
+            Stop Game Challenge
+          </h2>
+          <p className="text-text-secondary">
             Select a category group and test your vocabulary! You will be given
             a letter and a category, and you must type a valid word.
           </p>
 
           <div className="space-y-2 text-left">
-            <label className="text-sm font-bold text-slate-300">
+            <label className="text-sm font-bold text-text-muted">
               Category Group
             </label>
             <select
               value={selectedGroup}
               onChange={(e) => setSelectedGroup(e.target.value as GroupName)}
-              className="w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+              className="w-full bg-surface-2 border border-border text-text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-focus focus:border-transparent outline-none"
             >
               {(Object.keys(CATEGORY_GROUPS) as GroupName[]).map((group) => (
                 <option key={group} value={group}>
@@ -334,25 +336,25 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           </div>
 
           <div className="space-y-2 text-left">
-            <label className="text-sm font-bold text-slate-300">
+            <label className="text-sm font-bold text-text-muted">
               Difficulty (Time per word)
             </label>
             <div className="flex gap-2">
               <button
                 onClick={() => setDifficulty(60)}
-                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 60 ? "bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700"}`}
+                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 60 ? "bg-success border-success text-white shadow-lg shadow-success/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
               >
                 Relaxed (60s)
               </button>
               <button
                 onClick={() => setDifficulty(30)}
-                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 30 ? "bg-sky-600 border-sky-500 text-white shadow-lg shadow-sky-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700"}`}
+                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 30 ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
               >
                 Normal (30s)
               </button>
               <button
                 onClick={() => setDifficulty(15)}
-                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 15 ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700"}`}
+                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 15 ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
               >
                 Hard (15s)
               </button>
@@ -363,7 +365,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             onClick={startGame}
             variant="primary"
             fullWidth
-            className="py-3 text-lg font-bold bg-gradient-to-r from-sky-500 to-emerald-500 hover:from-sky-400 hover:to-emerald-400 border-none"
+            className="py-3 text-lg font-bold bg-gradient-to-r from-sky-500 to-emerald-500 hover:from-sky-400 hover:to-emerald-400 border-none text-white"
           >
             Start Game
           </Button>
@@ -402,18 +404,18 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     })();
 
     return (
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-900/50 flex flex-col items-center justify-center">
-        <Card className="max-w-2xl w-full p-8 text-center space-y-8 animate-fade-in shadow-2xl border-t-4 border-sky-500">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-background flex flex-col items-center justify-center">
+        <Card className="max-w-2xl w-full p-8 text-center space-y-8 animate-fade-in shadow-2xl border-t-4 border-accent bg-surface-1">
           <div>
             <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-2">
               Game Complete!
             </h2>
-            <p className="text-slate-400 text-lg">{gradeInfo.message}</p>
+            <p className="text-text-secondary text-lg">{gradeInfo.message}</p>
           </div>
 
           <div className="flex justify-center items-center gap-8 py-4">
             <div className="text-center">
-              <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">
+              <div className="text-sm font-bold text-text-muted uppercase tracking-widest mb-1">
                 Rank
               </div>
               <div
@@ -425,27 +427,27 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 hover:bg-slate-800 transition-colors">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+            <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
+              <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
                 Total Score
               </div>
-              <div className="text-3xl font-black text-emerald-400">
+              <div className="text-3xl font-black text-success-hover">
                 {score}
               </div>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 hover:bg-slate-800 transition-colors">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+            <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
+              <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
                 Best Streak
               </div>
-              <div className="text-3xl font-black text-amber-400">
+              <div className="text-3xl font-black text-amber-500">
                 🔥 {bestStreak}
               </div>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 hover:bg-slate-800 transition-colors">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+            <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
+              <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
                 Accuracy
               </div>
-              <div className="text-3xl font-black text-blue-400">
+              <div className="text-3xl font-black text-accent-hover">
                 {gameStats.correct + gameStats.incorrect > 0
                   ? Math.round(
                       (gameStats.correct /
@@ -456,18 +458,18 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                 %
               </div>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 hover:bg-slate-800 transition-colors">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+            <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
+              <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
                 Words Seen
               </div>
-              <div className="text-3xl font-black text-purple-400">
+              <div className="text-3xl font-black text-purple-500">
                 {gameStats.history.length}
               </div>
             </div>
           </div>
 
-          <div className="w-full text-left max-h-60 overflow-y-auto pr-2 space-y-2 text-sm bg-slate-900/50 p-2 rounded-lg scrollbar-thin scrollbar-thumb-slate-700">
-            <div className="sticky top-0 bg-slate-900 py-2 z-10 w-full mb-2 border-b border-slate-700 font-bold uppercase text-slate-400 text-xs tracking-wider">
+          <div className="w-full text-left max-h-60 overflow-y-auto pr-2 space-y-2 text-sm bg-surface-2 p-2 rounded-lg scrollbar-thin scrollbar-thumb-border">
+            <div className="sticky top-0 bg-surface-2 py-2 z-10 w-full mb-2 border-b border-border font-bold uppercase text-text-muted text-xs tracking-wider">
               Session History (Newest First)
             </div>
             {gameStats.history
@@ -478,22 +480,22 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                   key={idx}
                   className={`p-3 rounded-lg flex justify-between items-center ${
                     item.status === "correct"
-                      ? "bg-emerald-500/10 border border-emerald-500/20"
+                      ? "bg-success/10 border border-success/20"
                       : item.status === "skipped"
-                        ? "bg-slate-700/50 border border-slate-600"
+                        ? "bg-surface-hover border border-border"
                         : "bg-red-500/10 border border-red-500/20"
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="font-black text-slate-300 w-6 h-6 flex items-center justify-center bg-slate-700 rounded text-xs">
+                    <span className="font-black text-text-secondary w-6 h-6 flex items-center justify-center bg-surface-1 rounded text-xs">
                       {item.letter}
                     </span>
                     <div className="flex flex-col text-left">
-                      <span className="text-[10px] text-slate-400 uppercase leading-tight truncate max-w-[120px]">
+                      <span className="text-[10px] text-text-muted uppercase leading-tight truncate max-w-[120px]">
                         {item.category}
                       </span>
                       <span
-                        className={`font-medium ${item.status === "correct" ? "text-white" : "text-slate-300"}`}
+                        className={`font-medium ${item.status === "correct" ? "text-text-primary" : "text-text-secondary"}`}
                       >
                         {item.word}
                       </span>
@@ -502,9 +504,9 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                   <span
                     className={`text-[10px] uppercase font-bold px-2 py-1 rounded ${
                       item.status === "correct"
-                        ? "bg-emerald-500 text-slate-900"
+                        ? "bg-success text-white"
                         : item.status === "skipped"
-                          ? "bg-slate-600 text-slate-300"
+                          ? "bg-surface-hover text-text-muted"
                           : "bg-red-500 text-white"
                     }`}
                   >
@@ -531,15 +533,15 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-900/50 flex flex-col items-center justify-center">
+    <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-background flex flex-col items-center justify-center">
       <div className="max-w-lg w-full space-y-6">
         <div className="flex justify-between items-center">
           <div className="flex gap-4 items-center">
-            <div className="text-xl font-bold text-white">
-              Score: <span className="text-emerald-400">{score}</span>
+            <div className="text-xl font-bold text-text-primary">
+              Score: <span className="text-success">{score}</span>
             </div>
             {currentStreak > 1 && (
-              <div className="text-sm font-bold text-amber-400 animate-pulse">
+              <div className="text-sm font-bold text-amber-500 animate-pulse">
                 🔥 {currentStreak} Streak!{" "}
                 {currentStreak >= 5 ? "(3x)" : currentStreak >= 3 ? "(2x)" : ""}
               </div>
@@ -547,7 +549,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           </div>
           <button
             onClick={() => setShowSummary(true)}
-            className="text-slate-400 hover:text-white text-sm font-bold"
+            className="text-text-muted hover:text-text-primary text-sm font-bold transition-colors"
           >
             End Game
           </button>
@@ -562,32 +564,32 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         </div>
 
         <Card
-          className={`p-8 text-center border-t-4 ${theme?.accentColor || "border-sky-500"} relative overflow-hidden shadow-2xl`}
+          className={`p-8 text-center border-t-4 ${theme?.accentColor || "border-accent"} relative overflow-hidden shadow-2xl bg-surface-1`}
         >
           <div
             key={`${currentLetter}-${currentCategory}`}
             className="space-y-8 animate-fade-in"
           >
             <div>
-              <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">
+              <div className="text-sm font-bold text-text-muted uppercase tracking-widest mb-2">
                 Letter
               </div>
-              <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-400 drop-shadow-lg transform transition-transform hover:scale-110">
+              <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-text-primary to-text-muted drop-shadow-lg transform transition-transform hover:scale-110">
                 {currentLetter}
               </div>
             </div>
 
             <div>
-              <div className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">
+              <div className="text-sm font-bold text-text-muted uppercase tracking-widest mb-2">
                 Category
               </div>
-              <div className="flex items-center justify-center gap-3 bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+              <div className="flex items-center justify-center gap-3 bg-surface-2 p-4 rounded-2xl border border-border">
                 <span className="text-4xl animate-bounce">
                   {currentCategory &&
                     getCategoryIcon(currentCategory as StopCategory)}
                 </span>
                 <h3
-                  className={`text-3xl font-bold ${theme?.textClass || "text-white"}`}
+                  className={`text-3xl font-bold ${theme?.textClass || "text-text-primary"}`}
                 >
                   {currentCategory}
                 </h3>
@@ -622,8 +624,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                   }
                   className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors z-10 ${
                     micState === "listening"
-                      ? "bg-red-500/20 text-red-500 hover:bg-red-500/30 animate-pulse ring-2 ring-red-500 ring-offset-2 ring-offset-slate-800"
-                      : "text-slate-400 hover:text-white hover:bg-slate-700"
+                      ? "bg-red-500/20 text-red-500 hover:bg-red-500/30 animate-pulse ring-2 ring-red-500 ring-offset-2 ring-offset-surface-1"
+                      : "text-text-muted hover:text-text-primary hover:bg-surface-hover"
                   }`}
                   disabled={feedback !== null}
                   title={
@@ -668,14 +670,14 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
               {feedback && (
                 <div
-                  className={`text-sm font-bold ${feedback.type === "success" ? "text-emerald-400" : "text-red-400"} animate-fade-in`}
+                  className={`text-sm font-bold ${feedback.type === "success" ? "text-success" : "text-error"} animate-fade-in`}
                 >
                   {feedback.message}
                 </div>
               )}
 
               {hint && !feedback && (
-                <div className="text-sm font-medium text-amber-300 bg-amber-500/10 p-3 rounded-lg animate-fade-in border border-amber-500/20">
+                <div className="text-sm font-medium text-amber-500 bg-amber-500/10 p-3 rounded-lg animate-fade-in border border-amber-500/20">
                   {hint}
                 </div>
               )}
@@ -692,7 +694,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                 <button
                   type="button"
                   onClick={handleGetHint}
-                  className="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed relative group"
+                  className="px-4 py-3 bg-surface-2 hover:bg-surface-hover text-amber-500 border border-border rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed relative group"
                   disabled={feedback !== null}
                   title="Get a hint (-5s)"
                   aria-label="Get a hint (-5s)"

@@ -7,8 +7,7 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  default:
-    "bg-[var(--color-surface-2)] text-[var(--color-text-muted)] border-[var(--color-border)]",
+  default: "bg-surface-2 text-text-muted border-border",
   accent:
     "bg-sky-100 text-sky-700 border-sky-200 dark:bg-sky-900/30 dark:text-sky-300 dark:border-sky-700/40",
   success:
@@ -24,7 +23,7 @@ const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => (
   <span
-    className={`inline-flex items-center border rounded-[var(--radius-sm)] px-1.5 py-0.5 text-[var(--text-xs)] font-semibold ${variantStyles[variant]} ${className}`.trim()}
+    className={`inline-flex items-center border rounded-md px-1.5 py-0.5 text-xs font-semibold ${variantStyles[variant]} ${className}`.trim()}
     {...props}
   >
     {children}

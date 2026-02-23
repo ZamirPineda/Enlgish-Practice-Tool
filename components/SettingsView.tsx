@@ -13,9 +13,9 @@ const SettingsView: React.FC<SettingsViewProps> = ({
   onSettingsChange,
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-surface-2">
+    <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-background">
       <div className="max-w-3xl mx-auto space-y-4">
-        <Card className="p-5 sm:p-6">
+        <Card className="p-5 sm:p-6 bg-surface-1">
           <h2 className="text-2xl font-bold mb-4 text-text-primary">
             Settings
           </h2>

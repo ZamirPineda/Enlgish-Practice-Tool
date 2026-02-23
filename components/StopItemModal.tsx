@@ -88,7 +88,7 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in"
       onClick={onClose}
     >
       <div
@@ -97,12 +97,12 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
         aria-modal="true"
         aria-labelledby="modal-title"
         tabIndex={-1}
-        className={`w-full max-w-lg bg-slate-900 border-2 ${theme.accentColor} rounded-2xl shadow-2xl overflow-hidden relative transform transition-all scale-100 outline-none`}
+        className={`w-full max-w-lg bg-surface-1 border-2 ${theme.accentColor} rounded-2xl shadow-2xl overflow-hidden relative transform transition-all scale-100 outline-none`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div
-          className={`${theme.headerGradient} p-6 flex items-start justify-between border-b border-white/10`}
+          className={`${theme.headerGradient} p-6 flex items-start justify-between border-b border-border`}
         >
           <div className="flex items-center gap-4">
             <span
@@ -121,18 +121,18 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
             <div>
               <h2
                 id="modal-title"
-                className={`text-3xl font-black text-white tracking-tight ${theme.textClass}`}
+                className={`text-3xl font-black text-text-primary tracking-tight ${theme.textClass}`}
               >
                 {item.word}
               </h2>
-              <p className="text-slate-300 text-lg font-medium italic">
+              <p className="text-text-muted text-lg font-medium italic">
                 {item.translation}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 bg-black/20 hover:bg-black/40 rounded-full text-white/70 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+            className="p-2 bg-black/20 hover:bg-black/40 rounded-full text-white/70 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="Close modal"
           >
             <svg
@@ -157,7 +157,7 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
           <div className="flex justify-center">
             <button
               onClick={() => onPlay(item.word)}
-              className="flex items-center gap-3 px-6 py-3 bg-sky-600 hover:bg-sky-500 text-white rounded-full font-bold shadow-lg shadow-sky-500/30 transition-all hover:scale-105"
+              className="flex items-center gap-3 px-6 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full font-bold shadow-lg shadow-primary/30 transition-all hover:scale-105"
             >
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path
@@ -172,7 +172,7 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
 
           {/* IPA */}
           <div className="text-center">
-            <span className="font-mono text-2xl text-cyan-400 bg-cyan-950/30 px-4 py-2 rounded-lg border border-cyan-500/20">
+            <span className="font-mono text-2xl text-accent bg-accent/10 px-4 py-2 rounded-lg border border-accent/20">
               {item.ipa}
             </span>
           </div>
@@ -181,25 +181,27 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
           <div className="space-y-4">
             {/* Special Layout for Verbs */}
             {isVerb && (verbForms.past || verbForms.participle) ? (
-              <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
-                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">
+              <div className="bg-surface-2/50 rounded-xl p-4 border border-border">
+                <h3 className="text-sm font-bold text-text-muted uppercase tracking-wider mb-3">
                   Conjugation
                 </h3>
                 <div className="grid grid-cols-3 gap-2 text-center">
-                  <div className="p-2 bg-slate-800 rounded border border-slate-700">
-                    <div className="text-xs text-slate-400 mb-1">Base</div>
-                    <div className="font-bold text-white text-lg">
+                  <div className="p-2 bg-surface-2 rounded border border-border">
+                    <div className="text-xs text-text-muted mb-1">Base</div>
+                    <div className="font-bold text-text-primary text-lg">
                       {item.word}
                     </div>
                   </div>
-                  <div className="p-2 bg-slate-800 rounded border border-slate-700">
-                    <div className="text-xs text-slate-400 mb-1">Past (V2)</div>
+                  <div className="p-2 bg-surface-2 rounded border border-border">
+                    <div className="text-xs text-text-muted mb-1">
+                      Past (V2)
+                    </div>
                     <div className="font-bold text-amber-400 text-lg">
                       {verbForms.past || "-"}
                     </div>
                   </div>
-                  <div className="p-2 bg-slate-800 rounded border border-slate-700">
-                    <div className="text-xs text-slate-400 mb-1">
+                  <div className="p-2 bg-surface-2 rounded border border-border">
+                    <div className="text-xs text-text-muted mb-1">
                       Participle (V3)
                     </div>
                     <div className="font-bold text-emerald-400 text-lg">
@@ -211,11 +213,11 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
             ) : (
               /* Generic Definition */
               item.definition && (
-                <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
-                  <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <div className="bg-surface-2/50 rounded-xl p-4 border border-border">
+                  <h3 className="text-sm font-bold text-text-muted uppercase tracking-wider mb-2">
                     Definition & Context
                   </h3>
-                  <p className="text-slate-200 leading-relaxed">
+                  <p className="text-text-secondary leading-relaxed">
                     {item.definition}
                   </p>
                 </div>
@@ -224,11 +226,11 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
 
             {/* Examples */}
             {(item.example || item.examSentence) && (
-              <div className="bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-xl p-4 border-l-4 border-l-purple-500 border-y border-r border-slate-700">
-                <h3 className="text-sm font-bold text-purple-400 uppercase tracking-wider mb-2">
+              <div className="bg-gradient-to-r from-surface-2 to-surface-2/50 rounded-xl p-4 border-l-4 border-l-accent border-y border-r border-border">
+                <h3 className="text-sm font-bold text-accent uppercase tracking-wider mb-2">
                   Example
                 </h3>
-                <p className="text-white text-lg font-serif italic">
+                <p className="text-text-primary text-lg font-serif italic">
                   "{item.examSentence || item.example}"
                 </p>
               </div>
@@ -236,24 +238,24 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
 
             {/* Visual Associations (e.g. Colors, Countries placeholder) */}
             {category === "Colors" && item.hex && (
-              <div className="flex items-center gap-4 bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+              <div className="flex items-center gap-4 bg-surface-2/50 p-4 rounded-xl border border-border">
                 <div
-                  className="w-16 h-16 rounded-full shadow-lg border-2 border-slate-600"
+                  className="w-16 h-16 rounded-full shadow-lg border-2 border-border"
                   style={{ backgroundColor: item.hex }}
                 ></div>
                 <div>
-                  <h3 className="text-sm font-bold text-slate-400 uppercase">
+                  <h3 className="text-sm font-bold text-text-muted uppercase">
                     Visual Color
                   </h3>
-                  <p className="font-mono text-white">{item.hex}</p>
+                  <p className="font-mono text-text-primary">{item.hex}</p>
                 </div>
               </div>
             )}
 
             {/* Word Family */}
             {item.wordFamily && (
-              <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
-                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">
+              <div className="bg-surface-2/50 rounded-xl p-4 border border-border">
+                <h3 className="text-sm font-bold text-text-muted uppercase tracking-wider mb-3">
                   Word Family
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
@@ -262,12 +264,12 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
                       word && (
                         <div
                           key={pos}
-                          className="flex justify-between items-center bg-slate-900/50 px-3 py-2 rounded"
+                          className="flex justify-between items-center bg-surface-1/50 px-3 py-2 rounded"
                         >
-                          <span className="text-xs font-bold text-slate-400 uppercase">
+                          <span className="text-xs font-bold text-text-muted uppercase">
                             {pos}
                           </span>
-                          <span className="text-sky-300 font-medium">
+                          <span className="text-primary font-medium">
                             {word}
                           </span>
                         </div>
@@ -280,12 +282,12 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
             {/* Metadata Tag */}
             <div className="flex flex-wrap gap-2 pt-2">
               {item.level && (
-                <span className="px-2 py-1 bg-slate-800 rounded text-xs text-slate-400 border border-slate-700">
+                <span className="px-2 py-1 bg-surface-2 rounded text-xs text-text-muted border border-border">
                   Level: {item.level}
                 </span>
               )}
               {item.tag && (
-                <span className="px-2 py-1 bg-slate-800 rounded text-xs text-slate-400 border border-slate-700">
+                <span className="px-2 py-1 bg-surface-2 rounded text-xs text-text-muted border border-border">
                   Tag: {item.tag}
                 </span>
               )}

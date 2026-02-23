@@ -454,11 +454,11 @@ export const getCategoryIcon = (category: StopCategory) => {
 
 export const getCategoryTheme = (category: StopCategory) => {
   let theme = {
-    accentColor: "border-slate-500",
-    bgGradient: "bg-slate-800",
-    headerGradient: "bg-slate-800",
-    textClass: "text-slate-300",
-    iconBg: "bg-slate-700",
+    accentColor: "border-text-muted",
+    bgGradient: "bg-surface-2",
+    headerGradient: "bg-surface-2",
+    textClass: "text-text-muted",
+    iconBg: "bg-surface-3",
     glow: "",
   };
 
@@ -469,8 +469,8 @@ export const getCategoryTheme = (category: StopCategory) => {
   ) {
     theme = {
       accentColor: "border-pink-500",
-      bgGradient: "bg-gradient-to-b from-slate-800 to-slate-900",
-      headerGradient: "bg-gradient-to-r from-pink-900/40 to-slate-800",
+      bgGradient: "bg-gradient-to-b from-surface-2 to-surface-1",
+      headerGradient: "bg-gradient-to-r from-pink-900/40 to-surface-2",
       textClass: "text-pink-400",
       iconBg: "bg-pink-900/30 text-pink-300",
       glow: "group-hover:shadow-[0_0_20px_rgba(236,72,153,0.15)]",
@@ -478,8 +478,8 @@ export const getCategoryTheme = (category: StopCategory) => {
   } else if (["Sounds & Noise", "Music", "Songs"].includes(category)) {
     theme = {
       accentColor: "border-amber-400",
-      bgGradient: "bg-gradient-to-b from-slate-800 to-slate-900",
-      headerGradient: "bg-gradient-to-r from-amber-900/40 to-slate-800",
+      bgGradient: "bg-gradient-to-b from-surface-2 to-surface-1",
+      headerGradient: "bg-gradient-to-r from-amber-900/40 to-surface-2",
       textClass: "text-amber-400",
       iconBg: "bg-amber-900/30 text-amber-300",
       glow: "group-hover:shadow-[0_0_20px_rgba(251,191,36,0.15)]",
@@ -487,8 +487,8 @@ export const getCategoryTheme = (category: StopCategory) => {
   } else if (["Philosophy & Concepts", "Abstract Nouns"].includes(category)) {
     theme = {
       accentColor: "border-indigo-500",
-      bgGradient: "bg-gradient-to-b from-slate-800 to-slate-900",
-      headerGradient: "bg-gradient-to-r from-indigo-900/40 to-slate-800",
+      bgGradient: "bg-gradient-to-b from-surface-2 to-surface-1",
+      headerGradient: "bg-gradient-to-r from-indigo-900/40 to-surface-2",
       textClass: "text-indigo-300",
       iconBg: "bg-indigo-900/30 text-indigo-300",
       glow: "group-hover:shadow-[0_0_20px_rgba(99,102,241,0.15)]",
@@ -500,8 +500,8 @@ export const getCategoryTheme = (category: StopCategory) => {
   ) {
     theme = {
       accentColor: "border-violet-500",
-      bgGradient: "bg-gradient-to-b from-slate-800 to-slate-900",
-      headerGradient: "bg-gradient-to-r from-violet-900/40 to-slate-800",
+      bgGradient: "bg-gradient-to-b from-surface-2 to-surface-1",
+      headerGradient: "bg-gradient-to-r from-violet-900/40 to-surface-2",
       textClass: "text-violet-300",
       iconBg: "bg-violet-900/30 text-violet-300",
       glow: "group-hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]",
@@ -511,8 +511,8 @@ export const getCategoryTheme = (category: StopCategory) => {
   ) {
     theme = {
       accentColor: "border-emerald-500",
-      bgGradient: "bg-gradient-to-b from-slate-800 to-slate-900",
-      headerGradient: "bg-gradient-to-r from-emerald-900/40 to-slate-800",
+      bgGradient: "bg-gradient-to-b from-surface-2 to-surface-1",
+      headerGradient: "bg-gradient-to-r from-emerald-900/40 to-surface-2",
       textClass: "text-emerald-300",
       iconBg: "bg-emerald-900/30 text-emerald-300",
       glow: "group-hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]",
@@ -532,8 +532,8 @@ export const getCategoryTheme = (category: StopCategory) => {
   ) {
     theme = {
       accentColor: "border-lime-500",
-      bgGradient: "bg-gradient-to-b from-slate-800 to-slate-900",
-      headerGradient: "bg-gradient-to-r from-lime-900/40 to-slate-800",
+      bgGradient: "bg-gradient-to-b from-surface-2 to-surface-1",
+      headerGradient: "bg-gradient-to-r from-lime-900/40 to-surface-2",
       textClass: "text-lime-300",
       iconBg: "bg-lime-900/30 text-lime-300",
       glow: "group-hover:shadow-[0_0_20px_rgba(132,204,22,0.15)]",
@@ -550,8 +550,8 @@ export const getCategoryTheme = (category: StopCategory) => {
   ) {
     theme = {
       accentColor: "border-cyan-500",
-      bgGradient: "bg-gradient-to-b from-slate-800 to-slate-900",
-      headerGradient: "bg-gradient-to-r from-cyan-900/40 to-slate-800",
+      bgGradient: "bg-gradient-to-b from-surface-2 to-surface-1",
+      headerGradient: "bg-gradient-to-r from-cyan-900/40 to-surface-2",
       textClass: "text-cyan-300",
       iconBg: "bg-cyan-900/30 text-cyan-300",
       glow: "group-hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]",
@@ -568,8 +568,8 @@ export const getCategoryTheme = (category: StopCategory) => {
   ) {
     theme = {
       accentColor: "border-sky-500",
-      bgGradient: "bg-gradient-to-b from-slate-800 to-slate-900",
-      headerGradient: "bg-gradient-to-r from-sky-900/40 to-slate-800",
+      bgGradient: "bg-gradient-to-b from-surface-2 to-surface-1",
+      headerGradient: "bg-gradient-to-r from-sky-900/40 to-surface-2",
       textClass: "text-sky-300",
       iconBg: "bg-sky-900/30 text-sky-300",
       glow: "group-hover:shadow-[0_0_20px_rgba(14,165,233,0.15)]",
@@ -578,8 +578,8 @@ export const getCategoryTheme = (category: StopCategory) => {
     // Includes Spices & Herbs, Minerals & Gems (Orange/Amber theme fits Earth/Cooking)
     theme = {
       accentColor: "border-orange-400",
-      bgGradient: "bg-gradient-to-b from-slate-800 to-slate-900",
-      headerGradient: "bg-gradient-to-r from-orange-900/40 to-slate-800",
+      bgGradient: "bg-gradient-to-b from-surface-2 to-surface-1",
+      headerGradient: "bg-gradient-to-r from-orange-900/40 to-surface-2",
       textClass: "text-orange-300",
       iconBg: "bg-orange-900/30 text-orange-300",
       glow: "group-hover:shadow-[0_0_20px_rgba(249,115,22,0.15)]",

@@ -203,23 +203,25 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
   }, [searchQuery, filteredData]);
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-900 text-white">
+    <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-background text-text-primary">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-sky-400 mb-2">
+          <h1 className="text-3xl font-bold text-accent mb-2">
             My Personal Scripts
           </h1>
-          <p className="text-slate-400">
+          <p className="text-text-secondary">
             Customized responses for{" "}
-            <span className="font-semibold text-white">Zamir Pineda</span>.
-            Learn to sound like a native when talking about your own life.
+            <span className="font-semibold text-text-primary">
+              Zamir Pineda
+            </span>
+            . Learn to sound like a native when talking about your own life.
           </p>
         </div>
 
         {/* Controls Section */}
         <div className="mb-6 space-y-4">
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-muted">
               <SearchIcon />
             </div>
             <input
@@ -227,21 +229,21 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
               placeholder="Search scripts, questions, or contexts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
+              className="w-full pl-10 pr-4 py-3 bg-surface-2 border border-border rounded-xl text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition-all"
             />
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
+          <div className="flex flex-wrap items-center justify-between gap-4 bg-surface-2 p-3 rounded-xl border border-border">
             <div className="flex items-center gap-2">
               <button
                 onClick={expandAll}
-                className="px-3 py-1.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors"
+                className="px-3 py-1.5 text-sm font-medium text-text-muted hover:text-text-primary hover:bg-surface-hover rounded-lg transition-colors"
               >
                 Expand All
               </button>
               <button
                 onClick={collapseAll}
-                className="px-3 py-1.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors"
+                className="px-3 py-1.5 text-sm font-medium text-text-muted hover:text-text-primary hover:bg-surface-hover rounded-lg transition-colors"
               >
                 Collapse All
               </button>
@@ -254,8 +256,8 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
               }}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
                 isPracticeMode
-                  ? "bg-sky-500/20 text-sky-400 border border-sky-500/50"
-                  : "bg-slate-700 text-slate-300 hover:bg-slate-600 border border-transparent"
+                  ? "bg-accent/20 text-accent border border-accent/50"
+                  : "bg-surface-hover text-text-secondary hover:bg-surface-2 border border-transparent"
               }`}
             >
               {isPracticeMode ? <EyeOffIcon /> : <EyeIcon />}
@@ -266,8 +268,8 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
 
         <div className="space-y-6">
           {filteredData.length === 0 ? (
-            <div className="text-center py-12 bg-slate-800/50 rounded-2xl border border-slate-700 border-dashed">
-              <p className="text-slate-400">
+            <div className="text-center py-12 bg-surface-2 rounded-2xl border border-border border-dashed">
+              <p className="text-text-muted">
                 No scripts found matching "{searchQuery}"
               </p>
             </div>
@@ -275,21 +277,21 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
             filteredData.map((category) => (
               <div
                 key={category.title}
-                className="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden"
+                className="bg-surface-1 rounded-2xl border border-border overflow-hidden shadow-lg"
               >
                 <button
                   onClick={() => toggleCategory(category.title)}
-                  className="w-full px-6 py-4 flex justify-between items-center bg-slate-700/50 hover:bg-slate-700 transition-colors text-left"
+                  className="w-full px-6 py-4 flex justify-between items-center bg-surface-2/50 hover:bg-surface-hover transition-colors text-left"
                 >
-                  <h2 className="text-xl font-bold text-white">
+                  <h2 className="text-xl font-bold text-text-primary">
                     {category.title}
                   </h2>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-medium bg-slate-800 text-slate-400 px-2.5 py-1 rounded-full">
+                    <span className="text-xs font-medium bg-surface-2 text-text-muted px-2.5 py-1 rounded-full border border-border">
                       {category.scripts.length}
                     </span>
                     <svg
-                      className={`w-6 h-6 text-slate-400 transform transition-transform ${expandedCategories.has(category.title) ? "rotate-180" : ""}`}
+                      className={`w-6 h-6 text-text-muted transform transition-transform ${expandedCategories.has(category.title) ? "rotate-180" : ""}`}
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -305,21 +307,21 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                 </button>
 
                 {expandedCategories.has(category.title) && (
-                  <div className="p-6 grid gap-6">
+                  <div className="p-6 grid gap-6 bg-surface-1">
                     {category.scripts.map((script) => (
                       <div
                         key={script.id}
-                        className="bg-slate-900/50 rounded-xl p-5 border border-slate-700 shadow-sm"
+                        className="bg-surface-2/50 rounded-xl p-5 border border-border shadow-sm"
                       >
-                        <div className="flex items-start justify-between mb-4 border-b border-slate-700/50 pb-3">
+                        <div className="flex items-start justify-between mb-4 border-b border-border pb-3">
                           <div>
-                            <span className="text-xs font-bold text-sky-500 uppercase tracking-wider">
+                            <span className="text-xs font-bold text-accent uppercase tracking-wider">
                               The Question / Situation
                             </span>
-                            <h3 className="text-lg font-semibold text-white mt-1">
+                            <h3 className="text-lg font-semibold text-text-primary mt-1">
                               "{script.question}"
                             </h3>
-                            <p className="text-xs text-slate-400 mt-1">
+                            <p className="text-xs text-text-muted mt-1">
                               Context: {script.context}
                             </p>
                           </div>
@@ -328,11 +330,11 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                         <div className="grid md:grid-cols-2 gap-4">
                           {/* Formal Answer */}
                           <div
-                            className={`bg-slate-800 rounded-lg p-4 border-l-4 border-purple-500 transition-all ${isPracticeMode && !revealedScripts.has(`${script.id}-formal`) ? "cursor-pointer hover:bg-slate-700" : ""}`}
+                            className={`bg-surface-1 rounded-lg p-4 border-l-4 border-purple-500 transition-all shadow-sm ${isPracticeMode && !revealedScripts.has(`${script.id}-formal`) ? "cursor-pointer hover:bg-surface-hover" : ""}`}
                             onClick={() => toggleReveal(script.id, "formal")}
                           >
                             <div className="flex justify-between items-start mb-2">
-                              <span className="text-xs font-bold text-purple-300 uppercase">
+                              <span className="text-xs font-bold text-purple-400 uppercase">
                                 Formal / Professional
                               </span>
                               <div className="flex items-center gap-1">
@@ -341,7 +343,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                                     e.stopPropagation();
                                     handleCopy(script.formal);
                                   }}
-                                  className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-700 rounded-md transition-colors"
+                                  className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
                                   title="Copy to clipboard"
                                 >
                                   {copiedText === script.formal ? (
@@ -355,7 +357,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                                     e.stopPropagation();
                                     onPlayAudio(script.formal);
                                   }}
-                                  className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-700 rounded-md transition-colors"
+                                  className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
                                   title="Listen"
                                   aria-label={`Listen to formal response: ${script.formal}`}
                                 >
@@ -366,7 +368,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                             <div
                               className={`transition-all duration-300 ${isPracticeMode && !revealedScripts.has(`${script.id}-formal`) ? "blur-sm opacity-50 select-none" : "blur-none opacity-100"}`}
                             >
-                              <p className="text-slate-200 leading-relaxed">
+                              <p className="text-text-primary leading-relaxed">
                                 "{script.formal}"
                               </p>
                             </div>
@@ -380,11 +382,11 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
 
                           {/* Casual Answer */}
                           <div
-                            className={`bg-slate-800 rounded-lg p-4 border-l-4 border-emerald-500 transition-all ${isPracticeMode && !revealedScripts.has(`${script.id}-casual`) ? "cursor-pointer hover:bg-slate-700" : ""}`}
+                            className={`bg-surface-1 rounded-lg p-4 border-l-4 border-emerald-500 transition-all shadow-sm ${isPracticeMode && !revealedScripts.has(`${script.id}-casual`) ? "cursor-pointer hover:bg-surface-hover" : ""}`}
                             onClick={() => toggleReveal(script.id, "casual")}
                           >
                             <div className="flex justify-between items-start mb-2">
-                              <span className="text-xs font-bold text-emerald-300 uppercase">
+                              <span className="text-xs font-bold text-emerald-400 uppercase">
                                 Casual / Friends
                               </span>
                               <div className="flex items-center gap-1">
@@ -393,7 +395,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                                     e.stopPropagation();
                                     handleCopy(script.casual);
                                   }}
-                                  className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-700 rounded-md transition-colors"
+                                  className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
                                   title="Copy to clipboard"
                                 >
                                   {copiedText === script.casual ? (
@@ -407,7 +409,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                                     e.stopPropagation();
                                     onPlayAudio(script.casual);
                                   }}
-                                  className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-700 rounded-md transition-colors"
+                                  className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
                                   title="Listen"
                                   aria-label={`Listen to casual response: ${script.casual}`}
                                 >
@@ -418,7 +420,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                             <div
                               className={`transition-all duration-300 ${isPracticeMode && !revealedScripts.has(`${script.id}-casual`) ? "blur-sm opacity-50 select-none" : "blur-none opacity-100"}`}
                             >
-                              <p className="text-slate-200 leading-relaxed">
+                              <p className="text-text-primary leading-relaxed">
                                 "{script.casual}"
                               </p>
                             </div>
@@ -432,15 +434,15 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
                         </div>
 
                         {/* Native Tip */}
-                        <div className="mt-4 bg-yellow-900/20 rounded-lg p-3 border border-yellow-500/20 flex items-start gap-3">
-                          <div className="mt-0.5 flex-shrink-0">
+                        <div className="mt-4 bg-amber-500/10 rounded-lg p-3 border border-amber-500/20 flex items-start gap-3">
+                          <div className="mt-0.5 flex-shrink-0 text-amber-500">
                             <BulbIcon />
                           </div>
                           <div>
-                            <span className="text-xs font-bold text-yellow-400 uppercase block mb-1">
+                            <span className="text-xs font-bold text-amber-500 uppercase block mb-1">
                               Native Nuance
                             </span>
-                            <p className="text-sm text-slate-300">
+                            <p className="text-sm text-text-secondary">
                               {script.nativeTip}
                             </p>
                           </div>

@@ -54,7 +54,7 @@ const HomeView: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex-1 overflow-y-auto bg-surface-2 p-4 sm:p-8 animate-fade-in">
+    <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 animate-fade-in">
       <div className="max-w-5xl mx-auto space-y-8">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">

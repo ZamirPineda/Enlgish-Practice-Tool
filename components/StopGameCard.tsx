@@ -33,7 +33,7 @@ const getLevelBadgeColor = (level: string) => {
     case "C2":
       return "bg-purple-900/50 text-purple-400 border-purple-500/30";
     default:
-      return "bg-slate-800 text-slate-400 border-slate-700";
+      return "bg-surface-2 text-text-muted border-border";
   }
 };
 
@@ -59,13 +59,13 @@ interface StopGameCardProps {
 const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="mt-3 border-t border-slate-700/50 pt-2">
+    <div className="mt-3 border-t border-border/50 pt-2">
       <button
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
         }}
-        className="text-[10px] uppercase font-bold text-slate-400 hover:text-sky-300 flex items-center gap-1 transition-colors"
+        className="text-[10px] uppercase font-bold text-text-muted hover:text-primary flex items-center gap-1 transition-colors"
       >
         {isOpen ? "Hide Family" : "Show Family 👨‍👩‍👧‍👦"}
         <ChevronDownIcon
@@ -73,37 +73,37 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
         />
       </button>
       {isOpen && (
-        <div className="mt-2 grid grid-cols-2 gap-2 text-xs bg-slate-900/40 p-2 rounded animate-fade-in">
+        <div className="mt-2 grid grid-cols-2 gap-2 text-xs bg-surface-1/40 p-2 rounded animate-fade-in">
           {family.noun && (
             <div>
-              <span className="text-slate-400 font-bold block text-[9px] uppercase">
+              <span className="text-text-muted font-bold block text-[9px] uppercase">
                 Noun
               </span>
-              <span className="text-white">{family.noun}</span>
+              <span className="text-text-primary">{family.noun}</span>
             </div>
           )}
           {family.verb && (
             <div>
-              <span className="text-slate-400 font-bold block text-[9px] uppercase">
+              <span className="text-text-muted font-bold block text-[9px] uppercase">
                 Verb
               </span>
-              <span className="text-white">{family.verb}</span>
+              <span className="text-text-primary">{family.verb}</span>
             </div>
           )}
           {family.adj && (
             <div>
-              <span className="text-slate-400 font-bold block text-[9px] uppercase">
+              <span className="text-text-muted font-bold block text-[9px] uppercase">
                 Adj
               </span>
-              <span className="text-white">{family.adj}</span>
+              <span className="text-text-primary">{family.adj}</span>
             </div>
           )}
           {family.adv && (
             <div>
-              <span className="text-slate-400 font-bold block text-[9px] uppercase">
+              <span className="text-text-muted font-bold block text-[9px] uppercase">
                 Adv
               </span>
-              <span className="text-white">{family.adv}</span>
+              <span className="text-text-primary">{family.adv}</span>
             </div>
           )}
         </div>
@@ -121,7 +121,7 @@ const FeedbackDisplay = ({
 }) => {
   if (!transcript)
     return (
-      <span className="text-slate-400 italic text-sm">Say "{target}"...</span>
+      <span className="text-text-muted italic text-sm">Say "{target}"...</span>
     );
 
   const normalizedTarget = target.toLowerCase();
@@ -162,19 +162,19 @@ const FeedbackDisplay = ({
   return (
     <div className="flex flex-col gap-2 mt-2">
       <div>
-        <div className="text-[10px] uppercase font-bold text-slate-400 mb-1">
+        <div className="text-[10px] uppercase font-bold text-text-muted mb-1">
           Target Match
         </div>
-        <div className="font-mono text-lg tracking-wider bg-black/40 p-2 rounded border border-slate-700/50 flex flex-wrap">
+        <div className="font-mono text-lg tracking-wider bg-black/40 p-2 rounded border border-border/50 flex flex-wrap">
           {result}
         </div>
       </div>
 
       <div>
-        <div className="text-[10px] uppercase font-bold text-slate-400 mb-1">
+        <div className="text-[10px] uppercase font-bold text-text-muted mb-1">
           Heard
         </div>
-        <div className="text-sm font-medium text-white break-words bg-slate-900/50 p-2 rounded border border-slate-600/50">
+        <div className="text-sm font-medium text-text-primary break-words bg-surface-1/50 p-2 rounded border border-border/50">
           <span
             className={
               normalizedTranscript.includes(normalizedTarget)
@@ -291,7 +291,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
         }
       }}
       tabIndex={isStudyMode ? 0 : undefined}
-      className={`study-card flex flex-col group bg-slate-900/40 p-2.5 rounded-lg border transition-all hover:bg-slate-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500 ${theme.glow} ${isPracticing ? "border-sky-500/50 bg-slate-800" : isSaved ? "border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.1)]" : "border-transparent hover:border-slate-600"} ${onDetailClick || (isStudyMode && !studyRevealAll && !isRevealed) ? "cursor-pointer hover:scale-[1.02]" : ""}`}
+      className={`study-card flex flex-col group bg-surface-1/40 p-2.5 rounded-lg border transition-all hover:bg-surface-2 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary ${theme.glow} ${isPracticing ? "border-primary/50 bg-surface-2" : isSaved ? "border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.1)]" : "border-transparent hover:border-border"} ${onDetailClick || (isStudyMode && !studyRevealAll && !isRevealed) ? "cursor-pointer hover:scale-[1.02]" : ""}`}
     >
       <div className="flex items-center justify-between">
         <div className="min-w-0 pr-2 flex-1">
@@ -306,13 +306,13 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
             )}
             {category === "Colors" && (
               <span
-                className="w-3 h-3 rounded-full border border-slate-500/50 shadow-sm flex-shrink-0"
+                className="w-3 h-3 rounded-full border border-border/50 shadow-sm flex-shrink-0"
                 style={{ backgroundColor: item.hex ?? "transparent" }}
                 aria-hidden="true"
               />
             )}
             <p
-              className={`font-bold truncate text-lg group-hover:text-white transition-colors ${theme.textClass}`}
+              className={`font-bold truncate text-lg group-hover:text-text-primary transition-colors ${theme.textClass}`}
             >
               {item.word}
             </p>
@@ -331,7 +331,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
 
             {/* RESTORED: Tags for Animals, Nature, etc. */}
             {item.tag && !isIrregularVerb && (
-              <span className="text-[9px] font-bold bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded border border-slate-600 uppercase tracking-wide">
+              <span className="text-[9px] font-bold bg-surface-3 text-text-muted px-1.5 py-0.5 rounded border border-border uppercase tracking-wide">
                 {item.tag}
               </span>
             )}
@@ -339,13 +339,13 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
 
           {/* IPA & Translation */}
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-            <span className="text-cyan-400 font-mono text-xs tracking-wide">
+            <span className="text-accent font-mono text-xs tracking-wide">
               {item.ipa}
             </span>
             {(item.translation ||
               (isStudyMode && !studyRevealAll && !isRevealed)) && (
               <span
-                className={`text-xs italic truncate max-w-full transition-all duration-300 ${isStudyMode && !studyRevealAll && !isRevealed ? "text-slate-400 bg-slate-800 border border-slate-700 rounded px-2 py-0.5 cursor-pointer hover:bg-slate-700 hover:text-slate-300" : "text-slate-400"}`}
+                className={`text-xs italic truncate max-w-full transition-all duration-300 ${isStudyMode && !studyRevealAll && !isRevealed ? "text-text-muted bg-surface-2 border border-border rounded px-2 py-0.5 cursor-pointer hover:bg-surface-3 hover:text-text-primary" : "text-text-muted"}`}
                 onClick={(e) => {
                   if (isStudyMode && !studyRevealAll) {
                     e.stopPropagation();
@@ -374,7 +374,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
           {/* RESTORED: Rich Metadata Badges */}
           <div className="flex flex-wrap gap-2 mt-1.5">
             {item.country && (
-              <span className="text-[10px] text-slate-400 flex items-center gap-1 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">
+              <span className="text-[10px] text-text-muted flex items-center gap-1 bg-surface-2 px-1.5 py-0.5 rounded border border-border">
                 📍 {item.country}
               </span>
             )}
@@ -404,7 +404,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
               </span>
             )}
             {item.genre && (
-              <span className="text-[9px] uppercase font-bold text-slate-400 border border-slate-600 px-1.5 py-0.5 rounded">
+              <span className="text-[9px] uppercase font-bold text-text-muted border border-border px-1.5 py-0.5 rounded">
                 {item.genre}
               </span>
             )}
@@ -414,7 +414,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
               </span>
             )}
             {item.production && (
-              <span className="text-[9px] text-slate-400">
+              <span className="text-[9px] text-text-muted">
                 ({item.production})
               </span>
             )}
@@ -451,12 +451,12 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                   (category === "Verbs" ? (
                     isIrregularVerb && irregularVerbData ? (
                       <div className="space-y-2 mt-1">
-                        <div className="flex items-center justify-between bg-black/20 p-1.5 rounded">
-                          <span className="text-[10px] uppercase font-bold text-slate-400">
+                        <div className="flex items-center justify-between bg-surface-1/20 p-1.5 rounded">
+                          <span className="text-[10px] uppercase font-bold text-text-muted">
                             Past
                           </span>
                           <div className="flex items-center gap-2">
-                            <span className="text-sky-100 font-medium">
+                            <span className="text-text-primary font-medium">
                               {irregularVerbData.past}
                             </span>
                             <button
@@ -464,7 +464,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                                 e.stopPropagation();
                                 onPlay(irregularVerbData.past.split("/")[0]);
                               }}
-                              className="p-1 hover:bg-white/10 rounded-full text-sky-400 transition-colors"
+                              className="p-1 hover:bg-surface-3 rounded-full text-primary transition-colors"
                               title="Play Past Tense"
                               aria-label={`Listen to past tense: ${irregularVerbData.past}`}
                             >
@@ -472,12 +472,12 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                             </button>
                           </div>
                         </div>
-                        <div className="flex items-center justify-between bg-black/20 p-1.5 rounded">
-                          <span className="text-[10px] uppercase font-bold text-slate-400">
+                        <div className="flex items-center justify-between bg-surface-1/20 p-1.5 rounded">
+                          <span className="text-[10px] uppercase font-bold text-text-muted">
                             Participle
                           </span>
                           <div className="flex items-center gap-2">
-                            <span className="text-sky-100 font-medium">
+                            <span className="text-text-primary font-medium">
                               {irregularVerbData.participle}
                             </span>
                             <button
@@ -487,7 +487,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                                   irregularVerbData.participle.split("/")[0],
                                 );
                               }}
-                              className="p-1 hover:bg-white/10 rounded-full text-sky-400 transition-colors"
+                              className="p-1 hover:bg-surface-3 rounded-full text-primary transition-colors"
                               title="Play Participle"
                               aria-label={`Listen to participle: ${irregularVerbData.participle}`}
                             >
@@ -497,7 +497,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                         </div>
                       </div>
                     ) : (
-                      <p className="text-sky-100">
+                      <p className="text-text-primary">
                         {item.definition || "Regular Verb"}
                       </p>
                     )
@@ -506,7 +506,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                       {category === "Minimal Pairs" &&
                       item.definition?.includes("vs.") ? (
                         <div className="mt-1">
-                          <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">
+                          <p className="text-[10px] text-text-muted font-bold uppercase mb-1">
                             Compare vs:
                           </p>
                           <div className="flex flex-wrap gap-2">
@@ -533,31 +533,31 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                           </div>
                         </div>
                       ) : item.definition ? (
-                        <p className="text-sky-100">{item.definition}</p>
+                        <p className="text-text-primary">{item.definition}</p>
                       ) : (
-                        <p className="text-sky-100 italic">
+                        <p className="text-text-primary italic">
                           {item.translation}
                         </p>
                       )}
                       {item.synonyms && (
-                        <p className="text-sky-500 font-bold text-[10px]">
+                        <p className="text-primary font-bold text-[10px]">
                           Syn: {item.synonyms.join(", ")}
                         </p>
                       )}
                     </div>
                   ))}
                 {!isMinimalPair && layer === 2 && (
-                  <p className="text-emerald-100 italic">
+                  <p className="text-text-secondary italic">
                     "{item.examSentence || item.example || "..."}"
                   </p>
                 )}
                 {!isMinimalPair && layer === 3 && (
                   <div className="space-y-1">
-                    <p className="text-purple-100">
+                    <p className="text-text-primary">
                       {item.transformation || "No structure shift available."}
                     </p>
                     {item.writingSwap && (
-                      <p className="text-[10px] text-purple-300">
+                      <p className="text-[10px] text-accent">
                         Formal: "{item.writingSwap}"
                       </p>
                     )}
@@ -567,7 +567,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
             </div>
           ) : item.definition &&
             (!isStudyMode || studyRevealAll || isRevealed) ? (
-            <p className="text-xs text-slate-400 mt-2 pt-2 border-t border-slate-700/50 italic leading-tight">
+            <p className="text-xs text-text-muted mt-2 pt-2 border-t border-border/50 italic leading-tight">
               {item.definition}
             </p>
           ) : null}
@@ -583,7 +583,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
           <button
             onClick={() => onPlay(item.word)}
             disabled={isAudioLoading}
-            className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-700 text-sky-400 hover:bg-sky-500 hover:text-white transition-colors disabled:opacity-50"
+            className="h-8 w-8 flex items-center justify-center rounded-full bg-surface-3 text-primary hover:bg-primary hover:text-white transition-colors disabled:opacity-50"
             title="Listen"
             aria-label={`Listen to ${item.word}`}
           >
@@ -596,7 +596,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                 ? micState === "listening"
                   ? "bg-red-500 text-white animate-pulse"
                   : "bg-emerald-600 text-white hover:bg-emerald-500"
-                : "bg-slate-700 text-purple-400 hover:bg-purple-500 hover:text-white"
+                : "bg-surface-3 text-accent hover:bg-accent hover:text-white"
             }`}
             title={
               isPracticing

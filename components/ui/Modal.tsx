@@ -83,7 +83,7 @@ const Modal: React.FC<ModalProps> = ({
         tabIndex={-1}
       >
         <Card
-          className={`relative w-full max-w-md bg-[var(--color-surface-1)] ${className}`.trim()}
+          className={`relative w-full max-w-md bg-surface-1 ${className}`.trim()}
           elevated
           onClick={(event) => event.stopPropagation()}
         >
@@ -91,7 +91,7 @@ const Modal: React.FC<ModalProps> = ({
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="absolute right-4 top-4 text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] rounded"
+            className="absolute right-4 top-4 text-text-muted hover:text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded"
             aria-label="Close modal"
           >
             ✕
