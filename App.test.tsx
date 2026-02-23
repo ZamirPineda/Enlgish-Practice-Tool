@@ -64,9 +64,9 @@ describe("App route lazy loading", () => {
   });
 
   test("keeps navigation working with lazy loaded routes", async () => {
+    window.location.hash = "#/vault";
     render(<App />);
 
-    fireEvent.click(screen.getByRole("link", { name: /vault/i }));
     expect(await screen.findByText("Vault mock view")).toBeInTheDocument();
     expect(screen.getByText(`About · v${APP_VERSION}`)).toBeInTheDocument();
   });

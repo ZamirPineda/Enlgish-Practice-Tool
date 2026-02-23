@@ -25,6 +25,7 @@ const PersonalPhrasesView = lazy(
 const VocabularyVaultView = lazy(
   () => import("./components/VocabularyVaultView"),
 );
+const SpeedBuilderView = lazy(() => import("./components/SpeedBuilderView"));
 const MathView = lazy(() => import("./components/MathView"));
 const StudyDocsView = lazy(() => import("./components/StudyDocsView"));
 const StatsView = lazy(() => import("./components/StatsView"));
@@ -413,6 +414,7 @@ const App: React.FC = () => {
               <NavItem to="/stop?mode=browse">🎲 Browse</NavItem>
               <NavItem to="/stop?mode=study">📚 Study</NavItem>
               <NavItem to="/stop?mode=game">🎮 Game</NavItem>
+              <NavItem to="/speed-builder">⚡ Speed Builder</NavItem>
             </NavGroup>
             <NavGroup title="Herramientas" icon="🛠️">
               <NavItem to="/calculus">∫ Math</NavItem>
@@ -474,6 +476,7 @@ const App: React.FC = () => {
                     </NavItem>
                     <NavItem to="/stop?mode=study">📚 Flashcards</NavItem>
                     <NavItem to="/stop?mode=game">🎮 Play Game</NavItem>
+                    <NavItem to="/speed-builder">⚡ Speed Builder</NavItem>
                   </div>
 
                   <NavItem to="/study">📚 Review Deck</NavItem>
@@ -539,6 +542,7 @@ const App: React.FC = () => {
                   />
                 }
               />
+              <Route path="/speed-builder" element={<SpeedBuilderView />} />
               <Route path="/stats" element={<StatsView />} />
               <Route path="/calculus" element={<MathView />} />
               <Route path="/docs" element={<StudyDocsView />} />

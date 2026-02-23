@@ -4,8 +4,11 @@ import { starterKits } from "../data/vocabularyVault";
 import {
   createNewSrsItem,
   getDueReviewItems,
+  getIsoWeekKey,
+  getWeeklyBossReviewItems,
   calculateSrsData,
 } from "../utils/srs";
+import { trackAnalyticsEvent } from "../utils/analytics";
 import ReviewSession from "./ReviewSession";
 import SpeechPracticeButton from "./SpeechPracticeButton";
 import { PlayIcon, TrashIcon } from "./Icons";
@@ -27,15 +30,36 @@ interface VaultProgress {
   bestStreak: number;
   totalReviews: number;
   lastReviewDate: string | null;
+  lastBossReviewWeek: string | null;
+  bossReviewsCompleted: number;
+}
+
+interface VaultWeeklyActivity {
+  weekKey: string;
+  sessions: number;
+  attempts: number;
+  correct: number;
+  studyMinutes: number;
 }
 
 const VAULT_PROGRESS_KEY = "vocab-vault-progress";
+const VAULT_WEEKLY_ACTIVITY_KEY = "vocab-vault-weekly-activity";
 const DEFAULT_VAULT_PROGRESS: VaultProgress = {
   currentStreak: 0,
   bestStreak: 0,
   totalReviews: 0,
   lastReviewDate: null,
+  lastBossReviewWeek: null,
+  bossReviewsCompleted: 0,
 };
+
+const createDefaultWeeklyActivity = (weekKey: string): VaultWeeklyActivity => ({
+  weekKey,
+  sessions: 0,
+  attempts: 0,
+  correct: 0,
+  studyMinutes: 0,
+});
 
 const updateVaultProgress = (
   previous: VaultProgress,
@@ -54,6 +78,7 @@ const updateVaultProgress = (
   }
 
   return {
+    ...previous,
     currentStreak,
     bestStreak: Math.max(previous.bestStreak, currentStreak),
     totalReviews: previous.totalReviews + 1,
@@ -130,6 +155,23 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   });
 
   const [importText, setImportText] = useState("");
+  const currentWeekKey = getIsoWeekKey(new Date());
+  const [weeklyActivity, setWeeklyActivity] = useState<VaultWeeklyActivity>(
+    () => {
+      try {
+        const saved = localStorage.getItem(VAULT_WEEKLY_ACTIVITY_KEY);
+        if (!saved) return createDefaultWeeklyActivity(currentWeekKey);
+        const parsed = JSON.parse(saved) as VaultWeeklyActivity;
+        if (!parsed || parsed.weekKey !== currentWeekKey) {
+          return createDefaultWeeklyActivity(currentWeekKey);
+        }
+        return parsed;
+      } catch (error) {
+        console.error("Failed to load weekly activity from storage", error);
+        return createDefaultWeeklyActivity(currentWeekKey);
+      }
+    },
+  );
 
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [newWord, setNewWord] = useState("");
@@ -152,9 +194,12 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   // Removed generatedData logic as AI is gone
 
   const [reviewItems, setReviewItems] = useState<SrsVocabularyItem[]>([]);
+  const [reviewMode, setReviewMode] = useState<"daily" | "boss">("daily");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobileActionsVisible, setIsMobileActionsVisible] = useState(true);
   const lastScrollTopRef = useRef(0);
+  const reviewSessionStartRef = useRef<number | null>(null);
+  const reviewSessionStatsRef = useRef({ attempts: 0, correct: 0 });
 
   useEffect(() => {
     localStorage.setItem("vocab-vault-deck", JSON.stringify(deck));
@@ -163,6 +208,13 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   useEffect(() => {
     localStorage.setItem(VAULT_PROGRESS_KEY, JSON.stringify(progress));
   }, [progress]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      VAULT_WEEKLY_ACTIVITY_KEY,
+      JSON.stringify(weeklyActivity),
+    );
+  }, [weeklyActivity]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -198,6 +250,9 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     [deck],
   );
   const dueItems = useMemo(() => getDueReviewItems(deck), [deck]);
+  const bossReviewItems = useMemo(() => getWeeklyBossReviewItems(deck), [deck]);
+  const bossReviewCompletedThisWeek =
+    progress.lastBossReviewWeek === currentWeekKey;
 
   const filteredCollection = useMemo(() => {
     let filtered = deckList.filter(
@@ -426,6 +481,16 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const handleReviewComplete = (wasCorrect: boolean) => {
     const item = reviewItems[currentIndex];
     const updatedItem = calculateSrsData(item, wasCorrect);
+    reviewSessionStatsRef.current.attempts += 1;
+    if (wasCorrect) {
+      reviewSessionStatsRef.current.correct += 1;
+    }
+    trackAnalyticsEvent(wasCorrect ? "item_correct" : "item_wrong", {
+      mode: reviewMode,
+      word: item.word,
+      position: currentIndex + 1,
+      total: reviewItems.length,
+    });
     setDeck((prev) => ({
       ...prev,
       [item.word.trim().toLowerCase()]: updatedItem,
@@ -433,11 +498,103 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     setProgress((prev) =>
       updateVaultProgress(prev, new Date().toISOString().split("T")[0]),
     );
+    setWeeklyActivity((previous) => {
+      const safePrevious =
+        previous.weekKey === currentWeekKey
+          ? previous
+          : createDefaultWeeklyActivity(currentWeekKey);
+      return {
+        ...safePrevious,
+        attempts: safePrevious.attempts + 1,
+        correct: safePrevious.correct + (wasCorrect ? 1 : 0),
+      };
+    });
     if (currentIndex < reviewItems.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
+      const sessionDurationMs = reviewSessionStartRef.current
+        ? Date.now() - reviewSessionStartRef.current
+        : 0;
+      const sessionMinutes = Math.max(1, Math.round(sessionDurationMs / 60000));
+      trackAnalyticsEvent("session_end", {
+        mode: reviewMode,
+        completed: true,
+        durationSeconds: Math.round(sessionDurationMs / 1000),
+        attempts: reviewSessionStatsRef.current.attempts,
+        correct: reviewSessionStatsRef.current.correct,
+      });
+      setWeeklyActivity((previous) => {
+        const safePrevious =
+          previous.weekKey === currentWeekKey
+            ? previous
+            : createDefaultWeeklyActivity(currentWeekKey);
+        return {
+          ...safePrevious,
+          studyMinutes: safePrevious.studyMinutes + sessionMinutes,
+        };
+      });
+      reviewSessionStartRef.current = null;
+      if (reviewMode === "boss") {
+        trackAnalyticsEvent("weekly_review_completed", {
+          weekKey: currentWeekKey,
+          items: reviewItems.length,
+        });
+        setProgress((previous) => ({
+          ...previous,
+          lastBossReviewWeek: currentWeekKey,
+          bossReviewsCompleted: previous.bossReviewsCompleted + 1,
+        }));
+      }
       setIsReviewing(false);
+      setReviewMode("daily");
+      reviewSessionStatsRef.current = { attempts: 0, correct: 0 };
     }
+  };
+
+  const handleStartDailyReview = () => {
+    reviewSessionStartRef.current = Date.now();
+    reviewSessionStatsRef.current = { attempts: 0, correct: 0 };
+    setReviewMode("daily");
+    setReviewItems(dueItems);
+    setCurrentIndex(0);
+    setIsReviewing(true);
+    trackAnalyticsEvent("session_start", {
+      mode: "daily",
+      items: dueItems.length,
+    });
+    setWeeklyActivity((previous) => {
+      const safePrevious =
+        previous.weekKey === currentWeekKey
+          ? previous
+          : createDefaultWeeklyActivity(currentWeekKey);
+      return {
+        ...safePrevious,
+        sessions: safePrevious.sessions + 1,
+      };
+    });
+  };
+
+  const handleStartBossReview = () => {
+    reviewSessionStartRef.current = Date.now();
+    reviewSessionStatsRef.current = { attempts: 0, correct: 0 };
+    setReviewMode("boss");
+    setReviewItems(bossReviewItems);
+    setCurrentIndex(0);
+    setIsReviewing(true);
+    trackAnalyticsEvent("session_start", {
+      mode: "boss",
+      items: bossReviewItems.length,
+    });
+    setWeeklyActivity((previous) => {
+      const safePrevious =
+        previous.weekKey === currentWeekKey
+          ? previous
+          : createDefaultWeeklyActivity(currentWeekKey);
+      return {
+        ...safePrevious,
+        sessions: safePrevious.sessions + 1,
+      };
+    });
   };
 
   if (isReviewing && reviewItems[currentIndex]) {
@@ -446,8 +603,42 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
         item={reviewItems[currentIndex]}
         progress={{ current: currentIndex + 1, total: reviewItems.length }}
         onComplete={handleReviewComplete}
-        onFinishSession={() => setIsReviewing(false)}
+        onFinishSession={() => {
+          const sessionDurationMs = reviewSessionStartRef.current
+            ? Date.now() - reviewSessionStartRef.current
+            : 0;
+          trackAnalyticsEvent("session_end", {
+            mode: reviewMode,
+            completed: false,
+            durationSeconds: Math.round(sessionDurationMs / 1000),
+            attempts: reviewSessionStatsRef.current.attempts,
+            correct: reviewSessionStatsRef.current.correct,
+          });
+          if (reviewSessionStartRef.current) {
+            const sessionMinutes = Math.max(
+              1,
+              Math.round(sessionDurationMs / 60000),
+            );
+            setWeeklyActivity((previous) => {
+              const safePrevious =
+                previous.weekKey === currentWeekKey
+                  ? previous
+                  : createDefaultWeeklyActivity(currentWeekKey);
+              return {
+                ...safePrevious,
+                studyMinutes: safePrevious.studyMinutes + sessionMinutes,
+              };
+            });
+            reviewSessionStartRef.current = null;
+          }
+          reviewSessionStatsRef.current = { attempts: 0, correct: 0 };
+          setIsReviewing(false);
+          setReviewMode("daily");
+        }}
         onPlayAudio={onPlayWord}
+        onSpeakingUsed={() =>
+          trackAnalyticsEvent("speaking_used", { source: "review_audio" })
+        }
       />
     );
   }
@@ -459,6 +650,21 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const progressPercent =
     totalInDeck > 0 ? ((learningCount + masteredCount) / totalInDeck) * 100 : 0;
   const showMobileActions = isMobileActionsVisible && !isAddOpen && !isEditOpen;
+
+  const starterSections = [
+    {
+      title: "🚀 High-Frequency Starter Kit",
+      items: starterKits.highFrequency,
+    },
+    {
+      title: "💼 Work & Interview Essentials",
+      items: starterKits.workInterview,
+    },
+    {
+      title: "🧳 Travel & Emergency Essentials",
+      items: starterKits.travelEmergencies,
+    },
+  ];
 
   const handleContainerScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const currentScrollTop = event.currentTarget.scrollTop;
@@ -527,11 +733,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   + Add Word
                 </Button>
                 <Button
-                  onClick={() => {
-                    setReviewItems(dueItems);
-                    setCurrentIndex(0);
-                    setIsReviewing(true);
-                  }}
+                  onClick={handleStartDailyReview}
                   disabled={dueItems.length === 0}
                   size="lg"
                   variant={dueItems.length > 0 ? "primary" : "secondary"}
@@ -540,6 +742,23 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   {dueItems.length > 0
                     ? `Review Now (${dueItems.length})`
                     : "All caught up!"}
+                </Button>
+                <Button
+                  onClick={handleStartBossReview}
+                  disabled={
+                    bossReviewItems.length === 0 || bossReviewCompletedThisWeek
+                  }
+                  size="lg"
+                  variant={
+                    bossReviewItems.length > 0 && !bossReviewCompletedThisWeek
+                      ? "success"
+                      : "secondary"
+                  }
+                  className="flex-1 md:flex-none font-black flex items-center justify-center gap-2 min-h-[44px]"
+                >
+                  {bossReviewCompletedThisWeek
+                    ? "Boss Review ✓"
+                    : `Boss Review (${bossReviewItems.length})`}
                 </Button>
               </div>
             }
@@ -625,6 +844,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     {progress.currentStreak} day streak · best{" "}
                     {progress.bestStreak}
                   </p>
+                  <p className="text-[10px] text-center text-success font-bold uppercase tracking-widest">
+                    Boss weekly:{" "}
+                    {bossReviewCompletedThisWeek ? "completed" : "pending"}
+                  </p>
                 </div>
               </Card>
               <div className="bg-gradient-to-br from-amber-600/10 to-orange-600/10 border border-amber-500/20 rounded-3xl p-6">
@@ -639,37 +862,45 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             </div>
 
             <div className="lg:col-span-2 space-y-12">
-              <section>
-                <h2 className="text-xl font-black text-text-primary mb-6 flex items-center gap-3">
-                  🚀 High-Frequency Starter Kit
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {starterKits.highFrequency.map((item) => (
-                    <div
-                      key={item.word}
-                      className="bg-surface-1 border border-border p-5 rounded-2xl hover:border-accent/30 transition-all group"
-                    >
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h4 className="text-lg font-black text-text-primary group-hover:text-accent transition-colors">
-                            {item.word}
-                          </h4>
-                          <p className="text-text-secondary text-xs line-clamp-2">
-                            {item.definition}
-                          </p>
+              {starterSections.map((section) => (
+                <section key={section.title}>
+                  <h2 className="text-xl font-black text-text-primary mb-6 flex items-center gap-3">
+                    {section.title}
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {section.items.map((item) => (
+                      <div
+                        key={item.word}
+                        className="bg-surface-1 border border-border p-5 rounded-2xl hover:border-accent/30 transition-all group"
+                      >
+                        <div className="flex justify-between items-start gap-3">
+                          <div>
+                            <h4 className="text-lg font-black text-text-primary group-hover:text-accent transition-colors">
+                              {item.word}
+                            </h4>
+                            <p className="text-text-secondary text-xs line-clamp-2">
+                              {item.definition}
+                            </p>
+                            {item.tags?.length ? (
+                              <p className="text-[10px] text-text-muted mt-2 uppercase tracking-widest font-bold">
+                                {item.tags.join(" · ")}
+                              </p>
+                            ) : null}
+                          </div>
+                          <button
+                            onClick={() => handleAddToDeck(item)}
+                            disabled={!!deck[item.word.toLowerCase()]}
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 ${deck[item.word.toLowerCase()] ? "bg-success/20 text-success" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"}`}
+                            aria-label={`Add ${item.word} to deck`}
+                          >
+                            {deck[item.word.toLowerCase()] ? "✓" : "+"}
+                          </button>
                         </div>
-                        <button
-                          onClick={() => handleAddToDeck(item)}
-                          disabled={!!deck[item.word.toLowerCase()]}
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${deck[item.word.toLowerCase()] ? "bg-success/20 text-success" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"}`}
-                        >
-                          {deck[item.word.toLowerCase()] ? "✓" : "+"}
-                        </button>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
+                    ))}
+                  </div>
+                </section>
+              ))}
             </div>
           </div>
         )}
@@ -834,7 +1065,13 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           {item.word}
                         </h3>
                         <button
-                          onClick={() => onPlayWord(item.word)}
+                          onClick={() => {
+                            onPlayWord(item.word);
+                            trackAnalyticsEvent("speaking_used", {
+                              source: "collection_audio",
+                              word: item.word,
+                            });
+                          }}
                           className="text-text-secondary hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded"
                           aria-label={`Listen to ${item.word}`}
                         >
@@ -843,6 +1080,12 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         <SpeechPracticeButton
                           targetText={item.word}
                           onCorrect={() => {}}
+                          onUsage={() =>
+                            trackAnalyticsEvent("speaking_used", {
+                              source: "speech_practice",
+                              word: item.word,
+                            })
+                          }
                         />
                       </div>
                       {viewMode === "grid" && (
@@ -1023,17 +1266,28 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             + Add
           </Button>
           <Button
-            onClick={() => {
-              setReviewItems(dueItems);
-              setCurrentIndex(0);
-              setIsReviewing(true);
-            }}
+            onClick={handleStartDailyReview}
             disabled={dueItems.length === 0}
             size="md"
             variant={dueItems.length > 0 ? "primary" : "secondary"}
             className="flex-1"
           >
             {dueItems.length > 0 ? `Review (${dueItems.length})` : "No Due"}
+          </Button>
+          <Button
+            onClick={handleStartBossReview}
+            disabled={
+              bossReviewItems.length === 0 || bossReviewCompletedThisWeek
+            }
+            size="md"
+            variant={
+              bossReviewItems.length > 0 && !bossReviewCompletedThisWeek
+                ? "success"
+                : "secondary"
+            }
+            className="flex-1"
+          >
+            {bossReviewCompletedThisWeek ? "Boss ✓" : "Boss"}
           </Button>
         </div>
       </div>

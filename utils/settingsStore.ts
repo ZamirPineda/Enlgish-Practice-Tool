@@ -5,6 +5,7 @@ export interface AppSettings {
   ttsSpeed: number;
   confirmDialogs: boolean;
   hasCompletedOnboarding: boolean;
+  weeklyGoalSessions: number;
 }
 
 const SETTINGS_KEY = "app-settings";
@@ -39,6 +40,10 @@ const normalizeSettings = (input: unknown): AppSettings => {
       typeof parsed.hasCompletedOnboarding === "boolean"
         ? parsed.hasCompletedOnboarding
         : false,
+    weeklyGoalSessions:
+      typeof parsed.weeklyGoalSessions === "number"
+        ? Math.min(14, Math.max(1, Math.round(parsed.weeklyGoalSessions)))
+        : 5,
   };
 };
 

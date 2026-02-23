@@ -3,6 +3,20 @@ import { SrsVocabularyItem } from "../types";
 const INITIAL_EFACTOR = 2.5;
 const INTERVAL_FUZZ_PERCENT = 0.05;
 
+const formatDateKey = (date: Date): string => {
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const getTodayUtcDate = (): Date => {
+  const now = new Date();
+  return new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+  );
+};
+
 /**
  * Calculates the next review data for an SRS item based on the SM-2 algorithm.
  */
@@ -10,8 +24,7 @@ export function calculateSrsData(
   item: SrsVocabularyItem,
   correct: boolean,
 ): SrsVocabularyItem {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = getTodayUtcDate();
 
   if (correct) {
     const repetition = item.repetition + 1;
@@ -35,7 +48,7 @@ export function calculateSrsData(
     );
 
     const nextReviewDate = new Date(today);
-    nextReviewDate.setDate(today.getDate() + interval);
+    nextReviewDate.setUTCDate(today.getUTCDate() + interval);
 
     let status: "learning" | "mastered" = "learning";
     if (interval > 14 || item.status === "mastered") {
@@ -48,19 +61,19 @@ export function calculateSrsData(
       efactor,
       interval,
       lapses: item.lapses ?? 0,
-      nextReviewDate: nextReviewDate.toISOString().split("T")[0],
+      nextReviewDate: formatDateKey(nextReviewDate),
       status,
     };
   } else {
     const nextReviewDate = new Date(today);
-    nextReviewDate.setDate(today.getDate() + 1);
+    nextReviewDate.setUTCDate(today.getUTCDate() + 1);
 
     return {
       ...item,
       repetition: 0,
       interval: 1,
       lapses: (item.lapses ?? 0) + 1,
-      nextReviewDate: nextReviewDate.toISOString().split("T")[0],
+      nextReviewDate: formatDateKey(nextReviewDate),
       status: "learning",
     };
   }
@@ -74,7 +87,7 @@ export function createNewSrsItem(
   word: string,
   definition: string,
 ): SrsVocabularyItem {
-  const today = new Date().toISOString().split("T")[0];
+  const today = formatDateKey(new Date());
 
   return {
     word,
@@ -95,7 +108,7 @@ export function getDueReviewItems(
   deck: Record<string, SrsVocabularyItem>,
 ): SrsVocabularyItem[] {
   if (!deck) return [];
-  const today = new Date().toISOString().split("T")[0];
+  const today = formatDateKey(new Date());
   return Object.values(deck)
     .filter((item) => item && item.nextReviewDate <= today)
     .sort((a, b) => {
@@ -112,6 +125,81 @@ export function getDueReviewWords(
   deck: Record<string, SrsVocabularyItem>,
 ): string[] {
   return getDueReviewItems(deck).map((item) => item.word);
+}
+
+export const getIsoWeekKey = (dateInput: Date = new Date()): string => {
+  const utcDate = new Date(
+    Date.UTC(
+      dateInput.getUTCFullYear(),
+      dateInput.getUTCMonth(),
+      dateInput.getUTCDate(),
+    ),
+  );
+
+  const dayNumber = utcDate.getUTCDay() || 7;
+  utcDate.setUTCDate(utcDate.getUTCDate() + 4 - dayNumber);
+
+  const yearStart = new Date(Date.UTC(utcDate.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil(
+    ((utcDate.getTime() - yearStart.getTime()) / 86400000 + 1) / 7,
+  );
+
+  return `${utcDate.getUTCFullYear()}-W${String(weekNo).padStart(2, "0")}`;
+};
+
+export function getWeeklyBossReviewItems(
+  deck: Record<string, SrsVocabularyItem>,
+  maxItems = 20,
+): SrsVocabularyItem[] {
+  const allItems = Object.values(deck || {}).filter(
+    (item): item is SrsVocabularyItem => !!item,
+  );
+  if (allItems.length === 0 || maxItems <= 0) return [];
+
+  const today = getTodayUtcDate();
+  const todayStr = formatDateKey(today);
+
+  const upcomingDate = new Date(today);
+  upcomingDate.setUTCDate(today.getUTCDate() + 7);
+  const upcomingStr = formatDateKey(upcomingDate);
+
+  const dueItems = allItems
+    .filter((item) => item.nextReviewDate <= todayStr)
+    .sort((a, b) => {
+      const lapsesDiff = (b.lapses ?? 0) - (a.lapses ?? 0);
+      if (lapsesDiff !== 0) return lapsesDiff;
+      return a.nextReviewDate.localeCompare(b.nextReviewDate);
+    });
+
+  const upcomingItems = allItems
+    .filter(
+      (item) =>
+        item.nextReviewDate > todayStr && item.nextReviewDate <= upcomingStr,
+    )
+    .sort((a, b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
+
+  const newItems = allItems
+    .filter((item) => item.status === "new" || item.interval === 0)
+    .sort((a, b) => a.word.localeCompare(b.word));
+
+  const selected: SrsVocabularyItem[] = [];
+  const seenWords = new Set<string>();
+
+  const pushUnique = (items: SrsVocabularyItem[]) => {
+    for (const item of items) {
+      if (selected.length >= maxItems) return;
+      const key = item.word.trim().toLowerCase();
+      if (seenWords.has(key)) continue;
+      seenWords.add(key);
+      selected.push(item);
+    }
+  };
+
+  pushUnique(dueItems);
+  pushUnique(upcomingItems);
+  pushUnique(newItems);
+
+  return selected;
 }
 
 export const getSrsLocalStorageKey = (level: string) =>

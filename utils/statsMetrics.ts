@@ -1,10 +1,21 @@
 import { SrsVocabularyItem } from "../types";
+import { getIsoWeekKey } from "./srs";
 
 export interface VaultProgress {
   currentStreak: number;
   bestStreak: number;
   totalReviews: number;
   lastReviewDate: string | null;
+  lastBossReviewWeek?: string | null;
+  bossReviewsCompleted?: number;
+}
+
+export interface WeeklyActivitySummary {
+  weekKey: string;
+  sessions: number;
+  attempts: number;
+  correct: number;
+  studyMinutes: number;
 }
 
 export interface StatsMetrics {
@@ -29,6 +40,13 @@ export interface StatsMetrics {
     status: string;
   }>;
   estimatedStudyMinutes: number | null;
+  weeklySummary: {
+    sessions: number;
+    accuracy: number;
+    studyMinutes: number;
+    focusSuggested: string;
+    bossCompletedThisWeek: boolean;
+  };
 }
 
 const getCategory = (item: SrsVocabularyItem): string => {
@@ -56,6 +74,7 @@ const roundToOneDecimal = (value: number): number =>
 export const calculateStatsMetrics = (
   deck: Record<string, SrsVocabularyItem>,
   progress: VaultProgress,
+  weeklyActivity?: WeeklyActivitySummary,
 ): StatsMetrics => {
   const items = Object.values(deck || {});
   const totalCards = items.length;
@@ -110,6 +129,15 @@ export const calculateStatsMetrics = (
     }))
     .sort((a, b) => a.category.localeCompare(b.category));
 
+  const weakestCategory = categoryAccuracy
+    .filter((item) => item.totalCards > 0)
+    .reduce<StatsMetrics["categoryAccuracy"][number] | null>((lowest, item) => {
+      if (!lowest || item.accuracy < lowest.accuracy) {
+        return item;
+      }
+      return lowest;
+    }, null);
+
   const levelCounts = new Map<string, number>();
   items.forEach((item) => {
     const level = getLevel(item);
@@ -162,6 +190,32 @@ export const calculateStatsMetrics = (
         )
       : null;
 
+  const currentWeekKey = getIsoWeekKey(new Date());
+  const safeWeeklyActivity =
+    weeklyActivity && weeklyActivity.weekKey === currentWeekKey
+      ? weeklyActivity
+      : {
+          weekKey: currentWeekKey,
+          sessions: 0,
+          attempts: 0,
+          correct: 0,
+          studyMinutes: 0,
+        };
+
+  const weeklyAccuracy =
+    safeWeeklyActivity.attempts > 0
+      ? roundToOneDecimal(
+          (safeWeeklyActivity.correct / safeWeeklyActivity.attempts) * 100,
+        )
+      : 0;
+
+  const focusSuggested = weakestCategory
+    ? `Focus on ${weakestCategory.category}`
+    : "Focus on daily consistency";
+
+  const bossCompletedThisWeek =
+    progress.lastBossReviewWeek === safeWeeklyActivity.weekKey;
+
   return {
     currentStreak: progress.currentStreak,
     bestStreak: progress.bestStreak,
@@ -173,5 +227,12 @@ export const calculateStatsMetrics = (
     levelBreakdown,
     recentActivity,
     estimatedStudyMinutes,
+    weeklySummary: {
+      sessions: safeWeeklyActivity.sessions,
+      accuracy: weeklyAccuracy,
+      studyMinutes: safeWeeklyActivity.studyMinutes,
+      focusSuggested,
+      bossCompletedThisWeek,
+    },
   };
 };

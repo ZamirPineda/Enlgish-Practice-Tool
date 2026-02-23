@@ -61,6 +61,31 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                 onSettingsChange({ confirmDialogs: checked })
               }
             />
+
+            <div>
+              <label
+                htmlFor="weekly-goal-select"
+                className="block text-sm font-bold mb-2 text-text-secondary"
+              >
+                Weekly goal (sessions)
+              </label>
+              <select
+                id="weekly-goal-select"
+                className="w-full min-h-[44px] rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-focus"
+                value={settings.weeklyGoalSessions}
+                onChange={(event) =>
+                  onSettingsChange({
+                    weeklyGoalSessions: Number(event.target.value),
+                  })
+                }
+              >
+                {[3, 4, 5, 6, 7, 8, 10, 12].map((value) => (
+                  <option key={value} value={value}>
+                    {value} sessions
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </Card>
       </div>

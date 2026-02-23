@@ -4,6 +4,8 @@ import {
   createNewSrsItem,
   getDueReviewItems,
   getDueReviewWords,
+  getIsoWeekKey,
+  getWeeklyBossReviewItems,
 } from "./srs";
 import { SrsVocabularyItem } from "../types";
 
@@ -361,5 +363,68 @@ describe("getDueReviewItems", () => {
 
     expect(result).toHaveLength(1);
     expect(result[0].word).toBe("valid");
+  });
+});
+
+describe("getIsoWeekKey", () => {
+  it("returns expected ISO week key", () => {
+    expect(getIsoWeekKey(new Date("2026-02-23T00:00:00.000Z"))).toBe(
+      "2026-W09",
+    );
+  });
+});
+
+describe("getWeeklyBossReviewItems", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-02-23T12:00:00.000Z"));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  const createBossItem = (
+    word: string,
+    nextReviewDate: string,
+    status: "new" | "learning" | "mastered" = "learning",
+  ): SrsVocabularyItem => ({
+    word,
+    definition: "test",
+    repetition: status === "new" ? 0 : 1,
+    efactor: 2.5,
+    interval: status === "new" ? 0 : 3,
+    nextReviewDate,
+    status,
+    lapses: 0,
+  });
+
+  it("prioritizes due items and then upcoming/new items", () => {
+    const deck: Record<string, SrsVocabularyItem> = {
+      overdue1: createBossItem("overdue-1", "2026-02-20"),
+      dueToday: createBossItem("due-today", "2026-02-23"),
+      upcoming: createBossItem("upcoming", "2026-02-27"),
+      newCard: createBossItem("new-card", "2026-03-12", "new"),
+      future: createBossItem("future", "2026-03-20"),
+    };
+
+    const result = getWeeklyBossReviewItems(deck, 4).map((item) => item.word);
+
+    expect(result).toContain("overdue-1");
+    expect(result).toContain("due-today");
+    expect(result).toContain("upcoming");
+    expect(result).toContain("new-card");
+    expect(result).not.toContain("future");
+  });
+
+  it("respects maxItems limit", () => {
+    const deck: Record<string, SrsVocabularyItem> = {
+      a: createBossItem("a", "2026-02-20"),
+      b: createBossItem("b", "2026-02-21"),
+      c: createBossItem("c", "2026-02-22"),
+    };
+
+    const result = getWeeklyBossReviewItems(deck, 2);
+    expect(result).toHaveLength(2);
   });
 });

@@ -1,7 +1,13 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { SrsVocabularyItem } from "../types";
-import { calculateStatsMetrics, VaultProgress } from "../utils/statsMetrics";
+import {
+  calculateStatsMetrics,
+  VaultProgress,
+  WeeklyActivitySummary,
+} from "../utils/statsMetrics";
+import { AppSettings, loadSettings } from "../utils/settingsStore";
+import { getIsoWeekKey } from "../utils/srs";
 import Card from "./ui/Card";
 import ViewToolbar from "./ui/ViewToolbar";
 import {
@@ -10,11 +16,13 @@ import {
   Gamepad2,
   BookOpen,
   Library,
+  Zap,
   ArrowRight,
 } from "lucide-react";
 
 const VAULT_DECK_KEY = "vocab-vault-deck";
 const VAULT_PROGRESS_KEY = "vocab-vault-progress";
+const VAULT_WEEKLY_ACTIVITY_KEY = "vocab-vault-weekly-activity";
 
 const DEFAULT_PROGRESS: VaultProgress = {
   currentStreak: 0,
@@ -34,6 +42,7 @@ const readJson = <T,>(key: string, fallback: T): T => {
 };
 
 const HomeView: React.FC = () => {
+  const currentWeekKey = getIsoWeekKey(new Date());
   const deck = useMemo(
     () => readJson<Record<string, SrsVocabularyItem>>(VAULT_DECK_KEY, {}),
     [],
@@ -42,9 +51,30 @@ const HomeView: React.FC = () => {
     () => readJson<VaultProgress>(VAULT_PROGRESS_KEY, DEFAULT_PROGRESS),
     [],
   );
+  const weeklyActivity = useMemo(
+    () =>
+      readJson<WeeklyActivitySummary>(VAULT_WEEKLY_ACTIVITY_KEY, {
+        weekKey: currentWeekKey,
+        sessions: 0,
+        attempts: 0,
+        correct: 0,
+        studyMinutes: 0,
+      }),
+    [currentWeekKey],
+  );
+  const settings = useMemo<AppSettings>(() => loadSettings(), []);
   const metrics = useMemo(
-    () => calculateStatsMetrics(deck, { ...DEFAULT_PROGRESS, ...progress }),
-    [deck, progress],
+    () =>
+      calculateStatsMetrics(
+        deck,
+        { ...DEFAULT_PROGRESS, ...progress },
+        weeklyActivity,
+      ),
+    [deck, progress, weeklyActivity],
+  );
+  const weeklyGoalProgress = Math.min(
+    100,
+    (metrics.weeklySummary.sessions / settings.weeklyGoalSessions) * 100,
   );
 
   const greeting = useMemo(() => {
@@ -124,7 +154,7 @@ const HomeView: React.FC = () => {
           <h2 className="text-xl font-bold text-text-primary mb-4">
             Quick Actions
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Link to="/vault" className="group block">
               <Card
                 interactive
@@ -177,6 +207,23 @@ const HomeView: React.FC = () => {
                 </p>
               </Card>
             </Link>
+
+            <Link to="/speed-builder" className="group block">
+              <Card
+                interactive
+                className="h-full p-6 border-t-4 border-amber-500 bg-surface-1"
+              >
+                <div className="mb-4 text-amber-500 group-hover:scale-110 transition-transform origin-left">
+                  <Zap className="w-10 h-10" />
+                </div>
+                <h3 className="text-xl font-bold text-text-primary mb-2">
+                  Speed Builder
+                </h3>
+                <p className="text-text-secondary text-sm">
+                  Build correct sentences by ordering words as fast as you can.
+                </p>
+              </Card>
+            </Link>
           </div>
         </section>
 
@@ -220,6 +267,22 @@ const HomeView: React.FC = () => {
               <div className="text-3xl font-black text-purple-500">
                 {metrics.estimatedStudyMinutes || 0}m
               </div>
+            </div>
+          </div>
+
+          <div className="mt-6 bg-surface-2 p-4 rounded-2xl border border-border">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-sm font-bold text-text-primary">Weekly Goal</p>
+              <p className="text-xs font-bold text-text-secondary uppercase tracking-widest">
+                {metrics.weeklySummary.sessions} / {settings.weeklyGoalSessions}{" "}
+                sessions
+              </p>
+            </div>
+            <div className="w-full bg-surface-1 h-2 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-accent transition-all duration-500"
+                style={{ width: `${weeklyGoalProgress}%` }}
+              ></div>
             </div>
           </div>
         </section>

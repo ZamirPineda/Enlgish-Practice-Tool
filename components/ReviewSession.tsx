@@ -8,6 +8,7 @@ interface ReviewSessionProps {
   onComplete: (wasCorrect: boolean) => void;
   onFinishSession: () => void;
   onPlayAudio: (text: string) => void;
+  onSpeakingUsed?: (source: "review_audio") => void;
 }
 
 const ReviewSession: React.FC<ReviewSessionProps> = ({
@@ -16,6 +17,7 @@ const ReviewSession: React.FC<ReviewSessionProps> = ({
   onComplete,
   onFinishSession,
   onPlayAudio,
+  onSpeakingUsed,
 }) => {
   const [isRevealed, setIsRevealed] = useState(false);
 
@@ -49,7 +51,10 @@ const ReviewSession: React.FC<ReviewSessionProps> = ({
         <div className="mb-8">
           <h2 className="text-4xl font-black text-white mb-4">{item.word}</h2>
           <button
-            onClick={() => onPlayAudio(item.word)}
+            onClick={() => {
+              onPlayAudio(item.word);
+              onSpeakingUsed?.("review_audio");
+            }}
             className="bg-slate-700 hover:bg-sky-600 text-white p-3 rounded-full transition-all inline-flex items-center justify-center"
             aria-label={`Listen to pronunciation of ${item.word}`}
           >

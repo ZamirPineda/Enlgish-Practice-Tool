@@ -4,6 +4,7 @@ import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
 interface SpeechPracticeButtonProps {
   targetText: string;
   onCorrect: () => void;
+  onUsage?: () => void;
 }
 
 const MicIcon = () => (
@@ -41,6 +42,7 @@ const CheckIcon = () => (
 const SpeechPracticeButton: React.FC<SpeechPracticeButtonProps> = ({
   targetText,
   onCorrect,
+  onUsage,
 }) => {
   const HIGH_ACCURACY_THRESHOLD = 90;
   const MEDIUM_ACCURACY_THRESHOLD = 70;
@@ -82,6 +84,7 @@ const SpeechPracticeButton: React.FC<SpeechPracticeButtonProps> = ({
       startListening();
       setStatus("listening");
       setAccuracyScore(null);
+      onUsage?.();
     }
   };
 
