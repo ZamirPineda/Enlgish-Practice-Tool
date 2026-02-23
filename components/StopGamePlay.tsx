@@ -16,7 +16,11 @@ import Button from "./ui/Button";
 
 interface StopGamePlayProps {
   onPlayWord: (word: string) => void;
-  onAddToVault: (word: string, definition: string) => void;
+  onAddToVault: (
+    word: string,
+    definition: string,
+    options?: { category?: string; tags?: string[] },
+  ) => void;
 }
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -236,7 +240,9 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         ],
       }));
 
-      onAddToVault(randomWord.word, definition);
+      onAddToVault(randomWord.word, definition, {
+        category: currentCategory || undefined,
+      });
 
       setTimeout(() => {
         pickNextChallenge();

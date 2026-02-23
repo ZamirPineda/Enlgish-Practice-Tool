@@ -24,7 +24,11 @@ interface StopGameBrowseProps {
   onPlayWord: (word: string) => void;
   isWordAudioLoading: string | null;
   ttsAutoPlay: boolean;
-  onAddToVault: (word: string, definition: string) => void;
+  onAddToVault: (
+    word: string,
+    definition: string,
+    options?: { category?: string; tags?: string[] },
+  ) => void;
 }
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -69,6 +73,9 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
 
   // Practice State
   const [practiceWord, setPracticeWord] = useState<StopItem | null>(null);
+  const [practiceCategory, setPracticeCategory] = useState<StopCategory | null>(
+    null,
+  );
   const [practiceFeedback, setPracticeFeedback] = useState<string | null>(null);
   // Add state to hold the 'frozen' transcript for feedback display even after mic stops
   const [frozenTranscript, setFrozenTranscript] = useState<string | null>(null);
@@ -262,12 +269,14 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
           handleSaveWord(
             practiceWord.word,
             practiceWord.definition || practiceWord.translation,
+            practiceCategory || undefined,
           );
         }
 
         setTimeout(() => {
           setIsPracticing(false);
           setPracticeWord(null);
+          setPracticeCategory(null);
           setPracticeFeedback(null);
           setFrozenTranscript(null);
         }, 5000);
@@ -295,7 +304,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
     finalTranscript,
   } = useSpeechRecognition(handleSpeechResult);
 
-  const handlePracticeClick = (item: StopItem) => {
+  const handlePracticeClick = (item: StopItem, category: StopCategory) => {
     // If clicking same word that is currently active (Closing or Retrying)
     if (isPracticing && practiceWord?.word === item.word) {
       // Just close/reset everything.
@@ -303,6 +312,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
       abortListening();
       setIsPracticing(false);
       setPracticeWord(null);
+      setPracticeCategory(null);
       setPracticeFeedback(null);
       setFrozenTranscript(null);
     } else {
@@ -313,6 +323,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
       }
 
       setPracticeWord(item);
+      setPracticeCategory(category);
       setPracticeFeedback(null);
       setFrozenTranscript(null);
       setIsPracticing(true);
@@ -320,9 +331,15 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
     }
   };
 
-  const handleSaveWord = (word: string, definition: string) => {
+  const handleSaveWord = (
+    word: string,
+    definition: string,
+    category?: StopCategory,
+  ) => {
     if (onAddToVault) {
-      onAddToVault(word, definition);
+      onAddToVault(word, definition, {
+        category,
+      });
       setSavedWords((prev) => new Set(prev).add(word));
     }
   };
@@ -632,8 +649,12 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                             category={category}
                             theme={theme}
                             onPlay={onPlayWord}
-                            onPractice={() => handlePracticeClick(item)}
-                            onSave={handleSaveWord}
+                            onPractice={() =>
+                              handlePracticeClick(item, category)
+                            }
+                            onSave={(word, definition) =>
+                              handleSaveWord(word, definition, category)
+                            }
                             isAudioLoading={isWordAudioLoading === item.word}
                             isPracticing={
                               practiceWord?.word === item.word && isPracticing

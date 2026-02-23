@@ -6,7 +6,11 @@ interface StopGameViewProps {
   onPlayWord: (word: string) => void;
   isWordAudioLoading: string | null;
   ttsAutoPlay: boolean;
-  onAddToVault: (word: string, definition: string) => void;
+  onAddToVault: (
+    word: string,
+    definition: string,
+    options?: { category?: string; tags?: string[] },
+  ) => void;
 }
 
 const StopGameView: React.FC<StopGameViewProps> = ({

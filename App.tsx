@@ -298,7 +298,14 @@ const App: React.FC = () => {
   }, [handleSettingsChange]);
 
   // Vocabulary Vault Logic (Kept for compatibility with StopGame/StudyDeck)
-  const addToVault = (word: string, definition: string) => {
+  const addToVault = (
+    word: string,
+    definition: string,
+    options?: {
+      category?: string;
+      tags?: string[];
+    },
+  ) => {
     try {
       const saved = localStorage.getItem("vocab-vault-deck");
       const deck: Record<string, SrsVocabularyItem> = saved
@@ -308,13 +315,45 @@ const App: React.FC = () => {
       // Simple duplicate check normalization
       const key = word.toLowerCase().trim();
       if (deck[key]) {
+        const existing = deck[key];
+        const metadataTags = [
+          ...(options?.tags || []),
+          ...(options?.category ? [options.category] : []),
+        ]
+          .map((tag) => tag.trim())
+          .filter((tag) => tag.length > 0);
+
+        if (metadataTags.length > 0) {
+          const mergedTags = Array.from(
+            new Set([...(existing.tags || []), ...metadataTags]),
+          );
+          deck[key] = {
+            ...existing,
+            tags: mergedTags,
+          };
+          localStorage.setItem("vocab-vault-deck", JSON.stringify(deck));
+          toast.info(`Updated "${word}" with category info.`);
+          return;
+        }
+
         toast.info(`"${word}" is already in your Vault.`);
         return;
       }
 
-      deck[key] = createNewSrsItem(word, definition);
+      const metadataTags = [
+        ...(options?.tags || []),
+        ...(options?.category ? [options.category] : []),
+      ]
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0);
+
+      deck[key] = {
+        ...createNewSrsItem(word, definition),
+        tags: metadataTags.length > 0 ? Array.from(new Set(metadataTags)) : [],
+      };
       localStorage.setItem("vocab-vault-deck", JSON.stringify(deck));
-      toast.success(`Added "${word}" to Vault!`);
+      const categorySuffix = options?.category ? ` (${options.category})` : "";
+      toast.success(`Added "${word}"${categorySuffix} to Vault!`);
     } catch (e) {
       console.error("Error saving to vault", e);
       toast.error("Failed to save word.");
