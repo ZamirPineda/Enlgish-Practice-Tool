@@ -360,59 +360,55 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
   return (
     <>
       {/* UNIFIED VIEW TOOLBAR */}
-      <div className="flex-shrink-0 bg-[var(--color-surface-1)] border-b border-[var(--color-border)] z-30 relative shadow-sm">
-        <div className="max-w-7xl mx-auto px-2 py-1.5">
-          <ViewToolbar
-            className="border-none rounded-lg p-0 bg-transparent"
-            left={
-              <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
-                <span className="text-xs font-bold text-[var(--color-text-secondary)] uppercase tracking-wider flex items-center gap-2 whitespace-nowrap">
-                  <span className="text-lg">🛑</span>{" "}
-                  {viewMode === "browse"
-                    ? "Dictionary"
-                    : viewMode === "study"
-                      ? "Flashcards"
-                      : "Game"}
-                </span>
-
-                {viewMode !== "game" && currentData && (
-                  <span className="bg-[var(--color-surface-2)] text-[var(--color-text-muted)] px-2 py-1 rounded-lg text-xs font-mono border border-[var(--color-border)] whitespace-nowrap flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]"></span>
-                    {Object.values(currentData).flat().length}
+      {viewMode !== "game" && (
+        <div className="flex-shrink-0 bg-[var(--color-surface-1)] border-b border-[var(--color-border)] z-30 relative shadow-sm">
+          <div className="max-w-7xl mx-auto px-2 py-1.5">
+            <ViewToolbar
+              className="border-none rounded-lg p-0 bg-transparent"
+              left={
+                <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+                  <span className="text-xs font-bold text-[var(--color-text-secondary)] uppercase tracking-wider flex items-center gap-2 whitespace-nowrap">
+                    <span className="text-lg">🛑</span>{" "}
+                    {viewMode === "browse" ? "Dictionary" : "Flashcards"}
                   </span>
-                )}
-              </div>
-            }
-            right={
-              <>
-                {viewMode === "study" && (
-                  <div className="flex gap-1">
-                    <button
-                      onClick={() => {
-                        setIsShuffled(!isShuffled);
-                        if (!isShuffled) setShuffleSeed((s) => s + 1);
-                      }}
-                      className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${isShuffled ? "bg-purple-600 border-purple-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-purple-400"}`}
-                      title={isShuffled ? "Unshuffle" : "Shuffle Words"}
-                    >
-                      🔀
-                    </button>
-                    <button
-                      onClick={() => setStudyAutoPlay(!studyAutoPlay)}
-                      className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${studyAutoPlay ? "bg-[var(--color-accent)] border-[var(--color-accent)] text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"}`}
-                    >
-                      {studyAutoPlay ? "🔊" : "🔈"}
-                    </button>
-                    <button
-                      onClick={() => setStudyRevealAll(!studyRevealAll)}
-                      className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${studyRevealAll ? "bg-amber-600 border-amber-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-amber-400"}`}
-                    >
-                      {studyRevealAll ? "Hide" : "Reveal"}
-                    </button>
-                  </div>
-                )}
 
-                {viewMode !== "game" && (
+                  {currentData && (
+                    <span className="bg-[var(--color-surface-2)] text-[var(--color-text-muted)] px-2 py-1 rounded-lg text-xs font-mono border border-[var(--color-border)] whitespace-nowrap flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]"></span>
+                      {Object.values(currentData).flat().length}
+                    </span>
+                  )}
+                </div>
+              }
+              right={
+                <>
+                  {viewMode === "study" && (
+                    <div className="flex gap-1">
+                      <button
+                        onClick={() => {
+                          setIsShuffled(!isShuffled);
+                          if (!isShuffled) setShuffleSeed((s) => s + 1);
+                        }}
+                        className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${isShuffled ? "bg-purple-600 border-purple-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-purple-400"}`}
+                        title={isShuffled ? "Unshuffle" : "Shuffle Words"}
+                      >
+                        🔀
+                      </button>
+                      <button
+                        onClick={() => setStudyAutoPlay(!studyAutoPlay)}
+                        className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${studyAutoPlay ? "bg-[var(--color-accent)] border-[var(--color-accent)] text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"}`}
+                      >
+                        {studyAutoPlay ? "🔊" : "🔈"}
+                      </button>
+                      <button
+                        onClick={() => setStudyRevealAll(!studyRevealAll)}
+                        className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${studyRevealAll ? "bg-amber-600 border-amber-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-amber-400"}`}
+                      >
+                        {studyRevealAll ? "Hide" : "Reveal"}
+                      </button>
+                    </div>
+                  )}
+
                   <>
                     <div className="relative w-full md:w-52 group flex-1 md:flex-none">
                       <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-[var(--color-text-secondary)]">
@@ -465,12 +461,12 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       <SparklesIcon />
                     </button>
                   </>
-                )}
-              </>
-            }
-          />
+                </>
+              }
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Row 2: Letters & Filters (Always Visible in Browse Mode) */}
       {viewMode === "browse" && (
