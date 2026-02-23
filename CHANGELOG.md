@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.14.0...english-practice-pal-v1.15.0) (2026-02-23)
+
+
+### Features
+
+* Add visuals ([3a42e49](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/3a42e4980dbfb32a6660b3b9d866e6103a38f0b1))
+
 ## [1.14.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.13.1...english-practice-pal-v1.14.0) (2026-02-22)
 
 
