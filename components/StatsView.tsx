@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { SrsVocabularyItem } from "../types";
 import {
@@ -58,6 +58,95 @@ const buildAnalyticsSummary = (events: Array<{ name: AnalyticsEventName }>) => {
     itemAttempts,
     itemAccuracy,
   };
+};
+
+interface GameErrorBreakdownItem {
+  game: string;
+  total: number;
+  reasons: Array<{ errorType: string; count: number }>;
+}
+
+interface ErrorTypeAggregateItem {
+  errorType: string;
+  count: number;
+}
+
+type GameErrorCountMap = Record<string, Record<string, number>>;
+
+const prettifyAnalyticsLabel = (value: string) =>
+  value
+    .split("_")
+    .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
+    .join(" ");
+
+const buildGameErrorCountMap = (
+  events: Array<{ name: AnalyticsEventName; payload: Record<string, unknown> }>,
+): GameErrorCountMap => {
+  const grouped: GameErrorCountMap = {};
+
+  events.forEach((event) => {
+    if (event.name !== "item_wrong") {
+      return;
+    }
+
+    const game =
+      typeof event.payload.game === "string"
+        ? event.payload.game
+        : "unknown_game";
+    const errorType =
+      typeof event.payload.errorType === "string"
+        ? event.payload.errorType
+        : "unknown_reason";
+
+    if (!grouped[game]) {
+      grouped[game] = {};
+    }
+    grouped[game][errorType] = (grouped[game][errorType] || 0) + 1;
+  });
+
+  return grouped;
+};
+
+const buildGameErrorBreakdown = (
+  events: Array<{ name: AnalyticsEventName; payload: Record<string, unknown> }>,
+): GameErrorBreakdownItem[] => {
+  const grouped = buildGameErrorCountMap(events);
+
+  return Object.entries(grouped)
+    .map(([game, reasonsMap]) => {
+      const reasons = Object.entries(reasonsMap)
+        .map(([errorType, count]) => ({ errorType, count }))
+        .sort((left, right) => right.count - left.count);
+
+      return {
+        game,
+        total: reasons.reduce(
+          (accumulator, item) => accumulator + item.count,
+          0,
+        ),
+        reasons,
+      };
+    })
+    .sort((left, right) => right.total - left.total);
+};
+
+const buildTopErrorTypes = (
+  events: Array<{ name: AnalyticsEventName; payload: Record<string, unknown> }>,
+  limit = 3,
+): ErrorTypeAggregateItem[] => {
+  const grouped = buildGameErrorCountMap(events);
+  const totals: Record<string, number> = {};
+
+  Object.values(grouped).forEach((gameMap) => {
+    Object.entries(gameMap).forEach(([errorType, count]) => {
+      totals[errorType] = (totals[errorType] || 0) + count;
+    });
+  });
+
+  return Object.entries(totals)
+    .map(([errorType, count]) => ({ errorType, count }))
+    .sort((left, right) => right.count - left.count)
+    .slice(0, limit);
 };
 
 const formatDelta = (value: number) => (value > 0 ? `+${value}` : `${value}`);
@@ -145,6 +234,7 @@ const ClockIcon = () => (
 const StatsView: React.FC = () => {
   const currentWeekKey = getIsoWeekKey(new Date());
   const [analyticsRange, setAnalyticsRange] = useState<"week" | "30d">("week");
+  const [selectedErrorGame, setSelectedErrorGame] = useState<string>("all");
 
   const [deck] = useState<Record<string, SrsVocabularyItem>>(() =>
     readJson<Record<string, SrsVocabularyItem>>(VAULT_DECK_KEY, {}),
@@ -222,6 +312,43 @@ const StatsView: React.FC = () => {
   const previousAnalyticsSummary = useMemo(() => {
     return buildAnalyticsSummary(previousAnalytics);
   }, [previousAnalytics]);
+
+  const analyticsErrorBreakdown = useMemo(() => {
+    return buildGameErrorBreakdown(filteredAnalytics);
+  }, [filteredAnalytics]);
+
+  const topErrorTypes = useMemo(() => {
+    return buildTopErrorTypes(filteredAnalytics, 3);
+  }, [filteredAnalytics]);
+
+  const previousErrorCountMap = useMemo(() => {
+    return buildGameErrorCountMap(previousAnalytics);
+  }, [previousAnalytics]);
+
+  const availableErrorGames = useMemo(
+    () => analyticsErrorBreakdown.map((item) => item.game),
+    [analyticsErrorBreakdown],
+  );
+
+  useEffect(() => {
+    if (selectedErrorGame === "all") {
+      return;
+    }
+
+    if (!availableErrorGames.includes(selectedErrorGame)) {
+      setSelectedErrorGame("all");
+    }
+  }, [availableErrorGames, selectedErrorGame]);
+
+  const visibleErrorBreakdown = useMemo(() => {
+    if (selectedErrorGame === "all") {
+      return analyticsErrorBreakdown;
+    }
+
+    return analyticsErrorBreakdown.filter(
+      (item) => item.game === selectedErrorGame,
+    );
+  }, [analyticsErrorBreakdown, selectedErrorGame]);
 
   const sessionStartsDelta =
     analyticsSummary.session_start - previousAnalyticsSummary.session_start;
@@ -502,6 +629,98 @@ const StatsView: React.FC = () => {
                     vs prev: {formatDelta(speakingUsedDelta)}
                   </p>
                 </article>
+              </div>
+
+              <div className="mt-6 bg-surface-2 border border-border rounded-xl p-4">
+                <h3 className="text-sm font-black uppercase tracking-widest text-text-primary mb-3">
+                  Error Breakdown by Game
+                </h3>
+                {analyticsErrorBreakdown.length === 0 ? (
+                  <p className="text-sm text-text-muted">
+                    No wrong answers tracked in this range.
+                  </p>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="bg-surface-1 border border-border rounded-lg p-3">
+                      <p className="text-xs font-black uppercase tracking-widest text-text-secondary mb-2">
+                        Top 3 errores
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {topErrorTypes.map((item, index) => (
+                          <span
+                            key={`top-${item.errorType}`}
+                            className="px-2 py-1 rounded-md bg-surface-2 border border-border text-xs font-bold text-text-primary"
+                          >
+                            {index + 1}.{" "}
+                            {prettifyAnalyticsLabel(item.errorType)} —{" "}
+                            {item.count}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => setSelectedErrorGame("all")}
+                        className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
+                          selectedErrorGame === "all"
+                            ? "bg-accent text-white border-accent"
+                            : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"
+                        }`}
+                      >
+                        All games
+                      </button>
+                      {availableErrorGames.map((game) => (
+                        <button
+                          key={`filter-${game}`}
+                          onClick={() => setSelectedErrorGame(game)}
+                          className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
+                            selectedErrorGame === game
+                              ? "bg-accent text-white border-accent"
+                              : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"
+                          }`}
+                        >
+                          {prettifyAnalyticsLabel(game)}
+                        </button>
+                      ))}
+                    </div>
+
+                    {visibleErrorBreakdown.map((item) => (
+                      <div
+                        key={item.game}
+                        className="bg-surface-1 border border-border rounded-lg p-3"
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <p className="text-sm font-bold text-text-primary">
+                            {prettifyAnalyticsLabel(item.game)}
+                          </p>
+                          <p className="text-xs font-bold uppercase tracking-widest text-amber-400">
+                            {item.total} wrong
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {item.reasons.map((reason) => {
+                            const previousCount =
+                              previousErrorCountMap[item.game]?.[
+                                reason.errorType
+                              ] || 0;
+                            const delta = reason.count - previousCount;
+
+                            return (
+                              <span
+                                key={`${item.game}-${reason.errorType}`}
+                                className={`px-2 py-1 rounded-md bg-surface-2 border border-border text-xs font-bold ${getDeltaClass(delta)}`}
+                              >
+                                {prettifyAnalyticsLabel(reason.errorType)}:{" "}
+                                {reason.count} (vs prev: {formatDelta(delta)})
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </section>
 

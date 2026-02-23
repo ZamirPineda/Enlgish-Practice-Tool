@@ -34,6 +34,46 @@ describe("VocabularyVaultView flows", () => {
     expect(screen.getByRole("heading", { name: "hello" })).toBeInTheDocument();
   });
 
+  test("objective mode: filters review queue by travel tags", async () => {
+    localStorage.setItem(
+      "vocab-vault-deck",
+      JSON.stringify({
+        interviewWord: {
+          word: "resume",
+          definition: "a CV",
+          repetition: 0,
+          efactor: 2.5,
+          interval: 0,
+          nextReviewDate: today,
+          status: "new",
+          tags: ["Interview", "B1"],
+        },
+        travelWord: {
+          word: "boarding pass",
+          definition: "travel document",
+          repetition: 0,
+          efactor: 2.5,
+          interval: 0,
+          nextReviewDate: today,
+          status: "new",
+          tags: ["Travel", "A2"],
+        },
+      }),
+    );
+
+    render(
+      <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Objective travel" }));
+    fireEvent.click(screen.getByRole("button", { name: "Review Now (1)" }));
+
+    expect(await screen.findByText("Review 1 / 1")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "boarding pass" }),
+    ).toBeInTheDocument();
+  });
+
   test("responder: completing an answer updates deck and exits session", async () => {
     localStorage.setItem(
       "vocab-vault-deck",

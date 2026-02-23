@@ -13,6 +13,7 @@ type StarterKits = {
   business: StarterKitItem[];
   workInterview: StarterKitItem[];
   travelEmergencies: StarterKitItem[];
+  commonMistakesEs: StarterKitItem[];
 };
 
 export const starterKits: StarterKits = {
@@ -269,6 +270,96 @@ export const starterKits: StarterKits = {
       example: "Travel insurance can cover medical emergencies abroad.",
       partOfSpeech: "Noun phrase",
       tags: ["Travel", "B2"],
+    },
+  ],
+  commonMistakesEs: [
+    {
+      word: "I am 25 years old",
+      definition:
+        "Correct form for age. Avoid literal translation from Spanish ('I have 25 years').",
+      example: "I am 25 years old and I work in finance.",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Spanish Interference", "A2"],
+    },
+    {
+      word: "I have been here for two years",
+      definition:
+        "Use present perfect for actions continuing until now ('I have been...').",
+      example: "I have been here for two years.",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Spanish Interference", "B1"],
+    },
+    {
+      word: "I am interested in marketing",
+      definition: "After 'interested' use 'in', not 'on'.",
+      example: "I am interested in marketing and branding.",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Prepositions", "B1"],
+    },
+    {
+      word: "I agree with you",
+      definition: "Use 'agree with someone', not 'agree you'.",
+      example: "I agree with you about the deadline.",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Grammar", "A2"],
+    },
+    {
+      word: "It depends on the context",
+      definition: "Use 'depend on', not 'depend of'.",
+      example: "It depends on the context and audience.",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Prepositions", "A2"],
+    },
+    {
+      word: "Actually means in fact",
+      definition: "False friend: 'actually' means 'in fact', not 'currently'.",
+      example: "Actually, we shipped the feature yesterday.",
+      partOfSpeech: "Usage note",
+      tags: ["Common Mistake", "False Friends", "B1"],
+    },
+    {
+      word: "I am looking forward to meeting you",
+      definition: "Use 'look forward to' + gerund (-ing).",
+      example: "I am looking forward to meeting you next week.",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Grammar", "B1"],
+    },
+    {
+      word: "I need to make a decision",
+      definition:
+        "Use collocation 'make a decision', not 'take a decision' in most contexts.",
+      example: "We need to make a decision before Friday.",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Collocations", "B2"],
+    },
+    {
+      word: "I have experience in sales",
+      definition: "Use 'experience in' a field, not 'experience on'.",
+      example: "I have experience in sales and account management.",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Prepositions", "B1"],
+    },
+    {
+      word: "Can you lend me your pen?",
+      definition: "Use 'lend' when someone gives you something temporarily.",
+      example: "Can you lend me your pen for a minute?",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Vocabulary", "A2"],
+    },
+    {
+      word: "I missed the bus",
+      definition:
+        "Use 'missed' for transport/events; avoid literal translations.",
+      example: "I missed the bus, so I arrived late.",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Vocabulary", "A2"],
+    },
+    {
+      word: "I am responsible for onboarding",
+      definition: "Use 'responsible for', not 'responsible of'.",
+      example: "I am responsible for onboarding new team members.",
+      partOfSpeech: "Sentence",
+      tags: ["Common Mistake", "Prepositions", "B1"],
     },
   ],
 };

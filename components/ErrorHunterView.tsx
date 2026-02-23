@@ -1,85 +1,65 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
-import {
-  speedBuilderRounds,
-  type SpeedBuilderRound,
-} from "../data/speedBuilder";
+import { errorHunterRounds, type ErrorHunterRound } from "../data/errorHunter";
 
-type SpeedBuilderLevel = SpeedBuilderRound["level"];
-const LEVEL_ORDER: SpeedBuilderLevel[] = ["A1", "A2", "B1", "B2", "C1"];
+type ErrorHunterLevel = ErrorHunterRound["level"];
 
-const ROUND_TIME_SECONDS: Record<SpeedBuilderLevel, number> = {
-  A1: 60,
-  A2: 55,
-  B1: 45,
-  B2: 35,
-  C1: 30,
+const LEVEL_ORDER: ErrorHunterLevel[] = ["A2", "B1", "B2", "C1"];
+const ROUND_TIME_SECONDS: Record<ErrorHunterLevel, number> = {
+  A2: 45,
+  B1: 38,
+  B2: 32,
+  C1: 28,
 };
-const LEVEL_SCORE_MULTIPLIER: Record<SpeedBuilderLevel, number> = {
-  A1: 1,
+const LEVEL_SCORE_MULTIPLIER: Record<ErrorHunterLevel, number> = {
   A2: 1.1,
   B1: 1.25,
   B2: 1.5,
   C1: 1.75,
 };
-const BASE_POINTS_PER_CORRECT = 100;
-const TIME_BONUS_MULTIPLIER = 2;
+const BASE_POINTS_PER_CORRECT = 120;
+const TIME_BONUS_MULTIPLIER = 3;
 
-const shuffleWords = (sentence: string): string[] => {
-  const words = sentence.trim().split(/\s+/);
-  const shuffled = [...words];
-  for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1));
-    [shuffled[index], shuffled[randomIndex]] = [
-      shuffled[randomIndex],
-      shuffled[index],
-    ];
-  }
+const normalizeSentence = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9'\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 
-  const isSameOrder = shuffled.every((word, index) => word === words[index]);
-  if (isSameOrder && shuffled.length > 1) {
-    [shuffled[0], shuffled[1]] = [shuffled[1], shuffled[0]];
-  }
-
-  return shuffled;
-};
-
-const SpeedBuilderView: React.FC = () => {
-  const [selectedLevel, setSelectedLevel] = useState<SpeedBuilderLevel>("A2");
-  const rounds = useMemo(() => {
-    return speedBuilderRounds.filter((item) => item.level === selectedLevel);
-  }, [selectedLevel]);
-
+const ErrorHunterView: React.FC = () => {
+  const [selectedLevel, setSelectedLevel] = useState<ErrorHunterLevel>("B1");
   const [roundIndex, setRoundIndex] = useState(0);
-  const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  const [answer, setAnswer] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS.A2);
+  const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS.B1);
   const [totalScore, setTotalScore] = useState(0);
   const [lastRoundPoints, setLastRoundPoints] = useState(0);
   const [timeoutReached, setTimeoutReached] = useState(false);
-  const [showHint, setShowHint] = useState(false);
-  const beginnerLevel = selectedLevel === "A1" || selectedLevel === "A2";
+
+  const rounds = useMemo(
+    () => errorHunterRounds.filter((item) => item.level === selectedLevel),
+    [selectedLevel],
+  );
 
   const round = rounds[roundIndex];
-
   const roundTime = ROUND_TIME_SECONDS[selectedLevel];
 
   useEffect(() => {
     setRoundIndex(0);
-    setSelectedWords([]);
+    setAnswer("");
     setSubmitted(false);
     setCorrectCount(0);
     setTimeLeft(roundTime);
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
-    setShowHint(false);
   }, [selectedLevel, roundTime]);
 
   useEffect(() => {
-    if (submitted) return;
+    if (submitted || !round) return;
 
     const timerId = window.setInterval(() => {
       setTimeLeft((previous) => {
@@ -92,35 +72,32 @@ const SpeedBuilderView: React.FC = () => {
     }, 1000);
 
     return () => window.clearInterval(timerId);
-  }, [submitted, roundIndex]);
+  }, [submitted, roundIndex, round]);
 
   useEffect(() => {
-    if (submitted || timeLeft !== 0) return;
+    if (submitted || timeLeft !== 0 || !round) return;
 
     setSubmitted(true);
     setTimeoutReached(true);
     setLastRoundPoints(0);
-  }, [submitted, timeLeft]);
+  }, [submitted, timeLeft, round]);
 
-  const shuffledWords = useMemo(
-    () => shuffleWords(round.sentence),
-    [round.id, round.sentence],
-  );
+  if (!round) {
+    return (
+      <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-24 sm:pb-8">
+        <div className="max-w-4xl mx-auto">
+          <Card>
+            <p className="text-text-secondary text-sm">
+              No rounds available for this level yet.
+            </p>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
-  const availableWords = useMemo(() => {
-    const usageCount: Record<string, number> = {};
-
-    return shuffledWords.filter((word) => {
-      usageCount[word] = (usageCount[word] || 0) + 1;
-      const selectedCount = selectedWords.filter(
-        (item) => item === word,
-      ).length;
-      return usageCount[word] > selectedCount;
-    });
-  }, [selectedWords, shuffledWords]);
-
-  const expectedSentence = round.sentence.trim().toLowerCase();
-  const userSentence = selectedWords.join(" ").trim().toLowerCase();
+  const expectedSentence = normalizeSentence(round.correctedSentence);
+  const userSentence = normalizeSentence(answer);
   const isCorrect = submitted && userSentence === expectedSentence;
   const levelMultiplier = LEVEL_SCORE_MULTIPLIER[round.level];
   const basePoints = Math.round(BASE_POINTS_PER_CORRECT * levelMultiplier);
@@ -128,26 +105,14 @@ const SpeedBuilderView: React.FC = () => {
     timeLeft * TIME_BONUS_MULTIPLIER * levelMultiplier,
   );
 
-  const handleSelectWord = (word: string) => {
-    if (submitted) return;
-    setSelectedWords((previous) => [...previous, word]);
-  };
-
-  const handleUndoWord = (index: number) => {
-    if (submitted) return;
-    setSelectedWords((previous) =>
-      previous.filter((_, itemIndex) => itemIndex !== index),
-    );
-  };
-
   const handleCheck = () => {
-    if (selectedWords.length === 0 || submitted) return;
-    const nextIsCorrect = userSentence === expectedSentence;
+    if (!answer.trim() || submitted) return;
+
     setSubmitted(true);
     setTimeoutReached(false);
-    if (nextIsCorrect) {
-      setCorrectCount((previous) => previous + 1);
+    if (userSentence === expectedSentence) {
       const roundPoints = basePoints + timeBonus;
+      setCorrectCount((previous) => previous + 1);
       setLastRoundPoints(roundPoints);
       setTotalScore((previous) => previous + roundPoints);
       return;
@@ -158,36 +123,27 @@ const SpeedBuilderView: React.FC = () => {
 
   const handleNextRound = () => {
     if (roundIndex >= rounds.length - 1) return;
+
     setRoundIndex((previous) => previous + 1);
-    setSelectedWords([]);
+    setAnswer("");
     setSubmitted(false);
     setTimeLeft(roundTime);
     setTimeoutReached(false);
     setLastRoundPoints(0);
-    setShowHint(false);
   };
 
   const handleRestart = () => {
     setRoundIndex(0);
-    setSelectedWords([]);
+    setAnswer("");
     setSubmitted(false);
     setCorrectCount(0);
     setTimeLeft(roundTime);
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
-    setShowHint(false);
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
-
-  const hintText = useMemo(() => {
-    const words = round.sentence.split(/\s+/);
-    if (words.length <= 2) {
-      return round.sentence;
-    }
-    return `${words[0]} ... ${words[words.length - 1]}`;
-  }, [round.sentence]);
 
   return (
     <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-24 sm:pb-8">
@@ -196,10 +152,13 @@ const SpeedBuilderView: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
               <h1 className="text-3xl sm:text-4xl font-black text-text-primary tracking-tight">
-                Speed Builder
+                Error Hunter
               </h1>
               <p className="text-text-secondary text-sm mt-1">
-                Ordena las palabras para formar la oración correcta.
+                Detecta y corrige un error gramatical en cada oración.
+              </p>
+              <p className="text-text-muted text-xs mt-1">
+                Hay exactamente 1 error por ronda.
               </p>
               <div className="mt-3 flex items-center gap-2 flex-wrap">
                 {LEVEL_ORDER.map((level) => (
@@ -208,7 +167,7 @@ const SpeedBuilderView: React.FC = () => {
                     size="sm"
                     variant={selectedLevel === level ? "primary" : "secondary"}
                     onClick={() => setSelectedLevel(level)}
-                    aria-label={`Set level ${level}`}
+                    aria-label={`Set error hunter level ${level}`}
                   >
                     {level}
                   </Button>
@@ -234,65 +193,33 @@ const SpeedBuilderView: React.FC = () => {
             </div>
           </div>
 
-          {beginnerLevel && !submitted ? (
-            <div className="rounded-xl border border-border bg-surface-2 px-3 py-2">
-              <div className="flex items-center gap-2 flex-wrap">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setShowHint((previous) => !previous)}
-                >
-                  {showHint ? "Hide hint" : "Show hint"}
-                </Button>
-                {showHint ? (
-                  <p className="text-xs font-bold uppercase tracking-widest text-text-secondary">
-                    Hint: {hintText}
-                  </p>
-                ) : null}
-              </div>
-            </div>
-          ) : null}
-
-          <div>
+          <div className="rounded-xl border border-border bg-surface-2 p-4">
             <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
-              Tu respuesta
+              Oración con error
             </p>
-            <div className="min-h-[76px] rounded-xl border border-border bg-surface-2 p-3 flex flex-wrap gap-2">
-              {selectedWords.length === 0 ? (
-                <span className="text-sm text-text-muted">
-                  Selecciona palabras para construir la frase.
-                </span>
-              ) : (
-                selectedWords.map((word, index) => (
-                  <button
-                    key={`${word}-${index}`}
-                    onClick={() => handleUndoWord(index)}
-                    className="px-3 py-1.5 rounded-lg bg-surface-1 border border-border text-sm font-semibold text-text-primary hover:bg-surface-hover transition-colors"
-                    aria-label={`Quitar ${word}`}
-                  >
-                    {word}
-                  </button>
-                ))
-              )}
-            </div>
+            <p className="text-lg font-semibold text-text-primary">
+              "{round.incorrectSentence}"
+            </p>
+            <p className="text-xs uppercase tracking-widest font-bold text-text-muted mt-2">
+              Tipo de error objetivo: {round.errorType}
+            </p>
           </div>
 
-          <div>
-            <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
-              Palabras disponibles
-            </p>
-            <div className="rounded-xl border border-border bg-surface-1 p-3 flex flex-wrap gap-2">
-              {availableWords.map((word, index) => (
-                <button
-                  key={`${word}-${index}`}
-                  onClick={() => handleSelectWord(word)}
-                  className="px-3 py-1.5 rounded-lg bg-surface-2 border border-border text-sm font-semibold text-text-primary hover:bg-surface-hover transition-colors"
-                  disabled={submitted}
-                >
-                  {word}
-                </button>
-              ))}
-            </div>
+          <div className="space-y-2">
+            <label
+              htmlFor="error-hunter-answer"
+              className="text-xs uppercase tracking-widest font-bold text-text-secondary"
+            >
+              Tu corrección
+            </label>
+            <textarea
+              id="error-hunter-answer"
+              value={answer}
+              onChange={(event) => setAnswer(event.target.value)}
+              disabled={submitted}
+              className="w-full min-h-[96px] rounded-xl border border-border bg-surface-1 p-3 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-focus"
+              placeholder="Write the corrected sentence here..."
+            />
           </div>
 
           {submitted ? (
@@ -301,7 +228,7 @@ const SpeedBuilderView: React.FC = () => {
             >
               {isCorrect ? (
                 <div className="space-y-1">
-                  <p>✅ Correcto. ¡Buen orden!</p>
+                  <p>✅ Correcto. Excelente corrección.</p>
                   <p className="text-xs font-black uppercase tracking-widest">
                     +{lastRoundPoints} pts (base {basePoints} + bonus tiempo{" "}
                     {timeBonus} · x{levelMultiplier})
@@ -311,11 +238,16 @@ const SpeedBuilderView: React.FC = () => {
                 <div className="space-y-1">
                   <p>⏰ Tiempo agotado.</p>
                   <p className="text-xs">
-                    Respuesta correcta: "{round.sentence}"
+                    Corrección correcta: "{round.correctedSentence}"
                   </p>
                 </div>
               ) : (
-                `❌ Casi. Respuesta correcta: "${round.sentence}"`
+                <div className="space-y-1">
+                  <p>❌ Aún no. Intenta en la siguiente ronda.</p>
+                  <p className="text-xs">
+                    Corrección correcta: "{round.correctedSentence}"
+                  </p>
+                </div>
               )}
             </div>
           ) : null}
@@ -325,18 +257,16 @@ const SpeedBuilderView: React.FC = () => {
               onClick={handleCheck}
               variant="primary"
               size="lg"
-              disabled={
-                selectedWords.length === 0 || submitted || timeLeft === 0
-              }
+              disabled={!answer.trim() || submitted || timeLeft === 0}
             >
-              Check answer
+              Check correction
             </Button>
 
             <Button
-              onClick={() => setSelectedWords([])}
+              onClick={() => setAnswer("")}
               variant="secondary"
               size="lg"
-              disabled={selectedWords.length === 0 || submitted}
+              disabled={!answer.trim() || submitted}
             >
               Clear
             </Button>
@@ -396,4 +326,4 @@ const SpeedBuilderView: React.FC = () => {
   );
 };
 
-export default SpeedBuilderView;
+export default ErrorHunterView;

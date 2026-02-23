@@ -1,0 +1,269 @@
+import React, { useEffect, useMemo, useState } from "react";
+import Card from "./ui/Card";
+import Button from "./ui/Button";
+import {
+  tabooEnglishRounds,
+  type TabooEnglishRound,
+} from "../data/tabooEnglish";
+
+type TabooLevel = TabooEnglishRound["level"];
+
+const LEVEL_ORDER: TabooLevel[] = ["A2", "B1", "B2", "C1"];
+const ROUND_TIME_SECONDS: Record<TabooLevel, number> = {
+  A2: 50,
+  B1: 42,
+  B2: 36,
+  C1: 32,
+};
+const LEVEL_SCORE_MULTIPLIER: Record<TabooLevel, number> = {
+  A2: 1.1,
+  B1: 1.25,
+  B2: 1.5,
+  C1: 1.75,
+};
+
+const normalizeText = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9'\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const containsWord = (text: string, word: string) => {
+  const tokens = normalizeText(text).split(" ").filter(Boolean);
+  return tokens.includes(normalizeText(word));
+};
+
+const TabooEnglishView: React.FC = () => {
+  const [selectedLevel, setSelectedLevel] = useState<TabooLevel>("B1");
+  const [roundIndex, setRoundIndex] = useState(0);
+  const [answer, setAnswer] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS.B1);
+
+  const rounds = useMemo(
+    () => tabooEnglishRounds.filter((item) => item.level === selectedLevel),
+    [selectedLevel],
+  );
+
+  const round = rounds[roundIndex];
+  const roundTime = ROUND_TIME_SECONDS[selectedLevel];
+
+  useEffect(() => {
+    setRoundIndex(0);
+    setAnswer("");
+    setSubmitted(false);
+    setCorrectCount(0);
+    setTotalScore(0);
+    setTimeLeft(roundTime);
+  }, [selectedLevel, roundTime]);
+
+  useEffect(() => {
+    if (submitted || !round) return;
+
+    const timerId = window.setInterval(() => {
+      setTimeLeft((previous) => {
+        if (previous <= 1) {
+          window.clearInterval(timerId);
+          return 0;
+        }
+        return previous - 1;
+      });
+    }, 1000);
+
+    return () => window.clearInterval(timerId);
+  }, [submitted, roundIndex, round]);
+
+  useEffect(() => {
+    if (submitted || timeLeft !== 0 || !round) return;
+    setSubmitted(true);
+  }, [submitted, timeLeft, round]);
+
+  if (!round) {
+    return (
+      <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-24 sm:pb-8">
+        <div className="max-w-4xl mx-auto">
+          <Card>
+            <p className="text-sm text-text-secondary">No rounds available.</p>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  const usedForbidden = round.forbiddenWords.filter((word) =>
+    containsWord(answer, word),
+  );
+  const usedTargetWord = containsWord(answer, round.targetWord);
+
+  const isCorrect =
+    submitted &&
+    answer.trim().length >= 12 &&
+    !usedTargetWord &&
+    usedForbidden.length === 0;
+
+  const handleCheck = () => {
+    if (!answer.trim() || submitted) return;
+
+    setSubmitted(true);
+    if (
+      answer.trim().length >= 12 &&
+      !usedTargetWord &&
+      usedForbidden.length === 0
+    ) {
+      const multiplier = LEVEL_SCORE_MULTIPLIER[round.level];
+      const points = Math.round((110 + timeLeft * 2) * multiplier);
+      setCorrectCount((previous) => previous + 1);
+      setTotalScore((previous) => previous + points);
+    }
+  };
+
+  const handleNext = () => {
+    if (roundIndex >= rounds.length - 1) return;
+
+    setRoundIndex((previous) => previous + 1);
+    setAnswer("");
+    setSubmitted(false);
+    setTimeLeft(roundTime);
+  };
+
+  const handleRestart = () => {
+    setRoundIndex(0);
+    setAnswer("");
+    setSubmitted(false);
+    setCorrectCount(0);
+    setTotalScore(0);
+    setTimeLeft(roundTime);
+  };
+
+  const isComplete = roundIndex === rounds.length - 1 && submitted;
+
+  return (
+    <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-24 sm:pb-8">
+      <div className="max-w-4xl mx-auto space-y-6">
+        <Card elevated>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-black text-text-primary tracking-tight">
+                Taboo English
+              </h1>
+              <p className="text-text-secondary text-sm mt-1">
+                Describe la palabra sin usar las 3 palabras prohibidas.
+              </p>
+              <div className="mt-3 flex items-center gap-2 flex-wrap">
+                {LEVEL_ORDER.map((level) => (
+                  <Button
+                    key={level}
+                    size="sm"
+                    variant={selectedLevel === level ? "primary" : "secondary"}
+                    onClick={() => setSelectedLevel(level)}
+                    aria-label={`Set taboo level ${level}`}
+                  >
+                    {level}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            <div className="text-xs font-black uppercase tracking-widest text-amber-400">
+              ⏱ {timeLeft}s
+            </div>
+          </div>
+        </Card>
+
+        <Card className="space-y-5">
+          <div className="rounded-xl border border-border bg-surface-2 p-4 space-y-2">
+            <p className="text-xs uppercase tracking-widest font-bold text-text-secondary">
+              Target word
+            </p>
+            <p className="text-2xl font-black text-text-primary">
+              {round.targetWord}
+            </p>
+            <p className="text-xs uppercase tracking-widest font-bold text-text-secondary">
+              Forbidden words
+            </p>
+            <p className="text-sm text-text-muted">
+              {round.forbiddenWords.join(" · ")}
+            </p>
+          </div>
+
+          <textarea
+            value={answer}
+            onChange={(event) => setAnswer(event.target.value)}
+            disabled={submitted}
+            className="w-full min-h-[110px] rounded-xl border border-border bg-surface-1 p-3 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-focus"
+            placeholder="Explain the word without saying the forbidden words..."
+            aria-label="Taboo explanation"
+          />
+
+          {submitted ? (
+            <div
+              className={`rounded-xl border px-4 py-3 text-sm font-semibold ${isCorrect ? "border-success/40 bg-success/10 text-success" : "border-amber-500/40 bg-amber-500/10 text-amber-400"}`}
+            >
+              {isCorrect ? (
+                "✅ Clean explanation."
+              ) : (
+                <div className="space-y-1">
+                  <p>❌ Invalid clue.</p>
+                  {usedTargetWord ? (
+                    <p className="text-xs">You used the target word.</p>
+                  ) : null}
+                  {usedForbidden.length > 0 ? (
+                    <p className="text-xs">
+                      Forbidden used: {usedForbidden.join(", ")}
+                    </p>
+                  ) : null}
+                </div>
+              )}
+            </div>
+          ) : null}
+
+          <div className="flex flex-wrap gap-3">
+            <Button
+              onClick={handleCheck}
+              variant="primary"
+              size="lg"
+              disabled={!answer.trim() || submitted || timeLeft === 0}
+            >
+              Check clue
+            </Button>
+            <Button
+              onClick={() => setAnswer("")}
+              variant="secondary"
+              size="lg"
+              disabled={!answer.trim() || submitted}
+            >
+              Clear
+            </Button>
+            {submitted && !isComplete ? (
+              <Button onClick={handleNext} variant="success" size="lg">
+                Next round
+              </Button>
+            ) : null}
+            {isComplete ? (
+              <Button onClick={handleRestart} variant="success" size="lg">
+                Play again
+              </Button>
+            ) : null}
+          </div>
+        </Card>
+
+        <Card>
+          <p className="text-sm text-text-secondary">
+            Score total:{" "}
+            <span className="font-black text-text-primary">{totalScore}</span>{" "}
+            pts
+          </p>
+          <p className="text-sm text-text-secondary mt-1">
+            Aciertos:{" "}
+            <span className="font-black text-text-primary">{correctCount}</span>{" "}
+            / {roundIndex + (submitted ? 1 : 0)}
+          </p>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+export default TabooEnglishView;

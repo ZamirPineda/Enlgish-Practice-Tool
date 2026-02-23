@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { SrsVocabularyItem } from "../types";
 import {
@@ -7,7 +7,8 @@ import {
   WeeklyActivitySummary,
 } from "../utils/statsMetrics";
 import { AppSettings, loadSettings } from "../utils/settingsStore";
-import { getIsoWeekKey } from "../utils/srs";
+import { createNewSrsItem, getIsoWeekKey } from "../utils/srs";
+import { dailyPhrases } from "../data/dailyPhrases";
 import Card from "./ui/Card";
 import ViewToolbar from "./ui/ViewToolbar";
 import {
@@ -17,6 +18,7 @@ import {
   BookOpen,
   Library,
   Zap,
+  Search,
   ArrowRight,
 } from "lucide-react";
 
@@ -41,11 +43,20 @@ const readJson = <T,>(key: string, fallback: T): T => {
   }
 };
 
+const getDayOfYearUtc = (date: Date): number => {
+  const start = Date.UTC(date.getUTCFullYear(), 0, 0);
+  const current = Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+  );
+  return Math.floor((current - start) / 86400000);
+};
+
 const HomeView: React.FC = () => {
   const currentWeekKey = getIsoWeekKey(new Date());
-  const deck = useMemo(
-    () => readJson<Record<string, SrsVocabularyItem>>(VAULT_DECK_KEY, {}),
-    [],
+  const [deck, setDeck] = useState<Record<string, SrsVocabularyItem>>(() =>
+    readJson<Record<string, SrsVocabularyItem>>(VAULT_DECK_KEY, {}),
   );
   const progress = useMemo(
     () => readJson<VaultProgress>(VAULT_PROGRESS_KEY, DEFAULT_PROGRESS),
@@ -83,6 +94,30 @@ const HomeView: React.FC = () => {
     if (hour < 18) return "Good afternoon";
     return "Good evening";
   }, []);
+
+  const dailyPhrase = useMemo(() => {
+    const day = getDayOfYearUtc(new Date());
+    return dailyPhrases[day % dailyPhrases.length];
+  }, []);
+
+  const dailyPhraseKey = dailyPhrase.text.trim().toLowerCase();
+  const isDailyPhraseAdded = Boolean(deck[dailyPhraseKey]);
+
+  const handleAddDailyPhrase = () => {
+    if (isDailyPhraseAdded) return;
+
+    const nextDeck: Record<string, SrsVocabularyItem> = {
+      ...deck,
+      [dailyPhraseKey]: {
+        ...createNewSrsItem(dailyPhrase.text, dailyPhrase.meaning),
+        originalContext: dailyPhrase.context,
+        tags: ["Daily Phrase", ...dailyPhrase.tags],
+      },
+    };
+
+    setDeck(nextDeck);
+    localStorage.setItem(VAULT_DECK_KEY, JSON.stringify(nextDeck));
+  };
 
   return (
     <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-24 sm:pb-8 animate-fade-in">
@@ -149,12 +184,50 @@ const HomeView: React.FC = () => {
           </section>
         )}
 
+        <section>
+          <Card className="p-6 border-l-4 border-accent bg-surface-1">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-accent mb-2">
+                  Phrase of the day
+                </p>
+                <h2 className="text-2xl font-black text-text-primary mb-2">
+                  “{dailyPhrase.text}”
+                </h2>
+                <p className="text-sm text-text-secondary mb-2">
+                  {dailyPhrase.meaning}
+                </p>
+                <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+                  Context: {dailyPhrase.context}
+                </p>
+              </div>
+              <div className="flex flex-col gap-2 min-w-[12rem]">
+                <button
+                  onClick={handleAddDailyPhrase}
+                  disabled={isDailyPhraseAdded}
+                  className={`min-h-[40px] px-4 rounded-lg text-sm font-black transition-colors ${isDailyPhraseAdded ? "bg-surface-2 text-text-muted border border-border" : "bg-accent hover:bg-accent-hover text-white"}`}
+                >
+                  {isDailyPhraseAdded
+                    ? "Added to Vault"
+                    : "Add phrase to Vault"}
+                </button>
+                <Link
+                  to="/vault"
+                  className="min-h-[40px] px-4 rounded-lg text-sm font-bold border border-border text-text-secondary hover:text-text-primary hover:bg-surface-2 inline-flex items-center justify-center"
+                >
+                  Practice in Vault
+                </Link>
+              </div>
+            </div>
+          </Card>
+        </section>
+
         {/* Quick Actions */}
         <section>
           <h2 className="text-xl font-bold text-text-primary mb-4">
             Quick Actions
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <Link to="/vault" className="group block">
               <Card
                 interactive
@@ -221,6 +294,24 @@ const HomeView: React.FC = () => {
                 </h3>
                 <p className="text-text-secondary text-sm">
                   Build correct sentences by ordering words as fast as you can.
+                </p>
+              </Card>
+            </Link>
+
+            <Link to="/error-hunter" className="group block">
+              <Card
+                interactive
+                className="h-full p-6 border-t-4 border-rose-500 bg-surface-1"
+              >
+                <div className="mb-4 text-rose-500 group-hover:scale-110 transition-transform origin-left">
+                  <Search className="w-10 h-10" />
+                </div>
+                <h3 className="text-xl font-bold text-text-primary mb-2">
+                  Error Hunter
+                </h3>
+                <p className="text-text-secondary text-sm">
+                  Find and fix one grammar mistake per sentence before time runs
+                  out.
                 </p>
               </Card>
             </Link>

@@ -1,0 +1,173 @@
+export interface TabooEnglishRound {
+  id: string;
+  targetWord: string;
+  forbiddenWords: [string, string, string];
+  sampleClue: string;
+  tags: string[];
+  level: "A2" | "B1" | "B2" | "C1";
+}
+
+export const tabooEnglishRounds: TabooEnglishRound[] = [
+  {
+    id: "a2-1",
+    targetWord: "airport",
+    forbiddenWords: ["plane", "flight", "travel"],
+    sampleClue: "It is the place where people arrive and leave by air.",
+    tags: ["Travel"],
+    level: "A2",
+  },
+  {
+    id: "a2-2",
+    targetWord: "doctor",
+    forbiddenWords: ["hospital", "patient", "medicine"],
+    sampleClue: "This person helps when you are sick.",
+    tags: ["Health"],
+    level: "A2",
+  },
+  {
+    id: "a2-3",
+    targetWord: "restaurant",
+    forbiddenWords: ["food", "eat", "menu"],
+    sampleClue: "A place where people order meals and sit together.",
+    tags: ["Daily Life"],
+    level: "A2",
+  },
+  {
+    id: "b1-1",
+    targetWord: "deadline",
+    forbiddenWords: ["time", "date", "finish"],
+    sampleClue: "It is the final moment to complete a task.",
+    tags: ["Work"],
+    level: "B1",
+  },
+  {
+    id: "b1-2",
+    targetWord: "feedback",
+    forbiddenWords: ["opinion", "comment", "improve"],
+    sampleClue:
+      "Information about performance after someone reviews your work.",
+    tags: ["Work"],
+    level: "B1",
+  },
+  {
+    id: "b1-3",
+    targetWord: "schedule",
+    forbiddenWords: ["time", "plan", "calendar"],
+    sampleClue: "A structured list of activities and when they happen.",
+    tags: ["Work", "Planning"],
+    level: "B1",
+  },
+  {
+    id: "b2-1",
+    targetWord: "negotiation",
+    forbiddenWords: ["agreement", "price", "deal"],
+    sampleClue: "A discussion where two sides try to reach shared terms.",
+    tags: ["Business"],
+    level: "B2",
+  },
+  {
+    id: "b2-2",
+    targetWord: "stakeholder",
+    forbiddenWords: ["company", "project", "interest"],
+    sampleClue: "A person or group affected by strategic decisions.",
+    tags: ["Business"],
+    level: "B2",
+  },
+  {
+    id: "b2-3",
+    targetWord: "compliance",
+    forbiddenWords: ["law", "rules", "regulation"],
+    sampleClue: "Following required standards in a formal context.",
+    tags: ["Business", "Policy"],
+    level: "B2",
+  },
+  {
+    id: "c1-1",
+    targetWord: "resilience",
+    forbiddenWords: ["recover", "difficult", "strong"],
+    sampleClue: "The capacity to adapt and perform well after setbacks.",
+    tags: ["Leadership"],
+    level: "C1",
+  },
+  {
+    id: "c1-2",
+    targetWord: "mitigation",
+    forbiddenWords: ["risk", "reduce", "problem"],
+    sampleClue: "A strategy used to lessen negative consequences.",
+    tags: ["Strategy"],
+    level: "C1",
+  },
+  {
+    id: "c1-3",
+    targetWord: "coherence",
+    forbiddenWords: ["logical", "consistent", "clear"],
+    sampleClue: "The quality of ideas connecting smoothly in an argument.",
+    tags: ["Academic", "Communication"],
+    level: "C1",
+  },
+  {
+    id: "a2-4",
+    targetWord: "library",
+    forbiddenWords: ["books", "read", "study"],
+    sampleClue: "A quiet public place where people borrow materials.",
+    tags: ["Study"],
+    level: "A2",
+  },
+  {
+    id: "a2-5",
+    targetWord: "teacher",
+    forbiddenWords: ["school", "students", "class"],
+    sampleClue: "A professional who guides learning and explains topics.",
+    tags: ["Education"],
+    level: "A2",
+  },
+  {
+    id: "b1-4",
+    targetWord: "promotion",
+    forbiddenWords: ["job", "salary", "position"],
+    sampleClue: "Advancement to a higher professional role.",
+    tags: ["Work"],
+    level: "B1",
+  },
+  {
+    id: "b1-5",
+    targetWord: "conference",
+    forbiddenWords: ["meeting", "speakers", "event"],
+    sampleClue: "A formal gathering where experts share ideas publicly.",
+    tags: ["Communication"],
+    level: "B1",
+  },
+  {
+    id: "b2-4",
+    targetWord: "benchmark",
+    forbiddenWords: ["compare", "standard", "performance"],
+    sampleClue: "A reference point used to evaluate quality or progress.",
+    tags: ["Business", "Analysis"],
+    level: "B2",
+  },
+  {
+    id: "b2-5",
+    targetWord: "turnover",
+    forbiddenWords: ["staff", "leave", "company"],
+    sampleClue: "The rate at which personnel are replaced over time.",
+    tags: ["HR", "Business"],
+    level: "B2",
+  },
+  {
+    id: "c1-4",
+    targetWord: "feasibility",
+    forbiddenWords: ["possible", "practical", "plan"],
+    sampleClue:
+      "The degree to which an initiative can realistically be carried out.",
+    tags: ["Strategy"],
+    level: "C1",
+  },
+  {
+    id: "c1-5",
+    targetWord: "scrutiny",
+    forbiddenWords: ["examine", "carefully", "inspect"],
+    sampleClue: "Close and critical attention applied to evidence.",
+    tags: ["Academic", "Debate"],
+    level: "C1",
+  },
+];

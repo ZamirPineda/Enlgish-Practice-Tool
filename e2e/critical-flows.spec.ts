@@ -76,8 +76,11 @@ test("starts review session and completes 3 steps", async ({ page }) => {
   const starterKit = page
     .locator("section")
     .filter({ hasText: "High-Frequency Starter Kit" });
+  const addButtons = starterKit.getByRole("button", {
+    name: /Add .* to deck/i,
+  });
   for (let i = 0; i < 3; i += 1) {
-    await starterKit.getByRole("button", { name: "+" }).first().click();
+    await addButtons.nth(i).click();
   }
   await expect(
     page.getByRole("button", { name: "Review Now (3)" }),

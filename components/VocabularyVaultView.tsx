@@ -42,8 +42,11 @@ interface VaultWeeklyActivity {
   studyMinutes: number;
 }
 
+type PracticeObjective = "all" | "interview" | "travel";
+
 const VAULT_PROGRESS_KEY = "vocab-vault-progress";
 const VAULT_WEEKLY_ACTIVITY_KEY = "vocab-vault-weekly-activity";
+const VAULT_PRACTICE_OBJECTIVE_KEY = "vocab-vault-practice-objective";
 const DEFAULT_VAULT_PROGRESS: VaultProgress = {
   currentStreak: 0,
   bestStreak: 0,
@@ -60,6 +63,29 @@ const createDefaultWeeklyActivity = (weekKey: string): VaultWeeklyActivity => ({
   correct: 0,
   studyMinutes: 0,
 });
+
+const normalizePracticeObjective = (value: unknown): PracticeObjective => {
+  if (value === "interview" || value === "travel") {
+    return value;
+  }
+  return "all";
+};
+
+const matchesObjective = (
+  item: SrsVocabularyItem,
+  objective: PracticeObjective,
+): boolean => {
+  if (objective === "all") return true;
+  const tags = (item.tags || []).map((tag) => tag.toLowerCase());
+
+  if (objective === "interview") {
+    return tags.some((tag) =>
+      ["interview", "work", "business", "job"].includes(tag),
+    );
+  }
+
+  return tags.some((tag) => ["travel", "emergency", "health"].includes(tag));
+};
 
 const updateVaultProgress = (
   previous: VaultProgress,
@@ -195,6 +221,16 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
 
   const [reviewItems, setReviewItems] = useState<SrsVocabularyItem[]>([]);
   const [reviewMode, setReviewMode] = useState<"daily" | "boss">("daily");
+  const [practiceObjective, setPracticeObjective] = useState<PracticeObjective>(
+    () => {
+      try {
+        const saved = localStorage.getItem(VAULT_PRACTICE_OBJECTIVE_KEY);
+        return normalizePracticeObjective(saved);
+      } catch {
+        return "all";
+      }
+    },
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobileActionsVisible, setIsMobileActionsVisible] = useState(true);
   const lastScrollTopRef = useRef(0);
@@ -215,6 +251,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       JSON.stringify(weeklyActivity),
     );
   }, [weeklyActivity]);
+
+  useEffect(() => {
+    localStorage.setItem(VAULT_PRACTICE_OBJECTIVE_KEY, practiceObjective);
+  }, [practiceObjective]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -251,6 +291,17 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   );
   const dueItems = useMemo(() => getDueReviewItems(deck), [deck]);
   const bossReviewItems = useMemo(() => getWeeklyBossReviewItems(deck), [deck]);
+  const dueItemsForObjective = useMemo(
+    () => dueItems.filter((item) => matchesObjective(item, practiceObjective)),
+    [dueItems, practiceObjective],
+  );
+  const bossReviewItemsForObjective = useMemo(
+    () =>
+      bossReviewItems.filter((item) =>
+        matchesObjective(item, practiceObjective),
+      ),
+    [bossReviewItems, practiceObjective],
+  );
   const bossReviewCompletedThisWeek =
     progress.lastBossReviewWeek === currentWeekKey;
 
@@ -552,15 +603,17 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   };
 
   const handleStartDailyReview = () => {
+    if (dueItemsForObjective.length === 0) return;
     reviewSessionStartRef.current = Date.now();
     reviewSessionStatsRef.current = { attempts: 0, correct: 0 };
     setReviewMode("daily");
-    setReviewItems(dueItems);
+    setReviewItems(dueItemsForObjective);
     setCurrentIndex(0);
     setIsReviewing(true);
     trackAnalyticsEvent("session_start", {
       mode: "daily",
-      items: dueItems.length,
+      objective: practiceObjective,
+      items: dueItemsForObjective.length,
     });
     setWeeklyActivity((previous) => {
       const safePrevious =
@@ -575,15 +628,17 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   };
 
   const handleStartBossReview = () => {
+    if (bossReviewItemsForObjective.length === 0) return;
     reviewSessionStartRef.current = Date.now();
     reviewSessionStatsRef.current = { attempts: 0, correct: 0 };
     setReviewMode("boss");
-    setReviewItems(bossReviewItems);
+    setReviewItems(bossReviewItemsForObjective);
     setCurrentIndex(0);
     setIsReviewing(true);
     trackAnalyticsEvent("session_start", {
       mode: "boss",
-      items: bossReviewItems.length,
+      objective: practiceObjective,
+      items: bossReviewItemsForObjective.length,
     });
     setWeeklyActivity((previous) => {
       const safePrevious =
@@ -664,6 +719,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       title: "🧳 Travel & Emergency Essentials",
       items: starterKits.travelEmergencies,
     },
+    {
+      title: "⚠️ Common Mistakes (Spanish Speakers)",
+      items: starterKits.commonMistakesEs,
+    },
   ];
 
   const handleContainerScroll = (event: React.UIEvent<HTMLDivElement>) => {
@@ -734,23 +793,29 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 </Button>
                 <Button
                   onClick={handleStartDailyReview}
-                  disabled={dueItems.length === 0}
+                  disabled={dueItemsForObjective.length === 0}
                   size="lg"
-                  variant={dueItems.length > 0 ? "primary" : "secondary"}
-                  className={`flex-1 md:flex-none font-black flex items-center justify-center gap-3 min-h-[44px] ${dueItems.length > 0 ? "scale-105" : ""}`}
+                  variant={
+                    dueItemsForObjective.length > 0 ? "primary" : "secondary"
+                  }
+                  className={`flex-1 md:flex-none font-black flex items-center justify-center gap-3 min-h-[44px] ${dueItemsForObjective.length > 0 ? "scale-105" : ""}`}
                 >
-                  {dueItems.length > 0
-                    ? `Review Now (${dueItems.length})`
-                    : "All caught up!"}
+                  {dueItemsForObjective.length > 0
+                    ? `Review Now (${dueItemsForObjective.length})`
+                    : practiceObjective === "all"
+                      ? "All caught up!"
+                      : "No cards for objective"}
                 </Button>
                 <Button
                   onClick={handleStartBossReview}
                   disabled={
-                    bossReviewItems.length === 0 || bossReviewCompletedThisWeek
+                    bossReviewItemsForObjective.length === 0 ||
+                    bossReviewCompletedThisWeek
                   }
                   size="lg"
                   variant={
-                    bossReviewItems.length > 0 && !bossReviewCompletedThisWeek
+                    bossReviewItemsForObjective.length > 0 &&
+                    !bossReviewCompletedThisWeek
                       ? "success"
                       : "secondary"
                   }
@@ -758,11 +823,39 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 >
                   {bossReviewCompletedThisWeek
                     ? "Boss Review ✓"
-                    : `Boss Review (${bossReviewItems.length})`}
+                    : `Boss Review (${bossReviewItemsForObjective.length})`}
                 </Button>
               </div>
             }
           />
+          {activeTab === "study" && (
+            <div className="mt-3 bg-surface-2 border border-border rounded-xl p-3 flex flex-wrap items-center gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-text-secondary mr-2">
+                Practice objective
+              </span>
+              <button
+                onClick={() => setPracticeObjective("all")}
+                className={`min-h-[32px] px-3 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${practiceObjective === "all" ? "bg-accent text-white border-accent" : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"}`}
+                aria-label="Objective all"
+              >
+                All
+              </button>
+              <button
+                onClick={() => setPracticeObjective("interview")}
+                className={`min-h-[32px] px-3 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${practiceObjective === "interview" ? "bg-accent text-white border-accent" : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"}`}
+                aria-label="Objective interview"
+              >
+                Interview
+              </button>
+              <button
+                onClick={() => setPracticeObjective("travel")}
+                className={`min-h-[32px] px-3 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${practiceObjective === "travel" ? "bg-accent text-white border-accent" : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"}`}
+                aria-label="Objective travel"
+              >
+                Travel
+              </button>
+            </div>
+          )}
         </div>
 
         {activeTab === "study" && (
@@ -779,7 +872,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         Due for review
                       </p>
                       <span className="text-5xl font-black text-accent">
-                        {dueItems.length}
+                        {dueItemsForObjective.length}
                       </span>
                     </div>
                     <div className="text-right">
@@ -1267,21 +1360,25 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           </Button>
           <Button
             onClick={handleStartDailyReview}
-            disabled={dueItems.length === 0}
+            disabled={dueItemsForObjective.length === 0}
             size="md"
-            variant={dueItems.length > 0 ? "primary" : "secondary"}
+            variant={dueItemsForObjective.length > 0 ? "primary" : "secondary"}
             className="flex-1"
           >
-            {dueItems.length > 0 ? `Review (${dueItems.length})` : "No Due"}
+            {dueItemsForObjective.length > 0
+              ? `Review (${dueItemsForObjective.length})`
+              : "No Due"}
           </Button>
           <Button
             onClick={handleStartBossReview}
             disabled={
-              bossReviewItems.length === 0 || bossReviewCompletedThisWeek
+              bossReviewItemsForObjective.length === 0 ||
+              bossReviewCompletedThisWeek
             }
             size="md"
             variant={
-              bossReviewItems.length > 0 && !bossReviewCompletedThisWeek
+              bossReviewItemsForObjective.length > 0 &&
+              !bossReviewCompletedThisWeek
                 ? "success"
                 : "secondary"
             }

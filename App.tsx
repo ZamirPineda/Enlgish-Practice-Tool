@@ -26,6 +26,17 @@ const VocabularyVaultView = lazy(
   () => import("./components/VocabularyVaultView"),
 );
 const SpeedBuilderView = lazy(() => import("./components/SpeedBuilderView"));
+const ErrorHunterView = lazy(() => import("./components/ErrorHunterView"));
+const ParaphraseDuelView = lazy(
+  () => import("./components/ParaphraseDuelView"),
+);
+const CollocationSprintView = lazy(
+  () => import("./components/CollocationSprintView"),
+);
+const TabooEnglishView = lazy(() => import("./components/TabooEnglishView"));
+const SentenceTransformerView = lazy(
+  () => import("./components/SentenceTransformerView"),
+);
 const MathView = lazy(() => import("./components/MathView"));
 const StudyDocsView = lazy(() => import("./components/StudyDocsView"));
 const StatsView = lazy(() => import("./components/StatsView"));
@@ -415,6 +426,13 @@ const App: React.FC = () => {
               <NavItem to="/stop?mode=study">📚 Study</NavItem>
               <NavItem to="/stop?mode=game">🎮 Game</NavItem>
               <NavItem to="/speed-builder">⚡ Speed Builder</NavItem>
+              <NavItem to="/error-hunter">🕵️ Error Hunter</NavItem>
+              <NavItem to="/paraphrase-duel">🧠 Paraphrase Duel</NavItem>
+              <NavItem to="/collocation-sprint">🔗 Collocation Sprint</NavItem>
+              <NavItem to="/taboo-english">🚫 Taboo English</NavItem>
+              <NavItem to="/sentence-transformer">
+                🧬 Sentence Transformer
+              </NavItem>
             </NavGroup>
             <NavGroup title="Herramientas" icon="🛠️">
               <NavItem to="/calculus">∫ Math</NavItem>
@@ -477,6 +495,15 @@ const App: React.FC = () => {
                     <NavItem to="/stop?mode=study">📚 Flashcards</NavItem>
                     <NavItem to="/stop?mode=game">🎮 Play Game</NavItem>
                     <NavItem to="/speed-builder">⚡ Speed Builder</NavItem>
+                    <NavItem to="/error-hunter">🕵️ Error Hunter</NavItem>
+                    <NavItem to="/paraphrase-duel">🧠 Paraphrase Duel</NavItem>
+                    <NavItem to="/collocation-sprint">
+                      🔗 Collocation Sprint
+                    </NavItem>
+                    <NavItem to="/taboo-english">🚫 Taboo English</NavItem>
+                    <NavItem to="/sentence-transformer">
+                      🧬 Sentence Transformer
+                    </NavItem>
                   </div>
 
                   <NavItem to="/study">📚 Review Deck</NavItem>
@@ -543,6 +570,17 @@ const App: React.FC = () => {
                 }
               />
               <Route path="/speed-builder" element={<SpeedBuilderView />} />
+              <Route path="/error-hunter" element={<ErrorHunterView />} />
+              <Route path="/paraphrase-duel" element={<ParaphraseDuelView />} />
+              <Route
+                path="/collocation-sprint"
+                element={<CollocationSprintView />}
+              />
+              <Route path="/taboo-english" element={<TabooEnglishView />} />
+              <Route
+                path="/sentence-transformer"
+                element={<SentenceTransformerView />}
+              />
               <Route path="/stats" element={<StatsView />} />
               <Route path="/calculus" element={<MathView />} />
               <Route path="/docs" element={<StudyDocsView />} />

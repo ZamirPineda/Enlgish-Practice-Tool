@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { starterKits } from "./vocabularyVault";
 
 const requiredMvpKits = ["workInterview", "travelEmergencies"] as const;
+const requiredP1Kits = ["commonMistakesEs"] as const;
 
 describe("vocabularyVault starter kits", () => {
   it("includes MVP thematic kits with at least 12 items each", () => {
@@ -38,6 +39,18 @@ describe("vocabularyVault starter kits", () => {
       for (const item of starterKits[kitName]) {
         expect(item.tags?.some((tag) => cefrPattern.test(tag))).toBe(true);
       }
+    }
+  });
+
+  it("includes P1 common mistakes kit with at least 12 items", () => {
+    for (const kitName of requiredP1Kits) {
+      expect(starterKits[kitName].length).toBeGreaterThanOrEqual(12);
+    }
+  });
+
+  it("contains common mistake tagging in P1 kit", () => {
+    for (const item of starterKits.commonMistakesEs) {
+      expect(item.tags?.includes("Common Mistake")).toBe(true);
     }
   });
 });

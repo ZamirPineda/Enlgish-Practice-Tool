@@ -13,10 +13,10 @@ describe("SpeedBuilderView", () => {
     expect(screen.getByText(/⏱\s55s/)).toBeInTheDocument();
   });
 
-  test("switches to medium mode with lower timer and no easy hint", () => {
+  test("switches to B2 level with lower timer and no beginner hint", () => {
     render(<SpeedBuilderView />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Set medium mode" }));
+    fireEvent.click(screen.getByRole("button", { name: "Set level B2" }));
 
     expect(screen.getByText(/⏱\s35s/)).toBeInTheDocument();
     expect(
@@ -27,12 +27,14 @@ describe("SpeedBuilderView", () => {
   test("allows selecting and clearing words", () => {
     render(<SpeedBuilderView />);
 
-    const availableWords = screen
-      .getAllByRole("button")
-      .filter((button) => button.className.includes("bg-surface-2"));
+    const sentence = speedBuilderRounds.find(
+      (round) => round.level === "A2",
+    )?.sentence;
+    expect(sentence).toBeDefined();
+    const [firstWord, secondWord] = sentence!.split(" ");
 
-    fireEvent.click(availableWords[0]);
-    fireEvent.click(availableWords[1]);
+    fireEvent.click(screen.getByRole("button", { name: firstWord }));
+    fireEvent.click(screen.getByRole("button", { name: secondWord }));
 
     expect(
       screen.queryByText("Selecciona palabras para construir la frase."),
@@ -48,7 +50,11 @@ describe("SpeedBuilderView", () => {
   test("adds score after a correct answer", () => {
     render(<SpeedBuilderView />);
 
-    const firstSentenceWords = speedBuilderRounds[0].sentence.split(" ");
+    const a2Sentence = speedBuilderRounds.find(
+      (round) => round.level === "A2",
+    )?.sentence;
+    expect(a2Sentence).toBeDefined();
+    const firstSentenceWords = a2Sentence!.split(" ");
 
     for (const word of firstSentenceWords) {
       fireEvent.click(screen.getByRole("button", { name: word }));

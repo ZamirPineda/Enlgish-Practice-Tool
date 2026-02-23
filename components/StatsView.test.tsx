@@ -21,6 +21,8 @@ describe("StatsView", () => {
 
   test("shows metrics when deck has cards", () => {
     const nowIso = new Date().toISOString();
+    const previousWeekDate = new Date();
+    previousWeekDate.setDate(previousWeekDate.getDate() - 7);
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
     const fiveWeeksAgo = new Date();
@@ -68,6 +70,38 @@ describe("StatsView", () => {
           timestamp: fiveWeeksAgo.toISOString(),
           payload: { source: "collection_audio" },
         },
+        {
+          name: "item_wrong",
+          timestamp: nowIso,
+          payload: {
+            game: "paraphrase_duel",
+            errorType: "connector_missing",
+          },
+        },
+        {
+          name: "item_wrong",
+          timestamp: nowIso,
+          payload: {
+            game: "paraphrase_duel",
+            errorType: "connector_missing",
+          },
+        },
+        {
+          name: "item_wrong",
+          timestamp: nowIso,
+          payload: {
+            game: "sentence_transformer",
+            errorType: "mode_mismatch",
+          },
+        },
+        {
+          name: "item_wrong",
+          timestamp: previousWeekDate.toISOString(),
+          payload: {
+            game: "paraphrase_duel",
+            errorType: "connector_missing",
+          },
+        },
       ]),
     );
 
@@ -81,8 +115,44 @@ describe("StatsView", () => {
     expect(screen.getByText("Global Accuracy")).toBeInTheDocument();
     expect(screen.getByText("Weekly Summary")).toBeInTheDocument();
     expect(screen.getByText("Analytics (MVP)")).toBeInTheDocument();
+    expect(screen.getByText("Error Breakdown by Game")).toBeInTheDocument();
+    expect(screen.getByText("Top 3 errores")).toBeInTheDocument();
+    expect(screen.getByText("1. Connector Missing — 2")).toBeInTheDocument();
+    expect(screen.getByText("2. Mode Mismatch — 1")).toBeInTheDocument();
     expect(screen.getByText("Suggested Focus")).toBeInTheDocument();
     expect(screen.getByText("Session Starts")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Paraphrase Duel" }),
+    ).toBeInTheDocument();
+    expect(screen.getAllByText("Paraphrase Duel").length).toBeGreaterThan(0);
+    expect(
+      screen.getByText("Connector Missing: 2 (vs prev: +1)"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Sentence Transformer" }),
+    ).toBeInTheDocument();
+    expect(screen.getAllByText("Sentence Transformer").length).toBeGreaterThan(
+      0,
+    );
+    expect(
+      screen.getByText("Mode Mismatch: 1 (vs prev: +1)"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "All games" }),
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Paraphrase Duel" }));
+    expect(
+      screen.getByText("Connector Missing: 2 (vs prev: +1)"),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText("Mode Mismatch: 1 (vs prev: +1)"),
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "All games" }));
+    expect(
+      screen.getByText("Mode Mismatch: 1 (vs prev: +1)"),
+    ).toBeInTheDocument();
 
     const sessionStartsCard = screen
       .getByText("Session Starts")
