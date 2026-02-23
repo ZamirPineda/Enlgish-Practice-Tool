@@ -54,6 +54,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     message: string;
   } | null>(null);
   const [timeLeft, setTimeLeft] = useState(30);
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   // Timer Countdown Effect
   useEffect(() => {
@@ -147,6 +148,10 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     resetTranscript();
     setTimeLeft(difficulty); // Reset Timer
     playGameSound("start");
+
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
   };
 
   const startGame = () => {
@@ -247,7 +252,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || feedback !== null) return;
 
     const normalizedInput = inputValue.trim().toLowerCase();
     const validWords =
@@ -549,9 +554,9 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         </div>
 
         {/* Enhanced Timer Progress Bar */}
-        <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden shadow-inner">
+        <div className="w-full h-6 bg-surface-2 rounded-full overflow-hidden shadow-inner mb-4 border border-border">
           <div
-            className={`h-full transition-all duration-1000 linear rounded-full ${timeLeft <= 5 ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.7)] animate-pulse" : timeLeft <= 15 ? "bg-amber-400" : "bg-emerald-400"}`}
+            className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 5 ? "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= difficulty / 2 ? "bg-amber-400" : "bg-success"}`}
             style={{ width: `${(timeLeft / difficulty) * 100}%` }}
           />
         </div>
@@ -592,9 +597,11 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             <form onSubmit={handleSubmit} className="space-y-4 pt-4">
               <div className="relative">
                 <Input
+                  ref={inputRef}
                   type="text"
                   value={inputValue}
                   onChange={(e) => {
+                    if (feedback) return; // Prevent typing while waiting for next round
                     setInputValue(e.target.value);
                     if (e.target.value === "") {
                       resetTranscript();
@@ -607,7 +614,6 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                   }
                   className={`text-center text-xl py-4 pr-12 transition-all duration-300 ${micState === "listening" ? "ring-2 ring-red-500/50 bg-red-500/5" : ""}`}
                   autoFocus
-                  disabled={feedback !== null}
                 />
                 <button
                   type="button"
