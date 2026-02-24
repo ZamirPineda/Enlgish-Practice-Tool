@@ -21,3 +21,7 @@
 ## 2026-03-05 - [Skip to Content Link]
 **Learning:** The application lacked a "Skip to Content" link, forcing keyboard users to tab through the entire navigation menu on every page load.
 **Action:** Added a `Skip to main content` link at the top of `App.tsx` that targets the main content area. Future layouts must preserve this structure.
+
+## 2026-03-06 - [Dynamic Icon Button Accessibility]
+**Learning:** Icon-only buttons with changing states (like "Record" / "Stop") often use a static `title` which confuses users about the current action.
+**Action:** Use dynamic `aria-label` and `title` based on state, and add `aria-pressed` for toggle buttons. Wrap dynamic feedback in `role="status"` or `aria-live` regions.
