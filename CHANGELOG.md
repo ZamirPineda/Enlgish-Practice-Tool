@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.18.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.17.0...english-practice-pal-v1.18.0) (2026-02-24)
+
+
+### Features
+
+* **a11y:** improve SpeechPracticeButton accessibility ([300ba5c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/300ba5c3bfae8ec0159b448f0910b115f9643cb8))
+
+
+### Bug Fixes
+
+* **e2e:** resolve strict mode violation in critical flows ([0193c6e](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/0193c6eca83ed864bf0c784f25dd2f4add0918c4))
+
 ## [1.17.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.16.0...english-practice-pal-v1.17.0) (2026-02-23)
 
 
