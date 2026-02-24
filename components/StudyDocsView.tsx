@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import StudyDocsGameView from "./StudyDocsGameView";
+import StudyDocsQuizView from "./StudyDocsQuizView";
 
 interface FileNode {
   name: string;
@@ -9,6 +11,7 @@ interface FileNode {
 
 const StudyDocsView: React.FC = () => {
   const [fileTree, setFileTree] = useState<FileNode[]>([]);
+  const [allFileTree, setAllFileTree] = useState<FileNode[]>([]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(
     new Set(),
@@ -18,6 +21,9 @@ const StudyDocsView: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [copiedLink, setCopiedLink] = useState(false);
   const [zenMode, setZenMode] = useState(false);
+  const [viewMode, setViewMode] = useState<"reader" | "game" | "quiz">(
+    "reader",
+  );
   const workerRef = useRef<Worker | null>(null);
 
   useEffect(() => {
@@ -37,7 +43,9 @@ const StudyDocsView: React.FC = () => {
       }
 
       setError(null);
-      setFileTree(event.data.results ?? []);
+      const results = event.data.results ?? [];
+      setFileTree(results);
+      setAllFileTree((previous) => (previous.length > 0 ? previous : results));
       setIsLoading(false);
     };
 
@@ -202,8 +210,46 @@ const StudyDocsView: React.FC = () => {
     );
   if (error) return <div className="p-8 text-center text-red-400">{error}</div>;
 
+  if (viewMode !== "reader") {
+    return (
+      <div className="h-full bg-slate-900 overflow-y-auto overscroll-y-contain">
+        <div className="sticky top-0 z-20 bg-slate-900/95 backdrop-blur border-b border-slate-700 p-3 flex justify-end">
+          <button
+            type="button"
+            onClick={() => setViewMode("reader")}
+            className="min-h-[40px] px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest bg-slate-800 text-slate-200 hover:bg-slate-700 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none"
+          >
+            ← Reader
+          </button>
+        </div>
+        {viewMode === "game" && (
+          <StudyDocsGameView
+            fileTree={allFileTree.length > 0 ? allFileTree : fileTree}
+          />
+        )}
+        {viewMode === "quiz" && <StudyDocsQuizView />}
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-full overflow-hidden relative">
+      <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setViewMode("quiz")}
+          className="min-h-[40px] px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest bg-indigo-500 text-white hover:bg-indigo-400 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:outline-none shadow-lg"
+        >
+          📝 Quiz
+        </button>
+        <button
+          type="button"
+          onClick={() => setViewMode("game")}
+          className="min-h-[40px] px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest bg-rose-500 text-white hover:bg-rose-400 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-rose-300 focus-visible:outline-none shadow-lg"
+        >
+          🎮 Hunt
+        </button>
+      </div>
       {/* Mobile Toggle Button */}
       <button
         onClick={toggleSidebar}

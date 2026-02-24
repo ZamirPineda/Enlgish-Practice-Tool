@@ -51,4 +51,51 @@ describe("StudyDocsView", () => {
     );
     expect(worker.postMessage).toHaveBeenLastCalledWith({ term: "mydoc" });
   });
+
+  test("switches to docs game mode", async () => {
+    render(<StudyDocsView />);
+
+    const worker = WorkerMock.instances[0];
+    act(() => {
+      worker.onmessage?.({
+        data: {
+          results: [
+            {
+              name: "Cloud-Native & DevOps",
+              path: "Cloud-Native & DevOps",
+              type: "directory",
+              children: [
+                {
+                  name: "Chaos_Engineering.html",
+                  path: "Cloud-Native & DevOps/Chaos_Engineering.html",
+                  type: "file",
+                },
+                {
+                  name: "GitOps.html",
+                  path: "Cloud-Native & DevOps/GitOps.html",
+                  type: "file",
+                },
+              ],
+            },
+            {
+              name: "Comparación",
+              path: "Comparación",
+              type: "directory",
+              children: [
+                {
+                  name: "GraphQL_vs._REST.html",
+                  path: "Comparación/GraphQL_vs._REST.html",
+                  type: "file",
+                },
+              ],
+            },
+          ],
+        },
+      } as MessageEvent);
+    });
+
+    await userEvent.click(screen.getByRole("button", { name: /game/i }));
+
+    expect(screen.getByText("🕹️ Doc Hunt")).toBeInTheDocument();
+  });
 });
