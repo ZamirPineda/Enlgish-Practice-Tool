@@ -97,6 +97,13 @@ const SpeechPracticeButton: React.FC<SpeechPracticeButtonProps> = ({
           ? "text-amber-400"
           : "text-red-400";
 
+  const ariaLabel =
+    status === "correct"
+      ? "Pronunciation correct"
+      : micState === "listening"
+        ? "Stop recording"
+        : "Start pronunciation practice";
+
   return (
     <div className="flex items-center gap-2">
       <button
@@ -108,23 +115,27 @@ const SpeechPracticeButton: React.FC<SpeechPracticeButtonProps> = ({
               ? "bg-red-500 text-white animate-pulse shadow-lg shadow-red-500/30"
               : "bg-slate-700 text-slate-400 hover:bg-slate-600 hover:text-white"
         }`}
-        title="Practice Pronunciation"
+        title={ariaLabel}
+        aria-label={ariaLabel}
+        aria-pressed={micState === "listening"}
         disabled={status === "correct"}
       >
         {status === "correct" ? <CheckIcon /> : <MicIcon />}
       </button>
 
-      {micState === "listening" && (
-        <div className="text-xs text-sky-400 font-mono animate-fade-in whitespace-nowrap overflow-hidden max-w-[100px] text-ellipsis">
-          {interimTranscript || "Listening..."}
-        </div>
-      )}
+      <div role="status" aria-live="polite" className="flex items-center gap-2">
+        {micState === "listening" && (
+          <div className="text-xs text-sky-400 font-mono animate-fade-in whitespace-nowrap overflow-hidden max-w-[100px] text-ellipsis">
+            {interimTranscript || "Listening..."}
+          </div>
+        )}
 
-      {accuracyScore !== null && (
-        <div className={`text-xs font-bold ${accuracyClassName}`}>
-          Accuracy: {accuracyScore}%
-        </div>
-      )}
+        {accuracyScore !== null && (
+          <div className={`text-xs font-bold ${accuracyClassName}`}>
+            Accuracy: {accuracyScore}%
+          </div>
+        )}
+      </div>
     </div>
   );
 };

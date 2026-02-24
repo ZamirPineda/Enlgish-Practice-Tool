@@ -39,7 +39,7 @@ describe("SpeechPracticeButton", () => {
     );
 
     fireEvent.click(
-      screen.getByRole("button", { name: /practice pronunciation/i }),
+      screen.getByRole("button", { name: /pronunciation practice/i }),
     );
     act(() => transcriptHandler?.("acknowledge", 95));
 
@@ -53,7 +53,7 @@ describe("SpeechPracticeButton", () => {
     );
 
     fireEvent.click(
-      screen.getByRole("button", { name: /practice pronunciation/i }),
+      screen.getByRole("button", { name: /pronunciation practice/i }),
     );
     act(() => transcriptHandler?.("acknowled", 80));
 
@@ -66,10 +66,34 @@ describe("SpeechPracticeButton", () => {
     );
 
     fireEvent.click(
-      screen.getByRole("button", { name: /practice pronunciation/i }),
+      screen.getByRole("button", { name: /pronunciation practice/i }),
     );
     act(() => transcriptHandler?.("banana", 45));
 
     expect(screen.getByText("Accuracy: 45%")).toHaveClass("text-red-400");
+  });
+
+  it("updates accessible label when listening", () => {
+    vi.mocked(useSpeechRecognition).mockImplementation((onTranscriptReady) => {
+      transcriptHandler = onTranscriptReady;
+      return {
+        micState: "listening",
+        interimTranscript: "hello",
+        finalTranscript: "",
+        startListening,
+        stopListening,
+        abortListening: vi.fn(),
+        resetTranscript: vi.fn(),
+      };
+    });
+
+    render(
+      <SpeechPracticeButton targetText="acknowledge" onCorrect={vi.fn()} />,
+    );
+
+    const button = screen.getByRole("button", { name: /stop recording/i });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText("hello")).toBeInTheDocument();
   });
 });
