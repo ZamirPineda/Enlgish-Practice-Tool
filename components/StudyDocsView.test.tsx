@@ -94,7 +94,7 @@ describe("StudyDocsView", () => {
       } as MessageEvent);
     });
 
-    await userEvent.click(screen.getByRole("button", { name: /game/i }));
+    await userEvent.click(screen.getByRole("button", { name: /hunt/i }));
 
     expect(screen.getByText("🕹️ Doc Hunt")).toBeInTheDocument();
   });
