@@ -12,6 +12,10 @@ import {
   getCategoryTheme,
 } from "../utils/stopGameHelpers";
 import { playGameSound } from "../utils/audioUtils";
+import {
+  levenshteinDistance,
+  getToleranceForWordStr,
+} from "../utils/stringUtils";
 import Card from "./ui/Card";
 import Input from "./ui/Input";
 import Button from "./ui/Button";
@@ -63,6 +67,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     definition?: string;
     translation?: string;
   } | null>(null);
+  const [waitingForContinue, setWaitingForContinue] = useState(false);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
     message: string;
@@ -73,7 +78,13 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   // Timer Countdown Effect
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (isPlaying && !feedback && !showSummary && timeLeft > 0) {
+    if (
+      isPlaying &&
+      !feedback &&
+      !showSummary &&
+      !waitingForContinue &&
+      timeLeft > 0
+    ) {
       interval = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
@@ -86,12 +97,18 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           return prev - 1;
         });
       }, 1000);
-    } else if (timeLeft === 0 && isPlaying && !feedback && !showSummary) {
+    } else if (
+      timeLeft === 0 &&
+      isPlaying &&
+      !feedback &&
+      !showSummary &&
+      !waitingForContinue
+    ) {
       // Handle timeout immediately when 0 is reached
       handleFailOrSkip(false, true);
     }
     return () => clearInterval(interval);
-  }, [isPlaying, feedback, showSummary, timeLeft]);
+  }, [isPlaying, feedback, showSummary, waitingForContinue, timeLeft]);
 
   // --- Voice Logic ---
   const handleTranscript = useCallback((transcript: string) => {
@@ -168,6 +185,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setHint(null);
     setHintedWord(null);
     setFeedback(null);
+    setWaitingForContinue(false);
     // Important: clear the transcript to avoid "ghost" words from previous rounds appearing
     resetTranscript();
     setTimeLeft(difficulty); // Reset Timer
@@ -270,16 +288,18 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         category: currentCategory || undefined,
       });
 
-      setTimeout(() => {
-        pickNextChallenge();
-      }, 3000);
+      setWaitingForContinue(true);
     } else {
       setFeedback({
         type: "error",
         message: "No valid words found for this category.",
       });
-      setTimeout(() => pickNextChallenge(), 1500);
+      setWaitingForContinue(true);
     }
+  };
+
+  const handleContinue = () => {
+    pickNextChallenge();
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -290,9 +310,31 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     const validWords =
       stopGameData[currentLetter]?.[currentCategory as StopCategory] || [];
 
-    const isCorrect = validWords.some(
+    // 1. Check for exact match
+    let isCorrect = validWords.some(
       (item) => item.word.toLowerCase() === normalizedInput,
     );
+
+    let isCloseMatch = false;
+    let actualCorrectWord = "";
+
+    // 2. If not exact, check for typo matches
+    if (!isCorrect) {
+      for (const item of validWords) {
+        const targetWord = item.word.toLowerCase();
+        const tolerance = getToleranceForWordStr(targetWord);
+
+        if (tolerance > 0) {
+          const distance = levenshteinDistance(normalizedInput, targetWord);
+          if (distance <= tolerance) {
+            isCorrect = true;
+            isCloseMatch = true;
+            actualCorrectWord = item.word;
+            break; // Stop at first close match found
+          }
+        }
+      }
+    }
 
     if (isCorrect) {
       playGameSound("correct");
@@ -310,11 +352,21 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
       });
 
       const comboMessage = multiplier > 1 ? ` (Combo x${multiplier}!)` : "";
-      setFeedback({
-        type: "success",
-        message: `Correct! +${pointsEarned} point${pointsEarned > 1 ? "s" : ""}${comboMessage}`,
-      });
-      onPlayWord(inputValue.trim());
+
+      if (isCloseMatch) {
+        setFeedback({
+          type: "success",
+          // We use 'success' type but style it subtly differently or just rely on the text
+          message: `Close enough! Acceptable for "${actualCorrectWord}". +${pointsEarned} point${pointsEarned > 1 ? "s" : ""}${comboMessage}`,
+        });
+      } else {
+        setFeedback({
+          type: "success",
+          message: `Correct! +${pointsEarned} point${pointsEarned > 1 ? "s" : ""}${comboMessage}`,
+        });
+      }
+
+      onPlayWord(isCloseMatch ? actualCorrectWord : inputValue.trim());
 
       setGameStats((prev) => ({
         ...prev,
@@ -324,7 +376,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           {
             letter: currentLetter,
             category: currentCategory,
-            word: inputValue.trim(),
+            word: isCloseMatch ? actualCorrectWord : inputValue.trim(),
             status: "correct",
           },
         ],
@@ -333,9 +385,13 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
       // Clear the hint for the next round immediately, though pickNextChallenge does this too
       setHintedWord(null);
 
-      setTimeout(() => {
-        pickNextChallenge();
-      }, 1500);
+      if (isCloseMatch) {
+        setWaitingForContinue(true);
+      } else {
+        setTimeout(() => {
+          pickNextChallenge();
+        }, 1500);
+      }
     } else {
       handleFailOrSkip(false); // Play 'wrong' sound happens inside
     }
@@ -675,8 +731,9 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                       ? "Listening..."
                       : "Type or speak your answer..."
                   }
-                  className={`text-center text-xl py-4 pr-12 transition-all duration-300 ${micState === "listening" ? "ring-2 ring-red-500/50 bg-red-500/5" : ""}`}
+                  className={`text-center text-xl py-4 pr-12 transition-all duration-300 ${micState === "listening" ? "ring-2 ring-red-500/50 bg-red-500/5" : ""} ${waitingForContinue ? "opacity-50 cursor-not-allowed" : ""}`}
                   autoFocus
+                  disabled={waitingForContinue}
                 />
                 <button
                   type="button"
@@ -688,7 +745,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                       ? "bg-red-500/20 text-red-500 hover:bg-red-500/30 animate-pulse ring-2 ring-red-500 ring-offset-2 ring-offset-surface-1"
                       : "text-text-muted hover:text-text-primary hover:bg-surface-hover"
                   }`}
-                  disabled={feedback !== null}
+                  disabled={feedback !== null || waitingForContinue}
                   title={
                     micState === "listening"
                       ? "Stop Listening"
@@ -744,36 +801,50 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
               )}
 
               <div className="flex gap-2">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  className="flex-1 py-3"
-                  disabled={!inputValue.trim() || feedback !== null}
-                >
-                  Submit
-                </Button>
-                <button
-                  type="button"
-                  onClick={handleGetHint}
-                  className="px-4 py-3 bg-surface-2 hover:bg-surface-hover text-amber-500 border border-border rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed relative group"
-                  disabled={feedback !== null}
-                  title="Get a hint (-5s)"
-                  aria-label="Get a hint (-5s)"
-                >
-                  💡
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    -5s
-                  </span>
-                </button>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => handleFailOrSkip(true)}
-                  className="py-3"
-                  disabled={feedback !== null}
-                >
-                  Skip
-                </Button>
+                {waitingForContinue ? (
+                  <Button
+                    type="button"
+                    variant="primary"
+                    className="flex-1 py-3 text-lg font-bold animate-pulse shadow-lg bg-indigo-500 hover:bg-indigo-400 border-none text-white"
+                    onClick={handleContinue}
+                    autoFocus
+                  >
+                    Continue
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      className="flex-1 py-3"
+                      disabled={!inputValue.trim() || feedback !== null}
+                    >
+                      Submit
+                    </Button>
+                    <button
+                      type="button"
+                      onClick={handleGetHint}
+                      className="px-4 py-3 bg-surface-2 hover:bg-surface-hover text-amber-500 border border-border rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed relative group"
+                      disabled={feedback !== null}
+                      title="Get a hint (-5s)"
+                      aria-label="Get a hint (-5s)"
+                    >
+                      💡
+                      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        -5s
+                      </span>
+                    </button>
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={() => handleFailOrSkip(true)}
+                      className="py-3"
+                      disabled={feedback !== null}
+                    >
+                      Skip
+                    </Button>
+                  </>
+                )}
               </div>
             </form>
           </div>
