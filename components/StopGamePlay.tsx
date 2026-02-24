@@ -6,6 +6,8 @@ import {
   GroupName,
   CATEGORY_GROUPS,
   PREDEFINED_ALL_ORDER,
+  RELAXED_CATEGORIES,
+  NORMAL_CATEGORIES,
   getCategoryIcon,
   getCategoryTheme,
 } from "../utils/stopGameHelpers";
@@ -53,6 +55,14 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   const [showSummary, setShowSummary] = useState(false);
   const [hint, setHint] = useState<string | null>(null);
   const [difficulty, setDifficulty] = useState<15 | 30 | 60>(30);
+  const [categoryDifficulty, setCategoryDifficulty] = useState<
+    "Relaxed" | "Normal" | "Hard"
+  >("Normal");
+  const [hintedWord, setHintedWord] = useState<{
+    word: string;
+    definition?: string;
+    translation?: string;
+  } | null>(null);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
     message: string;
@@ -111,11 +121,20 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   }, [micState, interimTranscript]);
 
   const visibleCategories = useMemo(() => {
+    let baseCategories: StopCategory[];
     if (selectedGroup === "All") {
-      return PREDEFINED_ALL_ORDER;
+      baseCategories = PREDEFINED_ALL_ORDER;
+    } else {
+      baseCategories = CATEGORY_GROUPS[selectedGroup];
     }
-    return CATEGORY_GROUPS[selectedGroup];
-  }, [selectedGroup]);
+
+    if (categoryDifficulty === "Relaxed") {
+      return baseCategories.filter((c) => RELAXED_CATEGORIES.includes(c));
+    } else if (categoryDifficulty === "Normal") {
+      return baseCategories.filter((c) => NORMAL_CATEGORIES.includes(c));
+    }
+    return baseCategories;
+  }, [selectedGroup, categoryDifficulty]);
 
   const pickNextChallenge = () => {
     // Find a valid combination of letter and category that has words
@@ -147,6 +166,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setCurrentCategory(randomCombo.category);
     setInputValue("");
     setHint(null);
+    setHintedWord(null);
     setFeedback(null);
     // Important: clear the transcript to avoid "ghost" words from previous rounds appearing
     resetTranscript();
@@ -174,6 +194,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setIsPlaying(false);
     setInputValue("");
     setHint(null);
+    setHintedWord(null);
     setFeedback(null);
     stopListening();
     resetTranscript();
@@ -194,6 +215,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     const randomWord =
       validWords[Math.floor(Math.random() * validWords.length)];
 
+    setHintedWord(randomWord);
+
     if (randomWord.definition) {
       setHint(`💡 Hint: ${randomWord.definition}`);
     } else {
@@ -208,9 +231,12 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     const validWords =
       stopGameData[currentLetter]?.[currentCategory as StopCategory] || [];
     if (validWords.length > 0) {
-      const randomWord =
-        validWords[Math.floor(Math.random() * validWords.length)];
-      const definition = randomWord.definition || randomWord.translation || "";
+      const selectedWordForFeedback =
+        hintedWord || validWords[Math.floor(Math.random() * validWords.length)];
+      const definition =
+        selectedWordForFeedback.definition ||
+        selectedWordForFeedback.translation ||
+        "";
 
       playGameSound(isTimeout ? "timeout" : "wrong");
 
@@ -222,7 +248,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
       setFeedback({
         type: "error",
-        message: `${messagePrefix} A valid answer is: "${randomWord.word}". Added to Vault!`,
+        message: `${messagePrefix} A valid answer is: "${selectedWordForFeedback.word}". Added to Vault!`,
       });
 
       setGameStats((prev) => ({
@@ -234,13 +260,13 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           {
             letter: currentLetter,
             category: currentCategory,
-            word: randomWord.word, // We save the one we suggested
+            word: selectedWordForFeedback.word, // We save the one we suggested/hinted
             status: isSkip ? "skipped" : "incorrect",
           },
         ],
       }));
 
-      onAddToVault(randomWord.word, definition, {
+      onAddToVault(selectedWordForFeedback.word, definition, {
         category: currentCategory || undefined,
       });
 
@@ -304,6 +330,9 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         ],
       }));
 
+      // Clear the hint for the next round immediately, though pickNextChallenge does this too
+      setHintedWord(null);
+
       setTimeout(() => {
         pickNextChallenge();
       }, 1500);
@@ -343,26 +372,52 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
           <div className="space-y-2 text-left">
             <label className="text-sm font-bold text-text-muted">
-              Difficulty (Time per word)
+              Category Difficulty
+            </label>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setCategoryDifficulty("Relaxed")}
+                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Relaxed" ? "bg-success border-success text-white shadow-lg shadow-success/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+              >
+                Relaxed
+              </button>
+              <button
+                onClick={() => setCategoryDifficulty("Normal")}
+                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Normal" ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+              >
+                Normal
+              </button>
+              <button
+                onClick={() => setCategoryDifficulty("Hard")}
+                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Hard" ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+              >
+                Hard
+              </button>
+            </div>
+          </div>
+
+          <div className="space-y-2 text-left">
+            <label className="text-sm font-bold text-text-muted">
+              Time Limit (per word)
             </label>
             <div className="flex gap-2">
               <button
                 onClick={() => setDifficulty(60)}
                 className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 60 ? "bg-success border-success text-white shadow-lg shadow-success/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
               >
-                Relaxed (60s)
+                60s
               </button>
               <button
                 onClick={() => setDifficulty(30)}
                 className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 30 ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
               >
-                Normal (30s)
+                30s
               </button>
               <button
                 onClick={() => setDifficulty(15)}
                 className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 15 ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
               >
-                Hard (15s)
+                15s
               </button>
             </div>
           </div>

@@ -312,6 +312,48 @@ export const PREDEFINED_ALL_ORDER: StopCategory[] = [
   "Historical Figures",
 ];
 
+export const RELAXED_CATEGORIES: StopCategory[] = [
+  "Animals",
+  "Fruits & Vegetables",
+  "Colors",
+  "Objects",
+  "Food & Drinks",
+  "Clothing",
+  "Body Parts",
+  "Sports",
+  "Nature",
+  "Movies",
+  "Songs",
+  "Emotions",
+  "Countries",
+  "Verbs",
+  "Occupations",
+];
+
+export const NORMAL_CATEGORIES: StopCategory[] = [
+  ...RELAXED_CATEGORIES,
+  "Cities",
+  "Capitals",
+  "World Landmarks",
+  "Household Items",
+  "Housing & Rooms",
+  "Tools",
+  "Health & Fitness",
+  "Personality Traits",
+  "Relationships & Social",
+  "Adjectives",
+  "Adverbs",
+  "Science",
+  "Environment",
+  "Space Objects",
+  "Flowers",
+  "Plants",
+  "Trees",
+  "Business",
+  "Technology & Internet",
+];
+
+export const HARD_CATEGORIES: StopCategory[] = PREDEFINED_ALL_ORDER;
 // --- HELPER FUNCTIONS ---
 export const getCategoryIcon = (category: StopCategory) => {
   switch (category) {
