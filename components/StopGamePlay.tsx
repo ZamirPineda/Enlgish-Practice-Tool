@@ -52,7 +52,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
       letter: string;
       category: string;
       word: string;
-      status: "correct" | "skipped" | "incorrect";
+      status: "correct" | "skipped" | "incorrect" | "self-corrected";
     }[];
   }>({ correct: 0, skipped: 0, incorrect: 0, history: [] });
 
@@ -69,8 +69,10 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   } | null>(null);
   const [waitingForContinue, setWaitingForContinue] = useState(false);
   const [feedback, setFeedback] = useState<{
-    type: "success" | "error";
+    type: "success" | "error" | "info";
     message: string;
+    isTimeout?: boolean;
+    isSkip?: boolean;
   } | null>(null);
   const [timeLeft, setTimeLeft] = useState(30);
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -267,6 +269,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
       setFeedback({
         type: "error",
         message: `${messagePrefix} A valid answer is: "${selectedWordForFeedback.word}". Added to Vault!`,
+        isTimeout,
+        isSkip,
       });
 
       setGameStats((prev) => ({
@@ -300,6 +304,61 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
   const handleContinue = () => {
     pickNextChallenge();
+  };
+
+  const handleIWasRight = () => {
+    if (!inputValue.trim()) return;
+
+    // Add to vault as user-defined
+    const word = inputValue.trim();
+    onAddToVault(word, "Self-reported valid word", {
+      category: currentCategory || undefined,
+    });
+
+    // Reverse the "Incorrect" penalty visually and update state
+    playGameSound("correct");
+
+    // Recalculate streak and points as if they got it right initially
+    // We assume currentStreak was reset to 0 by handleFailOrSkip, so we just treat it as 1 for now (or reset to +1)
+    const pointsEarned = 1;
+
+    setScore((s) => s + pointsEarned);
+    setCurrentStreak(1);
+    setBestStreak((b) => Math.max(b, 1));
+
+    setFeedback({
+      type: "success",
+      message: `You were right! Added "${word}" to your Vault. +${pointsEarned} point!`,
+    });
+
+    // Update history: convert the last 'incorrect' to 'self-corrected'
+    setGameStats((prev) => {
+      const newHistory = [...prev.history];
+      if (newHistory.length > 0) {
+        // Find the last incorrect entry and mark it as self-corrected
+        const lastEntryIndex = newHistory.length - 1;
+        if (newHistory[lastEntryIndex].status === "incorrect") {
+          newHistory[lastEntryIndex] = {
+            ...newHistory[lastEntryIndex],
+            word: word,
+            status: "self-corrected",
+          };
+        }
+      }
+      return {
+        ...prev,
+        correct: prev.correct + 1,
+        incorrect: Math.max(0, prev.incorrect - 1),
+        history: newHistory,
+      };
+    });
+
+    onPlayWord(word);
+
+    // Briefly show the success message before skipping
+    setTimeout(() => {
+      pickNextChallenge();
+    }, 1500);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -596,7 +655,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                 <div
                   key={idx}
                   className={`p-3 rounded-lg flex justify-between items-center ${
-                    item.status === "correct"
+                    item.status === "correct" ||
+                    item.status === "self-corrected"
                       ? "bg-success/10 border border-success/20"
                       : item.status === "skipped"
                         ? "bg-surface-hover border border-border"
@@ -620,14 +680,17 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                   </div>
                   <span
                     className={`text-[10px] uppercase font-bold px-2 py-1 rounded ${
-                      item.status === "correct"
+                      item.status === "correct" ||
+                      item.status === "self-corrected"
                         ? "bg-success text-white"
                         : item.status === "skipped"
                           ? "bg-surface-hover text-text-muted"
                           : "bg-red-500 text-white"
                     }`}
                   >
-                    {item.status}
+                    {item.status === "self-corrected"
+                      ? "I WAS RIGHT"
+                      : item.status}
                   </span>
                 </div>
               ))}
@@ -802,15 +865,33 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
               <div className="flex gap-2">
                 {waitingForContinue ? (
-                  <Button
-                    type="button"
-                    variant="primary"
-                    className="flex-1 py-3 text-lg font-bold animate-pulse shadow-lg bg-indigo-500 hover:bg-indigo-400 border-none text-white"
-                    onClick={handleContinue}
-                    autoFocus
-                  >
-                    Continue
-                  </Button>
+                  <>
+                    <Button
+                      type="button"
+                      variant="primary"
+                      className="flex-1 py-3 text-lg font-bold shadow-lg"
+                      onClick={handleContinue}
+                      autoFocus
+                    >
+                      Continue
+                    </Button>
+                    {feedback?.type === "error" &&
+                      !feedback.isSkip &&
+                      inputValue.trim().length > 0 && (
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          className="py-3 px-6 whitespace-nowrap border-amber-500/50 text-amber-500 hover:bg-amber-500 hover:text-white transition-all font-bold group relative"
+                          onClick={handleIWasRight}
+                          title="I typed a valid word!"
+                        >
+                          I was right!
+                          <span className="absolute -top-3 -right-2 opacity-0 group-hover:opacity-100 bg-amber-500 text-white text-[10px] py-0.5 px-2 rounded-full transition-opacity shadow-lg">
+                            Get Points
+                          </span>
+                        </Button>
+                      )}
+                  </>
                 ) : (
                   <>
                     <Button
