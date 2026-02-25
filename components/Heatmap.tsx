@@ -1,10 +1,8 @@
 import React, { useMemo } from "react";
-import { SrsVocabularyItem } from "../types";
-import { VaultProgress } from "../utils/statsMetrics";
+import { getGlobalHeatmapData } from "../utils/activityTracker";
 
 interface HeatmapProps {
-  deck: Record<string, SrsVocabularyItem>;
-  progress: VaultProgress;
+  days?: number;
 }
 
 const DAYS = 365;
@@ -13,77 +11,22 @@ const DAYS_IN_WEEK = 7;
 const LOW_INTENSITY_THRESHOLD = 0.34;
 const MEDIUM_INTENSITY_THRESHOLD = 0.67;
 
-const toDateKey = (value: number): string =>
-  new Date(value).toISOString().split("T")[0];
-
-const parseDate = (value: unknown): number | null => {
-  if (typeof value !== "string" && typeof value !== "number") return null;
-  const timestamp = new Date(value).getTime();
-  return Number.isNaN(timestamp) ? null : timestamp;
-};
-
 const getIntensityClass = (count: number, maxCount: number): string => {
   if (count <= 0 || maxCount <= 0) return "bg-slate-700";
   const ratio = count / maxCount;
-  if (ratio < LOW_INTENSITY_THRESHOLD) return "bg-emerald-900";
-  if (ratio < MEDIUM_INTENSITY_THRESHOLD) return "bg-emerald-700";
-  return "bg-emerald-500";
+  if (ratio < MEDIUM_INTENSITY_THRESHOLD) return "bg-emerald-500";
+  return "bg-emerald-400";
 };
 
-const Heatmap: React.FC<HeatmapProps> = ({ deck, progress }) => {
-  const days = useMemo(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const end = today.getTime();
-    const start = end - (DAYS - 1) * DAY_MS;
+const Heatmap: React.FC<HeatmapProps> = ({ days: daysCount = DAYS }) => {
+  const days = useMemo(() => getGlobalHeatmapData(daysCount), [daysCount]);
 
-    const counts = new Map<string, number>();
-    const addCount = (timestamp: number, increment = 1) => {
-      if (timestamp < start || timestamp > end) return;
-      const key = toDateKey(timestamp);
-      counts.set(key, (counts.get(key) ?? 0) + increment);
-    };
-
-    Object.values(deck || {}).forEach((item) => {
-      const itemWithOptionalFields = item as SrsVocabularyItem &
-        Record<string, unknown>;
-      const explicitReviewTime =
-        parseDate(itemWithOptionalFields.reviewedAt) ??
-        parseDate(itemWithOptionalFields.lastReviewedAt);
-
-      if (explicitReviewTime !== null) {
-        addCount(explicitReviewTime);
-        return;
-      }
-
-      if (item.interval > 0) {
-        const nextReviewTime = parseDate(item.nextReviewDate);
-        if (nextReviewTime !== null) {
-          addCount(nextReviewTime - item.interval * DAY_MS);
-        }
-      }
-    });
-
-    const progressTime = parseDate(progress.lastReviewDate);
-    if (
-      counts.size === 0 &&
-      progressTime !== null &&
-      progress.totalReviews > 0
-    ) {
-      addCount(progressTime, progress.totalReviews);
-    }
-
-    return Array.from({ length: DAYS }, (_, index) => {
-      const timestamp = start + index * DAY_MS;
-      const date = toDateKey(timestamp);
-      return { date, count: counts.get(date) ?? 0 };
-    });
-  }, [deck, progress.lastReviewDate, progress.totalReviews]);
-
-  const maxCount = useMemo(
-    () => Math.max(...days.map((day) => day.count), 0),
-    [days],
-  );
+  // Determine dynamic max count for coloring, but cap the min maxCount to avoid
+  // turning standard 1-2 points into the darkest green initially
+  const maxCount = useMemo(() => {
+    const actualMax = Math.max(...days.map((day) => day.count), 0);
+    return Math.max(actualMax, 5); // ensures "low intensity" threshold behaves normally
+  }, [days]);
 
   return (
     <div className="w-full max-w-full">
@@ -107,8 +50,8 @@ const Heatmap: React.FC<HeatmapProps> = ({ deck, progress }) => {
           <span>Menos</span>
           <div className="w-3 h-3 rounded-sm bg-slate-700"></div>
           <div className="w-3 h-3 rounded-sm bg-emerald-900"></div>
-          <div className="w-3 h-3 rounded-sm bg-emerald-700"></div>
           <div className="w-3 h-3 rounded-sm bg-emerald-500"></div>
+          <div className="w-3 h-3 rounded-sm bg-emerald-400"></div>
           <span>Más</span>
         </div>
       </div>

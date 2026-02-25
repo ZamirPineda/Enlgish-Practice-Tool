@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
+import { trackActivity } from "../utils/activityTracker";
 
 interface FileNode {
   name: string;
@@ -463,6 +464,9 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     setGameState("finished");
     setSelectedOption(null);
     setLastResult(null);
+    if (score > 0) {
+      trackActivity(1);
+    }
     setBestScore((currentBest) => {
       const nextBest = Math.max(currentBest, score);
       localStorage.setItem(BEST_SCORE_KEY, String(nextBest));

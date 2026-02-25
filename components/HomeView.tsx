@@ -8,8 +8,10 @@ import {
 } from "../utils/statsMetrics";
 import { AppSettings, loadSettings } from "../utils/settingsStore";
 import { createNewSrsItem, getIsoWeekKey } from "../utils/srs";
+import { getGlobalStreak } from "../utils/activityTracker";
 import { dailyPhrases } from "../data/dailyPhrases";
 import Card from "./ui/Card";
+import Heatmap from "./Heatmap";
 import ViewToolbar from "./ui/ViewToolbar";
 import {
   Flame,
@@ -74,6 +76,7 @@ const HomeView: React.FC = () => {
     [currentWeekKey],
   );
   const settings = useMemo<AppSettings>(() => loadSettings(), []);
+  const globalStreak = useMemo(() => getGlobalStreak().current, []);
   const metrics = useMemo(
     () =>
       calculateStatsMetrics(
@@ -141,9 +144,9 @@ const HomeView: React.FC = () => {
                 </div>
                 <div className="text-xl sm:text-2xl font-black text-orange-500 flex items-center justify-center gap-1">
                   <Flame
-                    className={`w-5 h-5 sm:w-6 sm:h-6 ${metrics.currentStreak > 0 ? "text-orange-500 fill-orange-500 animate-pulse" : "text-text-muted"}`}
+                    className={`w-5 h-5 sm:w-6 sm:h-6 ${globalStreak > 0 ? "text-orange-500 fill-orange-500 animate-pulse" : "text-text-muted"}`}
                   />
-                  {metrics.currentStreak}
+                  {globalStreak}
                 </div>
               </div>
               <div className="w-px h-10 bg-border"></div>
@@ -318,11 +321,29 @@ const HomeView: React.FC = () => {
           </div>
         </section>
 
+        {/* Global Activity Heatmap */}
+        <section className="bg-surface-1 border border-border rounded-3xl p-6 md:p-8 shadow-sm">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-text-primary">
+              Global Activity
+            </h2>
+            <Link
+              to="/stats"
+              className="text-sm font-bold text-accent hover:text-accent-hover transition-colors"
+            >
+              View full stats →
+            </Link>
+          </div>
+          <div className="flex justify-center w-full overflow-x-auto pb-2">
+            <Heatmap />
+          </div>
+        </section>
+
         {/* Progress Summary */}
         <section className="bg-surface-1 border border-border rounded-3xl p-6 md:p-8 shadow-sm">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-text-primary">
-              Your Progress
+              Your Vault Progress
             </h2>
             <Link
               to="/stats"

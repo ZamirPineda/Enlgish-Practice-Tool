@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import LatexRenderer from "./LatexRenderer";
+import { trackActivity } from "../utils/activityTracker";
 import { algebraTopic, calculusTopic, geometryTopic } from "../data/math";
 import { MathTopic } from "../types";
 
@@ -147,6 +148,9 @@ const MathGameView: React.FC = () => {
     setGameState("finished");
     setSelectedOption(null);
     setLastResult(null);
+    if (score > 0) {
+      trackActivity(1);
+    }
     setBestScore((previousBest) => {
       const nextBest = Math.max(previousBest, score);
       localStorage.setItem(BEST_SCORE_KEY, String(nextBest));

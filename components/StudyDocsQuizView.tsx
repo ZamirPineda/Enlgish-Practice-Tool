@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
+import { trackActivity } from "../utils/activityTracker";
 import { docsQuizQuestions, QuizQuestion } from "../data/docs_quiz";
 
 type GameState = "idle" | "playing" | "finished";
 
-const GAME_DURATION_SECONDS = 90;
+const TIME_PER_QUESTION = 60;
 const INITIAL_LIVES = 3;
 const BEST_SCORE_KEY = "study-docs-quiz-best-score";
 
@@ -20,7 +21,7 @@ const shuffle = <T,>(items: T[]): T[] => {
 
 const StudyDocsQuizView: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>("idle");
-  const [timeLeft, setTimeLeft] = useState(GAME_DURATION_SECONDS);
+  const [timeLeft, setTimeLeft] = useState(TIME_PER_QUESTION);
   const [lives, setLives] = useState(INITIAL_LIVES);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -45,6 +46,9 @@ const StudyDocsQuizView: React.FC = () => {
     setGameState("finished");
     setSelectedOption(null);
     setLastResult(null);
+    if (score > 0) {
+      trackActivity(1);
+    }
     setBestScore((currentBest) => {
       const nextBest = Math.max(currentBest, score);
       localStorage.setItem(BEST_SCORE_KEY, String(nextBest));
@@ -53,9 +57,10 @@ const StudyDocsQuizView: React.FC = () => {
   };
 
   useEffect(() => {
-    if (gameState !== "playing") return;
-    if (timeLeft <= 0 || lives <= 0) {
-      finishGame();
+    if (gameState !== "playing" || selectedOption !== null) return;
+
+    if (timeLeft <= 0) {
+      handleAnswer("");
       return;
     }
 
@@ -64,7 +69,7 @@ const StudyDocsQuizView: React.FC = () => {
     }, 1000);
 
     return () => window.clearTimeout(timer);
-  }, [gameState, lives, timeLeft]);
+  }, [gameState, timeLeft, selectedOption]);
 
   const getNextRound = (pool: QuizQuestion[]): QuizQuestion | null => {
     if (pool.length === 0) return null;
@@ -78,7 +83,7 @@ const StudyDocsQuizView: React.FC = () => {
 
     setQuestionsPool(shuffledPool.slice(1));
     setGameState("playing");
-    setTimeLeft(GAME_DURATION_SECONDS);
+    setTimeLeft(TIME_PER_QUESTION);
     setLives(INITIAL_LIVES);
     setScore(0);
     setStreak(0);
@@ -89,7 +94,7 @@ const StudyDocsQuizView: React.FC = () => {
   };
 
   const handleAnswer = (option: string) => {
-    if (!currentRound || selectedOption) return;
+    if (!currentRound || selectedOption !== null) return;
 
     const isCorrect = option === currentRound.correctAnswer;
     setSelectedOption(option);
@@ -105,19 +110,24 @@ const StudyDocsQuizView: React.FC = () => {
       setLives((previous) => Math.max(0, previous - 1));
       setStreak(0);
     }
+  };
 
-    window.setTimeout(() => {
-      const nextRound = getNextRound(questionsPool);
-      if (!nextRound || (lives <= 1 && !isCorrect)) {
-        finishGame();
-        return;
-      }
-      setQuestionsPool((prev) => prev.slice(1));
-      setSelectedOption(null);
-      setLastResult(null);
-      setCurrentRound(nextRound);
-      setShuffledOptions(shuffle([...nextRound.options]));
-    }, 3500); // Dar más tiempo para leer la explicación
+  const handleNextQuestion = () => {
+    if (lives <= 0) {
+      finishGame();
+      return;
+    }
+    const nextRound = getNextRound(questionsPool);
+    if (!nextRound) {
+      finishGame();
+      return;
+    }
+    setQuestionsPool((prev) => prev.slice(1));
+    setSelectedOption(null);
+    setLastResult(null);
+    setCurrentRound(nextRound);
+    setShuffledOptions(shuffle([...nextRound.options]));
+    setTimeLeft(TIME_PER_QUESTION);
   };
 
   if (docsQuizQuestions.length === 0) {
@@ -143,8 +153,8 @@ const StudyDocsQuizView: React.FC = () => {
           </span>
         </div>
         <p className="text-sm text-text-secondary mt-3">
-          Prepárate para entrevistas de FAANG o certificaciones. 90 segundos, 3
-          vidas. Lee cuidadosamente.
+          Prepárate para entrevistas de FAANG o certificaciones. 60 segundos por
+          pregunta, 3 vidas. Lee cuidadosamente.
         </p>
       </Card>
 
@@ -232,7 +242,7 @@ const StudyDocsQuizView: React.FC = () => {
                   <button
                     key={option}
                     onClick={() => handleAnswer(option)}
-                    disabled={!!selectedOption}
+                    disabled={selectedOption !== null}
                     className={`w-full text-left rounded-xl border p-4 min-h-[60px] transition-all flex items-center ${stateClass}`}
                   >
                     <span className="font-semibold text-sm leading-relaxed">
@@ -243,23 +253,34 @@ const StudyDocsQuizView: React.FC = () => {
               })}
             </div>
 
-            {selectedOption && (
+            {selectedOption !== null && (
               <div
-                className={`p-4 rounded-xl border ${lastResult === "correct" ? "bg-success/10 border-success/30" : "bg-rose-500/10 border-rose-500/30"}`}
+                className={`p-4 rounded-xl border flex flex-col gap-4 ${lastResult === "correct" ? "bg-success/10 border-success/30" : "bg-rose-500/10 border-rose-500/30"}`}
               >
-                <p
-                  className={`text-sm font-bold mb-1 ${lastResult === "correct" ? "text-success" : "text-rose-400"}`}
+                <div>
+                  <p
+                    className={`text-sm font-bold mb-1 ${lastResult === "correct" ? "text-success" : "text-rose-400"}`}
+                  >
+                    {lastResult === "correct"
+                      ? "¡Excelente respuesta! +puntos"
+                      : timeLeft <= 0 && selectedOption === ""
+                        ? `¡Se acabó el tiempo! La respuesta era: ${currentRound.correctAnswer}`
+                        : `Incorrecto. La respuesta era: ${currentRound.correctAnswer}`}
+                  </p>
+                  <p className="text-sm text-text-primary leading-relaxed mt-2 border-t border-border pt-2">
+                    <span className="font-bold text-text-secondary text-xs uppercase tracking-widest mr-2">
+                      Explicación:
+                    </span>
+                    {currentRound.explanation}
+                  </p>
+                </div>
+                <Button
+                  variant={lastResult === "correct" ? "primary" : "secondary"}
+                  onClick={handleNextQuestion}
+                  className="self-end"
                 >
-                  {lastResult === "correct"
-                    ? "¡Excelente respuesta! +puntos"
-                    : `Incorrecto. La respuesta era: ${currentRound.correctAnswer}`}
-                </p>
-                <p className="text-sm text-text-primary leading-relaxed mt-2 border-t border-border pt-2">
-                  <span className="font-bold text-text-secondary text-xs uppercase tracking-widest mr-2">
-                    Explicación:
-                  </span>
-                  {currentRound.explanation}
-                </p>
+                  Continuar
+                </Button>
               </div>
             )}
           </Card>

@@ -840,10 +840,7 @@ const StatsView: React.FC = () => {
                 Activity Heatmap
               </h2>
               <div className="flex justify-center w-full overflow-x-auto pb-2">
-                <Heatmap
-                  deck={deck}
-                  progress={{ ...DEFAULT_PROGRESS, ...progress }}
-                />
+                <Heatmap />
               </div>
             </div>
           </>

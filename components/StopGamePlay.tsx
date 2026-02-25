@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { stopGameData } from "../data/stopGameData";
 import { StopCategory } from "../types";
+import { trackActivity } from "../utils/activityTracker";
 import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
 import {
   GroupName,
@@ -218,6 +219,9 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setFeedback(null);
     stopListening();
     resetTranscript();
+    if (score > 0) {
+      trackActivity(1);
+    }
   };
 
   const handleGetHint = () => {
