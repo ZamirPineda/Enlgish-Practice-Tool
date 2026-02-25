@@ -95,8 +95,10 @@ describe("VocabularyVaultView flows", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Review Now (1)" }));
-    fireEvent.click(await screen.findByRole("button", { name: "Show Answer" }));
-    fireEvent.click(screen.getByRole("button", { name: "Got it! 🚀" }));
+    fireEvent.click(
+      await screen.findByRole("button", { name: /Show Answer/i }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: /^Got it/i }));
 
     await waitFor(() => {
       expect(
@@ -183,8 +185,10 @@ describe("VocabularyVaultView flows", () => {
       <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
     );
     fireEvent.click(screen.getByRole("button", { name: "Review Now (1)" }));
-    fireEvent.click(await screen.findByRole("button", { name: "Show Answer" }));
-    fireEvent.click(screen.getByRole("button", { name: "Got it! 🚀" }));
+    fireEvent.click(
+      await screen.findByRole("button", { name: /Show Answer/i }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: /^Got it/i }));
 
     await waitFor(() => {
       expect(screen.getByText("2 day streak · best 2")).toBeInTheDocument();
@@ -371,8 +375,10 @@ describe("VocabularyVaultView flows", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: /Boss Review/i }));
-    fireEvent.click(await screen.findByRole("button", { name: "Show Answer" }));
-    fireEvent.click(screen.getByRole("button", { name: "Got it! 🚀" }));
+    fireEvent.click(
+      await screen.findByRole("button", { name: /Show Answer/i }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: /^Got it/i }));
 
     await waitFor(() => {
       expect(
