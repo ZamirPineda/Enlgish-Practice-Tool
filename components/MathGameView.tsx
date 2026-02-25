@@ -3,6 +3,7 @@ import Card from "./ui/Card";
 import Button from "./ui/Button";
 import LatexRenderer from "./LatexRenderer";
 import { trackActivity } from "../utils/activityTracker";
+import { trackAnalyticsEvent } from "../utils/analytics";
 import { algebraTopic, calculusTopic, geometryTopic } from "../data/math";
 import { MathTopic } from "../types";
 
@@ -192,12 +193,21 @@ const MathGameView: React.FC = () => {
     setLastResult(isCorrect ? "correct" : "wrong");
 
     if (isCorrect) {
+      trackAnalyticsEvent("item_correct", {
+        game: "math_game",
+        question: currentQuestion.prompt,
+      });
       setStreak((previous) => {
         const next = previous + 1;
         setScore((currentScore) => currentScore + 10 + previous * 2);
         return next;
       });
     } else {
+      trackAnalyticsEvent("item_wrong", {
+        game: "math_game",
+        question: currentQuestion.prompt,
+        errorType: "calculation_error",
+      });
       setLives((previous) => previous - 1);
       setStreak(0);
     }

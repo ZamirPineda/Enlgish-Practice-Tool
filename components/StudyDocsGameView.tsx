@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import { trackActivity } from "../utils/activityTracker";
+import { trackAnalyticsEvent } from "../utils/analytics";
 
 interface FileNode {
   name: string;
@@ -512,12 +513,21 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     setLastResult(isCorrect ? "correct" : "wrong");
 
     if (isCorrect) {
+      trackAnalyticsEvent("item_correct", {
+        game: "study_docs_game",
+        question: currentRound.prompt,
+      });
       setStreak((previous) => {
         const nextStreak = previous + 1;
         setScore((currentScore) => currentScore + 10 + previous * 2);
         return nextStreak;
       });
     } else {
+      trackAnalyticsEvent("item_wrong", {
+        game: "study_docs_game",
+        question: currentRound.prompt,
+        errorType: "docs_error",
+      });
       setLives((previous) => previous - 1);
       setStreak(0);
     }
