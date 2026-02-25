@@ -25,3 +25,7 @@
 ## 2026-03-06 - [Dynamic Icon Button Accessibility]
 **Learning:** Icon-only buttons with changing states (like "Record" / "Stop") often use a static `title` which confuses users about the current action.
 **Action:** Use dynamic `aria-label` and `title` based on state, and add `aria-pressed` for toggle buttons. Wrap dynamic feedback in `role="status"` or `aria-live` regions.
+
+## 2026-03-07 - [Global Keyboard Shortcuts Safety]
+**Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
+**Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
