@@ -29,3 +29,7 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+
+## 2026-03-08 - [Interactive Card Accessibility]
+**Learning:** Flashcards and other interactive cards implemented as `div`s with `onClick` are completely inaccessible to keyboard users.
+**Action:** Retrofit such components with `role="button"`, `tabIndex="0"`, and `onKeyDown` handlers for Enter/Space, and ensure visible focus states.
