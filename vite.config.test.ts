@@ -48,6 +48,15 @@ function resolveBase(env: Record<string, string | undefined>) {
   return resolved;
 }
 
+function resolveManualChunk(id: string) {
+  if (typeof viteConfig !== "function") {
+    throw new Error("Expected viteConfig export to be a config function");
+  }
+
+  const resolved = viteConfig({ mode: "production", command: "build" });
+  return resolved.build?.rollupOptions?.output?.manualChunks?.(id);
+}
+
 describe("vite base path", () => {
   it("defaults to root path outside GitHub Actions", () => {
     expect(
@@ -67,5 +76,15 @@ describe("vite base path", () => {
         VITE_BASE_PATH: undefined,
       }),
     ).toBe("/Enlgish-Practice-Tool/");
+  });
+
+  it("keeps React ecosystem packages in the same vendor chunk", () => {
+    expect(resolveManualChunk("/node_modules/react/index.js")).toBe("vendor");
+    expect(resolveManualChunk("/node_modules/react-dom/index.js")).toBe(
+      "vendor",
+    );
+    expect(resolveManualChunk("/node_modules/react-router-dom/index.js")).toBe(
+      "vendor",
+    );
   });
 });
