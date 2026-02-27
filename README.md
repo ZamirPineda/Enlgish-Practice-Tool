@@ -69,7 +69,7 @@ npm run preview
 > La base de Vite ahora se resuelve automáticamente:
 >
 > - En local usa `/`
-> - En GitHub Actions (deploy Pages) usa `/${repo}/`
+> - En GitHub Actions (deploy Pages) usa `/${repository-name}/` (ej.: `/Enlgish-Practice-Tool/`)
 > - Puedes forzarla con `VITE_BASE_PATH`
 
 ## Persistencia y estudio offline
