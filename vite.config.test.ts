@@ -54,7 +54,15 @@ function resolveManualChunk(id: string) {
   }
 
   const resolved = viteConfig({ mode: "production", command: "build" });
-  return resolved.build?.rollupOptions?.output?.manualChunks?.(id);
+  const output = resolved.build?.rollupOptions?.output;
+  const normalizedOutput = Array.isArray(output) ? output[0] : output;
+  const manualChunks = normalizedOutput?.manualChunks;
+
+  if (typeof manualChunks !== "function") {
+    throw new Error("Expected manualChunks to be a function");
+  }
+
+  return manualChunks(id);
 }
 
 describe("vite base path", () => {
@@ -77,7 +85,9 @@ describe("vite base path", () => {
       }),
     ).toBe("/Enlgish-Practice-Tool/");
   });
+});
 
+describe("vite manual chunks", () => {
   it("keeps React ecosystem packages in the same vendor chunk", () => {
     expect(resolveManualChunk("/node_modules/react/index.js")).toBe("vendor");
     expect(resolveManualChunk("/node_modules/react-dom/index.js")).toBe(
