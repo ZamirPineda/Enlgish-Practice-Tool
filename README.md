@@ -66,7 +66,11 @@ Salida en carpeta `dist/`.
 npm run preview
 ```
 
-> El proyecto está preparado para GitHub Pages con base `/Enlgish-Practice-Tool/`.
+> La base de Vite ahora se resuelve automáticamente:
+>
+> - En local usa `/`
+> - En GitHub Actions (deploy Pages) usa `/${repo}/`
+> - Puedes forzarla con `VITE_BASE_PATH`
 
 ## Persistencia y estudio offline
 
@@ -192,7 +196,7 @@ Define `STUDIO_PATH` antes de ejecutar `node scripts/import-study-docs.js`.
 
 ### 5) Assets no cargan al desplegar en GitHub Pages
 
-Verifica que el despliegue use la base `/Enlgish-Practice-Tool/` (ya configurada en `vite.config.ts`).
+Verifica `VITE_BASE_PATH` si necesitas forzar una base específica. En GitHub Pages, la base se deriva automáticamente del repositorio.
 
 ## Roadmap (corto)
 
