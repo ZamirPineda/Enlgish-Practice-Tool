@@ -7,7 +7,10 @@ import { configDefaults } from "vitest/config";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, ".", "");
-  const basePath = "/Enlgish-Practice-Tool/";
+  const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1];
+  const ghPagesBasePath =
+    process.env.GITHUB_ACTIONS && repoName ? `/${repoName}/` : "/";
+  const basePath = env.VITE_BASE_PATH || ghPagesBasePath;
   return {
     server: {
       port: 3000,
