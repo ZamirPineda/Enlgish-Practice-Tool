@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_InfluxDB</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_InfluxDB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,79 +52,214 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_InfluxDB</h1>
-    <h2>Explicación</h2><p>Esta guía le permitirá levantar una instancia básica de InfluxDB 2.x utilizando Podman o Docker. La configuración incluirá la persistencia de datos a través de un volumen y la inicialización de un usuario administrador, una organización y un "bucket" predeterminados mediante variables de entorno. Una vez que el contenedor esté en funcionamiento, podrá acceder a la interfaz de usuario web de InfluxDB para empezar a gestionar sus datos.</p><p><strong>Pasos a seguir:</strong></p><p>1.  Asegúrese de tener Podman o Docker instalado y funcionando en su sistema.</p><p>2.  Copie el comando proporcionado en la sección <code>runCommands</code> y ejecútelo en su terminal.</p><p>3.  Una vez que el contenedor se esté ejecutando (puede verificar con <code>podman ps</code> o <code>docker ps</code>), abra su navegador web y navegue a <code>http://localhost:8086</code>.</p><p>4.  Debería ver la interfaz de usuario de InfluxDB. Utilice el nombre de usuario (<code>admin</code>) y la contraseña (<code>password</code>) que se configuraron en el comando para iniciar sesión, si es necesario. Aunque con <code>DOCKER_INFLUXDB_INIT_MODE=setup</code> InfluxDB ya debería estar configurado y listo para usar sin un login inicial, si se navega a la UI directamente.</p><p>5.  Para detener el contenedor, use <code>podman stop influxdb-instance</code> o <code>docker stop influxdb-instance</code>.</p><p>6.  Para eliminar el contenedor y el volumen de datos (si desea empezar de nuevo), use <code>podman rm -v influxdb-instance</code> o <code>docker rm -v influxdb-instance</code>. Tenga en cuenta que esto eliminará permanentemente todos sus datos de InfluxDB.</p><h2>Comandos de Ejecución</h2><pre><code>podman run -d --name influxdb-instance -p 8086:8086 -v influxdb_data:/var/lib/influxdb2 -e DOCKER_INFLUXDB_INIT_MODE=setup -e DOCKER_INFLUXDB_INIT_USERNAME=admin -e DOCKER_INFLUXDB_INIT_PASSWORD=password -e DOCKER_INFLUXDB_INIT_ORG=myorg -e DOCKER_INFLUXDB_INIT_BUCKET=mybucket -e DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mysecrettoken influxdb:latest</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgG4s12Lhh8tI7oemwDwvd7KLJa6b_RtP0DNx7p7OwFxY0C05rPlQtGa-F-meiAOcvjYgq4n8ZjDEBr7JkZDiss1IcO0yeAnv5WNrEbhIrplJmfAS41A==" target="_blank" rel="noopener noreferrer">influxdata.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEmvvZOeEdC76w6sf2JzXlgwbbnHFqCYiZ-AOyLfGLHSq2RYRirTTjeT003eyLoVWSFq4K_BqTfvLiK2ISjVX7ZvTb8tb3BN-oXOnWKlU_D9hddngb0wkpwxI2ewxPCy3hLBnPinKMSf_wyC8xurU0=" target="_blank" rel="noopener noreferrer">influxdata.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHruogRSEuEhxUq7N4ZcjtA3AcGo6qILK-AktfvZhZJn2j94wLpJjiDkJb0Y1udDNVPTLQ3kVxpp2R68EPV_jtFTsPH1OW-lMVAKmkVnccPoPd4oMqCZQ2KYm9KyZw8icVpGIbjYzm5N5yX2LNW28WTA0Ex1T7CGlsUcSXq27_-ik8ucW1aUW8=" target="_blank" rel="noopener noreferrer">ippon.tech</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRJtYsTLrVnWbKY9N0qmEzKpa9cHt-kcKGTPcP9P720mWfA-rrpc02qO7w9gj2S4dXrx3N1XGnAflZzJ8pvnxbmkftOxY8_mYJCqgdZHMxeRNMioSUKjQxPVxCg5PjYz70Nbe3yEo=" target="_blank" rel="noopener noreferrer">youtube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETg8wIszAjpBglHSeV9zteZPmjoadjAi4Vqy3wx92yAPUGyV4kTBhsx5QMNmXC3cxoeq_UxQSvqbiUTZ4NsIgim1prPswN2Pc8PDTZf42Us-h3WpuihRhzm9rC9C3YCdArRCFzkLc=" target="_blank" rel="noopener noreferrer">youtube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEigN9a-taIyAMf1jB6YhVZj2GflQannSCa3jojTARPJ9YpyV-F0yzFVn4JiL3jP08bT2-Hh8II1FshfWRcMOh-eCA1ERKSDInjd4atDwp2ILKXUnTw8wtGgEJojJwTmwjXXGTFLUk=" target="_blank" rel="noopener noreferrer">youtube.com</a></li></ul>
-  </div>
-</body>
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_InfluxDB</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía le permitirá levantar una instancia básica de InfluxDB 2.x
+        utilizando Podman o Docker. La configuración incluirá la persistencia de
+        datos a través de un volumen y la inicialización de un usuario
+        administrador, una organización y un "bucket" predeterminados mediante
+        variables de entorno. Una vez que el contenedor esté en funcionamiento,
+        podrá acceder a la interfaz de usuario web de InfluxDB para empezar a
+        gestionar sus datos.
+      </p>
+      <p><strong>Pasos a seguir:</strong></p>
+      <p>
+        1. Asegúrese de tener Podman o Docker instalado y funcionando en su
+        sistema.
+      </p>
+      <p>
+        2. Copie el comando proporcionado en la sección
+        <code>runCommands</code> y ejecútelo en su terminal.
+      </p>
+      <p>
+        3. Una vez que el contenedor se esté ejecutando (puede verificar con
+        <code>podman ps</code> o <code>docker ps</code>), abra su navegador web
+        y navegue a <code>http://localhost:8086</code>.
+      </p>
+      <p>
+        4. Debería ver la interfaz de usuario de InfluxDB. Utilice el nombre de
+        usuario (<code>admin</code>) y la contraseña (<code>password</code>) que
+        se configuraron en el comando para iniciar sesión, si es necesario.
+        Aunque con <code>DOCKER_INFLUXDB_INIT_MODE=setup</code> InfluxDB ya
+        debería estar configurado y listo para usar sin un login inicial, si se
+        navega a la UI directamente.
+      </p>
+      <p>
+        5. Para detener el contenedor, use
+        <code>podman stop influxdb-instance</code> o
+        <code>docker stop influxdb-instance</code>.
+      </p>
+      <p>
+        6. Para eliminar el contenedor y el volumen de datos (si desea empezar
+        de nuevo), use <code>podman rm -v influxdb-instance</code> o
+        <code>docker rm -v influxdb-instance</code>. Tenga en cuenta que esto
+        eliminará permanentemente todos sus datos de InfluxDB.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>podman run -d --name influxdb-instance -p 8086:8086 -v influxdb_data:/var/lib/influxdb2 -e DOCKER_INFLUXDB_INIT_MODE=setup -e DOCKER_INFLUXDB_INIT_USERNAME=admin -e DOCKER_INFLUXDB_INIT_PASSWORD=password -e DOCKER_INFLUXDB_INIT_ORG=myorg -e DOCKER_INFLUXDB_INIT_BUCKET=mybucket -e DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mysecrettoken influxdb:latest</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgG4s12Lhh8tI7oemwDwvd7KLJa6b_RtP0DNx7p7OwFxY0C05rPlQtGa-F-meiAOcvjYgq4n8ZjDEBr7JkZDiss1IcO0yeAnv5WNrEbhIrplJmfAS41A=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >influxdata.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEmvvZOeEdC76w6sf2JzXlgwbbnHFqCYiZ-AOyLfGLHSq2RYRirTTjeT003eyLoVWSFq4K_BqTfvLiK2ISjVX7ZvTb8tb3BN-oXOnWKlU_D9hddngb0wkpwxI2ewxPCy3hLBnPinKMSf_wyC8xurU0="
+            target="_blank"
+            rel="noopener noreferrer"
+            >influxdata.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHruogRSEuEhxUq7N4ZcjtA3AcGo6qILK-AktfvZhZJn2j94wLpJjiDkJb0Y1udDNVPTLQ3kVxpp2R68EPV_jtFTsPH1OW-lMVAKmkVnccPoPd4oMqCZQ2KYm9KyZw8icVpGIbjYzm5N5yX2LNW28WTA0Ex1T7CGlsUcSXq27_-ik8ucW1aUW8="
+            target="_blank"
+            rel="noopener noreferrer"
+            >ippon.tech</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRJtYsTLrVnWbKY9N0qmEzKpa9cHt-kcKGTPcP9P720mWfA-rrpc02qO7w9gj2S4dXrx3N1XGnAflZzJ8pvnxbmkftOxY8_mYJCqgdZHMxeRNMioSUKjQxPVxCg5PjYz70Nbe3yEo="
+            target="_blank"
+            rel="noopener noreferrer"
+            >youtube.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETg8wIszAjpBglHSeV9zteZPmjoadjAi4Vqy3wx92yAPUGyV4kTBhsx5QMNmXC3cxoeq_UxQSvqbiUTZ4NsIgim1prPswN2Pc8PDTZf42Us-h3WpuihRhzm9rC9C3YCdArRCFzkLc="
+            target="_blank"
+            rel="noopener noreferrer"
+            >youtube.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEigN9a-taIyAMf1jB6YhVZj2GflQannSCa3jojTARPJ9YpyV-F0yzFVn4JiL3jP08bT2-Hh8II1FshfWRcMOh-eCA1ERKSDInjd4atDwp2ILKXUnTw8wtGgEJojJwTmwjXXGTFLUk="
+            target="_blank"
+            rel="noopener noreferrer"
+            >youtube.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

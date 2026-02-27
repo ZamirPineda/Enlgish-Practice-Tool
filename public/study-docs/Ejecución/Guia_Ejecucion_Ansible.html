@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Ansible</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Ansible</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,78 +52,138 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Ansible</h1>
-    <h2>Explicación</h2><p>Esta guía le permitirá ejecutar Ansible dentro de un contenedor Podman o Docker. La configuración incluye un <code>Dockerfile</code> para construir una imagen ligera de Ansible, y dos archivos de soporte: <code>inventory.ini</code> para definir el inventario de hosts (en este caso, <code>localhost</code>) y <code>playbook.yml</code> que es un playbook de ejemplo que imprime un mensaje y verifica la versión de Python. El proceso se divide en dos pasos principales: primero, construir la imagen de Docker/Podman con Ansible instalado; segundo, ejecutar un comando de Ansible desde esa imagen, montando su directorio de trabajo local para que Ansible pueda acceder a los archivos de inventario y playbook. Esto proporciona un entorno aislado y consistente para sus tareas de automatización con Ansible.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-ansible-runner . && podman run --rm -it -v $(pwd):/ansible my-ansible-runner ansible-playbook -i inventory.ini playbook.yml</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM python:3.9-slim-buster
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Ansible</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía le permitirá ejecutar Ansible dentro de un contenedor Podman o
+        Docker. La configuración incluye un <code>Dockerfile</code> para
+        construir una imagen ligera de Ansible, y dos archivos de soporte:
+        <code>inventory.ini</code> para definir el inventario de hosts (en este
+        caso, <code>localhost</code>) y <code>playbook.yml</code> que es un
+        playbook de ejemplo que imprime un mensaje y verifica la versión de
+        Python. El proceso se divide en dos pasos principales: primero,
+        construir la imagen de Docker/Podman con Ansible instalado; segundo,
+        ejecutar un comando de Ansible desde esa imagen, montando su directorio
+        de trabajo local para que Ansible pueda acceder a los archivos de
+        inventario y playbook. Esto proporciona un entorno aislado y consistente
+        para sus tareas de automatización con Ansible.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>podman build -t my-ansible-runner . && podman run --rm -it -v $(pwd):/ansible my-ansible-runner ansible-playbook -i inventory.ini playbook.yml</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile</h3>
+      <pre><code>FROM python:3.9-slim-buster
 
 LABEL maintainer="Your Name &lt;your.email@example.com&gt;"
 
@@ -138,8 +200,12 @@ WORKDIR /ansible
 
 # Comando predeterminado al iniciar el contenedor (puede ser sobrescrito)
 # Esto mostrará la versión de Ansible si el contenedor se ejecuta sin un comando específico
-CMD ["ansible", "--version"]</code></pre><h3>inventory.ini</h3><pre><code>[local]
-localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3</code></pre><h3>playbook.yml</h3><pre><code>---
+CMD ["ansible", "--version"]</code></pre>
+      <h3>inventory.ini</h3>
+      <pre><code>[local]
+localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3</code></pre>
+      <h3>playbook.yml</h3>
+      <pre><code>---
 - name: Sample Playbook
   hosts: local
   connection: local
@@ -155,8 +221,58 @@ localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3</
 
     - name: Display Python version
       debug:
-        var: python_version_output.stdout_lines</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGrrVGI27-cfMmfzCy3TAHGPHqi6FEP2a9QBYNAESU7i3VUo3zYoQ_917SynR_KsGmxo8eO9qtbDB9LlCYZHcWqP961U80_vedaWunhgu8fcP-cTHkPO53aTBn0TC6ZR8dXKfi2SF1WCvBMJApIdjUgDMdcG7OnudE24zid_A==" target="_blank" rel="noopener noreferrer">ansible.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFOofX0EHWoOly_Lblaq4W9JMWbylge3VuNaipxhlP64ZFHvBjmMc9rkLre4GM8FRLoFMdP91mL1gzp8J31Ve_sCzXDF4NScWDF5Lc3wgIV_Wi8OnaNIe8Ropvc6M-jmlvd72TJG40ZXLPhl2WQ" target="_blank" rel="noopener noreferrer">ansible.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnKSglbZ-PUElo1O8w4WLQ7mMoWB2ei1zbQeh342khqoI5Ir2U6j5KhpUmLPu3AQANmttd20q83XI2W3P3VkkCJ667VgEZG6wqryOmoIUos8iykpXk3yBHuqa-PpCO7dpIYbAeC5E2hWfQ3shM4z7VbULVij6u42SCYw==" target="_blank" rel="noopener noreferrer">ansible.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXx1IG19MbTeNcXZI4WNQaW0Oz8ID6vkAH_uSFeUBapLGnwZpZ0NWlONUPY4hHCK4-zG1yVJiW1igX5DE2DMn_mZaEvCEwsa3oMQTyGQ7LIYf4lwwQ1DAr8uJwt9axRBwOF4Dc2udctAT3aMrkHP_fk-7m6EP4e9I9v1JLDrMLcZi3SwOrCdOyIAcL19GePA==" target="_blank" rel="noopener noreferrer">learnansible.dev</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGFKTGonyqKEgPEl5CGojW3gbLWnQmrvn5Ksf6sDLogdRFRJFDt4vWZ0sy2Qs7e43gNz1076uDO3sMv0ZhwiDde6DmQV-MYfBErQOfkmp_yj-TLbTdvC_8uOgoUwV1kN1CDy5itCF5_qlvAhGwKvWoYMX8nH9cHBd6qhCebSzdnysU_NG_0TOlJY70eTcY=" target="_blank" rel="noopener noreferrer">nashtechglobal.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEZCaxm6-GWct4wXhIJjCgIxy4LiU65su4sH1NEH1HvzolQk1ZIjjpgs63L0DoE-Ybb3bzr7QjE7luv8e9dL7NkPOhpnABcKzAgGEHbtCLfeUUTonS_9rPBBXDeWy_A8uiLCKLMgg==" target="_blank" rel="noopener noreferrer">spacelift.io</a></li></ul>
-  </div>
-</body>
+        var: python_version_output.stdout_lines</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGrrVGI27-cfMmfzCy3TAHGPHqi6FEP2a9QBYNAESU7i3VUo3zYoQ_917SynR_KsGmxo8eO9qtbDB9LlCYZHcWqP961U80_vedaWunhgu8fcP-cTHkPO53aTBn0TC6ZR8dXKfi2SF1WCvBMJApIdjUgDMdcG7OnudE24zid_A=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >ansible.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFOofX0EHWoOly_Lblaq4W9JMWbylge3VuNaipxhlP64ZFHvBjmMc9rkLre4GM8FRLoFMdP91mL1gzp8J31Ve_sCzXDF4NScWDF5Lc3wgIV_Wi8OnaNIe8Ropvc6M-jmlvd72TJG40ZXLPhl2WQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            >ansible.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnKSglbZ-PUElo1O8w4WLQ7mMoWB2ei1zbQeh342khqoI5Ir2U6j5KhpUmLPu3AQANmttd20q83XI2W3P3VkkCJ667VgEZG6wqryOmoIUos8iykpXk3yBHuqa-PpCO7dpIYbAeC5E2hWfQ3shM4z7VbULVij6u42SCYw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >ansible.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXx1IG19MbTeNcXZI4WNQaW0Oz8ID6vkAH_uSFeUBapLGnwZpZ0NWlONUPY4hHCK4-zG1yVJiW1igX5DE2DMn_mZaEvCEwsa3oMQTyGQ7LIYf4lwwQ1DAr8uJwt9axRBwOF4Dc2udctAT3aMrkHP_fk-7m6EP4e9I9v1JLDrMLcZi3SwOrCdOyIAcL19GePA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >learnansible.dev</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGFKTGonyqKEgPEl5CGojW3gbLWnQmrvn5Ksf6sDLogdRFRJFDt4vWZ0sy2Qs7e43gNz1076uDO3sMv0ZhwiDde6DmQV-MYfBErQOfkmp_yj-TLbTdvC_8uOgoUwV1kN1CDy5itCF5_qlvAhGwKvWoYMX8nH9cHBd6qhCebSzdnysU_NG_0TOlJY70eTcY="
+            target="_blank"
+            rel="noopener noreferrer"
+            >nashtechglobal.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEZCaxm6-GWct4wXhIJjCgIxy4LiU65su4sH1NEH1HvzolQk1ZIjjpgs63L0DoE-Ybb3bzr7QjE7luv8e9dL7NkPOhpnABcKzAgGEHbtCLfeUUTonS_9rPBBXDeWy_A8uiLCKLMgg=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >spacelift.io</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

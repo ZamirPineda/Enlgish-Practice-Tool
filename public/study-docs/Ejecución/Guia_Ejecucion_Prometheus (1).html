@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Prometheus</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Prometheus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,78 +52,134 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Prometheus</h1>
-    <h2>Explicación</h2><p>Esta guía le permitirá levantar una instancia básica de Prometheus localmente usando Podman o Docker. Se construirá una imagen de contenedor personalizada que incluirá un archivo de configuración mínimo (<code>prometheus.yml</code>). Esta configuración instruye a Prometheus para que se monitoree a sí mismo, exponiendo su interfaz web y métricas en el puerto <code>9090</code> de su máquina local. Una vez iniciado, podrá acceder a la UI de Prometheus en <code>http://localhost:9090</code>.</p><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-prometheus . && podman run -d -p 9090:9090 --name prometheus-instance my-prometheus</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de Prometheus como base. Puedes especificar una versión específica, por ejemplo, prom/prometheus:v2.47.1
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Prometheus</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía le permitirá levantar una instancia básica de Prometheus
+        localmente usando Podman o Docker. Se construirá una imagen de
+        contenedor personalizada que incluirá un archivo de configuración mínimo
+        (<code>prometheus.yml</code>). Esta configuración instruye a Prometheus
+        para que se monitoree a sí mismo, exponiendo su interfaz web y métricas
+        en el puerto <code>9090</code> de su máquina local. Una vez iniciado,
+        podrá acceder a la UI de Prometheus en
+        <code>http://localhost:9090</code>.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>podman build -t my-prometheus . && podman run -d -p 9090:9090 --name prometheus-instance my-prometheus</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile</h3>
+      <pre><code># Usa la imagen oficial de Prometheus como base. Puedes especificar una versión específica, por ejemplo, prom/prometheus:v2.47.1
 FROM prom/prometheus:latest
 
 # Copia el archivo de configuración de Prometheus en el directorio de configuración del contenedor.
@@ -133,7 +191,9 @@ EXPOSE 9090
 
 # Define el comando de inicio para Prometheus, apuntando a nuestro archivo de configuración.
 # También especificamos una ruta para el almacenamiento de TSDB (Time Series Database).
-CMD ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus"]</code></pre><h3>prometheus.yml</h3><pre><code>global:
+CMD ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus"]</code></pre>
+      <h3>prometheus.yml</h3>
+      <pre><code>global:
   # Establece el intervalo global en el que Prometheus intentará extraer métricas de sus objetivos.
   scrape_interval: 15s 
   # Etiquetas opcionales que se adjuntarán a todas las series temporales de este Prometheus.
@@ -147,8 +207,50 @@ scrape_configs:
     # Configuración estática para los objetivos de este job.
     # Aquí, Prometheus se configurará para extraer métricas de sí mismo.
     static_configs:
-      - targets: ['localhost:9090'] # El propio Prometheus expone sus métricas en este puerto por defecto.</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE_CwYdI_PvaiGxLGB6GYbZuRrHcRuxOxuSdmkqtgAdYtuBHkUWXh5x4y7BCAmnbRxngmXzMo3vBqtOPM4Ypra5EDntn05kR9wPO5iW9MjKDceEKkeAgVJZ3A-0Lbmr9XP5xeYEafNjwqt_DHcuy29Q308CYgmOQ_I=" target="_blank" rel="noopener noreferrer">prometheus.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfIIHHevvi8Zf2uX757k7Yy017ERORWqMfX1SdW9udssbe0_wAcbTouiVAO71GfTdUZMFiihPWWpQbfX5gfa9-paze1UWihS2VjFK10Kresmy7CsiIf7cdAVmO7MVlDreJYxfxUXsB7EGk0YNtclf2mVkieqk=" target="_blank" rel="noopener noreferrer">prometheus.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSJX-WhaDWDP-Xui6_0a4QAjMm9lHjiyTR0lPPMVWQOothaxroLGUMxcB0lVCssaNu8BWEeNYtyzzwlcwmgPqe17sj1LgmiaDIGS9uVs9MKI_-KUyy3AsA6YHNFD2nxWImPRM57SvGYJUkQxE7MQ==" target="_blank" rel="noopener noreferrer">signoz.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiDhMGVjWE5rOwKkKbevH7SFs-btUDJ_xc4Y8-wJGzGFHXzxcnycxL7PU91920R-selDcuOrRsBccBz99Mi_k2MlhYfqSUvv8W_dpL-R7j2OI_V_KJXVGEMZLFC3JdCbTCBbXZKcnQim9PEHYIiq4om7iDWvYDVjLDFw==" target="_blank" rel="noopener noreferrer">betterstack.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQELH3SxA1gHl-eYMd10zMmS86EZ79VF2kE3UmnXq-R_TfVCArxQuVia49SJ_LTXINzf8tPZsMngZKV4gB9ktTrdNccASxo28HWvChmrUD9IUUG7aPHw5FdNjJXmbwREBHGL8nWUk4T6XEXOrykMJdppxmzcWKmTpAdU6Zxgc6M=" target="_blank" rel="noopener noreferrer">netdevops.it</a></li></ul>
-  </div>
-</body>
+      - targets: ['localhost:9090'] # El propio Prometheus expone sus métricas en este puerto por defecto.</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE_CwYdI_PvaiGxLGB6GYbZuRrHcRuxOxuSdmkqtgAdYtuBHkUWXh5x4y7BCAmnbRxngmXzMo3vBqtOPM4Ypra5EDntn05kR9wPO5iW9MjKDceEKkeAgVJZ3A-0Lbmr9XP5xeYEafNjwqt_DHcuy29Q308CYgmOQ_I="
+            target="_blank"
+            rel="noopener noreferrer"
+            >prometheus.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfIIHHevvi8Zf2uX757k7Yy017ERORWqMfX1SdW9udssbe0_wAcbTouiVAO71GfTdUZMFiihPWWpQbfX5gfa9-paze1UWihS2VjFK10Kresmy7CsiIf7cdAVmO7MVlDreJYxfxUXsB7EGk0YNtclf2mVkieqk="
+            target="_blank"
+            rel="noopener noreferrer"
+            >prometheus.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSJX-WhaDWDP-Xui6_0a4QAjMm9lHjiyTR0lPPMVWQOothaxroLGUMxcB0lVCssaNu8BWEeNYtyzzwlcwmgPqe17sj1LgmiaDIGS9uVs9MKI_-KUyy3AsA6YHNFD2nxWImPRM57SvGYJUkQxE7MQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >signoz.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiDhMGVjWE5rOwKkKbevH7SFs-btUDJ_xc4Y8-wJGzGFHXzxcnycxL7PU91920R-selDcuOrRsBccBz99Mi_k2MlhYfqSUvv8W_dpL-R7j2OI_V_KJXVGEMZLFC3JdCbTCBbXZKcnQim9PEHYIiq4om7iDWvYDVjLDFw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >betterstack.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQELH3SxA1gHl-eYMd10zMmS86EZ79VF2kE3UmnXq-R_TfVCArxQuVia49SJ_LTXINzf8tPZsMngZKV4gB9ktTrdNccASxo28HWvChmrUD9IUUG7aPHw5FdNjJXmbwREBHGL8nWUk4T6XEXOrykMJdppxmzcWKmTpAdU6Zxgc6M="
+            target="_blank"
+            rel="noopener noreferrer"
+            >netdevops.it</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

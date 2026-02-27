@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modelos de Consistencia (Fuerte, Eventual, Causal)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modelos de Consistencia (Fuerte, Eventual, Causal)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,104 +52,1487 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Modelos de Consistencia (Fuerte, Eventual, Causal)</h1>
+      <p>
+        # Modelos de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        en Sistemas Distribuidos
+      </p>
+      <p>
+        Los modelos de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        definen las reglas sobre cómo y cuándo los cambios en los datos escritos
+        en un sistema distribuido son visibles para futuras lecturas. Son
+        fundamentales para entender el comportamiento de los datos en entornos
+        donde la información se replica en múltiples nodos, impactando
+        directamente en la fiabilidad, el rendimiento y la
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >
+        de las aplicaciones.
+      </p>
+      <p>---</p>
+      <h2>
+        1.
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        Fuerte (Strong Consistency)
+      </h2>
+      <h3>Conceptos Principales</h3>
+      <p>
+        La
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        fuerte garantiza que una vez que una operación de escritura (write) se
+        completa, cualquier lectura (read) subsiguiente obtendrá el valor más
+        reciente. Es como si el sistema fuera un único nodo, sin importar
+        cuántas réplicas existan. Todas las réplicas deben estar de acuerdo en
+        el estado de los datos antes de que se confirme una escritura.
+      </p>
+      <ul>
+        <li>
+          <strong>Linearizabilidad (Linearizability):</strong> Es la forma más
+          estricta de
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          fuerte. Garantiza que todas las operaciones (lecturas y escrituras)
+          parecen ejecutarse instantáneamente en algún punto entre su invocación
+          y su respuesta, y que todas las operaciones ocurren en un orden total
+          global que es consistente con el tiempo real.
+        </li>
+        <li>
+          <strong>Actualizaciones Sincrónicas:</strong> Las escrituras a menudo
+          requieren la confirmación de la mayoría o de todas las réplicas antes
+          de ser consideradas exitosas.
+        </li>
+      </ul>
+      <h3>Ventajas</h3>
+      <ul>
+        <li>
+          <strong>Simplicidad para el Desarrollador:</strong> La aplicación no
+          necesita manejar lecturas obsoletas o conflictos de datos, ya que
+          siempre se obtiene el estado más reciente.
+        </li>
+        <li>
+          <strong>Integridad de Datos:</strong> Es ideal para escenarios donde
+          la precisión y el orden absoluto de las operaciones son críticos
+          (e.g., transacciones bancarias, control de inventario).
+        </li>
+        <li>
+          <strong>Predecibilidad:</strong> El comportamiento del sistema es
+          altamente predecible.
+        </li>
+      </ul>
+      <h3>Desventajas</h3>
+      <ul>
+        <li>
+          <strong
+            >Alta
+            <span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >:</strong
+          >
+          Las escrituras son lentas porque el sistema debe esperar la
+          propagación y confirmación en múltiples nodos. Las lecturas también
+          pueden ser lentas si requieren un quorum.
+        </li>
+        <li>
+          <strong
+            >Baja
+            <span
+              class="tooltip"
+              data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+              >Disponibilidad</span
+            >:</strong
+          >
+          Si hay fallos en la red (particiones) o un número suficiente de nodos
+          no está disponible para alcanzar el quorum, el sistema puede dejar de
+          aceptar escrituras (o incluso lecturas) para mantener la
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          (Teorema CAP: Consistency sobre Availability).
+        </li>
+        <li>
+          <strong>Menor Escalabilidad:</strong> Escalar horizontalmente puede
+          ser un desafío, ya que la coordinación entre un mayor número de nodos
+          aumenta la sobrecarga y la
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >.
+        </li>
+      </ul>
+      <p>---</p>
+      <h2>
+        2.
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        Eventual (Eventual Consistency)
+      </h2>
+      <h3>Conceptos Principales</h3>
+      <p>
+        La
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        eventual garantiza que si no se realizan más actualizaciones, todas las
+        réplicas convergerán eventualmente al mismo valor. No hay garantía de
+        que una lectura obtenga el último valor escrito inmediatamente después
+        de una escritura, pero <em>eventualmente</em> lo hará. Durante un
+        período de tiempo, las réplicas pueden tener datos inconsistentes.
+      </p>
+      <ul>
+        <li>
+          <strong>Propagación Asíncrona:</strong> Las escrituras se confirman
+          rápidamente en el nodo local o en un subconjunto de réplicas, y luego
+          se propagan al resto de los nodos de forma asíncrona en segundo plano.
+        </li>
+        <li>
+          <strong>Lecturas Obsoletas:</strong> Es posible que una lectura
+          obtenga un valor antiguo o "obsoleto" antes de que la propagación de
+          la última escritura haya alcanzado todas las réplicas.
+        </li>
+        <li>
+          <strong>Resolución de Conflictos:</strong> Los sistemas eventuales a
+          menudo requieren mecanismos para detectar y resolver conflictos cuando
+          múltiples réplicas reciben escrituras concurrentes (e.g., última
+          escritura gana, marcas de tiempo, lógica de aplicación).
+        </li>
+      </ul>
+      <h3>Ventajas</h3>
+      <ul>
+        <li>
+          <strong
+            >Alta
+            <span
+              class="tooltip"
+              data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+              >Disponibilidad</span
+            >:</strong
+          >
+          El sistema puede continuar operando y aceptando escrituras incluso si
+          algunas réplicas no están disponibles o hay particiones de red
+          (Teorema CAP: Availability sobre Consistency).
+        </li>
+        <li>
+          <strong
+            >Baja
+            <span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >:</strong
+          >
+          Las escrituras son rápidas porque no esperan la confirmación de todas
+          las réplicas. Las lecturas también pueden ser rápidas, obteniéndose de
+          cualquier réplica disponible.
+        </li>
+        <li>
+          <strong>Excelente Escalabilidad:</strong> Facilita la expansión
+          horizontal del sistema, ya que los nodos pueden operar de manera más
+          independiente.
+        </li>
+        <li>
+          <strong>Tolerancia a Particiones:</strong> Resiste mejor las fallas de
+          red y las particiones.
+        </li>
+      </ul>
+      <h3>Desventajas</h3>
+      <ul>
+        <li>
+          <strong>Complejidad para el Desarrollador:</strong> La aplicación debe
+          ser consciente de la posibilidad de lecturas obsoletas y, en algunos
+          casos, manejar la resolución de conflictos.
+        </li>
+        <li>
+          <strong>Inconsistencias Temporales:</strong> No es adecuada para
+          escenarios donde la
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          inmediata es crítica (e.g., el balance de una cuenta bancaria justo
+          después de un retiro).
+        </li>
+        <li>
+          <strong>Inconsistencia "Lectura tras escritura":</strong> Un usuario
+          puede realizar una escritura y luego inmediatamente intentar leerla,
+          obteniendo el valor antiguo.
+        </li>
+      </ul>
+      <p>---</p>
+      <h2>
+        3.
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        Causal (Causal Consistency)
+      </h2>
+      <h3>Conceptos Principales</h3>
+      <p>
+        La
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        causal es una forma de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        intermedia que es más fuerte que la eventual pero más débil que la
+        fuerte. Garantiza que las operaciones que están
+        <strong>causalmente relacionadas</strong> (es decir, una operación
+        influye o depende de otra) se verán en el mismo orden por todos los
+        observadores. Sin embargo, las operaciones que no están causalmente
+        relacionadas (concurrentes) pueden verse en diferentes órdenes por
+        diferentes observadores.
+      </p>
+      <ul>
+        <li>
+          <strong>Orden Parcial:</strong> Impone un orden parcial sobre las
+          operaciones basadas en su causalidad. Si la operación A causó la
+          operación B, entonces todos los nodos que ven B también deben haber
+          visto A.
+        </li>
+        <li>
+          <strong>Vector Clocks / Version Vectors:</strong> A menudo se
+          implementa utilizando estructuras de datos como relojes vectoriales
+          para rastrear las dependencias causales entre las operaciones.
+        </li>
+        <li>
+          <strong>"Happened-Before" Relationship:</strong> Se basa en la noción
+          de Lamport de "happened-before" para definir el orden.
+        </li>
+      </ul>
+      <h3>Ventajas</h3>
+      <ul>
+        <li>
+          <strong>Mejor Experiencia del Usuario:</strong> Evita algunas de las
+          anomalías más disruptivas de la
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          eventual (e.g., ver una respuesta antes de la pregunta a la que
+          responde).
+        </li>
+        <li>
+          <strong>Equilibrio entre C y A:</strong> Ofrece un buen compromiso
+          entre la
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          fuerte y la
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >/escalabilidad de la eventual. Permite una mayor
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >
+          y menor
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          que la
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          fuerte.
+        </li>
+        <li>
+          <strong>Razonamiento Simplificado:</strong> Facilita el razonamiento
+          sobre la aplicación en comparación con la
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          eventual pura, ya que las relaciones causales se mantienen.
+        </li>
+      </ul>
+      <h3>Desventajas</h3>
+      <ul>
+        <li>
+          <strong>Mayor Complejidad de Implementación:</strong> Más compleja de
+          implementar que la
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          eventual pura debido a la necesidad de rastrear y hacer cumplir las
+          relaciones causales (e.g., con relojes vectoriales).
+        </li>
+        <li>
+          <strong
+            >No es
+            <span
+              class="tooltip"
+              data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+              >Consistencia</span
+            >
+            Fuerte:</strong
+          >
+          Todavía es posible que existan anomalías para operaciones no
+          relacionadas causalmente, y las lecturas pueden no ver el último
+          estado global para escrituras concurrentes.
+        </li>
+        <li>
+          <strong>Sobrecarga de Metadatos:</strong> El seguimiento de la
+          causalidad puede introducir una sobrecarga de metadatos en las
+          operaciones.
+        </li>
+      </ul>
+      <p>---</p>
+      <p>
+        En resumen, la elección del modelo de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        adecuado depende en gran medida de los requisitos específicos de la
+        aplicación y del balance deseado entre
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >Consistencia</span
+          >
+          (C)</strong
+        >,
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >Disponibilidad</span
+          >
+          (A)</strong
+        >
+        y <strong>Tolerancia a Particiones (P)</strong>, según lo establecido
+        por el Teorema CAP. No hay una solución única para todos los casos, y
+        cada modelo tiene sus propias implicaciones de diseño.
+      </p>
+      <h2>Ejemplo de Aplicación Real</h2>
+      <p>
+        El concepto de Modelos de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        es fundamental en la arquitectura de sistemas distribuidos, donde
+        múltiples nodos almacenan o procesan datos. La elección de un modelo de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        impacta directamente en la
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >, rendimiento y fiabilidad del sistema. A continuación, se detalla un
+        ejemplo aplicado.
+      </p>
+      <p>---</p>
+      <p>
+        # Concepto de Arquitectura de Software: Modelos de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        (Fuerte, Eventual, Causal)
+      </p>
+      <h2>
+        Escenario Empresarial: "GloboShop" - Una Plataforma Global de E-commerce
+      </h2>
+      <p>
+        <strong>GloboShop</strong> es una plataforma de comercio electrónico en
+        rápido crecimiento, operando en múltiples regiones geográficas. Ofrecen
+        millones de productos, gestionan millones de usuarios, procesan miles de
+        transacciones por segundo y tienen un vasto ecosistema de reseñas,
+        recomendaciones y contenido generado por el usuario.
+      </p>
+      <h3>
+        Problema Original: Monolito y Cuellos de Botella de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        Fuerte Global
+      </h3>
+      <p>
+        Inicialmente, GloboShop operaba con una arquitectura monolítica y una
+        base de datos relacional centralizada (o un
+        <span
+          class="tooltip"
+          data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos."
+          >cluster</span
+        >
+        de alta
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >
+        con
+        <span
+          class="tooltip"
+          data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+          >replicación</span
+        >
+        sincrónica buscando
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        fuerte) para casi todos sus datos.
+      </p>
+      <p><strong>Problemas que enfrentaban:</strong></p>
+      <p>
+        1.
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >Latencia</span
+          >
+          Elevada:</strong
+        >
+        Con el crecimiento global, los usuarios lejos del centro de datos
+        principal experimentaban alta
+        <span
+          class="tooltip"
+          data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+          >latencia</span
+        >.
+      </p>
+      <p>
+        2. <strong>Cuellos de Botella en Escritura:</strong> Las operaciones
+        intensivas en escritura (nuevos pedidos, actualizaciones de inventario
+        en ventas flash) saturaban la base de datos, generando tiempos de espera
+        y fallos.
+      </p>
+      <p>
+        3.
+        <strong
+          >Baja
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >Disponibilidad</span
+          >:</strong
+        >
+        Un fallo en el nodo principal de la base de datos o en la red global
+        impactaba todo el sistema.
+      </p>
+      <p>
+        4. <strong>Escalabilidad Limitada:</strong> Era difícil escalar
+        componentes individualmente; la base de datos central era el factor
+        limitante.
+      </p>
+      <p>
+        5. <strong>Experiencia de Usuario Inconsistente:</strong> A veces, las
+        operaciones de lecturas lentas afectaban la navegación o mostraban
+        información desactualizada de forma crítica. Por otro lado, la búsqueda
+        de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        fuerte global ralentizaba operaciones no críticas.
+      </p>
+      <h3>
+        Implementación de Modelos de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        para la Solución
+      </h3>
+      <p>
+        GloboShop decidió refactorizar su arquitectura a un modelo de
+        microservicios, desacoplando componentes y adoptando diferentes modelos
+        de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        basados en los requisitos de negocio de cada módulo de datos.
+      </p>
+      <p>
+        #### 1.
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        Fuerte (Strong/Linearizable Consistency)
+      </p>
+      <p>
+        <strong>Definición:</strong> Todas las operaciones de lectura ven el
+        dato más reciente escrito. El orden de las operaciones es el mismo para
+        todos los observadores, como si hubiera un único punto de control.
+      </p>
+      <p><strong>Aplicación en GloboShop:</strong></p>
+      <ul>
+        <li>
+          <strong>Módulo:</strong> <code>Servicio de Inventario</code> y
+          <code>Servicio de Pagos</code>.
+        </li>
+        <li>
+          <strong>Problema Resuelto:</strong> Evitar el "over-selling" (vender
+          más productos de los disponibles) y garantizar la atomicidad y
+          unicidad de las transacciones financieras.
+        </li>
+        <li><strong>Detalles de Implementación:</strong></li>
+        <li>
+          * <strong>Inventario:</strong> Para la
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >
+          de productos durante el proceso de compra (desde que el usuario añade
+          al carrito hasta que se confirma el pago), GloboShop implementó un
+          sistema de "reservas" de inventario que utiliza una base de datos
+          distribuida transaccional (ej., <strong>Google Spanner</strong> o
+          <strong>CockroachDB</strong>) o un RDBMS tradicional con
+          <strong>bloqueos optimistas/pesimistas</strong> y transacciones
+          <span
+            class="tooltip"
+            data-tooltip-text="Un acrónimo (Atomicidad, Consistencia, Aislamiento, Durabilidad) que describe las propiedades de una transacción de base de datos confiable. Garantiza que las transacciones sean predecibles y seguras, incluso en caso de errores."
+            >ACID</span
+          >.
+        </li>
+        <li>
+          * Cuando un usuario añade un producto al carrito, se realiza una
+          reserva con
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          fuerte para ese ítem por un tiempo limitado.
+        </li>
+        <li>
+          * Cuando se confirma el pago, la deducción final del inventario es una
+          operación fuertemente consistente.
+        </li>
+        <li>
+          * <strong>Pagos:</strong> Todas las transacciones financieras
+          (débitos, créditos, reembolsos) se gestionan con
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          fuerte para asegurar que los fondos se transfieren una y solo una vez,
+          y que el saldo del usuario se actualiza de forma inmediata y precisa.
+          Esto es crítico para la confianza y la legalidad.
+        </li>
+        <li>
+          <strong>Tecnologías:</strong> Bases de datos distribuidas con
+          garantías
+          <span
+            class="tooltip"
+            data-tooltip-text="Un acrónimo (Atomicidad, Consistencia, Aislamiento, Durabilidad) que describe las propiedades de una transacción de base de datos confiable. Garantiza que las transacciones sean predecibles y seguras, incluso en caso de errores."
+            >ACID</span
+          >
+          y transacciones de dos fases (2PC), RDBMS tradicionales para regiones
+          específicas con alta
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >
+          y
+          <span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          >
+          síncrona estricta.
+        </li>
+      </ul>
+      <p>
+        #### 2.
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        Eventual (Eventual Consistency)
+      </p>
+      <p>
+        <strong>Definición:</strong> Si no se realizan nuevas escrituras en un
+        elemento de datos, finalmente todas las lecturas de ese elemento
+        devolverán el último valor escrito. Prioriza la
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >
+        y la tolerancia a particiones sobre la
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        inmediata.
+      </p>
+      <p><strong>Aplicación en GloboShop:</strong></p>
+      <ul>
+        <li>
+          <strong>Módulo:</strong> <code>Servicio de Recomendaciones</code>,
+          <code>Servicio de Reseñas de Productos</code>,
+          <code>Feed de Actividad de Usuarios</code>,
+          <code>Contadores de Vistas de Productos</code>.
+        </li>
+        <li>
+          <strong>Problema Resuelto:</strong> Reducir la
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          y aumentar la escalabilidad para datos que no requieren inmediatez
+          absoluta, mejorando la experiencia del usuario general.
+        </li>
+        <li><strong>Detalles de Implementación:</strong></li>
+        <li>
+          * <strong>Recomendaciones:</strong> Cuando un usuario compra un
+          producto, este evento se envía a una cola de mensajes (ej.,
+          <strong>Kafka</strong>). Un servicio de recomendaciones consume estos
+          eventos y actualiza los modelos de recomendación. Si un nuevo producto
+          comprado no aparece instantáneamente en las recomendaciones, no hay un
+          impacto crítico. Las lecturas del servicio de recomendaciones se hacen
+          desde una base de datos NoSQL (ej., <strong>Cassandra</strong> o
+          <strong>DynamoDB</strong>) configurada para
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          eventual.
+        </li>
+        <li>
+          * <strong>Reseñas de Productos:</strong> Cuando un usuario escribe una
+          reseña, esta se guarda en una base de datos de documentos NoSQL. Se
+          replica asincrónicamente a otras regiones. Es aceptable si una nueva
+          reseña tarda unos segundos o minutos en aparecer en todas las
+          interfaces de los usuarios a nivel global.
+        </li>
+        <li>
+          * <strong>Contadores de Vistas:</strong> Los recuentos de cuántas
+          veces se ha visto un producto se actualizan de forma eventual.
+          Utilizan bases de datos clave-valor (ej., <strong>Redis</strong> o
+          <strong>Aerospike</strong>) o NoSQL configuradas para alta velocidad y
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          eventual, donde una pequeña discrepancia temporal en el número de
+          vistas no es un problema de negocio.
+        </li>
+        <li>
+          <strong>Tecnologías:</strong> Bases de datos NoSQL (Cassandra,
+          DynamoDB, MongoDB), Message Brokers (Kafka, RabbitMQ), Almacenes de
+          clave-valor (Redis).
+        </li>
+      </ul>
+      <p>
+        #### 3.
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >Consistencia</span
+        >
+        Causal (Causal Consistency)
+      </p>
+      <p>
+        <strong>Definición:</strong> Si un proceso ve un evento A y luego causa
+        un evento B, entonces cualquier otro proceso que vea B también debe
+        haber visto A. Garantiza que las relaciones de "causa y efecto" se
+        preserven.
+      </p>
+      <p><strong>Aplicación en GloboShop:</strong></p>
+      <ul>
+        <li>
+          <strong>Módulo:</strong>
+          <code>Servicio de Comentarios y Respuestas a Comentarios</code>,
+          <code
+            >Historial de Actualizaciones de Productos (Precio,
+            Descripción)</code
+          >
+          para un editor.
+        </li>
+        <li>
+          <strong>Problema Resuelto:</strong> Asegurar que las secuencias
+          lógicas de eventos se mantengan, incluso si no todas las lecturas son
+          inmediatamente fuertes a nivel global.
+        </li>
+        <li><strong>Detalles de Implementación:</strong></li>
+        <li>
+          <em>
+            <strong>Comentarios y Respuestas:</strong> En el sistema de
+            comentarios de los productos, si un usuario A publica un comentario
+            y un usuario B responde a ese comentario, es </em
+          >esencial<em>
+            que cualquier usuario que vea la respuesta de B también vea el
+            comentario original de A. Sin embargo, no es estrictamente necesario
+            que vean </em
+          >todos* los comentarios en orden global inmediato. GloboShop utiliza
+          un sistema que rastrea las dependencias causales (ej.,
+          <strong>Vector Clocks</strong> o <strong>Version Vectors</strong>)
+          para asegurar que si se está leyendo una respuesta, su comentario
+          padre ya esté visible para ese lector, incluso si la actualización
+          global de otros comentarios no relacionados es eventual.
+        </li>
+        <li>
+          <em>
+            <strong>Historial de Ediciones de Productos:</strong> Si un gerente
+            de producto actualiza la descripción de un producto y luego
+            actualiza su precio (porque la nueva descripción justifica un nuevo
+            precio), es crucial que cualquier sistema que vea el nuevo precio </em
+          >también* vea la nueva descripción. No debería verse el nuevo precio
+          con la descripción antigua. Este tipo de lógica se maneja con
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          causal, asegurando que los "eventos" de actualización se propaguen en
+          el orden en que ocurrieron y se relacionaron causalmente.
+        </li>
+        <li>
+          <strong>Tecnologías:</strong> Algunas bases de datos NoSQL ofrecen
+          soporte nativo para causalidad (ej., Riak, algunas configuraciones de
+          Cosmos DB), o se implementa a nivel de aplicación utilizando
+          estructuras de datos como Vector Clocks.
+        </li>
+      </ul>
+      <h3>Resultados y Beneficios Obtenidos</h3>
+      <p>
+        La implementación estratégica de diferentes modelos de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        permitió a GloboShop transformar su plataforma y obtener los siguientes
+        beneficios clave:
+      </p>
+      <p>1. <strong>Mejora Drástica del Rendimiento:</strong></p>
+      <ul>
+        <li>
+          *
+          <strong
+            >Menor
+            <span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >:</strong
+          >
+          Los usuarios experimentan tiempos de carga mucho más rápidos,
+          especialmente en contenido no crítico y geográficamente disperso.
+        </li>
+        <li>
+          *
+          <strong
+            >Mayor
+            <span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >Throughput</span
+            >:</strong
+          >
+          El sistema puede manejar un volumen de transacciones
+          significativamente mayor, especialmente durante eventos de alta
+          demanda como ventas flash, al distribuir la carga y evitar cuellos de
+          botella de
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          fuerte global.
+        </li>
+      </ul>
+      <p>
+        2.
+        <strong
+          >Alta
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >Disponibilidad</span
+          >
+          y Resiliencia:</strong
+        >
+        Al permitir la eventual
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        para muchos servicios, el sistema puede seguir funcionando y sirviendo
+        datos incluso si algunos nodos o regiones experimentan problemas
+        temporales, priorizando la
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >.
+      </p>
+      <p>
+        3.
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL."
+            >Escalabilidad Horizontal</span
+          >:</strong
+        >
+        Cada microservicio puede escalar de forma independiente según sus
+        propias necesidades de datos y carga, utilizando la tecnología y el
+        modelo de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        más adecuados. Esto permitió a GloboShop crecer globalmente sin rehacer
+        todo el sistema cada vez.
+      </p>
+      <p>
+        4. <strong>Reducción de Costos Operacionales:</strong> Utilizar bases de
+        datos NoSQL y otros almacenes de datos optimizados para
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        eventual para la mayoría de los datos es generalmente más económico que
+        mantener sistemas de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        fuerte globalmente distribuidos para todo.
+      </p>
+      <p>
+        5. <strong>Mejor Experiencia de Usuario:</strong> Los usuarios disfrutan
+        de una interfaz más rápida y reactiva. Las pequeñas inconsistencias
+        eventuales son imperceptibles o aceptables, mientras que la información
+        crítica (inventario, pagos) es siempre precisa.
+      </p>
+      <p>
+        6. <strong>Mayor Agilidad en el Desarrollo:</strong> Los equipos de
+        desarrollo pueden elegir las herramientas y patrones de datos más
+        eficientes para sus microservicios, sin verse obligados por las
+        limitaciones de un único modelo de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        para todo el monolito.
+      </p>
+      <p>
+        Al comprender y aplicar inteligentemente los modelos de
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >, GloboShop pudo transformar un sistema monolítico lento y propenso a
+        fallos en una plataforma de e-commerce global, robusta, escalable y de
+        alto rendimiento.
+      </p>
+      <h2>Preguntas de Entrevista</h2>
+      <div>
+        <div class="accordion-item">
+          <p class="accordion-question">
+            En un sistema distribuido, ¿cuál es la diferencia fundamental entre
+            la consistencia fuerte y la consistencia eventual, y cuándo elegiría
+            una sobre la otra, considerando las implicaciones prácticas?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                  >consistencia</span
+                >
+                fuerte</strong
+              >
+              garantiza que una vez que un dato se escribe, cualquier lectura
+              posterior de ese dato devolverá el valor más reciente. Todos los
+              nodos del sistema ven el mismo orden de operaciones. Esto ofrece
+              una visión unificada y actualizada de los datos, pero a menudo
+              implica una mayor
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >
+              y menor
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >
+              en sistemas distribuidos (violando el teorema CAP). Es ideal para
+              transacciones financieras o sistemas donde la integridad inmediata
+              es crítica. La
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                  >consistencia</span
+                >
+                eventual</strong
+              >
+              permite que las escrituras se propaguen por el sistema a lo largo
+              del tiempo. Después de un período, y si no hay más escrituras,
+              todos los nodos convergerán al mismo valor. Prioriza la
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >
+              y la tolerancia a particiones, siendo más escalable y de menor
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >. Es adecuada para casos de uso como redes sociales (likes,
+              comentarios) o catálogos de productos donde una ligera demora en
+              la visibilidad no es crítica. La elección depende del equilibrio
+              entre la frescura de los datos, la
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >
+              y el rendimiento que el caso de uso requiere.
+            </p>
+          </div>
+        </div>
 
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Modelos de Consistencia (Fuerte, Eventual, Causal)</h1>
-    <p># Modelos de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> en Sistemas Distribuidos</p><p>Los modelos de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> definen las reglas sobre cómo y cuándo los cambios en los datos escritos en un sistema distribuido son visibles para futuras lecturas. Son fundamentales para entender el comportamiento de los datos en entornos donde la información se replica en múltiples nodos, impactando directamente en la fiabilidad, el rendimiento y la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> de las aplicaciones.</p><p>---</p><h2>1. <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Fuerte (Strong Consistency)</h2><h3>Conceptos Principales</h3><p>La <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte garantiza que una vez que una operación de escritura (write) se completa, cualquier lectura (read) subsiguiente obtendrá el valor más reciente. Es como si el sistema fuera un único nodo, sin importar cuántas réplicas existan. Todas las réplicas deben estar de acuerdo en el estado de los datos antes de que se confirme una escritura.</p><ul><li>  <strong>Linearizabilidad (Linearizability):</strong> Es la forma más estricta de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte. Garantiza que todas las operaciones (lecturas y escrituras) parecen ejecutarse instantáneamente en algún punto entre su invocación y su respuesta, y que todas las operaciones ocurren en un orden total global que es consistente con el tiempo real.</li><li>  <strong>Actualizaciones Sincrónicas:</strong> Las escrituras a menudo requieren la confirmación de la mayoría o de todas las réplicas antes de ser consideradas exitosas.</li></ul><h3>Ventajas</h3><ul><li>  <strong>Simplicidad para el Desarrollador:</strong> La aplicación no necesita manejar lecturas obsoletas o conflictos de datos, ya que siempre se obtiene el estado más reciente.</li><li>  <strong>Integridad de Datos:</strong> Es ideal para escenarios donde la precisión y el orden absoluto de las operaciones son críticos (e.g., transacciones bancarias, control de inventario).</li><li>  <strong>Predecibilidad:</strong> El comportamiento del sistema es altamente predecible.</li></ul><h3>Desventajas</h3><ul><li>  <strong>Alta <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span>:</strong> Las escrituras son lentas porque el sistema debe esperar la propagación y confirmación en múltiples nodos. Las lecturas también pueden ser lentas si requieren un quorum.</li><li>  <strong>Baja <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">Disponibilidad</span>:</strong> Si hay fallos en la red (particiones) o un número suficiente de nodos no está disponible para alcanzar el quorum, el sistema puede dejar de aceptar escrituras (o incluso lecturas) para mantener la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> (Teorema CAP: Consistency sobre Availability).</li><li>  <strong>Menor Escalabilidad:</strong> Escalar horizontalmente puede ser un desafío, ya que la coordinación entre un mayor número de nodos aumenta la sobrecarga y la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span>.</li></ul><p>---</p><h2>2. <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Eventual (Eventual Consistency)</h2><h3>Conceptos Principales</h3><p>La <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual garantiza que si no se realizan más actualizaciones, todas las réplicas convergerán eventualmente al mismo valor. No hay garantía de que una lectura obtenga el último valor escrito inmediatamente después de una escritura, pero <em>eventualmente</em> lo hará. Durante un período de tiempo, las réplicas pueden tener datos inconsistentes.</p><ul><li>  <strong>Propagación Asíncrona:</strong> Las escrituras se confirman rápidamente en el nodo local o en un subconjunto de réplicas, y luego se propagan al resto de los nodos de forma asíncrona en segundo plano.</li><li>  <strong>Lecturas Obsoletas:</strong> Es posible que una lectura obtenga un valor antiguo o "obsoleto" antes de que la propagación de la última escritura haya alcanzado todas las réplicas.</li><li>  <strong>Resolución de Conflictos:</strong> Los sistemas eventuales a menudo requieren mecanismos para detectar y resolver conflictos cuando múltiples réplicas reciben escrituras concurrentes (e.g., última escritura gana, marcas de tiempo, lógica de aplicación).</li></ul><h3>Ventajas</h3><ul><li>  <strong>Alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">Disponibilidad</span>:</strong> El sistema puede continuar operando y aceptando escrituras incluso si algunas réplicas no están disponibles o hay particiones de red (Teorema CAP: Availability sobre Consistency).</li><li>  <strong>Baja <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span>:</strong> Las escrituras son rápidas porque no esperan la confirmación de todas las réplicas. Las lecturas también pueden ser rápidas, obteniéndose de cualquier réplica disponible.</li><li>  <strong>Excelente Escalabilidad:</strong> Facilita la expansión horizontal del sistema, ya que los nodos pueden operar de manera más independiente.</li><li>  <strong>Tolerancia a Particiones:</strong> Resiste mejor las fallas de red y las particiones.</li></ul><h3>Desventajas</h3><ul><li>  <strong>Complejidad para el Desarrollador:</strong> La aplicación debe ser consciente de la posibilidad de lecturas obsoletas y, en algunos casos, manejar la resolución de conflictos.</li><li>  <strong>Inconsistencias Temporales:</strong> No es adecuada para escenarios donde la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> inmediata es crítica (e.g., el balance de una cuenta bancaria justo después de un retiro).</li><li>  <strong>Inconsistencia "Lectura tras escritura":</strong> Un usuario puede realizar una escritura y luego inmediatamente intentar leerla, obteniendo el valor antiguo.</li></ul><p>---</p><h2>3. <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Causal (Causal Consistency)</h2><h3>Conceptos Principales</h3><p>La <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> causal es una forma de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> intermedia que es más fuerte que la eventual pero más débil que la fuerte. Garantiza que las operaciones que están <strong>causalmente relacionadas</strong> (es decir, una operación influye o depende de otra) se verán en el mismo orden por todos los observadores. Sin embargo, las operaciones que no están causalmente relacionadas (concurrentes) pueden verse en diferentes órdenes por diferentes observadores.</p><ul><li>  <strong>Orden Parcial:</strong> Impone un orden parcial sobre las operaciones basadas en su causalidad. Si la operación A causó la operación B, entonces todos los nodos que ven B también deben haber visto A.</li><li>  <strong>Vector Clocks / Version Vectors:</strong> A menudo se implementa utilizando estructuras de datos como relojes vectoriales para rastrear las dependencias causales entre las operaciones.</li><li>  <strong>"Happened-Before" Relationship:</strong> Se basa en la noción de Lamport de "happened-before" para definir el orden.</li></ul><h3>Ventajas</h3><ul><li>  <strong>Mejor Experiencia del Usuario:</strong> Evita algunas de las anomalías más disruptivas de la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual (e.g., ver una respuesta antes de la pregunta a la que responde).</li><li>  <strong>Equilibrio entre C y A:</strong> Ofrece un buen compromiso entre la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte y la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span>/escalabilidad de la eventual. Permite una mayor <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y menor <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> que la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte.</li><li>  <strong>Razonamiento Simplificado:</strong> Facilita el razonamiento sobre la aplicación en comparación con la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual pura, ya que las relaciones causales se mantienen.</li></ul><h3>Desventajas</h3><ul><li>  <strong>Mayor Complejidad de Implementación:</strong> Más compleja de implementar que la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual pura debido a la necesidad de rastrear y hacer cumplir las relaciones causales (e.g., con relojes vectoriales).</li><li>  <strong>No es <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Fuerte:</strong> Todavía es posible que existan anomalías para operaciones no relacionadas causalmente, y las lecturas pueden no ver el último estado global para escrituras concurrentes.</li><li>  <strong>Sobrecarga de Metadatos:</strong> El seguimiento de la causalidad puede introducir una sobrecarga de metadatos en las operaciones.</li></ul><p>---</p><p>En resumen, la elección del modelo de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> adecuado depende en gran medida de los requisitos específicos de la aplicación y del balance deseado entre <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> (C)</strong>, <strong><span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">Disponibilidad</span> (A)</strong> y <strong>Tolerancia a Particiones (P)</strong>, según lo establecido por el Teorema CAP. No hay una solución única para todos los casos, y cada modelo tiene sus propias implicaciones de diseño.</p><h2>Ejemplo de Aplicación Real</h2><p>El concepto de Modelos de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> es fundamental en la arquitectura de sistemas distribuidos, donde múltiples nodos almacenan o procesan datos. La elección de un modelo de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> impacta directamente en la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span>, rendimiento y fiabilidad del sistema. A continuación, se detalla un ejemplo aplicado.</p><p>---</p><p># Concepto de Arquitectura de Software: Modelos de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> (Fuerte, Eventual, Causal)</p><h2>Escenario Empresarial: "GloboShop" - Una Plataforma Global de E-commerce</h2><p><strong>GloboShop</strong> es una plataforma de comercio electrónico en rápido crecimiento, operando en múltiples regiones geográficas. Ofrecen millones de productos, gestionan millones de usuarios, procesan miles de transacciones por segundo y tienen un vasto ecosistema de reseñas, recomendaciones y contenido generado por el usuario.</p><h3>Problema Original: Monolito y Cuellos de Botella de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Fuerte Global</h3><p>Inicialmente, GloboShop operaba con una arquitectura monolítica y una base de datos relacional centralizada (o un <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> de alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> con <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> sincrónica buscando <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte) para casi todos sus datos.</p><p><strong>Problemas que enfrentaban:</strong></p><p>1.  <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> Elevada:</strong> Con el crecimiento global, los usuarios lejos del centro de datos principal experimentaban alta <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span>.</p><p>2.  <strong>Cuellos de Botella en Escritura:</strong> Las operaciones intensivas en escritura (nuevos pedidos, actualizaciones de inventario en ventas flash) saturaban la base de datos, generando tiempos de espera y fallos.</p><p>3.  <strong>Baja <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">Disponibilidad</span>:</strong> Un fallo en el nodo principal de la base de datos o en la red global impactaba todo el sistema.</p><p>4.  <strong>Escalabilidad Limitada:</strong> Era difícil escalar componentes individualmente; la base de datos central era el factor limitante.</p><p>5.  <strong>Experiencia de Usuario Inconsistente:</strong> A veces, las operaciones de lecturas lentas afectaban la navegación o mostraban información desactualizada de forma crítica. Por otro lado, la búsqueda de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte global ralentizaba operaciones no críticas.</p><h3>Implementación de Modelos de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> para la Solución</h3><p>GloboShop decidió refactorizar su arquitectura a un modelo de microservicios, desacoplando componentes y adoptando diferentes modelos de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> basados en los requisitos de negocio de cada módulo de datos.</p><p>#### 1. <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Fuerte (Strong/Linearizable Consistency)</p><p><strong>Definición:</strong> Todas las operaciones de lectura ven el dato más reciente escrito. El orden de las operaciones es el mismo para todos los observadores, como si hubiera un único punto de control.</p><p><strong>Aplicación en GloboShop:</strong></p><ul><li>  <strong>Módulo:</strong> <code>Servicio de Inventario</code> y <code>Servicio de Pagos</code>.</li><li>  <strong>Problema Resuelto:</strong> Evitar el "over-selling" (vender más productos de los disponibles) y garantizar la atomicidad y unicidad de las transacciones financieras.</li><li>  <strong>Detalles de Implementación:</strong></li><li>   *   <strong>Inventario:</strong> Para la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> de productos durante el proceso de compra (desde que el usuario añade al carrito hasta que se confirma el pago), GloboShop implementó un sistema de "reservas" de inventario que utiliza una base de datos distribuida transaccional (ej., <strong>Google Spanner</strong> o <strong>CockroachDB</strong>) o un RDBMS tradicional con <strong>bloqueos optimistas/pesimistas</strong> y transacciones <span class="tooltip" data-tooltip-text="Un acrónimo (Atomicidad, Consistencia, Aislamiento, Durabilidad) que describe las propiedades de una transacción de base de datos confiable. Garantiza que las transacciones sean predecibles y seguras, incluso en caso de errores.">ACID</span>.</li><li>       *   Cuando un usuario añade un producto al carrito, se realiza una reserva con <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte para ese ítem por un tiempo limitado.</li><li>       *   Cuando se confirma el pago, la deducción final del inventario es una operación fuertemente consistente.</li><li>   *   <strong>Pagos:</strong> Todas las transacciones financieras (débitos, créditos, reembolsos) se gestionan con <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte para asegurar que los fondos se transfieren una y solo una vez, y que el saldo del usuario se actualiza de forma inmediata y precisa. Esto es crítico para la confianza y la legalidad.</li><li>  <strong>Tecnologías:</strong> Bases de datos distribuidas con garantías <span class="tooltip" data-tooltip-text="Un acrónimo (Atomicidad, Consistencia, Aislamiento, Durabilidad) que describe las propiedades de una transacción de base de datos confiable. Garantiza que las transacciones sean predecibles y seguras, incluso en caso de errores.">ACID</span> y transacciones de dos fases (2PC), RDBMS tradicionales para regiones específicas con alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> síncrona estricta.</li></ul><p>#### 2. <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Eventual (Eventual Consistency)</p><p><strong>Definición:</strong> Si no se realizan nuevas escrituras en un elemento de datos, finalmente todas las lecturas de ese elemento devolverán el último valor escrito. Prioriza la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y la tolerancia a particiones sobre la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> inmediata.</p><p><strong>Aplicación en GloboShop:</strong></p><ul><li>  <strong>Módulo:</strong> <code>Servicio de Recomendaciones</code>, <code>Servicio de Reseñas de Productos</code>, <code>Feed de Actividad de Usuarios</code>, <code>Contadores de Vistas de Productos</code>.</li><li>  <strong>Problema Resuelto:</strong> Reducir la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> y aumentar la escalabilidad para datos que no requieren inmediatez absoluta, mejorando la experiencia del usuario general.</li><li>  <strong>Detalles de Implementación:</strong></li><li>   *   <strong>Recomendaciones:</strong> Cuando un usuario compra un producto, este evento se envía a una cola de mensajes (ej., <strong>Kafka</strong>). Un servicio de recomendaciones consume estos eventos y actualiza los modelos de recomendación. Si un nuevo producto comprado no aparece instantáneamente en las recomendaciones, no hay un impacto crítico. Las lecturas del servicio de recomendaciones se hacen desde una base de datos NoSQL (ej., <strong>Cassandra</strong> o <strong>DynamoDB</strong>) configurada para <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual.</li><li>   *   <strong>Reseñas de Productos:</strong> Cuando un usuario escribe una reseña, esta se guarda en una base de datos de documentos NoSQL. Se replica asincrónicamente a otras regiones. Es aceptable si una nueva reseña tarda unos segundos o minutos en aparecer en todas las interfaces de los usuarios a nivel global.</li><li>   *   <strong>Contadores de Vistas:</strong> Los recuentos de cuántas veces se ha visto un producto se actualizan de forma eventual. Utilizan bases de datos clave-valor (ej., <strong>Redis</strong> o <strong>Aerospike</strong>) o NoSQL configuradas para alta velocidad y <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual, donde una pequeña discrepancia temporal en el número de vistas no es un problema de negocio.</li><li>  <strong>Tecnologías:</strong> Bases de datos NoSQL (Cassandra, DynamoDB, MongoDB), Message Brokers (Kafka, RabbitMQ), Almacenes de clave-valor (Redis).</li></ul><p>#### 3. <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Causal (Causal Consistency)</p><p><strong>Definición:</strong> Si un proceso ve un evento A y luego causa un evento B, entonces cualquier otro proceso que vea B también debe haber visto A. Garantiza que las relaciones de "causa y efecto" se preserven.</p><p><strong>Aplicación en GloboShop:</strong></p><ul><li>  <strong>Módulo:</strong> <code>Servicio de Comentarios y Respuestas a Comentarios</code>, <code>Historial de Actualizaciones de Productos (Precio, Descripción)</code> para un editor.</li><li>  <strong>Problema Resuelto:</strong> Asegurar que las secuencias lógicas de eventos se mantengan, incluso si no todas las lecturas son inmediatamente fuertes a nivel global.</li><li>  <strong>Detalles de Implementación:</strong></li><li>   <em>   <strong>Comentarios y Respuestas:</strong> En el sistema de comentarios de los productos, si un usuario A publica un comentario y un usuario B responde a ese comentario, es </em>esencial<em> que cualquier usuario que vea la respuesta de B también vea el comentario original de A. Sin embargo, no es estrictamente necesario que vean </em>todos* los comentarios en orden global inmediato. GloboShop utiliza un sistema que rastrea las dependencias causales (ej., <strong>Vector Clocks</strong> o <strong>Version Vectors</strong>) para asegurar que si se está leyendo una respuesta, su comentario padre ya esté visible para ese lector, incluso si la actualización global de otros comentarios no relacionados es eventual.</li><li>   <em>   <strong>Historial de Ediciones de Productos:</strong> Si un gerente de producto actualiza la descripción de un producto y luego actualiza su precio (porque la nueva descripción justifica un nuevo precio), es crucial que cualquier sistema que vea el nuevo precio </em>también* vea la nueva descripción. No debería verse el nuevo precio con la descripción antigua. Este tipo de lógica se maneja con <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> causal, asegurando que los "eventos" de actualización se propaguen en el orden en que ocurrieron y se relacionaron causalmente.</li><li>  <strong>Tecnologías:</strong> Algunas bases de datos NoSQL ofrecen soporte nativo para causalidad (ej., Riak, algunas configuraciones de Cosmos DB), o se implementa a nivel de aplicación utilizando estructuras de datos como Vector Clocks.</li></ul><h3>Resultados y Beneficios Obtenidos</h3><p>La implementación estratégica de diferentes modelos de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> permitió a GloboShop transformar su plataforma y obtener los siguientes beneficios clave:</p><p>1.  <strong>Mejora Drástica del Rendimiento:</strong></p><ul><li>   *   <strong>Menor <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span>:</strong> Los usuarios experimentan tiempos de carga mucho más rápidos, especialmente en contenido no crítico y geográficamente disperso.</li><li>   *   <strong>Mayor <span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">Throughput</span>:</strong> El sistema puede manejar un volumen de transacciones significativamente mayor, especialmente durante eventos de alta demanda como ventas flash, al distribuir la carga y evitar cuellos de botella de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte global.</li></ul><p>2.  <strong>Alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">Disponibilidad</span> y Resiliencia:</strong> Al permitir la eventual <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> para muchos servicios, el sistema puede seguir funcionando y sirviendo datos incluso si algunos nodos o regiones experimentan problemas temporales, priorizando la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span>.</p><p>3.  <strong><span class="tooltip" data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL.">Escalabilidad Horizontal</span>:</strong> Cada microservicio puede escalar de forma independiente según sus propias necesidades de datos y carga, utilizando la tecnología y el modelo de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> más adecuados. Esto permitió a GloboShop crecer globalmente sin rehacer todo el sistema cada vez.</p><p>4.  <strong>Reducción de Costos Operacionales:</strong> Utilizar bases de datos NoSQL y otros almacenes de datos optimizados para <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual para la mayoría de los datos es generalmente más económico que mantener sistemas de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte globalmente distribuidos para todo.</p><p>5.  <strong>Mejor Experiencia de Usuario:</strong> Los usuarios disfrutan de una interfaz más rápida y reactiva. Las pequeñas inconsistencias eventuales son imperceptibles o aceptables, mientras que la información crítica (inventario, pagos) es siempre precisa.</p><p>6.  <strong>Mayor Agilidad en el Desarrollo:</strong> Los equipos de desarrollo pueden elegir las herramientas y patrones de datos más eficientes para sus microservicios, sin verse obligados por las limitaciones de un único modelo de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> para todo el monolito.</p><p>Al comprender y aplicar inteligentemente los modelos de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span>, GloboShop pudo transformar un sistema monolítico lento y propenso a fallos en una plataforma de e-commerce global, robusta, escalable y de alto rendimiento.</p><h2>Preguntas de Entrevista</h2><div>
         <div class="accordion-item">
-          <p class="accordion-question">En un sistema distribuido, ¿cuál es la diferencia fundamental entre la consistencia fuerte y la consistencia eventual, y cuándo elegiría una sobre la otra, considerando las implicaciones prácticas?</p>
-          <div class="accordion-answer"><p>La <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte</strong> garantiza que una vez que un dato se escribe, cualquier lectura posterior de ese dato devolverá el valor más reciente. Todos los nodos del sistema ven el mismo orden de operaciones. Esto ofrece una visión unificada y actualizada de los datos, pero a menudo implica una mayor <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> y menor <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> en sistemas distribuidos (violando el teorema CAP). Es ideal para transacciones financieras o sistemas donde la integridad inmediata es crítica. La <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual</strong> permite que las escrituras se propaguen por el sistema a lo largo del tiempo. Después de un período, y si no hay más escrituras, todos los nodos convergerán al mismo valor. Prioriza la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y la tolerancia a particiones, siendo más escalable y de menor <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span>. Es adecuada para casos de uso como redes sociales (likes, comentarios) o catálogos de productos donde una ligera demora en la visibilidad no es crítica. La elección depende del equilibrio entre la frescura de los datos, la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y el rendimiento que el caso de uso requiere.</p></div>
+          <p class="accordion-question">
+            Explique el modelo de consistencia causal. ¿Cómo se sitúa entre la
+            consistencia fuerte y la eventual, y podría dar un ejemplo práctico
+            de un escenario donde la consistencia causal es preferible?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                  >consistencia</span
+                >
+                causal</strong
+              >
+              es un modelo intermedio que garantiza que si un evento 'A' causó
+              un evento 'B', entonces cualquier observador que vea 'B' también
+              debe ver 'A'. Sin embargo, las operaciones no relacionadas
+              causalmente pueden verse en cualquier orden. Es más indulgente que
+              la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              fuerte, ya que solo ordena las operaciones que tienen una relación
+              de causa y efecto explícita, pero más estricta que la eventual,
+              que no ofrece garantías de orden. Se sitúa entre ambas ofreciendo
+              un mejor equilibrio entre rendimiento y garantía de datos que la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              fuerte, y más garantías de orden que la eventual. Un ejemplo
+              práctico es un sistema de foros o comentarios: si un usuario 'A'
+              publica un comentario y luego 'B' responde a ese comentario, la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              causal garantiza que cualquier usuario que vea la respuesta de 'B'
+              también verá el comentario original de 'A', incluso si las
+              actualizaciones de otros comentarios no relacionados pueden
+              aparecer en un orden diferente.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Explique el modelo de consistencia causal. ¿Cómo se sitúa entre la consistencia fuerte y la eventual, y podría dar un ejemplo práctico de un escenario donde la consistencia causal es preferible?</p>
-          <div class="accordion-answer"><p>La <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> causal</strong> es un modelo intermedio que garantiza que si un evento 'A' causó un evento 'B', entonces cualquier observador que vea 'B' también debe ver 'A'. Sin embargo, las operaciones no relacionadas causalmente pueden verse en cualquier orden. Es más indulgente que la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte, ya que solo ordena las operaciones que tienen una relación de causa y efecto explícita, pero más estricta que la eventual, que no ofrece garantías de orden. Se sitúa entre ambas ofreciendo un mejor equilibrio entre rendimiento y garantía de datos que la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte, y más garantías de orden que la eventual. Un ejemplo práctico es un sistema de foros o comentarios: si un usuario 'A' publica un comentario y luego 'B' responde a ese comentario, la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> causal garantiza que cualquier usuario que vea la respuesta de 'B' también verá el comentario original de 'A', incluso si las actualizaciones de otros comentarios no relacionados pueden aparecer en un orden diferente.</p></div>
+          <p class="accordion-question">
+            Implementar y mantener la consistencia fuerte en un sistema
+            distribuido a gran escala presenta desafíos significativos. Describa
+            algunos de estos desafíos y las compensaciones involucradas en
+            superar la latencia inherente y los problemas de disponibilidad.
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Los principales desafíos incluyen la
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                  >latencia</span
+                >
+                de comunicación</strong
+              >
+              para lograr consenso entre nodos (por ejemplo, con algoritmos como
+              Paxos o
+              <span
+                class="tooltip"
+                data-tooltip-text="Un algoritmo de consenso diseñado para ser más comprensible que Paxos. Se utiliza en sistemas distribuidos para gestionar un log replicado y garantizar que los nodos se pongan de acuerdo sobre el estado del sistema."
+                >Raft</span
+              >), lo que ralentiza las operaciones de escritura. Esto se agrava
+              con la
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen."
+                  >tolerancia a fallos</span
+                ></strong
+              >: si un nodo falla o se aísla por una partición de red, el
+              sistema podría dejar de estar disponible para escrituras o incluso
+              lecturas para mantener la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >. El <strong>teorema CAP</strong> dicta que un sistema
+              distribuido solo puede garantizar dos de tres propiedades:
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >Consistencia</span
+              >
+              (C),
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >Disponibilidad</span
+              >
+              (A) y Tolerancia a Particiones (P). La
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              fuerte en presencia de particiones suele sacrificar la
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >. Las <strong>compensaciones</strong> para superar esto implican
+              invertir en infraestructura de red robusta, diseñar algoritmos de
+              consenso eficientes (que aún introducen
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >), o reducir el número de réplicas que deben acordar una
+              escritura, lo que puede impactar la durabilidad o la
+              <span
+                class="tooltip"
+                data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen."
+                >tolerancia a fallos</span
+              >. En muchos casos, las complejidades operacionales y el coste de
+              rendimiento llevan a optar por modelos de
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              más flexibles.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Implementar y mantener la consistencia fuerte en un sistema distribuido a gran escala presenta desafíos significativos. Describa algunos de estos desafíos y las compensaciones involucradas en superar la latencia inherente y los problemas de disponibilidad.</p>
-          <div class="accordion-answer"><p>Los principales desafíos incluyen la <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> de comunicación</strong> para lograr consenso entre nodos (por ejemplo, con algoritmos como Paxos o <span class="tooltip" data-tooltip-text="Un algoritmo de consenso diseñado para ser más comprensible que Paxos. Se utiliza en sistemas distribuidos para gestionar un log replicado y garantizar que los nodos se pongan de acuerdo sobre el estado del sistema.">Raft</span>), lo que ralentiza las operaciones de escritura. Esto se agrava con la <strong><span class="tooltip" data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen.">tolerancia a fallos</span></strong>: si un nodo falla o se aísla por una partición de red, el sistema podría dejar de estar disponible para escrituras o incluso lecturas para mantener la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span>. El <strong>teorema CAP</strong> dicta que un sistema distribuido solo puede garantizar dos de tres propiedades: <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> (C), <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">Disponibilidad</span> (A) y Tolerancia a Particiones (P). La <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte en presencia de particiones suele sacrificar la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span>. Las <strong>compensaciones</strong> para superar esto implican invertir en infraestructura de red robusta, diseñar algoritmos de consenso eficientes (que aún introducen <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span>), o reducir el número de réplicas que deben acordar una escritura, lo que puede impactar la durabilidad o la <span class="tooltip" data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen.">tolerancia a fallos</span>. En muchos casos, las complejidades operacionales y el coste de rendimiento llevan a optar por modelos de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> más flexibles.</p></div>
+          <p class="accordion-question">
+            En un sistema que utiliza consistencia eventual, es inevitable que
+            se produzcan conflictos de datos. Describa al menos tres estrategias
+            comunes para detectar y resolver estos conflictos, y explique cuándo
+            sería apropiada cada una.
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Para resolver conflictos en sistemas con
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              eventual, se usan varias estrategias: 1.
+              <strong>Última Escritura Gana (Last Write Wins - LWW):</strong>
+              Este es el enfoque más simple. Se basa en una marca de tiempo o un
+              número de versión para determinar qué escritura es la 'más
+              reciente'. La operación con la marca de tiempo más alta 'gana'. Es
+              fácil de implementar y apropiado cuando la pérdida de datos de
+              escrituras anteriores es aceptable o el campo es idempotente (por
+              ejemplo, el estado de un interruptor). Sin embargo, puede llevar a
+              la pérdida de actualizaciones válidas si los relojes de los nodos
+              no están sincronizados o si una escritura 'más antigua' es
+              lógicamente la correcta. 2.
+              <strong>Vector Clocks (Relojes Vectoriales):</strong> Permiten
+              detectar si una operación es anterior, posterior o concurrente a
+              otra, sin requerir sincronización de relojes físicos. Cada nodo
+              mantiene un vector que representa el número de actualizaciones que
+              ha visto de cada otro nodo. Cuando dos escrituras son
+              concurrentes, los relojes vectoriales pueden identificarlas como
+              un conflicto. Requiere lógica de aplicación para la resolución,
+              pero permite preservar todas las actualizaciones potencialmente
+              conflictivas para una resolución manual o programática. Útil para
+              sistemas donde la causalidad es importante y se necesita detección
+              precisa de conflictos. 3.
+              <strong>Conflict-free Replicated Data Types (CRDTs):</strong> Son
+              estructuras de datos que se pueden replicar a través de múltiples
+              servidores, y se garantiza que se fusionarán automáticamente y sin
+              conflictos, incluso si las operaciones se aplican en diferentes
+              órdenes. Tipos comunes incluyen contadores incrementales,
+              conjuntos (add-only, remove-only), y registros de última
+              escritura. Son ideales para aplicaciones donde se requiere una
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              fuerte 'eventualmente' sin conflictos manuales, por ejemplo, en
+              editores colaborativos o sistemas de chat donde los estados pueden
+              fusionarse sin intervención. La resolución es parte del diseño de
+              la estructura de datos en sí.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">En un sistema que utiliza consistencia eventual, es inevitable que se produzcan conflictos de datos. Describa al menos tres estrategias comunes para detectar y resolver estos conflictos, y explique cuándo sería apropiada cada una.</p>
-          <div class="accordion-answer"><p>Para resolver conflictos en sistemas con <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual, se usan varias estrategias: 1. <strong>Última Escritura Gana (Last Write Wins - LWW):</strong> Este es el enfoque más simple. Se basa en una marca de tiempo o un número de versión para determinar qué escritura es la 'más reciente'. La operación con la marca de tiempo más alta 'gana'. Es fácil de implementar y apropiado cuando la pérdida de datos de escrituras anteriores es aceptable o el campo es idempotente (por ejemplo, el estado de un interruptor). Sin embargo, puede llevar a la pérdida de actualizaciones válidas si los relojes de los nodos no están sincronizados o si una escritura 'más antigua' es lógicamente la correcta. 2. <strong>Vector Clocks (Relojes Vectoriales):</strong> Permiten detectar si una operación es anterior, posterior o concurrente a otra, sin requerir sincronización de relojes físicos. Cada nodo mantiene un vector que representa el número de actualizaciones que ha visto de cada otro nodo. Cuando dos escrituras son concurrentes, los relojes vectoriales pueden identificarlas como un conflicto. Requiere lógica de aplicación para la resolución, pero permite preservar todas las actualizaciones potencialmente conflictivas para una resolución manual o programática. Útil para sistemas donde la causalidad es importante y se necesita detección precisa de conflictos. 3. <strong>Conflict-free Replicated Data Types (CRDTs):</strong> Son estructuras de datos que se pueden replicar a través de múltiples servidores, y se garantiza que se fusionarán automáticamente y sin conflictos, incluso si las operaciones se aplican en diferentes órdenes. Tipos comunes incluyen contadores incrementales, conjuntos (add-only, remove-only), y registros de última escritura. Son ideales para aplicaciones donde se requiere una <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte 'eventualmente' sin conflictos manuales, por ejemplo, en editores colaborativos o sistemas de chat donde los estados pueden fusionarse sin intervención. La resolución es parte del diseño de la estructura de datos en sí.</p></div>
+          <p class="accordion-question">
+            Imagine que está diseñando un sistema de comercio electrónico a gran
+            escala. ¿Cómo aplicaría diferentes modelos de consistencia (fuerte,
+            eventual, causal) a diferentes componentes o flujos de trabajo
+            dentro del sistema, y por qué? Proporcione ejemplos específicos.
+          </p>
+          <div class="accordion-answer">
+            <p>
+              En un sistema de comercio electrónico, se utilizaría una
+              combinación de modelos de
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              para optimizar el rendimiento y la experiencia del usuario,
+              manteniendo la integridad donde es crítica: 1.
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                  >Consistencia</span
+                >
+                Fuerte:</strong
+              >
+              Es esencial para la <strong>gestión de inventario</strong> y el
+              <strong>procesamiento de pagos</strong>. Cuando un cliente compra
+              un artículo, el stock debe reducirse inmediatamente y con
+              precisión para evitar la sobreventa. Las transacciones de pago
+              deben ser atómicas y garantizar que el dinero se debite o acredite
+              exactamente una vez. Estos flujos requieren garantías
+              transaccionales estrictas. 2.
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                  >Consistencia</span
+                >
+                Eventual:</strong
+              >
+              Se aplicaría a la <strong>visualización de productos</strong>,
+              <strong>reseñas de clientes</strong>,
+              <strong>seguimiento de pedidos</strong> y
+              <strong>recomendaciones personalizadas</strong>. Si una nueva
+              reseña o un cambio en la descripción de un producto tarda unos
+              segundos en propagarse a todos los usuarios, esto es generalmente
+              aceptable y permite una mayor
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >
+              y escalabilidad de la base de datos de productos. El estado de un
+              pedido puede actualizarse eventualmente en la interfaz del cliente
+              sin necesidad de
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              fuerte global inmediata. 3.
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                  >Consistencia</span
+                >
+                Causal:</strong
+              >
+              Podría ser útil en la
+              <strong>sección de preguntas y respuestas</strong> de un producto
+              o en un <strong>feed de noticias</strong> personalizado. Si un
+              usuario hace una pregunta sobre un producto y otro usuario
+              responde a esa pregunta, la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              causal garantizaría que cualquiera que vea la respuesta también
+              vea la pregunta original, manteniendo el contexto. Sin embargo,
+              otras preguntas o respuestas no relacionadas podrían aparecer en
+              un orden diferente sin causar confusión. Al adoptar este enfoque
+              híbrido, el sistema puede lograr la escalabilidad y
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >
+              requeridas para la mayoría de las operaciones, mientras protege
+              los datos críticos con garantías de
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              más estrictas.
+            </p>
+          </div>
         </div>
-      
-        <div class="accordion-item">
-          <p class="accordion-question">Imagine que está diseñando un sistema de comercio electrónico a gran escala. ¿Cómo aplicaría diferentes modelos de consistencia (fuerte, eventual, causal) a diferentes componentes o flujos de trabajo dentro del sistema, y por qué? Proporcione ejemplos específicos.</p>
-          <div class="accordion-answer"><p>En un sistema de comercio electrónico, se utilizaría una combinación de modelos de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> para optimizar el rendimiento y la experiencia del usuario, manteniendo la integridad donde es crítica: 1. <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Fuerte:</strong> Es esencial para la <strong>gestión de inventario</strong> y el <strong>procesamiento de pagos</strong>. Cuando un cliente compra un artículo, el stock debe reducirse inmediatamente y con precisión para evitar la sobreventa. Las transacciones de pago deben ser atómicas y garantizar que el dinero se debite o acredite exactamente una vez. Estos flujos requieren garantías transaccionales estrictas. 2. <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Eventual:</strong> Se aplicaría a la <strong>visualización de productos</strong>, <strong>reseñas de clientes</strong>, <strong>seguimiento de pedidos</strong> y <strong>recomendaciones personalizadas</strong>. Si una nueva reseña o un cambio en la descripción de un producto tarda unos segundos en propagarse a todos los usuarios, esto es generalmente aceptable y permite una mayor <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y escalabilidad de la base de datos de productos. El estado de un pedido puede actualizarse eventualmente en la interfaz del cliente sin necesidad de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte global inmediata. 3. <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Causal:</strong> Podría ser útil en la <strong>sección de preguntas y respuestas</strong> de un producto o en un <strong>feed de noticias</strong> personalizado. Si un usuario hace una pregunta sobre un producto y otro usuario responde a esa pregunta, la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> causal garantizaría que cualquiera que vea la respuesta también vea la pregunta original, manteniendo el contexto. Sin embargo, otras preguntas o respuestas no relacionadas podrían aparecer en un orden diferente sin causar confusión. Al adoptar este enfoque híbrido, el sistema puede lograr la escalabilidad y <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> requeridas para la mayoría de las operaciones, mientras protege los datos críticos con garantías de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> más estrictas.</p></div>
-        </div>
-      </div><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEn_AL5xPK36XDMfQWCmrn19fW7HB2WH7MXSPl-vQfYcGHI-Mf6T2cmurvU3amHSC-rU1MgCOmh5UjcedBrLucrigz_4sa412wRMF2Hmdd1nbJuyKQOqYwPdh6So33vySj_GUJBqdSpJg3_C8eTGJngW3zM2f_Kfjfp5tDSO_9_xR4DKyt2ZgyT78yVbZDnIMUp0g==" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGt72KwL6OjnB_6Tckt92IpdBZuP3-oqwNt4vSxe-8O73AK39AiWzpZFvhofRxPXJR3TEPlS2U3Jz-OdmJLE6YBm36F36KZbfws7hPXz-Ytpdk-NvXII2fi5W8UbdFu-EA-soDjhidfWkoZaJUbUvAQB349tEoq00jInW5piLOY3GMi" target="_blank" rel="noopener noreferrer">designgurus.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEOfW6OZKM5xeSCVvoY8VEzYFYc9hUagcCDt5QKA6UR3hJhXgYQTpyRWeToDfe47jUsZwkUaAdF--qsPz84K0QDumUuJgyYcdJdO1CupErmqMXBz87ZeaAxSARKXQxheOINlo2_1fAZmYe54ZbfBFQ0V49OK1UN7dKmKNQ1ozewTZBtF_FXOyd1og00X1f9F9kOpyY-9HulsxRj4edUXrAadgdN" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHJ_-RJKhSz8ANmNGQ5tXkerMCgfujLGrsUS3yHvwuMFt7-JLHoHmV-sSWN5SpGagc28RX3hRDXIWzcX3TemuHR-K3_N-KvnQ7NuUwvh6PPBN9kGoqwr8Fdwvm4XKdal9qOt2xURTpKquxVVnUf5IZOvGZ8HZ83bjaBh7XUgvGD9iy2Oh3Q8F1cY-gcXNUjleV0i_zQyx9xswt3G9Vu2LwQkFJ-kQnvhybaAlDTgil-sqzMnezBeUdG7g==" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQGLDB9dWODETnV8MpvGKOqiAy74xQRttGrwC1lvlPXmsWkJ6kZ_XsYP-ILow58eP6z7TezbIZkUkDSwztTMKeJtisLIvrQN8O_cReRQLEq4Id64uN7wZhESm6OEQNVAsmedy2lQ==" target="_blank" rel="noopener noreferrer">youtube.com</a></li></ul>
-  </div>
-</body>
+      </div>
+      <h2>Recursos Adicionales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEn_AL5xPK36XDMfQWCmrn19fW7HB2WH7MXSPl-vQfYcGHI-Mf6T2cmurvU3amHSC-rU1MgCOmh5UjcedBrLucrigz_4sa412wRMF2Hmdd1nbJuyKQOqYwPdh6So33vySj_GUJBqdSpJg3_C8eTGJngW3zM2f_Kfjfp5tDSO_9_xR4DKyt2ZgyT78yVbZDnIMUp0g=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >geeksforgeeks.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGt72KwL6OjnB_6Tckt92IpdBZuP3-oqwNt4vSxe-8O73AK39AiWzpZFvhofRxPXJR3TEPlS2U3Jz-OdmJLE6YBm36F36KZbfws7hPXz-Ytpdk-NvXII2fi5W8UbdFu-EA-soDjhidfWkoZaJUbUvAQB349tEoq00jInW5piLOY3GMi"
+            target="_blank"
+            rel="noopener noreferrer"
+            >designgurus.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEOfW6OZKM5xeSCVvoY8VEzYFYc9hUagcCDt5QKA6UR3hJhXgYQTpyRWeToDfe47jUsZwkUaAdF--qsPz84K0QDumUuJgyYcdJdO1CupErmqMXBz87ZeaAxSARKXQxheOINlo2_1fAZmYe54ZbfBFQ0V49OK1UN7dKmKNQ1ozewTZBtF_FXOyd1og00X1f9F9kOpyY-9HulsxRj4edUXrAadgdN"
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHJ_-RJKhSz8ANmNGQ5tXkerMCgfujLGrsUS3yHvwuMFt7-JLHoHmV-sSWN5SpGagc28RX3hRDXIWzcX3TemuHR-K3_N-KvnQ7NuUwvh6PPBN9kGoqwr8Fdwvm4XKdal9qOt2xURTpKquxVVnUf5IZOvGZ8HZ83bjaBh7XUgvGD9iy2Oh3Q8F1cY-gcXNUjleV0i_zQyx9xswt3G9Vu2LwQkFJ-kQnvhybaAlDTgil-sqzMnezBeUdG7g=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQGLDB9dWODETnV8MpvGKOqiAy74xQRttGrwC1lvlPXmsWkJ6kZ_XsYP-ILow58eP6z7TezbIZkUkDSwztTMKeJtisLIvrQN8O_cReRQLEq4Id64uN7wZhESm6OEQNVAsmedy2lQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >youtube.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Terraform</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Terraform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,84 +52,158 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Terraform</h1>
-    <h2>Explicación</h2><p>Esta guía te permitirá configurar y ejecutar Terraform localmente utilizando Podman (o Docker) para gestionar tu infraestructura como código. Crearemos una imagen de contenedor personalizada que incluirá la CLI de Terraform. Luego, ejecutaremos comandos de Terraform dentro de este contenedor, montando tu directorio de trabajo local para que puedas interactuar con tus archivos <code>.tf</code>.</p><p><strong>Pasos a seguir:</strong></p><p>1.  Guarda el contenido del <code>Dockerfile</code> y <code>main.tf</code> en el mismo directorio local.</p><p>2.  Asegúrate de tener Podman (o Docker) instalado y funcionando.</p><p>3.  Asegúrate de tener tus credenciales de AWS configuradas en tu entorno local (ej. exportando <code>AWS_ACCESS_KEY_ID</code> y <code>AWS_SECRET_ACCESS_KEY</code> o configurando el archivo <code>~/.aws/credentials</code>).</p><p>4.  Ejecuta el comando <code>podman build</code> para construir la imagen de Terraform.</p><p>5.  Ejecuta los comandos <code>podman run</code> para inicializar, planificar y aplicar tu configuración de Terraform. </p><h2>Comandos de Ejecución</h2><pre><code>podman build -t my-terraform-cli .
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Terraform</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía te permitirá configurar y ejecutar Terraform localmente
+        utilizando Podman (o Docker) para gestionar tu infraestructura como
+        código. Crearemos una imagen de contenedor personalizada que incluirá la
+        CLI de Terraform. Luego, ejecutaremos comandos de Terraform dentro de
+        este contenedor, montando tu directorio de trabajo local para que puedas
+        interactuar con tus archivos <code>.tf</code>.
+      </p>
+      <p><strong>Pasos a seguir:</strong></p>
+      <p>
+        1. Guarda el contenido del <code>Dockerfile</code> y
+        <code>main.tf</code> en el mismo directorio local.
+      </p>
+      <p>2. Asegúrate de tener Podman (o Docker) instalado y funcionando.</p>
+      <p>
+        3. Asegúrate de tener tus credenciales de AWS configuradas en tu entorno
+        local (ej. exportando <code>AWS_ACCESS_KEY_ID</code> y
+        <code>AWS_SECRET_ACCESS_KEY</code> o configurando el archivo
+        <code>~/.aws/credentials</code>).
+      </p>
+      <p>
+        4. Ejecuta el comando <code>podman build</code> para construir la imagen
+        de Terraform.
+      </p>
+      <p>
+        5. Ejecuta los comandos <code>podman run</code> para inicializar,
+        planificar y aplicar tu configuración de Terraform.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>podman build -t my-terraform-cli .
 podman run --rm -it -v "$(pwd):/app" -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -w /app my-terraform-cli init
 podman run --rm -it -v "$(pwd):/app" -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -w /app my-terraform-cli plan
 # Para aplicar los cambios (¡procede con precaución en entornos reales!)
 # podman run --rm -it -v "$(pwd):/app" -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -w /app my-terraform-cli apply
 # Para destruir los recursos creados
-# podman run --rm -it -v "$(pwd):/app" -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -w /app my-terraform-cli destroy</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa una imagen base ligera de Alpine Linux
+# podman run --rm -it -v "$(pwd):/app" -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -w /app my-terraform-cli destroy</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile</h3>
+      <pre><code># Usa una imagen base ligera de Alpine Linux
 FROM alpine:latest
 
 # Define la versión de Terraform a instalar
@@ -150,7 +226,9 @@ RUN terraform version
 ENTRYPOINT ["terraform"]
 
 # Define un comando por defecto si no se proporciona ninguno
-CMD ["--help"]</code></pre><h3>main.tf</h3><pre><code># Define el proveedor de AWS
+CMD ["--help"]</code></pre>
+      <h3>main.tf</h3>
+      <pre><code># Define el proveedor de AWS
 # Asegúrate de haber configurado tus credenciales de AWS en tu entorno local
 # (ej. variables de entorno AWS_ACCESS_KEY_ID y AWS_SECRET_ACCESS_KEY)
 provider "aws" {
@@ -175,8 +253,66 @@ resource "aws_s3_bucket" "example_bucket" {
 output "bucket_name" {
   value       = aws_s3_bucket.example_bucket.id
   description = "El nombre del bucket S3 creado por Terraform."
-}</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpxP6uRNkyWW8hf1YjJc8sOj468SpyBcOuyut1ARo5XX67zT98kS9jI4AFyT4vSe-AYCtbRPPN4RXlRYdHyyVN7hypbde3zMq_d2J787-njP3t-lcapkpikk6PdKVfvElcNMDmUIv8akuGr5GcHA==" target="_blank" rel="noopener noreferrer">hashicorp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEdRHrh4C9LjnN1Og4GsrMDhjuCrsyznb8EuFNIZbYhxq8zfZmyIM48bXvDGYUB_v4BeWO1vYQlQ6ds5BDEFntZojt-PuhesmaXE170X2V8dCS4mlbeMnGzt5Pt_C3A2EI8IdFU" target="_blank" rel="noopener noreferrer">hashicorp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEcjyl0PZCbEXbMMl2WQ_5k3gAof_mjrJU1MAfTLx9bDztXaZfJ_sL2sv7tld0M8oJy-KppdK-fC_PToUVgCNLpLgnAfeOvVaffphgJ0TEkM9lFXcROOnftHgatLBFCdYekJDQHyGLb64k=" target="_blank" rel="noopener noreferrer">hashicorp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUsWbq0y7GqoRCF7S8dxG2qMu_ghnHw55FyTCFddSaBaX-9hUYTyBRFRwtB7CGeHgJISfJSnyE-8VHYZ2k6OFjn6cdv79dXRiWfMr5N0SYj6BVfstbkA_MPq0HNcDFpd2FchkJThHV3LSpMUM3" target="_blank" rel="noopener noreferrer">hashicorp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzpdehVVEcmKnHE5DBlTQ42YEspG-2SxOVMzdcWftY_x9exaDIw2KX5XYlAIYmkxXzP8wHOB1DhNbrh_5r1KxsPrVTscn0-DHFA4R-0b0X-z290xIgHa0U1lCCUhW0J1T5hadbYI2Z" target="_blank" rel="noopener noreferrer">spacelift.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEHx5uW0HaH2HHaz2PTzGKdviA226cQDYXz0REpJAgV67wW51z3shGrMYnutP0W4Ou2-i_T2NGlSK0p-vg0Szpw5PbhPovdFFAh89Dm9C9ws-taCV87oKq0aq2m2gQWARygBkQIWp2aFp1pk13YeqKPinvSGNS3IG72aw==" target="_blank" rel="noopener noreferrer">k21academy.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHLhWxitXi-V6NIqFW2SFhgEXL5oMsWm-fQV_1jNVa7xWiHa1DW92OK7TQVddTa10hqNtZF5ehv7PWJcd23Q2c7XBHOY3q-q0er9Ao9x1VkWSh6KqJe24TGxdHiJh_h9fy2zA==" target="_blank" rel="noopener noreferrer">zeet.co</a></li></ul>
-  </div>
-</body>
+}</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpxP6uRNkyWW8hf1YjJc8sOj468SpyBcOuyut1ARo5XX67zT98kS9jI4AFyT4vSe-AYCtbRPPN4RXlRYdHyyVN7hypbde3zMq_d2J787-njP3t-lcapkpikk6PdKVfvElcNMDmUIv8akuGr5GcHA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >hashicorp.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEdRHrh4C9LjnN1Og4GsrMDhjuCrsyznb8EuFNIZbYhxq8zfZmyIM48bXvDGYUB_v4BeWO1vYQlQ6ds5BDEFntZojt-PuhesmaXE170X2V8dCS4mlbeMnGzt5Pt_C3A2EI8IdFU"
+            target="_blank"
+            rel="noopener noreferrer"
+            >hashicorp.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEcjyl0PZCbEXbMMl2WQ_5k3gAof_mjrJU1MAfTLx9bDztXaZfJ_sL2sv7tld0M8oJy-KppdK-fC_PToUVgCNLpLgnAfeOvVaffphgJ0TEkM9lFXcROOnftHgatLBFCdYekJDQHyGLb64k="
+            target="_blank"
+            rel="noopener noreferrer"
+            >hashicorp.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUsWbq0y7GqoRCF7S8dxG2qMu_ghnHw55FyTCFddSaBaX-9hUYTyBRFRwtB7CGeHgJISfJSnyE-8VHYZ2k6OFjn6cdv79dXRiWfMr5N0SYj6BVfstbkA_MPq0HNcDFpd2FchkJThHV3LSpMUM3"
+            target="_blank"
+            rel="noopener noreferrer"
+            >hashicorp.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzpdehVVEcmKnHE5DBlTQ42YEspG-2SxOVMzdcWftY_x9exaDIw2KX5XYlAIYmkxXzP8wHOB1DhNbrh_5r1KxsPrVTscn0-DHFA4R-0b0X-z290xIgHa0U1lCCUhW0J1T5hadbYI2Z"
+            target="_blank"
+            rel="noopener noreferrer"
+            >spacelift.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEHx5uW0HaH2HHaz2PTzGKdviA226cQDYXz0REpJAgV67wW51z3shGrMYnutP0W4Ou2-i_T2NGlSK0p-vg0Szpw5PbhPovdFFAh89Dm9C9ws-taCV87oKq0aq2m2gQWARygBkQIWp2aFp1pk13YeqKPinvSGNS3IG72aw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >k21academy.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHLhWxitXi-V6NIqFW2SFhgEXL5oMsWm-fQV_1jNVa7xWiHa1DW92OK7TQVddTa10hqNtZF5ehv7PWJcd23Q2c7XBHOY3q-q0er9Ao9x1VkWSh6KqJe24TGxdHiJh_h9fy2zA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >zeet.co</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

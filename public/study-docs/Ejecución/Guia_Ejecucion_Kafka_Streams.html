@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Kafka Streams</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Kafka Streams</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,78 +52,185 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Kafka Streams</h1>
-    <h2>Explicación</h2><p>Esta guía proporciona una configuración básica para ejecutar una aplicación Kafka Streams junto con un clúster de Apache Kafka (Zookeeper + <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">Broker</span>) usando Docker Compose. La aplicación de ejemplo de Kafka Streams leerá mensajes de un tema de entrada ('streams-plaintext-input'), convertirá el texto a mayúsculas y escribirá el resultado en un tema de salida ('streams-uppercase-output').</p><p><strong>Pasos a seguir:</strong></p><p>1.  <strong>Crear los archivos:</strong> Guarda los contenidos proporcionados en sus respectivos archivos y directorios. Asegúrate de crear el directorio <code>src/main/java/com/example/</code> para el archivo <code>StreamApp.java</code>.</p><p>2.  <strong>Dar permisos al script:</strong> <code>chmod +x create-topics.sh</code></p><p>3.  <strong>Iniciar el clúster y la aplicación:</strong> Ejecuta <code>docker-compose up -d</code>. Esto levantará Zookeeper, Kafka y construirá/ejecutará la aplicación Kafka Streams.</p><p>4.  <strong>Crear temas de Kafka:</strong> Una vez que Kafka esté en funcionamiento (puede tardar unos segundos), ejecuta <code>./create-topics.sh</code> para crear los temas necesarios.</p><p>5.  <strong>Probar la aplicación:</strong></p><ul><li>   *   Envía un mensaje al tema de entrada: <code>docker exec -it kafka-broker kafka-console-producer.sh --broker-list localhost:9092 --topic streams-plaintext-input</code> (luego escribe tus mensajes, ej: "hello world", "Kafka Streams").</li><li>   *   Consume mensajes del tema de salida para ver el resultado: <code>docker exec -it kafka-broker kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic streams-uppercase-output --from-beginning</code></li></ul><p>6.  <strong>Ver logs de la aplicación Streams:</strong> <code>docker logs kafka-streams-app</code></p><p>7.  <strong>Detener la configuración:</strong> <code>docker-compose down</code></p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.streams-app</h3><pre><code># Usa una imagen base de OpenJDK para compilar y ejecutar la aplicación Java
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Kafka Streams</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía proporciona una configuración básica para ejecutar una
+        aplicación Kafka Streams junto con un clúster de Apache Kafka (Zookeeper
+        +
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >Broker</span
+        >) usando Docker Compose. La aplicación de ejemplo de Kafka Streams
+        leerá mensajes de un tema de entrada ('streams-plaintext-input'),
+        convertirá el texto a mayúsculas y escribirá el resultado en un tema de
+        salida ('streams-uppercase-output').
+      </p>
+      <p><strong>Pasos a seguir:</strong></p>
+      <p>
+        1. <strong>Crear los archivos:</strong> Guarda los contenidos
+        proporcionados en sus respectivos archivos y directorios. Asegúrate de
+        crear el directorio <code>src/main/java/com/example/</code> para el
+        archivo <code>StreamApp.java</code>.
+      </p>
+      <p>
+        2. <strong>Dar permisos al script:</strong>
+        <code>chmod +x create-topics.sh</code>
+      </p>
+      <p>
+        3. <strong>Iniciar el clúster y la aplicación:</strong> Ejecuta
+        <code>docker-compose up -d</code>. Esto levantará Zookeeper, Kafka y
+        construirá/ejecutará la aplicación Kafka Streams.
+      </p>
+      <p>
+        4. <strong>Crear temas de Kafka:</strong> Una vez que Kafka esté en
+        funcionamiento (puede tardar unos segundos), ejecuta
+        <code>./create-topics.sh</code> para crear los temas necesarios.
+      </p>
+      <p>5. <strong>Probar la aplicación:</strong></p>
+      <ul>
+        <li>
+          * Envía un mensaje al tema de entrada:
+          <code
+            >docker exec -it kafka-broker kafka-console-producer.sh
+            --broker-list localhost:9092 --topic streams-plaintext-input</code
+          >
+          (luego escribe tus mensajes, ej: "hello world", "Kafka Streams").
+        </li>
+        <li>
+          * Consume mensajes del tema de salida para ver el resultado:
+          <code
+            >docker exec -it kafka-broker kafka-console-consumer.sh
+            --bootstrap-server localhost:9092 --topic streams-uppercase-output
+            --from-beginning</code
+          >
+        </li>
+      </ul>
+      <p>
+        6. <strong>Ver logs de la aplicación Streams:</strong>
+        <code>docker logs kafka-streams-app</code>
+      </p>
+      <p>
+        7. <strong>Detener la configuración:</strong>
+        <code>docker-compose down</code>
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile.streams-app</h3>
+      <pre><code># Usa una imagen base de OpenJDK para compilar y ejecutar la aplicación Java
 FROM openjdk:11-jdk-slim as builder
 
 # Establece el directorio de trabajo dentro del contenedor
@@ -152,7 +261,9 @@ COPY --from=builder /app/target/kafka-streams-example-1.0-SNAPSHOT.jar kafka-str
 # Define el punto de entrada para ejecutar la aplicación
 # java -jar &lt;nombre_del_jar&gt;
 ENTRYPOINT ["java", "-jar", "kafka-streams-example.jar"]
-</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+</code></pre>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 
 services:
   zookeeper:
@@ -195,7 +306,9 @@ services:
     # Puedes añadir más variables de entorno si tu aplicación las necesita
     # ports:
     #   - "8080:8080" # Mapea un puerto si quieres acceder a alguna interfaz web de tu app (no aplica para este ejemplo)
-</code></pre><h3>create-topics.sh</h3><pre><code>#!/bin/bash
+</code></pre>
+      <h3>create-topics.sh</h3>
+      <pre><code>#!/bin/bash
 echo "Waiting for Kafka to be ready..."
 
 # Wait until Kafka broker is up and running
@@ -214,7 +327,9 @@ docker exec kafka-broker kafka-topics.sh --create --topic streams-plaintext-inpu
 docker exec kafka-broker kafka-topics.sh --create --topic streams-uppercase-output --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1 --if-not-exists
 
 echo "Topics created successfully: streams-plaintext-input, streams-uppercase-output"
-</code></pre><h3>pom.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+</code></pre>
+      <h3>pom.xml</h3>
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
@@ -275,7 +390,9 @@ echo "Topics created successfully: streams-plaintext-input, streams-uppercase-ou
     &lt;/build&gt;
 
 &lt;/project&gt;
-</code></pre><h3>src/main/java/com/example/StreamApp.java</h3><pre><code>package com.example;
+</code></pre>
+      <h3>src/main/java/com/example/StreamApp.java</h3>
+      <pre><code>package com.example;
 
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -317,8 +434,58 @@ public class StreamApp {
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     }
 }
-</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHUTC85u6p9_8E5_aNfP1ZrLOCA7Tz2QWLjHW5c75jLVBY22e8G6p8blITNZSYRSC2mKUt_Ing1ww7tOSFq9FI6uz4t_ex6WDC9bsOFOtlz54Ec6ZzUQAdmTbhCi_9Psin3vdlsh56RrCQZ" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF_SABqhih47RSSahE8oCz3cyG7AI3I77_hvu16QcJ7Jlny12KMXcjn40QHqZDcZBn21Kz1sqKf7DbaL8jzqkzsCZTSMZGYEerTo15iwMuM62yC5qc0sEiHl_UZ1Tor1ylVng==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzP2ZhInUwZiOkMWB1CXhmTTmz0voHVxIZ2Rl-vCzd1NQIzIr4YNjBgqxbbQY_-YQm3AcSJotoxA_LDPh-2hIhXN3akxv-DH-kxSDRt2Sz6BtozA7Ie-AU3JMU-Mw-sdR-fIQGu3mIFN8ErEN-d36mRM_FUfQUoFeK" target="_blank" rel="noopener noreferrer">confluent.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQfCpz369m29lAtSwq9ui1cSIuPg7CA00oF4zLYKtY6r-1G9b1MuLHKZ80P6AJuRNrcrRKMi2suHCloWJWoIz5wS_4KX_d_NUTHFYLW-hytfjZ_vJxpI0_VB2uBaVjm3XCFAQyXuuhM9_X" target="_blank" rel="noopener noreferrer">aprenderbigdata.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEDAftgNhSUE88fv_qZLb4D3K4MLDB81WAg8_bpVJZTdyZqT6oK_wXrnbzzTc3O-1pYWjNYXE7_0tO9sIpee07MLF4hN_WgA8Kp2sDtmFld28wo3DEONBwvOigN8EbY" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKlC4ru-JuFp6Py78fqAlrJee9rZMrxNg1teDKi5Ngvs50n5UANt9wQU23bGKhv4yrheCdb3veM06Zy2yidqGRTaN7ZdbcdlSgeze_U3pc9ZMaycjr7udVO1eBX_NtiSY0SXyGVavsqz08DG-cM-4YcPyN_ekGptHrAhTO1dauEOCepTtkKIu-aovajmUJwIs=" target="_blank" rel="noopener noreferrer">datacamp.com</a></li></ul>
-  </div>
-</body>
+</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHUTC85u6p9_8E5_aNfP1ZrLOCA7Tz2QWLjHW5c75jLVBY22e8G6p8blITNZSYRSC2mKUt_Ing1ww7tOSFq9FI6uz4t_ex6WDC9bsOFOtlz54Ec6ZzUQAdmTbhCi_9Psin3vdlsh56RrCQZ"
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF_SABqhih47RSSahE8oCz3cyG7AI3I77_hvu16QcJ7Jlny12KMXcjn40QHqZDcZBn21Kz1sqKf7DbaL8jzqkzsCZTSMZGYEerTo15iwMuM62yC5qc0sEiHl_UZ1Tor1ylVng=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzP2ZhInUwZiOkMWB1CXhmTTmz0voHVxIZ2Rl-vCzd1NQIzIr4YNjBgqxbbQY_-YQm3AcSJotoxA_LDPh-2hIhXN3akxv-DH-kxSDRt2Sz6BtozA7Ie-AU3JMU-Mw-sdR-fIQGu3mIFN8ErEN-d36mRM_FUfQUoFeK"
+            target="_blank"
+            rel="noopener noreferrer"
+            >confluent.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQfCpz369m29lAtSwq9ui1cSIuPg7CA00oF4zLYKtY6r-1G9b1MuLHKZ80P6AJuRNrcrRKMi2suHCloWJWoIz5wS_4KX_d_NUTHFYLW-hytfjZ_vJxpI0_VB2uBaVjm3XCFAQyXuuhM9_X"
+            target="_blank"
+            rel="noopener noreferrer"
+            >aprenderbigdata.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEDAftgNhSUE88fv_qZLb4D3K4MLDB81WAg8_bpVJZTdyZqT6oK_wXrnbzzTc3O-1pYWjNYXE7_0tO9sIpee07MLF4hN_WgA8Kp2sDtmFld28wo3DEONBwvOigN8EbY"
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKlC4ru-JuFp6Py78fqAlrJee9rZMrxNg1teDKi5Ngvs50n5UANt9wQU23bGKhv4yrheCdb3veM06Zy2yidqGRTaN7ZdbcdlSgeze_U3pc9ZMaycjr7udVO1eBX_NtiSY0SXyGVavsqz08DG-cM-4YcPyN_ekGptHrAhTO1dauEOCepTtkKIu-aovajmUJwIs="
+            target="_blank"
+            rel="noopener noreferrer"
+            >datacamp.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

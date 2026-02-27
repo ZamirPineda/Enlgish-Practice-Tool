@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Feast</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Feast</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,78 +52,217 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Feast</h1>
-    <h2>Explicación</h2><p>Esta guía le permitirá configurar y ejecutar una instancia básica de Feast localmente utilizando Docker Compose. Feast es un almacén de características (Feature Store) que le ayuda a gestionar y servir características para modelos de aprendizaje automático. Esta configuración incluye:</p><ul><li>  <strong>Redis</strong>: Como almacén en línea (online store) para servir características con baja <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span>.</li><li>  <strong>Feast Application</strong>: Un contenedor que contendrá el SDK de Feast, el registro local de características (registry) y los archivos de definición de características. Este contenedor realizará las operaciones de <code>feast apply</code> y ejecutará un script de ejemplo para mostrar la obtención de características históricas y en línea.</li><li>  <strong>Offline Store</strong>: Para simplificar, utilizaremos archivos Parquet locales como almacén fuera de línea (offline store).</li></ul><p><strong>Pasos a seguir:</strong></p><p>1.  <strong>Preparación de archivos:</strong></p><ul><li>   *   Guarde el contenido de <code>docker-compose.yml</code>, <code>Dockerfile</code>, <code>feature_store.yaml</code>, <code>start_feast.sh</code> y <code>generate_data.py</code> en el directorio raíz de su proyecto.</li><li>   *   Cree un directorio llamado <code>feature_repo</code> en el mismo directorio raíz y guarde <code>example.py</code> dentro de <code>feature_repo</code>.</li><li>   *   Cree un directorio llamado <code>data</code> en el mismo directorio raíz.</li></ul><p>2.  <strong>Generar datos de ejemplo:</strong></p><ul><li>   *   Ejecute el script <code>generate_data.py</code> localmente (no en un contenedor) para crear el archivo <code>data/data.parquet</code> necesario para el almacén fuera de línea:</li></ul><p>        <code>python generate_data.py</code></p><p>3.  <strong>Iniciar los contenedores:</strong></p><ul><li>   *   Desde el directorio raíz de su proyecto (donde se encuentran <code>docker-compose.yml</code> y los demás archivos), ejecute el comando <code>docker-compose up -d</code>.</li></ul><p>4.  <strong>Verificar el estado:</strong></p><ul><li>   *   Puede observar los logs del contenedor <code>feast_app</code> para ver la inicialización de Feast y la ejecución del script de ejemplo:</li></ul><p>        <code>docker-compose logs -f feast_app</code></p><ul><li>   *   Debería ver la aplicación de las definiciones de características, la recuperación de características históricas y en línea.</li></ul><p>5.  <strong>Detener los contenedores:</strong></p><ul><li>   *   Para detener y eliminar los contenedores, redes y volúmenes creados por Docker Compose, ejecute:</li></ul><p>        <code>docker-compose down -v</code></p><p>Esta configuración le proporciona un entorno funcional para experimentar con Feast de forma local.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM python:3.9-slim-buster
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Feast</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía le permitirá configurar y ejecutar una instancia básica de
+        Feast localmente utilizando Docker Compose. Feast es un almacén de
+        características (Feature Store) que le ayuda a gestionar y servir
+        características para modelos de aprendizaje automático. Esta
+        configuración incluye:
+      </p>
+      <ul>
+        <li>
+          <strong>Redis</strong>: Como almacén en línea (online store) para
+          servir características con baja
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >.
+        </li>
+        <li>
+          <strong>Feast Application</strong>: Un contenedor que contendrá el SDK
+          de Feast, el registro local de características (registry) y los
+          archivos de definición de características. Este contenedor realizará
+          las operaciones de <code>feast apply</code> y ejecutará un script de
+          ejemplo para mostrar la obtención de características históricas y en
+          línea.
+        </li>
+        <li>
+          <strong>Offline Store</strong>: Para simplificar, utilizaremos
+          archivos Parquet locales como almacén fuera de línea (offline store).
+        </li>
+      </ul>
+      <p><strong>Pasos a seguir:</strong></p>
+      <p>1. <strong>Preparación de archivos:</strong></p>
+      <ul>
+        <li>
+          * Guarde el contenido de <code>docker-compose.yml</code>,
+          <code>Dockerfile</code>, <code>feature_store.yaml</code>,
+          <code>start_feast.sh</code> y <code>generate_data.py</code> en el
+          directorio raíz de su proyecto.
+        </li>
+        <li>
+          * Cree un directorio llamado <code>feature_repo</code> en el mismo
+          directorio raíz y guarde <code>example.py</code> dentro de
+          <code>feature_repo</code>.
+        </li>
+        <li>
+          * Cree un directorio llamado <code>data</code> en el mismo directorio
+          raíz.
+        </li>
+      </ul>
+      <p>2. <strong>Generar datos de ejemplo:</strong></p>
+      <ul>
+        <li>
+          * Ejecute el script <code>generate_data.py</code> localmente (no en un
+          contenedor) para crear el archivo
+          <code>data/data.parquet</code> necesario para el almacén fuera de
+          línea:
+        </li>
+      </ul>
+      <p><code>python generate_data.py</code></p>
+      <p>3. <strong>Iniciar los contenedores:</strong></p>
+      <ul>
+        <li>
+          * Desde el directorio raíz de su proyecto (donde se encuentran
+          <code>docker-compose.yml</code> y los demás archivos), ejecute el
+          comando <code>docker-compose up -d</code>.
+        </li>
+      </ul>
+      <p>4. <strong>Verificar el estado:</strong></p>
+      <ul>
+        <li>
+          * Puede observar los logs del contenedor <code>feast_app</code> para
+          ver la inicialización de Feast y la ejecución del script de ejemplo:
+        </li>
+      </ul>
+      <p><code>docker-compose logs -f feast_app</code></p>
+      <ul>
+        <li>
+          * Debería ver la aplicación de las definiciones de características, la
+          recuperación de características históricas y en línea.
+        </li>
+      </ul>
+      <p>5. <strong>Detener los contenedores:</strong></p>
+      <ul>
+        <li>
+          * Para detener y eliminar los contenedores, redes y volúmenes creados
+          por Docker Compose, ejecute:
+        </li>
+      </ul>
+      <p><code>docker-compose down -v</code></p>
+      <p>
+        Esta configuración le proporciona un entorno funcional para experimentar
+        con Feast de forma local.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile</h3>
+      <pre><code>FROM python:3.9-slim-buster
 
 WORKDIR /app
 
@@ -144,7 +285,9 @@ ENV REDIS_HOST=redis
 ENV REDIS_PORT=6379
 
 # Default command to run
-CMD ["/bin/bash", "start_feast.sh"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+CMD ["/bin/bash", "start_feast.sh"]</code></pre>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 services:
   redis:
     image: redis:6-alpine
@@ -173,14 +316,18 @@ services:
     entrypoint: ["/bin/bash", "/app/start_feast.sh"]
 
 volumes:
-  redis_data:</code></pre><h3>feature_store.yaml</h3><pre><code>project: my_feature_project
+  redis_data:</code></pre>
+      <h3>feature_store.yaml</h3>
+      <pre><code>project: my_feature_project
 registry: data/registry.db # Local file for registry within the container
 provider: local
 online_store:
     type: redis
     host: redis
     port: 6379
-# offline_store will default to local files (parquet) because of 'provider: local'</code></pre><h3>start_feast.sh</h3><pre><code>#!/bin/bash
+# offline_store will default to local files (parquet) because of 'provider: local'</code></pre>
+      <h3>start_feast.sh</h3>
+      <pre><code>#!/bin/bash
 
 # Ensure the data directory (and thus registry path) exists inside the container
 mkdir -p data
@@ -197,7 +344,9 @@ python feature_repo/example.py
 
 echo "To stop: docker-compose down -v"
 # Keep the container running for inspection
-tail -f /dev/null</code></pre><h3>feature_repo/example.py</h3><pre><code>import pandas as pd
+tail -f /dev/null</code></pre>
+      <h3>feature_repo/example.py</h3>
+      <pre><code>import pandas as pd
 from datetime import datetime, timedelta
 from feast import FeatureStore, Entity, FeatureView, Field, FileSource, ValueType
 from feast.types import Int64, Float32
@@ -262,7 +411,9 @@ online_features = store.get_online_features(
 print("Online features retrieved (may be empty if not materialized):")
 print(online_features)
 
-print("\nFeast demonstration complete!")</code></pre><h3>generate_data.py</h3><pre><code>import pandas as pd
+print("\nFeast demonstration complete!")</code></pre>
+      <h3>generate_data.py</h3>
+      <pre><code>import pandas as pd
 from datetime import datetime, timedelta
 import os
 
@@ -294,8 +445,50 @@ df.to_parquet(output_file, index=False)
 
 print(f"Generated dummy data at: {output_file}")
 print("Content of data.parquet:")
-print(df)</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEufpnbs2LdmNWz2gEJa111_0DUIg-WjD1VQwHZ_kauNWAVSd_cnrp81pP2t0UK8NkV-R1ObH9aGgg4wHAcFu2ZvViU3PzlXiJahqN0bvz8Qg6LEM5BY1JkqUTqb_NAXaUpGBSwJ257vZnFxQ==" target="_blank" rel="noopener noreferrer">feast.dev</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGv_gXSzXzHFw7jod_gb2vkB5YqEgcT1OdYJgLE5v_YwQYU9GvPzdi0z16JNOrC3eX7hjondY9fZ6WJhGloJ2_R-VSsuZ1IJBmaFKgMzFU9WsM=" target="_blank" rel="noopener noreferrer">feast.dev</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2-yRcgv0WbYtugenUVBNO6R3rKPwQZGpjIJ5mXLV_NyR_H2qPZoSzuE3kJG6xNGF8miMSMljUZaEKEqRf29O74dFxua2M4d_1z1hna94KlQ91OQBrXZT0KDTRlFHUF0qs8kBNQvMomh-uvfKJftVeYXKFZ7HSmnh_jBQRxQrHy5kAQDyqBv3ZJMJBdlN6iyCqvIORFw==" target="_blank" rel="noopener noreferrer">google.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGsvTL8Yc_Zd7BeFsKnIp3RtKKIFHgmTMLVtwl4yncigTjnLz--Ll9gbjYawfiCKbmkugT0sxyvjdk2XMX2mvg2-MGaUOgEm3Hcai-GF-c5PBPuwgL0MbgV-fH8VoC8TQscAAb_TMh2Iil9CGTYfcdQFp1HxDhG1vXC1x-93m4Oj6EhQyFK1jAsrW8iVPQgqn-6B3kBY1C20B632_3unpjkfBqNbzLS9A==" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEEJjPgy-sBI8Wh45S0b6c0iDgIPxI_G4kJmp71rzqhn7TvFPAaI1t51Gl9W2GG23Ejgt1EA58qviR1vIcmpZ4vLq_U1JCY1tLKP9J2cXlr" target="_blank" rel="noopener noreferrer">feast.dev</a></li></ul>
-  </div>
-</body>
+print(df)</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEufpnbs2LdmNWz2gEJa111_0DUIg-WjD1VQwHZ_kauNWAVSd_cnrp81pP2t0UK8NkV-R1ObH9aGgg4wHAcFu2ZvViU3PzlXiJahqN0bvz8Qg6LEM5BY1JkqUTqb_NAXaUpGBSwJ257vZnFxQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >feast.dev</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGv_gXSzXzHFw7jod_gb2vkB5YqEgcT1OdYJgLE5v_YwQYU9GvPzdi0z16JNOrC3eX7hjondY9fZ6WJhGloJ2_R-VSsuZ1IJBmaFKgMzFU9WsM="
+            target="_blank"
+            rel="noopener noreferrer"
+            >feast.dev</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2-yRcgv0WbYtugenUVBNO6R3rKPwQZGpjIJ5mXLV_NyR_H2qPZoSzuE3kJG6xNGF8miMSMljUZaEKEqRf29O74dFxua2M4d_1z1hna94KlQ91OQBrXZT0KDTRlFHUF0qs8kBNQvMomh-uvfKJftVeYXKFZ7HSmnh_jBQRxQrHy5kAQDyqBv3ZJMJBdlN6iyCqvIORFw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >google.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGsvTL8Yc_Zd7BeFsKnIp3RtKKIFHgmTMLVtwl4yncigTjnLz--Ll9gbjYawfiCKbmkugT0sxyvjdk2XMX2mvg2-MGaUOgEm3Hcai-GF-c5PBPuwgL0MbgV-fH8VoC8TQscAAb_TMh2Iil9CGTYfcdQFp1HxDhG1vXC1x-93m4Oj6EhQyFK1jAsrW8iVPQgqn-6B3kBY1C20B632_3unpjkfBqNbzLS9A=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEEJjPgy-sBI8Wh45S0b6c0iDgIPxI_G4kJmp71rzqhn7TvFPAaI1t51Gl9W2GG23Ejgt1EA58qviR1vIcmpZ4vLq_U1JCY1tLKP9J2cXlr"
+            target="_blank"
+            rel="noopener noreferrer"
+            >feast.dev</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

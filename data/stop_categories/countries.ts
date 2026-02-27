@@ -1,294 +1,1258 @@
-
-import { StopData } from '../../types';
+import { StopData } from "../../types";
 
 export const countriesData: StopData = {
   A: {
     Countries: [
-      { word: 'Afghanistan', ipa: '/æfˈɡænɪstæn/', translation: 'Afganistán', definition: 'Landlocked country in Central Asia.' },
-      { word: 'Albania', ipa: '/ælˈbeɪniə/', translation: 'Albania', definition: 'On the Adriatic Sea, north of Greece.' },
-      { word: 'Algeria', ipa: '/ælˈdʒɪəriə/', translation: 'Argelia', definition: 'Largest country in Africa.' },
-      { word: 'Andorra', ipa: '/ænˈdɔːrə/', translation: 'Andorra', definition: 'Tiny nation in the Pyrenees mountains.' },
-      { word: 'Angola', ipa: '/æŋˈɡoʊlə/', translation: 'Angola', definition: 'Oil-rich nation in Southern Africa.' },
-      { word: 'Antigua and Barbuda', ipa: '/ænˌtiːɡwə ənd bɑːrˈbuːdə/', translation: 'Antigua y Barbuda', definition: 'Twin-island country in the Caribbean.' },
-      { word: 'Argentina', ipa: '/ˌɑːrdʒənˈtiːnə/', translation: 'Argentina', definition: 'Home of Tango and Patagonia.' },
-      { word: 'Armenia', ipa: '/ɑːrˈmiːniə/', translation: 'Armenia', definition: 'First nation to adopt Christianity.' },
-      { word: 'Australia', ipa: '/ɔːˈstreɪliə/', translation: 'Australia', definition: 'The Outback continent.' },
-      { word: 'Austria', ipa: '/ˈɒstriə/', translation: 'Austria', definition: 'Home of Mozart and the Alps.' },
-      { word: 'Azerbaijan', ipa: '/ˌæzərbaɪˈdʒɑːn/', translation: 'Azerbaiyán', definition: 'The Land of Fire.' }
-    ]
+      {
+        word: "Afghanistan",
+        ipa: "/æfˈɡænɪstæn/",
+        translation: "Afganistán",
+        definition: "Landlocked country in Central Asia.",
+      },
+      {
+        word: "Albania",
+        ipa: "/ælˈbeɪniə/",
+        translation: "Albania",
+        definition: "On the Adriatic Sea, north of Greece.",
+      },
+      {
+        word: "Algeria",
+        ipa: "/ælˈdʒɪəriə/",
+        translation: "Argelia",
+        definition: "Largest country in Africa.",
+      },
+      {
+        word: "Andorra",
+        ipa: "/ænˈdɔːrə/",
+        translation: "Andorra",
+        definition: "Tiny nation in the Pyrenees mountains.",
+      },
+      {
+        word: "Angola",
+        ipa: "/æŋˈɡoʊlə/",
+        translation: "Angola",
+        definition: "Oil-rich nation in Southern Africa.",
+      },
+      {
+        word: "Antigua and Barbuda",
+        ipa: "/ænˌtiːɡwə ənd bɑːrˈbuːdə/",
+        translation: "Antigua y Barbuda",
+        definition: "Twin-island country in the Caribbean.",
+      },
+      {
+        word: "Argentina",
+        ipa: "/ˌɑːrdʒənˈtiːnə/",
+        translation: "Argentina",
+        definition: "Home of Tango and Patagonia.",
+      },
+      {
+        word: "Armenia",
+        ipa: "/ɑːrˈmiːniə/",
+        translation: "Armenia",
+        definition: "First nation to adopt Christianity.",
+      },
+      {
+        word: "Australia",
+        ipa: "/ɔːˈstreɪliə/",
+        translation: "Australia",
+        definition: "The Outback continent.",
+      },
+      {
+        word: "Austria",
+        ipa: "/ˈɒstriə/",
+        translation: "Austria",
+        definition: "Home of Mozart and the Alps.",
+      },
+      {
+        word: "Azerbaijan",
+        ipa: "/ˌæzərbaɪˈdʒɑːn/",
+        translation: "Azerbaiyán",
+        definition: "The Land of Fire.",
+      },
+    ],
   },
   B: {
     Countries: [
-      { word: 'Bahamas', ipa: '/bəˈhɑːməz/', translation: 'Bahamas', definition: 'Archipelago of 700 islands.' },
-      { word: 'Bahrain', ipa: '/bɑːˈreɪn/', translation: 'Baréin', definition: 'Island nation in the Persian Gulf.' },
-      { word: 'Bangladesh', ipa: '/ˌbæŋɡləˈdɛʃ/', translation: 'Bangladés', definition: 'Known for the Bengal Tiger.' },
-      { word: 'Barbados', ipa: '/bɑːrˈbeɪdɒs/', translation: 'Barbados', definition: 'Easternmost Caribbean island.' },
-      { word: 'Belarus', ipa: '/ˌbɛləˈruːs/', translation: 'Bielorrusia', definition: 'Landlocked in Eastern Europe.' },
-      { word: 'Belgium', ipa: '/ˈbɛldʒəm/', translation: 'Bélgica', definition: 'Famous for chocolate and waffles.' },
-      { word: 'Belize', ipa: '/bəˈliːz/', translation: 'Belice', definition: 'Home to the Great Blue Hole.' },
-      { word: 'Benin', ipa: '/bɛˈniːn/', translation: 'Benín', definition: 'Birthplace of Voodoo.' },
-      { word: 'Bhutan', ipa: '/buːˈtɑːn/', translation: 'Bután', definition: 'Measures Gross National Happiness.' },
-      { word: 'Bolivia', ipa: '/bəˈlɪviə/', translation: 'Bolivia', definition: 'Has the world\'s highest salt flats.' },
-      { word: 'Bosnia and Herzegovina', ipa: '/ˈbɒzniə/', translation: 'Bosnia y Herzegovina', definition: 'Known for the Stari Most bridge.' },
-      { word: 'Botswana', ipa: '/bɒtˈswɑːnə/', translation: 'Botsuana', definition: 'Home to the Kalahari Desert.' },
-      { word: 'Brazil', ipa: '/brəˈzɪl/', translation: 'Brasil', definition: 'Home of the Amazon Rainforest.' },
-      { word: 'Brunei', ipa: '/bruːˈnaɪ/', translation: 'Brunéi', definition: 'Tiny, oil-rich sultanate.' },
-      { word: 'Bulgaria', ipa: '/bʌlˈɡɛəriə/', translation: 'Bulgaria', definition: 'Famous for rose oil production.' },
-      { word: 'Burkina Faso', ipa: '/bɜːrˌkiːnə ˈfæsoʊ/', translation: 'Burkina Faso', definition: 'Land of Incorruptible People.' },
-      { word: 'Burundi', ipa: '/bʊˈrʊndi/', translation: 'Burundi', definition: 'Heart of Africa.' }
-    ]
+      {
+        word: "Bahamas",
+        ipa: "/bəˈhɑːməz/",
+        translation: "Bahamas",
+        definition: "Archipelago of 700 islands.",
+      },
+      {
+        word: "Bahrain",
+        ipa: "/bɑːˈreɪn/",
+        translation: "Baréin",
+        definition: "Island nation in the Persian Gulf.",
+      },
+      {
+        word: "Bangladesh",
+        ipa: "/ˌbæŋɡləˈdɛʃ/",
+        translation: "Bangladés",
+        definition: "Known for the Bengal Tiger.",
+      },
+      {
+        word: "Barbados",
+        ipa: "/bɑːrˈbeɪdɒs/",
+        translation: "Barbados",
+        definition: "Easternmost Caribbean island.",
+      },
+      {
+        word: "Belarus",
+        ipa: "/ˌbɛləˈruːs/",
+        translation: "Bielorrusia",
+        definition: "Landlocked in Eastern Europe.",
+      },
+      {
+        word: "Belgium",
+        ipa: "/ˈbɛldʒəm/",
+        translation: "Bélgica",
+        definition: "Famous for chocolate and waffles.",
+      },
+      {
+        word: "Belize",
+        ipa: "/bəˈliːz/",
+        translation: "Belice",
+        definition: "Home to the Great Blue Hole.",
+      },
+      {
+        word: "Benin",
+        ipa: "/bɛˈniːn/",
+        translation: "Benín",
+        definition: "Birthplace of Voodoo.",
+      },
+      {
+        word: "Bhutan",
+        ipa: "/buːˈtɑːn/",
+        translation: "Bután",
+        definition: "Measures Gross National Happiness.",
+      },
+      {
+        word: "Bolivia",
+        ipa: "/bəˈlɪviə/",
+        translation: "Bolivia",
+        definition: "Has the world's highest salt flats.",
+      },
+      {
+        word: "Bosnia and Herzegovina",
+        ipa: "/ˈbɒzniə/",
+        translation: "Bosnia y Herzegovina",
+        definition: "Known for the Stari Most bridge.",
+      },
+      {
+        word: "Botswana",
+        ipa: "/bɒtˈswɑːnə/",
+        translation: "Botsuana",
+        definition: "Home to the Kalahari Desert.",
+      },
+      {
+        word: "Brazil",
+        ipa: "/brəˈzɪl/",
+        translation: "Brasil",
+        definition: "Home of the Amazon Rainforest.",
+      },
+      {
+        word: "Brunei",
+        ipa: "/bruːˈnaɪ/",
+        translation: "Brunéi",
+        definition: "Tiny, oil-rich sultanate.",
+      },
+      {
+        word: "Bulgaria",
+        ipa: "/bʌlˈɡɛəriə/",
+        translation: "Bulgaria",
+        definition: "Famous for rose oil production.",
+      },
+      {
+        word: "Burkina Faso",
+        ipa: "/bɜːrˌkiːnə ˈfæsoʊ/",
+        translation: "Burkina Faso",
+        definition: "Land of Incorruptible People.",
+      },
+      {
+        word: "Burundi",
+        ipa: "/bʊˈrʊndi/",
+        translation: "Burundi",
+        definition: "Heart of Africa.",
+      },
+    ],
   },
   C: {
     Countries: [
-      { word: 'Cabo Verde', ipa: '/ˌkɑːboʊ ˈvɜːrdeɪ/', translation: 'Cabo Verde', definition: 'Volcanic archipelago off Africa.' },
-      { word: 'Cambodia', ipa: '/kæmˈboʊdiə/', translation: 'Camboya', definition: 'Home to Angkor Wat.' },
-      { word: 'Cameroon', ipa: '/ˌkæməˈruːn/', translation: 'Camerún', definition: 'Often called "Africa in miniature".' },
-      { word: 'Canada', ipa: '/ˈkænədə/', translation: 'Canadá', definition: 'Second largest country by area.' },
-      { word: 'Central African Republic', ipa: '/.../', translation: 'República Centroafricana', definition: 'Located in the heart of Africa.' },
-      { word: 'Chad', ipa: '/tʃæd/', translation: 'Chad', definition: 'Home to the Sahara Desert.' },
-      { word: 'Chile', ipa: '/ˈtʃɪli/', translation: 'Chile', definition: 'Long, narrow country in S. America.' },
-      { word: 'China', ipa: '/ˈtʃaɪnə/', translation: 'China', definition: 'Most populous nation.' },
-      { word: 'Colombia', ipa: '/kəˈlʌmbiə/', translation: 'Colombia', definition: 'Famous for coffee and emeralds.' },
-      { word: 'Comoros', ipa: '/ˈkɒməroʊz/', translation: 'Comoras', definition: 'Perfume islands in Indian Ocean.' },
-      { word: 'Congo', ipa: '/ˈkɒŋɡoʊ/', translation: 'Congo', definition: 'Known for its rainforests.' },
-      { word: 'Costa Rica', ipa: '/ˌkɒstə ˈriːkə/', translation: 'Costa Rica', definition: 'Pioneer in ecotourism.' },
-      { word: 'Croatia', ipa: '/kroʊˈeɪʃə/', translation: 'Croacia', definition: 'Famous for its Adriatic coast.' },
-      { word: 'Cuba', ipa: '/ˈkjuːbə/', translation: 'Cuba', definition: 'Largest Caribbean island.' },
-      { word: 'Cyprus', ipa: '/ˈsaɪprəs/', translation: 'Chipre', definition: 'Island of Aphrodite.' },
-      { word: 'Czech Republic', ipa: '/tʃɛk rɪˈpʌblɪk/', translation: 'República Checa', definition: 'Famous for castles and beer.' }
-    ]
+      {
+        word: "Cabo Verde",
+        ipa: "/ˌkɑːboʊ ˈvɜːrdeɪ/",
+        translation: "Cabo Verde",
+        definition: "Volcanic archipelago off Africa.",
+      },
+      {
+        word: "Cambodia",
+        ipa: "/kæmˈboʊdiə/",
+        translation: "Camboya",
+        definition: "Home to Angkor Wat.",
+      },
+      {
+        word: "Cameroon",
+        ipa: "/ˌkæməˈruːn/",
+        translation: "Camerún",
+        definition: 'Often called "Africa in miniature".',
+      },
+      {
+        word: "Canada",
+        ipa: "/ˈkænədə/",
+        translation: "Canadá",
+        definition: "Second largest country by area.",
+      },
+      {
+        word: "Central African Republic",
+        ipa: "/.../",
+        translation: "República Centroafricana",
+        definition: "Located in the heart of Africa.",
+      },
+      {
+        word: "Chad",
+        ipa: "/tʃæd/",
+        translation: "Chad",
+        definition: "Home to the Sahara Desert.",
+      },
+      {
+        word: "Chile",
+        ipa: "/ˈtʃɪli/",
+        translation: "Chile",
+        definition: "Long, narrow country in S. America.",
+      },
+      {
+        word: "China",
+        ipa: "/ˈtʃaɪnə/",
+        translation: "China",
+        definition: "Most populous nation.",
+      },
+      {
+        word: "Colombia",
+        ipa: "/kəˈlʌmbiə/",
+        translation: "Colombia",
+        definition: "Famous for coffee and emeralds.",
+      },
+      {
+        word: "Comoros",
+        ipa: "/ˈkɒməroʊz/",
+        translation: "Comoras",
+        definition: "Perfume islands in Indian Ocean.",
+      },
+      {
+        word: "Congo",
+        ipa: "/ˈkɒŋɡoʊ/",
+        translation: "Congo",
+        definition: "Known for its rainforests.",
+      },
+      {
+        word: "Costa Rica",
+        ipa: "/ˌkɒstə ˈriːkə/",
+        translation: "Costa Rica",
+        definition: "Pioneer in ecotourism.",
+      },
+      {
+        word: "Croatia",
+        ipa: "/kroʊˈeɪʃə/",
+        translation: "Croacia",
+        definition: "Famous for its Adriatic coast.",
+      },
+      {
+        word: "Cuba",
+        ipa: "/ˈkjuːbə/",
+        translation: "Cuba",
+        definition: "Largest Caribbean island.",
+      },
+      {
+        word: "Cyprus",
+        ipa: "/ˈsaɪprəs/",
+        translation: "Chipre",
+        definition: "Island of Aphrodite.",
+      },
+      {
+        word: "Czech Republic",
+        ipa: "/tʃɛk rɪˈpʌblɪk/",
+        translation: "República Checa",
+        definition: "Famous for castles and beer.",
+      },
+    ],
   },
   D: {
     Countries: [
-      { word: 'Denmark', ipa: '/ˈdɛnmɑːrk/', translation: 'Dinamarca', definition: 'Home of Lego and Hans Christian Andersen.' },
-      { word: 'Djibouti', ipa: '/dʒɪˈbuːti/', translation: 'Yibuti', definition: 'Gateway to the Suez Canal.' },
-      { word: 'Dominica', ipa: '/ˌdɒmɪˈniːkə/', translation: 'Dominica', definition: 'The Nature Island of the Caribbean.' },
-      { word: 'Dominican Republic', ipa: '/dəˈmɪnɪkən.../', translation: 'República Dominicana', definition: 'Shares island with Haiti.' }
-    ]
+      {
+        word: "Denmark",
+        ipa: "/ˈdɛnmɑːrk/",
+        translation: "Dinamarca",
+        definition: "Home of Lego and Hans Christian Andersen.",
+      },
+      {
+        word: "Djibouti",
+        ipa: "/dʒɪˈbuːti/",
+        translation: "Yibuti",
+        definition: "Gateway to the Suez Canal.",
+      },
+      {
+        word: "Dominica",
+        ipa: "/ˌdɒmɪˈniːkə/",
+        translation: "Dominica",
+        definition: "The Nature Island of the Caribbean.",
+      },
+      {
+        word: "Dominican Republic",
+        ipa: "/dəˈmɪnɪkən.../",
+        translation: "República Dominicana",
+        definition: "Shares island with Haiti.",
+      },
+    ],
   },
   E: {
     Countries: [
-      { word: 'Ecuador', ipa: '/ˈɛkwədɔːr/', translation: 'Ecuador', definition: 'Named after the equator.' },
-      { word: 'Egypt', ipa: '/ˈiːdʒɪpt/', translation: 'Egipto', definition: 'Land of the Pharaohs.' },
-      { word: 'El Salvador', ipa: '/ɛl ˈsælvədɔːr/', translation: 'El Salvador', definition: 'Land of Volcanoes.' },
-      { word: 'Equatorial Guinea', ipa: '/ˌɛkwəˈtɔːriəl.../', translation: 'Guinea Ecuatorial', definition: 'Only Spanish-speaking African nation.' },
-      { word: 'Eritrea', ipa: '/ˌɛrɪˈtreɪə/', translation: 'Eritrea', definition: 'On the Red Sea coast.' },
-      { word: 'Estonia', ipa: '/ɛˈstoʊniə/', translation: 'Estonia', definition: 'A digital society in the Baltics.' },
-      { word: 'Eswatini', ipa: '/ˌɛswɑːˈtiːni/', translation: 'Esuatini', definition: 'Formerly known as Swaziland.' },
-      { word: 'Ethiopia', ipa: '/ˌiːθiˈoʊpiə/', translation: 'Etiopía', definition: 'Coffee originated here.' }
-    ]
+      {
+        word: "Ecuador",
+        ipa: "/ˈɛkwədɔːr/",
+        translation: "Ecuador",
+        definition: "Named after the equator.",
+      },
+      {
+        word: "Egypt",
+        ipa: "/ˈiːdʒɪpt/",
+        translation: "Egipto",
+        definition: "Land of the Pharaohs.",
+      },
+      {
+        word: "El Salvador",
+        ipa: "/ɛl ˈsælvədɔːr/",
+        translation: "El Salvador",
+        definition: "Land of Volcanoes.",
+      },
+      {
+        word: "Equatorial Guinea",
+        ipa: "/ˌɛkwəˈtɔːriəl.../",
+        translation: "Guinea Ecuatorial",
+        definition: "Only Spanish-speaking African nation.",
+      },
+      {
+        word: "Eritrea",
+        ipa: "/ˌɛrɪˈtreɪə/",
+        translation: "Eritrea",
+        definition: "On the Red Sea coast.",
+      },
+      {
+        word: "Estonia",
+        ipa: "/ɛˈstoʊniə/",
+        translation: "Estonia",
+        definition: "A digital society in the Baltics.",
+      },
+      {
+        word: "Eswatini",
+        ipa: "/ˌɛswɑːˈtiːni/",
+        translation: "Esuatini",
+        definition: "Formerly known as Swaziland.",
+      },
+      {
+        word: "Ethiopia",
+        ipa: "/ˌiːθiˈoʊpiə/",
+        translation: "Etiopía",
+        definition: "Coffee originated here.",
+      },
+    ],
   },
   F: {
     Countries: [
-      { word: 'Fiji', ipa: '/ˈfiːdʒiː/', translation: 'Fiyi', definition: '300+ islands in the South Pacific.' },
-      { word: 'Finland', ipa: '/ˈfɪnlənd/', translation: 'Finlandia', definition: 'Land of a thousand lakes.' },
-      { word: 'France', ipa: '/frɑːns/', translation: 'Francia', definition: 'Most visited country in the world.' }
-    ]
+      {
+        word: "Fiji",
+        ipa: "/ˈfiːdʒiː/",
+        translation: "Fiyi",
+        definition: "300+ islands in the South Pacific.",
+      },
+      {
+        word: "Finland",
+        ipa: "/ˈfɪnlənd/",
+        translation: "Finlandia",
+        definition: "Land of a thousand lakes.",
+      },
+      {
+        word: "France",
+        ipa: "/frɑːns/",
+        translation: "Francia",
+        definition: "Most visited country in the world.",
+      },
+    ],
   },
   G: {
     Countries: [
-      { word: 'Gabon', ipa: '/ɡæˈbɒn/', translation: 'Gabón', definition: 'Known for preserved parkland.' },
-      { word: 'Gambia', ipa: '/ˈɡæmbiə/', translation: 'Gambia', definition: 'Smallest country in mainland Africa.' },
-      { word: 'Georgia', ipa: '/ˈdʒɔːrdʒə/', translation: 'Georgia', definition: 'Birthplace of wine.' },
-      { word: 'Germany', ipa: '/ˈdʒɜːrməni/', translation: 'Alemania', definition: 'Economic powerhouse of Europe.' },
-      { word: 'Ghana', ipa: '/ˈɡɑːnə/', translation: 'Ghana', definition: 'Gold Coast of Africa.' },
-      { word: 'Greece', ipa: '/ɡriːs/', translation: 'Grecia', definition: 'Cradle of Western Civilization.' },
-      { word: 'Grenada', ipa: '/ɡrəˈneɪdə/', translation: 'Granada', definition: 'The Spice Isle.' },
-      { word: 'Guatemala', ipa: '/ˌɡwɑːtəˈmɑːlə/', translation: 'Guatemala', definition: 'Heart of the Maya world.' },
-      { word: 'Guinea', ipa: '/ˈɡɪni/', translation: 'Guinea', definition: 'Rich in bauxite reserves.' },
-      { word: 'Guinea-Bissau', ipa: '/ˌɡɪni bɪˈsaʊ/', translation: 'Guinea-Bisáu', definition: 'Known for its cashew nuts.' },
-      { word: 'Guyana', ipa: '/ɡaɪˈænə/', translation: 'Guyana', definition: 'Land of many waters.' }
-    ]
+      {
+        word: "Gabon",
+        ipa: "/ɡæˈbɒn/",
+        translation: "Gabón",
+        definition: "Known for preserved parkland.",
+      },
+      {
+        word: "Gambia",
+        ipa: "/ˈɡæmbiə/",
+        translation: "Gambia",
+        definition: "Smallest country in mainland Africa.",
+      },
+      {
+        word: "Georgia",
+        ipa: "/ˈdʒɔːrdʒə/",
+        translation: "Georgia",
+        definition: "Birthplace of wine.",
+      },
+      {
+        word: "Germany",
+        ipa: "/ˈdʒɜːrməni/",
+        translation: "Alemania",
+        definition: "Economic powerhouse of Europe.",
+      },
+      {
+        word: "Ghana",
+        ipa: "/ˈɡɑːnə/",
+        translation: "Ghana",
+        definition: "Gold Coast of Africa.",
+      },
+      {
+        word: "Greece",
+        ipa: "/ɡriːs/",
+        translation: "Grecia",
+        definition: "Cradle of Western Civilization.",
+      },
+      {
+        word: "Grenada",
+        ipa: "/ɡrəˈneɪdə/",
+        translation: "Granada",
+        definition: "The Spice Isle.",
+      },
+      {
+        word: "Guatemala",
+        ipa: "/ˌɡwɑːtəˈmɑːlə/",
+        translation: "Guatemala",
+        definition: "Heart of the Maya world.",
+      },
+      {
+        word: "Guinea",
+        ipa: "/ˈɡɪni/",
+        translation: "Guinea",
+        definition: "Rich in bauxite reserves.",
+      },
+      {
+        word: "Guinea-Bissau",
+        ipa: "/ˌɡɪni bɪˈsaʊ/",
+        translation: "Guinea-Bisáu",
+        definition: "Known for its cashew nuts.",
+      },
+      {
+        word: "Guyana",
+        ipa: "/ɡaɪˈænə/",
+        translation: "Guyana",
+        definition: "Land of many waters.",
+      },
+    ],
   },
   H: {
     Countries: [
-      { word: 'Haiti', ipa: '/ˈheɪti/', translation: 'Haití', definition: 'First independent Caribbean state.' },
-      { word: 'Honduras', ipa: '/hɒnˈdjʊərəs/', translation: 'Honduras', definition: 'Famous for Maya ruins at Copán.' },
-      { word: 'Hungary', ipa: '/ˈhʌŋɡəri/', translation: 'Hungría', definition: 'Land of thermal baths.' }
-    ]
+      {
+        word: "Haiti",
+        ipa: "/ˈheɪti/",
+        translation: "Haití",
+        definition: "First independent Caribbean state.",
+      },
+      {
+        word: "Honduras",
+        ipa: "/hɒnˈdjʊərəs/",
+        translation: "Honduras",
+        definition: "Famous for Maya ruins at Copán.",
+      },
+      {
+        word: "Hungary",
+        ipa: "/ˈhʌŋɡəri/",
+        translation: "Hungría",
+        definition: "Land of thermal baths.",
+      },
+    ],
   },
   I: {
     Countries: [
-      { word: 'Iceland', ipa: '/ˈaɪslənd/', translation: 'Islandia', definition: 'Land of Fire and Ice.' },
-      { word: 'India', ipa: '/ˈɪndiə/', translation: 'India', definition: 'Largest democracy in the world.' },
-      { word: 'Indonesia', ipa: '/ˌɪndəˈniːʒə/', translation: 'Indonesia', definition: 'Largest archipelago nation.' },
-      { word: 'Iran', ipa: '/ɪˈrɑːn/', translation: 'Irán', definition: 'Home of the Persian Empire.' },
-      { word: 'Iraq', ipa: '/ɪˈrɑːk/', translation: 'Irak', definition: 'Cradle of civilization.' },
-      { word: 'Ireland', ipa: '/ˈaɪərlənd/', translation: 'Irlanda', definition: 'The Emerald Isle.' },
-      { word: 'Israel', ipa: '/ˈɪzreɪəl/', translation: 'Israel', definition: 'The Holy Land.' },
-      { word: 'Italy', ipa: '/ˈɪtəli/', translation: 'Italia', definition: 'Home of the Roman Empire.' }
-    ]
+      {
+        word: "Iceland",
+        ipa: "/ˈaɪslənd/",
+        translation: "Islandia",
+        definition: "Land of Fire and Ice.",
+      },
+      {
+        word: "India",
+        ipa: "/ˈɪndiə/",
+        translation: "India",
+        definition: "Largest democracy in the world.",
+      },
+      {
+        word: "Indonesia",
+        ipa: "/ˌɪndəˈniːʒə/",
+        translation: "Indonesia",
+        definition: "Largest archipelago nation.",
+      },
+      {
+        word: "Iran",
+        ipa: "/ɪˈrɑːn/",
+        translation: "Irán",
+        definition: "Home of the Persian Empire.",
+      },
+      {
+        word: "Iraq",
+        ipa: "/ɪˈrɑːk/",
+        translation: "Irak",
+        definition: "Cradle of civilization.",
+      },
+      {
+        word: "Ireland",
+        ipa: "/ˈaɪərlənd/",
+        translation: "Irlanda",
+        definition: "The Emerald Isle.",
+      },
+      {
+        word: "Israel",
+        ipa: "/ˈɪzreɪəl/",
+        translation: "Israel",
+        definition: "The Holy Land.",
+      },
+      {
+        word: "Italy",
+        ipa: "/ˈɪtəli/",
+        translation: "Italia",
+        definition: "Home of the Roman Empire.",
+      },
+    ],
   },
   J: {
     Countries: [
-      { word: 'Jamaica', ipa: '/dʒəˈmeɪkə/', translation: 'Jamaica', definition: 'Birthplace of Reggae.' },
-      { word: 'Japan', ipa: '/dʒəˈpæn/', translation: 'Japón', definition: 'Land of the Rising Sun.' },
-      { word: 'Jordan', ipa: '/ˈdʒɔːrdən/', translation: 'Jordania', definition: 'Home to the ancient city of Petra.' }
-    ]
+      {
+        word: "Jamaica",
+        ipa: "/dʒəˈmeɪkə/",
+        translation: "Jamaica",
+        definition: "Birthplace of Reggae.",
+      },
+      {
+        word: "Japan",
+        ipa: "/dʒəˈpæn/",
+        translation: "Japón",
+        definition: "Land of the Rising Sun.",
+      },
+      {
+        word: "Jordan",
+        ipa: "/ˈdʒɔːrdən/",
+        translation: "Jordania",
+        definition: "Home to the ancient city of Petra.",
+      },
+    ],
   },
   K: {
     Countries: [
-      { word: 'Kazakhstan', ipa: '/ˌkæzækˈstɑːn/', translation: 'Kazajistán', definition: 'World\'s largest landlocked country.' },
-      { word: 'Kenya', ipa: '/ˈkɛnjə/', translation: 'Kenia', definition: 'Famous for safari wildlife.' },
-      { word: 'Kiribati', ipa: '/ˌkɪrɪˈbæs/', translation: 'Kiribati', definition: 'First to welcome the new year.' },
-      { word: 'Kuwait', ipa: '/kʊˈweɪt/', translation: 'Kuwait', definition: 'Oil-rich nation on the Gulf.' },
-      { word: 'Kyrgyzstan', ipa: '/ˈkɪərɡɪstɑːn/', translation: 'Kirguistán', definition: 'Land of Celestial Mountains.' }
-    ]
+      {
+        word: "Kazakhstan",
+        ipa: "/ˌkæzækˈstɑːn/",
+        translation: "Kazajistán",
+        definition: "World's largest landlocked country.",
+      },
+      {
+        word: "Kenya",
+        ipa: "/ˈkɛnjə/",
+        translation: "Kenia",
+        definition: "Famous for safari wildlife.",
+      },
+      {
+        word: "Kiribati",
+        ipa: "/ˌkɪrɪˈbæs/",
+        translation: "Kiribati",
+        definition: "First to welcome the new year.",
+      },
+      {
+        word: "Kuwait",
+        ipa: "/kʊˈweɪt/",
+        translation: "Kuwait",
+        definition: "Oil-rich nation on the Gulf.",
+      },
+      {
+        word: "Kyrgyzstan",
+        ipa: "/ˈkɪərɡɪstɑːn/",
+        translation: "Kirguistán",
+        definition: "Land of Celestial Mountains.",
+      },
+    ],
   },
   L: {
     Countries: [
-      { word: 'Laos', ipa: '/laʊs/', translation: 'Laos', definition: 'Land of a Million Elephants.' },
-      { word: 'Latvia', ipa: '/ˈlætviə/', translation: 'Letonia', definition: 'Baltic state with vast forests.' },
-      { word: 'Lebanon', ipa: '/ˈlɛbənɒn/', translation: 'Líbano', definition: 'Land of the Cedars.' },
-      { word: 'Lesotho', ipa: '/ləˈsuːtuː/', translation: 'Lesoto', definition: 'Kingdom in the Sky.' },
-      { word: 'Liberia', ipa: '/laɪˈbɪəriə/', translation: 'Liberia', definition: 'Founded by freed slaves.' },
-      { word: 'Libya', ipa: '/ˈlɪbiə/', translation: 'Libia', definition: 'Home to Leptis Magna ruins.' },
-      { word: 'Liechtenstein', ipa: '/ˈlɪktənstaɪn/', translation: 'Liechtenstein', definition: 'Tiny Alpine principality.' },
-      { word: 'Lithuania', ipa: '/ˌlɪθjuˈeɪniə/', translation: 'Lituania', definition: 'Southernmost Baltic state.' },
-      { word: 'Luxembourg', ipa: '/ˈlʌksəmbɜːrɡ/', translation: 'Luxemburgo', definition: 'Last Grand Duchy in the world.' }
-    ]
+      {
+        word: "Laos",
+        ipa: "/laʊs/",
+        translation: "Laos",
+        definition: "Land of a Million Elephants.",
+      },
+      {
+        word: "Latvia",
+        ipa: "/ˈlætviə/",
+        translation: "Letonia",
+        definition: "Baltic state with vast forests.",
+      },
+      {
+        word: "Lebanon",
+        ipa: "/ˈlɛbənɒn/",
+        translation: "Líbano",
+        definition: "Land of the Cedars.",
+      },
+      {
+        word: "Lesotho",
+        ipa: "/ləˈsuːtuː/",
+        translation: "Lesoto",
+        definition: "Kingdom in the Sky.",
+      },
+      {
+        word: "Liberia",
+        ipa: "/laɪˈbɪəriə/",
+        translation: "Liberia",
+        definition: "Founded by freed slaves.",
+      },
+      {
+        word: "Libya",
+        ipa: "/ˈlɪbiə/",
+        translation: "Libia",
+        definition: "Home to Leptis Magna ruins.",
+      },
+      {
+        word: "Liechtenstein",
+        ipa: "/ˈlɪktənstaɪn/",
+        translation: "Liechtenstein",
+        definition: "Tiny Alpine principality.",
+      },
+      {
+        word: "Lithuania",
+        ipa: "/ˌlɪθjuˈeɪniə/",
+        translation: "Lituania",
+        definition: "Southernmost Baltic state.",
+      },
+      {
+        word: "Luxembourg",
+        ipa: "/ˈlʌksəmbɜːrɡ/",
+        translation: "Luxemburgo",
+        definition: "Last Grand Duchy in the world.",
+      },
+    ],
   },
   M: {
     Countries: [
-      { word: 'Madagascar', ipa: '/ˌmædəˈɡæskər/', translation: 'Madagascar', definition: 'Island of lemurs and baobabs.' },
-      { word: 'Malawi', ipa: '/məˈlɑːwi/', translation: 'Malaui', definition: 'The Warm Heart of Africa.' },
-      { word: 'Malaysia', ipa: '/məˈleɪʒə/', translation: 'Malasia', definition: 'Home to the Petronas Towers.' },
-      { word: 'Maldives', ipa: '/ˈmɔːldiːvz/', translation: 'Maldivas', definition: 'Lowest country on Earth.' },
-      { word: 'Mali', ipa: '/ˈmɑːli/', translation: 'Mali', definition: 'Home to Timbuktu.' },
-      { word: 'Malta', ipa: '/ˈmɔːltə/', translation: 'Malta', definition: 'Historic island in the Med.' },
-      { word: 'Marshall Islands', ipa: '/ˈmɑːrʃəl.../', translation: 'Islas Marshall', definition: 'Known for Bikini Atoll.' },
-      { word: 'Mauritania', ipa: '/ˌmɔːrɪˈteɪniə/', translation: 'Mauritania', definition: 'Desert nation in West Africa.' },
-      { word: 'Mauritius', ipa: '/məˈrɪʃəs/', translation: 'Mauricio', definition: 'Home of the Dodo bird.' },
-      { word: 'Mexico', ipa: '/ˈmɛksɪkəʊ/', translation: 'México', definition: 'Land of the Aztecs and Maya.' },
-      { word: 'Micronesia', ipa: '/ˌmaɪkroʊˈniːʒə/', translation: 'Micronesia', definition: 'Spread across the western Pacific.' },
-      { word: 'Moldova', ipa: '/mɒlˈdoʊvə/', translation: 'Moldavia', definition: 'Known for its wine cellars.' },
-      { word: 'Monaco', ipa: '/ˈmɒnəkoʊ/', translation: 'Mónaco', definition: 'Playground for the rich.' },
-      { word: 'Mongolia', ipa: '/mɒŋˈɡoʊliə/', translation: 'Mongolia', definition: 'Land of the Blue Sky.' },
-      { word: 'Montenegro', ipa: '/ˌmɒntɪˈneɪɡroʊ/', translation: 'Montenegro', definition: 'Name means "Black Mountain".' },
-      { word: 'Morocco', ipa: '/məˈrɒkəʊ/', translation: 'Marruecos', definition: 'Gateway to Africa.' },
-      { word: 'Mozambique', ipa: '/ˌmoʊzæmˈbiːk/', translation: 'Mozambique', definition: 'Known for its coastline.' },
-      { word: 'Myanmar', ipa: '/ˈmjɑːnmɑːr/', translation: 'Myanmar', definition: 'Land of Golden Pagodas.' }
-    ]
+      {
+        word: "Madagascar",
+        ipa: "/ˌmædəˈɡæskər/",
+        translation: "Madagascar",
+        definition: "Island of lemurs and baobabs.",
+      },
+      {
+        word: "Malawi",
+        ipa: "/məˈlɑːwi/",
+        translation: "Malaui",
+        definition: "The Warm Heart of Africa.",
+      },
+      {
+        word: "Malaysia",
+        ipa: "/məˈleɪʒə/",
+        translation: "Malasia",
+        definition: "Home to the Petronas Towers.",
+      },
+      {
+        word: "Maldives",
+        ipa: "/ˈmɔːldiːvz/",
+        translation: "Maldivas",
+        definition: "Lowest country on Earth.",
+      },
+      {
+        word: "Mali",
+        ipa: "/ˈmɑːli/",
+        translation: "Mali",
+        definition: "Home to Timbuktu.",
+      },
+      {
+        word: "Malta",
+        ipa: "/ˈmɔːltə/",
+        translation: "Malta",
+        definition: "Historic island in the Med.",
+      },
+      {
+        word: "Marshall Islands",
+        ipa: "/ˈmɑːrʃəl.../",
+        translation: "Islas Marshall",
+        definition: "Known for Bikini Atoll.",
+      },
+      {
+        word: "Mauritania",
+        ipa: "/ˌmɔːrɪˈteɪniə/",
+        translation: "Mauritania",
+        definition: "Desert nation in West Africa.",
+      },
+      {
+        word: "Mauritius",
+        ipa: "/məˈrɪʃəs/",
+        translation: "Mauricio",
+        definition: "Home of the Dodo bird.",
+      },
+      {
+        word: "Mexico",
+        ipa: "/ˈmɛksɪkəʊ/",
+        translation: "México",
+        definition: "Land of the Aztecs and Maya.",
+      },
+      {
+        word: "Micronesia",
+        ipa: "/ˌmaɪkroʊˈniːʒə/",
+        translation: "Micronesia",
+        definition: "Spread across the western Pacific.",
+      },
+      {
+        word: "Moldova",
+        ipa: "/mɒlˈdoʊvə/",
+        translation: "Moldavia",
+        definition: "Known for its wine cellars.",
+      },
+      {
+        word: "Monaco",
+        ipa: "/ˈmɒnəkoʊ/",
+        translation: "Mónaco",
+        definition: "Playground for the rich.",
+      },
+      {
+        word: "Mongolia",
+        ipa: "/mɒŋˈɡoʊliə/",
+        translation: "Mongolia",
+        definition: "Land of the Blue Sky.",
+      },
+      {
+        word: "Montenegro",
+        ipa: "/ˌmɒntɪˈneɪɡroʊ/",
+        translation: "Montenegro",
+        definition: 'Name means "Black Mountain".',
+      },
+      {
+        word: "Morocco",
+        ipa: "/məˈrɒkəʊ/",
+        translation: "Marruecos",
+        definition: "Gateway to Africa.",
+      },
+      {
+        word: "Mozambique",
+        ipa: "/ˌmoʊzæmˈbiːk/",
+        translation: "Mozambique",
+        definition: "Known for its coastline.",
+      },
+      {
+        word: "Myanmar",
+        ipa: "/ˈmjɑːnmɑːr/",
+        translation: "Myanmar",
+        definition: "Land of Golden Pagodas.",
+      },
+    ],
   },
   N: {
     Countries: [
-      { word: 'Namibia', ipa: '/nəˈmɪbiə/', translation: 'Namibia', definition: 'Where desert meets ocean.' },
-      { word: 'Nauru', ipa: '/naʊˈruː/', translation: 'Nauru', definition: 'Smallest island nation.' },
-      { word: 'Nepal', ipa: '/nəˈpɔːl/', translation: 'Nepal', definition: 'Home to Mount Everest.' },
-      { word: 'Netherlands', ipa: '/ˈnɛðərləndz/', translation: 'Países Bajos', definition: 'Land of tulips and windmills.' },
-      { word: 'New Zealand', ipa: '/njuː ˈziːlənd/', translation: 'Nueva Zelanda', definition: 'Setting for Middle-earth.' },
-      { word: 'Nicaragua', ipa: '/ˌnɪkəˈrɑːɡwə/', translation: 'Nicaragua', definition: 'Land of Lakes and Volcanoes.' },
-      { word: 'Niger', ipa: '/ˈnaɪdʒər/', translation: 'Níger', definition: 'Named after the Niger River.' },
-      { word: 'Nigeria', ipa: '/naɪˈdʒɪəriə/', translation: 'Nigeria', definition: 'Giant of Africa.' },
-      { word: 'North Korea', ipa: '/nɔːrθ kəˈriːə/', translation: 'Corea del Norte', definition: 'The Hermit Kingdom.' },
-      { word: 'North Macedonia', ipa: '/nɔːrθ.../', translation: 'Macedonia del Norte', definition: 'Birthplace of Mother Teresa.' },
-      { word: 'Norway', ipa: '/ˈnɔːrweɪ/', translation: 'Noruega', definition: 'Land of the Midnight Sun.' }
-    ]
+      {
+        word: "Namibia",
+        ipa: "/nəˈmɪbiə/",
+        translation: "Namibia",
+        definition: "Where desert meets ocean.",
+      },
+      {
+        word: "Nauru",
+        ipa: "/naʊˈruː/",
+        translation: "Nauru",
+        definition: "Smallest island nation.",
+      },
+      {
+        word: "Nepal",
+        ipa: "/nəˈpɔːl/",
+        translation: "Nepal",
+        definition: "Home to Mount Everest.",
+      },
+      {
+        word: "Netherlands",
+        ipa: "/ˈnɛðərləndz/",
+        translation: "Países Bajos",
+        definition: "Land of tulips and windmills.",
+      },
+      {
+        word: "New Zealand",
+        ipa: "/njuː ˈziːlənd/",
+        translation: "Nueva Zelanda",
+        definition: "Setting for Middle-earth.",
+      },
+      {
+        word: "Nicaragua",
+        ipa: "/ˌnɪkəˈrɑːɡwə/",
+        translation: "Nicaragua",
+        definition: "Land of Lakes and Volcanoes.",
+      },
+      {
+        word: "Niger",
+        ipa: "/ˈnaɪdʒər/",
+        translation: "Níger",
+        definition: "Named after the Niger River.",
+      },
+      {
+        word: "Nigeria",
+        ipa: "/naɪˈdʒɪəriə/",
+        translation: "Nigeria",
+        definition: "Giant of Africa.",
+      },
+      {
+        word: "North Korea",
+        ipa: "/nɔːrθ kəˈriːə/",
+        translation: "Corea del Norte",
+        definition: "The Hermit Kingdom.",
+      },
+      {
+        word: "North Macedonia",
+        ipa: "/nɔːrθ.../",
+        translation: "Macedonia del Norte",
+        definition: "Birthplace of Mother Teresa.",
+      },
+      {
+        word: "Norway",
+        ipa: "/ˈnɔːrweɪ/",
+        translation: "Noruega",
+        definition: "Land of the Midnight Sun.",
+      },
+    ],
   },
   O: {
     Countries: [
-      { word: 'Oman', ipa: '/oʊˈmɑːn/', translation: 'Omán', definition: 'Oldest independent state in the Arab world.' }
-    ]
+      {
+        word: "Oman",
+        ipa: "/oʊˈmɑːn/",
+        translation: "Omán",
+        definition: "Oldest independent state in the Arab world.",
+      },
+    ],
   },
   P: {
     Countries: [
-      { word: 'Pakistan', ipa: '/ˈpækɪstæn/', translation: 'Pakistán', definition: 'Land of the Pure.' },
-      { word: 'Palau', ipa: '/pəˈlaʊ/', translation: 'Palaos', definition: 'Known for Jellyfish Lake.' },
-      { word: 'Palestine State', ipa: '/ˈpæləstaɪn.../', translation: 'Estado de Palestina', definition: 'Home to ancient Jericho.' },
-      { word: 'Panama', ipa: '/ˈpænəmɑː/', translation: 'Panamá', definition: 'Bridge of the World (Canal).' },
-      { word: 'Papua New Guinea', ipa: '/ˈpæpjuə.../', translation: 'Papúa Nueva Guinea', definition: 'One of the most linguistically diverse places.' },
-      { word: 'Paraguay', ipa: '/ˈpærəɡwaɪ/', translation: 'Paraguay', definition: 'Heart of South America.' },
-      { word: 'Peru', ipa: '/pəˈruː/', translation: 'Perú', definition: 'Home to Machu Picchu.' },
-      { word: 'Philippines', ipa: '/ˈfɪlɪpiːnz/', translation: 'Filipinas', definition: 'Archipelago of 7,000+ islands.' },
-      { word: 'Poland', ipa: '/ˈpoʊlənd/', translation: 'Polonia', definition: 'Land of Fields.' },
-      { word: 'Portugal', ipa: '/ˈpɔːrtʃəɡəl/', translation: 'Portugal', definition: 'Famous for explorers and cork.' }
-    ]
+      {
+        word: "Pakistan",
+        ipa: "/ˈpækɪstæn/",
+        translation: "Pakistán",
+        definition: "Land of the Pure.",
+      },
+      {
+        word: "Palau",
+        ipa: "/pəˈlaʊ/",
+        translation: "Palaos",
+        definition: "Known for Jellyfish Lake.",
+      },
+      {
+        word: "Palestine State",
+        ipa: "/ˈpæləstaɪn.../",
+        translation: "Estado de Palestina",
+        definition: "Home to ancient Jericho.",
+      },
+      {
+        word: "Panama",
+        ipa: "/ˈpænəmɑː/",
+        translation: "Panamá",
+        definition: "Bridge of the World (Canal).",
+      },
+      {
+        word: "Papua New Guinea",
+        ipa: "/ˈpæpjuə.../",
+        translation: "Papúa Nueva Guinea",
+        definition: "One of the most linguistically diverse places.",
+      },
+      {
+        word: "Paraguay",
+        ipa: "/ˈpærəɡwaɪ/",
+        translation: "Paraguay",
+        definition: "Heart of South America.",
+      },
+      {
+        word: "Peru",
+        ipa: "/pəˈruː/",
+        translation: "Perú",
+        definition: "Home to Machu Picchu.",
+      },
+      {
+        word: "Philippines",
+        ipa: "/ˈfɪlɪpiːnz/",
+        translation: "Filipinas",
+        definition: "Archipelago of 7,000+ islands.",
+      },
+      {
+        word: "Poland",
+        ipa: "/ˈpoʊlənd/",
+        translation: "Polonia",
+        definition: "Land of Fields.",
+      },
+      {
+        word: "Portugal",
+        ipa: "/ˈpɔːrtʃəɡəl/",
+        translation: "Portugal",
+        definition: "Famous for explorers and cork.",
+      },
+    ],
   },
   Q: {
     Countries: [
-      { word: 'Qatar', ipa: '/ˈkæ.tɑːr/', translation: 'Catar', definition: 'Peninsula in the Persian Gulf.' }
-    ]
+      {
+        word: "Qatar",
+        ipa: "/ˈkæ.tɑːr/",
+        translation: "Catar",
+        definition: "Peninsula in the Persian Gulf.",
+      },
+    ],
   },
   R: {
     Countries: [
-      { word: 'Romania', ipa: '/roʊˈmeɪniə/', translation: 'Rumania', definition: 'Home to the legend of Dracula.' },
-      { word: 'Russia', ipa: '/ˈrʌʃə/', translation: 'Rusia', definition: 'Largest country in the world.' },
-      { word: 'Rwanda', ipa: '/ruˈɑːndə/', translation: 'Ruanda', definition: 'Land of a Thousand Hills.' }
-    ]
+      {
+        word: "Romania",
+        ipa: "/roʊˈmeɪniə/",
+        translation: "Rumania",
+        definition: "Home to the legend of Dracula.",
+      },
+      {
+        word: "Russia",
+        ipa: "/ˈrʌʃə/",
+        translation: "Rusia",
+        definition: "Largest country in the world.",
+      },
+      {
+        word: "Rwanda",
+        ipa: "/ruˈɑːndə/",
+        translation: "Ruanda",
+        definition: "Land of a Thousand Hills.",
+      },
+    ],
   },
   S: {
     Countries: [
-      { word: 'Saint Kitts and Nevis', ipa: '/seɪnt kɪts.../', translation: 'San Cristóbal y Nieves', definition: 'Smallest country in the Americas.' },
-      { word: 'Saint Lucia', ipa: '/seɪnt ˈluːʃə/', translation: 'Santa Lucía', definition: 'Known for the Pitons mountains.' },
-      { word: 'Saint Vincent', ipa: '/seɪnt ˈvɪnsənt/', translation: 'San Vicente', definition: 'Filming location for Pirates of the Caribbean.' },
-      { word: 'Samoa', ipa: '/səˈmoʊə/', translation: 'Samoa', definition: 'Pacific island nation.' },
-      { word: 'San Marino', ipa: '/ˌsæn məˈriːnoʊ/', translation: 'San Marino', definition: 'Oldest surviving republic.' },
-      { word: 'Sao Tome and Principe', ipa: '/ˌsaʊ.../', translation: 'Santo Tomé y Príncipe', definition: 'Chocolate Islands.' },
-      { word: 'Saudi Arabia', ipa: '/ˌsaʊdi əˈreɪbiə/', translation: 'Arabia Saudita', definition: 'Birthplace of Islam.' },
-      { word: 'Senegal', ipa: '/ˌsɛnɪˈɡɔːl/', translation: 'Senegal', definition: 'Westernmost point of Africa.' },
-      { word: 'Serbia', ipa: '/ˈsɜːrbiə/', translation: 'Serbia', definition: 'Major exporter of raspberries.' },
-      { word: 'Seychelles', ipa: '/seɪˈʃɛlz/', translation: 'Seychelles', definition: 'Home to giant tortoises.' },
-      { word: 'Sierra Leone', ipa: '/siˈɛrə liˈoʊn/', translation: 'Sierra Leona', definition: 'Known for white-sand beaches.' },
-      { word: 'Singapore', ipa: '/ˌsɪŋəˈpɔːr/', translation: 'Singapur', definition: 'The Lion City.' },
-      { word: 'Slovakia', ipa: '/sloʊˈvækiə/', translation: 'Eslovaquia', definition: 'Has the most castles per capita.' },
-      { word: 'Slovenia', ipa: '/sloʊˈviːniə/', translation: 'Eslovenia', definition: 'Famous for Lake Bled.' },
-      { word: 'Solomon Islands', ipa: '/ˈsɒləmən.../', translation: 'Islas Salomón', definition: '900 islands in Oceania.' },
-      { word: 'Somalia', ipa: '/soʊˈmɑːliə/', translation: 'Somalia', definition: 'Has the longest coastline in Africa.' },
-      { word: 'South Africa', ipa: '/saʊθ ˈæfrɪkə/', translation: 'Sudáfrica', definition: 'The Rainbow Nation.' },
-      { word: 'South Korea', ipa: '/saʊθ kəˈriːə/', translation: 'Corea del Sur', definition: 'Land of K-Pop and Kimchi.' },
-      { word: 'South Sudan', ipa: '/saʊθ suːˈdæn/', translation: 'Sudán del Sur', definition: 'World\'s youngest country (2011).' },
-      { word: 'Spain', ipa: '/speɪn/', translation: 'España', definition: 'Land of Flamenco and Siesta.' },
-      { word: 'Sri Lanka', ipa: '/sriː ˈlɑːŋkə/', translation: 'Sri Lanka', definition: 'Pearl of the Indian Ocean.' },
-      { word: 'Sudan', ipa: '/suːˈdæn/', translation: 'Sudán', definition: 'Has more pyramids than Egypt.' },
-      { word: 'Suriname', ipa: '/ˌsʊərɪˈnæm/', translation: 'Surinam', definition: 'Dutch-speaking country in S. America.' },
-      { word: 'Sweden', ipa: '/ˈswiːdən/', translation: 'Suecia', definition: 'Home of IKEA and ABBA.' },
-      { word: 'Switzerland', ipa: '/ˈswɪtsərlənd/', translation: 'Suiza', definition: 'Neutral nation famous for watches.' },
-      { word: 'Syria', ipa: '/ˈsɪriə/', translation: 'Siria', definition: 'Home to ancient Damascus.' }
-    ]
+      {
+        word: "Saint Kitts and Nevis",
+        ipa: "/seɪnt kɪts.../",
+        translation: "San Cristóbal y Nieves",
+        definition: "Smallest country in the Americas.",
+      },
+      {
+        word: "Saint Lucia",
+        ipa: "/seɪnt ˈluːʃə/",
+        translation: "Santa Lucía",
+        definition: "Known for the Pitons mountains.",
+      },
+      {
+        word: "Saint Vincent",
+        ipa: "/seɪnt ˈvɪnsənt/",
+        translation: "San Vicente",
+        definition: "Filming location for Pirates of the Caribbean.",
+      },
+      {
+        word: "Samoa",
+        ipa: "/səˈmoʊə/",
+        translation: "Samoa",
+        definition: "Pacific island nation.",
+      },
+      {
+        word: "San Marino",
+        ipa: "/ˌsæn məˈriːnoʊ/",
+        translation: "San Marino",
+        definition: "Oldest surviving republic.",
+      },
+      {
+        word: "Sao Tome and Principe",
+        ipa: "/ˌsaʊ.../",
+        translation: "Santo Tomé y Príncipe",
+        definition: "Chocolate Islands.",
+      },
+      {
+        word: "Saudi Arabia",
+        ipa: "/ˌsaʊdi əˈreɪbiə/",
+        translation: "Arabia Saudita",
+        definition: "Birthplace of Islam.",
+      },
+      {
+        word: "Senegal",
+        ipa: "/ˌsɛnɪˈɡɔːl/",
+        translation: "Senegal",
+        definition: "Westernmost point of Africa.",
+      },
+      {
+        word: "Serbia",
+        ipa: "/ˈsɜːrbiə/",
+        translation: "Serbia",
+        definition: "Major exporter of raspberries.",
+      },
+      {
+        word: "Seychelles",
+        ipa: "/seɪˈʃɛlz/",
+        translation: "Seychelles",
+        definition: "Home to giant tortoises.",
+      },
+      {
+        word: "Sierra Leone",
+        ipa: "/siˈɛrə liˈoʊn/",
+        translation: "Sierra Leona",
+        definition: "Known for white-sand beaches.",
+      },
+      {
+        word: "Singapore",
+        ipa: "/ˌsɪŋəˈpɔːr/",
+        translation: "Singapur",
+        definition: "The Lion City.",
+      },
+      {
+        word: "Slovakia",
+        ipa: "/sloʊˈvækiə/",
+        translation: "Eslovaquia",
+        definition: "Has the most castles per capita.",
+      },
+      {
+        word: "Slovenia",
+        ipa: "/sloʊˈviːniə/",
+        translation: "Eslovenia",
+        definition: "Famous for Lake Bled.",
+      },
+      {
+        word: "Solomon Islands",
+        ipa: "/ˈsɒləmən.../",
+        translation: "Islas Salomón",
+        definition: "900 islands in Oceania.",
+      },
+      {
+        word: "Somalia",
+        ipa: "/soʊˈmɑːliə/",
+        translation: "Somalia",
+        definition: "Has the longest coastline in Africa.",
+      },
+      {
+        word: "South Africa",
+        ipa: "/saʊθ ˈæfrɪkə/",
+        translation: "Sudáfrica",
+        definition: "The Rainbow Nation.",
+      },
+      {
+        word: "South Korea",
+        ipa: "/saʊθ kəˈriːə/",
+        translation: "Corea del Sur",
+        definition: "Land of K-Pop and Kimchi.",
+      },
+      {
+        word: "South Sudan",
+        ipa: "/saʊθ suːˈdæn/",
+        translation: "Sudán del Sur",
+        definition: "World's youngest country (2011).",
+      },
+      {
+        word: "Spain",
+        ipa: "/speɪn/",
+        translation: "España",
+        definition: "Land of Flamenco and Siesta.",
+      },
+      {
+        word: "Sri Lanka",
+        ipa: "/sriː ˈlɑːŋkə/",
+        translation: "Sri Lanka",
+        definition: "Pearl of the Indian Ocean.",
+      },
+      {
+        word: "Sudan",
+        ipa: "/suːˈdæn/",
+        translation: "Sudán",
+        definition: "Has more pyramids than Egypt.",
+      },
+      {
+        word: "Suriname",
+        ipa: "/ˌsʊərɪˈnæm/",
+        translation: "Surinam",
+        definition: "Dutch-speaking country in S. America.",
+      },
+      {
+        word: "Sweden",
+        ipa: "/ˈswiːdən/",
+        translation: "Suecia",
+        definition: "Home of IKEA and ABBA.",
+      },
+      {
+        word: "Switzerland",
+        ipa: "/ˈswɪtsərlənd/",
+        translation: "Suiza",
+        definition: "Neutral nation famous for watches.",
+      },
+      {
+        word: "Syria",
+        ipa: "/ˈsɪriə/",
+        translation: "Siria",
+        definition: "Home to ancient Damascus.",
+      },
+    ],
   },
   T: {
     Countries: [
-      { word: 'Tajikistan', ipa: '/təˌdʒɪkɪˈstæn/', translation: 'Tayikistán', definition: '90% mountainous country.' },
-      { word: 'Tanzania', ipa: '/ˌtænzəˈniːə/', translation: 'Tanzania', definition: 'Home to the Serengeti.' },
-      { word: 'Thailand', ipa: '/ˈtaɪlænd/', translation: 'Tailandia', definition: 'Land of Smiles.' },
-      { word: 'Timor-Leste', ipa: '/ˈtiːmɔːr ˈlɛsteɪ/', translation: 'Timor Oriental', definition: 'Newest nation in SE Asia.' },
-      { word: 'Togo', ipa: '/ˈtoʊɡoʊ/', translation: 'Togo', definition: 'Narrow country in West Africa.' },
-      { word: 'Tonga', ipa: '/ˈtɒŋɡə/', translation: 'Tonga', definition: 'The Friendly Islands.' },
-      { word: 'Trinidad and Tobago', ipa: '/ˈtrɪnɪdæd.../', translation: 'Trinidad y Tobago', definition: 'Birthplace of the steelpan.' },
-      { word: 'Tunisia', ipa: '/tjuːˈnɪziə/', translation: 'Túnez', definition: 'Northernmost country in Africa.' },
-      { word: 'Turkey', ipa: '/ˈtɜːrki/', translation: 'Turquía', definition: 'Where East meets West.' },
-      { word: 'Turkmenistan', ipa: '/tɜːrkˈmɛnɪstæn/', translation: 'Turkmenistán', definition: 'Famous for the Door to Hell.' },
-      { word: 'Tuvalu', ipa: '/tuːˈvɑːluː/', translation: 'Tuvalu', definition: 'Fourth smallest country.' }
-    ]
+      {
+        word: "Tajikistan",
+        ipa: "/təˌdʒɪkɪˈstæn/",
+        translation: "Tayikistán",
+        definition: "90% mountainous country.",
+      },
+      {
+        word: "Tanzania",
+        ipa: "/ˌtænzəˈniːə/",
+        translation: "Tanzania",
+        definition: "Home to the Serengeti.",
+      },
+      {
+        word: "Thailand",
+        ipa: "/ˈtaɪlænd/",
+        translation: "Tailandia",
+        definition: "Land of Smiles.",
+      },
+      {
+        word: "Timor-Leste",
+        ipa: "/ˈtiːmɔːr ˈlɛsteɪ/",
+        translation: "Timor Oriental",
+        definition: "Newest nation in SE Asia.",
+      },
+      {
+        word: "Togo",
+        ipa: "/ˈtoʊɡoʊ/",
+        translation: "Togo",
+        definition: "Narrow country in West Africa.",
+      },
+      {
+        word: "Tonga",
+        ipa: "/ˈtɒŋɡə/",
+        translation: "Tonga",
+        definition: "The Friendly Islands.",
+      },
+      {
+        word: "Trinidad and Tobago",
+        ipa: "/ˈtrɪnɪdæd.../",
+        translation: "Trinidad y Tobago",
+        definition: "Birthplace of the steelpan.",
+      },
+      {
+        word: "Tunisia",
+        ipa: "/tjuːˈnɪziə/",
+        translation: "Túnez",
+        definition: "Northernmost country in Africa.",
+      },
+      {
+        word: "Turkey",
+        ipa: "/ˈtɜːrki/",
+        translation: "Turquía",
+        definition: "Where East meets West.",
+      },
+      {
+        word: "Turkmenistan",
+        ipa: "/tɜːrkˈmɛnɪstæn/",
+        translation: "Turkmenistán",
+        definition: "Famous for the Door to Hell.",
+      },
+      {
+        word: "Tuvalu",
+        ipa: "/tuːˈvɑːluː/",
+        translation: "Tuvalu",
+        definition: "Fourth smallest country.",
+      },
+    ],
   },
   U: {
     Countries: [
-      { word: 'Uganda', ipa: '/juːˈɡændə/', translation: 'Uganda', definition: 'Pearl of Africa.' },
-      { word: 'Ukraine', ipa: '/juːˈkreɪn/', translation: 'Ucrania', definition: 'Breadbasket of Europe.' },
-      { word: 'United Arab Emirates', ipa: '/.../', translation: 'EAU', definition: 'Home to Burj Khalifa.' },
-      { word: 'United Kingdom', ipa: '/.../', translation: 'Reino Unido', definition: 'Union of four nations.' },
-      { word: 'United States', ipa: '/.../', translation: 'Estados Unidos', definition: 'Land of the Free.' },
-      { word: 'Uruguay', ipa: '/ˈjʊərəɡwaɪ/', translation: 'Uruguay', definition: 'Won the first World Cup.' },
-      { word: 'Uzbekistan', ipa: '/ʊzˌbɛkɪˈstɑːn/', translation: 'Uzbekistán', definition: 'Heart of the Silk Road.' }
-    ]
+      {
+        word: "Uganda",
+        ipa: "/juːˈɡændə/",
+        translation: "Uganda",
+        definition: "Pearl of Africa.",
+      },
+      {
+        word: "Ukraine",
+        ipa: "/juːˈkreɪn/",
+        translation: "Ucrania",
+        definition: "Breadbasket of Europe.",
+      },
+      {
+        word: "United Arab Emirates",
+        ipa: "/.../",
+        translation: "EAU",
+        definition: "Home to Burj Khalifa.",
+      },
+      {
+        word: "United Kingdom",
+        ipa: "/.../",
+        translation: "Reino Unido",
+        definition: "Union of four nations.",
+      },
+      {
+        word: "United States",
+        ipa: "/.../",
+        translation: "Estados Unidos",
+        definition: "Land of the Free.",
+      },
+      {
+        word: "Uruguay",
+        ipa: "/ˈjʊərəɡwaɪ/",
+        translation: "Uruguay",
+        definition: "Won the first World Cup.",
+      },
+      {
+        word: "Uzbekistan",
+        ipa: "/ʊzˌbɛkɪˈstɑːn/",
+        translation: "Uzbekistán",
+        definition: "Heart of the Silk Road.",
+      },
+    ],
   },
   V: {
     Countries: [
-      { word: 'Vanuatu', ipa: '/ˌvænuˈɑːtuː/', translation: 'Vanuatu', definition: 'Famous for land diving.' },
-      { word: 'Vatican City', ipa: '/ˈvætɪkən ˈsɪti/', translation: 'Ciudad del Vaticano', definition: 'Smallest country in the world.' },
-      { word: 'Venezuela', ipa: '/ˌvɛnəˈzweɪlə/', translation: 'Venezuela', definition: 'Home to Angel Falls.' },
-      { word: 'Vietnam', ipa: '/ˌvjɛtˈnɑːm/', translation: 'Vietnam', definition: 'Known for Ha Long Bay.' }
-    ]
+      {
+        word: "Vanuatu",
+        ipa: "/ˌvænuˈɑːtuː/",
+        translation: "Vanuatu",
+        definition: "Famous for land diving.",
+      },
+      {
+        word: "Vatican City",
+        ipa: "/ˈvætɪkən ˈsɪti/",
+        translation: "Ciudad del Vaticano",
+        definition: "Smallest country in the world.",
+      },
+      {
+        word: "Venezuela",
+        ipa: "/ˌvɛnəˈzweɪlə/",
+        translation: "Venezuela",
+        definition: "Home to Angel Falls.",
+      },
+      {
+        word: "Vietnam",
+        ipa: "/ˌvjɛtˈnɑːm/",
+        translation: "Vietnam",
+        definition: "Known for Ha Long Bay.",
+      },
+    ],
   },
   Y: {
     Countries: [
-      { word: 'Yemen', ipa: '/ˈjɛmən/', translation: 'Yemen', definition: 'Home to Dragon Blood Trees.' }
-    ]
+      {
+        word: "Yemen",
+        ipa: "/ˈjɛmən/",
+        translation: "Yemen",
+        definition: "Home to Dragon Blood Trees.",
+      },
+    ],
   },
   Z: {
     Countries: [
-      { word: 'Zambia', ipa: '/ˈzæmbiə/', translation: 'Zambia', definition: 'Shares Victoria Falls.' },
-      { word: 'Zimbabwe', ipa: '/zɪmˈbɑːbweɪ/', translation: 'Zimbabue', definition: 'Great Zimbabwe ruins.' }
-    ]
-  }
+      {
+        word: "Zambia",
+        ipa: "/ˈzæmbiə/",
+        translation: "Zambia",
+        definition: "Shares Victoria Falls.",
+      },
+      {
+        word: "Zimbabwe",
+        ipa: "/zɪmˈbɑːbweɪ/",
+        translation: "Zimbabue",
+        definition: "Great Zimbabwe ruins.",
+      },
+    ],
+  },
 };

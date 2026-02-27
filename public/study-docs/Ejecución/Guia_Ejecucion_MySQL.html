@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_MySQL</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_MySQL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,84 +52,181 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_MySQL</h1>
-    <h2>Explicación</h2><p>Esta configuración te permitirá levantar una instancia básica de MySQL 8.0 usando <code>docker-compose</code> (compatible con Podman Compose). Incluye:</p><ul><li><strong>Persistencia de datos</strong>: Utiliza un volumen nombrado para asegurar que tus datos no se pierdan al reiniciar o eliminar el contenedor.</li><li><strong>Base de datos y usuario inicial</strong>: Se configura una base de datos <code>test_db</code> y un usuario <code>test_user</code> con contraseña <code>test_password</code> automáticamente al iniciar.</li><li><strong>Inicialización de esquema</strong>: Un archivo <code>init.sql</code> se ejecuta automáticamente la primera vez que la base de datos es creada, creando una tabla de ejemplo.</li><li><strong>Acceso externo</strong>: El puerto 3306 del contenedor se mapea al puerto 3306 de tu máquina local, permitiéndote conectar con cualquier cliente MySQL.</li></ul><p><strong>Pasos:</strong></p><p>1.  Asegúrate de tener Docker Compose (o Podman Compose) instalado.</p><p>2.  Crea un directorio para tu proyecto.</p><p>3.  Crea los archivos <code>docker-compose.yml</code>, <code>Dockerfile</code> (opcional, pero incluido para cumplir el esquema, ya que <code>docker-compose</code> puede usar la imagen directamente) e <code>init.sql</code> con el contenido proporcionado.</p><p>4.  Navega a ese directorio en tu terminal.</p><p>5.  Ejecuta el comando <code>docker-compose up -d</code>.</p><p>6.  Para verificar el estado, usa <code>docker-compose ps</code>.</p><p>7.  Para conectar, puedes usar: <code>mysql -h 127.0.0.1 -P 3306 -u test_user -p</code> (la contraseña es <code>test_password</code>).</p><p>8.  Para detener y eliminar los contenedores y el volumen (borrando los datos), usa <code>docker-compose down -v</code>.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de MySQL 8.0 como base.
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_MySQL</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta configuración te permitirá levantar una instancia básica de MySQL
+        8.0 usando <code>docker-compose</code> (compatible con Podman Compose).
+        Incluye:
+      </p>
+      <ul>
+        <li>
+          <strong>Persistencia de datos</strong>: Utiliza un volumen nombrado
+          para asegurar que tus datos no se pierdan al reiniciar o eliminar el
+          contenedor.
+        </li>
+        <li>
+          <strong>Base de datos y usuario inicial</strong>: Se configura una
+          base de datos <code>test_db</code> y un usuario
+          <code>test_user</code> con contraseña
+          <code>test_password</code> automáticamente al iniciar.
+        </li>
+        <li>
+          <strong>Inicialización de esquema</strong>: Un archivo
+          <code>init.sql</code> se ejecuta automáticamente la primera vez que la
+          base de datos es creada, creando una tabla de ejemplo.
+        </li>
+        <li>
+          <strong>Acceso externo</strong>: El puerto 3306 del contenedor se
+          mapea al puerto 3306 de tu máquina local, permitiéndote conectar con
+          cualquier cliente MySQL.
+        </li>
+      </ul>
+      <p><strong>Pasos:</strong></p>
+      <p>1. Asegúrate de tener Docker Compose (o Podman Compose) instalado.</p>
+      <p>2. Crea un directorio para tu proyecto.</p>
+      <p>
+        3. Crea los archivos <code>docker-compose.yml</code>,
+        <code>Dockerfile</code> (opcional, pero incluido para cumplir el
+        esquema, ya que <code>docker-compose</code> puede usar la imagen
+        directamente) e <code>init.sql</code> con el contenido proporcionado.
+      </p>
+      <p>4. Navega a ese directorio en tu terminal.</p>
+      <p>5. Ejecuta el comando <code>docker-compose up -d</code>.</p>
+      <p>6. Para verificar el estado, usa <code>docker-compose ps</code>.</p>
+      <p>
+        7. Para conectar, puedes usar:
+        <code>mysql -h 127.0.0.1 -P 3306 -u test_user -p</code> (la contraseña
+        es <code>test_password</code>).
+      </p>
+      <p>
+        8. Para detener y eliminar los contenedores y el volumen (borrando los
+        datos), usa <code>docker-compose down -v</code>.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile</h3>
+      <pre><code># Usa la imagen oficial de MySQL 8.0 como base.
 # Este Dockerfile es simple ya que la imagen oficial ya viene configurada.
 FROM mysql:8.0
 
 # No se necesitan pasos adicionales para una configuración básica,
 # ya que las variables de entorno y los volúmenes se manejan a través de docker-compose.yml
-# y la imagen oficial ya soporta scripts de inicialización en /docker-entrypoint-initdb.d</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+# y la imagen oficial ya soporta scripts de inicialización en /docker-entrypoint-initdb.d</code></pre>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 
 services:
   db:
@@ -151,7 +250,9 @@ services:
       retries: 5
 
 volumes:
-  mysql_data: # Define el volumen nombrado</code></pre><h3>init.sql</h3><pre><code>-- Script de inicialización de la base de datos MySQL
+  mysql_data: # Define el volumen nombrado</code></pre>
+      <h3>init.sql</h3>
+      <pre><code>-- Script de inicialización de la base de datos MySQL
 
 -- Selecciona la base de datos
 USE test_db;
@@ -167,8 +268,58 @@ CREATE TABLE IF NOT EXISTS users (
 -- Inserta algunos datos de ejemplo
 INSERT INTO users (name, email) VALUES ('Alice Smith', 'alice.smith@example.com');
 INSERT INTO users (name, email) VALUES ('Bob Johnson', 'bob.johnson@example.com');
-INSERT INTO users (name, email) VALUES ('Charlie Brown', 'charlie.brown@example.com');</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFsELuEnXsP7IG3mbtz-4fROe-wlZplieEHs7XasCoGjmqmU-3U24wDtDEDcVtwe-9ZaT1BOXxKHXTV6Vkp3T2n7XNu1NA0GWho3RkyWGx8bjPsb5gb_S27pgjZh3PmN4oV_Uv0Uk6CtcDYTWMvjA==" target="_blank" rel="noopener noreferrer">mysql.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH9651PDZeGfzVpFs5thAu8cuim5B-4hxncF5wdZ0cdvYYP0dxiX3m85TBGwU2hHdpgr6XYuyQrTj0LyZSGlEFPCd-NBq8l47bKfH7JYg_0PrhvmAV8Cwa6f5TgqnqPHsCpvT_A5gypm9TLVektKqn1lCrzla0LHXI=" target="_blank" rel="noopener noreferrer">mysql.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHTPJ_OcqWQZDEVx-favzv4ZKRQcuKZS9-ZiVgcyYqFk4KuzfM9Z4QYR5I1OZYSg98mH-iodMItNHROUGHk4zShXKDHLBwbLVl2R0yRuPu_jrORiADeukIdYr5S4QUwITigurlpV0MgeAuJbJI=" target="_blank" rel="noopener noreferrer">datacamp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGRaEi3B1pt9qQijSS4RZmHZdWmwMAA_Yf66OsrY2lbEr4kJDNQtUe40YfAD-PkyUo-JPaIkL2tD9nbC-bnOH7TIToJ5pWfEi_55Ug8n3Lw_fulQuyPRiMhICGXwDsjwxAzUMilfXHgxrxos86sKA==" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJWB_X3lXvHVC0ccLLIKYicvzNx0tubwUmath04SthRFAp5v3Z-dEa4cr_bWwId1n8QG6NcUINkOTFgmzyV_BqbGcueesbNMGeYp4ze7XsoCxfnEHKLmgBzQ==" target="_blank" rel="noopener noreferrer">mysqltutorial.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgELKy-BaxdlVQHnjHk-SwHQVJv5QCH1hM_yIxs2kVkwVV5bKjHdVlkO5hWRCRdtViEXjHFu6Lz_m_g-QRK_R42efQomyk492jwBKUH8ycmfe1NYnLI_9ubrY64QxP-dkvQHnk_C6F4jVGtIlXcUWrvGdvbWHZkEN9FA==" target="_blank" rel="noopener noreferrer">freecodecamp.org</a></li></ul>
-  </div>
-</body>
+INSERT INTO users (name, email) VALUES ('Charlie Brown', 'charlie.brown@example.com');</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFsELuEnXsP7IG3mbtz-4fROe-wlZplieEHs7XasCoGjmqmU-3U24wDtDEDcVtwe-9ZaT1BOXxKHXTV6Vkp3T2n7XNu1NA0GWho3RkyWGx8bjPsb5gb_S27pgjZh3PmN4oV_Uv0Uk6CtcDYTWMvjA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >mysql.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH9651PDZeGfzVpFs5thAu8cuim5B-4hxncF5wdZ0cdvYYP0dxiX3m85TBGwU2hHdpgr6XYuyQrTj0LyZSGlEFPCd-NBq8l47bKfH7JYg_0PrhvmAV8Cwa6f5TgqnqPHsCpvT_A5gypm9TLVektKqn1lCrzla0LHXI="
+            target="_blank"
+            rel="noopener noreferrer"
+            >mysql.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHTPJ_OcqWQZDEVx-favzv4ZKRQcuKZS9-ZiVgcyYqFk4KuzfM9Z4QYR5I1OZYSg98mH-iodMItNHROUGHk4zShXKDHLBwbLVl2R0yRuPu_jrORiADeukIdYr5S4QUwITigurlpV0MgeAuJbJI="
+            target="_blank"
+            rel="noopener noreferrer"
+            >datacamp.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGRaEi3B1pt9qQijSS4RZmHZdWmwMAA_Yf66OsrY2lbEr4kJDNQtUe40YfAD-PkyUo-JPaIkL2tD9nbC-bnOH7TIToJ5pWfEi_55Ug8n3Lw_fulQuyPRiMhICGXwDsjwxAzUMilfXHgxrxos86sKA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >geeksforgeeks.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJWB_X3lXvHVC0ccLLIKYicvzNx0tubwUmath04SthRFAp5v3Z-dEa4cr_bWwId1n8QG6NcUINkOTFgmzyV_BqbGcueesbNMGeYp4ze7XsoCxfnEHKLmgBzQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >mysqltutorial.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgELKy-BaxdlVQHnjHk-SwHQVJv5QCH1hM_yIxs2kVkwVV5bKjHdVlkO5hWRCRdtViEXjHFu6Lz_m_g-QRK_R42efQomyk492jwBKUH8ycmfe1NYnLI_9ubrY64QxP-dkvQHnk_C6F4jVGtIlXcUWrvGdvbWHZkEN9FA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >freecodecamp.org</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

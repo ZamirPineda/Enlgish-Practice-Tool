@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_RisingWave</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_RisingWave</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,80 +52,213 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_RisingWave</h1>
-    <h2>Explicación</h2><p>Esta guía te ayudará a levantar una instancia básica de RisingWave, un motor de streaming SQL distribuido, utilizando <code>docker-compose</code>. RisingWave permite procesar y analizar flujos de datos en tiempo real de manera eficiente y es compatible con el protocolo PostgreSQL.</p><p>La configuración incluye los componentes esenciales de RisingWave:</p><ul><li><em></em><code>meta-node</code><em></em>: Gestiona el metadata del clúster.</li><li><em></em><code>compute-node</code><em></em>: Realiza el procesamiento y cómputo de datos.</li><li><em></em><code>frontend</code><em></em>: Expone una interfaz compatible con PostgreSQL para que puedas ejecutar consultas SQL.</li><li><em></em><code>compactor</code><em></em>: Se encarga de la compactación de los datos de estado para optimizar el almacenamiento y el rendimiento.</li></ul><p>Se proporciona un <code>Dockerfile</code> para construir una imagen de cliente <code>psql</code> básica, que será útil para interactuar con RisingWave una vez que esté en funcionamiento.</p><p><strong>Pasos a seguir:</strong></p><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio de proyecto (ej. <code>risingwave-local</code>) y guarda <code>docker-compose.yml</code> y <code>Dockerfile</code> (para el cliente psql) en ese directorio.</p><p>2.  <strong>Construye la imagen del cliente (opcional, pero recomendado)</strong>: Navega hasta el directorio y ejecuta:</p><pre><code>    docker build -t psql-client -f Dockerfile .</code></pre><p>3.  <strong>Inicia los servicios de RisingWave</strong>: Ejecuta el comando <code>docker-compose up -d</code>. Esto descargará las imágenes oficiales de RisingWave y levantará todos los servicios en segundo plano.</p><p>4.  <strong>Verifica el estado</strong>: Puedes verificar que los contenedores están funcionando con <code>docker-compose ps</code>.</p><p>5.  <strong>Conéctate a RisingWave</strong>: Una vez que el <code>frontend</code> esté listo (puede tardar unos segundos en inicializarse), puedes conectar usando el cliente <code>psql</code> que construiste. El <code>frontend</code> de RisingWave escucha en el puerto <code>4566</code> y el usuario por defecto es <code>root</code> con la base de datos <code>dev</code>.</p><ul><li>   *   <strong>Para conectar desde tu máquina local (host):</strong></li></ul><pre><code>        docker run -it --rm --network host psql-client -h localhost -p 4566 -U root -d dev</code></pre><p>        <em>Nota</em>: La opción <code>--network host</code> permite que el contenedor psql-client vea <code>localhost</code> en tu máquina anfitriona, que está mapeada al puerto 4566 del <code>frontend</code> de RisingWave. Si prefieres usar la red de docker-compose, deberías agregar el cliente <code>psql</code> como un servicio más en el <code>docker-compose.yml</code>.</p><p>    Una vez conectado, puedes probar consultas SQL como <code>CREATE SOURCE</code>, <code>CREATE MATERIALIZED VIEW</code>, etc. Por ejemplo:</p><pre><code>    CREATE TABLE t1 (v1 int); 
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_RisingWave</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía te ayudará a levantar una instancia básica de RisingWave, un
+        motor de streaming SQL distribuido, utilizando
+        <code>docker-compose</code>. RisingWave permite procesar y analizar
+        flujos de datos en tiempo real de manera eficiente y es compatible con
+        el protocolo PostgreSQL.
+      </p>
+      <p>La configuración incluye los componentes esenciales de RisingWave:</p>
+      <ul>
+        <li>
+          <em></em><code>meta-node</code><em></em>: Gestiona el metadata del
+          clúster.
+        </li>
+        <li>
+          <em></em><code>compute-node</code><em></em>: Realiza el procesamiento
+          y cómputo de datos.
+        </li>
+        <li>
+          <em></em><code>frontend</code><em></em>: Expone una interfaz
+          compatible con PostgreSQL para que puedas ejecutar consultas SQL.
+        </li>
+        <li>
+          <em></em><code>compactor</code><em></em>: Se encarga de la
+          compactación de los datos de estado para optimizar el almacenamiento y
+          el rendimiento.
+        </li>
+      </ul>
+      <p>
+        Se proporciona un <code>Dockerfile</code> para construir una imagen de
+        cliente <code>psql</code> básica, que será útil para interactuar con
+        RisingWave una vez que esté en funcionamiento.
+      </p>
+      <p><strong>Pasos a seguir:</strong></p>
+      <p>
+        1. <strong>Guarda los archivos</strong>: Crea un directorio de proyecto
+        (ej. <code>risingwave-local</code>) y guarda
+        <code>docker-compose.yml</code> y <code>Dockerfile</code> (para el
+        cliente psql) en ese directorio.
+      </p>
+      <p>
+        2.
+        <strong
+          >Construye la imagen del cliente (opcional, pero recomendado)</strong
+        >: Navega hasta el directorio y ejecuta:
+      </p>
+      <pre><code>    docker build -t psql-client -f Dockerfile .</code></pre>
+      <p>
+        3. <strong>Inicia los servicios de RisingWave</strong>: Ejecuta el
+        comando <code>docker-compose up -d</code>. Esto descargará las imágenes
+        oficiales de RisingWave y levantará todos los servicios en segundo
+        plano.
+      </p>
+      <p>
+        4. <strong>Verifica el estado</strong>: Puedes verificar que los
+        contenedores están funcionando con <code>docker-compose ps</code>.
+      </p>
+      <p>
+        5. <strong>Conéctate a RisingWave</strong>: Una vez que el
+        <code>frontend</code> esté listo (puede tardar unos segundos en
+        inicializarse), puedes conectar usando el cliente <code>psql</code> que
+        construiste. El <code>frontend</code> de RisingWave escucha en el puerto
+        <code>4566</code> y el usuario por defecto es <code>root</code> con la
+        base de datos <code>dev</code>.
+      </p>
+      <ul>
+        <li>* <strong>Para conectar desde tu máquina local (host):</strong></li>
+      </ul>
+      <pre><code>        docker run -it --rm --network host psql-client -h localhost -p 4566 -U root -d dev</code></pre>
+      <p>
+        <em>Nota</em>: La opción <code>--network host</code> permite que el
+        contenedor psql-client vea <code>localhost</code> en tu máquina
+        anfitriona, que está mapeada al puerto 4566 del <code>frontend</code> de
+        RisingWave. Si prefieres usar la red de docker-compose, deberías agregar
+        el cliente <code>psql</code> como un servicio más en el
+        <code>docker-compose.yml</code>.
+      </p>
+      <p>
+        Una vez conectado, puedes probar consultas SQL como
+        <code>CREATE SOURCE</code>, <code>CREATE MATERIALIZED VIEW</code>, etc.
+        Por ejemplo:
+      </p>
+      <pre><code>    CREATE TABLE t1 (v1 int);
     INSERT INTO t1 VALUES (1), (2), (3);
-    SELECT * FROM t1;</code></pre><p>6.  <strong>Detén y limpia los servicios</strong>: Cuando hayas terminado, puedes detener y eliminar los contenedores y la red con:</p><pre><code>    docker-compose down</code></pre><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para un cliente PostgreSQL básico para conectar a RisingWave.
+    SELECT * FROM t1;</code></pre>
+      <p>
+        6. <strong>Detén y limpia los servicios</strong>: Cuando hayas
+        terminado, puedes detener y eliminar los contenedores y la red con:
+      </p>
+      <pre><code>    docker-compose down</code></pre>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile</h3>
+      <pre><code># Dockerfile para un cliente PostgreSQL básico para conectar a RisingWave.
 # RisingWave expone una interfaz compatible con PostgreSQL.
 
 # Usa una imagen base ligera con herramientas comunes.
@@ -144,7 +279,9 @@ ENTRYPOINT ["psql"]
 CMD ["--help"]
 
 # Para conectar a RisingWave, se usará:
-# docker run -it --rm --network host psql-client -h localhost -p 4566 -U root -d dev</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+# docker run -it --rm --network host psql-client -h localhost -p 4566 -U root -d dev</code></pre>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 services:
   meta-node:
     image: risingwave/risingwave:latest
@@ -197,8 +334,66 @@ services:
       test: ["CMD", "nc", "-z", "localhost", "6660"]
       interval: 5s
       timeout: 3s
-      retries: 5</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7EPONfaE8bdKsHnUHhQMqq5NXDTFImTH5Jx9d0MqQkPmOgynCMHxr83JYS7iaU2AS3l1QNNslwCrj4wtDo359pWkvHcY74veyT7SYhbEtwnzDuk_B9agip5ICDnHd57I-31m71JyLciPWsbBg" target="_blank" rel="noopener noreferrer">risingwave.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNx9XDPaqrD2TQeqUZQT5v4A-rlGEZsgC5u278ZGoUGdzmXefaLbrWjyPUZPvs1Svrd1NxNQ1r9MCwPvbBeKjsFYgCWDz_8FUeljEr-LXd721YAyIjv-Pd9kfNldR_sdjlUoauj4Kl" target="_blank" rel="noopener noreferrer">risingwave.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETZcz70hbAQ4ENu5XNn-2mk4du6UpG_1veVLw3NKfGkYD84Iq9F35H_zWqnaZrfrhY7tNfNAQFG8wSjPdU-vNEjCmW0BFbgMrBKs4bt99vLNsnQC72Wytsn_r79qDnwNXfVixQqjHJM4na3RMYu4N7JnZdVhIavLQGVgF6bO6ig_mlp_FHw5g-5Ub-T0pE5LAjnSPuP1kZ_-MvR56hbODMo4NmQbN-GDd9_h0BCCxHISV9-9OP" target="_blank" rel="noopener noreferrer">risingwave.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGCzE3dIut1pNGjusoUOyqC4DWQ4lc0HY6xR42Lwc338xpo4zldle0z7ZAmhRPOvoR96YkB3rdCIusz9EwKkyEtaTurHU1Y5iUCeGItdt5NhdbuC1vSySPsre_ZIQ==" target="_blank" rel="noopener noreferrer">risingwave.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGUdbrCVK-3V5Qh_97jPcAGr-sSgbUVVbVKyqSGLK3jSBJ8PhEgRq9Cz_VTZtT_CrKt7HCqTBVqQMygGbQTVSpTiGUcS47CFb7aWxbxifWzmE-8" target="_blank" rel="noopener noreferrer">risingwave.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJJTh2CWLDarVwerQLYk8KoKVMUYlFCasU_dvlbCUDoZobzXPS2wLCoEaiqxPxeVbod70a1Ek-mXD9yj2MZvII0ypzDmWHXIvL-VWC1u_nEa4GRdhrKjsH7V97aTQ6Rka-yKijitYh1C_wlVo=" target="_blank" rel="noopener noreferrer">github.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfxo30ypigXTgrJi7RLm4wqmctpbTC_Zeaz3zSipvLDRNTLgtH3SpGzjChYbFMpd9ZBRIMn8L1aOGfGv4bJW0oFaZdG4SPErVJ8MWkGQhqPewjMYi7izPtWzokD0AhRblzvk7-dfL6" target="_blank" rel="noopener noreferrer">github.io</a></li></ul>
-  </div>
-</body>
+      retries: 5</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7EPONfaE8bdKsHnUHhQMqq5NXDTFImTH5Jx9d0MqQkPmOgynCMHxr83JYS7iaU2AS3l1QNNslwCrj4wtDo359pWkvHcY74veyT7SYhbEtwnzDuk_B9agip5ICDnHd57I-31m71JyLciPWsbBg"
+            target="_blank"
+            rel="noopener noreferrer"
+            >risingwave.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNx9XDPaqrD2TQeqUZQT5v4A-rlGEZsgC5u278ZGoUGdzmXefaLbrWjyPUZPvs1Svrd1NxNQ1r9MCwPvbBeKjsFYgCWDz_8FUeljEr-LXd721YAyIjv-Pd9kfNldR_sdjlUoauj4Kl"
+            target="_blank"
+            rel="noopener noreferrer"
+            >risingwave.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETZcz70hbAQ4ENu5XNn-2mk4du6UpG_1veVLw3NKfGkYD84Iq9F35H_zWqnaZrfrhY7tNfNAQFG8wSjPdU-vNEjCmW0BFbgMrBKs4bt99vLNsnQC72Wytsn_r79qDnwNXfVixQqjHJM4na3RMYu4N7JnZdVhIavLQGVgF6bO6ig_mlp_FHw5g-5Ub-T0pE5LAjnSPuP1kZ_-MvR56hbODMo4NmQbN-GDd9_h0BCCxHISV9-9OP"
+            target="_blank"
+            rel="noopener noreferrer"
+            >risingwave.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGCzE3dIut1pNGjusoUOyqC4DWQ4lc0HY6xR42Lwc338xpo4zldle0z7ZAmhRPOvoR96YkB3rdCIusz9EwKkyEtaTurHU1Y5iUCeGItdt5NhdbuC1vSySPsre_ZIQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >risingwave.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGUdbrCVK-3V5Qh_97jPcAGr-sSgbUVVbVKyqSGLK3jSBJ8PhEgRq9Cz_VTZtT_CrKt7HCqTBVqQMygGbQTVSpTiGUcS47CFb7aWxbxifWzmE-8"
+            target="_blank"
+            rel="noopener noreferrer"
+            >risingwave.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJJTh2CWLDarVwerQLYk8KoKVMUYlFCasU_dvlbCUDoZobzXPS2wLCoEaiqxPxeVbod70a1Ek-mXD9yj2MZvII0ypzDmWHXIvL-VWC1u_nEa4GRdhrKjsH7V97aTQ6Rka-yKijitYh1C_wlVo="
+            target="_blank"
+            rel="noopener noreferrer"
+            >github.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfxo30ypigXTgrJi7RLm4wqmctpbTC_Zeaz3zSipvLDRNTLgtH3SpGzjChYbFMpd9ZBRIMn8L1aOGfGv4bJW0oFaZdG4SPErVJ8MWkGQhqPewjMYi7izPtWzokD0AhRblzvk7-dfL6"
+            target="_blank"
+            rel="noopener noreferrer"
+            >github.io</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

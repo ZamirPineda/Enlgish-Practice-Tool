@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Oozie</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Oozie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,78 +52,200 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Oozie</h1>
-    <h2>Explicación</h2><p>Esta guía proporciona una configuración completa para levantar una instancia básica de Apache Oozie junto con un clúster Hadoop pseudo-distribuido y una base de datos MySQL, todo gestionado con <code>docker-compose</code>. Es ideal para desarrollo y pruebas locales. La configuración incluye:</p><ul><li>  <strong>Hadoop</strong>: Un contenedor que ejecuta un clúster Hadoop pseudo-distribuido (NameNode, DataNode, ResourceManager, NodeManager, JobHistoryServer) para que Oozie pueda interactuar con HDFS y YARN.</li><li>  <strong>MySQL</strong>: Una base de datos MySQL que Oozie utiliza para almacenar la información de sus workflows, coordinadores y bundles.</li><li>  <strong>Oozie</strong>: El servidor Oozie que se conecta a Hadoop y MySQL para programar y ejecutar workflows de Big Data.</li></ul><p>Los pasos a seguir son:</p><p>1.  <strong>Guarda los archivos</strong>: Crea las siguientes carpetas y archivos en tu directorio de trabajo:</p><ul><li>   *   <code>docker-compose.yml</code></li><li>   *   <code>hadoop/Dockerfile</code></li><li>   *   <code>hadoop/core-site.xml</code></li><li>   *   <code>hadoop/hdfs-site.xml</code></li><li>   *   <code>hadoop/yarn-site.xml</code></li><li>   *   <code>hadoop/mapred-site.xml</code></li><li>   *   <code>hadoop/start-hadoop.sh</code></li><li>   *   <code>oozie/Dockerfile</code></li><li>   *   <code>oozie/oozie-site.xml</code></li><li>   *   <code>oozie/start-oozie.sh</code></li></ul><p>2.  <em></em>Ejecuta <code>docker-compose</code><em></em>: Navega hasta el directorio donde guardaste <code>docker-compose.yml</code> y ejecuta el comando de inicio.</p><p>3.  <strong>Verificación</strong>: Una vez que los contenedores estén en funcionamiento, puedes verificar su estado:</p><ul><li>   *   <strong>Hadoop NameNode UI</strong>: <code>http://localhost:9870</code></li><li>   *   <strong>Hadoop YARN ResourceManager UI</strong>: <code>http://localhost:8088</code></li><li>   *   <strong>Hadoop JobHistoryServer UI</strong>: <code>http://localhost:19888</code></li><li>   *   <strong>Oozie Web UI</strong>: <code>http://localhost:11000/oozie</code></li></ul><p>El script <code>start-hadoop.sh</code> en el contenedor Hadoop formatea el NameNode e inicia todos los demonios necesarios. El script <code>start-oozie.sh</code> espera a que MySQL y Hadoop estén disponibles, inicializa la base de datos de Oozie y luego inicia el servidor Oozie. Se han generado dinámicamente archivos de configuración de Hadoop (<code>core-site.xml</code>, <code>hdfs-site.xml</code>, <code>yarn-site.xml</code>, <code>mapred-site.xml</code>) dentro del contenedor Oozie para que actúe como cliente de Hadoop.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>hadoop/Dockerfile</h3><pre><code># Dockerfile para un clúster Hadoop pseudo-distribuido
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Oozie</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía proporciona una configuración completa para levantar una
+        instancia básica de Apache Oozie junto con un clúster Hadoop
+        pseudo-distribuido y una base de datos MySQL, todo gestionado con
+        <code>docker-compose</code>. Es ideal para desarrollo y pruebas locales.
+        La configuración incluye:
+      </p>
+      <ul>
+        <li>
+          <strong>Hadoop</strong>: Un contenedor que ejecuta un clúster Hadoop
+          pseudo-distribuido (NameNode, DataNode, ResourceManager, NodeManager,
+          JobHistoryServer) para que Oozie pueda interactuar con HDFS y YARN.
+        </li>
+        <li>
+          <strong>MySQL</strong>: Una base de datos MySQL que Oozie utiliza para
+          almacenar la información de sus workflows, coordinadores y bundles.
+        </li>
+        <li>
+          <strong>Oozie</strong>: El servidor Oozie que se conecta a Hadoop y
+          MySQL para programar y ejecutar workflows de Big Data.
+        </li>
+      </ul>
+      <p>Los pasos a seguir son:</p>
+      <p>
+        1. <strong>Guarda los archivos</strong>: Crea las siguientes carpetas y
+        archivos en tu directorio de trabajo:
+      </p>
+      <ul>
+        <li>* <code>docker-compose.yml</code></li>
+        <li>* <code>hadoop/Dockerfile</code></li>
+        <li>* <code>hadoop/core-site.xml</code></li>
+        <li>* <code>hadoop/hdfs-site.xml</code></li>
+        <li>* <code>hadoop/yarn-site.xml</code></li>
+        <li>* <code>hadoop/mapred-site.xml</code></li>
+        <li>* <code>hadoop/start-hadoop.sh</code></li>
+        <li>* <code>oozie/Dockerfile</code></li>
+        <li>* <code>oozie/oozie-site.xml</code></li>
+        <li>* <code>oozie/start-oozie.sh</code></li>
+      </ul>
+      <p>
+        2. <em></em>Ejecuta <code>docker-compose</code><em></em>: Navega hasta
+        el directorio donde guardaste <code>docker-compose.yml</code> y ejecuta
+        el comando de inicio.
+      </p>
+      <p>
+        3. <strong>Verificación</strong>: Una vez que los contenedores estén en
+        funcionamiento, puedes verificar su estado:
+      </p>
+      <ul>
+        <li>
+          * <strong>Hadoop NameNode UI</strong>:
+          <code>http://localhost:9870</code>
+        </li>
+        <li>
+          * <strong>Hadoop YARN ResourceManager UI</strong>:
+          <code>http://localhost:8088</code>
+        </li>
+        <li>
+          * <strong>Hadoop JobHistoryServer UI</strong>:
+          <code>http://localhost:19888</code>
+        </li>
+        <li>
+          * <strong>Oozie Web UI</strong>:
+          <code>http://localhost:11000/oozie</code>
+        </li>
+      </ul>
+      <p>
+        El script <code>start-hadoop.sh</code> en el contenedor Hadoop formatea
+        el NameNode e inicia todos los demonios necesarios. El script
+        <code>start-oozie.sh</code> espera a que MySQL y Hadoop estén
+        disponibles, inicializa la base de datos de Oozie y luego inicia el
+        servidor Oozie. Se han generado dinámicamente archivos de configuración
+        de Hadoop (<code>core-site.xml</code>, <code>hdfs-site.xml</code>,
+        <code>yarn-site.xml</code>, <code>mapred-site.xml</code>) dentro del
+        contenedor Oozie para que actúe como cliente de Hadoop.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>hadoop/Dockerfile</h3>
+      <pre><code># Dockerfile para un clúster Hadoop pseudo-distribuido
 # Utiliza OpenJDK 11 como base
 FROM openjdk:11-jdk-slim
 
@@ -169,7 +293,9 @@ RUN mkdir -p /opt/hadoop/data/namenode \
 EXPOSE 9870 8088 19888 9000 8032 8030 8031 8033
 
 # Establece el punto de entrada
-CMD ["/usr/local/bin/start-hadoop.sh"]</code></pre><h3>oozie/Dockerfile</h3><pre><code># Dockerfile para el servidor Oozie
+CMD ["/usr/local/bin/start-hadoop.sh"]</code></pre>
+      <h3>oozie/Dockerfile</h3>
+      <pre><code># Dockerfile para el servidor Oozie
 # Utiliza OpenJDK 11 como base
 FROM openjdk:11-jdk-slim
 
@@ -228,7 +354,9 @@ USER oozie
 EXPOSE 11000
 
 # Establece el punto de entrada
-CMD ["/usr/local/bin/start-oozie.sh"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+CMD ["/usr/local/bin/start-oozie.sh"]</code></pre>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 services:
   hadoop:
     build:
@@ -307,7 +435,9 @@ volumes:
 
 networks:
   hadoop_network:
-    driver: bridge</code></pre><h3>hadoop/core-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+    driver: bridge</code></pre>
+      <h3>hadoop/core-site.xml</h3>
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
 &lt;configuration&gt;
     &lt;property&gt;
@@ -320,7 +450,9 @@ networks:
         &lt;value&gt;/tmp/hadoop-root&lt;/value&gt;
         &lt;description&gt;A base for other temporary directories.&lt;/description&gt;
     &lt;/property&gt;
-&lt;/configuration&gt;</code></pre><h3>hadoop/hdfs-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;/configuration&gt;</code></pre>
+      <h3>hadoop/hdfs-site.xml</h3>
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
 &lt;configuration&gt;
     &lt;property&gt;
@@ -342,7 +474,9 @@ networks:
         &lt;name&gt;dfs.web.authentication.simple.anonymous.allowed&lt;/name&gt;
         &lt;value&gt;true&lt;/value&gt;
     &lt;/property&gt;
-&lt;/configuration&gt;</code></pre><h3>hadoop/yarn-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;/configuration&gt;</code></pre>
+      <h3>hadoop/yarn-site.xml</h3>
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
 &lt;configuration&gt;
     &lt;property&gt;
@@ -370,7 +504,9 @@ networks:
         &lt;name&gt;yarn.timeline-service.hostname&lt;/name&gt;
         &lt;value&gt;hadoop&lt;/value&gt;
     &lt;/property&gt;
-&lt;/configuration&gt;</code></pre><h3>hadoop/mapred-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;/configuration&gt;</code></pre>
+      <h3>hadoop/mapred-site.xml</h3>
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
 &lt;configuration&gt;
     &lt;property&gt;
@@ -388,7 +524,9 @@ networks:
         &lt;value&gt;hadoop:19888&lt;/value&gt;
         &lt;description&gt;MapReduce JobHistory Server Web UI address.&lt;/description&gt;
     &lt;/property&gt;
-&lt;/configuration&gt;</code></pre><h3>hadoop/start-hadoop.sh</h3><pre><code>#!/bin/bash
+&lt;/configuration&gt;</code></pre>
+      <h3>hadoop/start-hadoop.sh</h3>
+      <pre><code>#!/bin/bash
 # Script para iniciar los servicios de Hadoop en modo pseudo-distribuido
 
 # Configura JAVA_HOME si no está presente
@@ -422,7 +560,9 @@ hdfs dfs -chmod 777 /user/oozie # Permisos amplios para un entorno de desarrollo
 echo "Hadoop servicios iniciados y /user/oozie creado."
 
 # Mantén el contenedor en ejecución
-tail -f $HADOOP_HOME/logs/*</code></pre><h3>oozie/oozie-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+tail -f $HADOOP_HOME/logs/*</code></pre>
+      <h3>oozie/oozie-site.xml</h3>
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
 &lt;configuration&gt;
     &lt;!-- Oozie Services Configuration --&gt;
@@ -485,7 +625,9 @@ tail -f $HADOOP_HOME/logs/*</code></pre><h3>oozie/oozie-site.xml</h3><pre><code>
         &lt;value&gt;*&lt;/value&gt;
         &lt;description&gt;Permite al usuario 'oozie' actuar como proxy para cualquier grupo.&lt;/description&gt;
     &lt;/property&gt;
-&lt;/configuration&gt;</code></pre><h3>oozie/start-oozie.sh</h3><pre><code>#!/bin/bash
+&lt;/configuration&gt;</code></pre>
+      <h3>oozie/start-oozie.sh</h3>
+      <pre><code>#!/bin/bash
 # Script para iniciar el servidor Oozie
 
 # Esperar a que MySQL esté disponible
@@ -582,8 +724,74 @@ $OOZIE_HOME/bin/ooziedb.sh create -sqlfile oozie.sql -run -force
 
 # Iniciar el servidor Oozie
 echo "Iniciando el servidor Oozie..."
-exec $OOZIE_HOME/bin/oozie.sh run</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEJKxXRmQJrsPtioE7fvM0JYM0dFC_MDH4KwSo5jaulwE9IAi7ZzoGRbwvw-mFrLOJBr_Wp0G2jXJrx_CNAcQ7_oh-LAdA6DyPyqHITnslCdqSiMUU_c1EfZn9V9bQG1IJAzgc2AuKndodRke_D1HInM0Mh1Kg3NKsNMrKyywOzZiFbKA==" target="_blank" rel="noopener noreferrer">tutorialspoint.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUKON0K-G2lM-G7X545bsS0vP9FlM0cSw_wUSRsWXBSSvIKLgOLvwZL6djO30mAlDl0CZRr0HOZ-uU7OUbxG9dqWD2yQwpwz9peSiMRzvQEbl2wIapK5nwByl0gkJuwYV4YYjeZxgxvwQC8Zc2mNvo" target="_blank" rel="noopener noreferrer">tutorialspoint.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG1HBuovMemQhORyxhVH77-TXwyn8NyYxCgKZ7hQcCHptQnJdrNelMP_Ux47c0HokQ6SHBYVZzb-1MsO61AWQZTXhTwKfG2EdPSr6vlZgiWdGKuyhJgHtAzOleRqaRNJTFOtx5F3tckLg8Jvk9j" target="_blank" rel="noopener noreferrer">edureka.co</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPOLnpLUBREeTffQpJUG_3veUf4a2j1KDdaRVAhVpPU34MX9SEVwsHoHPNibqhB-gj-TjFFXN4o4tbpl42xntnzl19AaY6frJ5rcFkmxsLpqLalcBsk9j1IfBEE5dcNOux8gMlDjx0cNqwWAwEmX8rWw==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFAX0oVGjsl1ZVVgtBDOSVr2LEr_d_F_VB9v9BXrFmhLmIeHYmkwq8HdpYu-rRGfmRuA-D5avVFeqwNHRGTj001pB-O0DzMAw52fCMbmckUXv2P8-IUsSkPSYqtUnnSZK0Lhu_eL7uDcD4Chg6hA4fK5Q==" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFaNQLF_w8g19zs3ABWd04a7Lm3o4zESSWL8mSiXtzP6vfDYh1fK0OSbyFxGCHJ7RjQny33mNPbLtFLhAC5AOElvah3HOkfaTXI9ppTBgvIMT8sX5wYsRq6ufN76FIM61opvsQ2hkQ8yIo5dIC-" target="_blank" rel="noopener noreferrer">upgrad.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbpN2JUegPA3Vlu-2q-lvosQCHCu3Qk2oTtyLnzqvog9WkL9fW6pLh-UXkacyu7LUex9Ko50RZCk4lQ813rslmb5SPng7_3IdYGB7QKUa4aw_y377e_tfe8XONH6yxZ-XqSEfkCiUNilhlhujBKYZHqYiJoOLeMkYKADMIP2d_xRgW7w0=" target="_blank" rel="noopener noreferrer">oreilly.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFebntRZFV4UaJ4LTfIT58hQZy911RgPCIqcy4z0e_ad65epLXFDMOy9vIuxI9TCvBvWTlKV52qL-BLekMg70sowuoYO3AeRiPeWbp3IyR26Dy9NBoVU_w8MP50SXM_dS8M0H9syH9WXsULtYUEeur2_50HkWc_jH_WP_fSAIpfajhmoWfJfOFI6v6zeLBKOKfjhUo4zcd0" target="_blank" rel="noopener noreferrer">packtpub.com</a></li></ul>
-  </div>
-</body>
+exec $OOZIE_HOME/bin/oozie.sh run</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEJKxXRmQJrsPtioE7fvM0JYM0dFC_MDH4KwSo5jaulwE9IAi7ZzoGRbwvw-mFrLOJBr_Wp0G2jXJrx_CNAcQ7_oh-LAdA6DyPyqHITnslCdqSiMUU_c1EfZn9V9bQG1IJAzgc2AuKndodRke_D1HInM0Mh1Kg3NKsNMrKyywOzZiFbKA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >tutorialspoint.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUKON0K-G2lM-G7X545bsS0vP9FlM0cSw_wUSRsWXBSSvIKLgOLvwZL6djO30mAlDl0CZRr0HOZ-uU7OUbxG9dqWD2yQwpwz9peSiMRzvQEbl2wIapK5nwByl0gkJuwYV4YYjeZxgxvwQC8Zc2mNvo"
+            target="_blank"
+            rel="noopener noreferrer"
+            >tutorialspoint.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG1HBuovMemQhORyxhVH77-TXwyn8NyYxCgKZ7hQcCHptQnJdrNelMP_Ux47c0HokQ6SHBYVZzb-1MsO61AWQZTXhTwKfG2EdPSr6vlZgiWdGKuyhJgHtAzOleRqaRNJTFOtx5F3tckLg8Jvk9j"
+            target="_blank"
+            rel="noopener noreferrer"
+            >edureka.co</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPOLnpLUBREeTffQpJUG_3veUf4a2j1KDdaRVAhVpPU34MX9SEVwsHoHPNibqhB-gj-TjFFXN4o4tbpl42xntnzl19AaY6frJ5rcFkmxsLpqLalcBsk9j1IfBEE5dcNOux8gMlDjx0cNqwWAwEmX8rWw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFAX0oVGjsl1ZVVgtBDOSVr2LEr_d_F_VB9v9BXrFmhLmIeHYmkwq8HdpYu-rRGfmRuA-D5avVFeqwNHRGTj001pB-O0DzMAw52fCMbmckUXv2P8-IUsSkPSYqtUnnSZK0Lhu_eL7uDcD4Chg6hA4fK5Q=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFaNQLF_w8g19zs3ABWd04a7Lm3o4zESSWL8mSiXtzP6vfDYh1fK0OSbyFxGCHJ7RjQny33mNPbLtFLhAC5AOElvah3HOkfaTXI9ppTBgvIMT8sX5wYsRq6ufN76FIM61opvsQ2hkQ8yIo5dIC-"
+            target="_blank"
+            rel="noopener noreferrer"
+            >upgrad.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbpN2JUegPA3Vlu-2q-lvosQCHCu3Qk2oTtyLnzqvog9WkL9fW6pLh-UXkacyu7LUex9Ko50RZCk4lQ813rslmb5SPng7_3IdYGB7QKUa4aw_y377e_tfe8XONH6yxZ-XqSEfkCiUNilhlhujBKYZHqYiJoOLeMkYKADMIP2d_xRgW7w0="
+            target="_blank"
+            rel="noopener noreferrer"
+            >oreilly.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFebntRZFV4UaJ4LTfIT58hQZy911RgPCIqcy4z0e_ad65epLXFDMOy9vIuxI9TCvBvWTlKV52qL-BLekMg70sowuoYO3AeRiPeWbp3IyR26Dy9NBoVU_w8MP50SXM_dS8M0H9syH9WXsULtYUEeur2_50HkWc_jH_WP_fSAIpfajhmoWfJfOFI6v6zeLBKOKfjhUo4zcd0"
+            target="_blank"
+            rel="noopener noreferrer"
+            >packtpub.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

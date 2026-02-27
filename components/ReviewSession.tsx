@@ -22,10 +22,13 @@ const ReviewSession: React.FC<ReviewSessionProps> = ({
   const [isRevealed, setIsRevealed] = useState(false);
 
   // Memoize handleResult to use in effect
-  const handleResult = useCallback((correct: boolean) => {
-    onComplete(correct);
-    setIsRevealed(false);
-  }, [onComplete]);
+  const handleResult = useCallback(
+    (correct: boolean) => {
+      onComplete(correct);
+      setIsRevealed(false);
+    },
+    [onComplete],
+  );
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

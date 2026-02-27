@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Hadoop</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Hadoop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,78 +52,229 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Hadoop</h1>
-    <h2>Explicación</h2><p>Esta guía le permitirá configurar un clúster básico de Hadoop (NameNode, DataNode, ResourceManager, NodeManager y JobHistoryServer) utilizando <code>docker-compose</code> con Podman o Docker. La configuración incluye un NameNode y un DataNode para demostrar las funcionalidades principales.</p><h3>Componentes:</h3><ul><li>  <strong>Dockerfile</strong>: Prepara una imagen base con Java y Hadoop instalados. Incluye las dependencias necesarias y configura las rutas de entorno de Hadoop.</li><li>  <strong>hadoop-config/</strong>: Un directorio que contiene los archivos de configuración esenciales de Hadoop (<code>core-site.xml</code>, <code>hdfs-site.xml</code>, <code>mapred-site.xml</code>, <code>yarn-site.xml</code> y <code>hadoop-env.sh</code>). Estos archivos definen la comunicación entre los componentes del clúster y las ubicaciones de los datos.</li><li>  <strong>docker-compose.yml</strong>: Define dos servicios principales:</li><li>   *   <code>namenode</code>: El nodo maestro de HDFS, que gestiona el sistema de archivos distribuido. También ejecuta el ResourceManager de YARN (para la gestión de recursos y programación de tareas) y el JobHistoryServer de MapReduce.</li><li>   *   <code>datanode</code>: El nodo de datos de HDFS, que almacena los bloques de datos. También ejecuta el NodeManager de YARN (para ejecutar las tareas de la aplicación en el nodo).</li></ul><h3>Pasos a seguir:</h3><p>1.  <em></em>Crear el directorio <code>hadoop-config</code><em></em>: Asegúrese de crear un directorio llamado <code>hadoop-config</code> en el mismo nivel que su <code>Dockerfile</code> y <code>docker-compose.yml</code>.</p><p>2.  <strong>Copiar los archivos</strong>: Coloque los archivos <code>Dockerfile</code>, <code>docker-compose.yml</code> y todos los archivos <code>.xml</code> y <code>.sh</code> proporcionados dentro del directorio <code>hadoop-config</code> en sus respectivas ubicaciones.</p><p>3.  <strong>Construir y ejecutar</strong>: Utilice los comandos <code>docker-compose build</code> y <code>docker-compose up -d</code> para construir las imágenes y levantar los contenedores.</p><p>4.  <strong>Verificar</strong>: Una vez que los contenedores estén en funcionamiento, puede acceder a las interfaces de usuario web para verificar el estado del clúster:</p><ul><li>   *   <strong>NameNode UI</strong>: <code>http://localhost:9870</code></li><li>   *   <strong>ResourceManager UI</strong>: <code>http://localhost:8088</code></li><li>   *   <strong>MapReduce JobHistory Server UI</strong>: <code>http://localhost:19888</code></li></ul><p>5.  <strong>Ejecutar un ejemplo (opcional)</strong>:</p><ul><li>   *   Para crear un directorio HDFS y copiar un archivo: <code>docker-compose exec namenode hdfs dfs -mkdir /user && docker-compose exec namenode hdfs dfs -mkdir /user/root && docker-compose exec namenode hdfs dfs -put $HADOOP_HOME/etc/hadoop/core-site.xml /user/root/</code></li><li>   *   Para listar el archivo: <code>docker-compose exec namenode hdfs dfs -ls /user/root/</code></li><li>   *   Para ejecutar un <code>wordcount</code> de ejemplo: <code>docker-compose exec namenode hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.6.jar wordcount /user/root/core-site.xml /user/root/output</code></li><li>   *   Para ver el resultado: <code>docker-compose exec namenode hdfs dfs -cat /user/root/output/part-r-00000</code></li></ul><h2>Comandos de Ejecución</h2><pre><code>docker-compose build && docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM ubuntu:22.04
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Hadoop</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía le permitirá configurar un clúster básico de Hadoop (NameNode,
+        DataNode, ResourceManager, NodeManager y JobHistoryServer) utilizando
+        <code>docker-compose</code> con Podman o Docker. La configuración
+        incluye un NameNode y un DataNode para demostrar las funcionalidades
+        principales.
+      </p>
+      <h3>Componentes:</h3>
+      <ul>
+        <li>
+          <strong>Dockerfile</strong>: Prepara una imagen base con Java y Hadoop
+          instalados. Incluye las dependencias necesarias y configura las rutas
+          de entorno de Hadoop.
+        </li>
+        <li>
+          <strong>hadoop-config/</strong>: Un directorio que contiene los
+          archivos de configuración esenciales de Hadoop
+          (<code>core-site.xml</code>, <code>hdfs-site.xml</code>,
+          <code>mapred-site.xml</code>, <code>yarn-site.xml</code> y
+          <code>hadoop-env.sh</code>). Estos archivos definen la comunicación
+          entre los componentes del clúster y las ubicaciones de los datos.
+        </li>
+        <li>
+          <strong>docker-compose.yml</strong>: Define dos servicios principales:
+        </li>
+        <li>
+          * <code>namenode</code>: El nodo maestro de HDFS, que gestiona el
+          sistema de archivos distribuido. También ejecuta el ResourceManager de
+          YARN (para la gestión de recursos y programación de tareas) y el
+          JobHistoryServer de MapReduce.
+        </li>
+        <li>
+          * <code>datanode</code>: El nodo de datos de HDFS, que almacena los
+          bloques de datos. También ejecuta el NodeManager de YARN (para
+          ejecutar las tareas de la aplicación en el nodo).
+        </li>
+      </ul>
+      <h3>Pasos a seguir:</h3>
+      <p>
+        1. <em></em>Crear el directorio <code>hadoop-config</code><em></em>:
+        Asegúrese de crear un directorio llamado <code>hadoop-config</code> en
+        el mismo nivel que su <code>Dockerfile</code> y
+        <code>docker-compose.yml</code>.
+      </p>
+      <p>
+        2. <strong>Copiar los archivos</strong>: Coloque los archivos
+        <code>Dockerfile</code>, <code>docker-compose.yml</code> y todos los
+        archivos <code>.xml</code> y <code>.sh</code> proporcionados dentro del
+        directorio <code>hadoop-config</code> en sus respectivas ubicaciones.
+      </p>
+      <p>
+        3. <strong>Construir y ejecutar</strong>: Utilice los comandos
+        <code>docker-compose build</code> y
+        <code>docker-compose up -d</code> para construir las imágenes y levantar
+        los contenedores.
+      </p>
+      <p>
+        4. <strong>Verificar</strong>: Una vez que los contenedores estén en
+        funcionamiento, puede acceder a las interfaces de usuario web para
+        verificar el estado del clúster:
+      </p>
+      <ul>
+        <li>
+          * <strong>NameNode UI</strong>: <code>http://localhost:9870</code>
+        </li>
+        <li>
+          * <strong>ResourceManager UI</strong>:
+          <code>http://localhost:8088</code>
+        </li>
+        <li>
+          * <strong>MapReduce JobHistory Server UI</strong>:
+          <code>http://localhost:19888</code>
+        </li>
+      </ul>
+      <p>5. <strong>Ejecutar un ejemplo (opcional)</strong>:</p>
+      <ul>
+        <li>
+          * Para crear un directorio HDFS y copiar un archivo:
+          <code
+            >docker-compose exec namenode hdfs dfs -mkdir /user &&
+            docker-compose exec namenode hdfs dfs -mkdir /user/root &&
+            docker-compose exec namenode hdfs dfs -put
+            $HADOOP_HOME/etc/hadoop/core-site.xml /user/root/</code
+          >
+        </li>
+        <li>
+          * Para listar el archivo:
+          <code>docker-compose exec namenode hdfs dfs -ls /user/root/</code>
+        </li>
+        <li>
+          * Para ejecutar un <code>wordcount</code> de ejemplo:
+          <code
+            >docker-compose exec namenode hadoop jar
+            $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.6.jar
+            wordcount /user/root/core-site.xml /user/root/output</code
+          >
+        </li>
+        <li>
+          * Para ver el resultado:
+          <code
+            >docker-compose exec namenode hdfs dfs -cat
+            /user/root/output/part-r-00000</code
+          >
+        </li>
+      </ul>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose build && docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile</h3>
+      <pre><code>FROM ubuntu:22.04
 
 # Install necessary packages (Java, SSH, Rsync, Curl, Wget, Net-tools, IP-Utils)
 RUN apt-get update && \
@@ -177,7 +330,9 @@ WORKDIR $HADOOP_HOME
 
 # Default command to keep the container running if no other command is specified by docker-compose
 CMD ["/bin/bash"]
-</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+</code></pre>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 
 services:
   namenode:
@@ -246,7 +401,9 @@ networks:
 volumes:
   namenode_data:
   datanode_data:
-</code></pre><h3>hadoop-config/core-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+</code></pre>
+      <h3>hadoop-config/core-site.xml</h3>
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
 &lt;configuration&gt;
     &lt;property&gt;
@@ -260,7 +417,9 @@ volumes:
         &lt;description&gt;A base for other temporary directories.&lt;/description&gt;
     &lt;/property&gt;
 &lt;/configuration&gt;
-</code></pre><h3>hadoop-config/hdfs-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+</code></pre>
+      <h3>hadoop-config/hdfs-site.xml</h3>
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
 &lt;configuration&gt;
     &lt;property&gt;
@@ -304,7 +463,9 @@ volumes:
         &lt;description&gt;The address where the DataNode daemon serves HTTP requests.&lt;/description&gt;
     &lt;/property&gt;
 &lt;/configuration&gt;
-</code></pre><h3>hadoop-config/mapred-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+</code></pre>
+      <h3>hadoop-config/mapred-site.xml</h3>
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
 &lt;configuration&gt;
     &lt;property&gt;
@@ -328,7 +489,9 @@ volumes:
         &lt;description&gt;The host:port for the MapReduce JobHistory Server web UI.&lt;/description&gt;
     &lt;/property&gt;
 &lt;/configuration&gt;
-</code></pre><h3>hadoop-config/yarn-site.xml</h3><pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+</code></pre>
+      <h3>hadoop-config/yarn-site.xml</h3>
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;
 &lt;configuration&gt;
     &lt;property&gt;
@@ -387,7 +550,9 @@ volumes:
         &lt;description&gt;Disable physical memory checks for NodeManager, useful in Docker for flexibility.&lt;/description&gt;
     &lt;/property&gt;
 &lt;/configuration&gt;
-</code></pre><h3>hadoop-config/hadoop-env.sh</h3><pre><code># Licensed to the Apache Software Foundation (ASF) under one
+</code></pre>
+      <h3>hadoop-config/hadoop-env.sh</h3>
+      <pre><code># Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
 # regarding copyright ownership.  The ASF licenses this file
@@ -437,8 +602,58 @@ export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 
 # For debugging, uncomment the following line for more verbose logging:
 # export HADOOP_ROOT_LOGGER=INFO,console
-</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpIaWuVV4eh1zuXsMwT7dAfljaDZCh_XVZmyPk9sTZBa8L9OuGahkJROHpLpE8jA-8eVRSfbD3wIRzeWx3vwTsLJ7zxg0M4t4D0k612X6C_172qTqvSxZTkxzZGt0VeLru" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEP6Ft4hUy-XAnkEjK8JhYuK5v2VaDXiss9iYtw8ah7PEFRWUpI_44EOXanmfqb46pn9hxNfcpfWUNAecn8TMUd1BJqnReQK_V8zWWmlRQaoH11yIz4RCYz_kqrMNvfOdve5z-3_CLQDpYm" target="_blank" rel="noopener noreferrer">tutorialspoint.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFXHShwx0tqF4jREIKzYcbvzJ1N3fjMtdXeUczFmjrpi0cHeoI9OMx2EMWyZeuKoI6XIjre90pX3zskyKhGmJgeF-2DVN80RkeAVmwYtRjOYcvjvu_wxOwTk5o2asYp8T1AKC0LySVfCYAqIegtT8Ou" target="_blank" rel="noopener noreferrer">simplilearn.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFC5AGl5T_ynrYtCo9JlXPUEXNWvlJS6tnK4PMvrzINXWMJxJk8kUvl-tiakFFmU4l4aFOCzm6U085sQCzhF6XBS4H4XVBa-A4YDe2ETvzZxYwagA9m_TilYD6ACnKcRzpCquPRWvcm" target="_blank" rel="noopener noreferrer">igmguru.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUGoaWPtkXalWGrsFOrIJOVLFn_YwCT0rvjtCXhm9jpIG5JxS7FKp1c5lVvhAhj7TM7y7YKMtJk_LKAnOYGWCQoIgum9F13oD_1Gin5QlTRsaO49KcZy9ZFHvfdRlTCyQVkMIw-0dCzVAdKzdZMNV6xo7S7lEft8aBEg==" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE2Lj3vhEdX6DPjZ9XcvIRgbPubDrFrC8JKKcIznczJ7uT4opKglNzxFLuDkqqTpDrJDJAHtMhgufVGzV_8gA8_EICSuFl_jbbm-2k5mGL9Xsl9xqxepkb9RfuqQ_iIGYWcAH5IIjXm2pY_2pmVm1A44w7mKcv3jzKogYlm3wqTE1g=" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li></ul>
-  </div>
-</body>
+</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpIaWuVV4eh1zuXsMwT7dAfljaDZCh_XVZmyPk9sTZBa8L9OuGahkJROHpLpE8jA-8eVRSfbD3wIRzeWx3vwTsLJ7zxg0M4t4D0k612X6C_172qTqvSxZTkxzZGt0VeLru"
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEP6Ft4hUy-XAnkEjK8JhYuK5v2VaDXiss9iYtw8ah7PEFRWUpI_44EOXanmfqb46pn9hxNfcpfWUNAecn8TMUd1BJqnReQK_V8zWWmlRQaoH11yIz4RCYz_kqrMNvfOdve5z-3_CLQDpYm"
+            target="_blank"
+            rel="noopener noreferrer"
+            >tutorialspoint.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFXHShwx0tqF4jREIKzYcbvzJ1N3fjMtdXeUczFmjrpi0cHeoI9OMx2EMWyZeuKoI6XIjre90pX3zskyKhGmJgeF-2DVN80RkeAVmwYtRjOYcvjvu_wxOwTk5o2asYp8T1AKC0LySVfCYAqIegtT8Ou"
+            target="_blank"
+            rel="noopener noreferrer"
+            >simplilearn.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFC5AGl5T_ynrYtCo9JlXPUEXNWvlJS6tnK4PMvrzINXWMJxJk8kUvl-tiakFFmU4l4aFOCzm6U085sQCzhF6XBS4H4XVBa-A4YDe2ETvzZxYwagA9m_TilYD6ACnKcRzpCquPRWvcm"
+            target="_blank"
+            rel="noopener noreferrer"
+            >igmguru.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUGoaWPtkXalWGrsFOrIJOVLFn_YwCT0rvjtCXhm9jpIG5JxS7FKp1c5lVvhAhj7TM7y7YKMtJk_LKAnOYGWCQoIgum9F13oD_1Gin5QlTRsaO49KcZy9ZFHvfdRlTCyQVkMIw-0dCzVAdKzdZMNV6xo7S7lEft8aBEg=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >geeksforgeeks.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE2Lj3vhEdX6DPjZ9XcvIRgbPubDrFrC8JKKcIznczJ7uT4opKglNzxFLuDkqqTpDrJDJAHtMhgufVGzV_8gA8_EICSuFl_jbbm-2k5mGL9Xsl9xqxepkb9RfuqQ_iIGYWcAH5IIjXm2pY_2pmVm1A44w7mKcv3jzKogYlm3wqTE1g="
+            target="_blank"
+            rel="noopener noreferrer"
+            >geeksforgeeks.org</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

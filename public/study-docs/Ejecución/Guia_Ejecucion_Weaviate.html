@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Weaviate</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Weaviate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,78 +52,165 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Weaviate</h1>
-    <h2>Explicación</h2><p>Esta guía le permitirá configurar y ejecutar una instancia básica de Weaviate, un motor de búsqueda vectorial de código abierto, junto con un módulo de incrustación de Hugging Face (<code>text2vec-huggingface</code>) para generar vectores de texto localmente. Utilizaremos <code>docker-compose</code> para simplificar la configuración de ambos servicios y su comunicación.</p><h3>Pasos para levantar la instancia:</h3><p>1.  <strong>Guarda los archivos:</strong> Crea una carpeta en tu sistema (<code>ej. weaviate-local</code>) y guarda el contenido del archivo <code>docker-compose.yml</code> proporcionado dentro de ella.</p><p>2.  <strong>Ejecuta los contenedores:</strong> Abre una terminal en la carpeta donde guardaste <code>docker-compose.yml</code> y ejecuta el comando proporcionado en <code>runCommands</code>.</p><p>3.  <strong>Verifica el estado:</strong> Una vez que los contenedores estén en ejecución, puedes verificar su estado con <code>docker-compose ps</code>.</p><p>4.  <strong>Accede a Weaviate:</strong> Weaviate estará accesible en <code>http://localhost:8080</code>. Puedes usar herramientas como <code>curl</code> o un cliente Weaviate (Python, JavaScript, etc.) para interactuar con él. Por ejemplo, puedes verificar su estado de salud en <code>http://localhost:8080/v1/meta</code>.</p><p>Esta configuración utilizará el módulo <code>text2vec-huggingface</code> para generar incrustaciones (embeddings) de los datos que almacenes en Weaviate, lo que es fundamental para las capacidades de búsqueda semántica. El módulo de Hugging Face está configurado para ejecutarse en la CPU por defecto (<code>ENABLE_CUDA: '0'</code>) para una mayor compatibilidad local, pero si tienes una GPU compatible con CUDA, puedes cambiar este valor a <code>'1'</code> para un mejor rendimiento.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Weaviate</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía le permitirá configurar y ejecutar una instancia básica de
+        Weaviate, un motor de búsqueda vectorial de código abierto, junto con un
+        módulo de incrustación de Hugging Face
+        (<code>text2vec-huggingface</code>) para generar vectores de texto
+        localmente. Utilizaremos <code>docker-compose</code> para simplificar la
+        configuración de ambos servicios y su comunicación.
+      </p>
+      <h3>Pasos para levantar la instancia:</h3>
+      <p>
+        1. <strong>Guarda los archivos:</strong> Crea una carpeta en tu sistema
+        (<code>ej. weaviate-local</code>) y guarda el contenido del archivo
+        <code>docker-compose.yml</code> proporcionado dentro de ella.
+      </p>
+      <p>
+        2. <strong>Ejecuta los contenedores:</strong> Abre una terminal en la
+        carpeta donde guardaste <code>docker-compose.yml</code> y ejecuta el
+        comando proporcionado en <code>runCommands</code>.
+      </p>
+      <p>
+        3. <strong>Verifica el estado:</strong> Una vez que los contenedores
+        estén en ejecución, puedes verificar su estado con
+        <code>docker-compose ps</code>.
+      </p>
+      <p>
+        4. <strong>Accede a Weaviate:</strong> Weaviate estará accesible en
+        <code>http://localhost:8080</code>. Puedes usar herramientas como
+        <code>curl</code> o un cliente Weaviate (Python, JavaScript, etc.) para
+        interactuar con él. Por ejemplo, puedes verificar su estado de salud en
+        <code>http://localhost:8080/v1/meta</code>.
+      </p>
+      <p>
+        Esta configuración utilizará el módulo
+        <code>text2vec-huggingface</code> para generar incrustaciones
+        (embeddings) de los datos que almacenes en Weaviate, lo que es
+        fundamental para las capacidades de búsqueda semántica. El módulo de
+        Hugging Face está configurado para ejecutarse en la CPU por defecto
+        (<code>ENABLE_CUDA: '0'</code>) para una mayor compatibilidad local,
+        pero si tienes una GPU compatible con CUDA, puedes cambiar este valor a
+        <code>'1'</code> para un mejor rendimiento.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 services:
   weaviate:
     image: semitechnologies/weaviate:1.24.1 # Usa una versión estable específica
@@ -153,8 +242,50 @@ services:
 
 volumes:
   weaviate_data:
-</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGYKAV7AOw6iy3hngQFaZLJt0-AOP2qC4qXbVbzZucOodD6MmBr6RKEzaXmjyIUdE2eEGDGtO4o_BrEXfvZuUesxYYPOKsGsfiQh1DLbQmMHBlhXVgc9BiXBBtXEA==" target="_blank" rel="noopener noreferrer">weaviate.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHujj3AUA-0hmIzcQUZNgedCZFB2kzi01DoqxngZClQk0I70AwvRs3BeXGfC0L2X1bqywNXRxws3NdSQAHm1wy-l7DprqLdWgheKLmszyG1PE5S5VXuwSrrf-U8GohIlHQ0_c-l8kSnjRP9fxeq" target="_blank" rel="noopener noreferrer">weaviate.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG7e9mKR_b-zotPiCTPWNDk65vT0vnKhFIESMezhDs0nUeUD5bWoGZgNLByTmp_8pQwMxm8BG40xEkZuLAI_2Lp451nHo1p41c9TTzodKBIJo38Hm1a_ZXCGu1TiU8KoIPbJ3534nvO" target="_blank" rel="noopener noreferrer">weaviate.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEiiEyuhCSxA13PL6ivVoE4yUM6wv78GSomgVzUeMAXL_yfnY9wt6z6GotTzWaMqJZPt62pJEFcCz9kP_nZgQrK1XEfQo6Hcl6KzFEO55AreYqy-rN2FmOgfroDbVLt8WLkCAHC1lgdgHNqLCNJXw==" target="_blank" rel="noopener noreferrer">datacamp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDdPv0fQzBD8BzYJV2HCfAhFl3WzQBexBHTb0iiP5jYUGSbqw-f7eWs7yOjCbuYqnbxrCUQxWNT5vst_QyyhA9HEpEDUoa_JwH-PLCLF9UUuncV9OxKx8MSVWcyrqhE_ceLROohvAXOazk2smoN_jUBbmMZ7hM_iFRshw7AF2Tfb78wqVyBeBJMEd9KH0k2jtmQ3DpSF1NfG52oLfwhZgSlbxiMxvngGw3Wwj7wPM5SpQFMzArSoI=" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
-  </div>
-</body>
+</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGYKAV7AOw6iy3hngQFaZLJt0-AOP2qC4qXbVbzZucOodD6MmBr6RKEzaXmjyIUdE2eEGDGtO4o_BrEXfvZuUesxYYPOKsGsfiQh1DLbQmMHBlhXVgc9BiXBBtXEA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >weaviate.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHujj3AUA-0hmIzcQUZNgedCZFB2kzi01DoqxngZClQk0I70AwvRs3BeXGfC0L2X1bqywNXRxws3NdSQAHm1wy-l7DprqLdWgheKLmszyG1PE5S5VXuwSrrf-U8GohIlHQ0_c-l8kSnjRP9fxeq"
+            target="_blank"
+            rel="noopener noreferrer"
+            >weaviate.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG7e9mKR_b-zotPiCTPWNDk65vT0vnKhFIESMezhDs0nUeUD5bWoGZgNLByTmp_8pQwMxm8BG40xEkZuLAI_2Lp451nHo1p41c9TTzodKBIJo38Hm1a_ZXCGu1TiU8KoIPbJ3534nvO"
+            target="_blank"
+            rel="noopener noreferrer"
+            >weaviate.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEiiEyuhCSxA13PL6ivVoE4yUM6wv78GSomgVzUeMAXL_yfnY9wt6z6GotTzWaMqJZPt62pJEFcCz9kP_nZgQrK1XEfQo6Hcl6KzFEO55AreYqy-rN2FmOgfroDbVLt8WLkCAHC1lgdgHNqLCNJXw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >datacamp.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDdPv0fQzBD8BzYJV2HCfAhFl3WzQBexBHTb0iiP5jYUGSbqw-f7eWs7yOjCbuYqnbxrCUQxWNT5vst_QyyhA9HEpEDUoa_JwH-PLCLF9UUuncV9OxKx8MSVWcyrqhE_ceLROohvAXOazk2smoN_jUBbmMZ7hM_iFRshw7AF2Tfb78wqVyBeBJMEd9KH0k2jtmQ3DpSF1NfG52oLfwhZgSlbxiMxvngGw3Wwj7wPM5SpQFMzArSoI="
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

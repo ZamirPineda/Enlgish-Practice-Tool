@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Change Data Capture (CDC)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change Data Capture (CDC)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,104 +52,918 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Change Data Capture (CDC)</h1>
+      <p>
+        El patrón de arquitectura de software
+        <strong>Change Data Capture (CDC)</strong> es un enfoque para
+        identificar y capturar los cambios que ocurren en los datos de una base
+        de datos (inserciones, actualizaciones, eliminaciones) y luego entregar
+        esos cambios a otro sistema o aplicación en tiempo real o casi real. Su
+        objetivo principal es asegurar que los datos en diferentes sistemas
+        estén sincronizados y sean consistentes sin sobrecargar la base de datos
+        fuente con consultas constantes o extracciones masivas.
+      </p>
+      <p>---</p>
+      <h3>Conceptos Principales</h3>
+      <ul>
+        <li>
+          <strong>Identificación de Cambios:</strong> La esencia de CDC es
+          detectar qué registros han cambiado. Esto se puede lograr de varias
+          maneras:
+        </li>
+        <li>
+          * <strong>Basado en Log (Log-Based CDC):</strong> Es el método más
+          común y preferido. Consiste en leer los logs de transacciones de la
+          base de datos (por ejemplo, Write-Ahead Logs en PostgreSQL, Redo Logs
+          en Oracle, Binary Logs en MySQL). Estos logs contienen un registro
+          secuencial de todos los cambios realizados en la base de datos, lo que
+          permite capturar los cambios de manera no intrusiva y con bajo impacto
+          en el rendimiento de la base de datos fuente.
+        </li>
+        <li>
+          * <strong>Basado en Triggers (Trigger-Based CDC):</strong> Implica
+          crear triggers en las tablas de la base de datos que se activan ante
+          operaciones DML (INSERT, UPDATE, DELETE). Estos triggers registran los
+          cambios en tablas de auditoría separadas. Aunque es flexible, puede
+          introducir una sobrecarga de rendimiento en la base de datos fuente.
+        </li>
+        <li>
+          *
+          <strong>Basado en Sellos de Tiempo/Columnas de Auditoría:</strong>
+          Consiste en agregar columnas como
+          <code>ultima_actualizacion_at</code> o <code>fecha_creacion</code> a
+          las tablas. Los sistemas pueden consultar periódicamente estos campos
+          para identificar los registros modificados desde la última vez. Este
+          método es simple pero menos granular y no captura eliminaciones
+          directamente.
+        </li>
+        <li>
+          *
+          <strong
+            >Comparación de Instantáneas (Snapshot/Diff-Based CDC):</strong
+          >
+          Implica tomar instantáneas periódicas de los datos y compararlas con
+          la instantánea anterior para identificar las diferencias. Es muy
+          intensivo en recursos para grandes volúmenes de datos y solo captura
+          el estado final de los cambios, no los estados intermedios.
+        </li>
+        <li>
+          <strong>Extracción de Cambios:</strong> Una vez identificados, los
+          cambios se extraen de la base de datos fuente.
+        </li>
+        <li>
+          <strong>Transformación (Opcional):</strong> Los datos capturados
+          pueden ser transformados si es necesario antes de ser enviados al
+          destino.
+        </li>
+        <li>
+          <strong>Entrega de Cambios:</strong> Los cambios se entregan a uno o
+          más sistemas de destino. Esto puede ser una base de datos de réplica,
+          un sistema de almacenamiento de datos (Data Warehouse, Data Lake), un
+          sistema de mensajería (Kafka, RabbitMQ) o una aplicación downstream.
+        </li>
+        <li><strong>Componentes Típicos:</strong></li>
+        <li>
+          * <strong>Fuente de Datos:</strong> La base de datos original donde
+          ocurren los cambios.
+        </li>
+        <li>
+          * <strong>Mecanismo de Captura:</strong> La herramienta o el proceso
+          que implementa uno de los métodos de identificación de cambios.
+        </li>
+        <li>
+          * <strong>Almacén de Cambios / Stream de Eventos:</strong> Un lugar
+          donde los cambios capturados pueden ser almacenados temporalmente o
+          transmitidos como eventos (ej. un tema de Kafka).
+        </li>
+        <li>
+          * <strong>Consumidores / Destinos:</strong> Los sistemas o
+          aplicaciones que procesan y utilizan los datos cambiados.
+        </li>
+      </ul>
+      <p>---</p>
+      <h3>Ventajas</h3>
+      <ul>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+              >Consistencia</span
+            >
+            de Datos:</strong
+          >
+          Garantiza que los datos en diferentes sistemas estén sincronizados y
+          sean consistentes en tiempo real o casi real.
+        </li>
+        <li>
+          <strong>Procesamiento en Tiempo Real/Casi Real:</strong> Permite que
+          las aplicaciones reaccionen a los cambios de datos a medida que
+          ocurren, habilitando analítica en tiempo real,
+          <span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          >
+          continua y sincronización de cachés.
+        </li>
+        <li>
+          <strong>Reducción de Carga en el Sistema Fuente:</strong> Al extraer
+          solo los cambios incrementales, se evita la necesidad de realizar
+          extracciones de datos masivas periódicas (batch), lo que reduce la
+          carga en la base de datos transaccional.
+        </li>
+        <li>
+          <strong>Eficiencia de Red y Almacenamiento:</strong> Solo se
+          transmiten y almacenan los datos que han cambiado, lo que es mucho más
+          eficiente que mover conjuntos de datos completos.
+        </li>
+        <li>
+          <strong>Integración de Sistemas Flexible:</strong> Facilita la
+          integración entre microservicios, sistemas legacy, data warehouses y
+          data lakes, actuando como un puente de datos.
+        </li>
+        <li>
+          <strong>Auditoría y Trazabilidad:</strong> Los streams de cambios
+          pueden servir como un registro auditable de todas las modificaciones
+          de datos a lo largo del tiempo.
+        </li>
+        <li>
+          <strong
+            >Recuperación ante Desastres y
+            <span
+              class="tooltip"
+              data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+              >Replicación</span
+            >:</strong
+          >
+          Es fundamental para la
+          <span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          >
+          de bases de datos y estrategias de alta
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >/recuperación ante desastres.
+        </li>
+      </ul>
+      <p>---</p>
+      <h3>Desventajas</h3>
+      <ul>
+        <li>
+          <strong>Complejidad de Implementación y Mantenimiento:</strong>
+          Configurar y mantener una solución CDC robusta puede ser complejo,
+          especialmente con métodos basados en logs que requieren entender la
+          estructura interna de los logs de la base de datos.
+        </li>
+        <li>
+          <strong>Dependencia del Sistema Fuente:</strong> A menudo, las
+          soluciones CDC son específicas del motor de base de datos o incluso de
+          la versión, lo que puede limitar la portabilidad y crear un
+          acoplamiento estrecho.
+        </li>
+        <li>
+          <strong>Impacto en el Rendimiento (para ciertos métodos):</strong> Los
+          métodos basados en triggers pueden introducir una
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          y un impacto significativo en el rendimiento de la base de datos
+          fuente. Incluso los basados en logs, aunque menos intrusivos,
+          requieren recursos para su lectura y procesamiento.
+        </li>
+        <li>
+          <strong>Manejo de Esquemas (Schema Evolution):</strong> Los cambios en
+          el esquema de la base de datos fuente (añadir/eliminar columnas,
+          cambiar tipos de datos) deben manejarse cuidadosamente en la pipeline
+          CDC para evitar errores en los sistemas destino.
+        </li>
+        <li>
+          <strong>Costo de Recursos:</strong> Las herramientas CDC pueden
+          consumir CPU, memoria y almacenamiento, y las soluciones comerciales
+          pueden ser costosas.
+        </li>
+        <li>
+          <strong>Manejo de Transacciones Grandes:</strong> Transacciones muy
+          grandes que modifican millones de filas pueden generar un volumen
+          masivo de cambios en los logs, lo que puede sobrecargar el proceso de
+          captura y entrega.
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >
+            Potencial:</strong
+          >
+          Aunque es "casi real-time", siempre habrá una
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          inherente entre el momento en que ocurre un cambio y el momento en que
+          se aplica en el sistema de destino.
+        </li>
+        <li>
+          <strong
+            >Problemas de
+            <span
+              class="tooltip"
+              data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+              >Consistencia</span
+            >
+            Final:</strong
+          >
+          Si no se gestiona correctamente (por ejemplo, reintentos, orden de
+          eventos), los sistemas de destino pueden caer en un estado
+          inconsistente o ver los datos en un orden incorrecto.
+        </li>
+      </ul>
+      <h2>Ejemplo de Aplicación Real</h2>
+      <p>
+        Aquí tienes un ejemplo detallado de la aplicación de Change Data Capture
+        (CDC) en un escenario empresarial real:
+      </p>
+      <p>---</p>
+      <h2>
+        <strong
+          >Escenario Empresarial: GlobalCargoConnect - Gestión de Envíos en
+          Tiempo Real</strong
+        >
+      </h2>
+      <p>
+        <strong>Empresa:</strong> GlobalCargoConnect es una empresa
+        multinacional de logística y transporte de mercancías. Gestiona miles de
+        envíos diarios a través de múltiples países y modos de transporte
+        (aéreo, marítimo, terrestre).
+      </p>
+      <h2>
+        <strong
+          >Problema Anterior: Información de Seguimiento Obsoleta y Limitaciones
+          Operativas</strong
+        >
+      </h2>
+      <p>
+        Antes de implementar CDC, GlobalCargoConnect enfrentaba varios desafíos
+        críticos:
+      </p>
+      <p>
+        1.
+        <strong
+          >Seguimiento de Paquetes con
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >Latencia</span
+          >:</strong
+        >
+      </p>
+      <ul>
+        <li>
+          * Los sistemas operacionales (ej. escáneres en almacenes, aduanas,
+          centros de distribución) actualizaban el estado de los paquetes en una
+          base de datos transaccional (OLTP).
+        </li>
+        <li>
+          * Para alimentar el portal de clientes de seguimiento de paquetes y
+          los dashboards internos de operaciones, se utilizaban procesos de
+          Extracción, Transformación y Carga (<span
+            class="tooltip"
+            data-tooltip-text='Siglas de "Extract, Transform, Load" (Extraer, Transformar, Cargar). Es un proceso de integración de datos que combina datos de múltiples fuentes en un único almacén de datos centralizado y coherente.'
+            >ETL</span
+          >) por lotes, que se ejecutaban cada pocas horas o incluso una vez al
+          día.
+        </li>
+        <li>
+          * <strong>Resultado:</strong> Los clientes a menudo veían información
+          de seguimiento desactualizada, generando frustración, un alto volumen
+          de llamadas al servicio al cliente y quejas por "paquetes estancados"
+          cuando en realidad ya estaban en movimiento.
+        </li>
+      </ul>
+      <p>
+        2. <strong>Carga Excesiva en la Base de Datos Transaccional:</strong>
+      </p>
+      <ul>
+        <li>
+          * Para intentar mejorar la "frescura" de los datos, algunos sistemas
+          implementaron un <strong>polling</strong> agresivo (consultas
+          repetidas) a la base de datos OLTP. Esto saturaba la base de datos con
+          consultas redundantes, afectando el rendimiento de las operaciones
+          primarias.
+        </li>
+        <li>
+          * Alternativamente, el uso de
+          <strong>triggers de base de datos</strong> para capturar cambios se
+          consideró, pero se descartó por el
+          <span
+            class="tooltip"
+            data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+            >overhead</span
+          >
+          de rendimiento que generaría en el sistema transaccional principal y
+          la dificultad de mantenerlos y escalarlos.
+        </li>
+      </ul>
+      <p>
+        3.
+        <strong
+          >Dificultad para Reaccionar a Eventos Críticos en Tiempo Real:</strong
+        >
+      </p>
+      <ul>
+        <li>
+          * La falta de datos en tiempo real impedía que el equipo de
+          operaciones detectara y reaccionara rápidamente a anomalías (ej. un
+          paquete que no se escaneó en un hub esperado, retrasos significativos,
+          problemas de aduanas). Las decisiones se tomaban con horas de retraso.
+        </li>
+      </ul>
+      <p>4. <strong>Inconsistencia de Datos entre Sistemas:</strong></p>
+      <ul>
+        <li>
+          * Diferentes sistemas downstream (analytics, notificaciones,
+          facturación) tenían sus propias lógicas de sincronización o se basaban
+          en los mismos procesos batch, llevando a inconsistencias temporales.
+        </li>
+      </ul>
+      <h2>
+        <strong>Solución Implementada con Change Data Capture (CDC)</strong>
+      </h2>
+      <p>
+        GlobalCargoConnect implementó una arquitectura basada en CDC para
+        capturar y distribuir los cambios en los datos de estado de los paquetes
+        en tiempo real.
+      </p>
+      <h3><strong>Componentes Clave de la Solución:</strong></h3>
+      <ul>
+        <li>
+          <strong>Base de Datos Fuente:</strong> PostgreSQL (base de datos OLTP
+          principal donde se almacena el estado de los paquetes).
+        </li>
+        <li>
+          <strong>Herramienta CDC:</strong> <strong>Debezium</strong> (un
+          conector CDC de código abierto) configurado para monitorear las tablas
+          relevantes de PostgreSQL. Debezium lee el Write-Ahead Log (WAL) de
+          PostgreSQL.
+        </li>
+        <li>
+          <strong>Plataforma de Streaming de Eventos:</strong>
+          <strong>Apache Kafka</strong> (como un bus de mensajes distribuido y
+          escalable).
+        </li>
+        <li><strong>Consumidores de Kafka:</strong></li>
+        <li>
+          * <strong>Microservicio de Seguimiento del Cliente:</strong> Para
+          actualizar el portal web y la aplicación móvil.
+        </li>
+        <li>
+          * <strong>Microservicio de Notificaciones:</strong> Para enviar
+          alertas por SMS/email a los clientes.
+        </li>
+        <li>
+          * <strong>Plataforma de Analytics en Tiempo Real:</strong> Para
+          dashboards operativos.
+        </li>
+        <li>
+          * <strong>Data Warehouse/Data Lake:</strong> Para alimentar sistemas
+          de business intelligence e históricos.
+        </li>
+      </ul>
+      <h3><strong>Flujo de Datos con CDC:</strong></h3>
+      <p>
+        1. <strong>Cambio en el Estado del Paquete:</strong> Un escáner en un
+        almacén actualiza el estado de un paquete en la tabla
+        <code>package_tracking_status</code> de PostgreSQL (ej. de "En Tránsito"
+        a "En Reparto").
+      </p>
+      <p>
+        2. <strong>Captura por Debezium:</strong> Debezium, configurado como un
+        conector de Kafka Connect, detecta este cambio leyendo el WAL de
+        PostgreSQL.
+      </p>
+      <p>
+        3. <strong>Generación de Evento CDC:</strong> Debezium transforma este
+        cambio de la base de datos en un
+        <strong>evento de datos</strong> estructurado (generalmente en formato
+        JSON o Avro), que contiene la información del cambio (tipo de operación:
+        <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>; estado
+        anterior y posterior del registro).
+      </p>
+      <p>
+        4. <strong>Publicación en Kafka:</strong> Debezium publica este evento
+        en un tema específico de Kafka (ej.
+        <code>globalcargo.package_status_updates</code>).
+      </p>
+      <p>5. <strong>Consumo en Tiempo Real:</strong></p>
+      <ul>
+        <li>
+          * El
+          <strong>Microservicio de Seguimiento del Cliente</strong> suscribe a
+          este tema de Kafka. Cuando recibe un evento, actualiza un caché rápido
+          (ej. Redis) o una base de datos NoSQL optimizada para lectura, que el
+          portal web consulta. La interfaz de usuario del cliente se actualiza
+          casi instantáneamente.
+        </li>
+        <li>
+          * El <strong>Microservicio de Notificaciones</strong> consume el
+          evento, evalúa las reglas de notificación y envía un SMS o email al
+          cliente con el nuevo estado del paquete.
+        </li>
+        <li>
+          * La <strong>Plataforma de Analytics en Tiempo Real</strong> ingiere
+          el evento, actualizando dashboards y disparando alertas si se detecta
+          una anomalía (ej. un paquete permanece demasiado tiempo en un estado).
+        </li>
+        <li>
+          * El <strong>Data Warehouse</strong> consume los eventos para realizar
+          cargas incrementales, manteniendo los datos históricos frescos sin
+          necesidad de
+          <span
+            class="tooltip"
+            data-tooltip-text='Siglas de "Extract, Transform, Load" (Extraer, Transformar, Cargar). Es un proceso de integración de datos que combina datos de múltiples fuentes en un único almacén de datos centralizado y coherente.'
+            >ETL</span
+          >
+          diarios completos.
+        </li>
+      </ul>
+      <h2><strong>Resultados y Beneficios Obtenidos:</strong></h2>
+      <p>1. <strong>Información en Tiempo Real para Clientes:</strong></p>
+      <ul>
+        <li>
+          * La
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          en el seguimiento de paquetes se redujo de
+          <strong>horas a segundos</strong>.
+        </li>
+        <li>
+          *
+          <strong>Mejora significativa en la satisfacción del cliente</strong>
+          al proporcionar información precisa y oportuna.
+        </li>
+        <li>
+          *
+          <strong
+            >Disminución del 30% en las llamadas al servicio al cliente</strong
+          >
+          relacionadas con consultas de seguimiento.
+        </li>
+      </ul>
+      <p>
+        2.
+        <strong
+          >Optimización del Rendimiento de la Base de Datos Principal:</strong
+        >
+      </p>
+      <ul>
+        <li>
+          * Se eliminó la necesidad de polling intensivo y triggers complejos,
+          <strong>reduciendo la carga en la base de datos OLTP en un 25%</strong
+          >, mejorando la capacidad de respuesta de las operaciones centrales.
+        </li>
+      </ul>
+      <p>3. <strong>Mejora de la Eficiencia Operacional:</strong></p>
+      <ul>
+        <li>
+          * Los dashboards operativos ahora muestran el estado actual de la red
+          de logística.
+        </li>
+        <li>
+          * Capacidad para
+          <strong
+            >detectar y reaccionar a incidentes (retrasos, paquetes extraviados)
+            en cuestión de minutos</strong
+          >, permitiendo una intervención proactiva y minimizando los impactos.
+        </li>
+        <li>
+          *
+          <strong>Reducción del 15% en los costos operativos</strong> asociados
+          a la resolución manual de incidencias.
+        </li>
+      </ul>
+      <p>4. <strong>Arquitectura Flexible y Escalable:</strong></p>
+      <ul>
+        <li>
+          * La arquitectura basada en Kafka y CDC
+          <strong
+            >desacopló la base de datos transaccional de los sistemas
+            consumidores</strong
+          >, permitiendo que cada sistema escalara independientemente.
+        </li>
+        <li>
+          * Facilitó la integración de nuevos sistemas y microservicios, ya que
+          solo necesitaban suscribirse a los temas de Kafka relevantes.
+        </li>
+      </ul>
+      <p>5. <strong>Nuevas Capacidades de Negocio:</strong></p>
+      <ul>
+        <li>
+          * Permitió la creación de
+          <strong>algoritmos de optimización de rutas en tiempo real</strong>
+          basados en el flujo actual de paquetes.
+        </li>
+        <li>
+          * Habilitó
+          <strong>notificaciones proactivas y personalizadas</strong> a los
+          clientes sobre posibles retrasos o cambios en la entrega.
+        </li>
+      </ul>
+      <p>
+        En resumen, la implementación de Change Data Capture transformó la
+        capacidad de GlobalCargoConnect para gestionar y comunicar información
+        sobre envíos, pasando de un enfoque reactivo y lento a uno proactivo y
+        en tiempo real, con beneficios tangibles tanto para los clientes como
+        para la eficiencia operativa interna.
+      </p>
+      <h2>Preguntas de Entrevista</h2>
+      <div>
+        <div class="accordion-item">
+          <p class="accordion-question">
+            ¿Cómo se asegura la consistencia transaccional y el orden estricto
+            de los mensajes al implementar CDC en múltiples tablas o servicios,
+            especialmente en un entorno distribuido donde los eventos pueden
+            procesarse asincrónicamente?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Asegurar la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              transaccional y el orden estricto en CDC distribuido es crítico.
+              Se logra propagando identificadores de transacción (como XID o
+              LSN) desde la base de datos fuente, permitiendo a los consumidores
+              agrupar y ordenar eventos de la misma transacción. Para eventos
+              que abarcan múltiples tablas, el publicador de CDC debe garantizar
+              que todos los eventos relacionados se publiquen atómicamente con
+              un único ID de transacción. Los consumidores deben ser
+              configurados para un ordenamiento estricto dentro de las
+              particiones (por ejemplo, en Kafka), y las claves de partición
+              deben asegurar que todos los eventos para una entidad lógica vayan
+              a la misma partición. Además, diseñar los consumidores para ser
+              idempotentes es crucial, ya que las reintentos son inevitables y
+              la
+              <span
+                class="tooltip"
+                data-tooltip-text="La propiedad de una operación que permite que se pueda aplicar múltiples veces sin cambiar el resultado más allá de la aplicación inicial. Crucial para sistemas distribuidos donde las retransmisiones de mensajes son comunes."
+                >idempotencia</span
+              >
+              previene el procesamiento duplicado y las inconsistencias. El
+              patrón Outbox puede asegurar la atomicidad al publicar eventos
+              desde una aplicación.
+            </p>
+          </div>
+        </div>
 
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Change Data Capture (CDC)</h1>
-    <p>El patrón de arquitectura de software <strong>Change Data Capture (CDC)</strong> es un enfoque para identificar y capturar los cambios que ocurren en los datos de una base de datos (inserciones, actualizaciones, eliminaciones) y luego entregar esos cambios a otro sistema o aplicación en tiempo real o casi real. Su objetivo principal es asegurar que los datos en diferentes sistemas estén sincronizados y sean consistentes sin sobrecargar la base de datos fuente con consultas constantes o extracciones masivas.</p><p>---</p><h3>Conceptos Principales</h3><ul><li>  <strong>Identificación de Cambios:</strong> La esencia de CDC es detectar qué registros han cambiado. Esto se puede lograr de varias maneras:</li><li>   *   <strong>Basado en Log (Log-Based CDC):</strong> Es el método más común y preferido. Consiste en leer los logs de transacciones de la base de datos (por ejemplo, Write-Ahead Logs en PostgreSQL, Redo Logs en Oracle, Binary Logs en MySQL). Estos logs contienen un registro secuencial de todos los cambios realizados en la base de datos, lo que permite capturar los cambios de manera no intrusiva y con bajo impacto en el rendimiento de la base de datos fuente.</li><li>   *   <strong>Basado en Triggers (Trigger-Based CDC):</strong> Implica crear triggers en las tablas de la base de datos que se activan ante operaciones DML (INSERT, UPDATE, DELETE). Estos triggers registran los cambios en tablas de auditoría separadas. Aunque es flexible, puede introducir una sobrecarga de rendimiento en la base de datos fuente.</li><li>   *   <strong>Basado en Sellos de Tiempo/Columnas de Auditoría:</strong> Consiste en agregar columnas como <code>ultima_actualizacion_at</code> o <code>fecha_creacion</code> a las tablas. Los sistemas pueden consultar periódicamente estos campos para identificar los registros modificados desde la última vez. Este método es simple pero menos granular y no captura eliminaciones directamente.</li><li>   *   <strong>Comparación de Instantáneas (Snapshot/Diff-Based CDC):</strong> Implica tomar instantáneas periódicas de los datos y compararlas con la instantánea anterior para identificar las diferencias. Es muy intensivo en recursos para grandes volúmenes de datos y solo captura el estado final de los cambios, no los estados intermedios.</li><li>  <strong>Extracción de Cambios:</strong> Una vez identificados, los cambios se extraen de la base de datos fuente.</li><li>  <strong>Transformación (Opcional):</strong> Los datos capturados pueden ser transformados si es necesario antes de ser enviados al destino.</li><li>  <strong>Entrega de Cambios:</strong> Los cambios se entregan a uno o más sistemas de destino. Esto puede ser una base de datos de réplica, un sistema de almacenamiento de datos (Data Warehouse, Data Lake), un sistema de mensajería (Kafka, RabbitMQ) o una aplicación downstream.</li><li>  <strong>Componentes Típicos:</strong></li><li>   *   <strong>Fuente de Datos:</strong> La base de datos original donde ocurren los cambios.</li><li>   *   <strong>Mecanismo de Captura:</strong> La herramienta o el proceso que implementa uno de los métodos de identificación de cambios.</li><li>   *   <strong>Almacén de Cambios / Stream de Eventos:</strong> Un lugar donde los cambios capturados pueden ser almacenados temporalmente o transmitidos como eventos (ej. un tema de Kafka).</li><li>   *   <strong>Consumidores / Destinos:</strong> Los sistemas o aplicaciones que procesan y utilizan los datos cambiados.</li></ul><p>---</p><h3>Ventajas</h3><ul><li>  <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> de Datos:</strong> Garantiza que los datos en diferentes sistemas estén sincronizados y sean consistentes en tiempo real o casi real.</li><li>  <strong>Procesamiento en Tiempo Real/Casi Real:</strong> Permite que las aplicaciones reaccionen a los cambios de datos a medida que ocurren, habilitando analítica en tiempo real, <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> continua y sincronización de cachés.</li><li>  <strong>Reducción de Carga en el Sistema Fuente:</strong> Al extraer solo los cambios incrementales, se evita la necesidad de realizar extracciones de datos masivas periódicas (batch), lo que reduce la carga en la base de datos transaccional.</li><li>  <strong>Eficiencia de Red y Almacenamiento:</strong> Solo se transmiten y almacenan los datos que han cambiado, lo que es mucho más eficiente que mover conjuntos de datos completos.</li><li>  <strong>Integración de Sistemas Flexible:</strong> Facilita la integración entre microservicios, sistemas legacy, data warehouses y data lakes, actuando como un puente de datos.</li><li>  <strong>Auditoría y Trazabilidad:</strong> Los streams de cambios pueden servir como un registro auditable de todas las modificaciones de datos a lo largo del tiempo.</li><li>  <strong>Recuperación ante Desastres y <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span>:</strong> Es fundamental para la <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> de bases de datos y estrategias de alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span>/recuperación ante desastres.</li></ul><p>---</p><h3>Desventajas</h3><ul><li>  <strong>Complejidad de Implementación y Mantenimiento:</strong> Configurar y mantener una solución CDC robusta puede ser complejo, especialmente con métodos basados en logs que requieren entender la estructura interna de los logs de la base de datos.</li><li>  <strong>Dependencia del Sistema Fuente:</strong> A menudo, las soluciones CDC son específicas del motor de base de datos o incluso de la versión, lo que puede limitar la portabilidad y crear un acoplamiento estrecho.</li><li>  <strong>Impacto en el Rendimiento (para ciertos métodos):</strong> Los métodos basados en triggers pueden introducir una <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> y un impacto significativo en el rendimiento de la base de datos fuente. Incluso los basados en logs, aunque menos intrusivos, requieren recursos para su lectura y procesamiento.</li><li>  <strong>Manejo de Esquemas (Schema Evolution):</strong> Los cambios en el esquema de la base de datos fuente (añadir/eliminar columnas, cambiar tipos de datos) deben manejarse cuidadosamente en la pipeline CDC para evitar errores en los sistemas destino.</li><li>  <strong>Costo de Recursos:</strong> Las herramientas CDC pueden consumir CPU, memoria y almacenamiento, y las soluciones comerciales pueden ser costosas.</li><li>  <strong>Manejo de Transacciones Grandes:</strong> Transacciones muy grandes que modifican millones de filas pueden generar un volumen masivo de cambios en los logs, lo que puede sobrecargar el proceso de captura y entrega.</li><li>  <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> Potencial:</strong> Aunque es "casi real-time", siempre habrá una <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> inherente entre el momento en que ocurre un cambio y el momento en que se aplica en el sistema de destino.</li><li>  <strong>Problemas de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Final:</strong> Si no se gestiona correctamente (por ejemplo, reintentos, orden de eventos), los sistemas de destino pueden caer en un estado inconsistente o ver los datos en un orden incorrecto.</li></ul><h2>Ejemplo de Aplicación Real</h2><p>Aquí tienes un ejemplo detallado de la aplicación de Change Data Capture (CDC) en un escenario empresarial real:</p><p>---</p><h2><strong>Escenario Empresarial: GlobalCargoConnect - Gestión de Envíos en Tiempo Real</strong></h2><p><strong>Empresa:</strong> GlobalCargoConnect es una empresa multinacional de logística y transporte de mercancías. Gestiona miles de envíos diarios a través de múltiples países y modos de transporte (aéreo, marítimo, terrestre).</p><h2><strong>Problema Anterior: Información de Seguimiento Obsoleta y Limitaciones Operativas</strong></h2><p>Antes de implementar CDC, GlobalCargoConnect enfrentaba varios desafíos críticos:</p><p>1.  <strong>Seguimiento de Paquetes con <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span>:</strong></p><ul><li>   *   Los sistemas operacionales (ej. escáneres en almacenes, aduanas, centros de distribución) actualizaban el estado de los paquetes en una base de datos transaccional (OLTP).</li><li>   *   Para alimentar el portal de clientes de seguimiento de paquetes y los dashboards internos de operaciones, se utilizaban procesos de Extracción, Transformación y Carga (<span class="tooltip" data-tooltip-text="Siglas de &quot;Extract, Transform, Load&quot; (Extraer, Transformar, Cargar). Es un proceso de integración de datos que combina datos de múltiples fuentes en un único almacén de datos centralizado y coherente.">ETL</span>) por lotes, que se ejecutaban cada pocas horas o incluso una vez al día.</li><li>   *   <strong>Resultado:</strong> Los clientes a menudo veían información de seguimiento desactualizada, generando frustración, un alto volumen de llamadas al servicio al cliente y quejas por "paquetes estancados" cuando en realidad ya estaban en movimiento.</li></ul><p>2.  <strong>Carga Excesiva en la Base de Datos Transaccional:</strong></p><ul><li>   *   Para intentar mejorar la "frescura" de los datos, algunos sistemas implementaron un <strong>polling</strong> agresivo (consultas repetidas) a la base de datos OLTP. Esto saturaba la base de datos con consultas redundantes, afectando el rendimiento de las operaciones primarias.</li><li>   *   Alternativamente, el uso de <strong>triggers de base de datos</strong> para capturar cambios se consideró, pero se descartó por el <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">overhead</span> de rendimiento que generaría en el sistema transaccional principal y la dificultad de mantenerlos y escalarlos.</li></ul><p>3.  <strong>Dificultad para Reaccionar a Eventos Críticos en Tiempo Real:</strong></p><ul><li>   *   La falta de datos en tiempo real impedía que el equipo de operaciones detectara y reaccionara rápidamente a anomalías (ej. un paquete que no se escaneó en un hub esperado, retrasos significativos, problemas de aduanas). Las decisiones se tomaban con horas de retraso.</li></ul><p>4.  <strong>Inconsistencia de Datos entre Sistemas:</strong></p><ul><li>   *   Diferentes sistemas downstream (analytics, notificaciones, facturación) tenían sus propias lógicas de sincronización o se basaban en los mismos procesos batch, llevando a inconsistencias temporales.</li></ul><h2><strong>Solución Implementada con Change Data Capture (CDC)</strong></h2><p>GlobalCargoConnect implementó una arquitectura basada en CDC para capturar y distribuir los cambios en los datos de estado de los paquetes en tiempo real.</p><h3><strong>Componentes Clave de la Solución:</strong></h3><ul><li>  <strong>Base de Datos Fuente:</strong> PostgreSQL (base de datos OLTP principal donde se almacena el estado de los paquetes).</li><li>  <strong>Herramienta CDC:</strong> <strong>Debezium</strong> (un conector CDC de código abierto) configurado para monitorear las tablas relevantes de PostgreSQL. Debezium lee el Write-Ahead Log (WAL) de PostgreSQL.</li><li>  <strong>Plataforma de Streaming de Eventos:</strong> <strong>Apache Kafka</strong> (como un bus de mensajes distribuido y escalable).</li><li>  <strong>Consumidores de Kafka:</strong></li><li>   *   <strong>Microservicio de Seguimiento del Cliente:</strong> Para actualizar el portal web y la aplicación móvil.</li><li>   *   <strong>Microservicio de Notificaciones:</strong> Para enviar alertas por SMS/email a los clientes.</li><li>   *   <strong>Plataforma de Analytics en Tiempo Real:</strong> Para dashboards operativos.</li><li>   *   <strong>Data Warehouse/Data Lake:</strong> Para alimentar sistemas de business intelligence e históricos.</li></ul><h3><strong>Flujo de Datos con CDC:</strong></h3><p>1.  <strong>Cambio en el Estado del Paquete:</strong> Un escáner en un almacén actualiza el estado de un paquete en la tabla <code>package_tracking_status</code> de PostgreSQL (ej. de "En Tránsito" a "En Reparto").</p><p>2.  <strong>Captura por Debezium:</strong> Debezium, configurado como un conector de Kafka Connect, detecta este cambio leyendo el WAL de PostgreSQL.</p><p>3.  <strong>Generación de Evento CDC:</strong> Debezium transforma este cambio de la base de datos en un <strong>evento de datos</strong> estructurado (generalmente en formato JSON o Avro), que contiene la información del cambio (tipo de operación: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>; estado anterior y posterior del registro).</p><p>4.  <strong>Publicación en Kafka:</strong> Debezium publica este evento en un tema específico de Kafka (ej. <code>globalcargo.package_status_updates</code>).</p><p>5.  <strong>Consumo en Tiempo Real:</strong></p><ul><li>   *   El <strong>Microservicio de Seguimiento del Cliente</strong> suscribe a este tema de Kafka. Cuando recibe un evento, actualiza un caché rápido (ej. Redis) o una base de datos NoSQL optimizada para lectura, que el portal web consulta. La interfaz de usuario del cliente se actualiza casi instantáneamente.</li><li>   *   El <strong>Microservicio de Notificaciones</strong> consume el evento, evalúa las reglas de notificación y envía un SMS o email al cliente con el nuevo estado del paquete.</li><li>   *   La <strong>Plataforma de Analytics en Tiempo Real</strong> ingiere el evento, actualizando dashboards y disparando alertas si se detecta una anomalía (ej. un paquete permanece demasiado tiempo en un estado).</li><li>   *   El <strong>Data Warehouse</strong> consume los eventos para realizar cargas incrementales, manteniendo los datos históricos frescos sin necesidad de <span class="tooltip" data-tooltip-text="Siglas de &quot;Extract, Transform, Load&quot; (Extraer, Transformar, Cargar). Es un proceso de integración de datos que combina datos de múltiples fuentes en un único almacén de datos centralizado y coherente.">ETL</span> diarios completos.</li></ul><h2><strong>Resultados y Beneficios Obtenidos:</strong></h2><p>1.  <strong>Información en Tiempo Real para Clientes:</strong></p><ul><li>   *   La <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> en el seguimiento de paquetes se redujo de <strong>horas a segundos</strong>.</li><li>   *   <strong>Mejora significativa en la satisfacción del cliente</strong> al proporcionar información precisa y oportuna.</li><li>   *   <strong>Disminución del 30% en las llamadas al servicio al cliente</strong> relacionadas con consultas de seguimiento.</li></ul><p>2.  <strong>Optimización del Rendimiento de la Base de Datos Principal:</strong></p><ul><li>   *   Se eliminó la necesidad de polling intensivo y triggers complejos, <strong>reduciendo la carga en la base de datos OLTP en un 25%</strong>, mejorando la capacidad de respuesta de las operaciones centrales.</li></ul><p>3.  <strong>Mejora de la Eficiencia Operacional:</strong></p><ul><li>   *   Los dashboards operativos ahora muestran el estado actual de la red de logística.</li><li>   *   Capacidad para <strong>detectar y reaccionar a incidentes (retrasos, paquetes extraviados) en cuestión de minutos</strong>, permitiendo una intervención proactiva y minimizando los impactos.</li><li>   *   <strong>Reducción del 15% en los costos operativos</strong> asociados a la resolución manual de incidencias.</li></ul><p>4.  <strong>Arquitectura Flexible y Escalable:</strong></p><ul><li>   *   La arquitectura basada en Kafka y CDC <strong>desacopló la base de datos transaccional de los sistemas consumidores</strong>, permitiendo que cada sistema escalara independientemente.</li><li>   *   Facilitó la integración de nuevos sistemas y microservicios, ya que solo necesitaban suscribirse a los temas de Kafka relevantes.</li></ul><p>5.  <strong>Nuevas Capacidades de Negocio:</strong></p><ul><li>   *   Permitió la creación de <strong>algoritmos de optimización de rutas en tiempo real</strong> basados en el flujo actual de paquetes.</li><li>   *   Habilitó <strong>notificaciones proactivas y personalizadas</strong> a los clientes sobre posibles retrasos o cambios en la entrega.</li></ul><p>En resumen, la implementación de Change Data Capture transformó la capacidad de GlobalCargoConnect para gestionar y comunicar información sobre envíos, pasando de un enfoque reactivo y lento a uno proactivo y en tiempo real, con beneficios tangibles tanto para los clientes como para la eficiencia operativa interna.</p><h2>Preguntas de Entrevista</h2><div>
         <div class="accordion-item">
-          <p class="accordion-question">¿Cómo se asegura la consistencia transaccional y el orden estricto de los mensajes al implementar CDC en múltiples tablas o servicios, especialmente en un entorno distribuido donde los eventos pueden procesarse asincrónicamente?</p>
-          <div class="accordion-answer"><p>Asegurar la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> transaccional y el orden estricto en CDC distribuido es crítico. Se logra propagando identificadores de transacción (como XID o LSN) desde la base de datos fuente, permitiendo a los consumidores agrupar y ordenar eventos de la misma transacción. Para eventos que abarcan múltiples tablas, el publicador de CDC debe garantizar que todos los eventos relacionados se publiquen atómicamente con un único ID de transacción. Los consumidores deben ser configurados para un ordenamiento estricto dentro de las particiones (por ejemplo, en Kafka), y las claves de partición deben asegurar que todos los eventos para una entidad lógica vayan a la misma partición. Además, diseñar los consumidores para ser idempotentes es crucial, ya que las reintentos son inevitables y la <span class="tooltip" data-tooltip-text="La propiedad de una operación que permite que se pueda aplicar múltiples veces sin cambiar el resultado más allá de la aplicación inicial. Crucial para sistemas distribuidos donde las retransmisiones de mensajes son comunes.">idempotencia</span> previene el procesamiento duplicado y las inconsistencias. El patrón Outbox puede asegurar la atomicidad al publicar eventos desde una aplicación.</p></div>
+          <p class="accordion-question">
+            Describa los desafíos y las estrategias para manejar la evolución
+            del esquema en un pipeline de CDC. ¿Qué sucede cuando una columna se
+            añade, se elimina o su tipo de dato cambia en la base de datos
+            fuente?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La evolución del esquema presenta desafíos significativos en CDC,
+              como la posible pérdida o corrupción de datos y la rotura de
+              consumidores que esperan el esquema antiguo. Las estrategias
+              incluyen el uso de un <strong>Registro de Esquemas</strong> (por
+              ejemplo, Confluent Schema Registry) para almacenar y validar
+              esquemas de eventos (Avro, Protobuf), asegurando la compatibilidad
+              hacia adelante y hacia atrás. La
+              <strong>versión de esquemas</strong> es crucial, favoreciendo
+              cambios aditivos (añadir columnas nulas) para mantener la
+              compatibilidad. Para cambios incompatibles, se requiere una
+              implementación coordinada de productores y consumidores. Las
+              <strong>capas de transformación</strong> (usando frameworks de
+              procesamiento de streams como Flink o Spark Streaming) pueden
+              adaptar la estructura del evento del esquema fuente al esquema
+              esperado por el destino, manejando mapeos y conversiones de tipo.
+              Finalmente, los consumidores deben ser diseñados para manejar
+              campos desconocidos o valores nulos de nuevas columnas de forma
+              robusta.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Describa los desafíos y las estrategias para manejar la evolución del esquema en un pipeline de CDC. ¿Qué sucede cuando una columna se añade, se elimina o su tipo de dato cambia en la base de datos fuente?</p>
-          <div class="accordion-answer"><p>La evolución del esquema presenta desafíos significativos en CDC, como la posible pérdida o corrupción de datos y la rotura de consumidores que esperan el esquema antiguo. Las estrategias incluyen el uso de un <strong>Registro de Esquemas</strong> (por ejemplo, Confluent Schema Registry) para almacenar y validar esquemas de eventos (Avro, Protobuf), asegurando la compatibilidad hacia adelante y hacia atrás. La <strong>versión de esquemas</strong> es crucial, favoreciendo cambios aditivos (añadir columnas nulas) para mantener la compatibilidad. Para cambios incompatibles, se requiere una implementación coordinada de productores y consumidores. Las <strong>capas de transformación</strong> (usando frameworks de procesamiento de streams como Flink o Spark Streaming) pueden adaptar la estructura del evento del esquema fuente al esquema esperado por el destino, manejando mapeos y conversiones de tipo. Finalmente, los consumidores deben ser diseñados para manejar campos desconocidos o valores nulos de nuevas columnas de forma robusta.</p></div>
+          <p class="accordion-question">
+            ¿Cómo diseñaría un sistema CDC de alto rendimiento y baja latencia
+            capaz de capturar cambios de una base de datos OLTP con muchas
+            transacciones y entregarlos a múltiples consumidores con un impacto
+            mínimo en la base de datos fuente?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Para un sistema CDC de alto rendimiento y baja
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >, se debe minimizar el impacto en la fuente utilizando CDC basado
+              en logs (por ejemplo, WAL de PostgreSQL, binlog de MySQL) en lugar
+              de triggers, ya que lee logs de transacciones con sobrecarga
+              mínima. Si es posible, se puede usar una réplica de lectura
+              dedicada para el conector CDC. La captura y publicación deben ser
+              eficientes: los conectores deben procesar cambios por lotes y
+              publicarlos asincrónicamente en un
+              <span
+                class="tooltip"
+                data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+                >broker</span
+              >
+              de mensajes (como Kafka), y los eventos deben comprimirse. Kafka
+              es ideal por su alto rendimiento y
+              <span
+                class="tooltip"
+                data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen."
+                >tolerancia a fallos</span
+              >; una estrategia de particionamiento adecuada es vital. Los
+              consumidores deben ser predominantemente sin estado e
+              idempotentes, procesar en paralelo usando grupos de consumidores y
+              realizar operaciones masivas en sus sistemas de destino para
+              reducir la E/S. Un monitoreo robusto es esencial para identificar
+              y resolver cuellos de botella.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">¿Cómo diseñaría un sistema CDC de alto rendimiento y baja latencia capaz de capturar cambios de una base de datos OLTP con muchas transacciones y entregarlos a múltiples consumidores con un impacto mínimo en la base de datos fuente?</p>
-          <div class="accordion-answer"><p>Para un sistema CDC de alto rendimiento y baja <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span>, se debe minimizar el impacto en la fuente utilizando CDC basado en logs (por ejemplo, WAL de PostgreSQL, binlog de MySQL) en lugar de triggers, ya que lee logs de transacciones con sobrecarga mínima. Si es posible, se puede usar una réplica de lectura dedicada para el conector CDC. La captura y publicación deben ser eficientes: los conectores deben procesar cambios por lotes y publicarlos asincrónicamente en un <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de mensajes (como Kafka), y los eventos deben comprimirse. Kafka es ideal por su alto rendimiento y <span class="tooltip" data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen.">tolerancia a fallos</span>; una estrategia de particionamiento adecuada es vital. Los consumidores deben ser predominantemente sin estado e idempotentes, procesar en paralelo usando grupos de consumidores y realizar operaciones masivas en sus sistemas de destino para reducir la E/S. Un monitoreo robusto es esencial para identificar y resolver cuellos de botella.</p></div>
+          <p class="accordion-question">
+            Un sistema descendente crítico que consume sus eventos CDC falla por
+            un período prolongado, lo que provoca un retraso significativo.
+            ¿Cómo diseña su pipeline CDC para manejar tales fallos, garantizar
+            la integridad de los datos, evitar la pérdida de datos y facilitar
+            la recuperación sin abrumar al consumidor al reanudarse?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La resiliencia ante fallos del consumidor descendente es
+              primordial. Se utiliza un
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+                  >broker</span
+                >
+                de mensajes duradero</strong
+              >
+              (como Kafka) con políticas de retención de datos configurables que
+              mantienen los eventos disponibles para que el consumidor se ponga
+              al día. La retención debe ser suficiente para cubrir el tiempo de
+              inactividad previsto. Los
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="En sistemas como Kafka, un offset es un puntero o marcador que indica la posición de un consumidor dentro de una partición de un tópico. Actúa como un marcador de libro para saber qué mensajes ya han sido leídos."
+                  >offsets</span
+                >
+                independientes</strong
+              >
+              en Kafka permiten que otros consumidores sigan operando
+              normalmente. Los consumidores deben implementar
+              <strong>mecanismos de autolimitación</strong> (<span
+                class="tooltip"
+                data-tooltip-text="El proceso de controlar la tasa de solicitudes que un cliente puede hacer a una API o servicio. Se utiliza para prevenir el abuso, garantizar la calidad del servicio y proteger el sistema de la sobrecarga."
+                >throttling</span
+              >) para no abrumar al sistema de destino cuando se reanuden. Los
+              <strong>Dead Letter Queues (DLQs)</strong> son esenciales para
+              eventos individuales no procesables, evitando que bloqueen el
+              flujo principal. Al recuperarse, el consumidor reanuda
+              automáticamente desde su último offset confirmado. Es fundamental
+              que los consumidores sean <strong>idempotentes</strong> para que
+              reprocesar eventos durante la recuperación no cause
+              inconsistencias. Un monitoreo exhaustivo de los retrasos y las
+              tasas de error es clave para una detección temprana.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Un sistema descendente crítico que consume sus eventos CDC falla por un período prolongado, lo que provoca un retraso significativo. ¿Cómo diseña su pipeline CDC para manejar tales fallos, garantizar la integridad de los datos, evitar la pérdida de datos y facilitar la recuperación sin abrumar al consumidor al reanudarse?</p>
-          <div class="accordion-answer"><p>La resiliencia ante fallos del consumidor descendente es primordial. Se utiliza un <strong><span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de mensajes duradero</strong> (como Kafka) con políticas de retención de datos configurables que mantienen los eventos disponibles para que el consumidor se ponga al día. La retención debe ser suficiente para cubrir el tiempo de inactividad previsto. Los <strong><span class="tooltip" data-tooltip-text="En sistemas como Kafka, un offset es un puntero o marcador que indica la posición de un consumidor dentro de una partición de un tópico. Actúa como un marcador de libro para saber qué mensajes ya han sido leídos.">offsets</span> independientes</strong> en Kafka permiten que otros consumidores sigan operando normalmente. Los consumidores deben implementar <strong>mecanismos de autolimitación</strong> (<span class="tooltip" data-tooltip-text="El proceso de controlar la tasa de solicitudes que un cliente puede hacer a una API o servicio. Se utiliza para prevenir el abuso, garantizar la calidad del servicio y proteger el sistema de la sobrecarga.">throttling</span>) para no abrumar al sistema de destino cuando se reanuden. Los <strong>Dead Letter Queues (DLQs)</strong> son esenciales para eventos individuales no procesables, evitando que bloqueen el flujo principal. Al recuperarse, el consumidor reanuda automáticamente desde su último offset confirmado. Es fundamental que los consumidores sean <strong>idempotentes</strong> para que reprocesar eventos durante la recuperación no cause inconsistencias. Un monitoreo exhaustivo de los retrasos y las tasas de error es clave para una detección temprana.</p></div>
+          <p class="accordion-question">
+            Aunque potente, CDC no es una solución universal. Discuta escenarios
+            donde CDC podría no ser la solución óptima y sugiera enfoques
+            alternativos. ¿Cuáles son las principales compensaciones a
+            considerar?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              CDC no es óptimo para la
+              <strong>carga inicial de datos</strong> de grandes volúmenes; un
+              volcado/importación masiva suele ser más eficiente. Para
+              <strong>procesamiento por lotes simple</strong> con baja
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >, los jobs
+              <span
+                class="tooltip"
+                data-tooltip-text='Siglas de "Extract, Transform, Load" (Extraer, Transformar, Cargar). Es un proceso de integración de datos que combina datos de múltiples fuentes en un único almacén de datos centralizado y coherente.'
+                >ETL</span
+              >/ELT tradicionales pueden ser más sencillos y económicos. Si se
+              requieren
+              <strong>transformaciones muy complejas y con estado</strong> que
+              son difíciles de expresar en streaming, una tubería
+              <span
+                class="tooltip"
+                data-tooltip-text='Siglas de "Extract, Transform, Load" (Extraer, Transformar, Cargar). Es un proceso de integración de datos que combina datos de múltiples fuentes en un único almacén de datos centralizado y coherente.'
+                >ETL</span
+              >/ELT con procesamiento por lotes potente podría ser mejor. CDC
+              captura <em>cambios de estado</em>, no
+              <em>eventos de negocio</em>; si se necesita un historial de
+              eventos de dominio rico en contexto, el
+              <strong
+                >patrón de
+                <span
+                  class="tooltip"
+                  data-tooltip-text="Un patrón de diseño en el que todos los cambios en el estado de una aplicación se almacenan como una secuencia de eventos inmutables. En lugar de guardar el estado actual, se guarda el historial de cambios."
+                  >Event Sourcing</span
+                ></strong
+              >
+              es más apropiado. Las compensaciones clave incluyen la
+              <strong>complejidad operativa</strong> de gestionar una nueva
+              infraestructura de streaming (conectores, brokers, procesadores).
+              Existe un <strong>acoplamiento del esquema</strong> entre la
+              fuente y los consumidores. La
+              <strong>adaptación de modelos de datos</strong> (por ejemplo, de
+              OLTP a data warehouse) puede requerir una lógica de transformación
+              significativa. Finalmente, el <strong>costo</strong> de ejecutar
+              infraestructura de streaming en tiempo real puede ser mayor que el
+              de trabajos por lotes más simples.
+            </p>
+          </div>
         </div>
-      
-        <div class="accordion-item">
-          <p class="accordion-question">Aunque potente, CDC no es una solución universal. Discuta escenarios donde CDC podría no ser la solución óptima y sugiera enfoques alternativos. ¿Cuáles son las principales compensaciones a considerar?</p>
-          <div class="accordion-answer"><p>CDC no es óptimo para la <strong>carga inicial de datos</strong> de grandes volúmenes; un volcado/importación masiva suele ser más eficiente. Para <strong>procesamiento por lotes simple</strong> con baja <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span>, los jobs <span class="tooltip" data-tooltip-text="Siglas de &quot;Extract, Transform, Load&quot; (Extraer, Transformar, Cargar). Es un proceso de integración de datos que combina datos de múltiples fuentes en un único almacén de datos centralizado y coherente.">ETL</span>/ELT tradicionales pueden ser más sencillos y económicos. Si se requieren <strong>transformaciones muy complejas y con estado</strong> que son difíciles de expresar en streaming, una tubería <span class="tooltip" data-tooltip-text="Siglas de &quot;Extract, Transform, Load&quot; (Extraer, Transformar, Cargar). Es un proceso de integración de datos que combina datos de múltiples fuentes en un único almacén de datos centralizado y coherente.">ETL</span>/ELT con procesamiento por lotes potente podría ser mejor. CDC captura <em>cambios de estado</em>, no <em>eventos de negocio</em>; si se necesita un historial de eventos de dominio rico en contexto, el <strong>patrón de <span class="tooltip" data-tooltip-text="Un patrón de diseño en el que todos los cambios en el estado de una aplicación se almacenan como una secuencia de eventos inmutables. En lugar de guardar el estado actual, se guarda el historial de cambios.">Event Sourcing</span></strong> es más apropiado. Las compensaciones clave incluyen la <strong>complejidad operativa</strong> de gestionar una nueva infraestructura de streaming (conectores, brokers, procesadores). Existe un <strong>acoplamiento del esquema</strong> entre la fuente y los consumidores. La <strong>adaptación de modelos de datos</strong> (por ejemplo, de OLTP a data warehouse) puede requerir una lógica de transformación significativa. Finalmente, el <strong>costo</strong> de ejecutar infraestructura de streaming en tiempo real puede ser mayor que el de trabajos por lotes más simples.</p></div>
-        </div>
-      </div><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwN-l9NVIiRutvxF-JPcRJbFd-7LeeItMHTi4ytMlxoNes3ZUaRfVPMFETMNv2XMsmfs5FCZhN-mUPSeOwqLQFQCSVJUD5qpk2y8staadY44dm-mk-f4rWTpGQFnk5lnRtLTc9klQEm6shUUF73Zj-xNzJkkPFzJQ536AR4lD5xfG-mCRJ9nlPTw7xjtELdEq1gFyXpcZgcoFXvSQdiA==" target="_blank" rel="noopener noreferrer">elmundodelosdatos.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2GYlXtBy2NJOdnThG9ri-7zYUGVPaIvlUBX8kP34G_2N_A8Ni_soNd9HZRTrrq4aOqOt4OajK--dY4XwRbZCRm8w-ADE2_QUbLPSk_QItvVIYK2QYdkRZvoruE2BxMsWKfA3T0QtCt8NPGGvvM-eH3wWA3qL9D8oJlshAqA5Q6m_N8nEqHNpjIHMfj7Z4fC1roHBHFbCDt8NP-AE-Vkrsht6S6uUWXv1el_QJQ_qX8ObRdNJ26OdwAwWnENIDfVwbpbq47aT8" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgGEhZ-6rRwC4WC0COuroDfQsi4L5JLYIrxy-TFq5zrbExJyf9sDPcvp8qALmnksxOCFGMiurG1ENyHl3W6kbDMAWtQTDGTYmw4DWjIddMYeRorydXCI3bRv_GN_P4h1lgZ8-fn9xUG-G7WC5W-VlrOt_y8gdsN5WlEBOB5ELVLSunPAEWlpedJikI" target="_blank" rel="noopener noreferrer">striim.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsApuJIvyny-CAla81DZgwoJjc-ArcQJlq8P-qnHw5bwV34tbBQ21piVXeRupVGqe3V1si5tIlTyTfBQ4YD0qlXJIXT5t4ygG3QKWxngobSbBjNUxkZnGSK5R5myOFJgvWIGk7r_gGndBJ7cN1FP50RbpF4oj2-w==" target="_blank" rel="noopener noreferrer">estuary.dev</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHTXEN_tqfnxamNI-PoU-rSlijMwHHBKMREt0KseX5SPXDjSzXWNiQshRf4Dkj5XjClfu4L03W_qjzWumg1BsyzYsPeDGB_IjUCOF2gw7D3yOOqXsyiHPuJQwiZuI78BXtk3xq7UV0CQW0T1r7-dTDRQIjzEpeWIEVzK0asQN44Vd63d5nwSF5k5J_ozY6S0JAP-2BlKkYhFnd2bdaBEnuLzUJyZDWG96vq24c00TagimWCorCB6i_FV0pQMAPFPRkaXacS0b70KMvxs00aP-0rmd6SmiCWC-UuaGlsO11AU0PzsWIM" target="_blank" rel="noopener noreferrer">mariadb.com</a></li></ul>
-  </div>
-</body>
+      </div>
+      <h2>Recursos Adicionales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwN-l9NVIiRutvxF-JPcRJbFd-7LeeItMHTi4ytMlxoNes3ZUaRfVPMFETMNv2XMsmfs5FCZhN-mUPSeOwqLQFQCSVJUD5qpk2y8staadY44dm-mk-f4rWTpGQFnk5lnRtLTc9klQEm6shUUF73Zj-xNzJkkPFzJQ536AR4lD5xfG-mCRJ9nlPTw7xjtELdEq1gFyXpcZgcoFXvSQdiA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >elmundodelosdatos.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2GYlXtBy2NJOdnThG9ri-7zYUGVPaIvlUBX8kP34G_2N_A8Ni_soNd9HZRTrrq4aOqOt4OajK--dY4XwRbZCRm8w-ADE2_QUbLPSk_QItvVIYK2QYdkRZvoruE2BxMsWKfA3T0QtCt8NPGGvvM-eH3wWA3qL9D8oJlshAqA5Q6m_N8nEqHNpjIHMfj7Z4fC1roHBHFbCDt8NP-AE-Vkrsht6S6uUWXv1el_QJQ_qX8ObRdNJ26OdwAwWnENIDfVwbpbq47aT8"
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgGEhZ-6rRwC4WC0COuroDfQsi4L5JLYIrxy-TFq5zrbExJyf9sDPcvp8qALmnksxOCFGMiurG1ENyHl3W6kbDMAWtQTDGTYmw4DWjIddMYeRorydXCI3bRv_GN_P4h1lgZ8-fn9xUG-G7WC5W-VlrOt_y8gdsN5WlEBOB5ELVLSunPAEWlpedJikI"
+            target="_blank"
+            rel="noopener noreferrer"
+            >striim.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsApuJIvyny-CAla81DZgwoJjc-ArcQJlq8P-qnHw5bwV34tbBQ21piVXeRupVGqe3V1si5tIlTyTfBQ4YD0qlXJIXT5t4ygG3QKWxngobSbBjNUxkZnGSK5R5myOFJgvWIGk7r_gGndBJ7cN1FP50RbpF4oj2-w=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >estuary.dev</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHTXEN_tqfnxamNI-PoU-rSlijMwHHBKMREt0KseX5SPXDjSzXWNiQshRf4Dkj5XjClfu4L03W_qjzWumg1BsyzYsPeDGB_IjUCOF2gw7D3yOOqXsyiHPuJQwiZuI78BXtk3xq7UV0CQW0T1r7-dTDRQIjzEpeWIEVzK0asQN44Vd63d5nwSF5k5J_ozY6S0JAP-2BlKkYhFnd2bdaBEnuLzUJyZDWG96vq24c00TagimWCorCB6i_FV0pQMAPFPRkaXacS0b70KMvxs00aP-0rmd6SmiCWC-UuaGlsO11AU0PzsWIM"
+            target="_blank"
+            rel="noopener noreferrer"
+            >mariadb.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

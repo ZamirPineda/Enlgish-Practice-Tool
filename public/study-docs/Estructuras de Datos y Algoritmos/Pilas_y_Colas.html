@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pilas y Colas</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pilas y Colas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,104 +52,817 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Pilas y Colas</h1>
+      <p># Concepto de Ingeniería de Software: Pilas y Colas</p>
+      <p>
+        Las Pilas (Stacks) y Colas (Queues) son dos de las estructuras de datos
+        abstractas más fundamentales y utilizadas en la ingeniería de software.
+        Ambas organizan los datos de manera lineal, pero difieren
+        fundamentalmente en el principio de cómo se añaden y eliminan los
+        elementos, lo que las hace adecuadas para distintos escenarios.
+      </p>
+      <h2>Pilas (Stacks)</h2>
+      <p>
+        Una Pila es una estructura de datos lineal que sigue un principio de
+        "último en entrar, primero en salir" (LIFO - Last-In, First-Out). Piensa
+        en una pila de platos: el último plato que pones encima es el primero
+        que quitas.
+      </p>
+      <h3>Conceptos Principales</h3>
+      <ul>
+        <li>
+          <strong>Principio LIFO (Last-In, First-Out):</strong> El último
+          elemento que se añade a la pila es el primero en ser eliminado.
+        </li>
+        <li>
+          <strong>Top (Cima):</strong> Es la única posición de la pila donde se
+          pueden añadir o eliminar elementos.
+        </li>
+        <li><strong>Operaciones Fundamentales:</strong></li>
+        <li>* <code>Push()</code>: Añade un elemento a la cima de la pila.</li>
+        <li>
+          * <code>Pop()</code>: Elimina y devuelve el elemento de la cima de la
+          pila. Si la pila está vacía, se produce un error (underflow).
+        </li>
+        <li>
+          * <code>Peek()</code> (o <code>Top()</code>): Devuelve el elemento de
+          la cima de la pila sin eliminarlo.
+        </li>
+        <li>* <code>IsEmpty()</code>: Comprueba si la pila está vacía.</li>
+        <li>
+          * <code>Size()</code>: Devuelve el número de elementos en la pila.
+        </li>
+      </ul>
+      <h3>Casos de Uso Comunes</h3>
+      <ul>
+        <li>
+          <strong>Gestión de la Pila de Llamadas (Call Stack):</strong> Los
+          sistemas operativos utilizan una pila para gestionar las llamadas a
+          funciones. Cada vez que una función es llamada, se "apila" información
+          sobre ella; cuando termina, se "desapila".
+        </li>
+        <li>
+          <strong>Deshacer/Rehacer (Undo/Redo):</strong> Las acciones realizadas
+          por un usuario en una aplicación se guardan en una pila para permitir
+          deshacerlas.
+        </li>
+        <li>
+          <strong>Historial del Navegador:</strong> El botón "Atrás" de un
+          navegador web funciona como una pila. Cada página visitada se apila, y
+          al hacer clic en "Atrás", se desapila la página actual para mostrar la
+          anterior.
+        </li>
+        <li>
+          <strong>Evaluación de Expresiones:</strong> Se utilizan para convertir
+          y evaluar expresiones matemáticas (por ejemplo, de notación infija a
+          postfija).
+        </li>
+        <li>
+          <strong>Algoritmos de Backtracking:</strong> En la búsqueda en
+          profundidad (DFS) en grafos o árboles, o para resolver laberintos, las
+          pilas ayudan a recordar el camino para "retroceder" si una rama no
+          lleva a una solución.
+        </li>
+      </ul>
+      <h3>Ventajas</h3>
+      <ul>
+        <li>
+          <strong>Simplicidad:</strong> Concepto muy intuitivo y fácil de
+          entender e implementar.
+        </li>
+        <li>
+          <strong>Eficiencia:</strong> Las operaciones <code>push</code> y
+          <code>pop</code> son muy eficientes, típicamente O(1) (tiempo
+          constante).
+        </li>
+        <li>
+          <strong>Control de Orden:</strong> Garantiza que los elementos se
+          procesen estrictamente en el orden LIFO, lo cual es esencial para
+          ciertos algoritmos y funcionalidades.
+        </li>
+      </ul>
+      <h3>Desventajas</h3>
+      <ul>
+        <li>
+          <strong>Acceso Limitado:</strong> Solo se puede acceder al elemento
+          superior. Para acceder a elementos intermedios, es necesario desapilar
+          todos los elementos que están por encima.
+        </li>
+        <li>
+          <strong>Stack Overflow:</strong> Si se implementa con un array de
+          tamaño fijo, puede ocurrir un "desbordamiento de pila" (<code
+            >stack overflow</code
+          >) si se intenta añadir elementos a una pila llena.
+        </li>
+      </ul>
+      <p>---</p>
+      <h2>Colas (Queues)</h2>
+      <p>
+        Una Cola es una estructura de datos lineal que sigue un principio de
+        "primero en entrar, primero en salir" (<span
+          class="tooltip"
+          data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+          >FIFO</span
+        >
+        - First-In, First-Out). Piensa en una cola de personas esperando en una
+        ventanilla: el primero en llegar es el primero en ser atendido.
+      </p>
+      <h3>Conceptos Principales</h3>
+      <ul>
+        <li>
+          <strong
+            >Principio
+            <span
+              class="tooltip"
+              data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+              >FIFO</span
+            >
+            (First-In, First-Out):</strong
+          >
+          El primer elemento que se añade a la cola es el primero en ser
+          eliminado.
+        </li>
+        <li>
+          <strong>Front (Frente):</strong> Es la posición de la cola donde se
+          eliminan los elementos.
+        </li>
+        <li>
+          <strong>Rear (Parte Trasera/Final):</strong> Es la posición de la cola
+          donde se añaden los elementos.
+        </li>
+        <li><strong>Operaciones Fundamentales:</strong></li>
+        <li>
+          * <code>Enqueue()</code>: Añade un elemento al final de la cola.
+        </li>
+        <li>
+          * <code>Dequeue()</code>: Elimina y devuelve el elemento del frente de
+          la cola. Si la cola está vacía, se produce un error (underflow).
+        </li>
+        <li>
+          * <code>Peek()</code> (o <code>Front()</code>): Devuelve el elemento
+          del frente de la cola sin eliminarlo.
+        </li>
+        <li>* <code>IsEmpty()</code>: Comprueba si la cola está vacía.</li>
+        <li>
+          * <code>Size()</code>: Devuelve el número de elementos en la cola.
+        </li>
+      </ul>
+      <h3>Casos de Uso Comunes</h3>
+      <ul>
+        <li>
+          <strong>Programación de Tareas:</strong> Los sistemas operativos
+          utilizan colas para gestionar y programar procesos, hilos o
+          solicitudes que esperan su turno para ser ejecutados por la CPU o un
+          recurso.
+        </li>
+        <li>
+          <strong>Colas de Impresión:</strong> Los documentos enviados a una
+          impresora se almacenan en una cola y se imprimen en el orden en que
+          fueron recibidos.
+        </li>
+        <li>
+          <strong>Sistemas de Mensajería (Message Queues):</strong> En
+          arquitecturas distribuidas, las colas de mensajes permiten la
+          comunicación asíncrona entre diferentes servicios o componentes,
+          asegurando que los mensajes se procesen en el orden correcto.
+        </li>
+        <li>
+          <strong>Búsqueda en Amplitud (BFS - Breadth-First Search):</strong> Un
+          algoritmo para recorrer grafos o árboles donde se visitan todos los
+          vecinos de un nodo antes de pasar a los vecinos de los vecinos,
+          utilizando una cola para mantener el orden de exploración.
+        </li>
+        <li>
+          <strong>Simulaciones:</strong> Para modelar sistemas donde entidades
+          esperan su turno (ej., llamadas a un centro de atención al cliente,
+          clientes en una tienda).
+        </li>
+      </ul>
+      <h3>Ventajas</h3>
+      <ul>
+        <li>
+          <strong>Simplicidad:</strong> Concepto fácil de entender e
+          implementar, modelando muchas situaciones del mundo real.
+        </li>
+        <li>
+          <strong>Eficiencia:</strong> Las operaciones <code>enqueue</code> y
+          <code>dequeue</code> son muy eficientes, típicamente O(1).
+        </li>
+        <li>
+          <strong>Control de Orden:</strong> Garantiza que los elementos se
+          procesen en el estricto orden
+          <span
+            class="tooltip"
+            data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+            >FIFO</span
+          >, lo cual es crucial para la equidad y el procesamiento secuencial.
+        </li>
+        <li>
+          <strong>Desacoplamiento:</strong> Permite que los productores de datos
+          y los consumidores de datos operen a su propio ritmo sin depender
+          directamente uno del otro, mejorando la robustez del sistema.
+        </li>
+      </ul>
+      <h3>Desventajas</h3>
+      <ul>
+        <li>
+          <strong>Acceso Limitado:</strong> Solo se pueden acceder a los
+          elementos del frente y la parte trasera.
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+              >Overhead</span
+            >
+            de Memoria:</strong
+          >
+          Si la cola no tiene un límite o no se gestiona adecuadamente, puede
+          crecer indefinidamente y consumir una cantidad significativa de
+          memoria.
+        </li>
+        <li>
+          <strong>No Prioritaria:</strong> Una cola simple no tiene en cuenta
+          las prioridades; todos los elementos son procesados en estricto orden
+          de llegada. Para prioridades, se necesita una "Cola de Prioridad".
+        </li>
+      </ul>
+      <h2>Ejemplo de Aplicación Real</h2>
+      <p>
+        Aquí tienes un ejemplo detallado de la aplicación de Pilas y Colas en un
+        escenario del mundo real, utilizando un formato claro con encabezados en
+        Markdown.
+      </p>
+      <p>---</p>
+      <p>
+        # Aplicación de Pilas y Colas: Sistema de Procesamiento de Pedidos y
+        Gestión de Acciones de Usuario
+      </p>
+      <h2>1. Descripción del Problema</h2>
+      <p>
+        Imaginemos un sistema de comercio electrónico complejo que maneja dos
+        tipos principales de flujos de trabajo, cada uno con requisitos
+        distintos sobre cómo se gestionan los elementos:
+      </p>
+      <p>
+        1. <strong>Procesamiento de Pedidos (Backend):</strong> Los clientes
+        realizan pedidos online. Estos pedidos deben ser procesados por los
+        agentes de un almacén o centro de distribución. Es crucial que los
+        pedidos se procesen en el orden en que fueron recibidos para asegurar la
+        equidad y evitar cuellos de botella. Un nuevo pedido debe esperar su
+        turno hasta que los pedidos anteriores hayan sido manejados.
+      </p>
+      <p>
+        2.
+        <strong
+          >Gestión de Acciones de Usuario (Frontend - Interfaz de Creación de
+          Pedidos):</strong
+        >
+        Mientras un usuario está creando un pedido (añadiendo productos al
+        carrito, ajustando cantidades, aplicando descuentos), puede cometer
+        errores o cambiar de opinión. El sistema debe ofrecer una funcionalidad
+        de "Deshacer" (Undo) que le permita revertir las últimas acciones
+        realizadas, una a una, hasta un estado anterior. Por ejemplo, si el
+        usuario añade un producto, luego cambia su cantidad y luego elimina
+        otro, al usar "Deshacer", primero se revertiría la eliminación, luego el
+        cambio de cantidad y finalmente la adición del primer producto.
+      </p>
+      <h2>2. Cómo se Implementa con Pilas y Colas</h2>
+      <p>
+        Este escenario es un ejemplo perfecto donde tanto las colas (<span
+          class="tooltip"
+          data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+          >FIFO</span
+        >
+        - First-In, First-Out) como las pilas (LIFO - Last-In, First-Out) son
+        las estructuras de datos ideales para resolver los problemas planteados.
+      </p>
+      <h3>
+        A. Cola de Procesamiento de Pedidos (<span
+          class="tooltip"
+          data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+          >FIFO</span
+        >)
+      </h3>
+      <ul>
+        <li>
+          <strong>Concepto:</strong> Para el procesamiento de pedidos en el
+          backend, necesitamos una <strong>Cola (Queue)</strong>. Una cola
+          garantiza que el primer elemento que entra es el primer elemento que
+          sale. Esto simula una línea de espera donde los clientes son atendidos
+          en el orden de llegada.
+        </li>
+        <li><strong>Funcionamiento:</strong></li>
+        <li>
+          * Cuando un cliente finaliza y confirma un pedido, este pedido se
+          <strong>enqueues (pone en la cola)</strong>.
+        </li>
+        <li>
+          * Los agentes de almacén o el sistema de procesamiento automatizado
+          <strong>dequeues (sacan de la cola)</strong> el pedido más antiguo (el
+          que lleva más tiempo esperando) para procesarlo.
+        </li>
+        <li>* Si la cola está vacía, no hay pedidos para procesar.</li>
+        <li><strong>Ejemplo Práctico:</strong></li>
+      </ul>
+      <p>
+        1. <strong>Cliente A</strong> realiza un pedido (<code>Pedido A</code>).
+        <code>Pedido A</code> se <code>enqueue</code> en la cola.
+      </p>
+      <p><code>Cola: [Pedido A]</code></p>
+      <p>
+        2. <strong>Cliente B</strong> realiza un pedido (<code>Pedido B</code>).
+        <code>Pedido B</code> se <code>enqueue</code> en la cola.
+      </p>
+      <p><code>Cola: [Pedido A, Pedido B]</code></p>
+      <p>
+        3. <strong>Cliente C</strong> realiza un pedido (<code>Pedido C</code>).
+        <code>Pedido C</code> se <code>enqueue</code> en la cola.
+      </p>
+      <p><code>Cola: [Pedido A, Pedido B, Pedido C]</code></p>
+      <p>
+        4. El <strong>Agente 1</strong> está libre y
+        <strong>dequeues</strong> el primer pedido. Recibe
+        <code>Pedido A</code>.
+      </p>
+      <p><code>Cola: [Pedido B, Pedido C]</code></p>
+      <p>
+        5. El <strong>Agente 2</strong> está libre y
+        <strong>dequeues</strong> el siguiente pedido. Recibe
+        <code>Pedido B</code>.
+      </p>
+      <p><code>Cola: [Pedido C]</code></p>
+      <p>
+        6. El <strong>Agente 1</strong> (terminando <code>Pedido A</code>) está
+        libre y <strong>dequeues</strong> el siguiente pedido. Recibe
+        <code>Pedido C</code>.
+      </p>
+      <p><code>Cola: []</code></p>
+      <p>
+        Este proceso asegura que los pedidos se procesan de manera justa y
+        eficiente, en el orden cronológico de su creación.
+      </p>
+      <h3>B. Pila de Acciones del Usuario (LIFO)</h3>
+      <ul>
+        <li>
+          <strong>Concepto:</strong> Para la funcionalidad de "Deshacer" en la
+          interfaz de usuario, necesitamos una <strong>Pila (Stack)</strong>.
+          Una pila sigue el principio LIFO (Last-In, First-Out), lo que
+          significa que el último elemento añadido es el primero en ser
+          removido. Esto es perfecto para revertir acciones, ya que la acción
+          más reciente es la primera que se desea "deshacer".
+        </li>
+        <li><strong>Funcionamiento:</strong></li>
+        <li>
+          * Cada vez que un usuario realiza una acción significativa durante la
+          creación de un pedido (por ejemplo, añadir un artículo, cambiar una
+          cantidad, eliminar un artículo), se crea un "registro de acción" (que
+          incluye información para revertir la acción) y se
+          <strong>pushes (apila)</strong> en la pila de acciones.
+        </li>
+        <li>
+          * Cuando el usuario hace clic en "Deshacer", la última acción
+          registrada se <strong>pops (desapila)</strong> de la pila, y el
+          sistema ejecuta la lógica para revertir esa acción específica.
+        </li>
+        <li><strong>Ejemplo Práctico:</strong></li>
+        <li>
+          * <strong>Usuario</strong> está creando un <code>Pedido X</code>.
+        </li>
+        <li>* El usuario <strong>añade "Laptop" al carrito</strong>.</li>
+        <li>
+          * Se registra <code>Accion: Añadir("Laptop", Cantidad: 1)</code> y se
+          <code>push</code> a la pila.
+        </li>
+      </ul>
+      <p><code>Pila: [Añadir("Laptop")]</code></p>
+      <ul>
+        <li>
+          * El usuario <strong>cambia la cantidad de "Laptop" a 2</strong>.
+        </li>
+        <li>
+          * Se registra
+          <code>Accion: CambiarCantidad("Laptop", De: 1, A: 2)</code> y se
+          <code>push</code> a la pila.
+        </li>
+      </ul>
+      <p><code>Pila: [Añadir("Laptop"), CambiarCantidad("Laptop")]</code></p>
+      <ul>
+        <li>* El usuario <strong>añade "Ratón" al carrito</strong>.</li>
+        <li>
+          * Se registra <code>Accion: Añadir("Ratón", Cantidad: 1)</code> y se
+          <code>push</code> a la pila.
+        </li>
+      </ul>
+      <p>
+        <code
+          >Pila: [Añadir("Laptop"), CambiarCantidad("Laptop"),
+          Añadir("Ratón")]</code
+        >
+      </p>
+      <ul>
+        <li>* El usuario hace clic en <strong>"Deshacer"</strong>.</li>
+        <li>
+          * Se <code>pop</code> la última acción: <code>Añadir("Ratón")</code>.
+          El sistema elimina el "Ratón" del carrito.
+        </li>
+      </ul>
+      <p><code>Pila: [Añadir("Laptop"), CambiarCantidad("Laptop")]</code></p>
+      <ul>
+        <li>* El usuario hace clic en <strong>"Deshacer"</strong> de nuevo.</li>
+        <li>
+          * Se <code>pop</code> la última acción:
+          <code>CambiarCantidad("Laptop", De: 1, A: 2)</code>. El sistema cambia
+          la cantidad de "Laptop" de nuevo a 1.
+        </li>
+      </ul>
+      <p><code>Pila: [Añadir("Laptop")]</code></p>
+      <ul>
+        <li>
+          * El usuario hace clic en <strong>"Deshacer"</strong> por tercera vez.
+        </li>
+        <li>
+          * Se <code>pop</code> la última acción: <code>Añadir("Laptop")</code>.
+          El sistema elimina la "Laptop" del carrito.
+        </li>
+      </ul>
+      <p><code>Pila: []</code></p>
+      <h2>3. Resultados Obtenidos</h2>
+      <h3>Beneficios de la Cola de Pedidos:</h3>
+      <ul>
+        <li>
+          <strong>Equidad y Orden:</strong> Garantiza que los pedidos se
+          procesen estrictamente en el orden en que fueron recibidos, evitando
+          favoritismos o que pedidos más antiguos sean olvidados.
+        </li>
+        <li>
+          <strong>Gestión de Carga:</strong> Permite que el sistema absorba
+          picos de demanda. Si hay muchos pedidos de repente, simplemente se
+          ponen en cola y se procesan a medida que los agentes están
+          disponibles, sin perder ninguno.
+        </li>
+        <li>
+          <strong>Flujo de Trabajo Claro:</strong> Proporciona un flujo de
+          trabajo sencillo y predecible para los agentes de procesamiento, ya
+          que siempre saben qué pedido deben tomar a continuación.
+        </li>
+      </ul>
+      <h3>Beneficios de la Pila de Acciones:</h3>
+      <ul>
+        <li>
+          <strong>Mejora de la Experiencia de Usuario (UX):</strong> Ofrece a
+          los usuarios control y flexibilidad, permitiéndoles corregir errores
+          fácilmente sin tener que empezar desde cero. Esto reduce la
+          frustración y mejora la satisfacción del cliente.
+        </li>
+        <li>
+          <strong>Reducción de Errores:</strong> Al permitir deshacer acciones,
+          se minimiza la probabilidad de que los usuarios confirmen pedidos
+          incorrectos, lo que a su vez reduce las cancelaciones, devoluciones y
+          la necesidad de atención al cliente.
+        </li>
+        <li>
+          <strong>Interacción Intuitiva:</strong> La funcionalidad "Deshacer" se
+          ha convertido en un estándar de facto en muchas aplicaciones, y su
+          implementación con una pila es natural e intuitiva.
+        </li>
+      </ul>
+      <h2>4. Conclusión</h2>
+      <p>
+        El uso de <strong>Colas</strong> para el procesamiento de pedidos y
+        <strong>Pilas</strong> para la gestión de acciones de usuario demuestra
+        cómo estas estructuras de datos fundamentales de la ingeniería de
+        software son herramientas poderosas para resolver problemas del mundo
+        real. Cada una se elige por sus propiedades inherentes (<span
+          class="tooltip"
+          data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+          >FIFO</span
+        >
+        para orden cronológico, LIFO para reversión de acciones), resultando en
+        un sistema más robusto, eficiente y amigable para el usuario.
+      </p>
+      <h2>Preguntas de Entrevista</h2>
+      <div>
+        <div class="accordion-item">
+          <p class="accordion-question">
+            Más allá de las definiciones básicas LIFO/FIFO, ¿cuándo elegirías
+            una pila sobre una cola (o viceversa) para resolver un problema de
+            diseño, y cuáles son las implicaciones clave de esa decisión en
+            términos de rendimiento o complejidad?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La elección depende fundamentalmente del patrón de acceso a los
+              datos. Una pila es ideal para problemas donde el último elemento
+              agregado es el primero en ser procesado (LIFO), como el rastreo de
+              llamadas de funciones (call stack), deshacer/rehacer
+              funcionalidades en editores o el análisis de expresiones. Una cola
+              es mejor para escenarios
+              <span
+                class="tooltip"
+                data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+                >FIFO</span
+              >, como la gestión de tareas pendientes, el procesamiento de
+              solicitudes en un servidor o la implementación de un buffer. La
+              implicación clave es la predicción del orden de procesamiento: las
+              pilas garantizan que el elemento "más reciente" sea el primero en
+              salir, lo cual puede simplificar algoritmos recursivos o de
+              retroceso. Las colas aseguran la equidad o el orden de llegada,
+              crucial para sistemas donde el orden cronológico es importante,
+              evitando el "starvation" de elementos más antiguos. Ambas ofrecen
+              operaciones O(1) para añadir y eliminar en sus respectivos
+              extremos, asumiendo una implementación eficiente (e.g., lista
+              enlazada).
+            </p>
+          </div>
+        </div>
 
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Pilas y Colas</h1>
-    <p># Concepto de Ingeniería de Software: Pilas y Colas</p><p>Las Pilas (Stacks) y Colas (Queues) son dos de las estructuras de datos abstractas más fundamentales y utilizadas en la ingeniería de software. Ambas organizan los datos de manera lineal, pero difieren fundamentalmente en el principio de cómo se añaden y eliminan los elementos, lo que las hace adecuadas para distintos escenarios.</p><h2>Pilas (Stacks)</h2><p>Una Pila es una estructura de datos lineal que sigue un principio de "último en entrar, primero en salir" (LIFO - Last-In, First-Out). Piensa en una pila de platos: el último plato que pones encima es el primero que quitas.</p><h3>Conceptos Principales</h3><ul><li>  <strong>Principio LIFO (Last-In, First-Out):</strong> El último elemento que se añade a la pila es el primero en ser eliminado.</li><li>  <strong>Top (Cima):</strong> Es la única posición de la pila donde se pueden añadir o eliminar elementos.</li><li>  <strong>Operaciones Fundamentales:</strong></li><li>   *   <code>Push()</code>: Añade un elemento a la cima de la pila.</li><li>   *   <code>Pop()</code>: Elimina y devuelve el elemento de la cima de la pila. Si la pila está vacía, se produce un error (underflow).</li><li>   *   <code>Peek()</code> (o <code>Top()</code>): Devuelve el elemento de la cima de la pila sin eliminarlo.</li><li>   *   <code>IsEmpty()</code>: Comprueba si la pila está vacía.</li><li>   *   <code>Size()</code>: Devuelve el número de elementos en la pila.</li></ul><h3>Casos de Uso Comunes</h3><ul><li>  <strong>Gestión de la Pila de Llamadas (Call Stack):</strong> Los sistemas operativos utilizan una pila para gestionar las llamadas a funciones. Cada vez que una función es llamada, se "apila" información sobre ella; cuando termina, se "desapila".</li><li>  <strong>Deshacer/Rehacer (Undo/Redo):</strong> Las acciones realizadas por un usuario en una aplicación se guardan en una pila para permitir deshacerlas.</li><li>  <strong>Historial del Navegador:</strong> El botón "Atrás" de un navegador web funciona como una pila. Cada página visitada se apila, y al hacer clic en "Atrás", se desapila la página actual para mostrar la anterior.</li><li>  <strong>Evaluación de Expresiones:</strong> Se utilizan para convertir y evaluar expresiones matemáticas (por ejemplo, de notación infija a postfija).</li><li>  <strong>Algoritmos de Backtracking:</strong> En la búsqueda en profundidad (DFS) en grafos o árboles, o para resolver laberintos, las pilas ayudan a recordar el camino para "retroceder" si una rama no lleva a una solución.</li></ul><h3>Ventajas</h3><ul><li>  <strong>Simplicidad:</strong> Concepto muy intuitivo y fácil de entender e implementar.</li><li>  <strong>Eficiencia:</strong> Las operaciones <code>push</code> y <code>pop</code> son muy eficientes, típicamente O(1) (tiempo constante).</li><li>  <strong>Control de Orden:</strong> Garantiza que los elementos se procesen estrictamente en el orden LIFO, lo cual es esencial para ciertos algoritmos y funcionalidades.</li></ul><h3>Desventajas</h3><ul><li>  <strong>Acceso Limitado:</strong> Solo se puede acceder al elemento superior. Para acceder a elementos intermedios, es necesario desapilar todos los elementos que están por encima.</li><li>  <strong>Stack Overflow:</strong> Si se implementa con un array de tamaño fijo, puede ocurrir un "desbordamiento de pila" (<code>stack overflow</code>) si se intenta añadir elementos a una pila llena.</li></ul><p>---</p><h2>Colas (Queues)</h2><p>Una Cola es una estructura de datos lineal que sigue un principio de "primero en entrar, primero en salir" (<span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span> - First-In, First-Out). Piensa en una cola de personas esperando en una ventanilla: el primero en llegar es el primero en ser atendido.</p><h3>Conceptos Principales</h3><ul><li>  <strong>Principio <span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span> (First-In, First-Out):</strong> El primer elemento que se añade a la cola es el primero en ser eliminado.</li><li>  <strong>Front (Frente):</strong> Es la posición de la cola donde se eliminan los elementos.</li><li>  <strong>Rear (Parte Trasera/Final):</strong> Es la posición de la cola donde se añaden los elementos.</li><li>  <strong>Operaciones Fundamentales:</strong></li><li>   *   <code>Enqueue()</code>: Añade un elemento al final de la cola.</li><li>   *   <code>Dequeue()</code>: Elimina y devuelve el elemento del frente de la cola. Si la cola está vacía, se produce un error (underflow).</li><li>   *   <code>Peek()</code> (o <code>Front()</code>): Devuelve el elemento del frente de la cola sin eliminarlo.</li><li>   *   <code>IsEmpty()</code>: Comprueba si la cola está vacía.</li><li>   *   <code>Size()</code>: Devuelve el número de elementos en la cola.</li></ul><h3>Casos de Uso Comunes</h3><ul><li>  <strong>Programación de Tareas:</strong> Los sistemas operativos utilizan colas para gestionar y programar procesos, hilos o solicitudes que esperan su turno para ser ejecutados por la CPU o un recurso.</li><li>  <strong>Colas de Impresión:</strong> Los documentos enviados a una impresora se almacenan en una cola y se imprimen en el orden en que fueron recibidos.</li><li>  <strong>Sistemas de Mensajería (Message Queues):</strong> En arquitecturas distribuidas, las colas de mensajes permiten la comunicación asíncrona entre diferentes servicios o componentes, asegurando que los mensajes se procesen en el orden correcto.</li><li>  <strong>Búsqueda en Amplitud (BFS - Breadth-First Search):</strong> Un algoritmo para recorrer grafos o árboles donde se visitan todos los vecinos de un nodo antes de pasar a los vecinos de los vecinos, utilizando una cola para mantener el orden de exploración.</li><li>  <strong>Simulaciones:</strong> Para modelar sistemas donde entidades esperan su turno (ej., llamadas a un centro de atención al cliente, clientes en una tienda).</li></ul><h3>Ventajas</h3><ul><li>  <strong>Simplicidad:</strong> Concepto fácil de entender e implementar, modelando muchas situaciones del mundo real.</li><li>  <strong>Eficiencia:</strong> Las operaciones <code>enqueue</code> y <code>dequeue</code> son muy eficientes, típicamente O(1).</li><li>  <strong>Control de Orden:</strong> Garantiza que los elementos se procesen en el estricto orden <span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span>, lo cual es crucial para la equidad y el procesamiento secuencial.</li><li>  <strong>Desacoplamiento:</strong> Permite que los productores de datos y los consumidores de datos operen a su propio ritmo sin depender directamente uno del otro, mejorando la robustez del sistema.</li></ul><h3>Desventajas</h3><ul><li>  <strong>Acceso Limitado:</strong> Solo se pueden acceder a los elementos del frente y la parte trasera.</li><li>  <strong><span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">Overhead</span> de Memoria:</strong> Si la cola no tiene un límite o no se gestiona adecuadamente, puede crecer indefinidamente y consumir una cantidad significativa de memoria.</li><li>  <strong>No Prioritaria:</strong> Una cola simple no tiene en cuenta las prioridades; todos los elementos son procesados en estricto orden de llegada. Para prioridades, se necesita una "Cola de Prioridad".</li></ul><h2>Ejemplo de Aplicación Real</h2><p>Aquí tienes un ejemplo detallado de la aplicación de Pilas y Colas en un escenario del mundo real, utilizando un formato claro con encabezados en Markdown.</p><p>---</p><p># Aplicación de Pilas y Colas: Sistema de Procesamiento de Pedidos y Gestión de Acciones de Usuario</p><h2>1. Descripción del Problema</h2><p>Imaginemos un sistema de comercio electrónico complejo que maneja dos tipos principales de flujos de trabajo, cada uno con requisitos distintos sobre cómo se gestionan los elementos:</p><p>1.  <strong>Procesamiento de Pedidos (Backend):</strong> Los clientes realizan pedidos online. Estos pedidos deben ser procesados por los agentes de un almacén o centro de distribución. Es crucial que los pedidos se procesen en el orden en que fueron recibidos para asegurar la equidad y evitar cuellos de botella. Un nuevo pedido debe esperar su turno hasta que los pedidos anteriores hayan sido manejados.</p><p>2.  <strong>Gestión de Acciones de Usuario (Frontend - Interfaz de Creación de Pedidos):</strong> Mientras un usuario está creando un pedido (añadiendo productos al carrito, ajustando cantidades, aplicando descuentos), puede cometer errores o cambiar de opinión. El sistema debe ofrecer una funcionalidad de "Deshacer" (Undo) que le permita revertir las últimas acciones realizadas, una a una, hasta un estado anterior. Por ejemplo, si el usuario añade un producto, luego cambia su cantidad y luego elimina otro, al usar "Deshacer", primero se revertiría la eliminación, luego el cambio de cantidad y finalmente la adición del primer producto.</p><h2>2. Cómo se Implementa con Pilas y Colas</h2><p>Este escenario es un ejemplo perfecto donde tanto las colas (<span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span> - First-In, First-Out) como las pilas (LIFO - Last-In, First-Out) son las estructuras de datos ideales para resolver los problemas planteados.</p><h3>A. Cola de Procesamiento de Pedidos (<span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span>)</h3><ul><li>  <strong>Concepto:</strong> Para el procesamiento de pedidos en el backend, necesitamos una <strong>Cola (Queue)</strong>. Una cola garantiza que el primer elemento que entra es el primer elemento que sale. Esto simula una línea de espera donde los clientes son atendidos en el orden de llegada.</li><li>  <strong>Funcionamiento:</strong></li><li>   *   Cuando un cliente finaliza y confirma un pedido, este pedido se <strong>enqueues (pone en la cola)</strong>.</li><li>   *   Los agentes de almacén o el sistema de procesamiento automatizado <strong>dequeues (sacan de la cola)</strong> el pedido más antiguo (el que lleva más tiempo esperando) para procesarlo.</li><li>   *   Si la cola está vacía, no hay pedidos para procesar.</li><li>  <strong>Ejemplo Práctico:</strong></li></ul><p>    1.  <strong>Cliente A</strong> realiza un pedido (<code>Pedido A</code>). <code>Pedido A</code> se <code>enqueue</code> en la cola.</p><p>        <code>Cola: [Pedido A]</code></p><p>    2.  <strong>Cliente B</strong> realiza un pedido (<code>Pedido B</code>). <code>Pedido B</code> se <code>enqueue</code> en la cola.</p><p>        <code>Cola: [Pedido A, Pedido B]</code></p><p>    3.  <strong>Cliente C</strong> realiza un pedido (<code>Pedido C</code>). <code>Pedido C</code> se <code>enqueue</code> en la cola.</p><p>        <code>Cola: [Pedido A, Pedido B, Pedido C]</code></p><p>    4.  El <strong>Agente 1</strong> está libre y <strong>dequeues</strong> el primer pedido. Recibe <code>Pedido A</code>.</p><p>        <code>Cola: [Pedido B, Pedido C]</code></p><p>    5.  El <strong>Agente 2</strong> está libre y <strong>dequeues</strong> el siguiente pedido. Recibe <code>Pedido B</code>.</p><p>        <code>Cola: [Pedido C]</code></p><p>    6.  El <strong>Agente 1</strong> (terminando <code>Pedido A</code>) está libre y <strong>dequeues</strong> el siguiente pedido. Recibe <code>Pedido C</code>.</p><p>        <code>Cola: []</code></p><p>    Este proceso asegura que los pedidos se procesan de manera justa y eficiente, en el orden cronológico de su creación.</p><h3>B. Pila de Acciones del Usuario (LIFO)</h3><ul><li>  <strong>Concepto:</strong> Para la funcionalidad de "Deshacer" en la interfaz de usuario, necesitamos una <strong>Pila (Stack)</strong>. Una pila sigue el principio LIFO (Last-In, First-Out), lo que significa que el último elemento añadido es el primero en ser removido. Esto es perfecto para revertir acciones, ya que la acción más reciente es la primera que se desea "deshacer".</li><li>  <strong>Funcionamiento:</strong></li><li>   *   Cada vez que un usuario realiza una acción significativa durante la creación de un pedido (por ejemplo, añadir un artículo, cambiar una cantidad, eliminar un artículo), se crea un "registro de acción" (que incluye información para revertir la acción) y se <strong>pushes (apila)</strong> en la pila de acciones.</li><li>   *   Cuando el usuario hace clic en "Deshacer", la última acción registrada se <strong>pops (desapila)</strong> de la pila, y el sistema ejecuta la lógica para revertir esa acción específica.</li><li>  <strong>Ejemplo Práctico:</strong></li><li>   *   <strong>Usuario</strong> está creando un <code>Pedido X</code>.</li><li>   *   El usuario <strong>añade "Laptop" al carrito</strong>.</li><li>       *   Se registra <code>Accion: Añadir("Laptop", Cantidad: 1)</code> y se <code>push</code> a la pila.</li></ul><p>        <code>Pila: [Añadir("Laptop")]</code></p><ul><li>   *   El usuario <strong>cambia la cantidad de "Laptop" a 2</strong>.</li><li>       *   Se registra <code>Accion: CambiarCantidad("Laptop", De: 1, A: 2)</code> y se <code>push</code> a la pila.</li></ul><p>        <code>Pila: [Añadir("Laptop"), CambiarCantidad("Laptop")]</code></p><ul><li>   *   El usuario <strong>añade "Ratón" al carrito</strong>.</li><li>       *   Se registra <code>Accion: Añadir("Ratón", Cantidad: 1)</code> y se <code>push</code> a la pila.</li></ul><p>        <code>Pila: [Añadir("Laptop"), CambiarCantidad("Laptop"), Añadir("Ratón")]</code></p><ul><li>   *   El usuario hace clic en <strong>"Deshacer"</strong>.</li><li>       *   Se <code>pop</code> la última acción: <code>Añadir("Ratón")</code>. El sistema elimina el "Ratón" del carrito.</li></ul><p>        <code>Pila: [Añadir("Laptop"), CambiarCantidad("Laptop")]</code></p><ul><li>   *   El usuario hace clic en <strong>"Deshacer"</strong> de nuevo.</li><li>       *   Se <code>pop</code> la última acción: <code>CambiarCantidad("Laptop", De: 1, A: 2)</code>. El sistema cambia la cantidad de "Laptop" de nuevo a 1.</li></ul><p>        <code>Pila: [Añadir("Laptop")]</code></p><ul><li>   *   El usuario hace clic en <strong>"Deshacer"</strong> por tercera vez.</li><li>       *   Se <code>pop</code> la última acción: <code>Añadir("Laptop")</code>. El sistema elimina la "Laptop" del carrito.</li></ul><p>        <code>Pila: []</code></p><h2>3. Resultados Obtenidos</h2><h3>Beneficios de la Cola de Pedidos:</h3><ul><li>  <strong>Equidad y Orden:</strong> Garantiza que los pedidos se procesen estrictamente en el orden en que fueron recibidos, evitando favoritismos o que pedidos más antiguos sean olvidados.</li><li>  <strong>Gestión de Carga:</strong> Permite que el sistema absorba picos de demanda. Si hay muchos pedidos de repente, simplemente se ponen en cola y se procesan a medida que los agentes están disponibles, sin perder ninguno.</li><li>  <strong>Flujo de Trabajo Claro:</strong> Proporciona un flujo de trabajo sencillo y predecible para los agentes de procesamiento, ya que siempre saben qué pedido deben tomar a continuación.</li></ul><h3>Beneficios de la Pila de Acciones:</h3><ul><li>  <strong>Mejora de la Experiencia de Usuario (UX):</strong> Ofrece a los usuarios control y flexibilidad, permitiéndoles corregir errores fácilmente sin tener que empezar desde cero. Esto reduce la frustración y mejora la satisfacción del cliente.</li><li>  <strong>Reducción de Errores:</strong> Al permitir deshacer acciones, se minimiza la probabilidad de que los usuarios confirmen pedidos incorrectos, lo que a su vez reduce las cancelaciones, devoluciones y la necesidad de atención al cliente.</li><li>  <strong>Interacción Intuitiva:</strong> La funcionalidad "Deshacer" se ha convertido en un estándar de facto en muchas aplicaciones, y su implementación con una pila es natural e intuitiva.</li></ul><h2>4. Conclusión</h2><p>El uso de <strong>Colas</strong> para el procesamiento de pedidos y <strong>Pilas</strong> para la gestión de acciones de usuario demuestra cómo estas estructuras de datos fundamentales de la ingeniería de software son herramientas poderosas para resolver problemas del mundo real. Cada una se elige por sus propiedades inherentes (<span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span> para orden cronológico, LIFO para reversión de acciones), resultando en un sistema más robusto, eficiente y amigable para el usuario.</p><h2>Preguntas de Entrevista</h2><div>
         <div class="accordion-item">
-          <p class="accordion-question">Más allá de las definiciones básicas LIFO/FIFO, ¿cuándo elegirías una pila sobre una cola (o viceversa) para resolver un problema de diseño, y cuáles son las implicaciones clave de esa decisión en términos de rendimiento o complejidad?</p>
-          <div class="accordion-answer"><p>La elección depende fundamentalmente del patrón de acceso a los datos. Una pila es ideal para problemas donde el último elemento agregado es el primero en ser procesado (LIFO), como el rastreo de llamadas de funciones (call stack), deshacer/rehacer funcionalidades en editores o el análisis de expresiones. Una cola es mejor para escenarios <span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span>, como la gestión de tareas pendientes, el procesamiento de solicitudes en un servidor o la implementación de un buffer. La implicación clave es la predicción del orden de procesamiento: las pilas garantizan que el elemento "más reciente" sea el primero en salir, lo cual puede simplificar algoritmos recursivos o de retroceso. Las colas aseguran la equidad o el orden de llegada, crucial para sistemas donde el orden cronológico es importante, evitando el "starvation" de elementos más antiguos. Ambas ofrecen operaciones O(1) para añadir y eliminar en sus respectivos extremos, asumiendo una implementación eficiente (e.g., lista enlazada).</p></div>
+          <p class="accordion-question">
+            ¿Cómo afectaría la elección de una implementación basada en arrays
+            versus una basada en listas enlazadas a las operaciones de una pila
+            o una cola en términos de eficiencia espacial y temporal, incluyendo
+            el manejo de capacidad dinámica?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Implementación con Arrays: Para pilas, Push y Pop son O(1)
+              amortizado; el redimensionamiento es O(N) y ocurre cuando el array
+              se llena, causando picos de rendimiento. Para colas, si es
+              circular, Enqueue y Dequeue son O(1); si no es circular o hay
+              redimensionamiento, pueden ser O(N). Los arrays ofrecen buena
+              localidad de caché, pero pueden desperdiciar espacio o incurrir en
+              costos de redimensionamiento. Implementación con Listas Enlazadas:
+              Push y Pop (pila), o Enqueue y Dequeue (cola), son O(1). No
+              requieren redimensionamiento, por lo que la capacidad es dinámica
+              de forma natural. El costo espacial es ligeramente mayor debido a
+              los punteros. Las listas enlazadas son generalmente preferibles
+              cuando la capacidad es impredecible o se esperan muchas
+              inserciones/eliminaciones sin el costo de redimensionamiento.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">¿Cómo afectaría la elección de una implementación basada en arrays versus una basada en listas enlazadas a las operaciones de una pila o una cola en términos de eficiencia espacial y temporal, incluyendo el manejo de capacidad dinámica?</p>
-          <div class="accordion-answer"><p>Implementación con Arrays: Para pilas, Push y Pop son O(1) amortizado; el redimensionamiento es O(N) y ocurre cuando el array se llena, causando picos de rendimiento. Para colas, si es circular, Enqueue y Dequeue son O(1); si no es circular o hay redimensionamiento, pueden ser O(N). Los arrays ofrecen buena localidad de caché, pero pueden desperdiciar espacio o incurrir en costos de redimensionamiento. Implementación con Listas Enlazadas: Push y Pop (pila), o Enqueue y Dequeue (cola), son O(1). No requieren redimensionamiento, por lo que la capacidad es dinámica de forma natural. El costo espacial es ligeramente mayor debido a los punteros. Las listas enlazadas son generalmente preferibles cuando la capacidad es impredecible o se esperan muchas inserciones/eliminaciones sin el costo de redimensionamiento.</p></div>
+          <p class="accordion-question">
+            Imagina que estás diseñando un sistema de procesamiento de eventos
+            en tiempo real donde los eventos tienen diferentes niveles de
+            prioridad. ¿Podrías usar una pila o una cola estándar para esto? Si
+            no, ¿qué estructura de datos relacionada recomendarías y por qué?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              No, ni una pila ni una cola estándar serían adecuadas. Una pila
+              procesaría el evento más reciente (LIFO) y una cola procesaría el
+              evento más antiguo (<span
+                class="tooltip"
+                data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+                >FIFO</span
+              >), ambos sin considerar la prioridad. Para un sistema de eventos
+              con diferentes niveles de prioridad, la estructura de datos
+              recomendada es una Cola de Prioridad (Priority Queue). Esta
+              permite extraer el elemento de mayor prioridad (o menor, según la
+              implementación) en cualquier momento, lo cual es crucial para
+              asegurar que los eventos críticos sean procesados antes que los de
+              menor prioridad, incluso si llegaron más tarde. La implementación
+              común para una Cola de Prioridad es un heap binario, que garantiza
+              que las operaciones de inserción y extracción del elemento de
+              mayor prioridad se realicen en tiempo O(log N).
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Imagina que estás diseñando un sistema de procesamiento de eventos en tiempo real donde los eventos tienen diferentes niveles de prioridad. ¿Podrías usar una pila o una cola estándar para esto? Si no, ¿qué estructura de datos relacionada recomendarías y por qué?</p>
-          <div class="accordion-answer"><p>No, ni una pila ni una cola estándar serían adecuadas. Una pila procesaría el evento más reciente (LIFO) y una cola procesaría el evento más antiguo (<span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span>), ambos sin considerar la prioridad. Para un sistema de eventos con diferentes niveles de prioridad, la estructura de datos recomendada es una Cola de Prioridad (Priority Queue). Esta permite extraer el elemento de mayor prioridad (o menor, según la implementación) en cualquier momento, lo cual es crucial para asegurar que los eventos críticos sean procesados antes que los de menor prioridad, incluso si llegaron más tarde. La implementación común para una Cola de Prioridad es un heap binario, que garantiza que las operaciones de inserción y extracción del elemento de mayor prioridad se realicen en tiempo O(log N).</p></div>
+          <p class="accordion-question">
+            Describe un escenario donde el uso de una pila o cola podría llevar
+            a un "deadlock" o "starvation" en un sistema concurrente. ¿Cómo
+            mitigarías estos problemas?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Starvation (hambre) con Colas de Prioridad: Si se usa una cola de
+              prioridad y hay un flujo constante de tareas de alta prioridad,
+              las tareas de baja prioridad podrían nunca ser procesadas.
+              Mitigación: Implementar "ageing" (aumentar la prioridad de tareas
+              más antiguas) o usar algoritmos de planificación que aseguren el
+              progreso de todas las tareas. Deadlock con Stacks/Queues (con
+              locks): Un deadlock no es causado por la estructura en sí, sino
+              por el manejo incorrecto de locks en un contexto concurrente. Por
+              ejemplo, si dos hilos intentan adquirir locks para acceder a la
+              pila/cola en un orden diferente, podrían bloquearse mutuamente.
+              Mitigación: Usar implementaciones de pilas/colas ya diseñadas para
+              concurrencia (thread-safe, e.g., ConcurrentQueue), que manejan la
+              sincronización internamente. Si se implementan locks manualmente,
+              siempre adquirir los locks en un orden consistente y considerar el
+              uso de timeouts en los locks o algoritmos "lock-free" con
+              operaciones atómicas (CAS).
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Describe un escenario donde el uso de una pila o cola podría llevar a un "deadlock" o "starvation" en un sistema concurrente. ¿Cómo mitigarías estos problemas?</p>
-          <div class="accordion-answer"><p>Starvation (hambre) con Colas de Prioridad: Si se usa una cola de prioridad y hay un flujo constante de tareas de alta prioridad, las tareas de baja prioridad podrían nunca ser procesadas. Mitigación: Implementar "ageing" (aumentar la prioridad de tareas más antiguas) o usar algoritmos de planificación que aseguren el progreso de todas las tareas. Deadlock con Stacks/Queues (con locks): Un deadlock no es causado por la estructura en sí, sino por el manejo incorrecto de locks en un contexto concurrente. Por ejemplo, si dos hilos intentan adquirir locks para acceder a la pila/cola en un orden diferente, podrían bloquearse mutuamente. Mitigación: Usar implementaciones de pilas/colas ya diseñadas para concurrencia (thread-safe, e.g., ConcurrentQueue), que manejan la sincronización internamente. Si se implementan locks manualmente, siempre adquirir los locks en un orden consistente y considerar el uso de timeouts en los locks o algoritmos "lock-free" con operaciones atómicas (CAS).</p></div>
+          <p class="accordion-question">
+            En un sistema de software donde se están utilizando pilas o colas
+            extensivamente, ¿cómo evaluarías y optimizarías su rendimiento?
+            Menciona métricas clave y posibles estrategias de optimización más
+            allá de la elección básica de implementación.
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Métricas Clave: Tasa de
+              <span
+                class="tooltip"
+                data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+                >Throughput</span
+              >
+              (operaciones por unidad de tiempo),
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >Latencia</span
+              >
+              (tiempo por operación), Uso de Memoria, y Contención de Bloqueo
+              (en sistemas concurrentes). Estrategias de Optimización: 1.
+              Minimización de Operaciones: Evitar operaciones redundantes. 2.
+              Concurrencia: Utilizar estructuras "thread-safe" de las librerías
+              estándar. Considerar "batching" (procesar múltiples elementos a la
+              vez) para reducir el
+              <span
+                class="tooltip"
+                data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+                >overhead</span
+              >
+              de sincronización o "<span
+                class="tooltip"
+                data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+                >sharding</span
+              >"/particionamiento de la pila/cola si es un cuello de botella.
+              Para alta concurrencia, investigar algoritmos "lock-free" con
+              operaciones atómicas. 3. Localidad de Caché: Las implementaciones
+              basadas en arrays suelen tener mejor localidad de caché. 4.
+              Pre-asignación/Pre-llenado: Si el patrón de uso es predecible,
+              pre-asignar memoria o pre-llenar para evitar redimensionamientos o
+              esperas. 5. Pooling de Objetos: Reutilizar objetos almacenados en
+              la pila/cola para reducir la presión del recolector de basura.
+            </p>
+          </div>
         </div>
-      
-        <div class="accordion-item">
-          <p class="accordion-question">En un sistema de software donde se están utilizando pilas o colas extensivamente, ¿cómo evaluarías y optimizarías su rendimiento? Menciona métricas clave y posibles estrategias de optimización más allá de la elección básica de implementación.</p>
-          <div class="accordion-answer"><p>Métricas Clave: Tasa de <span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">Throughput</span> (operaciones por unidad de tiempo), <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> (tiempo por operación), Uso de Memoria, y Contención de Bloqueo (en sistemas concurrentes). Estrategias de Optimización: 1. Minimización de Operaciones: Evitar operaciones redundantes. 2. Concurrencia: Utilizar estructuras "thread-safe" de las librerías estándar. Considerar "batching" (procesar múltiples elementos a la vez) para reducir el <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">overhead</span> de sincronización o "<span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span>"/particionamiento de la pila/cola si es un cuello de botella. Para alta concurrencia, investigar algoritmos "lock-free" con operaciones atómicas. 3. Localidad de Caché: Las implementaciones basadas en arrays suelen tener mejor localidad de caché. 4. Pre-asignación/Pre-llenado: Si el patrón de uso es predecible, pre-asignar memoria o pre-llenar para evitar redimensionamientos o esperas. 5. Pooling de Objetos: Reutilizar objetos almacenados en la pila/cola para reducir la presión del recolector de basura.</p></div>
-        </div>
-      </div><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHGYyWhNEmBlSCwuj46mh6STReEkJmhL8e0URk7wKmKdh1naOoNJ4gi7SZwaB6qDKYAHAeJy6Bw78g2wqiowMHjBVVT0VgvQN6Lg8G-5nnto1U7WIBIAMEOMBp5odQD_oIgoE5GyemQX9-vrRCSRhR2WPKfsSHl6tm6PubeWq0JXspMIeiFEO8Tr1SBFIOZsw==" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHG5K91DJq-wI_-CuKdFnuL7Ix_le69TZsoGVuX0-kzaWoGxLULo2F8esG-E-5EoaZ7Yc9EH1UdxCQ-rY8qfJFqz9DJw5GAZdncrHyTNnlYnsuYN00appGT1yCAxCS3VKZeY9I=" target="_blank" rel="noopener noreferrer">dev.to</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEXRcOZTMbEIimQqdHWQ_e0iCo-Tuq8ftYw8kpcQmZ9uaS9zWcW0BjKULk611kSYJEwkKbpabEeqwuiaYRXYhOQEak9cmrT03hqeaIdSmT54StSn4lbRyXASvbKZ-a2Jr0FfnCLGTiAdKXdrfiGlwW5NaA4X6G95DG4Tz1EpY63QKKcDzuIIsw45dWxmb0ZWkY7744NdyZIaAE=" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFqk4i-WO_wKx-u-kji0b5fJYlBvxjpZQXYQOAwDuAn-cl4srZTDgIS3SxJFUHW2rUFJ9bmEa0q9xnO7VtwHUF-CsK1dz_09o6wm46grb_7LgqVhUKk4vqUorCFy4cmJkWAUr5QAllF6LFEPyAv5F5xqVwy5ycXY_aqPhdupHZZwujxlPmdHoQAf27-Ktz_2JScnoAdww==" target="_blank" rel="noopener noreferrer">gitconnected.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpbUyqiDGbeiC7RWmRfuNpN4zwVUb5Ew2bqAS94NsFMkkRmYGbzxYkK3eYyD0oq0h-OZSI6j3O8kvMSopmfnIY5427L2ycQmWw6MiSHirXNn0EnhPQbHxeD_ZPpwamdnC2z37iZ_d0NjrBSAnTWyxviQie1CEN--oh1Cajzw==" target="_blank" rel="noopener noreferrer">masaischool.com</a></li></ul>
-  </div>
-</body>
+      </div>
+      <h2>Recursos Adicionales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHGYyWhNEmBlSCwuj46mh6STReEkJmhL8e0URk7wKmKdh1naOoNJ4gi7SZwaB6qDKYAHAeJy6Bw78g2wqiowMHjBVVT0VgvQN6Lg8G-5nnto1U7WIBIAMEOMBp5odQD_oIgoE5GyemQX9-vrRCSRhR2WPKfsSHl6tm6PubeWq0JXspMIeiFEO8Tr1SBFIOZsw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >geeksforgeeks.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHG5K91DJq-wI_-CuKdFnuL7Ix_le69TZsoGVuX0-kzaWoGxLULo2F8esG-E-5EoaZ7Yc9EH1UdxCQ-rY8qfJFqz9DJw5GAZdncrHyTNnlYnsuYN00appGT1yCAxCS3VKZeY9I="
+            target="_blank"
+            rel="noopener noreferrer"
+            >dev.to</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEXRcOZTMbEIimQqdHWQ_e0iCo-Tuq8ftYw8kpcQmZ9uaS9zWcW0BjKULk611kSYJEwkKbpabEeqwuiaYRXYhOQEak9cmrT03hqeaIdSmT54StSn4lbRyXASvbKZ-a2Jr0FfnCLGTiAdKXdrfiGlwW5NaA4X6G95DG4Tz1EpY63QKKcDzuIIsw45dWxmb0ZWkY7744NdyZIaAE="
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFqk4i-WO_wKx-u-kji0b5fJYlBvxjpZQXYQOAwDuAn-cl4srZTDgIS3SxJFUHW2rUFJ9bmEa0q9xnO7VtwHUF-CsK1dz_09o6wm46grb_7LgqVhUKk4vqUorCFy4cmJkWAUr5QAllF6LFEPyAv5F5xqVwy5ycXY_aqPhdupHZZwujxlPmdHoQAf27-Ktz_2JScnoAdww=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >gitconnected.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpbUyqiDGbeiC7RWmRfuNpN4zwVUb5Ew2bqAS94NsFMkkRmYGbzxYkK3eYyD0oq0h-OZSI6j3O8kvMSopmfnIY5427L2ycQmWw6MiSHirXNn0EnhPQbHxeD_ZPpwamdnC2z37iZ_d0NjrBSAnTWyxviQie1CEN--oh1Cajzw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >masaischool.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

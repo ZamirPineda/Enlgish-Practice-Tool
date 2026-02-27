@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_CockroachDB</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_CockroachDB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,80 +52,262 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_CockroachDB</h1>
-    <h2>Explicación</h2><p>Esta guía te permitirá levantar un <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> básico de 3 nodos de CockroachDB localmente utilizando <code>docker-compose</code> (o <code>podman-compose</code>). CockroachDB es una base de datos SQL distribuida, elástica y tolerante a fallos, diseñada para la nube. Esta configuración simula un <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> distribuido, lo cual es fundamental para entender sus capacidades.</p><h3>Componentes de la Configuración:</h3><p>1.  <em></em><code>Dockerfile</code><em></em>: Un archivo simple que utiliza la imagen oficial de CockroachDB. Esto permite construir una imagen personalizada si necesitaras añadir herramientas o configuraciones adicionales, aunque para este setup básico la imagen oficial es suficiente.</p><p>2.  <em></em><code>docker-compose.yml</code><em></em>: Este archivo define un <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> de CockroachDB compuesto por tres nodos (<code>roach1</code>, <code>roach2</code>, <code>roach3</code>) y un servicio de inicialización (<code>init</code>).</p><ul><li>   *   Cada nodo de CockroachDB se ejecuta en un contenedor separado, configurado para unirse a los otros nodos y formar el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span>.</li><li>   *   Se utilizan volúmenes persistentes (<code>roachX_data</code>) para asegurar que los datos no se pierdan al detener y reiniciar los contenedores.</li><li>   *   <code>roach1</code> expone los puertos <code>26257</code> (SQL) y <code>8080</code> (UI de administración) al host para que puedas interactuar con el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span>.</li><li>   *   El servicio <code>init</code> se encarga de ejecutar el comando <code>cockroach init</code> una vez que todos los nodos están saludables, lo cual es necesario para que el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span> funcione.</li></ul><h3>Pasos a Seguir:</h3><p>1.  <strong>Guarda los archivos</strong>: Crea un directorio <code>cockroachdb-cluster</code> y guarda el <code>Dockerfile</code> y el <code>docker-compose.yml</code> dentro de él.</p><p>2.  <strong>Levanta el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span></strong>: Abre tu terminal en el directorio <code>cockroachdb-cluster</code> y ejecuta el comando de <code>runCommands</code>.</p><p>3.  <strong>Verifica el estado</strong>: Una vez que los contenedores estén en ejecución, puedes verificar su estado con <code>docker-compose ps</code>. También puedes ver los logs con <code>docker-compose logs -f</code>.</p><p>4.  <strong>Accede a la UI de administración</strong>: Abre tu navegador web y visita <code>http://localhost:8080</code>. Aquí podrás ver el estado del <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span>, las métricas y la topología.</p><p>5.  <strong>Conéctate vía SQL</strong>: Puedes conectar un cliente SQL (como <code>psql</code> o el mismo CLI de CockroachDB) al puerto <code>26257</code> del host. Por ejemplo, desde otro contenedor o instalando el CLI localmente:</p><pre><code>    docker run -it --rm --network host cockroachdb/cockroach sql --insecure --host=localhost:26257
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_CockroachDB</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía te permitirá levantar un
+        <span
+          class="tooltip"
+          data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos."
+          >cluster</span
+        >
+        básico de 3 nodos de CockroachDB localmente utilizando
+        <code>docker-compose</code> (o <code>podman-compose</code>). CockroachDB
+        es una base de datos SQL distribuida, elástica y tolerante a fallos,
+        diseñada para la nube. Esta configuración simula un
+        <span
+          class="tooltip"
+          data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos."
+          >cluster</span
+        >
+        distribuido, lo cual es fundamental para entender sus capacidades.
+      </p>
+      <h3>Componentes de la Configuración:</h3>
+      <p>
+        1. <em></em><code>Dockerfile</code><em></em>: Un archivo simple que
+        utiliza la imagen oficial de CockroachDB. Esto permite construir una
+        imagen personalizada si necesitaras añadir herramientas o
+        configuraciones adicionales, aunque para este setup básico la imagen
+        oficial es suficiente.
+      </p>
+      <p>
+        2. <em></em><code>docker-compose.yml</code><em></em>: Este archivo
+        define un
+        <span
+          class="tooltip"
+          data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos."
+          >cluster</span
+        >
+        de CockroachDB compuesto por tres nodos (<code>roach1</code>,
+        <code>roach2</code>, <code>roach3</code>) y un servicio de
+        inicialización (<code>init</code>).
+      </p>
+      <ul>
+        <li>
+          * Cada nodo de CockroachDB se ejecuta en un contenedor separado,
+          configurado para unirse a los otros nodos y formar el
+          <span
+            class="tooltip"
+            data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos."
+            >cluster</span
+          >.
+        </li>
+        <li>
+          * Se utilizan volúmenes persistentes (<code>roachX_data</code>) para
+          asegurar que los datos no se pierdan al detener y reiniciar los
+          contenedores.
+        </li>
+        <li>
+          * <code>roach1</code> expone los puertos <code>26257</code> (SQL) y
+          <code>8080</code> (UI de administración) al host para que puedas
+          interactuar con el
+          <span
+            class="tooltip"
+            data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos."
+            >cluster</span
+          >.
+        </li>
+        <li>
+          * El servicio <code>init</code> se encarga de ejecutar el comando
+          <code>cockroach init</code> una vez que todos los nodos están
+          saludables, lo cual es necesario para que el
+          <span
+            class="tooltip"
+            data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos."
+            >cluster</span
+          >
+          funcione.
+        </li>
+      </ul>
+      <h3>Pasos a Seguir:</h3>
+      <p>
+        1. <strong>Guarda los archivos</strong>: Crea un directorio
+        <code>cockroachdb-cluster</code> y guarda el <code>Dockerfile</code> y
+        el <code>docker-compose.yml</code> dentro de él.
+      </p>
+      <p>
+        2.
+        <strong
+          >Levanta el
+          <span
+            class="tooltip"
+            data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos."
+            >cluster</span
+          ></strong
+        >: Abre tu terminal en el directorio <code>cockroachdb-cluster</code> y
+        ejecuta el comando de <code>runCommands</code>.
+      </p>
+      <p>
+        3. <strong>Verifica el estado</strong>: Una vez que los contenedores
+        estén en ejecución, puedes verificar su estado con
+        <code>docker-compose ps</code>. También puedes ver los logs con
+        <code>docker-compose logs -f</code>.
+      </p>
+      <p>
+        4. <strong>Accede a la UI de administración</strong>: Abre tu navegador
+        web y visita <code>http://localhost:8080</code>. Aquí podrás ver el
+        estado del
+        <span
+          class="tooltip"
+          data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos."
+          >cluster</span
+        >, las métricas y la topología.
+      </p>
+      <p>
+        5. <strong>Conéctate vía SQL</strong>: Puedes conectar un cliente SQL
+        (como <code>psql</code> o el mismo CLI de CockroachDB) al puerto
+        <code>26257</code> del host. Por ejemplo, desde otro contenedor o
+        instalando el CLI localmente:
+      </p>
+      <pre><code>    docker run -it --rm --network host cockroachdb/cockroach sql --insecure --host=localhost:26257
     # O si tienes el CLI instalado localmente:
-    cockroach sql --insecure --host=localhost:26257</code></pre><p>6.  <strong>Limpia el <span class="tooltip" data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos.">cluster</span></strong>: Para detener y eliminar todos los contenedores y los volúmenes de datos (eliminando los datos persistentes), ejecuta <code>docker-compose down -v</code>.</p><p><strong>Nota Importante</strong>: La configuración utiliza la bandera <code>--insecure</code> para simplificar el setup local. Esto significa que las comunicaciones no están cifradas y no hay autenticación. <em></em>NUNCA utilices <code>--insecure</code> en un entorno de producción.<em></em></p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Dockerfile para una instancia de CockroachDB
+    cockroach sql --insecure --host=localhost:26257</code></pre>
+      <p>
+        6.
+        <strong
+          >Limpia el
+          <span
+            class="tooltip"
+            data-tooltip-text="Un grupo de servidores o nodos que trabajan juntos y se presentan como un único sistema, proporcionando alta disponibilidad, balanceo de carga y tolerancia a fallos."
+            >cluster</span
+          ></strong
+        >: Para detener y eliminar todos los contenedores y los volúmenes de
+        datos (eliminando los datos persistentes), ejecuta
+        <code>docker-compose down -v</code>.
+      </p>
+      <p>
+        <strong>Nota Importante</strong>: La configuración utiliza la bandera
+        <code>--insecure</code> para simplificar el setup local. Esto significa
+        que las comunicaciones no están cifradas y no hay autenticación.
+        <em></em>NUNCA utilices <code>--insecure</code> en un entorno de
+        producción.<em></em>
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile</h3>
+      <pre><code># Dockerfile para una instancia de CockroachDB
 # Este Dockerfile utiliza la imagen oficial de CockroachDB.
 # Puedes personalizarlo si necesitas agregar herramientas o configuraciones específicas.
 
@@ -142,7 +326,9 @@ EXPOSE 26257 8080
 
 # Este Dockerfile es mínimo ya que la imagen oficial es bastante completa.
 # Para un desarrollo local, puedes usar directamente la imagen oficial
-# o esta imagen construida a partir de ella.</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+# o esta imagen construida a partir de ella.</code></pre>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 
 services:
   roach1:
@@ -219,8 +405,50 @@ volumes:
   roach1_data:
   roach2_data:
   roach3_data:
-</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGdORywqS8vOtBTyX-dTouDfo9CJGFUApb1tKITDGptTmUWg6HHCcXSUNK73EeAa6EeINscoExaVL1XFRkH_zFAPVyIs2myPgciENCnN07oPvEuBUWvG3zi5hpFQyD-H3hesUB9Sw==" target="_blank" rel="noopener noreferrer">cockroachlabs.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF_A_hKSYs55p7Shzd_FOtgkCXtVPXQJrF1vyMK0og3v-KlSHDB5Xbdp1MGdpKHrY7PF9BVL8MVsM-TPQYrUTOXVXAmsyeiX7HS7vxwVYTH85OEDSSlC3cIgoD_Z4bs0suSAVzVavG7DDEmHM7FnxOrTr8TsVdIhJL3LltD3igdhpIhG38C" target="_blank" rel="noopener noreferrer">cockroachlabs.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHZXZmMkQJY5c7Yk34qgZ2S8HLhCpHZ0kRmqbaWj0ITZODC-b46zUdVaiO5EL3q68nhP39dyHyfjmnIedHD0mN2IfaQAD_t8od-MgwtVya5Csoy2HT3w5lEORdpcz1ugSIt7keD-IjGCss6j5gabYP_3Pq7XE1FPg==" target="_blank" rel="noopener noreferrer">cockroachlabs.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgZBIEoMp5Dn1mxyVl40OJWRoU4dXboXdRBYQVgmg7pstV40R9vZvg_VQG5fJ6xhfdCAyMYR3TowmSjqsw8kDViMJHwCLaBklzUGnXfV3W9USNNmxA8aqSaKoNucyF4eVu2I4MEKnyyqzmnz8WB-_bEgwBaPFrMG6bxtbePUEocD09w-YwjolPp6B9GZP0wSy7koWfb9jLK58jIaRZhHYaLtqUpSrttrKcSjjzVLKkYFeee0l3BPUW3D9Oh8llTMlR" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG-tup8oSdiXhg-gJq5rO-oQqcG32JVK0xBqXph0dj7a3cqXrluB-gkTHEXzTqcD-TvB7u0eg11D3j-p4E4Al6YRVKXLmCAEYorC8NrKaEz9erJiiT2tajR0ep_ESWF6PX5VwgcSqhmzXKoqQA0csvr3PrhFCFyfwZ_Nh59asi86M0d" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
-  </div>
-</body>
+</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGdORywqS8vOtBTyX-dTouDfo9CJGFUApb1tKITDGptTmUWg6HHCcXSUNK73EeAa6EeINscoExaVL1XFRkH_zFAPVyIs2myPgciENCnN07oPvEuBUWvG3zi5hpFQyD-H3hesUB9Sw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >cockroachlabs.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF_A_hKSYs55p7Shzd_FOtgkCXtVPXQJrF1vyMK0og3v-KlSHDB5Xbdp1MGdpKHrY7PF9BVL8MVsM-TPQYrUTOXVXAmsyeiX7HS7vxwVYTH85OEDSSlC3cIgoD_Z4bs0suSAVzVavG7DDEmHM7FnxOrTr8TsVdIhJL3LltD3igdhpIhG38C"
+            target="_blank"
+            rel="noopener noreferrer"
+            >cockroachlabs.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHZXZmMkQJY5c7Yk34qgZ2S8HLhCpHZ0kRmqbaWj0ITZODC-b46zUdVaiO5EL3q68nhP39dyHyfjmnIedHD0mN2IfaQAD_t8od-MgwtVya5Csoy2HT3w5lEORdpcz1ugSIt7keD-IjGCss6j5gabYP_3Pq7XE1FPg=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >cockroachlabs.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgZBIEoMp5Dn1mxyVl40OJWRoU4dXboXdRBYQVgmg7pstV40R9vZvg_VQG5fJ6xhfdCAyMYR3TowmSjqsw8kDViMJHwCLaBklzUGnXfV3W9USNNmxA8aqSaKoNucyF4eVu2I4MEKnyyqzmnz8WB-_bEgwBaPFrMG6bxtbePUEocD09w-YwjolPp6B9GZP0wSy7koWfb9jLK58jIaRZhHYaLtqUpSrttrKcSjjzVLKkYFeee0l3BPUW3D9Oh8llTMlR"
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG-tup8oSdiXhg-gJq5rO-oQqcG32JVK0xBqXph0dj7a3cqXrluB-gkTHEXzTqcD-TvB7u0eg11D3j-p4E4Al6YRVKXLmCAEYorC8NrKaEz9erJiiT2tajR0ep_ESWF6PX5VwgcSqhmzXKoqQA0csvr3PrhFCFyfwZ_Nh59asi86M0d"
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

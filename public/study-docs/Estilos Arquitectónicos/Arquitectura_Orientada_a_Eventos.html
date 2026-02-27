@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arquitectura Orientada a Eventos</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arquitectura Orientada a Eventos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,104 +52,982 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Arquitectura Orientada a Eventos</h1>
+      <p>
+        La
+        <strong
+          >Arquitectura Orientada a Eventos (EDA -
+          <span
+            class="tooltip"
+            data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento."
+            >Event-Driven</span
+          >
+          Architecture)</strong
+        >
+        es un patrón de arquitectura de software que promueve el diseño de
+        sistemas que reaccionan a eventos. En lugar de componentes que se llaman
+        directamente entre sí (solicitud-respuesta), los componentes de un
+        sistema EDA publican eventos cuando algo significativo sucede, y otros
+        componentes interesados reaccionan a esos eventos de forma asíncrona.
+      </p>
+      <p>
+        Su objetivo principal es lograr un alto grado de desacoplamiento entre
+        los servicios, lo que mejora la escalabilidad, la resiliencia y la
+        extensibilidad del sistema.
+      </p>
+      <p>---</p>
+      <h2>Conceptos Principales</h2>
+      <ul>
+        <li>### <strong>Evento</strong></li>
+      </ul>
+      <p>
+        Un evento es una notificación de que "algo significativo ha sucedido" en
+        el sistema. Es un hecho inmutable que representa un cambio de estado.
+        Los eventos no son comandos (instrucciones para hacer algo), sino
+        descripciones de lo que ya ocurrió. Contienen datos relevantes sobre el
+        suceso (qué, cuándo, dónde, quién), pero no sobre cómo reaccionar a él.
+      </p>
+      <ul>
+        <li>
+          * <strong>Ejemplos:</strong> <code>OrderCreated</code>,
+          <code>PaymentProcessed</code>, <code>UserLoggedIn</code>,
+          <code>ProductShipped</code>.
+        </li>
+        <li>### <strong>Productor (o Publicador)</strong></li>
+      </ul>
+      <p>
+        Es el componente o servicio que detecta un cambio de estado
+        significativo dentro de su dominio y publica un evento para notificar a
+        otros que este cambio ha ocurrido. El productor no sabe quién o cuántos
+        consumidores escucharán su evento, lo que promueve un fuerte
+        desacoplamiento.
+      </p>
+      <ul>
+        <li>### <strong>Consumidor (o Suscriptor)</strong></li>
+      </ul>
+      <p>
+        Es el componente o servicio que está interesado en ciertos tipos de
+        eventos. Se suscribe a esos eventos y, cuando recibe uno, reacciona
+        realizando alguna acción (ej. actualizar su propio estado, enviar una
+        notificación, o incluso publicar un nuevo evento). Al igual que el
+        productor, el consumidor no sabe quién produjo el evento. Es crucial que
+        los consumidores sean <strong>idempotentes</strong>, es decir, que
+        procesar el mismo evento varias veces no cause efectos secundarios
+        indeseados.
+      </p>
+      <ul>
+        <li>
+          ###
+          <strong
+            >Canal de Eventos (o
+            <span
+              class="tooltip"
+              data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+              >Broker</span
+            >/Bus de Eventos)</strong
+          >
+        </li>
+      </ul>
+      <p>
+        Es la infraestructura que facilita la comunicación entre productores y
+        consumidores. Actúa como un intermediario que recibe eventos de los
+        productores y los entrega a los consumidores suscritos. Este canal
+        garantiza la persistencia, el orden (en la medida de lo posible) y la
+        entrega confiable de los eventos.
+      </p>
+      <ul>
+        <li>
+          * <strong>Ejemplos:</strong> Apache Kafka, RabbitMQ, AWS SNS/SQS,
+          Google Cloud
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          >.
+        </li>
+        <li>### <strong>Comunicación Asíncrona</strong></li>
+      </ul>
+      <p>
+        La interacción entre componentes en EDA es inherentemente asíncrona. El
+        productor publica un evento y continúa con su trabajo sin esperar una
+        respuesta inmediata. Los consumidores procesan los eventos en su propio
+        tiempo, lo que mejora la capacidad de respuesta y la eficiencia del
+        sistema.
+      </p>
+      <p>---</p>
+      <h2>Ventajas</h2>
+      <ul>
+        <li>### <strong>Desacoplamiento Extremo</strong></li>
+      </ul>
+      <p>
+        Los productores y consumidores no tienen conocimiento directo entre sí,
+        solo se comunican a través del
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >
+        de eventos. Esto permite que los componentes evolucionen, escalen y
+        fallen de forma independiente.
+      </p>
+      <ul>
+        <li>### <strong>Escalabilidad y Resiliencia</strong></li>
+      </ul>
+      <p>
+        Los componentes pueden escalarse horizontalmente de forma independiente.
+        Si un servicio se sobrecarga, los eventos pueden acumularse en el canal
+        hasta que el servicio tenga capacidad para procesarlos. Si un consumidor
+        falla, el
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >
+        puede reintentar la entrega o dirigir el evento a una cola de mensajes
+        fallidos.
+      </p>
+      <ul>
+        <li>### <strong>Extensibilidad y Agilidad</strong></li>
+      </ul>
+      <p>
+        Es fácil añadir nuevas funcionalidades o servicios simplemente añadiendo
+        nuevos consumidores que reaccionen a eventos existentes, sin necesidad
+        de modificar los productores o los consumidores actuales.
+      </p>
+      <ul>
+        <li>### <strong>Flexibilidad</strong></li>
+      </ul>
+      <p>
+        Soporta patrones de comunicación de uno-a-muchos (un evento puede ser
+        consumido por múltiples servicios) y muchos-a-uno.
+      </p>
+      <ul>
+        <li>### <strong>Auditoría y Trazabilidad</strong></li>
+      </ul>
+      <p>
+        El flujo de eventos en el canal puede servir como un registro inmutable
+        de todos los cambios de estado en el sistema, lo que facilita la
+        auditoría, la depuración y la reconstrucción de estados pasados.
+      </p>
+      <ul>
+        <li>### <strong>Rendimiento Mejorado</strong></li>
+      </ul>
+      <p>
+        La comunicación asíncrona permite que los sistemas respondan más
+        rápidamente al usuario final, ya que las operaciones de procesamiento
+        complejas se realizan en segundo plano.
+      </p>
+      <p>---</p>
+      <h2>Desventajas</h2>
+      <ul>
+        <li>### <strong>Complejidad Incremental</strong></li>
+      </ul>
+      <p>
+        La arquitectura puede ser más difícil de entender y diseñar
+        inicialmente. La depuración de flujos de negocio que abarcan múltiples
+        servicios asíncronos es considerablemente más compleja que en sistemas
+        síncronos.
+      </p>
+      <ul>
+        <li>
+          ###
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+              >Consistencia</span
+            >
+            Eventual</strong
+          >
+        </li>
+      </ul>
+      <p>
+        Debido a la naturaleza asíncrona, el estado del sistema no será
+        consistente de forma instantánea en todos los servicios. Los
+        desarrolladores deben diseñar los sistemas para manejar la
+        <span
+          class="tooltip"
+          data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+          >consistencia</span
+        >
+        eventual, lo que puede requerir lógica de compensación o reintentos.
+      </p>
+      <ul>
+        <li>### <strong>Manejo de Errores y Retries</strong></li>
+      </ul>
+      <p>
+        Es más complejo garantizar que todos los eventos se procesen
+        correctamente y manejar fallos. Requiere implementar estrategias
+        robustas para reintentos, colas de mensajes fallidos (dead-letter
+        queues) y garantizar la
+        <span
+          class="tooltip"
+          data-tooltip-text="La propiedad de una operación que permite que se pueda aplicar múltiples veces sin cambiar el resultado más allá de la aplicación inicial. Crucial para sistemas distribuidos donde las retransmisiones de mensajes son comunes."
+          >idempotencia</span
+        >
+        de los consumidores.
+      </p>
+      <ul>
+        <li>### <strong>Diseño de Eventos</strong></li>
+      </ul>
+      <p>
+        Definir los eventos correctos (qué datos incluir, cómo versionarlos) es
+        crucial. Un mal diseño de eventos puede llevar a un acoplamiento
+        implícito y dificultades futuras para la evolución del sistema.
+      </p>
+      <ul>
+        <li>### <strong>Operacionalización</strong></li>
+      </ul>
+      <p>
+        Gestionar y monitorear el
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >
+        de eventos introduce una capa adicional de infraestructura y complejidad
+        operativa.
+      </p>
+      <ul>
+        <li>
+          ###
+          <strong
+            >Carga de Mensajes (<span
+              class="tooltip"
+              data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+              >Overhead</span
+            >)</strong
+          >
+        </li>
+      </ul>
+      <p>
+        La serialización/deserialización de eventos y el paso por el
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >
+        pueden introducir una pequeña
+        <span
+          class="tooltip"
+          data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+          >latencia</span
+        >
+        y sobrecarga de procesamiento en comparación con llamadas directas en
+        memoria.
+      </p>
+      <h2>Ejemplo de Aplicación Real</h2>
+      <p>
+        Aquí tienes un ejemplo detallado de la aplicación de la Arquitectura
+        Orientada a Eventos (EDA) en un escenario empresarial real, presentado
+        con encabezados claros en Markdown.
+      </p>
+      <p>---</p>
+      <h2>
+        Arquitectura Orientada a Eventos (EDA) en "ShopEase" - Un Retailer
+        Online en Crecimiento
+      </h2>
+      <h3>
+        1. Problema Empresarial: Cuellos de Botella y Experiencia de Usuario
+        Deficiente
+      </h3>
+      <p>
+        La empresa "ShopEase" es un minorista online de tamaño mediano que ha
+        experimentado un crecimiento rápido en los últimos años. Su plataforma
+        de comercio electrónico original fue construida como una
+        <strong>aplicación monolítica</strong> fuertemente acoplada, donde todas
+        las funcionalidades (gestión de pedidos, inventario, pagos, envío,
+        notificaciones, historial de clientes) residían en una única base de
+        código y base de datos.
+      </p>
+      <p><strong>Los problemas clave que enfrentaba ShopEase eran:</strong></p>
+      <ul>
+        <li>
+          <strong>Cuellos de Botella en el Procesamiento de Pedidos:</strong>
+          Durante picos de ventas (Black Friday, Cyber Monday, promociones), el
+          sistema se volvía extremadamente lento. El procesamiento de un solo
+          pedido involucraba múltiples llamadas síncronas a diferentes módulos
+          (validar stock, procesar pago, generar factura, notificar al almacén,
+          enviar email de confirmación), lo que ralentizaba la experiencia del
+          usuario y aumentaba el tiempo de espera.
+        </li>
+        <li>
+          <strong>Escalabilidad Limitada:</strong> La escalabilidad era difícil
+          y costosa. Si un componente (ej. inventario) era el cuello de botella,
+          había que escalar todo el monolito, desperdiciando recursos en otras
+          áreas menos saturadas.
+        </li>
+        <li>
+          <strong>Falta de Resiliencia:</strong> Un fallo en cualquier parte del
+          proceso de pedido (ej. el servicio de pago de terceros se caía
+          momentáneamente) podía bloquear todo el flujo, resultando en errores
+          para el cliente o inconsistencias de datos. Las reintentos eran
+          complejos de gestionar.
+        </li>
+        <li>
+          <strong>Dificultad para Introducir Nuevas Funcionalidades:</strong>
+          Añadir nuevas características (ej. un sistema de fidelización de
+          clientes en tiempo real, análisis avanzados de comportamiento de
+          compra) requería modificar una gran parte del código base, aumentando
+          el riesgo de introducir nuevos errores y prolongando el tiempo de
+          comercialización.
+        </li>
+        <li>
+          <strong>Dependencia Estrecha y Complejidad del Código:</strong> Los
+          diferentes módulos estaban tan entrelazados que cambiar uno a menudo
+          tenía efectos secundarios inesperados en otros, haciendo que el
+          desarrollo y mantenimiento fueran lentos y propensos a errores.
+        </li>
+        <li>
+          <strong>Experiencia del Usuario Inconsistente:</strong> Los usuarios a
+          menudo experimentaban largos tiempos de espera después de hacer clic
+          en "Confirmar Pedido", y las notificaciones por correo electrónico a
+          veces llegaban con retraso o se perdían.
+        </li>
+      </ul>
+      <p>
+        En resumen, la arquitectura monolítica de ShopEase estaba impidiendo su
+        capacidad para escalar, innovar y ofrecer una experiencia de cliente
+        fluida y fiable en un mercado competitivo.
+      </p>
+      <h3>2. Implementación de la Arquitectura Orientada a Eventos</h3>
+      <p>
+        ShopEase decidió reestructurar su plataforma adoptando una Arquitectura
+        Orientada a Eventos (EDA) junto con un enfoque de microservicios.
+      </p>
+      <p><strong>2.1. Visión de la Nueva Arquitectura:</strong></p>
+      <p>
+        La idea central fue reemplazar las llamadas síncronas directas entre
+        componentes con un modelo donde los servicios publican "eventos" (hechos
+        inmutables que han ocurrido en el negocio) y otros servicios "escuchan"
+        y reaccionan a esos eventos de forma asíncrona.
+      </p>
+      <p><strong>2.2. Componentes Clave de la Solución:</strong></p>
+      <ul>
+        <li>
+          <strong>Servicios/Microservicios:</strong> El monolito se descompuso
+          en servicios más pequeños, autónomos y especializados, cada uno
+          responsable de un dominio de negocio específico (ej. Servicio de
+          Pedidos, Servicio de Inventario, Servicio de Pagos, Servicio de Envío,
+          Servicio de Notificaciones, Servicio de Lealtad, Servicio de
+          Análisis).
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+              >Broker</span
+            >
+            de Eventos (Ej. Apache Kafka):</strong
+          >
+          Se introdujo un sistema de mensajería distribuido y escalable como
+          Apache Kafka. Este
+          <span
+            class="tooltip"
+            data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+            >broker</span
+          >
+          actúa como el centro neurálgico donde todos los servicios publican sus
+          eventos y de donde otros servicios los consumen. Proporciona
+          durabilidad, orden garantizado (dentro de una partición) y la
+          capacidad de retransmitir eventos.
+        </li>
+        <li>
+          <strong>Eventos:</strong> Los eventos son mensajes ligeros que
+          describen un cambio de estado significativo en el negocio. Son
+          inmutables y en pasado (ej. <code>PedidoRealizado</code>,
+          <code>PagoProcesado</code>, <code>InventarioActualizado</code>,
+          <code>EnvioSolicitado</code>, <code>ClienteRegistrado</code>).
+        </li>
+      </ul>
+      <p>
+        <strong
+          >2.3. Flujo Detallado del Procesamiento de Pedidos (Ejemplo):</strong
+        >
+      </p>
+      <p>1. <strong>El cliente realiza un pedido:</strong></p>
+      <ul>
+        <li>
+          * El <strong>Servicio de Pedidos</strong> recibe la solicitud del
+          cliente.
+        </li>
+        <li>
+          * Valida la información básica del pedido y lo almacena con un estado
+          inicial (<code>PENDIENTE_PAGO</code>).
+        </li>
+        <li>
+          * Publica un evento <code>PedidoRealizado</code> en un tópico de Kafka
+          (ej. <code>pedidos.topic</code>). Este evento contiene el ID del
+          pedido, detalles del artículo, ID del cliente, etc.
+        </li>
+        <li>
+          * Responde rápidamente al cliente con un "Pedido recibido, procesando
+          pago..." mientras el resto de la lógica continúa de forma asíncrona.
+        </li>
+      </ul>
+      <p>2. <strong>Procesamiento de Pago:</strong></p>
+      <ul>
+        <li>
+          * El <strong>Servicio de Pagos</strong> es un consumidor del tópico
+          <code>pedidos.topic</code>.
+        </li>
+        <li>
+          * Al recibir el evento <code>PedidoRealizado</code>, inicia el
+          procesamiento del pago con la pasarela de pago externa.
+        </li>
+        <li>
+          * Una vez que el pago es exitoso, publica un evento
+          <code>PagoProcesado</code> en un tópico <code>pagos.topic</code>. Si
+          falla, publica <code>PagoFallido</code>.
+        </li>
+      </ul>
+      <p>3. <strong>Gestión de Inventario:</strong></p>
+      <ul>
+        <li>
+          * El <strong>Servicio de Inventario</strong> es un consumidor del
+          tópico <code>pagos.topic</code>.
+        </li>
+        <li>
+          * Al recibir el evento <code>PagoProcesado</code>, reserva los
+          artículos del inventario.
+        </li>
+        <li>
+          * Publica un evento <code>InventarioReservado</code> o
+          <code>InventarioFalloReserva</code> en un tópico
+          <code>inventario.topic</code>.
+        </li>
+      </ul>
+      <p>4. <strong>Solicitud de Envío:</strong></p>
+      <ul>
+        <li>
+          * El <strong>Servicio de Envío</strong> es un consumidor del tópico
+          <code>inventario.topic</code>.
+        </li>
+        <li>
+          * Al recibir el evento <code>InventarioReservado</code>, genera una
+          solicitud de envío a la empresa de logística.
+        </li>
+        <li>
+          * Publica un evento <code>EnvioSolicitado</code> en un tópico
+          <code>envios.topic</code>.
+        </li>
+      </ul>
+      <p>5. <strong>Notificaciones al Cliente:</strong></p>
+      <ul>
+        <li>
+          * El <strong>Servicio de Notificaciones</strong> es un consumidor de
+          múltiples
+          <span
+            class="tooltip"
+            data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+            >tópicos</span
+          >: <code>pedidos.topic</code>, <code>pagos.topic</code>,
+          <code>envios.topic</code>.
+        </li>
+        <li>
+          * Al recibir <code>PedidoRealizado</code>, envía un email de
+          "Confirmación de Pedido Recibido".
+        </li>
+        <li>
+          * Al recibir <code>PagoProcesado</code>, envía un email/SMS de "Pago
+          Confirmado".
+        </li>
+        <li>
+          * Al recibir <code>EnvioSolicitado</code> (o
+          <code>PaqueteEnviado</code> de un evento externo), envía un email/SMS
+          de "Tu pedido ha sido enviado".
+        </li>
+      </ul>
+      <p>6. <strong>Análisis y Lealtad:</strong></p>
+      <ul>
+        <li>
+          * El <strong>Servicio de Análisis</strong> consume eventos de casi
+          todos los
+          <span
+            class="tooltip"
+            data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+            >tópicos</span
+          >
+          para construir dashboards en tiempo real, identificar tendencias de
+          compra y generar informes.
+        </li>
+        <li>
+          * El <strong>Servicio de Lealtad</strong> consume
+          <code>PagoProcesado</code> para otorgar puntos al cliente
+          automáticamente.
+        </li>
+      </ul>
+      <p><strong>2.4. Tecnologías Clave Utilizadas:</strong></p>
+      <ul>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+              >Broker</span
+            >
+            de Eventos:</strong
+          >
+          Apache Kafka
+        </li>
+        <li>
+          <strong>Servicios:</strong> Desarrollados principalmente con Spring
+          Boot (Java) y Node.js, desplegados como microservicios.
+        </li>
+        <li>
+          <strong>Bases de Datos:</strong> Cada microservicio gestiona su propia
+          base de datos (ej. PostgreSQL, MongoDB, Redis), siguiendo el patrón
+          "Database Per Service".
+        </li>
+        <li>
+          <strong
+            >Contenedores y
+            <span
+              class="tooltip"
+              data-tooltip-text="La gestión y coordinación automatizada de sistemas informáticos, aplicaciones y servicios complejos. Kubernetes es un ejemplo popular de un orquestador de contenedores."
+              >Orquestación</span
+            >:</strong
+          >
+          Docker y Kubernetes para el despliegue y la gestión de los
+          microservicios.
+        </li>
+      </ul>
+      <h3>3. Resultados y Beneficios Obtenidos</h3>
+      <p>
+        La implementación de la Arquitectura Orientada a Eventos transformó la
+        plataforma de ShopEase y brindó beneficios significativos:
+      </p>
+      <ul>
+        <li><strong>Escalabilidad y Resiliencia Mejoradas:</strong></li>
+        <li>
+          * Los servicios pueden escalar de forma independiente. Durante picos
+          de tráfico, el Servicio de Pedidos puede manejar miles de solicitudes
+          por segundo, mientras que otros servicios (ej. Notificaciones)
+          procesan sus mensajes a su propio ritmo sin afectar el rendimiento
+          principal.
+        </li>
+        <li>
+          * Los fallos son aislados. Si el Servicio de Envío falla
+          temporalmente, el sistema sigue aceptando pedidos y procesando pagos.
+          Kafka almacena los eventos, y el Servicio de Envío los procesará una
+          vez que se recupere. Esto garantiza una mayor
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >
+          y una experiencia de usuario más estable.
+        </li>
+        <li>
+          <strong>Rendimiento y Experiencia del Usuario Optimizados:</strong>
+        </li>
+        <li>
+          * El tiempo de respuesta inicial al cliente se redujo drásticamente
+          (de ~5-10 segundos a <1 segundo) ya que el
+          <code>PedidoRealizado</code> es el primer evento que se publica y el
+          flujo principal se completa de forma asíncrona.
+        </li>
+        <li>
+          * Las notificaciones son más consistentes y rápidas, mejorando la
+          satisfacción del cliente.
+        </li>
+        <li><strong>Desacoplamiento y Agilidad en el Desarrollo:</strong></li>
+        <li>
+          * Los equipos de desarrollo pueden trabajar en servicios individuales
+          de forma independiente, utilizando diferentes tecnologías si es
+          necesario, sin afectar a otros. Esto acelera el tiempo de
+          comercialización para nuevas características.
+        </li>
+        <li>
+          * La integración de nuevos sistemas o terceros es más sencilla. Un
+          nuevo servicio solo necesita suscribirse a los eventos relevantes en
+          Kafka.
+        </li>
+        <li><strong>Procesamiento en Tiempo Real y Extensibilidad:</strong></li>
+        <li>
+          * ShopEase pudo introducir nuevas funcionalidades como un sistema de
+          fidelización en tiempo real y análisis avanzados de comportamiento de
+          compra de manera eficiente. Por ejemplo, al agregar un nuevo "Servicio
+          de Detección de Fraude", este simplemente se suscribe a los eventos
+          <code>PedidoRealizado</code> y <code>PagoProcesado</code> para
+          realizar verificaciones en tiempo real sin modificar los servicios
+          existentes.
+        </li>
+        <li>
+          * El flujo de eventos se convirtió en una "auditoría en tiempo real"
+          de todas las acciones del negocio, facilitando la depuración y la
+          observabilidad.
+        </li>
+        <li><strong>Reducción de Costos Operativos:</strong></li>
+        <li>
+          * La capacidad de escalar componentes individualmente optimizó el uso
+          de recursos, reduciendo la necesidad de provisionar infraestructura
+          excesiva para el monolito completo.
+        </li>
+        <li>
+          * Aunque la complejidad inicial de la transición fue alta, a largo
+          plazo, el mantenimiento y la evolución del sistema se volvieron más
+          manejables y menos costosos.
+        </li>
+      </ul>
+      <p>
+        En conclusión, la adopción de la Arquitectura Orientada a Eventos
+        permitió a ShopEase superar los desafíos de escalabilidad y rendimiento
+        de su antigua plataforma, mejorar significativamente la experiencia de
+        sus clientes y posicionarse para una innovación más rápida y eficiente
+        en el futuro.
+      </p>
+      <h2>Preguntas de Entrevista</h2>
+      <div>
+        <div class="accordion-item">
+          <p class="accordion-question">
+            En una Arquitectura Orientada a Eventos (EDA), la consistencia
+            eventual es una característica inherente. ¿Cómo gestionaría los
+            desafíos operativos y de experiencia de usuario que surgen de los
+            retrasos en la propagación de datos y la visualización de estados
+            inconsistentes temporalmente?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Para gestionar la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              eventual, implemento varias estrategias. A nivel de UX,
+              proporciono retroalimentación visual al usuario (por ejemplo,
+              estados 'procesando', 'pendiente', 'actualizando') y evito mostrar
+              datos potencialmente obsoletos de inmediato. Operativamente,
+              utilizo sistemas de monitoreo robustos para rastrear la
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >
+              de procesamiento de eventos e identificar cuellos de botella. Para
+              compensar, a veces diseño 'acciones de compensación' que pueden
+              revertir o ajustar transacciones. También es crucial diseñar los
+              límites de los contextos acotados (bounded contexts)
+              cuidadosamente para minimizar las dependencias y la necesidad de
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              fuerte entre ellos, favoreciendo la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              eventual solo donde es aceptable.
+            </p>
+          </div>
+        </div>
 
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Arquitectura Orientada a Eventos</h1>
-    <p>La <strong>Arquitectura Orientada a Eventos (EDA - <span class="tooltip" data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento.">Event-Driven</span> Architecture)</strong> es un patrón de arquitectura de software que promueve el diseño de sistemas que reaccionan a eventos. En lugar de componentes que se llaman directamente entre sí (solicitud-respuesta), los componentes de un sistema EDA publican eventos cuando algo significativo sucede, y otros componentes interesados reaccionan a esos eventos de forma asíncrona.</p><p>Su objetivo principal es lograr un alto grado de desacoplamiento entre los servicios, lo que mejora la escalabilidad, la resiliencia y la extensibilidad del sistema.</p><p>---</p><h2>Conceptos Principales</h2><ul><li>  ### <strong>Evento</strong></li></ul><p>    Un evento es una notificación de que "algo significativo ha sucedido" en el sistema. Es un hecho inmutable que representa un cambio de estado. Los eventos no son comandos (instrucciones para hacer algo), sino descripciones de lo que ya ocurrió. Contienen datos relevantes sobre el suceso (qué, cuándo, dónde, quién), pero no sobre cómo reaccionar a él.</p><ul><li>   *   <strong>Ejemplos:</strong> <code>OrderCreated</code>, <code>PaymentProcessed</code>, <code>UserLoggedIn</code>, <code>ProductShipped</code>.</li><li>  ### <strong>Productor (o Publicador)</strong></li></ul><p>    Es el componente o servicio que detecta un cambio de estado significativo dentro de su dominio y publica un evento para notificar a otros que este cambio ha ocurrido. El productor no sabe quién o cuántos consumidores escucharán su evento, lo que promueve un fuerte desacoplamiento.</p><ul><li>  ### <strong>Consumidor (o Suscriptor)</strong></li></ul><p>    Es el componente o servicio que está interesado en ciertos tipos de eventos. Se suscribe a esos eventos y, cuando recibe uno, reacciona realizando alguna acción (ej. actualizar su propio estado, enviar una notificación, o incluso publicar un nuevo evento). Al igual que el productor, el consumidor no sabe quién produjo el evento. Es crucial que los consumidores sean <strong>idempotentes</strong>, es decir, que procesar el mismo evento varias veces no cause efectos secundarios indeseados.</p><ul><li>  ### <strong>Canal de Eventos (o <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">Broker</span>/Bus de Eventos)</strong></li></ul><p>    Es la infraestructura que facilita la comunicación entre productores y consumidores. Actúa como un intermediario que recibe eventos de los productores y los entrega a los consumidores suscritos. Este canal garantiza la persistencia, el orden (en la medida de lo posible) y la entrega confiable de los eventos.</p><ul><li>   *   <strong>Ejemplos:</strong> Apache Kafka, RabbitMQ, AWS SNS/SQS, Google Cloud <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>.</li><li>  ### <strong>Comunicación Asíncrona</strong></li></ul><p>    La interacción entre componentes en EDA es inherentemente asíncrona. El productor publica un evento y continúa con su trabajo sin esperar una respuesta inmediata. Los consumidores procesan los eventos en su propio tiempo, lo que mejora la capacidad de respuesta y la eficiencia del sistema.</p><p>---</p><h2>Ventajas</h2><ul><li>  ### <strong>Desacoplamiento Extremo</strong></li></ul><p>    Los productores y consumidores no tienen conocimiento directo entre sí, solo se comunican a través del <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de eventos. Esto permite que los componentes evolucionen, escalen y fallen de forma independiente.</p><ul><li>  ### <strong>Escalabilidad y Resiliencia</strong></li></ul><p>    Los componentes pueden escalarse horizontalmente de forma independiente. Si un servicio se sobrecarga, los eventos pueden acumularse en el canal hasta que el servicio tenga capacidad para procesarlos. Si un consumidor falla, el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> puede reintentar la entrega o dirigir el evento a una cola de mensajes fallidos.</p><ul><li>  ### <strong>Extensibilidad y Agilidad</strong></li></ul><p>    Es fácil añadir nuevas funcionalidades o servicios simplemente añadiendo nuevos consumidores que reaccionen a eventos existentes, sin necesidad de modificar los productores o los consumidores actuales.</p><ul><li>  ### <strong>Flexibilidad</strong></li></ul><p>    Soporta patrones de comunicación de uno-a-muchos (un evento puede ser consumido por múltiples servicios) y muchos-a-uno.</p><ul><li>  ### <strong>Auditoría y Trazabilidad</strong></li></ul><p>    El flujo de eventos en el canal puede servir como un registro inmutable de todos los cambios de estado en el sistema, lo que facilita la auditoría, la depuración y la reconstrucción de estados pasados.</p><ul><li>  ### <strong>Rendimiento Mejorado</strong></li></ul><p>    La comunicación asíncrona permite que los sistemas respondan más rápidamente al usuario final, ya que las operaciones de procesamiento complejas se realizan en segundo plano.</p><p>---</p><h2>Desventajas</h2><ul><li>  ### <strong>Complejidad Incremental</strong></li></ul><p>    La arquitectura puede ser más difícil de entender y diseñar inicialmente. La depuración de flujos de negocio que abarcan múltiples servicios asíncronos es considerablemente más compleja que en sistemas síncronos.</p><ul><li>  ### <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Eventual</strong></li></ul><p>    Debido a la naturaleza asíncrona, el estado del sistema no será consistente de forma instantánea en todos los servicios. Los desarrolladores deben diseñar los sistemas para manejar la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual, lo que puede requerir lógica de compensación o reintentos.</p><ul><li>  ### <strong>Manejo de Errores y Retries</strong></li></ul><p>    Es más complejo garantizar que todos los eventos se procesen correctamente y manejar fallos. Requiere implementar estrategias robustas para reintentos, colas de mensajes fallidos (dead-letter queues) y garantizar la <span class="tooltip" data-tooltip-text="La propiedad de una operación que permite que se pueda aplicar múltiples veces sin cambiar el resultado más allá de la aplicación inicial. Crucial para sistemas distribuidos donde las retransmisiones de mensajes son comunes.">idempotencia</span> de los consumidores.</p><ul><li>  ### <strong>Diseño de Eventos</strong></li></ul><p>    Definir los eventos correctos (qué datos incluir, cómo versionarlos) es crucial. Un mal diseño de eventos puede llevar a un acoplamiento implícito y dificultades futuras para la evolución del sistema.</p><ul><li>  ### <strong>Operacionalización</strong></li></ul><p>    Gestionar y monitorear el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de eventos introduce una capa adicional de infraestructura y complejidad operativa.</p><ul><li>  ### <strong>Carga de Mensajes (<span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">Overhead</span>)</strong></li></ul><p>    La serialización/deserialización de eventos y el paso por el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> pueden introducir una pequeña <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> y sobrecarga de procesamiento en comparación con llamadas directas en memoria.</p><h2>Ejemplo de Aplicación Real</h2><p>Aquí tienes un ejemplo detallado de la aplicación de la Arquitectura Orientada a Eventos (EDA) en un escenario empresarial real, presentado con encabezados claros en Markdown.</p><p>---</p><h2>Arquitectura Orientada a Eventos (EDA) en "ShopEase" - Un Retailer Online en Crecimiento</h2><h3>1. Problema Empresarial: Cuellos de Botella y Experiencia de Usuario Deficiente</h3><p>La empresa "ShopEase" es un minorista online de tamaño mediano que ha experimentado un crecimiento rápido en los últimos años. Su plataforma de comercio electrónico original fue construida como una <strong>aplicación monolítica</strong> fuertemente acoplada, donde todas las funcionalidades (gestión de pedidos, inventario, pagos, envío, notificaciones, historial de clientes) residían en una única base de código y base de datos.</p><p><strong>Los problemas clave que enfrentaba ShopEase eran:</strong></p><ul><li>  <strong>Cuellos de Botella en el Procesamiento de Pedidos:</strong> Durante picos de ventas (Black Friday, Cyber Monday, promociones), el sistema se volvía extremadamente lento. El procesamiento de un solo pedido involucraba múltiples llamadas síncronas a diferentes módulos (validar stock, procesar pago, generar factura, notificar al almacén, enviar email de confirmación), lo que ralentizaba la experiencia del usuario y aumentaba el tiempo de espera.</li><li>  <strong>Escalabilidad Limitada:</strong> La escalabilidad era difícil y costosa. Si un componente (ej. inventario) era el cuello de botella, había que escalar todo el monolito, desperdiciando recursos en otras áreas menos saturadas.</li><li>  <strong>Falta de Resiliencia:</strong> Un fallo en cualquier parte del proceso de pedido (ej. el servicio de pago de terceros se caía momentáneamente) podía bloquear todo el flujo, resultando en errores para el cliente o inconsistencias de datos. Las reintentos eran complejos de gestionar.</li><li>  <strong>Dificultad para Introducir Nuevas Funcionalidades:</strong> Añadir nuevas características (ej. un sistema de fidelización de clientes en tiempo real, análisis avanzados de comportamiento de compra) requería modificar una gran parte del código base, aumentando el riesgo de introducir nuevos errores y prolongando el tiempo de comercialización.</li><li>  <strong>Dependencia Estrecha y Complejidad del Código:</strong> Los diferentes módulos estaban tan entrelazados que cambiar uno a menudo tenía efectos secundarios inesperados en otros, haciendo que el desarrollo y mantenimiento fueran lentos y propensos a errores.</li><li>  <strong>Experiencia del Usuario Inconsistente:</strong> Los usuarios a menudo experimentaban largos tiempos de espera después de hacer clic en "Confirmar Pedido", y las notificaciones por correo electrónico a veces llegaban con retraso o se perdían.</li></ul><p>En resumen, la arquitectura monolítica de ShopEase estaba impidiendo su capacidad para escalar, innovar y ofrecer una experiencia de cliente fluida y fiable en un mercado competitivo.</p><h3>2. Implementación de la Arquitectura Orientada a Eventos</h3><p>ShopEase decidió reestructurar su plataforma adoptando una Arquitectura Orientada a Eventos (EDA) junto con un enfoque de microservicios.</p><p><strong>2.1. Visión de la Nueva Arquitectura:</strong></p><p>La idea central fue reemplazar las llamadas síncronas directas entre componentes con un modelo donde los servicios publican "eventos" (hechos inmutables que han ocurrido en el negocio) y otros servicios "escuchan" y reaccionan a esos eventos de forma asíncrona.</p><p><strong>2.2. Componentes Clave de la Solución:</strong></p><ul><li>  <strong>Servicios/Microservicios:</strong> El monolito se descompuso en servicios más pequeños, autónomos y especializados, cada uno responsable de un dominio de negocio específico (ej. Servicio de Pedidos, Servicio de Inventario, Servicio de Pagos, Servicio de Envío, Servicio de Notificaciones, Servicio de Lealtad, Servicio de Análisis).</li><li>  <strong><span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">Broker</span> de Eventos (Ej. Apache Kafka):</strong> Se introdujo un sistema de mensajería distribuido y escalable como Apache Kafka. Este <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> actúa como el centro neurálgico donde todos los servicios publican sus eventos y de donde otros servicios los consumen. Proporciona durabilidad, orden garantizado (dentro de una partición) y la capacidad de retransmitir eventos.</li><li>  <strong>Eventos:</strong> Los eventos son mensajes ligeros que describen un cambio de estado significativo en el negocio. Son inmutables y en pasado (ej. <code>PedidoRealizado</code>, <code>PagoProcesado</code>, <code>InventarioActualizado</code>, <code>EnvioSolicitado</code>, <code>ClienteRegistrado</code>).</li></ul><p><strong>2.3. Flujo Detallado del Procesamiento de Pedidos (Ejemplo):</strong></p><p>1.  <strong>El cliente realiza un pedido:</strong></p><ul><li>   *   El <strong>Servicio de Pedidos</strong> recibe la solicitud del cliente.</li><li>   *   Valida la información básica del pedido y lo almacena con un estado inicial (<code>PENDIENTE_PAGO</code>).</li><li>   *   Publica un evento <code>PedidoRealizado</code> en un tópico de Kafka (ej. <code>pedidos.topic</code>). Este evento contiene el ID del pedido, detalles del artículo, ID del cliente, etc.</li><li>   *   Responde rápidamente al cliente con un "Pedido recibido, procesando pago..." mientras el resto de la lógica continúa de forma asíncrona.</li></ul><p>2.  <strong>Procesamiento de Pago:</strong></p><ul><li>   *   El <strong>Servicio de Pagos</strong> es un consumidor del tópico <code>pedidos.topic</code>.</li><li>   *   Al recibir el evento <code>PedidoRealizado</code>, inicia el procesamiento del pago con la pasarela de pago externa.</li><li>   *   Una vez que el pago es exitoso, publica un evento <code>PagoProcesado</code> en un tópico <code>pagos.topic</code>. Si falla, publica <code>PagoFallido</code>.</li></ul><p>3.  <strong>Gestión de Inventario:</strong></p><ul><li>   *   El <strong>Servicio de Inventario</strong> es un consumidor del tópico <code>pagos.topic</code>.</li><li>   *   Al recibir el evento <code>PagoProcesado</code>, reserva los artículos del inventario.</li><li>   *   Publica un evento <code>InventarioReservado</code> o <code>InventarioFalloReserva</code> en un tópico <code>inventario.topic</code>.</li></ul><p>4.  <strong>Solicitud de Envío:</strong></p><ul><li>   *   El <strong>Servicio de Envío</strong> es un consumidor del tópico <code>inventario.topic</code>.</li><li>   *   Al recibir el evento <code>InventarioReservado</code>, genera una solicitud de envío a la empresa de logística.</li><li>   *   Publica un evento <code>EnvioSolicitado</code> en un tópico <code>envios.topic</code>.</li></ul><p>5.  <strong>Notificaciones al Cliente:</strong></p><ul><li>   *   El <strong>Servicio de Notificaciones</strong> es un consumidor de múltiples <span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span>: <code>pedidos.topic</code>, <code>pagos.topic</code>, <code>envios.topic</code>.</li><li>   *   Al recibir <code>PedidoRealizado</code>, envía un email de "Confirmación de Pedido Recibido".</li><li>   *   Al recibir <code>PagoProcesado</code>, envía un email/SMS de "Pago Confirmado".</li><li>   *   Al recibir <code>EnvioSolicitado</code> (o <code>PaqueteEnviado</code> de un evento externo), envía un email/SMS de "Tu pedido ha sido enviado".</li></ul><p>6.  <strong>Análisis y Lealtad:</strong></p><ul><li>   *   El <strong>Servicio de Análisis</strong> consume eventos de casi todos los <span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span> para construir dashboards en tiempo real, identificar tendencias de compra y generar informes.</li><li>   *   El <strong>Servicio de Lealtad</strong> consume <code>PagoProcesado</code> para otorgar puntos al cliente automáticamente.</li></ul><p><strong>2.4. Tecnologías Clave Utilizadas:</strong></p><ul><li>  <strong><span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">Broker</span> de Eventos:</strong> Apache Kafka</li><li>  <strong>Servicios:</strong> Desarrollados principalmente con Spring Boot (Java) y Node.js, desplegados como microservicios.</li><li>  <strong>Bases de Datos:</strong> Cada microservicio gestiona su propia base de datos (ej. PostgreSQL, MongoDB, Redis), siguiendo el patrón "Database Per Service".</li><li>  <strong>Contenedores y <span class="tooltip" data-tooltip-text="La gestión y coordinación automatizada de sistemas informáticos, aplicaciones y servicios complejos. Kubernetes es un ejemplo popular de un orquestador de contenedores.">Orquestación</span>:</strong> Docker y Kubernetes para el despliegue y la gestión de los microservicios.</li></ul><h3>3. Resultados y Beneficios Obtenidos</h3><p>La implementación de la Arquitectura Orientada a Eventos transformó la plataforma de ShopEase y brindó beneficios significativos:</p><ul><li>  <strong>Escalabilidad y Resiliencia Mejoradas:</strong></li><li>   *   Los servicios pueden escalar de forma independiente. Durante picos de tráfico, el Servicio de Pedidos puede manejar miles de solicitudes por segundo, mientras que otros servicios (ej. Notificaciones) procesan sus mensajes a su propio ritmo sin afectar el rendimiento principal.</li><li>   *   Los fallos son aislados. Si el Servicio de Envío falla temporalmente, el sistema sigue aceptando pedidos y procesando pagos. Kafka almacena los eventos, y el Servicio de Envío los procesará una vez que se recupere. Esto garantiza una mayor <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y una experiencia de usuario más estable.</li><li>  <strong>Rendimiento y Experiencia del Usuario Optimizados:</strong></li><li>   *   El tiempo de respuesta inicial al cliente se redujo drásticamente (de ~5-10 segundos a <1 segundo) ya que el <code>PedidoRealizado</code> es el primer evento que se publica y el flujo principal se completa de forma asíncrona.</li><li>   *   Las notificaciones son más consistentes y rápidas, mejorando la satisfacción del cliente.</li><li>  <strong>Desacoplamiento y Agilidad en el Desarrollo:</strong></li><li>   *   Los equipos de desarrollo pueden trabajar en servicios individuales de forma independiente, utilizando diferentes tecnologías si es necesario, sin afectar a otros. Esto acelera el tiempo de comercialización para nuevas características.</li><li>   *   La integración de nuevos sistemas o terceros es más sencilla. Un nuevo servicio solo necesita suscribirse a los eventos relevantes en Kafka.</li><li>  <strong>Procesamiento en Tiempo Real y Extensibilidad:</strong></li><li>   *   ShopEase pudo introducir nuevas funcionalidades como un sistema de fidelización en tiempo real y análisis avanzados de comportamiento de compra de manera eficiente. Por ejemplo, al agregar un nuevo "Servicio de Detección de Fraude", este simplemente se suscribe a los eventos <code>PedidoRealizado</code> y <code>PagoProcesado</code> para realizar verificaciones en tiempo real sin modificar los servicios existentes.</li><li>   *   El flujo de eventos se convirtió en una "auditoría en tiempo real" de todas las acciones del negocio, facilitando la depuración y la observabilidad.</li><li>  <strong>Reducción de Costos Operativos:</strong></li><li>   *   La capacidad de escalar componentes individualmente optimizó el uso de recursos, reduciendo la necesidad de provisionar infraestructura excesiva para el monolito completo.</li><li>   *   Aunque la complejidad inicial de la transición fue alta, a largo plazo, el mantenimiento y la evolución del sistema se volvieron más manejables y menos costosos.</li></ul><p>En conclusión, la adopción de la Arquitectura Orientada a Eventos permitió a ShopEase superar los desafíos de escalabilidad y rendimiento de su antigua plataforma, mejorar significativamente la experiencia de sus clientes y posicionarse para una innovación más rápida y eficiente en el futuro.</p><h2>Preguntas de Entrevista</h2><div>
         <div class="accordion-item">
-          <p class="accordion-question">En una Arquitectura Orientada a Eventos (EDA), la consistencia eventual es una característica inherente. ¿Cómo gestionaría los desafíos operativos y de experiencia de usuario que surgen de los retrasos en la propagación de datos y la visualización de estados inconsistentes temporalmente?</p>
-          <div class="accordion-answer"><p>Para gestionar la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual, implemento varias estrategias. A nivel de UX, proporciono retroalimentación visual al usuario (por ejemplo, estados 'procesando', 'pendiente', 'actualizando') y evito mostrar datos potencialmente obsoletos de inmediato. Operativamente, utilizo sistemas de monitoreo robustos para rastrear la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> de procesamiento de eventos e identificar cuellos de botella. Para compensar, a veces diseño 'acciones de compensación' que pueden revertir o ajustar transacciones. También es crucial diseñar los límites de los contextos acotados (bounded contexts) cuidadosamente para minimizar las dependencias y la necesidad de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte entre ellos, favoreciendo la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual solo donde es aceptable.</p></div>
+          <p class="accordion-question">
+            El seguimiento de una transacción o flujo de negocio completo a
+            través de múltiples microservicios y colas de eventos puede ser
+            extremadamente complejo en una EDA. Describa su enfoque para depurar
+            problemas en un entorno tan distribuido y asíncrono.
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Mi enfoque para depurar en EDA se centra en la observabilidad.
+              Implemento IDs de correlación (correlation IDs) que se propagan a
+              través de todos los servicios y eventos de un flujo de negocio,
+              permitiendo el seguimiento de extremo a extremo. Utilizo
+              herramientas de trazado distribuido (como Jaeger o OpenTelemetry)
+              para visualizar la ruta completa de un evento y sus efectos.
+              Centralizo todos los logs con timestamps precisos en una
+              plataforma como ELK Stack o Splunk, y uso monitoreo de métricas y
+              alertas para detectar anomalías. Además, el
+              <span
+                class="tooltip"
+                data-tooltip-text="Un patrón de diseño en el que todos los cambios en el estado de una aplicación se almacenan como una secuencia de eventos inmutables. En lugar de guardar el estado actual, se guarda el historial de cambios."
+                >Event Sourcing</span
+              >, cuando se utiliza, proporciona un historial auditable de todos
+              los cambios de estado.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">El seguimiento de una transacción o flujo de negocio completo a través de múltiples microservicios y colas de eventos puede ser extremadamente complejo en una EDA. Describa su enfoque para depurar problemas en un entorno tan distribuido y asíncrono.</p>
-          <div class="accordion-answer"><p>Mi enfoque para depurar en EDA se centra en la observabilidad. Implemento IDs de correlación (correlation IDs) que se propagan a través de todos los servicios y eventos de un flujo de negocio, permitiendo el seguimiento de extremo a extremo. Utilizo herramientas de trazado distribuido (como Jaeger o OpenTelemetry) para visualizar la ruta completa de un evento y sus efectos. Centralizo todos los logs con timestamps precisos en una plataforma como ELK Stack o Splunk, y uso monitoreo de métricas y alertas para detectar anomalías. Además, el <span class="tooltip" data-tooltip-text="Un patrón de diseño en el que todos los cambios en el estado de una aplicación se almacenan como una secuencia de eventos inmutables. En lugar de guardar el estado actual, se guarda el historial de cambios.">Event Sourcing</span>, cuando se utiliza, proporciona un historial auditable de todos los cambios de estado.</p></div>
+          <p class="accordion-question">
+            Los sistemas de eventos a menudo no garantizan el orden estricto de
+            los eventos o pueden entregar el mismo evento varias veces. ¿Cómo
+            diseña sus consumidores de eventos para manejar eventos fuera de
+            orden y para asegurar que el procesamiento sea idempotente?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Para manejar eventos fuera de orden, cada evento incluye un número
+              de secuencia o un timestamp, lo que permite al consumidor decidir
+              si un evento es obsoleto o si necesita reordenarse temporalmente.
+              En muchos casos, los consumidores están diseñados para procesar
+              solo el evento más reciente para una entidad específica. Para
+              asegurar la
+              <span
+                class="tooltip"
+                data-tooltip-text="La propiedad de una operación que permite que se pueda aplicar múltiples veces sin cambiar el resultado más allá de la aplicación inicial. Crucial para sistemas distribuidos donde las retransmisiones de mensajes son comunes."
+                >idempotencia</span
+              >, cada evento debe tener un ID único (UUID). Antes de procesar un
+              evento que alteraría el estado, el consumidor verifica si ese ID
+              de evento ya ha sido procesado y registrado en su propia base de
+              datos o almacenamiento. Si ya se procesó, el evento se ignora,
+              evitando efectos secundarios duplicados. Esto se logra a menudo
+              dentro de una transacción que registra el evento como procesado y
+              aplica el cambio de estado atómicamente.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Los sistemas de eventos a menudo no garantizan el orden estricto de los eventos o pueden entregar el mismo evento varias veces. ¿Cómo diseña sus consumidores de eventos para manejar eventos fuera de orden y para asegurar que el procesamiento sea idempotente?</p>
-          <div class="accordion-answer"><p>Para manejar eventos fuera de orden, cada evento incluye un número de secuencia o un timestamp, lo que permite al consumidor decidir si un evento es obsoleto o si necesita reordenarse temporalmente. En muchos casos, los consumidores están diseñados para procesar solo el evento más reciente para una entidad específica. Para asegurar la <span class="tooltip" data-tooltip-text="La propiedad de una operación que permite que se pueda aplicar múltiples veces sin cambiar el resultado más allá de la aplicación inicial. Crucial para sistemas distribuidos donde las retransmisiones de mensajes son comunes.">idempotencia</span>, cada evento debe tener un ID único (UUID). Antes de procesar un evento que alteraría el estado, el consumidor verifica si ese ID de evento ya ha sido procesado y registrado en su propia base de datos o almacenamiento. Si ya se procesó, el evento se ignora, evitando efectos secundarios duplicados. Esto se logra a menudo dentro de una transacción que registra el evento como procesado y aplica el cambio de estado atómicamente.</p></div>
+          <p class="accordion-question">
+            Un evento defectuoso ('poison pill') o una avalancha de eventos
+            ('event storm') pueden paralizar partes de un sistema basado en
+            eventos. ¿Qué estrategias implementaría para mitigar el impacto de
+            estos escenarios y garantizar la resiliencia del sistema?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Para los 'poison pills', implementaría colas de mensajes no
+              entregados (Dead Letter Queues -
+              <span
+                class="tooltip"
+                data-tooltip-text="Cola de Mensajes Muertos (Dead-Letter Queue). Una cola especial donde un message broker envía los mensajes que no pudieron ser procesados exitosamente por un consumidor después de varios intentos."
+                >DLQ</span
+              >) donde los eventos que fallan persistentemente después de varios
+              reintentos son movidos para su análisis manual o reprocesamiento
+              posterior. Esto evita que bloqueen la cola principal. Para 'event
+              storms' o picos de carga, utilizo mecanismos de limitación de
+              velocidad (rate limiting) en los productores de eventos y
+              backpressure en los consumidores. También implementaría el
+              escalado automático de los consumidores de eventos y patrones como
+              el Circuit Breaker para aislar servicios fallidos, y Bulkhead para
+              particionar recursos. Monitoreo activamente las métricas de
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >
+              y errores para detectar y responder rápidamente a estos
+              escenarios, a menudo con alarmas que activan acciones correctivas
+              o de escalado.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Un evento defectuoso ('poison pill') o una avalancha de eventos ('event storm') pueden paralizar partes de un sistema basado en eventos. ¿Qué estrategias implementaría para mitigar el impacto de estos escenarios y garantizar la resiliencia del sistema?</p>
-          <div class="accordion-answer"><p>Para los 'poison pills', implementaría colas de mensajes no entregados (Dead Letter Queues - <span class="tooltip" data-tooltip-text="Cola de Mensajes Muertos (Dead-Letter Queue). Una cola especial donde un message broker envía los mensajes que no pudieron ser procesados exitosamente por un consumidor después de varios intentos.">DLQ</span>) donde los eventos que fallan persistentemente después de varios reintentos son movidos para su análisis manual o reprocesamiento posterior. Esto evita que bloqueen la cola principal. Para 'event storms' o picos de carga, utilizo mecanismos de limitación de velocidad (rate limiting) en los productores de eventos y backpressure en los consumidores. También implementaría el escalado automático de los consumidores de eventos y patrones como el Circuit Breaker para aislar servicios fallidos, y Bulkhead para particionar recursos. Monitoreo activamente las métricas de <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> y errores para detectar y responder rápidamente a estos escenarios, a menudo con alarmas que activan acciones correctivas o de escalado.</p></div>
+          <p class="accordion-question">
+            Si bien EDA ofrece grandes beneficios, no es una panacea. ¿Puede
+            describir escenarios o tipos de sistemas donde la Arquitectura
+            Orientada a Eventos no sería la opción más adecuada, y cuáles son
+            sus principales desventajas?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              EDA no es ideal para sistemas que requieren una
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              transaccional fuerte e inmediata a través de múltiples dominios,
+              como algunas aplicaciones bancarias tradicionales, o para
+              aplicaciones CRUD muy simples donde la complejidad adicional de la
+              gestión de eventos no justifica los beneficios. Sus principales
+              desventajas incluyen: aumento de la complejidad del sistema
+              distribuido, lo que dificulta la depuración y el monitoreo sin
+              herramientas adecuadas; la curva de aprendizaje para los equipos;
+              los desafíos inherentes de la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              eventual; y la necesidad de una infraestructura de mensajería
+              robusta. Además, puede introducir una sobrecarga operacional
+              significativa si no se diseña e implementa cuidadosamente, y la
+              gestión del historial de eventos puede volverse un desafío a largo
+              plazo.
+            </p>
+          </div>
         </div>
-      
-        <div class="accordion-item">
-          <p class="accordion-question">Si bien EDA ofrece grandes beneficios, no es una panacea. ¿Puede describir escenarios o tipos de sistemas donde la Arquitectura Orientada a Eventos no sería la opción más adecuada, y cuáles son sus principales desventajas?</p>
-          <div class="accordion-answer"><p>EDA no es ideal para sistemas que requieren una <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> transaccional fuerte e inmediata a través de múltiples dominios, como algunas aplicaciones bancarias tradicionales, o para aplicaciones CRUD muy simples donde la complejidad adicional de la gestión de eventos no justifica los beneficios. Sus principales desventajas incluyen: aumento de la complejidad del sistema distribuido, lo que dificulta la depuración y el monitoreo sin herramientas adecuadas; la curva de aprendizaje para los equipos; los desafíos inherentes de la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual; y la necesidad de una infraestructura de mensajería robusta. Además, puede introducir una sobrecarga operacional significativa si no se diseña e implementa cuidadosamente, y la gestión del historial de eventos puede volverse un desafío a largo plazo.</p></div>
-        </div>
-      </div><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFgMX_i04Vo6haJevGGGrDOZoIiynXLw22Wn-Km31PY0z0s5jKXdnw3KFh5wNlsHdQNdmxtbqUI6I6ISBeYP7BATJ29eXyTEK1_CNOB4FKg3WzCi6H0aWL3OtpC-zSbmjDz6Xw3aBFDtPlUyHeF4T-oLnUYDg==" target="_blank" rel="noopener noreferrer">confluent.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQECm1Gc-_T-qirt71KILtIhNNKzsgw3bpOG8FXFPo7Irkr3Z-Gz0kuaMT28aA7R1kqQOpOodPeAqfHSQMqJYZhfiNNmrD56q_xzecdmRSpFT8fpjtmTVrWbE53L_0wWVHMAS_yoaUIrQsg3M-u0uAtkG0wf7r0=" target="_blank" rel="noopener noreferrer">ibm.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7iGZ3dev9PrkGZAa4ozr0eR_riJkeMAs3LNo-UKhs7AWg4naZHlphab5BE20cuzeMlHKAUuKUMS5O3Wu6LRKbkAAvr--kBGxsZrskDtBjWeFxn2eqoEwpDE4zhII9knPzI7ABdJN2KwjdIndKwBjQX6PDKWJugyR3pzE=" target="_blank" rel="noopener noreferrer">ibm.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGernRS9FJq_TiZzne52Ppno05Sw1TTWoKZ6Ht9XwvhUxyAiS2fBvFuJ84k4vdQJSPHPSNPYpP7LZgwTwcXFuBHuaAwfgtJKUuereVw-kWrtTm0DEq_LfebA_eFmXSE7o7DudUDfPvQn1jOjiElhsaj_EY=" target="_blank" rel="noopener noreferrer">wikipedia.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHRzkymPc-Buwfhc760WELzSJRNZ-m5OkoXLSuZw5nq7_PqpwWn7u_ctreNOw03WGVxjsRjtzvRqmFrat5mcldfC3TtNEtUAsCUMQKgjz0Txi9HtAl0YJiiGW2XmifKAkgjXmo0HM4NzHm-6bTqeBHln4kgbdL8tHxdXA==" target="_blank" rel="noopener noreferrer">wikipedia.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2nsHlUv5pggANJf78POcDkXA1oytfArrIZMFU3i963IMC_1FUldov6-N9DIc6_nE3csfLGXthTgvaELVjzS4kHxo4cYTwwIhN_hi1p0im3Ffvz6m4zq6VviUMGlzty4G7blZlQOHINvMdH2nc17tRYgKyYPQ32DH_zjYTvdZUQ7aixMJ6hiG75A==" target="_blank" rel="noopener noreferrer">redhat.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBkfdT_0mzuJ59apSihgyNizflnAv67uNqScXFcdiIeSSfMmAY0lkQJQXIEjZpAr5PSO4ddt_M-3cXT4-DUDHczt0yHQmNDv9pIYwb15rudDLUkKIp5OB5MhpziHf5IqmSKUjsYGkQ4POMIQND6y1f" target="_blank" rel="noopener noreferrer">solace.com</a></li></ul>
-  </div>
-</body>
+      </div>
+      <h2>Recursos Adicionales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFgMX_i04Vo6haJevGGGrDOZoIiynXLw22Wn-Km31PY0z0s5jKXdnw3KFh5wNlsHdQNdmxtbqUI6I6ISBeYP7BATJ29eXyTEK1_CNOB4FKg3WzCi6H0aWL3OtpC-zSbmjDz6Xw3aBFDtPlUyHeF4T-oLnUYDg=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >confluent.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQECm1Gc-_T-qirt71KILtIhNNKzsgw3bpOG8FXFPo7Irkr3Z-Gz0kuaMT28aA7R1kqQOpOodPeAqfHSQMqJYZhfiNNmrD56q_xzecdmRSpFT8fpjtmTVrWbE53L_0wWVHMAS_yoaUIrQsg3M-u0uAtkG0wf7r0="
+            target="_blank"
+            rel="noopener noreferrer"
+            >ibm.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7iGZ3dev9PrkGZAa4ozr0eR_riJkeMAs3LNo-UKhs7AWg4naZHlphab5BE20cuzeMlHKAUuKUMS5O3Wu6LRKbkAAvr--kBGxsZrskDtBjWeFxn2eqoEwpDE4zhII9knPzI7ABdJN2KwjdIndKwBjQX6PDKWJugyR3pzE="
+            target="_blank"
+            rel="noopener noreferrer"
+            >ibm.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGernRS9FJq_TiZzne52Ppno05Sw1TTWoKZ6Ht9XwvhUxyAiS2fBvFuJ84k4vdQJSPHPSNPYpP7LZgwTwcXFuBHuaAwfgtJKUuereVw-kWrtTm0DEq_LfebA_eFmXSE7o7DudUDfPvQn1jOjiElhsaj_EY="
+            target="_blank"
+            rel="noopener noreferrer"
+            >wikipedia.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHRzkymPc-Buwfhc760WELzSJRNZ-m5OkoXLSuZw5nq7_PqpwWn7u_ctreNOw03WGVxjsRjtzvRqmFrat5mcldfC3TtNEtUAsCUMQKgjz0Txi9HtAl0YJiiGW2XmifKAkgjXmo0HM4NzHm-6bTqeBHln4kgbdL8tHxdXA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >wikipedia.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2nsHlUv5pggANJf78POcDkXA1oytfArrIZMFU3i963IMC_1FUldov6-N9DIc6_nE3csfLGXthTgvaELVjzS4kHxo4cYTwwIhN_hi1p0im3Ffvz6m4zq6VviUMGlzty4G7blZlQOHINvMdH2nc17tRYgKyYPQ32DH_zjYTvdZUQ7aixMJ6hiG75A=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >redhat.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBkfdT_0mzuJ59apSihgyNizflnAv67uNqScXFcdiIeSSfMmAY0lkQJQXIEjZpAr5PSO4ddt_M-3cXT4-DUDHczt0yHQmNDv9pIYwb15rudDLUkKIp5OB5MhpziHf5IqmSKUjsYGkQ4POMIQND6y1f"
+            target="_blank"
+            rel="noopener noreferrer"
+            >solace.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

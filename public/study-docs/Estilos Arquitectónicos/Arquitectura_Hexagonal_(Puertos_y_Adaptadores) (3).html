@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arquitectura Hexagonal (Puertos y Adaptadores)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arquitectura Hexagonal (Puertos y Adaptadores)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,104 +52,906 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Arquitectura Hexagonal (Puertos y Adaptadores)</h1>
+      <p># Arquitectura Hexagonal (Puertos y Adaptadores)</p>
+      <p>
+        La Arquitectura Hexagonal, también conocida como "Arquitectura de
+        Puertos y Adaptadores", es un patrón de arquitectura de software
+        propuesto por Alistair Cockburn. Su objetivo principal es aislar la
+        lógica de negocio central (el "core" de la aplicación) de las
+        preocupaciones externas como la interfaz de usuario, las bases de datos,
+        los servicios externos y los frameworks. Esto se logra mediante el uso
+        de "puertos" como interfaces y "adaptadores" como implementaciones de
+        esas interfaces.
+      </p>
+      <h2>Conceptos Principales</h2>
+      <p>
+        1. <strong>Core de la Aplicación (Dominio o Hexágono Central):</strong>
+      </p>
+      <ul>
+        <li>
+          * Representa el corazón de la aplicación, conteniendo la lógica de
+          negocio pura y las reglas del dominio.
+        </li>
+        <li>
+          * Es completamente independiente de cualquier tecnología o
+          infraestructura externa (UI, base de datos, servicios web). No conoce
+          a los adaptadores ni a los detalles de cómo se interactúa con el mundo
+          exterior.
+        </li>
+        <li>
+          * Define las interfaces (puertos) a través de las cuales interactúa
+          con el mundo exterior y viceversa.
+        </li>
+      </ul>
+      <p>2. <strong>Puertos (Ports):</strong></p>
+      <ul>
+        <li>
+          * Son interfaces o contratos definidos en el core de la aplicación.
+          Declaran las operaciones que el core ofrece al exterior o que el core
+          necesita del exterior.
+        </li>
+        <li>* <strong>Puertos Impulsores (Driving/Primary Ports):</strong></li>
+        <li>
+          * Definen las acciones que los "actores primarios" (usuarios, otros
+          sistemas) pueden pedirle a la aplicación.
+        </li>
+        <li>
+          * Son las APIs de la aplicación. El core de la aplicación implementa
+          estos puertos.
+        </li>
+        <li>
+          * Ejemplo:
+          <code
+            >interface UserServicePort { User createUser(UserDto user); }</code
+          >
+        </li>
+        <li>* <strong>Puertos Conducidos (Driven/Secondary Ports):</strong></li>
+        <li>
+          * Definen las acciones que la aplicación necesita de los "actores
+          secundarios" (base de datos, servicios externos).
+        </li>
+        <li>
+          <em> Son las APIs que el core de la aplicación </em>consume*. El core
+          invoca métodos de estos puertos, y alguna infraestructura externa los
+          implementará.
+        </li>
+        <li>
+          * Ejemplo:
+          <code
+            >interface UserRepositoryPort { User save(User user); User
+            findById(Long id); }</code
+          >
+        </li>
+      </ul>
+      <p>3. <strong>Adaptadores (Adapters):</strong></p>
+      <ul>
+        <li>
+          * Son las implementaciones concretas de los puertos. Convierten las
+          interacciones tecnológicas específicas (HTTP, SQL, gRPC) en el formato
+          que el core de la aplicación entiende y espera.
+        </li>
+        <li>
+          * Se encuentran en la capa exterior de la arquitectura y dependen de
+          los puertos (y, por lo tanto, del core).
+        </li>
+        <li>
+          * <strong>Adaptadores Impulsores (Driving/Primary Adapters):</strong>
+        </li>
+        <li>
+          * Son los que "llaman" o "impulsan" a la aplicación a través de sus
+          puertos impulsores.
+        </li>
+        <li>
+          * Implementan una interfaz de usuario, una API REST (controladores),
+          un CLI, un consumidor de mensajes, etc.
+        </li>
+        <li>
+          * Ejemplo: <code>UserController</code> (que utiliza
+          <code>UserServicePort</code>).
+        </li>
+        <li>
+          * <strong>Adaptadores Conducidos (Driven/Secondary Adapters):</strong>
+        </li>
+        <li>
+          * Son los que la aplicación "conduce" o "usa" a través de sus puertos
+          conducidos.
+        </li>
+        <li>
+          * Implementan el acceso a bases de datos (repositorios ORM), servicios
+          externos (clientes HTTP), sistemas de mensajería, etc.
+        </li>
+        <li>
+          * Ejemplo: <code>JpaUserRepository</code> (que implementa
+          <code>UserRepositoryPort</code>).
+        </li>
+      </ul>
+      <p>
+        4. <strong>Inversión de Dependencias:</strong> La característica clave
+        es que las dependencias siempre apuntan hacia el interior. El core nunca
+        depende de los adaptadores; los adaptadores dependen de los puertos
+        definidos en el core. Esto se logra a menudo con la inyección de
+        dependencias.
+      </p>
+      <h2>Ventajas</h2>
+      <ul>
+        <li>
+          <strong>Aislamiento de la Lógica de Negocio:</strong> El core de la
+          aplicación permanece limpio, puro y libre de preocupaciones
+          tecnológicas, lo que facilita su comprensión, mantenimiento y
+          evolución.
+        </li>
+        <li>
+          <strong>Alta Testabilidad:</strong> La lógica de negocio puede ser
+          probada de forma aislada sin necesidad de bases de datos reales, UIs o
+          servicios externos. Basta con "mockear" o "stubear" los puertos.
+        </li>
+        <li>
+          <strong>Flexibilidad Tecnológica:</strong> Permite cambiar fácilmente
+          tecnologías externas (base de datos, framework UI, sistema de
+          mensajería) sin afectar la lógica de negocio central. Por ejemplo,
+          pasar de MySQL a PostgreSQL, o de una UI web a una de escritorio.
+        </li>
+        <li>
+          <strong>Mantenibilidad y Evolución:</strong> Los cambios en las
+          tecnologías externas o en los requisitos de interacción son más
+          fáciles de gestionar, ya que se limitan a la capa de adaptadores. La
+          evolución del dominio es más predecible.
+        </li>
+        <li>
+          <strong>Equipos Independientes:</strong> Diferentes equipos pueden
+          trabajar en el core y en los distintos adaptadores con mayor
+          independencia, siempre que respeten los contratos de los puertos.
+        </li>
+        <li>
+          <strong>Tecnología Agnosticismo del Core:</strong> El core de la
+          aplicación es independiente de cualquier framework o librería
+          específica, lo que aumenta su longevidad y reutilización.
+        </li>
+      </ul>
+      <h2>Desventajas</h2>
+      <ul>
+        <li>
+          <strong>Mayor Complejidad Inicial:</strong> Para aplicaciones pequeñas
+          o triviales, la sobrecarga de definir puertos y adaptadores puede
+          parecer excesiva y aumentar la complejidad inicial del proyecto.
+        </li>
+        <li>
+          <strong>Mayor Cantidad de Código Boilerplate:</strong> Se requiere más
+          código (interfaces, clases de implementación, configuraciones de
+          inyección de dependencias) para establecer las capas y los contratos.
+        </li>
+        <li>
+          <strong>Curva de Aprendizaje:</strong> Requiere que el equipo entienda
+          bien los principios de Diseño Dirigido por el Dominio (DDD) y la
+          Inversión de Dependencias, lo que puede tener una curva de aprendizaje
+          para desarrolladores no familiarizados.
+        </li>
+        <li>
+          <strong>Puede Ser Sobre-ingeniería:</strong> Si la aplicación no tiene
+          requisitos de cambio de tecnología significativos o una lógica de
+          negocio compleja que justifique el aislamiento, podría considerarse
+          una sobre-ingeniería.
+        </li>
+        <li>
+          <strong>Configuración de la Inyección de Dependencias:</strong> La
+          gestión de las dependencias y la configuración de los contenedores de
+          inyección de dependencias puede ser un desafío si no se realiza
+          correctamente.
+        </li>
+      </ul>
+      <h2>Ejemplo de Aplicación Real</h2>
+      <p>
+        Aquí tienes un ejemplo detallado de la aplicación de la Arquitectura
+        Hexagonal (Puertos y Adaptadores) en un escenario empresarial real.
+      </p>
+      <p>---</p>
+      <h2>Aplicación de la Arquitectura Hexagonal en "MediCare Solutions"</h2>
+      <p><strong>Empresa:</strong> MediCare Solutions</p>
+      <p><strong>Sector:</strong> Salud Digital</p>
+      <p>
+        <strong>Producto Principal:</strong> Sistema de Gestión de Historiales
+        Clínicos (SGHC)
+      </p>
+      <p>---</p>
+      <h3>1. El Problema que Enfrentaba la Empresa</h3>
+      <p>
+        MediCare Solutions poseía un <strong>monolito legado</strong> para su
+        Sistema de Gestión de Historiales Clínicos (SGHC). Este sistema había
+        crecido orgánicamente durante más de una década, acumulando deuda
+        técnica significativa.
+      </p>
+      <p><strong>Problemas Específicos:</strong></p>
+      <ul>
+        <li>
+          <strong>Acoplamiento Extremo:</strong> La lógica de negocio
+          fundamental (ej., cálculo de dosis, validación de diagnósticos,
+          gestión de citas) estaba inextricablemente ligada a la infraestructura
+          y la interfaz de usuario.
+        </li>
+        <li>
+          * El código de la interfaz web (JSP, JSF) mezclaba directamente con
+          las reglas de negocio.
+        </li>
+        <li>
+          * Las entidades de base de datos (Hibernate, JDBC) se utilizaban
+          directamente en las capas de negocio y presentación.
+        </li>
+        <li>
+          * Cambiar la base de datos o la interfaz de usuario implicaba
+          reescribir una parte sustancial de la lógica central.
+        </li>
+        <li><strong>Dificultad de Mantenimiento y Evolución:</strong></li>
+        <li>
+          * Implementar nuevas funcionalidades o adaptar el sistema a nuevas
+          regulaciones sanitarias (ej., GDPR, HIPAA, HL7 FHIR) era lento y
+          propenso a errores, ya que cada cambio tenía efectos secundarios
+          impredecibles.
+        </li>
+        <li>
+          * Las pruebas unitarias del código de negocio eran casi imposibles sin
+          levantar una base de datos y un servidor web, lo que resultaba en un
+          bajo coverage y confianza.
+        </li>
+        <li>
+          <strong>Falta de Flexibilidad Tecnológica:</strong> El sistema estaba
+          fuertemente acoplado a una base de datos relacional específica
+          (Oracle) y a un framework web particular. Explorar nuevas tecnologías
+          o integrar con sistemas externos (ej., laboratorios, farmacias) era
+          una pesadilla de integración.
+        </li>
+        <li>
+          <strong>Múltiples Puntos de Interacción Necesarios:</strong> MediCare
+          Solutions necesitaba interactuar con el SGHC a través de:
+        </li>
+        <li>* Una interfaz web para médicos y personal administrativo.</li>
+        <li>* Una API para su aplicación móvil de pacientes.</li>
+        <li>
+          * Una API para socios (ej., compañías de seguros, sistemas de
+          laboratorio externos).
+        </li>
+        <li>* Procesos de importación/exportación de datos por lotes.</li>
+        <li>
+          * Cada nueva interfaz requería duplicar o adaptar la lógica de
+          negocio, introduciendo inconsistencias.
+        </li>
+      </ul>
+      <p>
+        En resumen, la empresa sufría de una baja agilidad, altos costos de
+        desarrollo y un riesgo elevado en cada cambio, amenazando su capacidad
+        para competir y adaptarse en un mercado de salud digital en rápida
+        evolución.
+      </p>
+      <p>---</p>
+      <h3>2. Implementación de la Arquitectura Hexagonal</h3>
+      <p>
+        MediCare Solutions decidió refactorizar gradualmente su monolito,
+        comenzando por los módulos más críticos y de mayor evolución, aplicando
+        la Arquitectura Hexagonal.
+      </p>
+      <p><strong>Conceptos Clave Aplicados:</strong></p>
+      <p>
+        1. <strong>El Hexágono (Core del Dominio):</strong> El corazón de la
+        aplicación, que encapsula toda la lógica de negocio y las reglas
+        específicas del dominio. Es completamente
+        <span
+          class="tooltip"
+          data-tooltip-text='Ser independiente de una tecnología, protocolo o proveedor específico. Por ejemplo, "agnóstico a la nube" significa que puede funcionar en cualquier proveedor de nube.'
+          >agnóstico</span
+        >
+        a la tecnología.
+      </p>
+      <ul>
+        <li>
+          * <strong>Entidades:</strong> <code>Paciente</code>,
+          <code>HistorialClinico</code>, <code>Diagnostico</code>,
+          <code>Tratamiento</code>, <code>Cita</code>.
+        </li>
+        <li>
+          * <strong>Servicios del Dominio:</strong>
+          <code>GestionarPacienteService</code>,
+          <code>RegistrarDiagnosticoService</code>,
+          <code>ProgramarCitaService</code>,
+          <code>ObtenerHistorialService</code>. Estos servicios orquestan las
+          entidades y aplican las reglas de negocio.
+        </li>
+        <li>
+          * <strong>Reglas de Negocio:</strong> Validación de entradas, cálculo
+          de riesgos, restricciones de acceso basadas en roles, lógica de flujos
+          de trabajo clínicos.
+        </li>
+      </ul>
+      <p>2. <strong>Puertos (Interfaces):</strong></p>
+      <ul>
+        <li>
+          *
+          <strong
+            >Puertos Impulsores (Driving Ports - APIs para el Exterior):</strong
+          >
+          Definen lo que el "Hexágono" puede hacer. Son las interfaces que las
+          capas externas utilizan para interactuar con la lógica de negocio.
+        </li>
+        <li>
+          * <code>PacienteManagementPort</code>: Define métodos como
+          <code>registrarPaciente()</code>, <code>actualizarPaciente()</code>,
+          <code>buscarPacientePorId()</code>.
+        </li>
+        <li>
+          * <code>ClinicalRecordManagementPort</code>: Define métodos como
+          <code>añadirDiagnostico()</code>, <code>registrarTratamiento()</code>,
+          <code>obtenerHistorialClinico()</code>.
+        </li>
+        <li>
+          * <code>AppointmentSchedulingPort</code>: Define métodos como
+          <code>programarCita()</code>, <code>cancelarCita()</code>.
+        </li>
+        <li>
+          *
+          <strong
+            >Puertos Impulsados (Driven Ports - APIs para el Interior):</strong
+          >
+          Definen lo que el "Hexágono" necesita del exterior para funcionar
+          (bases de datos, servicios externos, etc.). Son interfaces que la
+          lógica de negocio llama.
+        </li>
+        <li>
+          * <code>PacienteRepositoryPort</code>: Define métodos como
+          <code>guardar(Paciente)</code>, <code>encontrarPorId(UUID)</code>,
+          <code>buscarPorCriterios(CriteriosBusqueda)</code>.
+        </li>
+        <li>
+          * <code>ExternalLabServicePort</code>: Define métodos como
+          <code>solicitarAnalisis(SolicitudAnalisis)</code>,
+          <code>obtenerResultadosAnalisis(String idAnalisis)</code>.
+        </li>
+        <li>
+          * <code>NotificationServicePort</code>: Define métodos como
+          <code
+            >enviarNotificacion(TipoNotificacion, Destinatario, Contenido)</code
+          >.
+        </li>
+        <li>
+          * <code>PrescriptionServicePort</code>: Define métodos como
+          <code>emitirRecetaElectronica(Receta)</code>.
+        </li>
+      </ul>
+      <p>3. <strong>Adaptadores (Implementaciones de Puertos):</strong></p>
+      <ul>
+        <li>
+          *
+          <strong>Adaptadores Impulsores (Driving Adapters):</strong>
+          Implementan los Puertos Impulsores, permitiendo que diferentes
+          tecnologías se comuniquen con el core.
+        </li>
+        <li>
+          * <strong>REST API Adapter:</strong> Un controlador REST (usando
+          Spring Boot) que implementa <code>PacienteManagementPort</code> y
+          <code>ClinicalRecordManagementPort</code>. Traduce las peticiones HTTP
+          a llamadas a los servicios del dominio.
+        </li>
+        <li>
+          * <strong>Batch Processing Adapter:</strong> Un servicio que lee
+          archivos CSV/XML de pacientes y llama a
+          <code>PacienteManagementPort</code> para importaciones masivas.
+        </li>
+        <li>
+          * <strong>Web UI Adapter:</strong> La capa de presentación (ej.,
+          Angular/React) que consume la REST API para interactuar con el
+          sistema.
+        </li>
+        <li>
+          * <strong>Mobile App Adapter:</strong> Otro conjunto de controladores
+          REST o una API GraphQL optimizada para la aplicación móvil, también
+          usando los mismos puertos del core.
+        </li>
+        <li>
+          *
+          <strong>Adaptadores Impulsados (Driven Adapters):</strong> Implementan
+          los Puertos Impulsados, permitiendo que el core se comunique con
+          tecnologías externas.
+        </li>
+        <li>
+          * <strong>Database Adapter (JPA/Hibernate):</strong>
+          <code>PacienteRepositoryAdapter</code> implementa
+          <code>PacienteRepositoryPort</code> utilizando entidades JPA y un
+          <code>EntityManager</code> para interactuar con la base de datos
+          relacional.
+        </li>
+        <li>
+          * <strong>External Lab System Adapter (HTTP Client):</strong>
+          <code>ExternalLabServiceAdapter</code> implementa
+          <code>ExternalLabServicePort</code>, realizando llamadas HTTP (ej., a
+          una API REST HL7 FHIR) al sistema de laboratorio externo.
+        </li>
+        <li>
+          * <strong>Email Notification Adapter (SMTP Client):</strong>
+          <code>EmailNotificationAdapter</code> implementa
+          <code>NotificationServicePort</code> enviando correos electrónicos a
+          través de un servidor SMTP.
+        </li>
+        <li>
+          * <strong>SMS Notification Adapter (Twilio/Vonage):</strong> Otra
+          implementación de <code>NotificationServicePort</code> para enviar
+          SMS.
+        </li>
+        <li>
+          * <strong>Prescription Service Adapter (HL7 FHIR Client):</strong>
+          <code>PrescriptionServiceAdapter</code> implementa
+          <code>PrescriptionServicePort</code> para integrarse con sistemas de
+          prescripción electrónica.
+        </li>
+      </ul>
+      <p>
+        <strong
+          >Flujo de Interacción (Ejemplo: Registro de un nuevo
+          paciente):</strong
+        >
+      </p>
+      <p>
+        1. El usuario (médico) interactúa con la
+        <strong>Web UI Adapter</strong>.
+      </p>
+      <p>
+        2. La Web UI envía una petición HTTP al
+        <strong>REST API Adapter</strong>.
+      </p>
+      <p>
+        3. El REST API Adapter recibe la petición, la deserializa y llama al
+        método <code>registrarPaciente()</code> del
+        <code>PacienteManagementPort</code> (que es una interfaz definida en el
+        core).
+      </p>
+      <p>
+        4. El <code>GestionarPacienteService</code> (la implementación del
+        <code>PacienteManagementPort</code> en el core) ejecuta la lógica de
+        negocio (validaciones, etc.).
+      </p>
+      <p>
+        5. Para persistir el paciente, el
+        <code>GestionarPacienteService</code> llama al método
+        <code>guardar(paciente)</code> del
+        <code>PacienteRepositoryPort</code> (una interfaz definida en el core).
+      </p>
+      <p>
+        6. El <strong>Database Adapter (JPA)</strong>, que implementa
+        <code>PacienteRepositoryPort</code>, toma el objeto
+        <code>Paciente</code> del dominio, lo mapea a una entidad JPA y lo
+        guarda en la base de datos.
+      </p>
+      <p>
+        7. El <code>GestionarPacienteService</code> podría también llamar a
+        <code>enviarNotificacion()</code> del
+        <code>NotificationServicePort</code>.
+      </p>
+      <p>
+        8. El <strong>Email Notification Adapter</strong> (o SMS) implementa
+        este puerto y envía el correo/SMS real.
+      </p>
+      <p><strong>Proceso de Migración:</strong></p>
+      <p>
+        MediCare Solutions adoptó un enfoque de "Strangler Fig Pattern". Las
+        nuevas funcionalidades se desarrollaron usando la arquitectura hexagonal
+        desde cero. Las funcionalidades existentes que requerían refactorización
+        o alta flexibilidad se envolvieron progresivamente con adaptadores o se
+        reescribieron dentro del hexágono, redirigiendo el tráfico del monolito
+        original al nuevo servicio hexagonal.
+      </p>
+      <p>---</p>
+      <h3>3. Resultados y Beneficios Obtenidos</h3>
+      <p>
+        La adopción de la Arquitectura Hexagonal transformó significativamente
+        el desarrollo de software en MediCare Solutions:
+      </p>
+      <ul>
+        <li>
+          <strong
+            >Aumento Drástico de la Agilidad y Velocidad de Desarrollo:</strong
+          >
+        </li>
+        <li>
+          * Nuevas funcionalidades se implementan en semanas en lugar de meses.
+        </li>
+        <li>
+          * La adaptación a nuevas regulaciones sanitarias es mucho más rápida,
+          ya que solo el código del core o un adaptador específico necesita ser
+          modificado, sin afectar otras partes.
+        </li>
+        <li><strong>Testabilidad Superior:</strong></li>
+        <li>
+          * La lógica de negocio del core puede ser probada con
+          <strong>pruebas unitarias rápidas y fiables</strong> sin necesidad de
+          bases de datos, servidores web o servicios externos. Se mockean los
+          puertos impulsados (repositorios, servicios externos), permitiendo que
+          el core sea probado en total aislamiento.
+        </li>
+        <li>
+          * Esto llevó a un mayor coverage de pruebas y una reducción
+          significativa de bugs en producción.
+        </li>
+        <li>
+          <strong
+            >Flexibilidad Tecnológica y Menor
+            <span
+              class="tooltip"
+              data-tooltip-text="Una situación en la que un cliente que utiliza un producto o servicio no puede cambiar fácilmente a un competidor sin incurrir en costos o esfuerzos de migración significativos."
+              >Vendor Lock-in</span
+            >:</strong
+          >
+        </li>
+        <li>
+          * La empresa pudo cambiar su base de datos de Oracle a PostgreSQL para
+          reducir costos, simplemente reescribiendo el
+          <code>Database Adapter</code> sin tocar el core del negocio.
+        </li>
+        <li>
+          * Pudieron integrar un nuevo sistema de laboratorio externo más
+          moderno cambiando solo el <code>ExternalLabServiceAdapter</code>,
+          mientras el core de negocio seguía funcionando sin cambios.
+        </li>
+        <li>
+          * Esto permite experimentar con nuevas tecnologías de manera segura.
+        </li>
+        <li><strong>Mayor Mantenibilidad y Claridad del Código:</strong></li>
+        <li>
+          * La clara separación de responsabilidades entre el core de negocio y
+          la infraestructura hace que el código sea mucho más fácil de entender,
+          mantener y depurar.
+        </li>
+        <li>
+          * Los nuevos desarrolladores se incorporan más rápido al proyecto, ya
+          que pueden concentrarse en el dominio de negocio sin verse abrumados
+          por detalles de infraestructura.
+        </li>
+        <li><strong>Soporte Eficiente para Múltiples Interfaces:</strong></li>
+        <li>
+          * El mismo core de negocio sirve eficazmente a la Web UI, la
+          aplicación móvil y las APIs de terceros. Cada interfaz es simplemente
+          un adaptador impulsor diferente que interactúa con los mismos puertos
+          del core, garantizando la
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          de la lógica.
+        </li>
+        <li>
+          <strong>Preparación para Microservicios:</strong> La estructura
+          modular de la Arquitectura Hexagonal facilita una eventual transición
+          hacia una arquitectura de microservicios, donde cada hexágono podría
+          convertirse en un microservicio independiente, si la complejidad y la
+          necesidad de escalabilidad lo justificaran.
+        </li>
+      </ul>
+      <p>
+        En definitiva, la Arquitectura Hexagonal permitió a MediCare Solutions
+        pasar de un sistema rígido y costoso a mantener, a una plataforma ágil,
+        robusta y adaptable, capaz de responder rápidamente a las demandas
+        cambiantes del sector de la salud digital.
+      </p>
+      <h2>Preguntas de Entrevista</h2>
+      <div>
+        <div class="accordion-item">
+          <p class="accordion-question">
+            A menudo se confunde la Arquitectura Hexagonal con una simple
+            arquitectura en capas. ¿Cuáles son las diferencias fundamentales que
+            evitan esta confusión y cuáles son los errores más comunes al
+            intentar aplicar el patrón?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La diferencia fundamental radica en la dirección de las
+              dependencias y la responsabilidad. En la Arquitectura Hexagonal,
+              el dominio (el hexágono) es el centro y no tiene dependencias de
+              infraestructura; toda dependencia apunta hacia adentro. Los
+              Puertos (interfaces) definen lo que el dominio necesita o expone,
+              mientras que los Adaptadores implementan esas interfaces,
+              permitiendo que la infraestructura se 'conecte' al dominio. En una
+              arquitectura en capas tradicional, las capas superiores suelen
+              depender de las capas inferiores, creando a menudo un acoplamiento
+              accidental con la infraestructura. Los errores comunes incluyen
+              tratar los puertos como meras interfaces de infraestructura (en
+              lugar de contratos del dominio), permitir que los objetos de
+              dominio contengan lógica específica de la infraestructura, o que
+              los servicios de aplicación se acoplen directamente a los detalles
+              de la base de datos o frameworks.
+            </p>
+          </div>
+        </div>
 
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Arquitectura Hexagonal (Puertos y Adaptadores)</h1>
-    <p># Arquitectura Hexagonal (Puertos y Adaptadores)</p><p>La Arquitectura Hexagonal, también conocida como "Arquitectura de Puertos y Adaptadores", es un patrón de arquitectura de software propuesto por Alistair Cockburn. Su objetivo principal es aislar la lógica de negocio central (el "core" de la aplicación) de las preocupaciones externas como la interfaz de usuario, las bases de datos, los servicios externos y los frameworks. Esto se logra mediante el uso de "puertos" como interfaces y "adaptadores" como implementaciones de esas interfaces.</p><h2>Conceptos Principales</h2><p>1.  <strong>Core de la Aplicación (Dominio o Hexágono Central):</strong></p><ul><li>   *   Representa el corazón de la aplicación, conteniendo la lógica de negocio pura y las reglas del dominio.</li><li>   *   Es completamente independiente de cualquier tecnología o infraestructura externa (UI, base de datos, servicios web). No conoce a los adaptadores ni a los detalles de cómo se interactúa con el mundo exterior.</li><li>   *   Define las interfaces (puertos) a través de las cuales interactúa con el mundo exterior y viceversa.</li></ul><p>2.  <strong>Puertos (Ports):</strong></p><ul><li>   *   Son interfaces o contratos definidos en el core de la aplicación. Declaran las operaciones que el core ofrece al exterior o que el core necesita del exterior.</li><li>   *   <strong>Puertos Impulsores (Driving/Primary Ports):</strong></li><li>       *   Definen las acciones que los "actores primarios" (usuarios, otros sistemas) pueden pedirle a la aplicación.</li><li>       *   Son las APIs de la aplicación. El core de la aplicación implementa estos puertos.</li><li>       *   Ejemplo: <code>interface UserServicePort { User createUser(UserDto user); }</code></li><li>   *   <strong>Puertos Conducidos (Driven/Secondary Ports):</strong></li><li>       *   Definen las acciones que la aplicación necesita de los "actores secundarios" (base de datos, servicios externos).</li><li>       <em>   Son las APIs que el core de la aplicación </em>consume*. El core invoca métodos de estos puertos, y alguna infraestructura externa los implementará.</li><li>       *   Ejemplo: <code>interface UserRepositoryPort { User save(User user); User findById(Long id); }</code></li></ul><p>3.  <strong>Adaptadores (Adapters):</strong></p><ul><li>   *   Son las implementaciones concretas de los puertos. Convierten las interacciones tecnológicas específicas (HTTP, SQL, gRPC) en el formato que el core de la aplicación entiende y espera.</li><li>   *   Se encuentran en la capa exterior de la arquitectura y dependen de los puertos (y, por lo tanto, del core).</li><li>   *   <strong>Adaptadores Impulsores (Driving/Primary Adapters):</strong></li><li>       *   Son los que "llaman" o "impulsan" a la aplicación a través de sus puertos impulsores.</li><li>       *   Implementan una interfaz de usuario, una API REST (controladores), un CLI, un consumidor de mensajes, etc.</li><li>       *   Ejemplo: <code>UserController</code> (que utiliza <code>UserServicePort</code>).</li><li>   *   <strong>Adaptadores Conducidos (Driven/Secondary Adapters):</strong></li><li>       *   Son los que la aplicación "conduce" o "usa" a través de sus puertos conducidos.</li><li>       *   Implementan el acceso a bases de datos (repositorios ORM), servicios externos (clientes HTTP), sistemas de mensajería, etc.</li><li>       *   Ejemplo: <code>JpaUserRepository</code> (que implementa <code>UserRepositoryPort</code>).</li></ul><p>4.  <strong>Inversión de Dependencias:</strong> La característica clave es que las dependencias siempre apuntan hacia el interior. El core nunca depende de los adaptadores; los adaptadores dependen de los puertos definidos en el core. Esto se logra a menudo con la inyección de dependencias.</p><h2>Ventajas</h2><ul><li>  <strong>Aislamiento de la Lógica de Negocio:</strong> El core de la aplicación permanece limpio, puro y libre de preocupaciones tecnológicas, lo que facilita su comprensión, mantenimiento y evolución.</li><li>  <strong>Alta Testabilidad:</strong> La lógica de negocio puede ser probada de forma aislada sin necesidad de bases de datos reales, UIs o servicios externos. Basta con "mockear" o "stubear" los puertos.</li><li>  <strong>Flexibilidad Tecnológica:</strong> Permite cambiar fácilmente tecnologías externas (base de datos, framework UI, sistema de mensajería) sin afectar la lógica de negocio central. Por ejemplo, pasar de MySQL a PostgreSQL, o de una UI web a una de escritorio.</li><li>  <strong>Mantenibilidad y Evolución:</strong> Los cambios en las tecnologías externas o en los requisitos de interacción son más fáciles de gestionar, ya que se limitan a la capa de adaptadores. La evolución del dominio es más predecible.</li><li>  <strong>Equipos Independientes:</strong> Diferentes equipos pueden trabajar en el core y en los distintos adaptadores con mayor independencia, siempre que respeten los contratos de los puertos.</li><li>  <strong>Tecnología Agnosticismo del Core:</strong> El core de la aplicación es independiente de cualquier framework o librería específica, lo que aumenta su longevidad y reutilización.</li></ul><h2>Desventajas</h2><ul><li>  <strong>Mayor Complejidad Inicial:</strong> Para aplicaciones pequeñas o triviales, la sobrecarga de definir puertos y adaptadores puede parecer excesiva y aumentar la complejidad inicial del proyecto.</li><li>  <strong>Mayor Cantidad de Código Boilerplate:</strong> Se requiere más código (interfaces, clases de implementación, configuraciones de inyección de dependencias) para establecer las capas y los contratos.</li><li>  <strong>Curva de Aprendizaje:</strong> Requiere que el equipo entienda bien los principios de Diseño Dirigido por el Dominio (DDD) y la Inversión de Dependencias, lo que puede tener una curva de aprendizaje para desarrolladores no familiarizados.</li><li>  <strong>Puede Ser Sobre-ingeniería:</strong> Si la aplicación no tiene requisitos de cambio de tecnología significativos o una lógica de negocio compleja que justifique el aislamiento, podría considerarse una sobre-ingeniería.</li><li>  <strong>Configuración de la Inyección de Dependencias:</strong> La gestión de las dependencias y la configuración de los contenedores de inyección de dependencias puede ser un desafío si no se realiza correctamente.</li></ul><h2>Ejemplo de Aplicación Real</h2><p>Aquí tienes un ejemplo detallado de la aplicación de la Arquitectura Hexagonal (Puertos y Adaptadores) en un escenario empresarial real.</p><p>---</p><h2>Aplicación de la Arquitectura Hexagonal en "MediCare Solutions"</h2><p><strong>Empresa:</strong> MediCare Solutions</p><p><strong>Sector:</strong> Salud Digital</p><p><strong>Producto Principal:</strong> Sistema de Gestión de Historiales Clínicos (SGHC)</p><p>---</p><h3>1. El Problema que Enfrentaba la Empresa</h3><p>MediCare Solutions poseía un <strong>monolito legado</strong> para su Sistema de Gestión de Historiales Clínicos (SGHC). Este sistema había crecido orgánicamente durante más de una década, acumulando deuda técnica significativa.</p><p><strong>Problemas Específicos:</strong></p><ul><li>  <strong>Acoplamiento Extremo:</strong> La lógica de negocio fundamental (ej., cálculo de dosis, validación de diagnósticos, gestión de citas) estaba inextricablemente ligada a la infraestructura y la interfaz de usuario.</li><li>   *   El código de la interfaz web (JSP, JSF) mezclaba directamente con las reglas de negocio.</li><li>   *   Las entidades de base de datos (Hibernate, JDBC) se utilizaban directamente en las capas de negocio y presentación.</li><li>   *   Cambiar la base de datos o la interfaz de usuario implicaba reescribir una parte sustancial de la lógica central.</li><li>  <strong>Dificultad de Mantenimiento y Evolución:</strong></li><li>   *   Implementar nuevas funcionalidades o adaptar el sistema a nuevas regulaciones sanitarias (ej., GDPR, HIPAA, HL7 FHIR) era lento y propenso a errores, ya que cada cambio tenía efectos secundarios impredecibles.</li><li>   *   Las pruebas unitarias del código de negocio eran casi imposibles sin levantar una base de datos y un servidor web, lo que resultaba en un bajo coverage y confianza.</li><li>  <strong>Falta de Flexibilidad Tecnológica:</strong> El sistema estaba fuertemente acoplado a una base de datos relacional específica (Oracle) y a un framework web particular. Explorar nuevas tecnologías o integrar con sistemas externos (ej., laboratorios, farmacias) era una pesadilla de integración.</li><li>  <strong>Múltiples Puntos de Interacción Necesarios:</strong> MediCare Solutions necesitaba interactuar con el SGHC a través de:</li><li>   *   Una interfaz web para médicos y personal administrativo.</li><li>   *   Una API para su aplicación móvil de pacientes.</li><li>   *   Una API para socios (ej., compañías de seguros, sistemas de laboratorio externos).</li><li>   *   Procesos de importación/exportación de datos por lotes.</li><li>   *   Cada nueva interfaz requería duplicar o adaptar la lógica de negocio, introduciendo inconsistencias.</li></ul><p>En resumen, la empresa sufría de una baja agilidad, altos costos de desarrollo y un riesgo elevado en cada cambio, amenazando su capacidad para competir y adaptarse en un mercado de salud digital en rápida evolución.</p><p>---</p><h3>2. Implementación de la Arquitectura Hexagonal</h3><p>MediCare Solutions decidió refactorizar gradualmente su monolito, comenzando por los módulos más críticos y de mayor evolución, aplicando la Arquitectura Hexagonal.</p><p><strong>Conceptos Clave Aplicados:</strong></p><p>1.  <strong>El Hexágono (Core del Dominio):</strong> El corazón de la aplicación, que encapsula toda la lógica de negocio y las reglas específicas del dominio. Es completamente <span class="tooltip" data-tooltip-text="Ser independiente de una tecnología, protocolo o proveedor específico. Por ejemplo, &quot;agnóstico a la nube&quot; significa que puede funcionar en cualquier proveedor de nube.">agnóstico</span> a la tecnología.</p><ul><li>   *   <strong>Entidades:</strong> <code>Paciente</code>, <code>HistorialClinico</code>, <code>Diagnostico</code>, <code>Tratamiento</code>, <code>Cita</code>.</li><li>   *   <strong>Servicios del Dominio:</strong> <code>GestionarPacienteService</code>, <code>RegistrarDiagnosticoService</code>, <code>ProgramarCitaService</code>, <code>ObtenerHistorialService</code>. Estos servicios orquestan las entidades y aplican las reglas de negocio.</li><li>   *   <strong>Reglas de Negocio:</strong> Validación de entradas, cálculo de riesgos, restricciones de acceso basadas en roles, lógica de flujos de trabajo clínicos.</li></ul><p>2.  <strong>Puertos (Interfaces):</strong></p><ul><li>   *   <strong>Puertos Impulsores (Driving Ports - APIs para el Exterior):</strong> Definen lo que el "Hexágono" puede hacer. Son las interfaces que las capas externas utilizan para interactuar con la lógica de negocio.</li><li>       *   <code>PacienteManagementPort</code>: Define métodos como <code>registrarPaciente()</code>, <code>actualizarPaciente()</code>, <code>buscarPacientePorId()</code>.</li><li>       *   <code>ClinicalRecordManagementPort</code>: Define métodos como <code>añadirDiagnostico()</code>, <code>registrarTratamiento()</code>, <code>obtenerHistorialClinico()</code>.</li><li>       *   <code>AppointmentSchedulingPort</code>: Define métodos como <code>programarCita()</code>, <code>cancelarCita()</code>.</li><li>   *   <strong>Puertos Impulsados (Driven Ports - APIs para el Interior):</strong> Definen lo que el "Hexágono" necesita del exterior para funcionar (bases de datos, servicios externos, etc.). Son interfaces que la lógica de negocio llama.</li><li>       *   <code>PacienteRepositoryPort</code>: Define métodos como <code>guardar(Paciente)</code>, <code>encontrarPorId(UUID)</code>, <code>buscarPorCriterios(CriteriosBusqueda)</code>.</li><li>       *   <code>ExternalLabServicePort</code>: Define métodos como <code>solicitarAnalisis(SolicitudAnalisis)</code>, <code>obtenerResultadosAnalisis(String idAnalisis)</code>.</li><li>       *   <code>NotificationServicePort</code>: Define métodos como <code>enviarNotificacion(TipoNotificacion, Destinatario, Contenido)</code>.</li><li>       *   <code>PrescriptionServicePort</code>: Define métodos como <code>emitirRecetaElectronica(Receta)</code>.</li></ul><p>3.  <strong>Adaptadores (Implementaciones de Puertos):</strong></p><ul><li>   *   <strong>Adaptadores Impulsores (Driving Adapters):</strong> Implementan los Puertos Impulsores, permitiendo que diferentes tecnologías se comuniquen con el core.</li><li>       *   <strong>REST API Adapter:</strong> Un controlador REST (usando Spring Boot) que implementa <code>PacienteManagementPort</code> y <code>ClinicalRecordManagementPort</code>. Traduce las peticiones HTTP a llamadas a los servicios del dominio.</li><li>       *   <strong>Batch Processing Adapter:</strong> Un servicio que lee archivos CSV/XML de pacientes y llama a <code>PacienteManagementPort</code> para importaciones masivas.</li><li>       *   <strong>Web UI Adapter:</strong> La capa de presentación (ej., Angular/React) que consume la REST API para interactuar con el sistema.</li><li>       *   <strong>Mobile App Adapter:</strong> Otro conjunto de controladores REST o una API GraphQL optimizada para la aplicación móvil, también usando los mismos puertos del core.</li><li>   *   <strong>Adaptadores Impulsados (Driven Adapters):</strong> Implementan los Puertos Impulsados, permitiendo que el core se comunique con tecnologías externas.</li><li>       *   <strong>Database Adapter (JPA/Hibernate):</strong> <code>PacienteRepositoryAdapter</code> implementa <code>PacienteRepositoryPort</code> utilizando entidades JPA y un <code>EntityManager</code> para interactuar con la base de datos relacional.</li><li>       *   <strong>External Lab System Adapter (HTTP Client):</strong> <code>ExternalLabServiceAdapter</code> implementa <code>ExternalLabServicePort</code>, realizando llamadas HTTP (ej., a una API REST HL7 FHIR) al sistema de laboratorio externo.</li><li>       *   <strong>Email Notification Adapter (SMTP Client):</strong> <code>EmailNotificationAdapter</code> implementa <code>NotificationServicePort</code> enviando correos electrónicos a través de un servidor SMTP.</li><li>       *   <strong>SMS Notification Adapter (Twilio/Vonage):</strong> Otra implementación de <code>NotificationServicePort</code> para enviar SMS.</li><li>       *   <strong>Prescription Service Adapter (HL7 FHIR Client):</strong> <code>PrescriptionServiceAdapter</code> implementa <code>PrescriptionServicePort</code> para integrarse con sistemas de prescripción electrónica.</li></ul><p><strong>Flujo de Interacción (Ejemplo: Registro de un nuevo paciente):</strong></p><p>1.  El usuario (médico) interactúa con la <strong>Web UI Adapter</strong>.</p><p>2.  La Web UI envía una petición HTTP al <strong>REST API Adapter</strong>.</p><p>3.  El REST API Adapter recibe la petición, la deserializa y llama al método <code>registrarPaciente()</code> del <code>PacienteManagementPort</code> (que es una interfaz definida en el core).</p><p>4.  El <code>GestionarPacienteService</code> (la implementación del <code>PacienteManagementPort</code> en el core) ejecuta la lógica de negocio (validaciones, etc.).</p><p>5.  Para persistir el paciente, el <code>GestionarPacienteService</code> llama al método <code>guardar(paciente)</code> del <code>PacienteRepositoryPort</code> (una interfaz definida en el core).</p><p>6.  El <strong>Database Adapter (JPA)</strong>, que implementa <code>PacienteRepositoryPort</code>, toma el objeto <code>Paciente</code> del dominio, lo mapea a una entidad JPA y lo guarda en la base de datos.</p><p>7.  El <code>GestionarPacienteService</code> podría también llamar a <code>enviarNotificacion()</code> del <code>NotificationServicePort</code>.</p><p>8.  El <strong>Email Notification Adapter</strong> (o SMS) implementa este puerto y envía el correo/SMS real.</p><p><strong>Proceso de Migración:</strong></p><p>MediCare Solutions adoptó un enfoque de "Strangler Fig Pattern". Las nuevas funcionalidades se desarrollaron usando la arquitectura hexagonal desde cero. Las funcionalidades existentes que requerían refactorización o alta flexibilidad se envolvieron progresivamente con adaptadores o se reescribieron dentro del hexágono, redirigiendo el tráfico del monolito original al nuevo servicio hexagonal.</p><p>---</p><h3>3. Resultados y Beneficios Obtenidos</h3><p>La adopción de la Arquitectura Hexagonal transformó significativamente el desarrollo de software en MediCare Solutions:</p><ul><li>  <strong>Aumento Drástico de la Agilidad y Velocidad de Desarrollo:</strong></li><li>   *   Nuevas funcionalidades se implementan en semanas en lugar de meses.</li><li>   *   La adaptación a nuevas regulaciones sanitarias es mucho más rápida, ya que solo el código del core o un adaptador específico necesita ser modificado, sin afectar otras partes.</li><li>  <strong>Testabilidad Superior:</strong></li><li>   *   La lógica de negocio del core puede ser probada con <strong>pruebas unitarias rápidas y fiables</strong> sin necesidad de bases de datos, servidores web o servicios externos. Se mockean los puertos impulsados (repositorios, servicios externos), permitiendo que el core sea probado en total aislamiento.</li><li>   *   Esto llevó a un mayor coverage de pruebas y una reducción significativa de bugs en producción.</li><li>  <strong>Flexibilidad Tecnológica y Menor <span class="tooltip" data-tooltip-text="Una situación en la que un cliente que utiliza un producto o servicio no puede cambiar fácilmente a un competidor sin incurrir en costos o esfuerzos de migración significativos.">Vendor Lock-in</span>:</strong></li><li>   *   La empresa pudo cambiar su base de datos de Oracle a PostgreSQL para reducir costos, simplemente reescribiendo el <code>Database Adapter</code> sin tocar el core del negocio.</li><li>   *   Pudieron integrar un nuevo sistema de laboratorio externo más moderno cambiando solo el <code>ExternalLabServiceAdapter</code>, mientras el core de negocio seguía funcionando sin cambios.</li><li>   *   Esto permite experimentar con nuevas tecnologías de manera segura.</li><li>  <strong>Mayor Mantenibilidad y Claridad del Código:</strong></li><li>   *   La clara separación de responsabilidades entre el core de negocio y la infraestructura hace que el código sea mucho más fácil de entender, mantener y depurar.</li><li>   *   Los nuevos desarrolladores se incorporan más rápido al proyecto, ya que pueden concentrarse en el dominio de negocio sin verse abrumados por detalles de infraestructura.</li><li>  <strong>Soporte Eficiente para Múltiples Interfaces:</strong></li><li>   *   El mismo core de negocio sirve eficazmente a la Web UI, la aplicación móvil y las APIs de terceros. Cada interfaz es simplemente un adaptador impulsor diferente que interactúa con los mismos puertos del core, garantizando la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> de la lógica.</li><li>  <strong>Preparación para Microservicios:</strong> La estructura modular de la Arquitectura Hexagonal facilita una eventual transición hacia una arquitectura de microservicios, donde cada hexágono podría convertirse en un microservicio independiente, si la complejidad y la necesidad de escalabilidad lo justificaran.</li></ul><p>En definitiva, la Arquitectura Hexagonal permitió a MediCare Solutions pasar de un sistema rígido y costoso a mantener, a una plataforma ágil, robusta y adaptable, capaz de responder rápidamente a las demandas cambiantes del sector de la salud digital.</p><h2>Preguntas de Entrevista</h2><div>
         <div class="accordion-item">
-          <p class="accordion-question">A menudo se confunde la Arquitectura Hexagonal con una simple arquitectura en capas. ¿Cuáles son las diferencias fundamentales que evitan esta confusión y cuáles son los errores más comunes al intentar aplicar el patrón?</p>
-          <div class="accordion-answer"><p>La diferencia fundamental radica en la dirección de las dependencias y la responsabilidad. En la Arquitectura Hexagonal, el dominio (el hexágono) es el centro y no tiene dependencias de infraestructura; toda dependencia apunta hacia adentro. Los Puertos (interfaces) definen lo que el dominio necesita o expone, mientras que los Adaptadores implementan esas interfaces, permitiendo que la infraestructura se 'conecte' al dominio. En una arquitectura en capas tradicional, las capas superiores suelen depender de las capas inferiores, creando a menudo un acoplamiento accidental con la infraestructura. Los errores comunes incluyen tratar los puertos como meras interfaces de infraestructura (en lugar de contratos del dominio), permitir que los objetos de dominio contengan lógica específica de la infraestructura, o que los servicios de aplicación se acoplen directamente a los detalles de la base de datos o frameworks.</p></div>
+          <p class="accordion-question">
+            Si bien la Arquitectura Hexagonal ofrece numerosos beneficios,
+            ¿existen escenarios o tipos de proyectos donde su adopción podría
+            ser excesiva o incluso contraproducente? Justifique su respuesta.
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Sí, la Arquitectura Hexagonal puede ser excesiva o
+              contraproducente en ciertos escenarios. Para aplicaciones CRUD muy
+              simples, microservicios pequeños con una funcionalidad
+              extremadamente limitada y una infraestructura muy estable, o
+              scripts utilitarios, la sobrecarga de abstracción y la curva de
+              aprendizaje inicial pueden no justificarse. La creación de
+              múltiples interfaces (puertos) y sus implementaciones
+              (adaptadores) para lo que podría ser una interacción directa y
+              sencilla puede introducir complejidad innecesaria, retrasar el
+              desarrollo inicial y dificultar la comprensión para equipos
+              pequeños o proyectos con un ciclo de vida muy corto. El patrón es
+              más valioso cuando se busca longevidad, testeabilidad, cambio
+              frecuente de adaptadores o una clara separación de
+              responsabilidades en sistemas complejos.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Si bien la Arquitectura Hexagonal ofrece numerosos beneficios, ¿existen escenarios o tipos de proyectos donde su adopción podría ser excesiva o incluso contraproducente? Justifique su respuesta.</p>
-          <div class="accordion-answer"><p>Sí, la Arquitectura Hexagonal puede ser excesiva o contraproducente en ciertos escenarios. Para aplicaciones CRUD muy simples, microservicios pequeños con una funcionalidad extremadamente limitada y una infraestructura muy estable, o scripts utilitarios, la sobrecarga de abstracción y la curva de aprendizaje inicial pueden no justificarse. La creación de múltiples interfaces (puertos) y sus implementaciones (adaptadores) para lo que podría ser una interacción directa y sencilla puede introducir complejidad innecesaria, retrasar el desarrollo inicial y dificultar la comprensión para equipos pequeños o proyectos con un ciclo de vida muy corto. El patrón es más valioso cuando se busca longevidad, testeabilidad, cambio frecuente de adaptadores o una clara separación de responsabilidades en sistemas complejos.</p></div>
+          <p class="accordion-question">
+            En una Arquitectura Hexagonal, ¿cómo se gestionarían eficazmente las
+            transacciones de base de datos o los aspectos transversales (como la
+            seguridad o el logging) sin acoplar el dominio a la infraestructura
+            o violar el principio de la inversión de dependencias?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La gestión de transacciones y aspectos transversales se realiza
+              principalmente en la capa de aplicación (servicios de aplicación)
+              o mediante adaptadores específicos. Para las transacciones, el
+              servicio de aplicación orquesta la unidad de trabajo (Unit of
+              Work), invocando uno o más puertos de repositorio para persistir
+              cambios. La lógica transaccional concreta (commit/rollback) se
+              delega a un adaptador de infraestructura (ej. un adaptador JPA o
+              JDBC) que implementa un Puerto de Repositorio o un Puerto de
+              Unidad de Trabajo. Para la seguridad, la autenticación y
+              autorización se aplican a menudo <em>antes</em> de que la
+              solicitud llegue al servicio de aplicación (ej. en el adaptador de
+              la interfaz de usuario/<span
+                class="tooltip"
+                data-tooltip-text="Un servidor que actúa como punto de entrada único para un grupo de microservicios. Agrega las respuestas de varios servicios y las devuelve al cliente, simplificando la comunicación del lado del cliente."
+                >API Gateway</span
+              >). Si el dominio necesita reglas de autorización, el servicio de
+              aplicación podría invocar un Puerto de Autorización. El logging es
+              típicamente una preocupación de infraestructura; los adaptadores
+              pueden loguear su propia actividad o, si el dominio necesita
+              loguear eventos específicos, podría usar un Puerto de Auditoría
+              con un Adaptador de Logging. La clave es que el dominio define
+              <em>qué</em> se necesita (el Puerto), y la infraestructura
+              <em>cómo</em> se implementa (el Adaptador).
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">En una Arquitectura Hexagonal, ¿cómo se gestionarían eficazmente las transacciones de base de datos o los aspectos transversales (como la seguridad o el logging) sin acoplar el dominio a la infraestructura o violar el principio de la inversión de dependencias?</p>
-          <div class="accordion-answer"><p>La gestión de transacciones y aspectos transversales se realiza principalmente en la capa de aplicación (servicios de aplicación) o mediante adaptadores específicos. Para las transacciones, el servicio de aplicación orquesta la unidad de trabajo (Unit of Work), invocando uno o más puertos de repositorio para persistir cambios. La lógica transaccional concreta (commit/rollback) se delega a un adaptador de infraestructura (ej. un adaptador JPA o JDBC) que implementa un Puerto de Repositorio o un Puerto de Unidad de Trabajo. Para la seguridad, la autenticación y autorización se aplican a menudo <em>antes</em> de que la solicitud llegue al servicio de aplicación (ej. en el adaptador de la interfaz de usuario/<span class="tooltip" data-tooltip-text="Un servidor que actúa como punto de entrada único para un grupo de microservicios. Agrega las respuestas de varios servicios y las devuelve al cliente, simplificando la comunicación del lado del cliente.">API Gateway</span>). Si el dominio necesita reglas de autorización, el servicio de aplicación podría invocar un Puerto de Autorización. El logging es típicamente una preocupación de infraestructura; los adaptadores pueden loguear su propia actividad o, si el dominio necesita loguear eventos específicos, podría usar un Puerto de Auditoría con un Adaptador de Logging. La clave es que el dominio define <em>qué</em> se necesita (el Puerto), y la infraestructura <em>cómo</em> se implementa (el Adaptador).</p></div>
+          <p class="accordion-question">
+            ¿Cómo altera la Arquitectura Hexagonal la estrategia de pruebas, y
+            qué ventajas específicas ofrece para las pruebas unitarias, de
+            integración y end-to-end en comparación con una arquitectura
+            tradicional en capas?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La Arquitectura Hexagonal revoluciona la estrategia de pruebas al
+              permitir probar el dominio y los servicios de aplicación de forma
+              completamente aislada de la infraestructura. Para las
+              <em>pruebas unitarias</em>, se pueden probar las entidades y casos
+              de uso del dominio sin mocks complejos de bases de datos o
+              servicios externos, ya que el dominio no tiene dependencias de
+              infraestructura. Para las <em>pruebas de integración</em>, se
+              pueden crear fácilmente adaptadores simulados (mocks/stubs) para
+              los puertos, lo que permite probar la lógica de negocio y los
+              servicios de aplicación de manera rápida y eficiente sin la
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >
+              o la complejidad de los sistemas externos. También facilita probar
+              cada adaptador de infraestructura de forma aislada, verificando su
+              correcta interacción con un sistema externo real (ej. una base de
+              datos de prueba). Las <em>pruebas end-to-end</em> se benefician de
+              la robustez de las capas internas bien probadas, aunque su
+              naturaleza general sigue siendo similar, enfocándose en la
+              interacción completa del sistema. En resumen, promueve pruebas más
+              rápidas, fiables y granulares, ya que el acoplamiento mínimo
+              permite aislar y verificar cada componente de manera efectiva.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">¿Cómo altera la Arquitectura Hexagonal la estrategia de pruebas, y qué ventajas específicas ofrece para las pruebas unitarias, de integración y end-to-end en comparación con una arquitectura tradicional en capas?</p>
-          <div class="accordion-answer"><p>La Arquitectura Hexagonal revoluciona la estrategia de pruebas al permitir probar el dominio y los servicios de aplicación de forma completamente aislada de la infraestructura. Para las <em>pruebas unitarias</em>, se pueden probar las entidades y casos de uso del dominio sin mocks complejos de bases de datos o servicios externos, ya que el dominio no tiene dependencias de infraestructura. Para las <em>pruebas de integración</em>, se pueden crear fácilmente adaptadores simulados (mocks/stubs) para los puertos, lo que permite probar la lógica de negocio y los servicios de aplicación de manera rápida y eficiente sin la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> o la complejidad de los sistemas externos. También facilita probar cada adaptador de infraestructura de forma aislada, verificando su correcta interacción con un sistema externo real (ej. una base de datos de prueba). Las <em>pruebas end-to-end</em> se benefician de la robustez de las capas internas bien probadas, aunque su naturaleza general sigue siendo similar, enfocándose en la interacción completa del sistema. En resumen, promueve pruebas más rápidas, fiables y granulares, ya que el acoplamiento mínimo permite aislar y verificar cada componente de manera efectiva.</p></div>
+          <p class="accordion-question">
+            Tienes una aplicación monolítica legacy fuertemente acoplada. ¿Cuál
+            sería una estrategia incremental y realista para introducir la
+            Arquitectura Hexagonal sin una reescritura completa, minimizando el
+            riesgo y maximizando el valor entregado en cada paso?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La estrategia más efectiva es aplicar el patrón "Strangler Fig"
+              (Higuera Estranguladora). Esto implica: 1. Identificar un nuevo
+              módulo o característica que se agregará al monolito, o un módulo
+              existente que sea un buen candidato para refactorización debido a
+              su complejidad o importancia. 2. Implementar este nuevo módulo
+              utilizando la Arquitectura Hexagonal, creándolo como una nueva
+              parte del sistema que coexiste con el legacy. 3. Crear una "Capa
+              Anti-Corrupción" (Anti-Corruption Layer - ACL) alrededor del
+              código legacy. Esta ACL actúa como un adaptador para el código
+              legacy, traduciendo sus modelos y comportamiento al lenguaje del
+              nuevo módulo Hexagonal y viceversa, permitiendo la comunicación
+              sin que el nuevo código se contamine. 4. Exponer los servicios del
+              nuevo módulo Hexagonal a través de Puertos y Adaptadores que el
+              código legacy pueda consumir, o que un nuevo frontend pueda usar.
+              5. Con el tiempo, identificar más módulos legacy para
+              'estrangulados' (refactorizados) e ir migrando su funcionalidad al
+              nuevo estilo Hexagonal, reduciendo la dependencia del monolito
+              original. Esto minimiza el riesgo al no requerir una reescritura
+              masiva y permite entregar valor incrementalmente.
+            </p>
+          </div>
         </div>
-      
-        <div class="accordion-item">
-          <p class="accordion-question">Tienes una aplicación monolítica legacy fuertemente acoplada. ¿Cuál sería una estrategia incremental y realista para introducir la Arquitectura Hexagonal sin una reescritura completa, minimizando el riesgo y maximizando el valor entregado en cada paso?</p>
-          <div class="accordion-answer"><p>La estrategia más efectiva es aplicar el patrón "Strangler Fig" (Higuera Estranguladora). Esto implica: 1. Identificar un nuevo módulo o característica que se agregará al monolito, o un módulo existente que sea un buen candidato para refactorización debido a su complejidad o importancia. 2. Implementar este nuevo módulo utilizando la Arquitectura Hexagonal, creándolo como una nueva parte del sistema que coexiste con el legacy. 3. Crear una "Capa Anti-Corrupción" (Anti-Corruption Layer - ACL) alrededor del código legacy. Esta ACL actúa como un adaptador para el código legacy, traduciendo sus modelos y comportamiento al lenguaje del nuevo módulo Hexagonal y viceversa, permitiendo la comunicación sin que el nuevo código se contamine. 4. Exponer los servicios del nuevo módulo Hexagonal a través de Puertos y Adaptadores que el código legacy pueda consumir, o que un nuevo frontend pueda usar. 5. Con el tiempo, identificar más módulos legacy para 'estrangulados' (refactorizados) e ir migrando su funcionalidad al nuevo estilo Hexagonal, reduciendo la dependencia del monolito original. Esto minimiza el riesgo al no requerir una reescritura masiva y permite entregar valor incrementalmente.</p></div>
-        </div>
-      </div><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE23GEDiAdrHr8IDheEaOyPiTYQLewNmTJnreinVKqIAsios4ql_YeUDVeAOweK7biQqNHBKNuqt1lsVf56mfDFxpS4xbXZMSLOYCe0c-FIQVAb_vka_GgSojRDKloxRynKWQVee-y6ZtJ3Un-jOFQw66KLHRK6_dlkfkiYsdkZMX0XbcaGn37ptxtvObzfHd86mZeqaQJ0MWUgPsAQn79p" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFT6gf5gUhXbNQP7ZDlppCYbc1hKkWnWthCmsNpsREQKWbwLlTVgcjd3vPxzCP-85lm839dus2NmB4JCiTTnnwiSGOS8R8ofVx75ek5LuC_tFIjYnEh68htEQp3yaxKq4YowW2PPdLYmQyQhhYtoz9yRNvcDOEPEVkQWG8IvADFg3C1E2PnG4oGbjJxFg==" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHcKFnBYLhvbnbp4f9Z7C-ZS_wsrI9MKSoH-_dYNeIOpl9zvrRmnDFWSnyT57aKXBt4n0IYCrgpW97juLxPlArekGP-RpWv6BNpv3I1q7-o955KqRBwsYOFgwdt1yobZb7RWntb-bIFknbzeUwcm9Y1BctpJHDDcBlRvA==" target="_blank" rel="noopener noreferrer">wikipedia.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEWAvi8JOFXaywML4aquieDMCkyG9t0mjrqTTXciyKZ4zopBGdx1PP3gP3N29tIaWoMnxe6kadCKIlKhTCdSgaUYZNmMhEPRcPFCky7ZspztJ9NfT2Nfvifjuu97Swo8hGCJTBkkLOXjlKU3VRO7lWKq_XbuxUcRbxDW__8Zt0DlC_tEk0l3Sa317k8RWHLzfKWwqslPo3MRZ7eWU37FCboUe_kcek=" target="_blank" rel="noopener noreferrer">amazon.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHoVeAL54m-qFA2LkKtQP_DngXd0Ew01d6k5yJ96PH6D7eo-xWTR-CN-8Pry73VHqAh6fwB2utq5mS3VTzBBSWq7i62rDIbQN49W0d3njuB4PknW8jF_k3ftg8gfY-ntCz9AWXl90M7ZdMIrSuXxdb90KL3UEzX-qymzO6t9FrWjrfEkX74sRfEemstNcwGVGKu61NIEWorCCE_pRijTrI12DuFUSquyJL0d0g=" target="_blank" rel="noopener noreferrer">amazon.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEd2A-VBILhpOQXJuAdNVEJta_jkP_HoR7YO4gjc8_NKMKrdHG5QdDHOya6LP6NhIh-2-kIUZ2edmh4P-HHpFuavibfC1TesuSuAH_QebOcAfnfnK2ZZ7ZH192KMem9G-G36h7PrdwnTw7GcEf16PV7BQee-iLvx1yoQtvqX-VEchtvzVCeJiuYB7FOBYlPKgANf_n61eDlH4tt" target="_blank" rel="noopener noreferrer">mentorestech.com</a></li></ul>
-  </div>
-</body>
+      </div>
+      <h2>Recursos Adicionales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE23GEDiAdrHr8IDheEaOyPiTYQLewNmTJnreinVKqIAsios4ql_YeUDVeAOweK7biQqNHBKNuqt1lsVf56mfDFxpS4xbXZMSLOYCe0c-FIQVAb_vka_GgSojRDKloxRynKWQVee-y6ZtJ3Un-jOFQw66KLHRK6_dlkfkiYsdkZMX0XbcaGn37ptxtvObzfHd86mZeqaQJ0MWUgPsAQn79p"
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFT6gf5gUhXbNQP7ZDlppCYbc1hKkWnWthCmsNpsREQKWbwLlTVgcjd3vPxzCP-85lm839dus2NmB4JCiTTnnwiSGOS8R8ofVx75ek5LuC_tFIjYnEh68htEQp3yaxKq4YowW2PPdLYmQyQhhYtoz9yRNvcDOEPEVkQWG8IvADFg3C1E2PnG4oGbjJxFg=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >geeksforgeeks.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHcKFnBYLhvbnbp4f9Z7C-ZS_wsrI9MKSoH-_dYNeIOpl9zvrRmnDFWSnyT57aKXBt4n0IYCrgpW97juLxPlArekGP-RpWv6BNpv3I1q7-o955KqRBwsYOFgwdt1yobZb7RWntb-bIFknbzeUwcm9Y1BctpJHDDcBlRvA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >wikipedia.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEWAvi8JOFXaywML4aquieDMCkyG9t0mjrqTTXciyKZ4zopBGdx1PP3gP3N29tIaWoMnxe6kadCKIlKhTCdSgaUYZNmMhEPRcPFCky7ZspztJ9NfT2Nfvifjuu97Swo8hGCJTBkkLOXjlKU3VRO7lWKq_XbuxUcRbxDW__8Zt0DlC_tEk0l3Sa317k8RWHLzfKWwqslPo3MRZ7eWU37FCboUe_kcek="
+            target="_blank"
+            rel="noopener noreferrer"
+            >amazon.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHoVeAL54m-qFA2LkKtQP_DngXd0Ew01d6k5yJ96PH6D7eo-xWTR-CN-8Pry73VHqAh6fwB2utq5mS3VTzBBSWq7i62rDIbQN49W0d3njuB4PknW8jF_k3ftg8gfY-ntCz9AWXl90M7ZdMIrSuXxdb90KL3UEzX-qymzO6t9FrWjrfEkX74sRfEemstNcwGVGKu61NIEWorCCE_pRijTrI12DuFUSquyJL0d0g="
+            target="_blank"
+            rel="noopener noreferrer"
+            >amazon.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEd2A-VBILhpOQXJuAdNVEJta_jkP_HoR7YO4gjc8_NKMKrdHG5QdDHOya6LP6NhIh-2-kIUZ2edmh4P-HHpFuavibfC1TesuSuAH_QebOcAfnfnK2ZZ7ZH192KMem9G-G36h7PrdwnTw7GcEf16PV7BQee-iLvx1yoQtvqX-VEchtvzVCeJiuYB7FOBYlPKgANf_n61eDlH4tt"
+            target="_blank"
+            rel="noopener noreferrer"
+            >mentorestech.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

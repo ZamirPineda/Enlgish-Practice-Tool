@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Publicación/Suscripción (Pub/Sub)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Publicación/Suscripción (Pub/Sub)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,104 +52,1155 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Publicación/Suscripción (Pub/Sub)</h1>
+      <p>
+        # Patrón de Arquitectura: Publicación/Suscripción (<span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >)
+      </p>
+      <p>
+        El patrón de Publicación/Suscripción (<span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >) es un patrón de mensajería asíncrona en el que los remitentes de
+        mensajes (publicadores) no se comunican directamente con los receptores
+        de mensajes (suscriptores), sino que lo hacen a través de un
+        intermediario central conocido como "<span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >" o "bus de mensajes". Este patrón promueve un alto grado de
+        desacoplamiento entre los componentes del sistema.
+      </p>
+      <p>
+        Imagina un sistema de noticias: los periodistas (publicadores) escriben
+        artículos y los envían a una agencia de noticias (<span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >). Los lectores (suscriptores) se "suscriben" a ciertos temas
+        (deportes, política, tecnología) y la agencia de noticias les entrega
+        automáticamente los artículos relevantes. Los periodistas no necesitan
+        saber quién leerá sus artículos, y los lectores no necesitan saber quién
+        los escribió.
+      </p>
+      <p>---</p>
+      <h2>Conceptos Principales</h2>
+      <ul>
+        <li><strong>Publicador (Publisher):</strong></li>
+        <li>
+          * Es el componente que crea y envía mensajes (o eventos) a un tema
+          específico del
+          <span
+            class="tooltip"
+            data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+            >broker</span
+          >.
+        </li>
+        <li>
+          * No tiene conocimiento de qué suscriptores existen o cuántos hay. Su
+          única responsabilidad es publicar el mensaje.
+        </li>
+        <li>
+          * Ejemplo: Un servicio que detecta un nuevo pedido y publica un evento
+          "PedidoCreado".
+        </li>
+        <li><strong>Suscriptor (Subscriber):</strong></li>
+        <li>
+          * Es el componente que expresa interés en recibir mensajes de uno o
+          más temas específicos.
+        </li>
+        <li>
+          * Recibe y procesa los mensajes que el
+          <span
+            class="tooltip"
+            data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+            >broker</span
+          >
+          le envía para los temas a los que está suscrito.
+        </li>
+        <li>
+          * No sabe quién envió el mensaje. Su única responsabilidad es procesar
+          el mensaje recibido.
+        </li>
+        <li>
+          * Ejemplo: Un servicio de facturación que se suscribe al tema
+          "Pedidos" para procesar nuevos pedidos.
+        </li>
+        <li><strong>Mensaje/Evento (Message/Event):</strong></li>
+        <li>
+          * Es el paquete de datos que un publicador envía y un suscriptor
+          recibe.
+        </li>
+        <li>
+          * Contiene la información relevante que se necesita transmitir entre
+          los componentes.
+        </li>
+        <li><strong>Tema (Topic):</strong></li>
+        <li>
+          * Es un canal o categoría con nombre al que los publicadores envían
+          mensajes y los suscriptores se suscriben.
+        </li>
+        <li>
+          * Actúa como un punto de encuentro lógico para mensajes relacionados.
+        </li>
+        <li>
+          * Ejemplo: "pedidos_nuevos", "actualizaciones_inventario",
+          "eventos_usuarios".
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+              >Broker</span
+            >/Bus de Mensajes (Message
+            <span
+              class="tooltip"
+              data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+              >Broker</span
+            >/Bus):</strong
+          >
+        </li>
+        <li>* Es el intermediario central y la pieza clave del patrón.</li>
+        <li>
+          * Es responsable de enrutar los mensajes de los publicadores a los
+          suscriptores correctos, basándose en los temas.
+        </li>
+        <li>
+          * Generalmente ofrece características como persistencia de mensajes,
+          garantía de entrega, manejo de colas y escalabilidad.
+        </li>
+        <li>
+          * Ejemplos: Apache Kafka, RabbitMQ, Google Cloud
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          >, AWS SQS/SNS, Azure
+          <span
+            class="tooltip"
+            data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos."
+            >Service Bus</span
+          >.
+        </li>
+      </ul>
+      <p>---</p>
+      <h2>Ventajas</h2>
+      <ul>
+        <li>
+          <strong>Desacoplamiento Extremo:</strong> Elimina la dependencia
+          directa entre los productores y consumidores de información. Los
+          componentes no necesitan conocer la identidad o la existencia de los
+          demás. Esto facilita el desarrollo y mantenimiento independiente.
+        </li>
+        <li>
+          <strong>Escalabilidad:</strong> Permite añadir nuevos suscriptores
+          (consumidores) sin afectar a los publicadores. Un mismo mensaje puede
+          ser consumido por múltiples suscriptores de forma simultánea (<span
+            class="tooltip"
+            data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción."
+            >fan-out</span
+          >), lo que facilita la
+          <span
+            class="tooltip"
+            data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL."
+            >escalabilidad horizontal</span
+          >
+          y el procesamiento paralelo.
+        </li>
+        <li>
+          <strong>Resiliencia y Confiabilidad:</strong> Los mensajes pueden
+          persistirse en el
+          <span
+            class="tooltip"
+            data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+            >broker</span
+          >, lo que significa que si un suscriptor no está disponible
+          temporalmente, los mensajes pueden almacenarse y entregarse una vez
+          que vuelva a estar en línea, evitando la pérdida de datos.
+        </li>
+        <li>
+          <strong>Flexibilidad y Reusabilidad:</strong> Facilita la adición de
+          nuevas funcionalidades (nuevos suscriptores) que reaccionan a eventos
+          existentes sin modificar los componentes actuales. Los eventos se
+          vuelven una "fuente de verdad" que puede ser utilizada por múltiples
+          servicios.
+        </li>
+        <li>
+          <strong>Asincronía:</strong> La comunicación es inherentemente
+          asíncrona, lo que mejora el rendimiento general del sistema al no
+          obligar a los publicadores a esperar una respuesta de los
+          suscriptores.
+        </li>
+        <li>
+          <strong>Gestión de Carga:</strong> El
+          <span
+            class="tooltip"
+            data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+            >broker</span
+          >
+          puede actuar como un buffer, absorbiendo picos de carga y
+          distribuyéndolos de manera más uniforme a los suscriptores,
+          protegiéndolos de sobrecargas.
+        </li>
+      </ul>
+      <p>---</p>
+      <h2>Desventajas</h2>
+      <ul>
+        <li>
+          <strong>Complejidad Operacional:</strong> Añade una capa adicional de
+          infraestructura (el
+          <span
+            class="tooltip"
+            data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+            >broker</span
+          >), que requiere configuración, monitoreo y mantenimiento, aumentando
+          la complejidad del despliegue y la operación.
+        </li>
+        <li>
+          <strong>Dificultad de Depuración (Debugging):</strong> Rastrear el
+          flujo de mensajes a través de un
+          <span
+            class="tooltip"
+            data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+            >broker</span
+          >
+          y múltiples suscriptores puede ser un desafío, especialmente en
+          sistemas distribuidos complejos. Puede ser difícil determinar qué
+          componente consumió un mensaje o si un mensaje se perdió.
+        </li>
+        <li>
+          <strong>Garantías de Entrega y Orden:</strong> La garantía de entrega
+          (por ejemplo, "al menos una vez", "a lo sumo una vez", "exactamente
+          una vez") y el orden de los mensajes no siempre están garantizados por
+          defecto o pueden requerir una configuración y lógica adicionales. Los
+          mensajes duplicados pueden ser un problema si no se manejan
+          idempotentemente.
+        </li>
+        <li>
+          <strong
+            >Dependencia del
+            <span
+              class="tooltip"
+              data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+              >Broker</span
+            >:</strong
+          >
+          El
+          <span
+            class="tooltip"
+            data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+            >broker</span
+          >
+          se convierte en un punto central de la arquitectura. Su falla puede
+          impactar severamente la comunicación de todo el sistema si no se
+          implementa con alta
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >
+          y redundancia.
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+              >Overhead</span
+            >
+            para Casos Simples:</strong
+          >
+          Para comunicaciones simples y directas entre dos componentes, el
+          patrón
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          >
+          puede introducir una complejidad innecesaria y un mayor
+          <span
+            class="tooltip"
+            data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+            >overhead</span
+          >
+          en comparación con una llamada directa (<span
+            class="tooltip"
+            data-tooltip-text='Siglas de "Remote Procedure Call" (Llamada a Procedimiento Remoto). Es un protocolo que un programa puede usar para solicitar un servicio de otro programa en una red sin tener que comprender los detalles de la misma.'
+            >RPC</span
+          >
+          o HTTP).
+        </li>
+        <li>
+          <strong>Difusión sin Cautela:</strong> Si los suscriptores no están
+          bien diseñados o la lógica de filtrado de temas no es precisa, pueden
+          terminar recibiendo y procesando mensajes que no son relevantes para
+          ellos, lo que lleva a un uso ineficiente de recursos.
+        </li>
+      </ul>
+      <h2>Ejemplo de Aplicación Real</h2>
+      <p>
+        Aquí tienes un ejemplo detallado de la aplicación del concepto de
+        arquitectura de software "Publicación/Suscripción (<span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >)" en un escenario empresarial del mundo real.
+      </p>
+      <p>---</p>
+      <p>
+        # Aplicación de Publicación/Suscripción (<span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >) en un Escenario Empresarial
+      </p>
+      <h2>
+        Empresa: "EcoMarket" - Plataforma de E-commerce de Productos Sostenibles
+      </h2>
+      <p>
+        EcoMarket es una plataforma de comercio electrónico de rápido
+        crecimiento especializada en productos ecológicos y sostenibles. Su
+        infraestructura maneja miles de transacciones diarias, desde la creación
+        de pedidos hasta la gestión de inventario y el envío.
+      </p>
+      <h2>
+        Problema que la Empresa Enfrentaba (Arquitectura Monolítica o Acoplada)
+      </h2>
+      <p>
+        Antes de implementar
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >, EcoMarket utilizaba una arquitectura más tradicional y fuertemente
+        acoplada para el procesamiento de pedidos. Cuando un cliente realizaba
+        un pedido, el <code>Servicio de Órdenes</code> era responsable de llamar
+        directamente a varios otros servicios a través de APIs síncronas:
+      </p>
+      <p>
+        1. <em></em>Llamada al <code>Servicio de Pagos</code><em></em>: Para
+        procesar la transacción bancaria.
+      </p>
+      <p>
+        2. <em></em>Llamada al <code>Servicio de Inventario</code><em></em>:
+        Para descontar los productos del stock.
+      </p>
+      <p>
+        3. <em></em>Llamada al <code>Servicio de Envío</code><em></em>: Para
+        crear una etiqueta de envío y programar la recolección.
+      </p>
+      <p>
+        4. <em></em>Llamada al <code>Servicio de Notificaciones</code><em></em>:
+        Para enviar un correo electrónico de confirmación al cliente.
+      </p>
+      <p><strong>Desafíos de esta arquitectura:</strong></p>
+      <ul>
+        <li>
+          <strong>Acoplamiento Fuerte:</strong> El
+          <code>Servicio de Órdenes</code> estaba altamente acoplado a los demás
+          servicios. Si la API del <code>Servicio de Inventario</code> cambiaba,
+          el <code>Servicio de Órdenes</code> también necesitaba ser modificado
+          y redeployado.
+        </li>
+        <li>
+          <strong>Escalabilidad Limitada:</strong> El
+          <code>Servicio de Órdenes</code> se convertía en un cuello de botella.
+          Si el <code>Servicio de Notificaciones</code> estaba lento, todo el
+          proceso de pedido se retrasaba, afectando la experiencia del usuario y
+          la capacidad de procesar nuevas órdenes.
+        </li>
+        <li>
+          <strong>Falta de Resiliencia:</strong> Si uno de los servicios
+          downstream (por ejemplo, el <code>Servicio de Pagos</code>) estaba
+          caído, la transacción completa del pedido fallaba, requiriendo
+          reintentos manuales o complejos mecanismos de reintento en el
+          <code>Servicio de Órdenes</code>.
+        </li>
+        <li>
+          <strong>Dificultad para Añadir Nuevas Funcionalidades:</strong>
+          Incorporar un nuevo servicio (ej.
+          <code>Servicio de Análisis de Fraude</code>,
+          <code>Servicio de Puntos de Lealtad</code>) significaba modificar y
+          redeployar el <code>Servicio de Órdenes</code> cada vez.
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >
+            Elevada:</strong
+          >
+          Cada llamada síncrona añadía
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          al proceso total de confirmación del pedido para el usuario.
+        </li>
+      </ul>
+      <h2>
+        Cómo se Implementó el Concepto de
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+        para Solucionarlo
+      </h2>
+      <p>
+        EcoMarket decidió migrar a una arquitectura basada en eventos utilizando
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >, empleando una plataforma de mensajería como Apache Kafka o Google
+        Cloud
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >.
+      </p>
+      <p>
+        <strong
+          >Arquitectura con
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          >:</strong
+        >
+      </p>
+      <p>
+        1. <strong>Definición de Temas (Topics):</strong> Se crearon "temas"
+        lógicos para diferentes tipos de eventos clave en el sistema. Ejemplos:
+      </p>
+      <ul>
+        <li>* <code>ordenes.creadas</code></li>
+        <li>* <code>pagos.procesados</code></li>
+        <li>* <code>inventario.actualizado</code></li>
+        <li>* <code>envios.programados</code></li>
+      </ul>
+      <p>
+        2. <strong>Publicadores (Publishers):</strong> Los servicios que
+        generaban estos eventos se convirtieron en "publicadores". Su única
+        responsabilidad es publicar un mensaje en el tema correspondiente sin
+        saber quién lo consumirá.
+      </p>
+      <ul>
+        <li>
+          * El <code>Servicio de Órdenes</code> ahora, después de crear el
+          registro del pedido, <strong>publica un mensaje</strong> en el tema
+          <code>ordenes.creadas</code> (ej.
+          <code
+            >{ "id_pedido": "12345", "id_cliente": "67890", "productos": [...],
+            "monto": 99.99 }</code
+          >). <em>Ya no llama directamente a otros servicios.</em>
+        </li>
+        <li>
+          * El <code>Servicio de Pagos</code>, una vez procesado un pago,
+          <strong>publica un mensaje</strong> en el tema
+          <code>pagos.procesados</code>.
+        </li>
+        <li>
+          * El <code>Servicio de Inventario</code>, al actualizar el stock,
+          <strong>publica un mensaje</strong> en el tema
+          <code>inventario.actualizado</code>.
+        </li>
+      </ul>
+      <p>
+        3. <strong>Suscriptores (Subscribers):</strong> Los servicios
+        interesados en reaccionar a ciertos eventos se convirtieron en
+        "suscriptores". Se suscriben a los temas relevantes y procesan los
+        mensajes de forma asíncrona.
+      </p>
+      <ul>
+        <li>
+          <em> </em>*Servicios que se suscriben a
+          <code>ordenes.creadas</code>:<em></em>
+        </li>
+        <li>
+          * <code>Servicio de Pagos</code>: Recibe el evento de nueva orden,
+          inicia el cobro al cliente.
+        </li>
+        <li>
+          * <code>Servicio de Inventario</code>: Recibe el evento, reserva los
+          productos del stock.
+        </li>
+        <li>
+          * <code>Servicio de Notificaciones</code>: Recibe el evento, envía el
+          correo electrónico de "Pedido Recibido".
+        </li>
+        <li>
+          * <code>Servicio de Análisis de Fraude</code>: Recibe el evento,
+          realiza comprobaciones de riesgo en segundo plano.
+        </li>
+        <li>
+          <em> </em>*Servicios que se suscriben a
+          <code>pagos.procesados</code>:<em></em>
+        </li>
+        <li>
+          * <code>Servicio de Envío</code>: Recibe el evento, crea la etiqueta
+          de envío y programa la recolección.
+        </li>
+        <li>
+          * <code>Servicio de Notificaciones</code>: Envía el correo electrónico
+          de "Pago Confirmado".
+        </li>
+        <li>
+          * <code>Servicio de Puntos de Lealtad</code>: Otorga puntos al cliente
+          por la compra.
+        </li>
+        <li>
+          <em> </em>*Servicios que se suscriben a
+          <code>envios.programados</code>:<em></em>
+        </li>
+        <li>
+          * <code>Servicio de Rastreo</code>: Actualiza el estado del pedido y
+          permite al cliente seguirlo.
+        </li>
+      </ul>
+      <p>
+        <strong
+          >Flujo de Ejemplo con
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          >:</strong
+        >
+      </p>
+      <p>1. <strong>Cliente hace un pedido.</strong></p>
+      <p>
+        2. <code>Servicio de Órdenes</code> crea el registro en su base de datos
+        y <strong>publica un evento</strong> <code>ordenes.creadas</code> en el
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >
+        de mensajes. Retorna inmediatamente una confirmación al cliente (el
+        pedido ha sido recibido).
+      </p>
+      <p>
+        3. El
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >
+        de mensajes distribuye el evento <code>ordenes.creadas</code> a todos
+        sus suscriptores:
+      </p>
+      <ul>
+        <li>
+          * <code>Servicio de Pagos</code> consume el evento, procesa el pago y
+          <strong>publica un evento</strong> <code>pagos.procesados</code>.
+        </li>
+        <li>
+          * <code>Servicio de Inventario</code> consume el evento, reserva el
+          stock y <strong>publica un evento</strong>
+          <code>inventario.actualizado</code>.
+        </li>
+        <li>
+          * <code>Servicio de Notificaciones</code> consume el evento, envía el
+          email de confirmación de "Pedido Recibido".
+        </li>
+        <li>
+          * <code>Servicio de Análisis de Fraude</code> consume el evento y
+          realiza sus comprobaciones.
+        </li>
+      </ul>
+      <p>
+        4. El
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >
+        de mensajes distribuye el evento <code>pagos.procesados</code> a sus
+        suscriptores:
+      </p>
+      <ul>
+        <li>
+          * <code>Servicio de Envío</code> consume el evento, programa el envío
+          y <strong>publica un evento</strong> <code>envios.programados</code>.
+        </li>
+        <li>
+          * <code>Servicio de Notificaciones</code> consume el evento, envía el
+          email de "Pago Confirmado".
+        </li>
+        <li>
+          * <code>Servicio de Puntos de Lealtad</code> consume el evento, asigna
+          los puntos.
+        </li>
+      </ul>
+      <p>
+        5. Y así sucesivamente, cada servicio reacciona a los eventos relevantes
+        para su dominio.
+      </p>
+      <h2>Resultados y Beneficios Obtenidos</h2>
+      <p>
+        La implementación de
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+        trajo una serie de mejoras significativas para EcoMarket:
+      </p>
+      <p>
+        1. <strong>Desacoplamiento Extremo:</strong> Los servicios son
+        completamente independientes entre sí. El
+        <code>Servicio de Órdenes</code> no necesita conocer la lógica o la
+        existencia de los servicios de Pago, Envío o Notificaciones. Simplemente
+        "anuncia" que una orden ha sido creada.
+      </p>
+      <p>
+        2. <strong>Escalabilidad Mejorada:</strong> Cada servicio puede
+        escalarse de forma independiente según sus propias necesidades de carga.
+        Si el <code>Servicio de Notificaciones</code> tiene un pico de trabajo,
+        no afecta al rendimiento del <code>Servicio de Órdenes</code> o de
+        Pagos. Se pueden añadir más instancias de un suscriptor para procesar
+        mensajes en paralelo.
+      </p>
+      <p>
+        3. <strong>Mayor Resiliencia y Fiabilidad:</strong> El
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >
+        de mensajes actúa como un búfer. Si un servicio suscriptor está
+        temporalmente caído, los mensajes se retienen en el tema y se entregan
+        una vez que el servicio vuelve a estar en línea. Los reintentos se
+        gestionan a nivel del
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >
+        o del consumidor, no del publicador.
+      </p>
+      <p>
+        4. <strong>Asincronía en el Procesamiento:</strong> Las tareas que antes
+        eran síncronas ahora se ejecutan en segundo plano. Esto reduce
+        drásticamente la
+        <span
+          class="tooltip"
+          data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+          >latencia</span
+        >
+        percibida por el usuario (la confirmación del pedido es casi
+        instantánea) y mejora la eficiencia del sistema.
+      </p>
+      <p>
+        5. <strong>Facilidad de Extensibilidad:</strong> Añadir nuevas
+        funcionalidades es trivial. Si EcoMarket decide implementar un
+        <code>Servicio de Puntos de Lealtad</code>, simplemente necesita que
+        este nuevo servicio se suscriba a los eventos
+        <code>ordenes.creadas</code> o <code>pagos.procesados</code> y comience
+        a procesarlos, sin necesidad de modificar ningún servicio existente.
+      </p>
+      <p>
+        6. <strong>Auditoría y Trazabilidad:</strong> Los mensajes en los temas
+        pueden ser registrados y monitoreados, proporcionando un rastro claro de
+        todos los eventos que ocurren en el sistema, lo que facilita la
+        depuración y la auditoría.
+      </p>
+      <p>
+        7. <strong>Flexibilidad Tecnológica:</strong> Diferentes servicios
+        pueden estar escritos en diferentes lenguajes de programación o utilizar
+        diferentes bases de datos, siempre y cuando puedan comunicarse con el
+        <span
+          class="tooltip"
+          data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+          >broker</span
+        >
+        de mensajes.
+      </p>
+      <p>
+        En resumen, EcoMarket transformó su arquitectura de un sistema rígido y
+        propenso a cuellos de botella en un ecosistema de microservicios ágil,
+        escalable y resiliente, capaz de adaptarse rápidamente a nuevas demandas
+        y funcionalidades sin comprometer la estabilidad ni el rendimiento.
+      </p>
+      <h2>Preguntas de Entrevista</h2>
+      <div>
+        <div class="accordion-item">
+          <p class="accordion-question">
+            ¿Cómo se gestiona la garantía de orden de los mensajes en un sistema
+            Pub/Sub y qué implicaciones tiene la falta de esta garantía para un
+            suscriptor?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La mayoría de los sistemas
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              distribuidos no garantizan el orden estricto y global de los
+              mensajes. Los mensajes publicados por un editor pueden llegar a
+              los suscriptores en un orden diferente al de su envío, y el orden
+              puede variar entre diferentes suscriptores. Las implicaciones para
+              un suscriptor son significativas: debe ser capaz de manejar
+              mensajes desordenados (por ejemplo, reensamblando eventos basados
+              en marcas de tiempo o números de secuencia) y ser idempotente, es
+              decir, que procesar el mismo mensaje varias veces o en un orden
+              diferente al esperado no cause efectos secundarios incorrectos o
+              duplicados. Esto a menudo requiere lógica adicional de
+              compensación o deduplicación en la aplicación del suscriptor.
+            </p>
+          </div>
+        </div>
 
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Publicación/Suscripción (Pub/Sub)</h1>
-    <p># Patrón de Arquitectura: Publicación/Suscripción (<span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>)</p><p>El patrón de Publicación/Suscripción (<span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>) es un patrón de mensajería asíncrona en el que los remitentes de mensajes (publicadores) no se comunican directamente con los receptores de mensajes (suscriptores), sino que lo hacen a través de un intermediario central conocido como "<span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span>" o "bus de mensajes". Este patrón promueve un alto grado de desacoplamiento entre los componentes del sistema.</p><p>Imagina un sistema de noticias: los periodistas (publicadores) escriben artículos y los envían a una agencia de noticias (<span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span>). Los lectores (suscriptores) se "suscriben" a ciertos temas (deportes, política, tecnología) y la agencia de noticias les entrega automáticamente los artículos relevantes. Los periodistas no necesitan saber quién leerá sus artículos, y los lectores no necesitan saber quién los escribió.</p><p>---</p><h2>Conceptos Principales</h2><ul><li>  <strong>Publicador (Publisher):</strong></li><li>   *   Es el componente que crea y envía mensajes (o eventos) a un tema específico del <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span>.</li><li>   *   No tiene conocimiento de qué suscriptores existen o cuántos hay. Su única responsabilidad es publicar el mensaje.</li><li>   *   Ejemplo: Un servicio que detecta un nuevo pedido y publica un evento "PedidoCreado".</li><li>  <strong>Suscriptor (Subscriber):</strong></li><li>   *   Es el componente que expresa interés en recibir mensajes de uno o más temas específicos.</li><li>   *   Recibe y procesa los mensajes que el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> le envía para los temas a los que está suscrito.</li><li>   *   No sabe quién envió el mensaje. Su única responsabilidad es procesar el mensaje recibido.</li><li>   *   Ejemplo: Un servicio de facturación que se suscribe al tema "Pedidos" para procesar nuevos pedidos.</li><li>  <strong>Mensaje/Evento (Message/Event):</strong></li><li>   *   Es el paquete de datos que un publicador envía y un suscriptor recibe.</li><li>   *   Contiene la información relevante que se necesita transmitir entre los componentes.</li><li>  <strong>Tema (Topic):</strong></li><li>   *   Es un canal o categoría con nombre al que los publicadores envían mensajes y los suscriptores se suscriben.</li><li>   *   Actúa como un punto de encuentro lógico para mensajes relacionados.</li><li>   *   Ejemplo: "pedidos_nuevos", "actualizaciones_inventario", "eventos_usuarios".</li><li>  <strong><span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">Broker</span>/Bus de Mensajes (Message <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">Broker</span>/Bus):</strong></li><li>   *   Es el intermediario central y la pieza clave del patrón.</li><li>   *   Es responsable de enrutar los mensajes de los publicadores a los suscriptores correctos, basándose en los temas.</li><li>   *   Generalmente ofrece características como persistencia de mensajes, garantía de entrega, manejo de colas y escalabilidad.</li><li>   *   Ejemplos: Apache Kafka, RabbitMQ, Google Cloud <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>, AWS SQS/SNS, Azure <span class="tooltip" data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos.">Service Bus</span>.</li></ul><p>---</p><h2>Ventajas</h2><ul><li>  <strong>Desacoplamiento Extremo:</strong> Elimina la dependencia directa entre los productores y consumidores de información. Los componentes no necesitan conocer la identidad o la existencia de los demás. Esto facilita el desarrollo y mantenimiento independiente.</li><li>  <strong>Escalabilidad:</strong> Permite añadir nuevos suscriptores (consumidores) sin afectar a los publicadores. Un mismo mensaje puede ser consumido por múltiples suscriptores de forma simultánea (<span class="tooltip" data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción.">fan-out</span>), lo que facilita la <span class="tooltip" data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL.">escalabilidad horizontal</span> y el procesamiento paralelo.</li><li>  <strong>Resiliencia y Confiabilidad:</strong> Los mensajes pueden persistirse en el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span>, lo que significa que si un suscriptor no está disponible temporalmente, los mensajes pueden almacenarse y entregarse una vez que vuelva a estar en línea, evitando la pérdida de datos.</li><li>  <strong>Flexibilidad y Reusabilidad:</strong> Facilita la adición de nuevas funcionalidades (nuevos suscriptores) que reaccionan a eventos existentes sin modificar los componentes actuales. Los eventos se vuelven una "fuente de verdad" que puede ser utilizada por múltiples servicios.</li><li>  <strong>Asincronía:</strong> La comunicación es inherentemente asíncrona, lo que mejora el rendimiento general del sistema al no obligar a los publicadores a esperar una respuesta de los suscriptores.</li><li>  <strong>Gestión de Carga:</strong> El <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> puede actuar como un buffer, absorbiendo picos de carga y distribuyéndolos de manera más uniforme a los suscriptores, protegiéndolos de sobrecargas.</li></ul><p>---</p><h2>Desventajas</h2><ul><li>  <strong>Complejidad Operacional:</strong> Añade una capa adicional de infraestructura (el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span>), que requiere configuración, monitoreo y mantenimiento, aumentando la complejidad del despliegue y la operación.</li><li>  <strong>Dificultad de Depuración (Debugging):</strong> Rastrear el flujo de mensajes a través de un <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> y múltiples suscriptores puede ser un desafío, especialmente en sistemas distribuidos complejos. Puede ser difícil determinar qué componente consumió un mensaje o si un mensaje se perdió.</li><li>  <strong>Garantías de Entrega y Orden:</strong> La garantía de entrega (por ejemplo, "al menos una vez", "a lo sumo una vez", "exactamente una vez") y el orden de los mensajes no siempre están garantizados por defecto o pueden requerir una configuración y lógica adicionales. Los mensajes duplicados pueden ser un problema si no se manejan idempotentemente.</li><li>  <strong>Dependencia del <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">Broker</span>:</strong> El <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> se convierte en un punto central de la arquitectura. Su falla puede impactar severamente la comunicación de todo el sistema si no se implementa con alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y redundancia.</li><li>  <strong><span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">Overhead</span> para Casos Simples:</strong> Para comunicaciones simples y directas entre dos componentes, el patrón <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> puede introducir una complejidad innecesaria y un mayor <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">overhead</span> en comparación con una llamada directa (<span class="tooltip" data-tooltip-text="Siglas de &quot;Remote Procedure Call&quot; (Llamada a Procedimiento Remoto). Es un protocolo que un programa puede usar para solicitar un servicio de otro programa en una red sin tener que comprender los detalles de la misma.">RPC</span> o HTTP).</li><li>  <strong>Difusión sin Cautela:</strong> Si los suscriptores no están bien diseñados o la lógica de filtrado de temas no es precisa, pueden terminar recibiendo y procesando mensajes que no son relevantes para ellos, lo que lleva a un uso ineficiente de recursos.</li></ul><h2>Ejemplo de Aplicación Real</h2><p>Aquí tienes un ejemplo detallado de la aplicación del concepto de arquitectura de software "Publicación/Suscripción (<span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>)" en un escenario empresarial del mundo real.</p><p>---</p><p># Aplicación de Publicación/Suscripción (<span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>) en un Escenario Empresarial</p><h2>Empresa: "EcoMarket" - Plataforma de E-commerce de Productos Sostenibles</h2><p>EcoMarket es una plataforma de comercio electrónico de rápido crecimiento especializada en productos ecológicos y sostenibles. Su infraestructura maneja miles de transacciones diarias, desde la creación de pedidos hasta la gestión de inventario y el envío.</p><h2>Problema que la Empresa Enfrentaba (Arquitectura Monolítica o Acoplada)</h2><p>Antes de implementar <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>, EcoMarket utilizaba una arquitectura más tradicional y fuertemente acoplada para el procesamiento de pedidos. Cuando un cliente realizaba un pedido, el <code>Servicio de Órdenes</code> era responsable de llamar directamente a varios otros servicios a través de APIs síncronas:</p><p>1.  <em></em>Llamada al <code>Servicio de Pagos</code><em></em>: Para procesar la transacción bancaria.</p><p>2.  <em></em>Llamada al <code>Servicio de Inventario</code><em></em>: Para descontar los productos del stock.</p><p>3.  <em></em>Llamada al <code>Servicio de Envío</code><em></em>: Para crear una etiqueta de envío y programar la recolección.</p><p>4.  <em></em>Llamada al <code>Servicio de Notificaciones</code><em></em>: Para enviar un correo electrónico de confirmación al cliente.</p><p><strong>Desafíos de esta arquitectura:</strong></p><ul><li>  <strong>Acoplamiento Fuerte:</strong> El <code>Servicio de Órdenes</code> estaba altamente acoplado a los demás servicios. Si la API del <code>Servicio de Inventario</code> cambiaba, el <code>Servicio de Órdenes</code> también necesitaba ser modificado y redeployado.</li><li>  <strong>Escalabilidad Limitada:</strong> El <code>Servicio de Órdenes</code> se convertía en un cuello de botella. Si el <code>Servicio de Notificaciones</code> estaba lento, todo el proceso de pedido se retrasaba, afectando la experiencia del usuario y la capacidad de procesar nuevas órdenes.</li><li>  <strong>Falta de Resiliencia:</strong> Si uno de los servicios downstream (por ejemplo, el <code>Servicio de Pagos</code>) estaba caído, la transacción completa del pedido fallaba, requiriendo reintentos manuales o complejos mecanismos de reintento en el <code>Servicio de Órdenes</code>.</li><li>  <strong>Dificultad para Añadir Nuevas Funcionalidades:</strong> Incorporar un nuevo servicio (ej. <code>Servicio de Análisis de Fraude</code>, <code>Servicio de Puntos de Lealtad</code>) significaba modificar y redeployar el <code>Servicio de Órdenes</code> cada vez.</li><li>  <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> Elevada:</strong> Cada llamada síncrona añadía <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> al proceso total de confirmación del pedido para el usuario.</li></ul><h2>Cómo se Implementó el Concepto de <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> para Solucionarlo</h2><p>EcoMarket decidió migrar a una arquitectura basada en eventos utilizando <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>, empleando una plataforma de mensajería como Apache Kafka o Google Cloud <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>.</p><p><strong>Arquitectura con <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>:</strong></p><p>1.  <strong>Definición de Temas (Topics):</strong> Se crearon "temas" lógicos para diferentes tipos de eventos clave en el sistema. Ejemplos:</p><ul><li>   *   <code>ordenes.creadas</code></li><li>   *   <code>pagos.procesados</code></li><li>   *   <code>inventario.actualizado</code></li><li>   *   <code>envios.programados</code></li></ul><p>2.  <strong>Publicadores (Publishers):</strong> Los servicios que generaban estos eventos se convirtieron en "publicadores". Su única responsabilidad es publicar un mensaje en el tema correspondiente sin saber quién lo consumirá.</p><ul><li>   *   El <code>Servicio de Órdenes</code> ahora, después de crear el registro del pedido, <strong>publica un mensaje</strong> en el tema <code>ordenes.creadas</code> (ej. <code>{ "id_pedido": "12345", "id_cliente": "67890", "productos": [...], "monto": 99.99 }</code>). <em>Ya no llama directamente a otros servicios.</em></li><li>   *   El <code>Servicio de Pagos</code>, una vez procesado un pago, <strong>publica un mensaje</strong> en el tema <code>pagos.procesados</code>.</li><li>   *   El <code>Servicio de Inventario</code>, al actualizar el stock, <strong>publica un mensaje</strong> en el tema <code>inventario.actualizado</code>.</li></ul><p>3.  <strong>Suscriptores (Subscribers):</strong> Los servicios interesados en reaccionar a ciertos eventos se convirtieron en "suscriptores". Se suscriben a los temas relevantes y procesan los mensajes de forma asíncrona.</p><ul><li>   <em>   </em>*Servicios que se suscriben a <code>ordenes.creadas</code>:<em></em></li><li>       *   <code>Servicio de Pagos</code>: Recibe el evento de nueva orden, inicia el cobro al cliente.</li><li>       *   <code>Servicio de Inventario</code>: Recibe el evento, reserva los productos del stock.</li><li>       *   <code>Servicio de Notificaciones</code>: Recibe el evento, envía el correo electrónico de "Pedido Recibido".</li><li>       *   <code>Servicio de Análisis de Fraude</code>: Recibe el evento, realiza comprobaciones de riesgo en segundo plano.</li><li>   <em>   </em>*Servicios que se suscriben a <code>pagos.procesados</code>:<em></em></li><li>       *   <code>Servicio de Envío</code>: Recibe el evento, crea la etiqueta de envío y programa la recolección.</li><li>       *   <code>Servicio de Notificaciones</code>: Envía el correo electrónico de "Pago Confirmado".</li><li>       *   <code>Servicio de Puntos de Lealtad</code>: Otorga puntos al cliente por la compra.</li><li>   <em>   </em>*Servicios que se suscriben a <code>envios.programados</code>:<em></em></li><li>       *   <code>Servicio de Rastreo</code>: Actualiza el estado del pedido y permite al cliente seguirlo.</li></ul><p><strong>Flujo de Ejemplo con <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>:</strong></p><p>1.  <strong>Cliente hace un pedido.</strong></p><p>2.  <code>Servicio de Órdenes</code> crea el registro en su base de datos y <strong>publica un evento</strong> <code>ordenes.creadas</code> en el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de mensajes. Retorna inmediatamente una confirmación al cliente (el pedido ha sido recibido).</p><p>3.  El <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de mensajes distribuye el evento <code>ordenes.creadas</code> a todos sus suscriptores:</p><ul><li>   *   <code>Servicio de Pagos</code> consume el evento, procesa el pago y <strong>publica un evento</strong> <code>pagos.procesados</code>.</li><li>   *   <code>Servicio de Inventario</code> consume el evento, reserva el stock y <strong>publica un evento</strong> <code>inventario.actualizado</code>.</li><li>   *   <code>Servicio de Notificaciones</code> consume el evento, envía el email de confirmación de "Pedido Recibido".</li><li>   *   <code>Servicio de Análisis de Fraude</code> consume el evento y realiza sus comprobaciones.</li></ul><p>4.  El <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de mensajes distribuye el evento <code>pagos.procesados</code> a sus suscriptores:</p><ul><li>   *   <code>Servicio de Envío</code> consume el evento, programa el envío y <strong>publica un evento</strong> <code>envios.programados</code>.</li><li>   *   <code>Servicio de Notificaciones</code> consume el evento, envía el email de "Pago Confirmado".</li><li>   *   <code>Servicio de Puntos de Lealtad</code> consume el evento, asigna los puntos.</li></ul><p>5.  Y así sucesivamente, cada servicio reacciona a los eventos relevantes para su dominio.</p><h2>Resultados y Beneficios Obtenidos</h2><p>La implementación de <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> trajo una serie de mejoras significativas para EcoMarket:</p><p>1.  <strong>Desacoplamiento Extremo:</strong> Los servicios son completamente independientes entre sí. El <code>Servicio de Órdenes</code> no necesita conocer la lógica o la existencia de los servicios de Pago, Envío o Notificaciones. Simplemente "anuncia" que una orden ha sido creada.</p><p>2.  <strong>Escalabilidad Mejorada:</strong> Cada servicio puede escalarse de forma independiente según sus propias necesidades de carga. Si el <code>Servicio de Notificaciones</code> tiene un pico de trabajo, no afecta al rendimiento del <code>Servicio de Órdenes</code> o de Pagos. Se pueden añadir más instancias de un suscriptor para procesar mensajes en paralelo.</p><p>3.  <strong>Mayor Resiliencia y Fiabilidad:</strong> El <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de mensajes actúa como un búfer. Si un servicio suscriptor está temporalmente caído, los mensajes se retienen en el tema y se entregan una vez que el servicio vuelve a estar en línea. Los reintentos se gestionan a nivel del <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> o del consumidor, no del publicador.</p><p>4.  <strong>Asincronía en el Procesamiento:</strong> Las tareas que antes eran síncronas ahora se ejecutan en segundo plano. Esto reduce drásticamente la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> percibida por el usuario (la confirmación del pedido es casi instantánea) y mejora la eficiencia del sistema.</p><p>5.  <strong>Facilidad de Extensibilidad:</strong> Añadir nuevas funcionalidades es trivial. Si EcoMarket decide implementar un <code>Servicio de Puntos de Lealtad</code>, simplemente necesita que este nuevo servicio se suscriba a los eventos <code>ordenes.creadas</code> o <code>pagos.procesados</code> y comience a procesarlos, sin necesidad de modificar ningún servicio existente.</p><p>6.  <strong>Auditoría y Trazabilidad:</strong> Los mensajes en los temas pueden ser registrados y monitoreados, proporcionando un rastro claro de todos los eventos que ocurren en el sistema, lo que facilita la depuración y la auditoría.</p><p>7.  <strong>Flexibilidad Tecnológica:</strong> Diferentes servicios pueden estar escritos en diferentes lenguajes de programación o utilizar diferentes bases de datos, siempre y cuando puedan comunicarse con el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de mensajes.</p><p>En resumen, EcoMarket transformó su arquitectura de un sistema rígido y propenso a cuellos de botella en un ecosistema de microservicios ágil, escalable y resiliente, capaz de adaptarse rápidamente a nuevas demandas y funcionalidades sin comprometer la estabilidad ni el rendimiento.</p><h2>Preguntas de Entrevista</h2><div>
         <div class="accordion-item">
-          <p class="accordion-question">¿Cómo se gestiona la garantía de orden de los mensajes en un sistema Pub/Sub y qué implicaciones tiene la falta de esta garantía para un suscriptor?</p>
-          <div class="accordion-answer"><p>La mayoría de los sistemas <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> distribuidos no garantizan el orden estricto y global de los mensajes. Los mensajes publicados por un editor pueden llegar a los suscriptores en un orden diferente al de su envío, y el orden puede variar entre diferentes suscriptores. Las implicaciones para un suscriptor son significativas: debe ser capaz de manejar mensajes desordenados (por ejemplo, reensamblando eventos basados en marcas de tiempo o números de secuencia) y ser idempotente, es decir, que procesar el mismo mensaje varias veces o en un orden diferente al esperado no cause efectos secundarios incorrectos o duplicados. Esto a menudo requiere lógica adicional de compensación o deduplicación en la aplicación del suscriptor.</p></div>
+          <p class="accordion-question">
+            ¿Cómo se aborda el problema de la contrapresión (backpressure) y la
+            gestión de suscriptores lentos o fallidos en un patrón Pub/Sub a
+            gran escala, y qué mecanismos se suelen emplear para evitar que
+            afecten a la salud general del sistema?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La contrapresión y los suscriptores lentos se gestionan con varios
+              mecanismos. Primero, las políticas de retención de mensajes del
+              <span
+                class="tooltip"
+                data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+                >broker</span
+              >
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              definen cuánto tiempo se almacenan los mensajes antes de expirar,
+              evitando una acumulación indefinida. Segundo, se utilizan colas de
+              mensajes no entregados (Dead-Letter Queues,
+              <span
+                class="tooltip"
+                data-tooltip-text="Cola de Mensajes Muertos (Dead-Letter Queue). Una cola especial donde un message broker envía los mensajes que no pudieron ser procesados exitosamente por un consumidor después de varios intentos."
+                >DLQ</span
+              >) para redirigir mensajes que no pueden ser procesados después de
+              un número configurable de reintentos, aislándolos del flujo
+              principal y evitando que bloqueen la suscripción. Tercero, algunos
+              sistemas
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              ofrecen mecanismos de control de flujo o limitación de consumo
+              (flow control) que pausan o ralentizan la entrega de mensajes a un
+              suscriptor si detectan que no puede procesarlos a la velocidad
+              necesaria. Finalmente, el escalado horizontal del suscriptor
+              (añadir más instancias) y la implementación de patrones de
+              reintentos con retroceso exponencial (exponential backoff) en la
+              lógica del suscriptor son clave para manejar cargas variables y
+              fallos temporales.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">¿Cómo se aborda el problema de la contrapresión (backpressure) y la gestión de suscriptores lentos o fallidos en un patrón Pub/Sub a gran escala, y qué mecanismos se suelen emplear para evitar que afecten a la salud general del sistema?</p>
-          <div class="accordion-answer"><p>La contrapresión y los suscriptores lentos se gestionan con varios mecanismos. Primero, las políticas de retención de mensajes del <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> definen cuánto tiempo se almacenan los mensajes antes de expirar, evitando una acumulación indefinida. Segundo, se utilizan colas de mensajes no entregados (Dead-Letter Queues, <span class="tooltip" data-tooltip-text="Cola de Mensajes Muertos (Dead-Letter Queue). Una cola especial donde un message broker envía los mensajes que no pudieron ser procesados exitosamente por un consumidor después de varios intentos.">DLQ</span>) para redirigir mensajes que no pueden ser procesados después de un número configurable de reintentos, aislándolos del flujo principal y evitando que bloqueen la suscripción. Tercero, algunos sistemas <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> ofrecen mecanismos de control de flujo o limitación de consumo (flow control) que pausan o ralentizan la entrega de mensajes a un suscriptor si detectan que no puede procesarlos a la velocidad necesaria. Finalmente, el escalado horizontal del suscriptor (añadir más instancias) y la implementación de patrones de reintentos con retroceso exponencial (exponential backoff) en la lógica del suscriptor son clave para manejar cargas variables y fallos temporales.</p></div>
+          <p class="accordion-question">
+            La mayoría de los sistemas Pub/Sub ofrecen garantías de 'al menos
+            una vez' (at-least-once) para la entrega de mensajes. Describa los
+            desafíos y las estrategias para lograr una semántica de 'exactamente
+            una vez' (exactly-once) en el procesamiento de mensajes, o cómo
+            mitigar los problemas derivados de la entrega 'al menos una vez'
+            cuando 'exactamente una vez' es un requisito implícito.
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Lograr la semántica de 'exactamente una vez' en sistemas
+              distribuidos es un desafío considerable, ya que la entrega 'al
+              menos una vez' implica que un mensaje puede ser entregado y, por
+              tanto, procesado varias veces. Las estrategias para mitigar los
+              problemas incluyen: 1.
+              <span
+                class="tooltip"
+                data-tooltip-text="La propiedad de una operación que permite que se pueda aplicar múltiples veces sin cambiar el resultado más allá de la aplicación inicial. Crucial para sistemas distribuidos donde las retransmisiones de mensajes son comunes."
+                >Idempotencia</span
+              >: Diseñar los suscriptores para que la operación de procesamiento
+              de un mensaje pueda ejecutarse múltiples veces sin cambiar el
+              resultado final más allá de la primera ejecución. Esto a menudo se
+              logra utilizando un identificador único de transacción o mensaje y
+              verificando su estado antes de proceder. 2. Transacciones:
+              Utilizar transacciones distribuidas o el patrón Saga para
+              coordinar cambios a través de múltiples servicios, aunque esto
+              añade una complejidad significativa. 3. Sistemas de procesamiento
+              de streams: Algunas plataformas avanzadas de procesamiento de
+              streams (como Apache Flink o Kafka Streams) ofrecen garantías de
+              'exactamente una vez' a nivel de plataforma, gestionando el estado
+              y la reintentos de forma transparente.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">La mayoría de los sistemas Pub/Sub ofrecen garantías de 'al menos una vez' (at-least-once) para la entrega de mensajes. Describa los desafíos y las estrategias para lograr una semántica de 'exactamente una vez' (exactly-once) en el procesamiento de mensajes, o cómo mitigar los problemas derivados de la entrega 'al menos una vez' cuando 'exactamente una vez' es un requisito implícito.</p>
-          <div class="accordion-answer"><p>Lograr la semántica de 'exactamente una vez' en sistemas distribuidos es un desafío considerable, ya que la entrega 'al menos una vez' implica que un mensaje puede ser entregado y, por tanto, procesado varias veces. Las estrategias para mitigar los problemas incluyen: 1. <span class="tooltip" data-tooltip-text="La propiedad de una operación que permite que se pueda aplicar múltiples veces sin cambiar el resultado más allá de la aplicación inicial. Crucial para sistemas distribuidos donde las retransmisiones de mensajes son comunes.">Idempotencia</span>: Diseñar los suscriptores para que la operación de procesamiento de un mensaje pueda ejecutarse múltiples veces sin cambiar el resultado final más allá de la primera ejecución. Esto a menudo se logra utilizando un identificador único de transacción o mensaje y verificando su estado antes de proceder. 2. Transacciones: Utilizar transacciones distribuidas o el patrón Saga para coordinar cambios a través de múltiples servicios, aunque esto añade una complejidad significativa. 3. Sistemas de procesamiento de streams: Algunas plataformas avanzadas de procesamiento de streams (como Apache Flink o Kafka Streams) ofrecen garantías de 'exactamente una vez' a nivel de plataforma, gestionando el estado y la reintentos de forma transparente.</p></div>
+          <p class="accordion-question">
+            Aunque el patrón Pub/Sub es potente, no es una solución universal.
+            ¿En qué escenarios o requisitos funcionales específicos el uso de
+            Pub/Sub podría considerarse un anti-patrón o introducir una
+            complejidad innecesaria, y qué alternativas serían más adecuadas?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              El patrón
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              puede ser un anti-patrón en varios escenarios: 1. Comunicación
+              síncrona/Request-Reply: Si se requiere una respuesta inmediata o
+              una comunicación tipo solicitud-respuesta,
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              introduce
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >
+              y desacoplamiento innecesario. Las APIs REST, GraphQL o
+              <span
+                class="tooltip"
+                data-tooltip-text='Siglas de "Remote Procedure Call" (Llamada a Procedimiento Remoto). Es un protocolo que un programa puede usar para solicitar un servicio de otro programa en una red sin tener que comprender los detalles de la misma.'
+                >RPC</span
+              >
+              son más adecuadas. 2. Pocos suscriptores conocidos y fijos: Cuando
+              el número de consumidores es pequeño, estático y bien conocido,
+              una invocación directa de servicio o una cola de mensajes punto a
+              punto puede ser más simple de implementar y mantener. 3.
+              Dependencia estricta del orden global entre múltiples editores: Si
+              el orden de los mensajes es críticamente importante a través de
+              múltiples editores,
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              por sí solo no garantiza esto y la lógica de reordenación en el
+              suscriptor puede volverse muy compleja. 4. Transacciones
+              distribuidas fuertemente acopladas: Para escenarios que requieren
+              transacciones
+              <span
+                class="tooltip"
+                data-tooltip-text="Un acrónimo (Atomicidad, Consistencia, Aislamiento, Durabilidad) que describe las propiedades de una transacción de base de datos confiable. Garantiza que las transacciones sean predecibles y seguras, incluso en caso de errores."
+                >ACID</span
+              >
+              estrictas a través de múltiples servicios,
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              proporciona solo el mecanismo de comunicación asíncrona, y la
+              coordinación transaccional debe manejarse en la capa de la
+              aplicación, lo cual puede ser complejo. 5. Requisitos de baja
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >
+              extrema para un único consumidor: El
+              <span
+                class="tooltip"
+                data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+                >overhead</span
+              >
+              inherente al
+              <span
+                class="tooltip"
+                data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción."
+                >fan-out</span
+              >
+              y la distribución de
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              podría no ser óptimo para un solo consumidor que necesita
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >
+              ultrabaja garantizada; un canal de comunicación directo podría ser
+              mejor.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Aunque el patrón Pub/Sub es potente, no es una solución universal. ¿En qué escenarios o requisitos funcionales específicos el uso de Pub/Sub podría considerarse un anti-patrón o introducir una complejidad innecesaria, y qué alternativas serían más adecuadas?</p>
-          <div class="accordion-answer"><p>El patrón <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> puede ser un anti-patrón en varios escenarios: 1. Comunicación síncrona/Request-Reply: Si se requiere una respuesta inmediata o una comunicación tipo solicitud-respuesta, <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> introduce <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> y desacoplamiento innecesario. Las APIs REST, GraphQL o <span class="tooltip" data-tooltip-text="Siglas de &quot;Remote Procedure Call&quot; (Llamada a Procedimiento Remoto). Es un protocolo que un programa puede usar para solicitar un servicio de otro programa en una red sin tener que comprender los detalles de la misma.">RPC</span> son más adecuadas. 2. Pocos suscriptores conocidos y fijos: Cuando el número de consumidores es pequeño, estático y bien conocido, una invocación directa de servicio o una cola de mensajes punto a punto puede ser más simple de implementar y mantener. 3. Dependencia estricta del orden global entre múltiples editores: Si el orden de los mensajes es críticamente importante a través de múltiples editores, <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> por sí solo no garantiza esto y la lógica de reordenación en el suscriptor puede volverse muy compleja. 4. Transacciones distribuidas fuertemente acopladas: Para escenarios que requieren transacciones <span class="tooltip" data-tooltip-text="Un acrónimo (Atomicidad, Consistencia, Aislamiento, Durabilidad) que describe las propiedades de una transacción de base de datos confiable. Garantiza que las transacciones sean predecibles y seguras, incluso en caso de errores.">ACID</span> estrictas a través de múltiples servicios, <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> proporciona solo el mecanismo de comunicación asíncrona, y la coordinación transaccional debe manejarse en la capa de la aplicación, lo cual puede ser complejo. 5. Requisitos de baja <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> extrema para un único consumidor: El <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">overhead</span> inherente al <span class="tooltip" data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción.">fan-out</span> y la distribución de <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> podría no ser óptimo para un solo consumidor que necesita <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> ultrabaja garantizada; un canal de comunicación directo podría ser mejor.</p></div>
+          <p class="accordion-question">
+            ¿Cómo se abordan las consideraciones de seguridad y control de
+            acceso en un sistema Pub/Sub para garantizar que solo los editores
+            autorizados puedan publicar mensajes en temas específicos y que solo
+            los suscriptores autorizados puedan recibir mensajes de esos temas?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La seguridad en
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              se aborda con una combinación de mecanismos: 1. Autenticación:
+              Tanto los editores como los suscriptores deben autenticarse con el
+              <span
+                class="tooltip"
+                data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+                >broker</span
+              >
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              utilizando credenciales (tokens OAuth, certificados, claves API)
+              para verificar su identidad. 2. Autorización (RBAC): Se implementa
+              un Control de Acceso Basado en Roles (RBAC) o políticas IAM. Estas
+              políticas definen permisos granulares que especifican qué
+              entidades tienen derecho a 'publicar' en temas específicos,
+              'suscribirse' a suscripciones o temas específicos, y 'gestionar'
+              (crear, eliminar) recursos
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >. 3. Cifrado en tránsito (TLS/<span
+                class="tooltip"
+                data-tooltip-text="(Secure Sockets Layer) Un protocolo criptográfico para establecer enlaces cifrados entre un servidor web y un navegador. Es el predecesor de TLS, aunque el término SSL se usa a menudo para referirse a ambos."
+                >SSL</span
+              >): Toda la comunicación entre los editores, los suscriptores y el
+              <span
+                class="tooltip"
+                data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+                >broker</span
+              >
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              debe cifrarse utilizando TLS/<span
+                class="tooltip"
+                data-tooltip-text="(Secure Sockets Layer) Un protocolo criptográfico para establecer enlaces cifrados entre un servidor web y un navegador. Es el predecesor de TLS, aunque el término SSL se usa a menudo para referirse a ambos."
+                >SSL</span
+              >
+              para proteger la integridad y confidencialidad de los mensajes. 4.
+              Cifrado en reposo: Si el
+              <span
+                class="tooltip"
+                data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+                >broker</span
+              >
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              persiste los mensajes en almacenamiento, estos deben ser cifrados
+              en reposo. 5. Segmentación de red: Aislar el
+              <span
+                class="tooltip"
+                data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+                >broker</span
+              >
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              en una red segura, limitando el acceso solo a servicios o IPs
+              autorizadas. 6. Auditoría y registro: Mantener registros
+              detallados de todas las actividades de publicación y suscripción
+              para fines de auditoría, seguimiento y detección de anomalías.
+            </p>
+          </div>
         </div>
-      
-        <div class="accordion-item">
-          <p class="accordion-question">¿Cómo se abordan las consideraciones de seguridad y control de acceso en un sistema Pub/Sub para garantizar que solo los editores autorizados puedan publicar mensajes en temas específicos y que solo los suscriptores autorizados puedan recibir mensajes de esos temas?</p>
-          <div class="accordion-answer"><p>La seguridad en <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> se aborda con una combinación de mecanismos: 1. Autenticación: Tanto los editores como los suscriptores deben autenticarse con el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> utilizando credenciales (tokens OAuth, certificados, claves API) para verificar su identidad. 2. Autorización (RBAC): Se implementa un Control de Acceso Basado en Roles (RBAC) o políticas IAM. Estas políticas definen permisos granulares que especifican qué entidades tienen derecho a 'publicar' en temas específicos, 'suscribirse' a suscripciones o temas específicos, y 'gestionar' (crear, eliminar) recursos <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>. 3. Cifrado en tránsito (TLS/<span class="tooltip" data-tooltip-text="(Secure Sockets Layer) Un protocolo criptográfico para establecer enlaces cifrados entre un servidor web y un navegador. Es el predecesor de TLS, aunque el término SSL se usa a menudo para referirse a ambos.">SSL</span>): Toda la comunicación entre los editores, los suscriptores y el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> debe cifrarse utilizando TLS/<span class="tooltip" data-tooltip-text="(Secure Sockets Layer) Un protocolo criptográfico para establecer enlaces cifrados entre un servidor web y un navegador. Es el predecesor de TLS, aunque el término SSL se usa a menudo para referirse a ambos.">SSL</span> para proteger la integridad y confidencialidad de los mensajes. 4. Cifrado en reposo: Si el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> persiste los mensajes en almacenamiento, estos deben ser cifrados en reposo. 5. Segmentación de red: Aislar el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> en una red segura, limitando el acceso solo a servicios o IPs autorizadas. 6. Auditoría y registro: Mantener registros detallados de todas las actividades de publicación y suscripción para fines de auditoría, seguimiento y detección de anomalías.</p></div>
-        </div>
-      </div><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFbYKM7lpKW0GX93nZvv31dNfIeKZRL3EnKqUBwe2XOzU57562rKxtDd-DXfbIvCNaQLWNyTYs2ZKPVSwOxBHz4NfszeJ1-I4hNNHcNfmb7XUkp65O6PpGR7gcf5XeQCoYjfjIfD4Ink9jR" target="_blank" rel="noopener noreferrer">wikipedia.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEVg-Uj5mvB6s7pxpzDtnj0CMKdPAIMtxRIvS6fM6Jf9IhAokzAcoxekZS1YfsVkPN4LYJYp8DSoQbVp-Wx8TDVMDKWVIGqehK2OknVr41pJBMfVL14RlnGNKOTfMdY6rHAzMbX_jI8fbf0r-nnK5ZA4va-yQgLLQ==" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGT4XKDPBHDvMgfl5id4JoNkJDnmbdwu5JKZAyJfEBspD95ItBS0s6d2YIZ9ezw4IExBejsPMKSvcjKM7g0hHvcozquHVbI_9COgAFrqD2ObHvwmZrNyo8auqi1RALLwpWjNqr0JtauEiCzALTbyP6BgA==" target="_blank" rel="noopener noreferrer">google.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE59EoceApYL3wjE2-0zrKgB6Np_NOSVu5li2gexVozvTK2U9DbIf_VZ1QJ3SLYYTSuJ4YpMUSh5YCNwK5kDVzHDO_HtVkrD_aCLiyPJ4dTonrA4RHvL02agFHGf3kloIyFwgttPCtWOqv95j9DUvPAjTP_PPGakA==" target="_blank" rel="noopener noreferrer">google.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGvzhRhPGpf1lYr69ZIqv-Bu7CVWuF3iYDJ1Yos9CkwgPsxkY5Zx1qiT71MdJCGpyI8tPhwcVdc3ClKw6g6HHdE_qnKXB7IJlXE4D9cMp3xr0DBu0vlPIpdMpz8tjoRKSaAASHycsOK7jZUp5wyhc=" target="_blank" rel="noopener noreferrer">amazon.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVZF4jrv72m5iYbIF6HmJMF-_7rt0phioyeAf1-8miIY3L_zsy0f0hdzZto0-4MtyvWiySvE26wJSts82drEp1Xx_-gNoDFjDA_3MAp2cMSDNG69PHOMjgLpNfPDFIqebuU22pj00EMKjyicT3egd8LPV6AUjRkl9IhixIbjjAdS7vBOQTX3hqMlkJ2Ww=" target="_blank" rel="noopener noreferrer">microsoft.com</a></li></ul>
-  </div>
-</body>
+      </div>
+      <h2>Recursos Adicionales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFbYKM7lpKW0GX93nZvv31dNfIeKZRL3EnKqUBwe2XOzU57562rKxtDd-DXfbIvCNaQLWNyTYs2ZKPVSwOxBHz4NfszeJ1-I4hNNHcNfmb7XUkp65O6PpGR7gcf5XeQCoYjfjIfD4Ink9jR"
+            target="_blank"
+            rel="noopener noreferrer"
+            >wikipedia.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEVg-Uj5mvB6s7pxpzDtnj0CMKdPAIMtxRIvS6fM6Jf9IhAokzAcoxekZS1YfsVkPN4LYJYp8DSoQbVp-Wx8TDVMDKWVIGqehK2OknVr41pJBMfVL14RlnGNKOTfMdY6rHAzMbX_jI8fbf0r-nnK5ZA4va-yQgLLQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >geeksforgeeks.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGT4XKDPBHDvMgfl5id4JoNkJDnmbdwu5JKZAyJfEBspD95ItBS0s6d2YIZ9ezw4IExBejsPMKSvcjKM7g0hHvcozquHVbI_9COgAFrqD2ObHvwmZrNyo8auqi1RALLwpWjNqr0JtauEiCzALTbyP6BgA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >google.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE59EoceApYL3wjE2-0zrKgB6Np_NOSVu5li2gexVozvTK2U9DbIf_VZ1QJ3SLYYTSuJ4YpMUSh5YCNwK5kDVzHDO_HtVkrD_aCLiyPJ4dTonrA4RHvL02agFHGf3kloIyFwgttPCtWOqv95j9DUvPAjTP_PPGakA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >google.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGvzhRhPGpf1lYr69ZIqv-Bu7CVWuF3iYDJ1Yos9CkwgPsxkY5Zx1qiT71MdJCGpyI8tPhwcVdc3ClKw6g6HHdE_qnKXB7IJlXE4D9cMp3xr0DBu0vlPIpdMpz8tjoRKSaAASHycsOK7jZUp5wyhc="
+            target="_blank"
+            rel="noopener noreferrer"
+            >amazon.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVZF4jrv72m5iYbIF6HmJMF-_7rt0phioyeAf1-8miIY3L_zsy0f0hdzZto0-4MtyvWiySvE26wJSts82drEp1Xx_-gNoDFjDA_3MAp2cMSDNG69PHOMjgLpNfPDFIqebuU22pj00EMKjyicT3egd8LPV6AUjRkl9IhixIbjjAdS7vBOQTX3hqMlkJ2Ww="
+            target="_blank"
+            rel="noopener noreferrer"
+            >microsoft.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

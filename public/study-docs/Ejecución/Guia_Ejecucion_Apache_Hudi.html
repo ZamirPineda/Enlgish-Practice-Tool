@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Apache Hudi</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Apache Hudi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,78 +52,186 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Apache Hudi</h1>
-    <h2>Explicación</h2><p>Esta guía le permitirá configurar un entorno local básico de Apache Hudi utilizando Spark y MinIO como almacenamiento de objetos, todo orquestado con Docker Compose. Apache Hudi es una plataforma de data lake que facilita la gestión de datos a escala, ofreciendo capacidades de transacciones <span class="tooltip" data-tooltip-text="Un acrónimo (Atomicidad, Consistencia, Aislamiento, Durabilidad) que describe las propiedades de una transacción de base de datos confiable. Garantiza que las transacciones sean predecibles y seguras, incluso en caso de errores.">ACID</span>, upserts, y deletes sobre formatos de archivo como Parquet o ORC.</p><p>La configuración incluye:</p><ul><li>  <strong>MinIO</strong>: Un servicio de almacenamiento de objetos compatible con S3, que actuará como nuestro data lake.</li><li>  <strong>Apache Spark</strong>: Un motor de procesamiento de datos distribuido, con una imagen de Docker personalizada que incluye las bibliotecas de Hudi necesarias para interactuar con él.</li></ul><p>Los pasos a seguir son:</p><p>1.  Guarde los contenidos proporcionados en los archivos <code>docker-compose.yml</code>, <code>Dockerfile.spark</code> y <code>hudi_example.py</code> en un mismo directorio.</p><p>2.  Construya la imagen de Spark personalizada y levante los servicios con <code>docker-compose up -d --build</code>.</p><p>3.  Una vez que los servicios estén en ejecución, ejecute el script de ejemplo de Hudi usando <code>spark-submit</code> dentro del contenedor <code>spark-master</code>.</p><p>4.  El script <code>hudi_example.py</code> realizará las siguientes operaciones:</p><ul><li>   *   Creará un DataFrame de muestra.</li><li>   *   Escribirá los datos en una tabla Hudi (<code>hudi_cow_table</code>) en MinIO en modo 'Copy-on-Write' (CoW).</li><li>   *   Realizará una operación de 'upsert' (actualizar/insertar) en la tabla.</li><li>   *   Leerá los datos de la tabla Hudi para verificar las operaciones.</li></ul><p>Una vez finalizado, puede inspeccionar los datos generados en el bucket de MinIO (accesible en <code>http://localhost:9000</code> con <code>minioadmin</code>/<code>minioadmin</code>).</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d --build && docker-compose exec spark-master spark-submit --master spark://spark-master:7077 --driver-memory 2G --executor-memory 2G --executor-cores 1 --conf "spark.serializer=org.apache.spark.serializer.KryoSerializer" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.hudi.catalog.HoodieCatalog" --conf "spark.hadoop.fs.s3a.endpoint=http://minio:9000" --conf "spark.hadoop.fs.s3a.access.key=minioadmin" --conf "spark.hadoop.fs.s3a.secret.key=minioadmin" --conf "spark.hadoop.fs.s3a.path.style.access=true" --conf "spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem" /opt/spark-apps/hudi_example.py</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.spark</h3><pre><code>FROM apache/spark:3.3.0
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Apache Hudi</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía le permitirá configurar un entorno local básico de Apache Hudi
+        utilizando Spark y MinIO como almacenamiento de objetos, todo orquestado
+        con Docker Compose. Apache Hudi es una plataforma de data lake que
+        facilita la gestión de datos a escala, ofreciendo capacidades de
+        transacciones
+        <span
+          class="tooltip"
+          data-tooltip-text="Un acrónimo (Atomicidad, Consistencia, Aislamiento, Durabilidad) que describe las propiedades de una transacción de base de datos confiable. Garantiza que las transacciones sean predecibles y seguras, incluso en caso de errores."
+          >ACID</span
+        >, upserts, y deletes sobre formatos de archivo como Parquet o ORC.
+      </p>
+      <p>La configuración incluye:</p>
+      <ul>
+        <li>
+          <strong>MinIO</strong>: Un servicio de almacenamiento de objetos
+          compatible con S3, que actuará como nuestro data lake.
+        </li>
+        <li>
+          <strong>Apache Spark</strong>: Un motor de procesamiento de datos
+          distribuido, con una imagen de Docker personalizada que incluye las
+          bibliotecas de Hudi necesarias para interactuar con él.
+        </li>
+      </ul>
+      <p>Los pasos a seguir son:</p>
+      <p>
+        1. Guarde los contenidos proporcionados en los archivos
+        <code>docker-compose.yml</code>, <code>Dockerfile.spark</code> y
+        <code>hudi_example.py</code> en un mismo directorio.
+      </p>
+      <p>
+        2. Construya la imagen de Spark personalizada y levante los servicios
+        con <code>docker-compose up -d --build</code>.
+      </p>
+      <p>
+        3. Una vez que los servicios estén en ejecución, ejecute el script de
+        ejemplo de Hudi usando <code>spark-submit</code> dentro del contenedor
+        <code>spark-master</code>.
+      </p>
+      <p>
+        4. El script <code>hudi_example.py</code> realizará las siguientes
+        operaciones:
+      </p>
+      <ul>
+        <li>* Creará un DataFrame de muestra.</li>
+        <li>
+          * Escribirá los datos en una tabla Hudi (<code>hudi_cow_table</code>)
+          en MinIO en modo 'Copy-on-Write' (CoW).
+        </li>
+        <li>
+          * Realizará una operación de 'upsert' (actualizar/insertar) en la
+          tabla.
+        </li>
+        <li>
+          * Leerá los datos de la tabla Hudi para verificar las operaciones.
+        </li>
+      </ul>
+      <p>
+        Una vez finalizado, puede inspeccionar los datos generados en el bucket
+        de MinIO (accesible en <code>http://localhost:9000</code> con
+        <code>minioadmin</code>/<code>minioadmin</code>).
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d --build && docker-compose exec spark-master spark-submit --master spark://spark-master:7077 --driver-memory 2G --executor-memory 2G --executor-cores 1 --conf "spark.serializer=org.apache.spark.serializer.KryoSerializer" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.hudi.catalog.HoodieCatalog" --conf "spark.hadoop.fs.s3a.endpoint=http://minio:9000" --conf "spark.hadoop.fs.s3a.access.key=minioadmin" --conf "spark.hadoop.fs.s3a.secret.key=minioadmin" --conf "spark.hadoop.fs.s3a.path.style.access=true" --conf "spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem" /opt/spark-apps/hudi_example.py</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile.spark</h3>
+      <pre><code>FROM apache/spark:3.3.0
 
 USER root
 
@@ -148,7 +258,9 @@ ENV SPARK_DIST_CLASSPATH="${SPARK_DIST_CLASSPATH}:${HUDI_SPARK_JARS_DIR}/*"
 RUN mkdir -p /opt/spark-apps
 WORKDIR /opt/spark-apps
 
-USER spark</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+USER spark</code></pre>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 
 services:
   minio:
@@ -212,7 +324,9 @@ services:
     depends_on:
       spark-master:
         condition: service_started
-</code></pre><h3>hudi_example.py</h3><pre><code>import sys
+</code></pre>
+      <h3>hudi_example.py</h3>
+      <pre><code>import sys
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import lit
 import time
@@ -311,8 +425,90 @@ read_data().sort("uuid").show(truncate=False)
 
 print("\nEjemplo de Apache Hudi completado exitosamente.")
 
-spark.stop()</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHqJ578y_W-oSscgfpfNVBHaoPWn4X5Xwi-zikVyG34yD8FnUPKW_xOw3YcjJRtQ6ER6n2Wr1r4FVUb7MYRFgL9GwiCaVrs2Qc2JIcnPuFXQgn_AUEBXI8uKtSCT4gQ0knxQ37_38vniqLOj52ft6M_Ey2ZppZwnduEkMgvXOgD0G4e" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFO3fVJ-KedzOoxu-Bvay8mGgAH-2C-eDP8r0wjKwGeHhWsIqlOu-eG-gPyO0Jt5lGBwZiOQsdDCye9V-lMXDSjB1nunw-b4gex5P2_gZ_G2TPx_J8XTYuka1RPGr3t0XgaoZnbMtEkr_ZKXHHLtt0=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEZlrwriGoTDeGAwjpMCFdTR-ubCJuBpII36uGtJqt_qsDZ_bTUG-2AnnpsYpICAGZuBpBJLnudVE9i3VFIkq942FCTyiWQcLGf-1S4q8XRbL0uJsWcXhtk2whgm2vT6hKon7IuNr1TNPec3OQQ3t0=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQzo9O0HUKwWmX3I13BbaY92-EBw7-2cJaohbqlzuML3m1eGvjhwnQCuRGVZCwtZ1YDOxRnTeYZIw5mz_GSGkuISlUNkM5azsoTfuqx8btL6HtKF9eGa_q3dgPbcbtUSfSTD0Lq9mL5yE=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXtTXqWEw8EopzxxI-K2ZRKs5ZzEknyQcCnFSESewvSY3DML8YNprNpUs--CF10EVntYDqRjQTSYZoZ7B-xs8gPqDFo9d2t6Z25KYF9XAaCrUqVHrwK_wp" target="_blank" rel="noopener noreferrer">github.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEXX_rjCk57qzRXPCAXxdoUuOE1rCyHQKEABZf9YvguizmhVNSBD8iIad7PxYAHRnWcAgMlIh3BgZTZwjH_XKQbs596FA5z-n1Qtna1_01dkp7Fz3mLDSX7rU9WvFKlBF_OwiMH-4ruOhbH3pP7jGE=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzy3UaeQaa5q9zqqfIffrMHFbwBup1hSP-Dl1_geNuD0ZCPqCPYpKYP2NWLQR2BsI8jRUGMVxyXpAemYHD7_mFIhRuQ6Sz5Ucgf0mLc7-stXzDUYj0-yTDCB4ZcvfPlsmQjoxycGYo6xqdn4tgn1qbSmpZSUM4J-dvv5Ig4ZZo8Ml45A==" target="_blank" rel="noopener noreferrer">dwh.co.in</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgAN8VhkrmX72l3G8fA9yM1TYn47mkjN9kaLCDB7xyC_o3uMYVW-kNyNqUoOfmip3tK7AlHIradbt-pqAV40Ur5wFv95ZgEcd0xW4T5MGq3Xks5DVKaO0VZV3-3vloJLiGJKYsobQZitsPgfOAbXGIF1pzLo6Bwk8sxRrTtkKdW3K2H1MGMChVkZZE5zDB5CPiSI8rRrGIV5A7Hx-RyN7RQITNtKk-V-MEJ-4=" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEhKW6bsaPmb8o1uH4CtVepI2SK-1AiY-kYXkasCratplz_W8fVdq6AJIPhCQJ27gm9HIJ1ZFs4QOuKwmjfRY3TAq30GDAA-Gyvq5Ih_T8wyDEDgbTQgieHaW2fHuqe9RASnnTJ0g==" target="_blank" rel="noopener noreferrer">youtube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGIskx4XPzUOkeu2nePadJbkJ1DabWiH9VnMFJR9P92VwZUzd0mQp3p7oyNAhxL3koPUG--cHyRnOayacyUMtvj7eVqxncnJztm5cmfC8Du0QEPaY24qSqpyqf8DKnOyGjuUqSzFCYOFUrAX5mArQKhFlwsJ5v9WkigvfKVVFJQPA08Vhs=" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
-  </div>
-</body>
+spark.stop()</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHqJ578y_W-oSscgfpfNVBHaoPWn4X5Xwi-zikVyG34yD8FnUPKW_xOw3YcjJRtQ6ER6n2Wr1r4FVUb7MYRFgL9GwiCaVrs2Qc2JIcnPuFXQgn_AUEBXI8uKtSCT4gQ0knxQ37_38vniqLOj52ft6M_Ey2ZppZwnduEkMgvXOgD0G4e"
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFO3fVJ-KedzOoxu-Bvay8mGgAH-2C-eDP8r0wjKwGeHhWsIqlOu-eG-gPyO0Jt5lGBwZiOQsdDCye9V-lMXDSjB1nunw-b4gex5P2_gZ_G2TPx_J8XTYuka1RPGr3t0XgaoZnbMtEkr_ZKXHHLtt0="
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEZlrwriGoTDeGAwjpMCFdTR-ubCJuBpII36uGtJqt_qsDZ_bTUG-2AnnpsYpICAGZuBpBJLnudVE9i3VFIkq942FCTyiWQcLGf-1S4q8XRbL0uJsWcXhtk2whgm2vT6hKon7IuNr1TNPec3OQQ3t0="
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQzo9O0HUKwWmX3I13BbaY92-EBw7-2cJaohbqlzuML3m1eGvjhwnQCuRGVZCwtZ1YDOxRnTeYZIw5mz_GSGkuISlUNkM5azsoTfuqx8btL6HtKF9eGa_q3dgPbcbtUSfSTD0Lq9mL5yE="
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXtTXqWEw8EopzxxI-K2ZRKs5ZzEknyQcCnFSESewvSY3DML8YNprNpUs--CF10EVntYDqRjQTSYZoZ7B-xs8gPqDFo9d2t6Z25KYF9XAaCrUqVHrwK_wp"
+            target="_blank"
+            rel="noopener noreferrer"
+            >github.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEXX_rjCk57qzRXPCAXxdoUuOE1rCyHQKEABZf9YvguizmhVNSBD8iIad7PxYAHRnWcAgMlIh3BgZTZwjH_XKQbs596FA5z-n1Qtna1_01dkp7Fz3mLDSX7rU9WvFKlBF_OwiMH-4ruOhbH3pP7jGE="
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzy3UaeQaa5q9zqqfIffrMHFbwBup1hSP-Dl1_geNuD0ZCPqCPYpKYP2NWLQR2BsI8jRUGMVxyXpAemYHD7_mFIhRuQ6Sz5Ucgf0mLc7-stXzDUYj0-yTDCB4ZcvfPlsmQjoxycGYo6xqdn4tgn1qbSmpZSUM4J-dvv5Ig4ZZo8Ml45A=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >dwh.co.in</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgAN8VhkrmX72l3G8fA9yM1TYn47mkjN9kaLCDB7xyC_o3uMYVW-kNyNqUoOfmip3tK7AlHIradbt-pqAV40Ur5wFv95ZgEcd0xW4T5MGq3Xks5DVKaO0VZV3-3vloJLiGJKYsobQZitsPgfOAbXGIF1pzLo6Bwk8sxRrTtkKdW3K2H1MGMChVkZZE5zDB5CPiSI8rRrGIV5A7Hx-RyN7RQITNtKk-V-MEJ-4="
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEhKW6bsaPmb8o1uH4CtVepI2SK-1AiY-kYXkasCratplz_W8fVdq6AJIPhCQJ27gm9HIJ1ZFs4QOuKwmjfRY3TAq30GDAA-Gyvq5Ih_T8wyDEDgbTQgieHaW2fHuqe9RASnnTJ0g=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >youtube.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGIskx4XPzUOkeu2nePadJbkJ1DabWiH9VnMFJR9P92VwZUzd0mQp3p7oyNAhxL3koPUG--cHyRnOayacyUMtvj7eVqxncnJztm5cmfC8Du0QEPaY24qSqpyqf8DKnOyGjuUqSzFCYOFUrAX5mArQKhFlwsJ5v9WkigvfKVVFJQPA08Vhs="
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

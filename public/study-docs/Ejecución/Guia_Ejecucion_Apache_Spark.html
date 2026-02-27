@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Apache Spark</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Apache Spark</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,80 +52,192 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Apache Spark</h1>
-    <h2>Explicación</h2><p>Esta configuración proporciona una instancia básica de Apache Spark con un maestro (master), dos trabajadores (<span class="tooltip" data-tooltip-text="Un proceso o hilo de ejecución que realiza una tarea específica, comúnmente consumiendo y procesando mensajes de una cola de trabajo de forma independiente.">workers</span>) y un servidor de historial (history server) utilizando Docker Compose. La idea es que puedas levantar rápidamente un entorno Spark distribuido para desarrollo o pruebas locales.</p><ul><li>  <strong>Dockerfile</strong>: Define la imagen base de Spark, instalando OpenJDK y Spark binario. Esta imagen se utiliza tanto para el maestro como para los trabajadores y el servidor de historial.</li><li>  <strong>docker-compose.yml</strong>: Orquesta los servicios:</li><li>   *   <code>spark-master</code>: El nodo principal de Spark que coordina los recursos y las aplicaciones. Su interfaz de usuario estará disponible en <code>http://localhost:8080</code>.</li><li>   *   <code>spark-worker</code> (y <code>spark-worker-2</code>): Nodos que ejecutan las tareas enviadas por el maestro. Sus interfaces de usuario estarán disponibles en <code>http://localhost:8081</code> y <code>http://localhost:8082</code> respectivamente.</li><li>   *   <code>spark-history</code>: Un servidor para ver la línea de tiempo y métricas de aplicaciones Spark completadas, accesible en <code>http://localhost:18080</code>. Requiere un volumen para almacenar los logs de eventos.</li></ul><p><strong>Pasos para ejecutar:</strong></p><p>1.  Asegúrate de tener Docker o Podman y Docker Compose (o Podman Compose) instalados.</p><p>2.  Guarda el contenido del Dockerfile como <code>Dockerfile</code> en el directorio raíz.</p><p>3.  Guarda el contenido del docker-compose.yml como <code>docker-compose.yml</code> en el mismo directorio.</p><p>4.  Ejecuta el comando <code>docker-compose up -d</code>.</p><p><strong>Verificar el estado:</strong></p><ul><li>  Abre tu navegador y navega a <code>http://localhost:8080</code> para ver la interfaz de usuario del Spark Master. Deberías ver los dos trabajadores registrados.</li><li>  Para interactuar con el clúster, puedes usar <code>spark-shell</code> o <code>spark-submit</code> desde un nuevo contenedor. Por ejemplo, para lanzar un <code>spark-shell</code> que se conecte al clúster:</li></ul><pre><code>    docker exec -it spark-master /bin/bash
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Apache Spark</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta configuración proporciona una instancia básica de Apache Spark con
+        un maestro (master), dos trabajadores (<span
+          class="tooltip"
+          data-tooltip-text="Un proceso o hilo de ejecución que realiza una tarea específica, comúnmente consumiendo y procesando mensajes de una cola de trabajo de forma independiente."
+          >workers</span
+        >) y un servidor de historial (history server) utilizando Docker
+        Compose. La idea es que puedas levantar rápidamente un entorno Spark
+        distribuido para desarrollo o pruebas locales.
+      </p>
+      <ul>
+        <li>
+          <strong>Dockerfile</strong>: Define la imagen base de Spark,
+          instalando OpenJDK y Spark binario. Esta imagen se utiliza tanto para
+          el maestro como para los trabajadores y el servidor de historial.
+        </li>
+        <li><strong>docker-compose.yml</strong>: Orquesta los servicios:</li>
+        <li>
+          * <code>spark-master</code>: El nodo principal de Spark que coordina
+          los recursos y las aplicaciones. Su interfaz de usuario estará
+          disponible en <code>http://localhost:8080</code>.
+        </li>
+        <li>
+          * <code>spark-worker</code> (y <code>spark-worker-2</code>): Nodos que
+          ejecutan las tareas enviadas por el maestro. Sus interfaces de usuario
+          estarán disponibles en <code>http://localhost:8081</code> y
+          <code>http://localhost:8082</code> respectivamente.
+        </li>
+        <li>
+          * <code>spark-history</code>: Un servidor para ver la línea de tiempo
+          y métricas de aplicaciones Spark completadas, accesible en
+          <code>http://localhost:18080</code>. Requiere un volumen para
+          almacenar los logs de eventos.
+        </li>
+      </ul>
+      <p><strong>Pasos para ejecutar:</strong></p>
+      <p>
+        1. Asegúrate de tener Docker o Podman y Docker Compose (o Podman
+        Compose) instalados.
+      </p>
+      <p>
+        2. Guarda el contenido del Dockerfile como <code>Dockerfile</code> en el
+        directorio raíz.
+      </p>
+      <p>
+        3. Guarda el contenido del docker-compose.yml como
+        <code>docker-compose.yml</code> en el mismo directorio.
+      </p>
+      <p>4. Ejecuta el comando <code>docker-compose up -d</code>.</p>
+      <p><strong>Verificar el estado:</strong></p>
+      <ul>
+        <li>
+          Abre tu navegador y navega a <code>http://localhost:8080</code> para
+          ver la interfaz de usuario del Spark Master. Deberías ver los dos
+          trabajadores registrados.
+        </li>
+        <li>
+          Para interactuar con el clúster, puedes usar
+          <code>spark-shell</code> o <code>spark-submit</code> desde un nuevo
+          contenedor. Por ejemplo, para lanzar un <code>spark-shell</code> que
+          se conecte al clúster:
+        </li>
+      </ul>
+      <pre><code>    docker exec -it spark-master /bin/bash
     # Dentro del contenedor spark-master
-    spark-shell --master spark://spark-master:7077</code></pre><ul><li>  Para ejecutar una aplicación de ejemplo (como el SparkPi) y que sus logs sean visibles en el History Server:</li></ul><pre><code>    docker exec -it spark-master /bin/bash
+    spark-shell --master spark://spark-master:7077</code></pre>
+      <ul>
+        <li>
+          Para ejecutar una aplicación de ejemplo (como el SparkPi) y que sus
+          logs sean visibles en el History Server:
+        </li>
+      </ul>
+      <pre><code>    docker exec -it spark-master /bin/bash
     # Dentro del contenedor spark-master, ejecuta lo siguiente para que los logs de la aplicación se generen y sean visibles en el History Server:
     # Nota: Es crucial usar 'file:///' para las rutas de logs locales.
     bin/spark-submit \
@@ -131,7 +245,16 @@
       --conf spark.eventLog.enabled=true \
       --conf spark.eventLog.dir=file:///tmp/spark-events \
       --class org.apache.spark.examples.SparkPi \
-      "${SPARK_HOME}/examples/jars/spark-examples_2.12-3.5.1.jar" 10</code></pre><p>    Después de que la aplicación finalice, podrás verla en el History Server (<code>http://localhost:18080</code>).</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code>FROM openjdk:11-jre-slim
+      "${SPARK_HOME}/examples/jars/spark-examples_2.12-3.5.1.jar" 10</code></pre>
+      <p>
+        Después de que la aplicación finalice, podrás verla en el History Server
+        (<code>http://localhost:18080</code>).
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile</h3>
+      <pre><code>FROM openjdk:11-jre-slim
 
 # Descargar y configurar Apache Spark
 ARG SPARK_VERSION=3.5.1
@@ -149,7 +272,9 @@ RUN mv /opt/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} ${SPARK_HOME}
 ENV PATH="${SPARK_HOME}/bin:${SPARK_HOME}/sbin:${PATH}"
 
 # Exponer puertos que Spark usa (Master UI y RPC)
-EXPOSE 8080 7077</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+EXPOSE 8080 7077</code></pre>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 
 services:
   spark-master:
@@ -215,8 +340,66 @@ services:
     command: bin/spark-class org.apache.spark.deploy.history.HistoryServer
 
 volumes:
-  spark-events: # Definición del volumen para los logs del historial</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQECDdNqLop_XY2rYRhusCyOdBfGkSFjL0VXkoIzpVMny9z10aaG7DX_yxTK0yYJuaqTxDVQ_UL93erIo6MlxBtIO0ydoESn-u8r9u70IUdC2tJaxH_0z9fXdGvy3UNHLp2scZLaeZz-R_cxZ-R94Ewj" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQWh0MaThc21e3jL4z9uBiji5Yde8uH2iIGbCpkVFE52x-dnb5HkWSL9rTtJ60sOZ4W6bqtSIbv0ncm8oLp3K4Ngs8-VrtCRluCShFhBvkKirNbDTeLxm-w6HbTAsRxAufcBqTHi4=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAMoMYL-opVIdFrk4m_jwPoHbvBKWozoTvQ76WDab5TBLX2XaoMSGHdbXtMYg7XtjP8yyyP68Kx2pToO_rnu6aqipatutKgDU5zOdPQ7krcBKlTz2pjsq4i31PfTNk4V0=" target="_blank" rel="noopener noreferrer">apache.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEo2pbVguruG_CWuYvFIdWFabxn9sf4pXh525cTAKvsVuK-xbFnAxFGs7D0O6oLffm1QidL-MsUMZHuqI2wDCP0mY1SpVJSe4c0SdyoBg9PTuMXzqBV26sZOMo=" target="_blank" rel="noopener noreferrer">github.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEdc4MG0tw1a9qOMmuYT7mERt88qmd2g30kquojMckcYFJcdv-pEZmEZbAhUbAzRa_puw8fEm2PLHLVWvqHEfRJLNtq4ipba4YgUyCxBQW8THlZ5n1ECWMD7NYgCZDQpYEPYpIRrJudrTeGy76P31R53h9SKdRoKUV_buT1mzhn1IXKdC_N8Haytg==" target="_blank" rel="noopener noreferrer">databricks.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEXVzlY8sG1wu1XlOrXntAxR0FqDFEinKBdtyWSMH_4OOQlGJmTAauTxe9bYRSXyfCJvD63ABihoQy5AbuJbUdziwjT2unGutMQLMy_avHOdcnqqCXvbJt959hpHeD64we61evf0qN2-llmiEdR0aCZmgqQHgNrPUvL_cNWWC0JFdIKG2OrhkX63x0onKEnI3_0kQ==" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHwlJu7kH57izxVfNQmfWnC1-YiXZ4vc9d2AhZfHF5X2t9cxZAxN022cEe20kuGN9SdSioiJDINzX4zIT60nA-S3c22YUDsucMGgiRmqscUBHf2aPre5hgYW5QMqKMDk_gPN9Ih9Fp9AkVPQov11LkmXiIhaVSZJKYv6e6uR91Ffvze9PU7I0ZXt8ytkG3lawRtzwAl9tF2k-67iSyDm-KGrkSbIknaBt8lu4wrU8XNc9i1obbKeLMx6s9KD8rLtA==" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
-  </div>
-</body>
+  spark-events: # Definición del volumen para los logs del historial</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQECDdNqLop_XY2rYRhusCyOdBfGkSFjL0VXkoIzpVMny9z10aaG7DX_yxTK0yYJuaqTxDVQ_UL93erIo6MlxBtIO0ydoESn-u8r9u70IUdC2tJaxH_0z9fXdGvy3UNHLp2scZLaeZz-R_cxZ-R94Ewj"
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQWh0MaThc21e3jL4z9uBiji5Yde8uH2iIGbCpkVFE52x-dnb5HkWSL9rTtJ60sOZ4W6bqtSIbv0ncm8oLp3K4Ngs8-VrtCRluCShFhBvkKirNbDTeLxm-w6HbTAsRxAufcBqTHi4="
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAMoMYL-opVIdFrk4m_jwPoHbvBKWozoTvQ76WDab5TBLX2XaoMSGHdbXtMYg7XtjP8yyyP68Kx2pToO_rnu6aqipatutKgDU5zOdPQ7krcBKlTz2pjsq4i31PfTNk4V0="
+            target="_blank"
+            rel="noopener noreferrer"
+            >apache.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEo2pbVguruG_CWuYvFIdWFabxn9sf4pXh525cTAKvsVuK-xbFnAxFGs7D0O6oLffm1QidL-MsUMZHuqI2wDCP0mY1SpVJSe4c0SdyoBg9PTuMXzqBV26sZOMo="
+            target="_blank"
+            rel="noopener noreferrer"
+            >github.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEdc4MG0tw1a9qOMmuYT7mERt88qmd2g30kquojMckcYFJcdv-pEZmEZbAhUbAzRa_puw8fEm2PLHLVWvqHEfRJLNtq4ipba4YgUyCxBQW8THlZ5n1ECWMD7NYgCZDQpYEPYpIRrJudrTeGy76P31R53h9SKdRoKUV_buT1mzhn1IXKdC_N8Haytg=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >databricks.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEXVzlY8sG1wu1XlOrXntAxR0FqDFEinKBdtyWSMH_4OOQlGJmTAauTxe9bYRSXyfCJvD63ABihoQy5AbuJbUdziwjT2unGutMQLMy_avHOdcnqqCXvbJt959hpHeD64we61evf0qN2-llmiEdR0aCZmgqQHgNrPUvL_cNWWC0JFdIKG2OrhkX63x0onKEnI3_0kQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHwlJu7kH57izxVfNQmfWnC1-YiXZ4vc9d2AhZfHF5X2t9cxZAxN022cEe20kuGN9SdSioiJDINzX4zIT60nA-S3c22YUDsucMGgiRmqscUBHf2aPre5hgYW5QMqKMDk_gPN9Ih9Fp9AkVPQov11LkmXiIhaVSZJKYv6e6uR91Ffvze9PU7I0ZXt8ytkG3lawRtzwAl9tF2k-67iSyDm-KGrkSbIknaBt8lu4wrU8XNc9i1obbKeLMx6s9KD8rLtA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

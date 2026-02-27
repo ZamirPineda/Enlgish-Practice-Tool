@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Kong</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Kong</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,78 +52,164 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Kong</h1>
-    <h2>Explicación</h2><p>Esta guía te permitirá levantar una instancia básica de Kong Gateway con PostgreSQL como base de datos usando <code>docker-compose</code>. Kong es un <span class="tooltip" data-tooltip-text="Un servidor que actúa como punto de entrada único para un grupo de microservicios. Agrega las respuestas de varios servicios y las devuelve al cliente, simplificando la comunicación del lado del cliente.">API Gateway</span> y una plataforma de gestión de microservicios que te permite gestionar, autenticar y monitorizar tus APIs y microservicios.nn<strong>Pasos para la configuración y ejecución:</strong>nn1.  <em></em>Guarda el archivo <code>docker-compose.yml</code><em></em>: Crea un archivo llamado <code>docker-compose.yml</code> en un directorio de tu elección y copia el contenido proporcionado en la sección <code>supportFiles</code>.nn2.  <strong>Inicia los servicios</strong>: Abre tu terminal en el mismo directorio donde guardaste <code>docker-compose.yml</code> y ejecuta el comando <code>docker-compose up -d</code>. Esto iniciará los contenedores de PostgreSQL y Kong en segundo plano.nn3.  <strong>Espera a que los servicios estén listos</strong>: Los servicios de <code>kong-database</code> y <code>kong-gateway</code> tienen <code>healthchecks</code> configurados, lo que significa que <code>docker-compose</code> esperará a que PostgreSQL esté listo antes de iniciar Kong, y a que Kong esté listo antes de considerarlo saludable. Esto puede tomar unos segundos.nn4.  <strong>Inicializa la base de datos de Kong</strong>: Una vez que los contenedores estén funcionando, necesitas ejecutar las migraciones de la base de datos de Kong. Ejecuta el siguiente comando para inicializar el esquema de la base de datos dentro del contenedor de Kong:n    <code>docker-compose exec kong-gateway kong migrations bootstrap</code>nn5.  <strong>Verifica la instalación</strong>:n    *   Puedes acceder a la <strong>Admin API de Kong</strong> en <code>http://localhost:8001</code>.n    *   El <strong>Proxy de Kong</strong> (donde tus APIs estarán expuestas) estará disponible en <code>http://localhost:8000</code> para HTTP y <code>https://localhost:8443</code> para HTTPS.nnPara detener los servicios, simplemente ejecuta <code>docker-compose down</code> en el mismo directorio.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: "3.9"
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Kong</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía te permitirá levantar una instancia básica de Kong Gateway con
+        PostgreSQL como base de datos usando <code>docker-compose</code>. Kong
+        es un
+        <span
+          class="tooltip"
+          data-tooltip-text="Un servidor que actúa como punto de entrada único para un grupo de microservicios. Agrega las respuestas de varios servicios y las devuelve al cliente, simplificando la comunicación del lado del cliente."
+          >API Gateway</span
+        >
+        y una plataforma de gestión de microservicios que te permite gestionar,
+        autenticar y monitorizar tus APIs y microservicios.nn<strong
+          >Pasos para la configuración y ejecución:</strong
+        >nn1. <em></em>Guarda el archivo <code>docker-compose.yml</code
+        ><em></em>: Crea un archivo llamado <code>docker-compose.yml</code> en
+        un directorio de tu elección y copia el contenido proporcionado en la
+        sección <code>supportFiles</code>.nn2.
+        <strong>Inicia los servicios</strong>: Abre tu terminal en el mismo
+        directorio donde guardaste <code>docker-compose.yml</code> y ejecuta el
+        comando <code>docker-compose up -d</code>. Esto iniciará los
+        contenedores de PostgreSQL y Kong en segundo plano.nn3.
+        <strong>Espera a que los servicios estén listos</strong>: Los servicios
+        de <code>kong-database</code> y <code>kong-gateway</code> tienen
+        <code>healthchecks</code> configurados, lo que significa que
+        <code>docker-compose</code> esperará a que PostgreSQL esté listo antes
+        de iniciar Kong, y a que Kong esté listo antes de considerarlo
+        saludable. Esto puede tomar unos segundos.nn4.
+        <strong>Inicializa la base de datos de Kong</strong>: Una vez que los
+        contenedores estén funcionando, necesitas ejecutar las migraciones de la
+        base de datos de Kong. Ejecuta el siguiente comando para inicializar el
+        esquema de la base de datos dentro del contenedor de Kong:n
+        <code>docker-compose exec kong-gateway kong migrations bootstrap</code
+        >nn5. <strong>Verifica la instalación</strong>:n * Puedes acceder a la
+        <strong>Admin API de Kong</strong> en
+        <code>http://localhost:8001</code>.n * El
+        <strong>Proxy de Kong</strong> (donde tus APIs estarán expuestas) estará
+        disponible en <code>http://localhost:8000</code> para HTTP y
+        <code>https://localhost:8443</code> para HTTPS.nnPara detener los
+        servicios, simplemente ejecuta <code>docker-compose down</code> en el
+        mismo directorio.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: "3.9"
 
 services:
   kong-database:
@@ -167,8 +255,50 @@ services:
       retries: 5
 
 volumes:
-  kong_data: # Define el volumen para la persistencia de datos de PostgreSQL</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGK1DI7a_C2ZoceAsXZlgVvCBbu-9k2LoXfu-s8Z8yla849iCh6CXMxgbHq5J2SasIkziG_wJ-nsLom1oZx2txVr4cUP2bburAmYDD49PjykFmCevELucOuxXctYqqQ6_ow1Oz2PmFhwS7r14w=" target="_blank" rel="noopener noreferrer">konghq.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE4-lD2peI-NsqKz8jLrUfciYGw88TX4cF3q-iADVJTlVh-kHAVyGgdpQizMkky6_9MRegVSyVHOHE5qgzc4QdREHO8XFkBm41URkWVMrmt5MXM2PTmXYQ=" target="_blank" rel="noopener noreferrer">github.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNZeHCrW_rbr28gkOqVNRvOHPkXJc9aSm-5kq41zZfnUUHsrgYEIbxxFeNpTZjmBmrQjWHTdkQzZcQ84NslI1B-wnff_4kOmtb__SeV4U5iT6pjTsEPsCDnyO6ybRxFBA_7orImFHmjN7Hk3mxxubkBfK7VNgCnWPafaoXfXyPlzMkNk53xkcPjPvY3RIQAWr3Ih5fEWulF1mf_O_BPOV_" target="_blank" rel="noopener noreferrer">apipark.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGw7Nar5OoWtHbKNKtq-M2TxamFZ3yWL9_5ag4BukYcZJQAazW7KxLdQQzgjqxXoGvXOQR2HTkUuR6BTT3CsJUi2WDzCucU1ywbwNKm3AE2U10x-NkszVcv1qMER2C6PwXEldK4hZ8SlnW-i0u6ek9b3GP61EpPOH8BLw==" target="_blank" rel="noopener noreferrer">bitnami.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG5QuJUohkJ86O4YglU9Ps-tFBPQuCQOlvqN27EgFyCor-b8fUwrxhQIy2UM9nz91nRBwZIFgABlfaCL0jssm7tmLOL39HnCXYX8ASXv6juUugfTDxpC9I_iWoqyskD9OM=" target="_blank" rel="noopener noreferrer">konghq.com</a></li></ul>
-  </div>
-</body>
+  kong_data: # Define el volumen para la persistencia de datos de PostgreSQL</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGK1DI7a_C2ZoceAsXZlgVvCBbu-9k2LoXfu-s8Z8yla849iCh6CXMxgbHq5J2SasIkziG_wJ-nsLom1oZx2txVr4cUP2bburAmYDD49PjykFmCevELucOuxXctYqqQ6_ow1Oz2PmFhwS7r14w="
+            target="_blank"
+            rel="noopener noreferrer"
+            >konghq.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE4-lD2peI-NsqKz8jLrUfciYGw88TX4cF3q-iADVJTlVh-kHAVyGgdpQizMkky6_9MRegVSyVHOHE5qgzc4QdREHO8XFkBm41URkWVMrmt5MXM2PTmXYQ="
+            target="_blank"
+            rel="noopener noreferrer"
+            >github.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNZeHCrW_rbr28gkOqVNRvOHPkXJc9aSm-5kq41zZfnUUHsrgYEIbxxFeNpTZjmBmrQjWHTdkQzZcQ84NslI1B-wnff_4kOmtb__SeV4U5iT6pjTsEPsCDnyO6ybRxFBA_7orImFHmjN7Hk3mxxubkBfK7VNgCnWPafaoXfXyPlzMkNk53xkcPjPvY3RIQAWr3Ih5fEWulF1mf_O_BPOV_"
+            target="_blank"
+            rel="noopener noreferrer"
+            >apipark.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGw7Nar5OoWtHbKNKtq-M2TxamFZ3yWL9_5ag4BukYcZJQAazW7KxLdQQzgjqxXoGvXOQR2HTkUuR6BTT3CsJUi2WDzCucU1ywbwNKm3AE2U10x-NkszVcv1qMER2C6PwXEldK4hZ8SlnW-i0u6ek9b3GP61EpPOH8BLw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >bitnami.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG5QuJUohkJ86O4YglU9Ps-tFBPQuCQOlvqN27EgFyCor-b8fUwrxhQIy2UM9nz91nRBwZIFgABlfaCL0jssm7tmLOL39HnCXYX8ASXv6juUugfTDxpC9I_iWoqyskD9OM="
+            target="_blank"
+            rel="noopener noreferrer"
+            >konghq.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

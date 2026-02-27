@@ -16,12 +16,12 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       <div className="relative">
         <input
           type="checkbox"
-          className="sr-only"
+          className="sr-only peer"
           checked={checked}
           onChange={(e) => onChange(e.target.checked)}
         />
         <div
-          className={`block w-10 h-6 rounded-full transition-colors ${
+          className={`block w-10 h-6 rounded-full transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-focus peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background ${
             checked ? "bg-accent" : "bg-surface-hover"
           }`}
         ></div>

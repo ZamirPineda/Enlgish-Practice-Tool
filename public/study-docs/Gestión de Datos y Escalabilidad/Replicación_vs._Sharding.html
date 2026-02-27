@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Replicación vs. Sharding</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Replicación vs. Sharding</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,104 +52,1553 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Replicación vs. Sharding</h1>
+      <p>
+        En la arquitectura de software, la
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          ></strong
+        >
+        y el
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+            >sharding</span
+          ></strong
+        >
+        son dos patrones fundamentales para escalar sistemas y mejorar su
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >, pero abordan problemas ligeramente diferentes y a menudo se utilizan
+        de forma complementaria.
+      </p>
+      <h2>Introducción</h2>
+      <p>
+        Tanto la
+        <span
+          class="tooltip"
+          data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+          >replicación</span
+        >
+        como el
+        <span
+          class="tooltip"
+          data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+          >sharding</span
+        >
+        son estrategias para distribuir datos y carga de trabajo entre múltiples
+        servidores. Su objetivo principal es mejorar la escalabilidad (capacidad
+        de manejar más usuarios o datos) y la
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >
+        (garantizar que el sistema siga funcionando incluso si un componente
+        falla).
+      </p>
+      <p>---</p>
+      <h2>
+        <span
+          class="tooltip"
+          data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+          >Replicación</span
+        >
+      </h2>
+      <h3>Concepto Principal</h3>
+      <p>
+        La
+        <span
+          class="tooltip"
+          data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+          >replicación</span
+        >
+        consiste en mantener múltiples copias idénticas del mismo conjunto de
+        datos en diferentes servidores. Estas copias pueden estar distribuidas
+        geográficamente o dentro del mismo centro de datos. El objetivo
+        principal es la redundancia, la alta
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >
+        y la escalabilidad de lectura.
+      </p>
+      <p>
+        Existen varios modelos, siendo el más común el de "maestro-esclavo" (o
+        primario-réplica), donde:
+      </p>
+      <ul>
+        <li>
+          <strong>Maestro/Primario:</strong> Maneja todas las operaciones de
+          escritura y propaga los cambios a las réplicas.
+        </li>
+        <li>
+          <strong>Esclavo/Réplica:</strong> Mantiene una copia de los datos del
+          maestro y suele manejar las operaciones de lectura.
+        </li>
+      </ul>
+      <h3>Ventajas</h3>
+      <ul>
+        <li>
+          <strong
+            >Alta
+            <span
+              class="tooltip"
+              data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+              >Disponibilidad</span
+            >
+            y
+            <span
+              class="tooltip"
+              data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen."
+              >Tolerancia a Fallos</span
+            >:</strong
+          >
+          Si el servidor primario falla, una de las réplicas puede ser promovida
+          a primario, minimizando el tiempo de inactividad del sistema.
+        </li>
+        <li>
+          <strong>Escalabilidad de Lectura:</strong> Las solicitudes de lectura
+          se pueden distribuir entre múltiples réplicas, lo que permite manejar
+          un mayor volumen de consultas sin sobrecargar el servidor primario.
+        </li>
+        <li>
+          <strong>Recuperación ante Desastres:</strong> Las copias de datos en
+          diferentes ubicaciones geográficas permiten recuperar el sistema en
+          caso de un desastre regional.
+        </li>
+        <li>
+          <strong>Actualizaciones y Mantenimiento sin Interrupción:</strong> Se
+          pueden realizar tareas de mantenimiento en las réplicas (o incluso en
+          el primario, con un
+          <span
+            class="tooltip"
+            data-tooltip-text="Un tipo de suscripción en sistemas de mensajería donde múltiples consumidores pueden conectarse, pero solo uno (el maestro) recibe mensajes. Si el maestro se desconecta, uno de los otros consumidores (en espera) toma el relevo."
+            >failover</span
+          >
+          planificado) sin que el servicio general se caiga.
+        </li>
+        <li>
+          <strong
+            >Mejora del Rendimiento de Lectura (<span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >):</strong
+          >
+          Al tener réplicas más cerca geográficamente de los usuarios, se puede
+          reducir la
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          de las consultas de lectura.
+        </li>
+      </ul>
+      <h3>Desventajas</h3>
+      <ul>
+        <li>
+          <strong>Escalabilidad de Escritura Limitada:</strong> Todas las
+          escrituras deben pasar por el servidor primario, lo que lo convierte
+          en un cuello de botella si la carga de escritura es muy alta.
+        </li>
+        <li>
+          <strong>Mayor Uso de Almacenamiento:</strong> Cada servidor almacena
+          una copia completa de los datos, lo que incrementa los costos de
+          almacenamiento a medida que el conjunto de datos crece.
+        </li>
+        <li>
+          <strong
+            >Complejidad de
+            <span
+              class="tooltip"
+              data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+              >Consistencia</span
+            >:</strong
+          >
+          Mantener la
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          entre el primario y las réplicas puede ser complejo.
+        </li>
+        <li>
+          *
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+              >Consistencia</span
+            >
+            Fuerte (Síncrona):</strong
+          >
+          Todas las réplicas deben confirmar la escritura antes de que se
+          considere completada, lo que aumenta la
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          de escritura.
+        </li>
+        <li>
+          *
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+              >Consistencia</span
+            >
+            Eventual (Asíncrona):</strong
+          >
+          El primario confirma la escritura inmediatamente y propaga los cambios
+          más tarde, lo que puede resultar en que las réplicas sirvan datos
+          ligeramente desactualizados por un corto período.
+        </li>
+        <li>
+          <strong>Fallo del Primario:</strong> Si el primario falla y no hay un
+          proceso automático de elección de un nuevo primario, puede haber una
+          interrupción del servicio.
+        </li>
+      </ul>
+      <p>---</p>
+      <h2>
+        <span
+          class="tooltip"
+          data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+          >Sharding</span
+        >
+      </h2>
+      <h3>Concepto Principal</h3>
+      <p>
+        El
+        <span
+          class="tooltip"
+          data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+          >sharding</span
+        >
+        (también conocido como particionamiento horizontal) consiste en dividir
+        un conjunto de datos muy grande en fragmentos más pequeños e
+        independientes, llamados "shards". Cada shard se almacena en un servidor
+        o grupo de servidores diferente. Cada servidor solo almacena una
+        <em>parte</em> del conjunto total de datos, pero esa parte es completa y
+        funcional por sí misma. El objetivo principal es la
+        <span
+          class="tooltip"
+          data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL."
+          >escalabilidad horizontal</span
+        >
+        para volúmenes de datos y cargas de escritura extremadamente grandes.
+      </p>
+      <p>
+        Para decidir qué datos van a qué shard, se utiliza una "clave de shard"
+        (o clave de partición).
+      </p>
+      <h3>Ventajas</h3>
+      <ul>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL."
+              >Escalabilidad Horizontal</span
+            >
+            Extrema (Escalabilidad de Escritura):</strong
+          >
+          Al distribuir los datos y las operaciones de escritura entre múltiples
+          servidores, el
+          <span
+            class="tooltip"
+            data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+            >sharding</span
+          >
+          permite manejar volúmenes de datos y cargas de escritura masivas que
+          un solo servidor no podría soportar.
+        </li>
+        <li>
+          <strong>Manejo de Grandes Volúmenes de Datos:</strong> Permite
+          almacenar conjuntos de datos que son demasiado grandes para caber en
+          un solo servidor, añadiendo simplemente más shards a medida que los
+          datos crecen.
+        </li>
+        <li>
+          <strong>Rendimiento Mejorado:</strong> Las consultas que solo afectan
+          a un shard son mucho más rápidas porque operan sobre un conjunto de
+          datos significativamente menor.
+        </li>
+        <li>
+          <strong>Aislamiento de Fallos:</strong> El fallo de un shard solo
+          afecta a la parte del sistema que depende de esos datos, no al sistema
+          completo.
+        </li>
+        <li>
+          <strong>Reducción de Costos:</strong> Se pueden utilizar servidores de
+          gama media en lugar de un único servidor muy potente y caro.
+        </li>
+      </ul>
+      <h3>Desventajas</h3>
+      <ul>
+        <li><strong>Mayor Complejidad Operacional:</strong></li>
+        <li>
+          * <strong>Diseño de la Clave de Shard:</strong> Elegir una buena clave
+          de shard es crucial. Una clave incorrecta puede llevar a "hot spots"
+          (un shard con mucha más carga que otros) o una distribución desigual
+          de los datos.
+        </li>
+        <li>
+          * <strong>Resharding (Rebalanceo):</strong> Redistribuir los datos
+          entre shards (por ejemplo, si uno se llena o se desequilibra) es una
+          operación muy compleja, costosa y a menudo disruptiva.
+        </li>
+        <li>
+          * <strong>Consultas entre Shards:</strong> Las consultas o uniones
+          (joins) que necesitan acceder a datos de múltiples shards son
+          difíciles de implementar, ineficientes o directamente imposibles.
+        </li>
+        <li>
+          * <strong>Transacciones Distribuidas:</strong> Mantener la atomicidad
+          y
+          <span
+            class="tooltip"
+            data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+            >consistencia</span
+          >
+          de las transacciones que afectan a múltiples shards es extremadamente
+          complejo.
+        </li>
+        <li>
+          <strong>Punto Único de Fallo Potencial (Coordinador):</strong> Si
+          existe un servicio central que gestiona la asignación de shards (un
+          "router de
+          <span
+            class="tooltip"
+            data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+            >sharding</span
+          >" o "coordinador"), este puede convertirse en un punto único de
+          fallo.
+        </li>
+        <li>
+          <strong>Mayor Complejidad de Desarrollo:</strong> Los desarrolladores
+          deben tener en cuenta la arquitectura de
+          <span
+            class="tooltip"
+            data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+            >sharding</span
+          >
+          al diseñar la aplicación.
+        </li>
+        <li>
+          <strong>Costo Inicial Más Alto:</strong> El diseño, la implementación
+          y la gestión de un sistema shardeado requiere más esfuerzo y recursos
+          que uno replicado.
+        </li>
+      </ul>
+      <p>---</p>
+      <h2>¿Cuándo Usar Cada Uno?</h2>
+      <ul>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+              >Replicación</span
+            >:</strong
+          >
+          Es ideal para sistemas con una
+          <strong>alta carga de lectura</strong> y donde la
+          <strong
+            >alta
+            <span
+              class="tooltip"
+              data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+              >disponibilidad</span
+            ></strong
+          >
+          y la
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen."
+              >tolerancia a fallos</span
+            ></strong
+          >
+          son críticas. El conjunto de datos total debe ser manejable por un
+          solo servidor (o un pequeño clúster de servidores primarios si se usa
+          multi-maestro).
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+              >Sharding</span
+            >:</strong
+          >
+          Es necesario cuando el
+          <strong>volumen de datos es demasiado grande</strong> para caber en un
+          solo servidor o cuando la
+          <strong>carga de escritura es tan alta</strong> que un único servidor
+          primario replicado no puede manejarla. Se utiliza para lograr una
+          escalabilidad de escritura masiva.
+        </li>
+      </ul>
+      <p>---</p>
+      <h2>Conclusión</h2>
+      <p>
+        La
+        <span
+          class="tooltip"
+          data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+          >replicación</span
+        >
+        y el
+        <span
+          class="tooltip"
+          data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+          >sharding</span
+        >
+        no son mutuamente excluyentes; de hecho,
+        <strong>a menudo se usan juntos</strong>. Un diseño común para sistemas
+        de muy alta escala es un sistema shardeado donde cada shard es en sí
+        mismo un clúster replicado (por ejemplo, un servidor primario de shard y
+        varias réplicas de shard). Esto proporciona tanto la escalabilidad de
+        datos y escritura del
+        <span
+          class="tooltip"
+          data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+          >sharding</span
+        >
+        como la alta
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >
+        y escalabilidad de lectura de la
+        <span
+          class="tooltip"
+          data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+          >replicación</span
+        >.
+      </p>
+      <h2>Ejemplo de Aplicación Real</h2>
+      <p>
+        Aquí tienes un ejemplo detallado de la aplicación de "<span
+          class="tooltip"
+          data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+          >Replicación</span
+        >
+        vs.
+        <span
+          class="tooltip"
+          data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+          >Sharding</span
+        >" en un escenario empresarial real, estructurado con encabezados en
+        Markdown.
+      </p>
+      <p>---</p>
+      <h2>
+        Escenario Empresarial: Plataforma Global de E-commerce "MegaMart Online"
+      </h2>
+      <p><strong>Empresa:</strong> MegaMart Online</p>
+      <p>
+        <strong>Problema Principal:</strong> Escalabilidad de la base de datos
+        para manejar un crecimiento explosivo en el tráfico de usuarios y el
+        volumen de transacciones a nivel global, así como garantizar alta
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >.
+      </p>
+      <h3>1. El Problema que Enfrentaba MegaMart Online</h3>
+      <p>
+        MegaMart Online comenzó como un minorista en línea de rápido crecimiento
+        con operaciones principalmente en un solo país. Su arquitectura inicial
+        era un monolito con una única base de datos relacional (PostgreSQL)
+        robusta, pero centralizada. A medida que la empresa expandió sus
+        operaciones a múltiples continentes y el número de usuarios activos se
+        disparó, comenzaron a surgir problemas críticos:
+      </p>
+      <ul>
+        <li>
+          <strong>Picos de Tráfico (Reads):</strong> Durante eventos de ventas
+          flash, Black Friday o lanzamientos de productos, la base de datos se
+          saturaba con millones de solicitudes de lectura simultáneas (consultas
+          de productos, historiales de pedidos de usuarios, etc.). Esto
+          resultaba en
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          elevada y, ocasionalmente, fallos del sistema que impactaban
+          negativamente la experiencia del usuario y las ventas.
+        </li>
+        <li>
+          <strong>Volumen de Transacciones (Writes):</strong> El número de
+          nuevos pedidos, registros de usuarios y actualizaciones de inventario
+          crecía exponencialmente. La base de datos centralizada se convertía en
+          un cuello de botella para las operaciones de escritura, lo que
+          ralentizaba la finalización de pedidos y la actualización del
+          catálogo.
+        </li>
+        <li>
+          <strong>Capacidad de Almacenamiento:</strong> El volumen total de
+          datos (especialmente historiales de pedidos y datos de usuarios)
+          estaba superando la capacidad de una única instancia de base de datos,
+          incluso con hardware de gama alta.
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+              >Disponibilidad</span
+            >
+            y Resiliencia:</strong
+          >
+          Una única base de datos representaba un Punto Único de Fallo (SPOF).
+          Cualquier problema con esta instancia significaba la interrupción
+          completa del servicio a nivel mundial, con enormes pérdidas económicas
+          y de reputación.
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >
+            Geográfica:</strong
+          >
+          Usuarios en regiones alejadas del centro de datos principal
+          experimentaban mayor
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          al interactuar con la plataforma.
+        </li>
+      </ul>
+      <h3>
+        2. Cómo se Implementó el Concepto de
+        <span
+          class="tooltip"
+          data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+          >Replicación</span
+        >
+        vs.
+        <span
+          class="tooltip"
+          data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+          >Sharding</span
+        >
+      </h3>
+      <p>
+        El equipo de arquitectura de MegaMart Online decidió abordar estos
+        desafíos aplicando estratégicamente tanto la
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          ></strong
+        >
+        como el
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+            >sharding</span
+          ></strong
+        >, complementando cada técnica para resolver problemas específicos.
+      </p>
+      <p>
+        #### Fase 1: Implementación de
+        <span
+          class="tooltip"
+          data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+          >Replicación</span
+        >
+        para Escalabilidad de Lectura y Alta
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >Disponibilidad</span
+        >
+      </p>
+      <p>
+        <strong>Objetivo:</strong> Distribuir la carga de lectura, reducir la
+        <span
+          class="tooltip"
+          data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+          >latencia</span
+        >
+        global y mejorar la
+        <span
+          class="tooltip"
+          data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen."
+          >tolerancia a fallos</span
+        >.
+      </p>
+      <p><strong>Detalles de la Implementación:</strong></p>
+      <p>
+        1.
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >Replicación</span
+          >
+          Maestra-Esclava (Leader-Follower):</strong
+        >
+      </p>
+      <ul>
+        <li>
+          * Se estableció un clúster de bases de datos PostgreSQL utilizando
+          <span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          >
+          de streaming asíncrona (con opciones de
+          <span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          >
+          sincrónica para datos críticos en algunas regiones).
+        </li>
+        <li>
+          * Una instancia de base de datos fue designada como
+          <strong>Maestra (Primary/Leader)</strong> y era la única responsable
+          de todas las operaciones de escritura (crear pedidos, actualizar
+          perfiles, etc.).
+        </li>
+        <li>
+          * Se implementaron múltiples instancias
+          <strong>Esclavas (Read Replicas/Followers)</strong>, distribuidas
+          geográficamente en centros de datos clave (ej. EE. UU. Este, Europa
+          Oeste, Asia Pacífico).
+        </li>
+      </ul>
+      <p>
+        2.
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="El proceso de distribuir el tráfico de red o de aplicaciones de manera uniforme entre múltiples servidores para garantizar que ningún servidor individual se sobrecargue."
+            >Balanceo de Carga</span
+          >
+          de Lectura:</strong
+        >
+      </p>
+      <ul>
+        <li>
+          * Se desplegaron balanceadores de carga (ej.
+          <span
+            class="tooltip"
+            data-tooltip-text="Un balanceador de carga y servidor proxy de código abierto, de alto rendimiento y muy popular para aplicaciones basadas en TCP y HTTP."
+            >HAProxy</span
+          >,
+          <span
+            class="tooltip"
+            data-tooltip-text="Un servidor web de alto rendimiento, también usado comúnmente como balanceador de carga, proxy inverso y caché HTTP."
+            >Nginx</span
+          >
+          con capacidades de balanceo) que monitoreaban la salud de las
+          réplicas.
+        </li>
+        <li>
+          * Todas las solicitudes de lectura de la aplicación (navegación de
+          productos, búsqueda, consulta de historial de pedidos) eran dirigidas
+          a las réplicas disponibles más cercanas. Las solicitudes de escritura
+          siempre se dirigían a la Maestra.
+        </li>
+      </ul>
+      <p>
+        3.
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="Un tipo de suscripción en sistemas de mensajería donde múltiples consumidores pueden conectarse, pero solo uno (el maestro) recibe mensajes. Si el maestro se desconecta, uno de los otros consumidores (en espera) toma el relevo."
+            >Failover</span
+          >
+          Automático:</strong
+        >
+      </p>
+      <ul>
+        <li>
+          * Se implementaron herramientas de monitoreo y
+          <span
+            class="tooltip"
+            data-tooltip-text="La gestión y coordinación automatizada de sistemas informáticos, aplicaciones y servicios complejos. Kubernetes es un ejemplo popular de un orquestador de contenedores."
+            >orquestación</span
+          >
+          (ej. Patroni para PostgreSQL) para detectar fallos en la instancia
+          Maestra.
+        </li>
+        <li>
+          * En caso de fallo de la Maestra, una de las réplicas se promocionaba
+          automáticamente a Maestra, minimizando el tiempo de inactividad.
+        </li>
+      </ul>
+      <p><strong>Datos Afectados en esta Fase:</strong></p>
+      <p>
+        Principalmente el catálogo de productos (altamente leído), contenido
+        estático, perfiles de usuario (lectura frecuente, escritura ocasional).
+      </p>
+      <p>
+        #### Fase 2: Implementación de
+        <span
+          class="tooltip"
+          data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+          >Sharding</span
+        >
+        para Escalabilidad de Escritura y Capacidad de Almacenamiento
+      </p>
+      <p>
+        <strong>Objetivo:</strong> Distribuir la carga de escritura, superar los
+        límites de almacenamiento de una sola máquina y aislar fallos a nivel de
+        datos.
+      </p>
+      <p><strong>Detalles de la Implementación:</strong></p>
+      <p>
+        1. <strong>Identificación del Dominio de Datos Crítico:</strong> El
+        mayor desafío en términos de crecimiento de datos y volumen de
+        escrituras era el <code>Historial de Pedidos</code> y los
+        <code>Datos de Usuarios</code>.
+      </p>
+      <p>
+        2.
+        <strong
+          >Clave de
+          <span
+            class="tooltip"
+            data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+            >Sharding</span
+          >:</strong
+        >
+        Para los pedidos y datos de usuario, se eligió
+        <code>customer_id</code> (ID de cliente) como la clave de
+        <span
+          class="tooltip"
+          data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+          >sharding</span
+        >. Esto aseguraba que todos los datos relacionados con un cliente
+        específico (su perfil, sus direcciones, su historial completo de
+        pedidos) residieran en el mismo shard. Esto simplificaba enormemente las
+        consultas que involucran a un solo cliente.
+      </p>
+      <p>
+        3.
+        <strong
+          >Estrategia de
+          <span
+            class="tooltip"
+            data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+            >Sharding</span
+          >:</strong
+        >
+        Se adoptó una estrategia de
+        <span
+          class="tooltip"
+          data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+          >sharding</span
+        >
+        basada en hash (ej. <code>hash(customer_id) % N</code>, donde N es el
+        número de shards iniciales).
+      </p>
+      <ul>
+        <li>
+          * MegaMart Online comenzó con 16 shards lógicos, cada uno mapeado a
+          una instancia de base de datos física.
+        </li>
+        <li>
+          <em>
+            <strong>Cada Shard en sí mismo era un clúster replicado:</strong>
+            Cada shard físico no era una base de datos única, sino un pequeño
+            clúster Maestra-Esclava (o Maestra-Maestra con cuidado) para
+            asegurar la alta
+            <span
+              class="tooltip"
+              data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+              >disponibilidad</span
+            >
+            y la escalabilidad de lectura </em
+          >dentro de ese shard específico*.
+        </li>
+      </ul>
+      <p>
+        4.
+        <strong
+          >Capa de Enrutamiento (<span
+            class="tooltip"
+            data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+            >Sharding</span
+          >
+          Proxy):</strong
+        >
+      </p>
+      <ul>
+        <li>
+          * Se desarrolló y desplegó un servicio de enrutamiento a medida (o se
+          utilizó una solución de proxy de
+          <span
+            class="tooltip"
+            data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+            >sharding</span
+          >
+          como Vitess o CitusData para PostgreSQL).
+        </li>
+        <li>
+          * Este servicio interceptaba todas las solicitudes de la aplicación
+          relacionadas con pedidos y usuarios.
+        </li>
+        <li>
+          * Utilizaba la <code>customer_id</code> (extraída de la solicitud)
+          para calcular el shard de destino y enrutar la consulta a la instancia
+          Maestra del shard correcto (para escrituras) o a una réplica del shard
+          (para lecturas).
+        </li>
+      </ul>
+      <p>5. <strong>Migración de Datos Existentes:</strong></p>
+      <ul>
+        <li>
+          * La migración de millones de registros existentes fue un proceso
+          complejo. Se realizó por etapas:
+        </li>
+        <li>
+          * Se congelaron las escrituras a las tablas afectadas temporalmente.
+        </li>
+        <li>* Se exportaron los datos existentes.</li>
+        <li>
+          * Se distribuyeron los datos exportados a los shards correctos
+          basándose en el <code>customer_id</code>.
+        </li>
+        <li>* Se importaron los datos a las nuevas instancias de shard.</li>
+        <li>
+          * Se implementó un mecanismo de "escritura dual" durante un período de
+          transición, donde los nuevos datos se escribían tanto en la base de
+          datos antigua como en el shard correspondiente, hasta que la migración
+          se validó por completo.
+        </li>
+      </ul>
+      <p>6. <strong>Manejo de Consultas Cross-Shard:</strong></p>
+      <ul>
+        <li>
+          * Se identificó que ciertas consultas analíticas (ej. "ventas totales
+          por categoría a nivel global") requerirían agregaciones de múltiples
+          shards. Para esto, se implementaron soluciones específicas como:
+        </li>
+        <li>
+          * Un data warehouse separado que ingería datos de todos los shards
+          mediante
+          <span
+            class="tooltip"
+            data-tooltip-text='Siglas de "Extract, Transform, Load" (Extraer, Transformar, Cargar). Es un proceso de integración de datos que combina datos de múltiples fuentes en un único almacén de datos centralizado y coherente.'
+            >ETL</span
+          >/CDC.
+        </li>
+        <li>
+          * Microservicios específicos que podían orquestar consultas en
+          múltiples shards cuando era estrictamente necesario para la operación
+          en tiempo real.
+        </li>
+      </ul>
+      <p><strong>Datos Afectados en esta Fase:</strong></p>
+      <p>
+        Tablas de <code>Pedidos</code>, <code>Artículos del Pedido</code>,
+        <code>Clientes</code>, <code>Direcciones de Envío</code>,
+        <code>Historial de Transacciones</code>. El catálogo de productos
+        permaneció en el clúster replicado de la Fase 1 o se replicó de forma
+        completa en cada shard si se accedía constantemente junto con los
+        pedidos.
+      </p>
+      <h3>3. Resultados y Beneficios Obtenidos</h3>
+      <p>
+        La implementación de estas estrategias transformó la arquitectura de
+        datos de MegaMart Online y proporcionó beneficios significativos:
+      </p>
+      <p>1. <strong>Rendimiento Drásticamente Mejorado:</strong></p>
+      <ul>
+        <li>
+          * <strong>Lecturas:</strong> La
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          de lectura se redujo en un 70% a nivel global. Los tiempos de carga de
+          las páginas de productos y los historiales de pedidos se optimizaron,
+          incluso durante los picos de tráfico.
+        </li>
+        <li>
+          * <strong>Escrituras:</strong> La tasa de rendimiento de escrituras
+          (TPS - Transacciones por Segundo) se multiplicó por 5, permitiendo a
+          la plataforma procesar un volumen mucho mayor de pedidos y registros
+          de usuarios sin degradación.
+        </li>
+      </ul>
+      <p>
+        2. <strong>Escalabilidad Prácticamente Ilimitada (Horizontal):</strong>
+      </p>
+      <ul>
+        <li>
+          * <strong>Reads:</strong> Fácil adición de más réplicas de lectura
+          según la demanda regional o global.
+        </li>
+        <li>
+          * <strong>Writes/Almacenamiento:</strong> Posibilidad de añadir nuevos
+          shards a medida que crece el volumen de datos y transacciones. Esto
+          permite a MegaMart Online escalar horizontalmente su capacidad de
+          almacenamiento y procesamiento de escrituras casi indefinidamente,
+          utilizando hardware más económico.
+        </li>
+      </ul>
+      <p>
+        3.
+        <strong
+          >Alta
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >Disponibilidad</span
+          >
+          y Resiliencia:</strong
+        >
+      </p>
+      <ul>
+        <li>
+          * El sistema ahora toleraba la falla de instancias individuales de
+          base de datos (tanto primarias como réplicas) sin interrupción del
+          servicio gracias a los mecanismos de
+          <span
+            class="tooltip"
+            data-tooltip-text="Un tipo de suscripción en sistemas de mensajería donde múltiples consumidores pueden conectarse, pero solo uno (el maestro) recibe mensajes. Si el maestro se desconecta, uno de los otros consumidores (en espera) toma el relevo."
+            >failover</span
+          >.
+        </li>
+        <li>
+          * La falla de un shard específico solo afectaba a un pequeño
+          subconjunto de clientes, no a toda la plataforma.
+        </li>
+        <li>
+          * La distribución geográfica de las réplicas mejoró la
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >
+          para los usuarios en diferentes regiones y proporcionó resiliencia
+          ante desastres regionales.
+        </li>
+      </ul>
+      <p>4. <strong>Costos Operacionales Optimizados:</strong></p>
+      <ul>
+        <li>
+          * Aunque la complejidad de la gestión aumentó, la capacidad de
+          utilizar hardware de menor costo para múltiples instancias pequeñas
+          (shards y réplicas) en lugar de una única máquina masivamente potente
+          redujo los costos de capital y operativos a largo plazo.
+        </li>
+      </ul>
+      <p>5. <strong>Mejor Experiencia del Cliente:</strong></p>
+      <ul>
+        <li>
+          * Menor
+          <span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          >, mayor
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >
+          y un rendimiento más consistente llevaron a una experiencia de compra
+          más fluida, lo que se tradujo en una mayor satisfacción del cliente y
+          una reducción de las tasas de abandono del carrito.
+        </li>
+      </ul>
+      <p>6. <strong>Innovación Acelerada:</strong></p>
+      <ul>
+        <li>
+          * Al liberar al equipo de la preocupación constante por la
+          escalabilidad de la base de datos, pudieron centrarse en desarrollar
+          nuevas características y servicios, sabiendo que la infraestructura
+          subyacente podría soportar el crecimiento.
+        </li>
+      </ul>
+      <p>
+        En resumen, MegaMart Online utilizó la
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          ></strong
+        >
+        para resolver los desafíos de lectura intensiva, alta
+        <span
+          class="tooltip"
+          data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+          >disponibilidad</span
+        >
+        y
+        <span
+          class="tooltip"
+          data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+          >latencia</span
+        >
+        geográfica, mientras que el
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+            >sharding</span
+          ></strong
+        >
+        fue la solución elegida para la escalabilidad de escritura, la capacidad
+        de almacenamiento masiva y la distribución de la carga transaccional,
+        permitiendo a la empresa seguir creciendo y prosperando en el mercado
+        global.
+      </p>
+      <h2>Preguntas de Entrevista</h2>
+      <div>
+        <div class="accordion-item">
+          <p class="accordion-question">
+            En un sistema de base de datos OLTP de alto tráfico, ¿cuáles son los
+            factores críticos que le harían priorizar la replicación sobre el
+            sharding para mejorar el rendimiento y la disponibilidad, y cuándo
+            sería lo contrario?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Priorizaría la
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >replicación</span
+              >
+              cuando: 1) La carga de trabajo es predominantemente de lectura y
+              se necesita escalar las lecturas sin modificar los datos. 2) Se
+              requiere alta
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >
+              y
+              <span
+                class="tooltip"
+                data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen."
+                >tolerancia a fallos</span
+              >, permitiendo que un nodo secundario asuma el rol del primario
+              rápidamente. 3) La complejidad de la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              se puede gestionar con
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              eventual o fuerte dentro de un solo conjunto de datos lógico. 4)
+              La recuperación ante desastres es una prioridad.Priorizaría el
+              <span
+                class="tooltip"
+                data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+                >sharding</span
+              >
+              cuando: 1) La base de datos ha alcanzado los límites de capacidad
+              de almacenamiento o procesamiento de un solo servidor. 2) La carga
+              de trabajo es intensiva en escrituras y un solo primario no puede
+              manejarla. 3) Existen cuellos de botella de contención de bloqueos
+              significativos en un solo nodo. 4) La estructura de datos o los
+              patrones de acceso permiten una partición lógica que minimiza las
+              transacciones entre fragmentos.
+            </p>
+          </div>
+        </div>
 
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Replicación vs. Sharding</h1>
-    <p>En la arquitectura de software, la <strong><span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span></strong> y el <strong><span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span></strong> son dos patrones fundamentales para escalar sistemas y mejorar su <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span>, pero abordan problemas ligeramente diferentes y a menudo se utilizan de forma complementaria.</p><h2>Introducción</h2><p>Tanto la <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> como el <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> son estrategias para distribuir datos y carga de trabajo entre múltiples servidores. Su objetivo principal es mejorar la escalabilidad (capacidad de manejar más usuarios o datos) y la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> (garantizar que el sistema siga funcionando incluso si un componente falla).</p><p>---</p><h2><span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span></h2><h3>Concepto Principal</h3><p>La <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> consiste en mantener múltiples copias idénticas del mismo conjunto de datos en diferentes servidores. Estas copias pueden estar distribuidas geográficamente o dentro del mismo centro de datos. El objetivo principal es la redundancia, la alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y la escalabilidad de lectura.</p><p>Existen varios modelos, siendo el más común el de "maestro-esclavo" (o primario-réplica), donde:</p><ul><li>  <strong>Maestro/Primario:</strong> Maneja todas las operaciones de escritura y propaga los cambios a las réplicas.</li><li>  <strong>Esclavo/Réplica:</strong> Mantiene una copia de los datos del maestro y suele manejar las operaciones de lectura.</li></ul><h3>Ventajas</h3><ul><li>  <strong>Alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">Disponibilidad</span> y <span class="tooltip" data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen.">Tolerancia a Fallos</span>:</strong> Si el servidor primario falla, una de las réplicas puede ser promovida a primario, minimizando el tiempo de inactividad del sistema.</li><li>  <strong>Escalabilidad de Lectura:</strong> Las solicitudes de lectura se pueden distribuir entre múltiples réplicas, lo que permite manejar un mayor volumen de consultas sin sobrecargar el servidor primario.</li><li>  <strong>Recuperación ante Desastres:</strong> Las copias de datos en diferentes ubicaciones geográficas permiten recuperar el sistema en caso de un desastre regional.</li><li>  <strong>Actualizaciones y Mantenimiento sin Interrupción:</strong> Se pueden realizar tareas de mantenimiento en las réplicas (o incluso en el primario, con un <span class="tooltip" data-tooltip-text="Un tipo de suscripción en sistemas de mensajería donde múltiples consumidores pueden conectarse, pero solo uno (el maestro) recibe mensajes. Si el maestro se desconecta, uno de los otros consumidores (en espera) toma el relevo.">failover</span> planificado) sin que el servicio general se caiga.</li><li>  <strong>Mejora del Rendimiento de Lectura (<span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span>):</strong> Al tener réplicas más cerca geográficamente de los usuarios, se puede reducir la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> de las consultas de lectura.</li></ul><h3>Desventajas</h3><ul><li>  <strong>Escalabilidad de Escritura Limitada:</strong> Todas las escrituras deben pasar por el servidor primario, lo que lo convierte en un cuello de botella si la carga de escritura es muy alta.</li><li>  <strong>Mayor Uso de Almacenamiento:</strong> Cada servidor almacena una copia completa de los datos, lo que incrementa los costos de almacenamiento a medida que el conjunto de datos crece.</li><li>  <strong>Complejidad de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span>:</strong> Mantener la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> entre el primario y las réplicas puede ser complejo.</li><li>   *   <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Fuerte (Síncrona):</strong> Todas las réplicas deben confirmar la escritura antes de que se considere completada, lo que aumenta la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> de escritura.</li><li>   *   <strong><span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span> Eventual (Asíncrona):</strong> El primario confirma la escritura inmediatamente y propaga los cambios más tarde, lo que puede resultar en que las réplicas sirvan datos ligeramente desactualizados por un corto período.</li><li>  <strong>Fallo del Primario:</strong> Si el primario falla y no hay un proceso automático de elección de un nuevo primario, puede haber una interrupción del servicio.</li></ul><p>---</p><h2><span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">Sharding</span></h2><h3>Concepto Principal</h3><p>El <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> (también conocido como particionamiento horizontal) consiste en dividir un conjunto de datos muy grande en fragmentos más pequeños e independientes, llamados "shards". Cada shard se almacena en un servidor o grupo de servidores diferente. Cada servidor solo almacena una <em>parte</em> del conjunto total de datos, pero esa parte es completa y funcional por sí misma. El objetivo principal es la <span class="tooltip" data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL.">escalabilidad horizontal</span> para volúmenes de datos y cargas de escritura extremadamente grandes.</p><p>Para decidir qué datos van a qué shard, se utiliza una "clave de shard" (o clave de partición).</p><h3>Ventajas</h3><ul><li>  <strong><span class="tooltip" data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL.">Escalabilidad Horizontal</span> Extrema (Escalabilidad de Escritura):</strong> Al distribuir los datos y las operaciones de escritura entre múltiples servidores, el <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> permite manejar volúmenes de datos y cargas de escritura masivas que un solo servidor no podría soportar.</li><li>  <strong>Manejo de Grandes Volúmenes de Datos:</strong> Permite almacenar conjuntos de datos que son demasiado grandes para caber en un solo servidor, añadiendo simplemente más shards a medida que los datos crecen.</li><li>  <strong>Rendimiento Mejorado:</strong> Las consultas que solo afectan a un shard son mucho más rápidas porque operan sobre un conjunto de datos significativamente menor.</li><li>  <strong>Aislamiento de Fallos:</strong> El fallo de un shard solo afecta a la parte del sistema que depende de esos datos, no al sistema completo.</li><li>  <strong>Reducción de Costos:</strong> Se pueden utilizar servidores de gama media en lugar de un único servidor muy potente y caro.</li></ul><h3>Desventajas</h3><ul><li>  <strong>Mayor Complejidad Operacional:</strong></li><li>   *   <strong>Diseño de la Clave de Shard:</strong> Elegir una buena clave de shard es crucial. Una clave incorrecta puede llevar a "hot spots" (un shard con mucha más carga que otros) o una distribución desigual de los datos.</li><li>   *   <strong>Resharding (Rebalanceo):</strong> Redistribuir los datos entre shards (por ejemplo, si uno se llena o se desequilibra) es una operación muy compleja, costosa y a menudo disruptiva.</li><li>   *   <strong>Consultas entre Shards:</strong> Las consultas o uniones (joins) que necesitan acceder a datos de múltiples shards son difíciles de implementar, ineficientes o directamente imposibles.</li><li>   *   <strong>Transacciones Distribuidas:</strong> Mantener la atomicidad y <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> de las transacciones que afectan a múltiples shards es extremadamente complejo.</li><li>  <strong>Punto Único de Fallo Potencial (Coordinador):</strong> Si existe un servicio central que gestiona la asignación de shards (un "router de <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span>" o "coordinador"), este puede convertirse en un punto único de fallo.</li><li>  <strong>Mayor Complejidad de Desarrollo:</strong> Los desarrolladores deben tener en cuenta la arquitectura de <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> al diseñar la aplicación.</li><li>  <strong>Costo Inicial Más Alto:</strong> El diseño, la implementación y la gestión de un sistema shardeado requiere más esfuerzo y recursos que uno replicado.</li></ul><p>---</p><h2>¿Cuándo Usar Cada Uno?</h2><ul><li>  <strong><span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span>:</strong> Es ideal para sistemas con una <strong>alta carga de lectura</strong> y donde la <strong>alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span></strong> y la <strong><span class="tooltip" data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen.">tolerancia a fallos</span></strong> son críticas. El conjunto de datos total debe ser manejable por un solo servidor (o un pequeño clúster de servidores primarios si se usa multi-maestro).</li><li>  <strong><span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">Sharding</span>:</strong> Es necesario cuando el <strong>volumen de datos es demasiado grande</strong> para caber en un solo servidor o cuando la <strong>carga de escritura es tan alta</strong> que un único servidor primario replicado no puede manejarla. Se utiliza para lograr una escalabilidad de escritura masiva.</li></ul><p>---</p><h2>Conclusión</h2><p>La <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> y el <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> no son mutuamente excluyentes; de hecho, <strong>a menudo se usan juntos</strong>. Un diseño común para sistemas de muy alta escala es un sistema shardeado donde cada shard es en sí mismo un clúster replicado (por ejemplo, un servidor primario de shard y varias réplicas de shard). Esto proporciona tanto la escalabilidad de datos y escritura del <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> como la alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y escalabilidad de lectura de la <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span>.</p><h2>Ejemplo de Aplicación Real</h2><p>Aquí tienes un ejemplo detallado de la aplicación de "<span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span> vs. <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">Sharding</span>" en un escenario empresarial real, estructurado con encabezados en Markdown.</p><p>---</p><h2>Escenario Empresarial: Plataforma Global de E-commerce "MegaMart Online"</h2><p><strong>Empresa:</strong> MegaMart Online</p><p><strong>Problema Principal:</strong> Escalabilidad de la base de datos para manejar un crecimiento explosivo en el tráfico de usuarios y el volumen de transacciones a nivel global, así como garantizar alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span>.</p><h3>1. El Problema que Enfrentaba MegaMart Online</h3><p>MegaMart Online comenzó como un minorista en línea de rápido crecimiento con operaciones principalmente en un solo país. Su arquitectura inicial era un monolito con una única base de datos relacional (PostgreSQL) robusta, pero centralizada. A medida que la empresa expandió sus operaciones a múltiples continentes y el número de usuarios activos se disparó, comenzaron a surgir problemas críticos:</p><ul><li>  <strong>Picos de Tráfico (Reads):</strong> Durante eventos de ventas flash, Black Friday o lanzamientos de productos, la base de datos se saturaba con millones de solicitudes de lectura simultáneas (consultas de productos, historiales de pedidos de usuarios, etc.). Esto resultaba en <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> elevada y, ocasionalmente, fallos del sistema que impactaban negativamente la experiencia del usuario y las ventas.</li><li>  <strong>Volumen de Transacciones (Writes):</strong> El número de nuevos pedidos, registros de usuarios y actualizaciones de inventario crecía exponencialmente. La base de datos centralizada se convertía en un cuello de botella para las operaciones de escritura, lo que ralentizaba la finalización de pedidos y la actualización del catálogo.</li><li>  <strong>Capacidad de Almacenamiento:</strong> El volumen total de datos (especialmente historiales de pedidos y datos de usuarios) estaba superando la capacidad de una única instancia de base de datos, incluso con hardware de gama alta.</li><li>  <strong><span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">Disponibilidad</span> y Resiliencia:</strong> Una única base de datos representaba un Punto Único de Fallo (SPOF). Cualquier problema con esta instancia significaba la interrupción completa del servicio a nivel mundial, con enormes pérdidas económicas y de reputación.</li><li>  <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> Geográfica:</strong> Usuarios en regiones alejadas del centro de datos principal experimentaban mayor <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> al interactuar con la plataforma.</li></ul><h3>2. Cómo se Implementó el Concepto de <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span> vs. <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">Sharding</span></h3><p>El equipo de arquitectura de MegaMart Online decidió abordar estos desafíos aplicando estratégicamente tanto la <strong><span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span></strong> como el <strong><span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span></strong>, complementando cada técnica para resolver problemas específicos.</p><p>#### Fase 1: Implementación de <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span> para Escalabilidad de Lectura y Alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">Disponibilidad</span></p><p><strong>Objetivo:</strong> Distribuir la carga de lectura, reducir la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> global y mejorar la <span class="tooltip" data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen.">tolerancia a fallos</span>.</p><p><strong>Detalles de la Implementación:</strong></p><p>1.  <strong><span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span> Maestra-Esclava (Leader-Follower):</strong></p><ul><li>   *   Se estableció un clúster de bases de datos PostgreSQL utilizando <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> de streaming asíncrona (con opciones de <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> sincrónica para datos críticos en algunas regiones).</li><li>   *   Una instancia de base de datos fue designada como <strong>Maestra (Primary/Leader)</strong> y era la única responsable de todas las operaciones de escritura (crear pedidos, actualizar perfiles, etc.).</li><li>   *   Se implementaron múltiples instancias <strong>Esclavas (Read Replicas/Followers)</strong>, distribuidas geográficamente en centros de datos clave (ej. EE. UU. Este, Europa Oeste, Asia Pacífico).</li></ul><p>2.  <strong><span class="tooltip" data-tooltip-text="El proceso de distribuir el tráfico de red o de aplicaciones de manera uniforme entre múltiples servidores para garantizar que ningún servidor individual se sobrecargue.">Balanceo de Carga</span> de Lectura:</strong></p><ul><li>   *   Se desplegaron balanceadores de carga (ej. <span class="tooltip" data-tooltip-text="Un balanceador de carga y servidor proxy de código abierto, de alto rendimiento y muy popular para aplicaciones basadas en TCP y HTTP.">HAProxy</span>, <span class="tooltip" data-tooltip-text="Un servidor web de alto rendimiento, también usado comúnmente como balanceador de carga, proxy inverso y caché HTTP.">Nginx</span> con capacidades de balanceo) que monitoreaban la salud de las réplicas.</li><li>   *   Todas las solicitudes de lectura de la aplicación (navegación de productos, búsqueda, consulta de historial de pedidos) eran dirigidas a las réplicas disponibles más cercanas. Las solicitudes de escritura siempre se dirigían a la Maestra.</li></ul><p>3.  <strong><span class="tooltip" data-tooltip-text="Un tipo de suscripción en sistemas de mensajería donde múltiples consumidores pueden conectarse, pero solo uno (el maestro) recibe mensajes. Si el maestro se desconecta, uno de los otros consumidores (en espera) toma el relevo.">Failover</span> Automático:</strong></p><ul><li>   *   Se implementaron herramientas de monitoreo y <span class="tooltip" data-tooltip-text="La gestión y coordinación automatizada de sistemas informáticos, aplicaciones y servicios complejos. Kubernetes es un ejemplo popular de un orquestador de contenedores.">orquestación</span> (ej. Patroni para PostgreSQL) para detectar fallos en la instancia Maestra.</li><li>   *   En caso de fallo de la Maestra, una de las réplicas se promocionaba automáticamente a Maestra, minimizando el tiempo de inactividad.</li></ul><p><strong>Datos Afectados en esta Fase:</strong></p><p>Principalmente el catálogo de productos (altamente leído), contenido estático, perfiles de usuario (lectura frecuente, escritura ocasional).</p><p>#### Fase 2: Implementación de <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">Sharding</span> para Escalabilidad de Escritura y Capacidad de Almacenamiento</p><p><strong>Objetivo:</strong> Distribuir la carga de escritura, superar los límites de almacenamiento de una sola máquina y aislar fallos a nivel de datos.</p><p><strong>Detalles de la Implementación:</strong></p><p>1.  <strong>Identificación del Dominio de Datos Crítico:</strong> El mayor desafío en términos de crecimiento de datos y volumen de escrituras era el <code>Historial de Pedidos</code> y los <code>Datos de Usuarios</code>.</p><p>2.  <strong>Clave de <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">Sharding</span>:</strong> Para los pedidos y datos de usuario, se eligió <code>customer_id</code> (ID de cliente) como la clave de <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span>. Esto aseguraba que todos los datos relacionados con un cliente específico (su perfil, sus direcciones, su historial completo de pedidos) residieran en el mismo shard. Esto simplificaba enormemente las consultas que involucran a un solo cliente.</p><p>3.  <strong>Estrategia de <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">Sharding</span>:</strong> Se adoptó una estrategia de <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> basada en hash (ej. <code>hash(customer_id) % N</code>, donde N es el número de shards iniciales).</p><ul><li>   *   MegaMart Online comenzó con 16 shards lógicos, cada uno mapeado a una instancia de base de datos física.</li><li>   <em>   <strong>Cada Shard en sí mismo era un clúster replicado:</strong> Cada shard físico no era una base de datos única, sino un pequeño clúster Maestra-Esclava (o Maestra-Maestra con cuidado) para asegurar la alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y la escalabilidad de lectura </em>dentro de ese shard específico*.</li></ul><p>4.  <strong>Capa de Enrutamiento (<span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">Sharding</span> Proxy):</strong></p><ul><li>   *   Se desarrolló y desplegó un servicio de enrutamiento a medida (o se utilizó una solución de proxy de <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> como Vitess o CitusData para PostgreSQL).</li><li>   *   Este servicio interceptaba todas las solicitudes de la aplicación relacionadas con pedidos y usuarios.</li><li>   *   Utilizaba la <code>customer_id</code> (extraída de la solicitud) para calcular el shard de destino y enrutar la consulta a la instancia Maestra del shard correcto (para escrituras) o a una réplica del shard (para lecturas).</li></ul><p>5.  <strong>Migración de Datos Existentes:</strong></p><ul><li>   *   La migración de millones de registros existentes fue un proceso complejo. Se realizó por etapas:</li><li>       *   Se congelaron las escrituras a las tablas afectadas temporalmente.</li><li>       *   Se exportaron los datos existentes.</li><li>       *   Se distribuyeron los datos exportados a los shards correctos basándose en el <code>customer_id</code>.</li><li>       *   Se importaron los datos a las nuevas instancias de shard.</li><li>       *   Se implementó un mecanismo de "escritura dual" durante un período de transición, donde los nuevos datos se escribían tanto en la base de datos antigua como en el shard correspondiente, hasta que la migración se validó por completo.</li></ul><p>6.  <strong>Manejo de Consultas Cross-Shard:</strong></p><ul><li>   *   Se identificó que ciertas consultas analíticas (ej. "ventas totales por categoría a nivel global") requerirían agregaciones de múltiples shards. Para esto, se implementaron soluciones específicas como:</li><li>       *   Un data warehouse separado que ingería datos de todos los shards mediante <span class="tooltip" data-tooltip-text="Siglas de &quot;Extract, Transform, Load&quot; (Extraer, Transformar, Cargar). Es un proceso de integración de datos que combina datos de múltiples fuentes en un único almacén de datos centralizado y coherente.">ETL</span>/CDC.</li><li>       *   Microservicios específicos que podían orquestar consultas en múltiples shards cuando era estrictamente necesario para la operación en tiempo real.</li></ul><p><strong>Datos Afectados en esta Fase:</strong></p><p>Tablas de <code>Pedidos</code>, <code>Artículos del Pedido</code>, <code>Clientes</code>, <code>Direcciones de Envío</code>, <code>Historial de Transacciones</code>. El catálogo de productos permaneció en el clúster replicado de la Fase 1 o se replicó de forma completa en cada shard si se accedía constantemente junto con los pedidos.</p><h3>3. Resultados y Beneficios Obtenidos</h3><p>La implementación de estas estrategias transformó la arquitectura de datos de MegaMart Online y proporcionó beneficios significativos:</p><p>1.  <strong>Rendimiento Drásticamente Mejorado:</strong></p><ul><li>   *   <strong>Lecturas:</strong> La <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> de lectura se redujo en un 70% a nivel global. Los tiempos de carga de las páginas de productos y los historiales de pedidos se optimizaron, incluso durante los picos de tráfico.</li><li>   *   <strong>Escrituras:</strong> La tasa de rendimiento de escrituras (TPS - Transacciones por Segundo) se multiplicó por 5, permitiendo a la plataforma procesar un volumen mucho mayor de pedidos y registros de usuarios sin degradación.</li></ul><p>2.  <strong>Escalabilidad Prácticamente Ilimitada (Horizontal):</strong></p><ul><li>   *   <strong>Reads:</strong> Fácil adición de más réplicas de lectura según la demanda regional o global.</li><li>   *   <strong>Writes/Almacenamiento:</strong> Posibilidad de añadir nuevos shards a medida que crece el volumen de datos y transacciones. Esto permite a MegaMart Online escalar horizontalmente su capacidad de almacenamiento y procesamiento de escrituras casi indefinidamente, utilizando hardware más económico.</li></ul><p>3.  <strong>Alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">Disponibilidad</span> y Resiliencia:</strong></p><ul><li>   *   El sistema ahora toleraba la falla de instancias individuales de base de datos (tanto primarias como réplicas) sin interrupción del servicio gracias a los mecanismos de <span class="tooltip" data-tooltip-text="Un tipo de suscripción en sistemas de mensajería donde múltiples consumidores pueden conectarse, pero solo uno (el maestro) recibe mensajes. Si el maestro se desconecta, uno de los otros consumidores (en espera) toma el relevo.">failover</span>.</li><li>   *   La falla de un shard específico solo afectaba a un pequeño subconjunto de clientes, no a toda la plataforma.</li><li>   *   La distribución geográfica de las réplicas mejoró la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> para los usuarios en diferentes regiones y proporcionó resiliencia ante desastres regionales.</li></ul><p>4.  <strong>Costos Operacionales Optimizados:</strong></p><ul><li>   *   Aunque la complejidad de la gestión aumentó, la capacidad de utilizar hardware de menor costo para múltiples instancias pequeñas (shards y réplicas) en lugar de una única máquina masivamente potente redujo los costos de capital y operativos a largo plazo.</li></ul><p>5.  <strong>Mejor Experiencia del Cliente:</strong></p><ul><li>   *   Menor <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span>, mayor <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y un rendimiento más consistente llevaron a una experiencia de compra más fluida, lo que se tradujo en una mayor satisfacción del cliente y una reducción de las tasas de abandono del carrito.</li></ul><p>6.  <strong>Innovación Acelerada:</strong></p><ul><li>   *   Al liberar al equipo de la preocupación constante por la escalabilidad de la base de datos, pudieron centrarse en desarrollar nuevas características y servicios, sabiendo que la infraestructura subyacente podría soportar el crecimiento.</li></ul><p>En resumen, MegaMart Online utilizó la <strong><span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span></strong> para resolver los desafíos de lectura intensiva, alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> geográfica, mientras que el <strong><span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span></strong> fue la solución elegida para la escalabilidad de escritura, la capacidad de almacenamiento masiva y la distribución de la carga transaccional, permitiendo a la empresa seguir creciendo y prosperando en el mercado global.</p><h2>Preguntas de Entrevista</h2><div>
         <div class="accordion-item">
-          <p class="accordion-question">En un sistema de base de datos OLTP de alto tráfico, ¿cuáles son los factores críticos que le harían priorizar la replicación sobre el sharding para mejorar el rendimiento y la disponibilidad, y cuándo sería lo contrario?</p>
-          <div class="accordion-answer"><p>Priorizaría la <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> cuando: 1) La carga de trabajo es predominantemente de lectura y se necesita escalar las lecturas sin modificar los datos. 2) Se requiere alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y <span class="tooltip" data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen.">tolerancia a fallos</span>, permitiendo que un nodo secundario asuma el rol del primario rápidamente. 3) La complejidad de la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> se puede gestionar con <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual o fuerte dentro de un solo conjunto de datos lógico. 4) La recuperación ante desastres es una prioridad.Priorizaría el <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> cuando: 1) La base de datos ha alcanzado los límites de capacidad de almacenamiento o procesamiento de un solo servidor. 2) La carga de trabajo es intensiva en escrituras y un solo primario no puede manejarla. 3) Existen cuellos de botella de contención de bloqueos significativos en un solo nodo. 4) La estructura de datos o los patrones de acceso permiten una partición lógica que minimiza las transacciones entre fragmentos.</p></div>
+          <p class="accordion-question">
+            Explique cómo la elección entre replicación y sharding impacta
+            directamente la gestión de la consistencia de datos (por ejemplo,
+            consistencia fuerte vs. eventual) y la complejidad operativa. Dé un
+            ejemplo.
+          </p>
+          <div class="accordion-answer">
+            <p>
+              La
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >replicación</span
+              >, especialmente la asíncrona, a menudo conduce a la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              eventual, donde los datos se propagan a las réplicas con un
+              retraso, garantizando la alta
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >
+              y escalabilidad de lectura a expensas de que las réplicas no estén
+              siempre perfectamente actualizadas. Un ejemplo es una base de
+              datos MySQL con
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >replicación</span
+              >
+              de réplica única, donde las lecturas de las réplicas pueden ver
+              datos ligeramente antiguos. La
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >replicación</span
+              >
+              síncrona puede ofrecer
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              fuerte, pero reduce la
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >
+              y escalabilidad de escritura.El
+              <span
+                class="tooltip"
+                data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+                >sharding</span
+              >, por otro lado, puede mantener una
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              fuerte dentro de cada fragmento individual. Sin embargo, introduce
+              una complejidad significativa para las transacciones que necesitan
+              acceder o modificar datos en múltiples fragmentos (transacciones
+              distribuidas), lo que requiere protocolos complejos como 2PC, que
+              aumentan la
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >
+              y la probabilidad de fallos. Operacionalmente, el
+              <span
+                class="tooltip"
+                data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+                >sharding</span
+              >
+              es más complejo debido a la gestión de claves de fragmentación, el
+              reequilibrio de fragmentos, las consultas distribuidas y la
+              recuperación ante desastres fragmentada.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Explique cómo la elección entre replicación y sharding impacta directamente la gestión de la consistencia de datos (por ejemplo, consistencia fuerte vs. eventual) y la complejidad operativa. Dé un ejemplo.</p>
-          <div class="accordion-answer"><p>La <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span>, especialmente la asíncrona, a menudo conduce a la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> eventual, donde los datos se propagan a las réplicas con un retraso, garantizando la alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y escalabilidad de lectura a expensas de que las réplicas no estén siempre perfectamente actualizadas. Un ejemplo es una base de datos MySQL con <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> de réplica única, donde las lecturas de las réplicas pueden ver datos ligeramente antiguos. La <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> síncrona puede ofrecer <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte, pero reduce la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y escalabilidad de escritura.El <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span>, por otro lado, puede mantener una <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> fuerte dentro de cada fragmento individual. Sin embargo, introduce una complejidad significativa para las transacciones que necesitan acceder o modificar datos en múltiples fragmentos (transacciones distribuidas), lo que requiere protocolos complejos como 2PC, que aumentan la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> y la probabilidad de fallos. Operacionalmente, el <span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> es más complejo debido a la gestión de claves de fragmentación, el reequilibrio de fragmentos, las consultas distribuidas y la recuperación ante desastres fragmentada.</p></div>
+          <p class="accordion-question">
+            Considere un escenario donde su aplicación experimenta cuellos de
+            botella tanto en la carga de lectura como en la carga de escritura.
+            ¿Cómo diseñaría una estrategia combinada de replicación y sharding,
+            y qué desafíos específicos introduce este enfoque?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Diseñaría una estrategia de '<span
+                class="tooltip"
+                data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+                >Sharding</span
+              >
+              con
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >Replicación</span
+              >
+              por Shard'. Cada fragmento (shard) de la base de datos tendría su
+              propio conjunto de réplicas. El tráfico de escritura se dirigiría
+              al primario de cada shard, y el tráfico de lectura se distribuiría
+              entre las réplicas dentro de ese shard.Los desafíos específicos
+              incluyen: 1.
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >Consistencia</span
+              >: Mantener la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              a través de múltiples réplicas en cada shard y potencialmente
+              manejar transacciones distribuidas que abarcan múltiples shards.
+              2. Complejidad de la gestión: Monitorear y gestionar no solo los
+              shards, sino también la
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >replicación</span
+              >
+              dentro de cada shard, incluyendo failovers y reequilibrios. 3.
+              Transacciones distribuidas: Las transacciones que involucran datos
+              en diferentes shards siguen siendo un desafío, requiriendo
+              patrones como Saga o el costoso Two-Phase Commit (2PC). 4.
+              Reequilibrio de datos: Redistribuir datos entre shards es
+              complejo, especialmente cuando cada shard tiene sus propias
+              réplicas que también deben ser actualizadas o reconstruidas. 5.
+              Costos: Mayor infraestructura para soportar N shards * M réplicas
+              por shard.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Considere un escenario donde su aplicación experimenta cuellos de botella tanto en la carga de lectura como en la carga de escritura. ¿Cómo diseñaría una estrategia combinada de replicación y sharding, y qué desafíos específicos introduce este enfoque?</p>
-          <div class="accordion-answer"><p>Diseñaría una estrategia de '<span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">Sharding</span> con <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span> por Shard'. Cada fragmento (shard) de la base de datos tendría su propio conjunto de réplicas. El tráfico de escritura se dirigiría al primario de cada shard, y el tráfico de lectura se distribuiría entre las réplicas dentro de ese shard.Los desafíos específicos incluyen: 1. <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">Consistencia</span>: Mantener la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> a través de múltiples réplicas en cada shard y potencialmente manejar transacciones distribuidas que abarcan múltiples shards. 2. Complejidad de la gestión: Monitorear y gestionar no solo los shards, sino también la <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> dentro de cada shard, incluyendo failovers y reequilibrios. 3. Transacciones distribuidas: Las transacciones que involucran datos en diferentes shards siguen siendo un desafío, requiriendo patrones como Saga o el costoso Two-Phase Commit (2PC). 4. Reequilibrio de datos: Redistribuir datos entre shards es complejo, especialmente cuando cada shard tiene sus propias réplicas que también deben ser actualizadas o reconstruidas. 5. Costos: Mayor infraestructura para soportar N shards * M réplicas por shard.</p></div>
+          <p class="accordion-question">
+            Al escalar horizontalmente una base de datos, el sharding introduce
+            el concepto de 'hot shards'. Describa qué son los hot shards, por
+            qué ocurren y qué estrategias avanzadas implementaría para mitigar
+            su impacto sin recurrir a una reorganización completa del esquema de
+            sharding.
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Un 'hot shard' (fragmento caliente) es un fragmento de datos que
+              recibe una cantidad desproporcionadamente alta de tráfico de
+              lectura o escritura en comparación con otros fragmentos. Esto
+              sucede cuando la clave de fragmentación elegida no distribuye la
+              carga de trabajo de manera uniforme. Por ejemplo, si se usa una
+              columna 'fecha_creacion' como clave de fragmentación y todos los
+              datos más recientes van a un mismo fragmento, o si un
+              'usuario_VIP' está en un fragmento y genera mucho más tráfico que
+              los demás.Estrategias avanzadas para mitigar su impacto sin
+              reorganizar completamente el esquema: 1. Réplicas de lectura
+              dedicadas: Asignar más réplicas de lectura específicamente al hot
+              shard para distribuir la carga de lectura. 2. Caching agresivo:
+              Implementar capas de caché más extensas para los datos del hot
+              shard, reduciendo la necesidad de acceder a la base de datos. 3.
+              Micro-<span
+                class="tooltip"
+                data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+                >sharding</span
+              >
+              o Sub-<span
+                class="tooltip"
+                data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos."
+                >sharding</span
+              >: Si es posible, identificar el subconjunto de datos dentro del
+              hot shard que está causando la contención y particionarlo aún más
+              lógicamente, o mover esos datos a un nuevo fragmento con una nueva
+              clave. 4. Redirección de escrituras: Si la clave es predecible,
+              algunas escrituras pueden ser redirigidas a nuevos fragmentos
+              preventivamente. 5. Compresión de datos o archivado: Mover datos
+              antiguos o menos accedidos fuera del hot shard si la hotness es
+              por volumen acumulado. 6. Optimización de consultas: Asegurarse de
+              que las consultas al hot shard sean lo más eficientes posible.
+            </p>
+          </div>
         </div>
-      
+
         <div class="accordion-item">
-          <p class="accordion-question">Al escalar horizontalmente una base de datos, el sharding introduce el concepto de 'hot shards'. Describa qué son los hot shards, por qué ocurren y qué estrategias avanzadas implementaría para mitigar su impacto sin recurrir a una reorganización completa del esquema de sharding.</p>
-          <div class="accordion-answer"><p>Un 'hot shard' (fragmento caliente) es un fragmento de datos que recibe una cantidad desproporcionadamente alta de tráfico de lectura o escritura en comparación con otros fragmentos. Esto sucede cuando la clave de fragmentación elegida no distribuye la carga de trabajo de manera uniforme. Por ejemplo, si se usa una columna 'fecha_creacion' como clave de fragmentación y todos los datos más recientes van a un mismo fragmento, o si un 'usuario_VIP' está en un fragmento y genera mucho más tráfico que los demás.Estrategias avanzadas para mitigar su impacto sin reorganizar completamente el esquema: 1. Réplicas de lectura dedicadas: Asignar más réplicas de lectura específicamente al hot shard para distribuir la carga de lectura. 2. Caching agresivo: Implementar capas de caché más extensas para los datos del hot shard, reduciendo la necesidad de acceder a la base de datos. 3. Micro-<span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span> o Sub-<span class="tooltip" data-tooltip-text="Un tipo de particionamiento de base de datos que separa una base de datos muy grande en partes más pequeñas, rápidas y más manejables llamadas fragmentos (shards). Cada shard comparte el mismo esquema, pero contiene un subconjunto diferente de los datos.">sharding</span>: Si es posible, identificar el subconjunto de datos dentro del hot shard que está causando la contención y particionarlo aún más lógicamente, o mover esos datos a un nuevo fragmento con una nueva clave. 4. Redirección de escrituras: Si la clave es predecible, algunas escrituras pueden ser redirigidas a nuevos fragmentos preventivamente. 5. Compresión de datos o archivado: Mover datos antiguos o menos accedidos fuera del hot shard si la hotness es por volumen acumulado. 6. Optimización de consultas: Asegurarse de que las consultas al hot shard sean lo más eficientes posible.</p></div>
+          <p class="accordion-question">
+            Si su aplicación requiere transacciones distribuidas atómicas a
+            través de múltiples fragmentos (shards), ¿qué dificultades
+            específicas enfrenta y cómo la replicación podría, paradójicamente,
+            empeorar o mejorar esta situación dependiendo de la implementación?
+          </p>
+          <div class="accordion-answer">
+            <p>
+              Las transacciones distribuidas atómicas entre múltiples fragmentos
+              enfrentan dificultades como: 1. Complejidad del protocolo:
+              Requieren protocolos complejos como Two-Phase Commit (2PC) o
+              Sagas, que aumentan la
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >
+              y la sobrecarga de la red. 2. Puntos únicos de fallo: El
+              coordinador de 2PC puede convertirse en un cuello de botella o un
+              SPOF. 3. Bloqueos prolongados: Durante 2PC, los recursos se
+              bloquean en todos los shards participantes, reduciendo la
+              concurrencia y aumentando el riesgo de interbloqueos. 4.
+              Recuperación ante fallos: Manejar fallos durante cualquier fase de
+              2PC es extremadamente complejo para garantizar la atomicidad. 5.
+              Rendimiento: El costo de coordinación reduce drásticamente el
+              rendimiento en comparación con las transacciones de un solo
+              fragmento.La
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >replicación</span
+              >
+              podría empeorar la situación si: Cada fragmento tiene réplicas y
+              el 2PC necesita asegurarse de que todos los primarios y sus
+              réplicas relevantes estén listos para confirmar, lo que añade más
+              coordinadores y comunicación. Si la
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >replicación</span
+              >
+              es asíncrona, se introduce la posibilidad de que los datos
+              confirmados en el primario aún no se hayan propagado a las
+              réplicas al momento de un posible
+              <span
+                class="tooltip"
+                data-tooltip-text="Un tipo de suscripción en sistemas de mensajería donde múltiples consumidores pueden conectarse, pero solo uno (el maestro) recibe mensajes. Si el maestro se desconecta, uno de los otros consumidores (en espera) toma el relevo."
+                >failover</span
+              >, rompiendo la
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              si se intenta recuperar una transacción distribuida incompleta.La
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >replicación</span
+              >
+              podría mejorar la situación si: Se utiliza para proporcionar alta
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >
+              para los primarios de los shards, asegurando que el coordinador de
+              2PC (o los participantes de la transacción) siempre tengan un
+              primario disponible para interactuar. Al escalar la capacidad de
+              lectura de cada fragmento, la
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >replicación</span
+              >
+              puede liberar recursos en el primario del fragmento, permitiendo
+              que el primario maneje las operaciones de escritura con menos
+              contención.En esencia, la
+              <span
+                class="tooltip"
+                data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+                >replicación</span
+              >
+              aborda la
+              <span
+                class="tooltip"
+                data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+                >disponibilidad</span
+              >
+              y el escalado de lectura, no la atomicidad de transacciones
+              distribuidas directamente. Integrarlas requiere un diseño
+              cuidadoso para evitar introducir más complejidad de
+              <span
+                class="tooltip"
+                data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error."
+                >consistencia</span
+              >
+              y
+              <span
+                class="tooltip"
+                data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                >latencia</span
+              >.
+            </p>
+          </div>
         </div>
-      
-        <div class="accordion-item">
-          <p class="accordion-question">Si su aplicación requiere transacciones distribuidas atómicas a través de múltiples fragmentos (shards), ¿qué dificultades específicas enfrenta y cómo la replicación podría, paradójicamente, empeorar o mejorar esta situación dependiendo de la implementación?</p>
-          <div class="accordion-answer"><p>Las transacciones distribuidas atómicas entre múltiples fragmentos enfrentan dificultades como: 1. Complejidad del protocolo: Requieren protocolos complejos como Two-Phase Commit (2PC) o Sagas, que aumentan la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> y la sobrecarga de la red. 2. Puntos únicos de fallo: El coordinador de 2PC puede convertirse en un cuello de botella o un SPOF. 3. Bloqueos prolongados: Durante 2PC, los recursos se bloquean en todos los shards participantes, reduciendo la concurrencia y aumentando el riesgo de interbloqueos. 4. Recuperación ante fallos: Manejar fallos durante cualquier fase de 2PC es extremadamente complejo para garantizar la atomicidad. 5. Rendimiento: El costo de coordinación reduce drásticamente el rendimiento en comparación con las transacciones de un solo fragmento.La <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> podría empeorar la situación si: Cada fragmento tiene réplicas y el 2PC necesita asegurarse de que todos los primarios y sus réplicas relevantes estén listos para confirmar, lo que añade más coordinadores y comunicación. Si la <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> es asíncrona, se introduce la posibilidad de que los datos confirmados en el primario aún no se hayan propagado a las réplicas al momento de un posible <span class="tooltip" data-tooltip-text="Un tipo de suscripción en sistemas de mensajería donde múltiples consumidores pueden conectarse, pero solo uno (el maestro) recibe mensajes. Si el maestro se desconecta, uno de los otros consumidores (en espera) toma el relevo.">failover</span>, rompiendo la <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> si se intenta recuperar una transacción distribuida incompleta.La <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> podría mejorar la situación si: Se utiliza para proporcionar alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> para los primarios de los shards, asegurando que el coordinador de 2PC (o los participantes de la transacción) siempre tengan un primario disponible para interactuar. Al escalar la capacidad de lectura de cada fragmento, la <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> puede liberar recursos en el primario del fragmento, permitiendo que el primario maneje las operaciones de escritura con menos contención.En esencia, la <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> aborda la <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> y el escalado de lectura, no la atomicidad de transacciones distribuidas directamente. Integrarlas requiere un diseño cuidadoso para evitar introducir más complejidad de <span class="tooltip" data-tooltip-text="En bases de datos, garantiza que cualquier transacción llevará la base de datos de un estado válido a otro, y que cada lectura recibirá la escritura más reciente o un error.">consistencia</span> y <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span>.</p></div>
-        </div>
-      </div><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGc8g3mlXuEpij0BRikoTwHXtczW7mwAcmSHdSeEd3iLmy-seN4eHP4fSJxNbFJca9OAedsRPmCR744kicrOuGUbvMdegbonefKNwq1J2UVVARJfL5zTcPErCGWSnKhC6Gs_2HG6yoML_ykfugADljY7Wx_wmy_OA_uptXeFFdInIRwXWkrCIu2wXzvqsrH0mQMMnSt_5pAGYPJhQgEpQ==" target="_blank" rel="noopener noreferrer">dev.to</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHo5xZyQvVQiSCQd6o6tAI2xeXJKBW2mLfr7VkFWLMdOtTunmMNxkUA1oQYOtpzIu61kDrL0JSuFR7PC74ed7gVIGsY94uqt63WupWZ8XvsgH0LlxFIDdByZbpo1GfLl9fkf8WM8LOK43oTQ98W7pQW2FFx2sIM9mRlLzgI53nDvy8VAZVeUKKK3t60ZWUthSJ_XBhq-DE=" target="_blank" rel="noopener noreferrer">devops.dev</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGmiZZl-RkBNBzLtaxomt4LXcsvhqetJLqD6OsVf5JwcGXSRenqU4SVSFvvtLQAqwkWa-GrwYE5ukjhZUUb4Zap2_BjGBjRjjLnRGp_swSP_vzzzlrGxPBjXEy33UR44LS33-P97q9Zxeac__oWiZhIJKPNzO4EPcZ8adipOrMh" target="_blank" rel="noopener noreferrer">substack.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHI0qh9PrDMs7m54saEzgCwn98xq1yFbkmzSjg2m_SPStiZ6Ijy8cHTd3CUWxRIZDakFZDMAL97zx4sVTGnXaXetXZcou52Eu67SK6itDGlX2UzKqipN11ZA0o8-RTUU48JVp3sMkQ2ytzHZ3V5Mj0L6mCXdpQ6hXjVEbN3KUIVp7ALmeuVMB4aKJ5laoIC2xjHrdDQcBXR3tQeSg==" target="_blank" rel="noopener noreferrer">geeksforgeeks.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUOzOrmedUACF3iXgj_MS6GQS9BDAAn-voNvfeQsYTPbLFyAl-GzSx-X7kepf3KKrO7dOpdH80znW5r0cBl0Fi2PHBbHsJlT0q1CXsGYW-C35xksdEtduLc9GmpTiEgBVzcC4ZX529TZJAf0mbBafn1kfmAVzyqXsB56qFTMIJmppI6w-vaqx5pxjJFS6YjFnfPPbbYju91O9engTYHkVVZlnBc1al" target="_blank" rel="noopener noreferrer">medium.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHGdkvvYWVxx95r5RkONagDH3NE8hc0Pf8jlPRvWNS8bgwHq6sQ-xHlbl5WjLxL2EBx3vuaCuOsUcmPm4WN8ekV4qLfVq5MqFcG6t_XRx47kte-rV3sWLXhZYuOTrWCj4k-wEVmTm9D6iaSEgBBjEMWTSqehaCgokFj6ZdwFuB_CxKfDMTGKXXU" target="_blank" rel="noopener noreferrer">double.cloud</a></li></ul>
-  </div>
-</body>
+      </div>
+      <h2>Recursos Adicionales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGc8g3mlXuEpij0BRikoTwHXtczW7mwAcmSHdSeEd3iLmy-seN4eHP4fSJxNbFJca9OAedsRPmCR744kicrOuGUbvMdegbonefKNwq1J2UVVARJfL5zTcPErCGWSnKhC6Gs_2HG6yoML_ykfugADljY7Wx_wmy_OA_uptXeFFdInIRwXWkrCIu2wXzvqsrH0mQMMnSt_5pAGYPJhQgEpQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >dev.to</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHo5xZyQvVQiSCQd6o6tAI2xeXJKBW2mLfr7VkFWLMdOtTunmMNxkUA1oQYOtpzIu61kDrL0JSuFR7PC74ed7gVIGsY94uqt63WupWZ8XvsgH0LlxFIDdByZbpo1GfLl9fkf8WM8LOK43oTQ98W7pQW2FFx2sIM9mRlLzgI53nDvy8VAZVeUKKK3t60ZWUthSJ_XBhq-DE="
+            target="_blank"
+            rel="noopener noreferrer"
+            >devops.dev</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGmiZZl-RkBNBzLtaxomt4LXcsvhqetJLqD6OsVf5JwcGXSRenqU4SVSFvvtLQAqwkWa-GrwYE5ukjhZUUb4Zap2_BjGBjRjjLnRGp_swSP_vzzzlrGxPBjXEy33UR44LS33-P97q9Zxeac__oWiZhIJKPNzO4EPcZ8adipOrMh"
+            target="_blank"
+            rel="noopener noreferrer"
+            >substack.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHI0qh9PrDMs7m54saEzgCwn98xq1yFbkmzSjg2m_SPStiZ6Ijy8cHTd3CUWxRIZDakFZDMAL97zx4sVTGnXaXetXZcou52Eu67SK6itDGlX2UzKqipN11ZA0o8-RTUU48JVp3sMkQ2ytzHZ3V5Mj0L6mCXdpQ6hXjVEbN3KUIVp7ALmeuVMB4aKJ5laoIC2xjHrdDQcBXR3tQeSg=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >geeksforgeeks.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUOzOrmedUACF3iXgj_MS6GQS9BDAAn-voNvfeQsYTPbLFyAl-GzSx-X7kepf3KKrO7dOpdH80znW5r0cBl0Fi2PHBbHsJlT0q1CXsGYW-C35xksdEtduLc9GmpTiEgBVzcC4ZX529TZJAf0mbBafn1kfmAVzyqXsB56qFTMIJmppI6w-vaqx5pxjJFS6YjFnfPPbbYju91O9engTYHkVVZlnBc1al"
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHGdkvvYWVxx95r5RkONagDH3NE8hc0Pf8jlPRvWNS8bgwHq6sQ-xHlbl5WjLxL2EBx3vuaCuOsUcmPm4WN8ekV4qLfVq5MqFcG6t_XRx47kte-rV3sWLXhZYuOTrWCj4k-wEVmTm9D6iaSEgBBjEMWTSqehaCgokFj6ZdwFuB_CxKfDMTGKXXU"
+            target="_blank"
+            rel="noopener noreferrer"
+            >double.cloud</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

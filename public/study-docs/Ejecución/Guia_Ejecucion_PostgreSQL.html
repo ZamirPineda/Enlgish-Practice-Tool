@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_PostgreSQL</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_PostgreSQL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,81 +52,139 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_PostgreSQL</h1>
-    <h2>Explicación</h2><p>Esta guía te permitirá levantar una instancia básica de PostgreSQL usando Docker o Podman. Utilizaremos la imagen oficial de PostgreSQL y configuraremos la base de datos, el usuario y la contraseña mediante variables de entorno. Los datos de la base de datos se persistirán en un volumen, asegurando que no se pierdan al reiniciar el contenedor. Aunque no es estrictamente necesario un <code>Dockerfile</code> personalizado para una configuración básica (se puede usar la imagen oficial directamente), hemos incluido uno mínimo para demostrar la estructura. No se necesitan archivos de soporte adicionales, ya que las variables de entorno son suficientes para la configuración inicial.</p><h2>Comandos de Ejecución</h2><pre><code>docker run -d --name my-postgres -p 5432:5432 -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb -v pgdata:/var/lib/postgresql/data postgres:latest
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_PostgreSQL</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía te permitirá levantar una instancia básica de PostgreSQL
+        usando Docker o Podman. Utilizaremos la imagen oficial de PostgreSQL y
+        configuraremos la base de datos, el usuario y la contraseña mediante
+        variables de entorno. Los datos de la base de datos se persistirán en un
+        volumen, asegurando que no se pierdan al reiniciar el contenedor. Aunque
+        no es estrictamente necesario un <code>Dockerfile</code> personalizado
+        para una configuración básica (se puede usar la imagen oficial
+        directamente), hemos incluido uno mínimo para demostrar la estructura.
+        No se necesitan archivos de soporte adicionales, ya que las variables de
+        entorno son suficientes para la configuración inicial.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker run -d --name my-postgres -p 5432:5432 -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb -v pgdata:/var/lib/postgresql/data postgres:latest
 
 Si usas Podman, simplemente reemplaza 'docker' por 'podman':
-podman run -d --name my-postgres -p 5432:5432 -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb -v pgdata:/var/lib/postgresql/data postgres:latest</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile</h3><pre><code># Usa la imagen oficial de PostgreSQL como base. Esto asegura que obtendremos
+podman run -d --name my-postgres -p 5432:5432 -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb -v pgdata:/var/lib/postgresql/data postgres:latest</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile</h3>
+      <pre><code># Usa la imagen oficial de PostgreSQL como base. Esto asegura que obtendremos
 # una instalación de PostgreSQL preconfigurada y lista para usar.
 FROM postgres:latest
 
@@ -138,8 +198,58 @@ FROM postgres:latest
 # Cualquier archivo .sql, .sh o .gz en /docker-entrypoint-initdb.d/ será
 # ejecutado por la imagen oficial cuando el contenedor se inicie por primera vez.
 
-# EXPOSE 5432 (el puerto 5432 ya está expuesto por la imagen base de PostgreSQL)</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYqpht9inA3t7AMip2GnHjm8pV86Y4yliTChoB_dN8XV3_WDnSEoBFQiBrVsAF8R0LI5kEKpCKRNa5naxpaG27aem5f0PZog8rHGZAXQI0bqcjN1jkTSmCc2NiHcnxjQ==" target="_blank" rel="noopener noreferrer">neon.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQElt5OZOC7IDhSGlF9fu2MC9YvTKg4ZCcYfyQxRMtVKNhDC1oU3d2BiGlj8zIWCflfo_G2cB4_YhRGIsF8kjWHBT8GjtF4palBoAX4GDOw_GIW4DcrFiCqCOw43sAhNSU8_9EJbh-M0uGHWjy5RKH-K" target="_blank" rel="noopener noreferrer">postgresql.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeK6Yy7aPL-t_3fHdVV2qI7Rz8rtsaXq4xdFdm35hMehiqR9Rgdtq7tj4qxBiI5RQNrEnBczCKJCmL1mh3EWs7sRvehXldqPA3EdsbeB1KDCRbwu3OIFiE-YXHJcegNa3kwusaVwAIaxh8PISxos6jiI3zlBTP" target="_blank" rel="noopener noreferrer">hackr.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0wHGl0aQhloGO0IHfkbZ_jdYVL2ROGHdD0gcWX1ybBJgQ2QPssYKSzo_oQ8Mf_MxquuhwCCoKJgxR4Jqa9raQQJiR8b6ez5HoptSRbKoWJqd-A-n7GDpF6nSXFI-CMN0WgCBfD3DgT2j8a3uQzz1BZgkSazogw8UAwi8NqZnBUrTln9sLK6OYQhP7fhSyqqPbjN-oY2yL2GHzx6hxDCrLkjORFVwZHKTC3zxl" target="_blank" rel="noopener noreferrer">instaclustr.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGvkogLW9cQoltsVQl3mIwb23Yk_oYfBYtCqaXTOabkNy-mvHHp3HEsoQXUvcNKWvOHJDUx4uBHgyM1KsoH_zrHHlMptJooytavIWcoXvd5jlX8DOz1bXArODgb2TvCl2EXnCUP67N5bJtV75_anSNdQw==" target="_blank" rel="noopener noreferrer">neon.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtBHItwwRdNmtR77DqBEJjtjaHsL0SKxDOL1y5VCmEzomoe97iat83oStcH-MUHfBNiFjo46onUE6tzrys93O9Q6K9WmlXh_O3w6QuT2CS_uptB9RXwkQXrQX4KdNdtiMn6JfD8ParDwcpw7e9spxvfaoIp6HyJoTYK48GqwO1qugBb3cKENedqek73F-Z" target="_blank" rel="noopener noreferrer">dev.to</a></li></ul>
-  </div>
-</body>
+# EXPOSE 5432 (el puerto 5432 ya está expuesto por la imagen base de PostgreSQL)</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYqpht9inA3t7AMip2GnHjm8pV86Y4yliTChoB_dN8XV3_WDnSEoBFQiBrVsAF8R0LI5kEKpCKRNa5naxpaG27aem5f0PZog8rHGZAXQI0bqcjN1jkTSmCc2NiHcnxjQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >neon.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQElt5OZOC7IDhSGlF9fu2MC9YvTKg4ZCcYfyQxRMtVKNhDC1oU3d2BiGlj8zIWCflfo_G2cB4_YhRGIsF8kjWHBT8GjtF4palBoAX4GDOw_GIW4DcrFiCqCOw43sAhNSU8_9EJbh-M0uGHWjy5RKH-K"
+            target="_blank"
+            rel="noopener noreferrer"
+            >postgresql.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeK6Yy7aPL-t_3fHdVV2qI7Rz8rtsaXq4xdFdm35hMehiqR9Rgdtq7tj4qxBiI5RQNrEnBczCKJCmL1mh3EWs7sRvehXldqPA3EdsbeB1KDCRbwu3OIFiE-YXHJcegNa3kwusaVwAIaxh8PISxos6jiI3zlBTP"
+            target="_blank"
+            rel="noopener noreferrer"
+            >hackr.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0wHGl0aQhloGO0IHfkbZ_jdYVL2ROGHdD0gcWX1ybBJgQ2QPssYKSzo_oQ8Mf_MxquuhwCCoKJgxR4Jqa9raQQJiR8b6ez5HoptSRbKoWJqd-A-n7GDpF6nSXFI-CMN0WgCBfD3DgT2j8a3uQzz1BZgkSazogw8UAwi8NqZnBUrTln9sLK6OYQhP7fhSyqqPbjN-oY2yL2GHzx6hxDCrLkjORFVwZHKTC3zxl"
+            target="_blank"
+            rel="noopener noreferrer"
+            >instaclustr.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGvkogLW9cQoltsVQl3mIwb23Yk_oYfBYtCqaXTOabkNy-mvHHp3HEsoQXUvcNKWvOHJDUx4uBHgyM1KsoH_zrHHlMptJooytavIWcoXvd5jlX8DOz1bXArODgb2TvCl2EXnCUP67N5bJtV75_anSNdQw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >neon.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtBHItwwRdNmtR77DqBEJjtjaHsL0SKxDOL1y5VCmEzomoe97iat83oStcH-MUHfBNiFjo46onUE6tzrys93O9Q6K9WmlXh_O3w6QuT2CS_uptB9RXwkQXrQX4KdNdtiMn6JfD8ParDwcpw7e9spxvfaoIp6HyJoTYK48GqwO1qugBb3cKENedqek73F-Z"
+            target="_blank"
+            rel="noopener noreferrer"
+            >dev.to</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Loki</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Loki</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,79 +52,206 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Loki</h1>
-    <h2>Explicación</h2><p>Esta guía te ayudará a levantar una instancia básica de Loki, Promtail y Grafana localmente usando Docker Compose.\n\n<em>   <strong>Loki</strong>: Es un sistema de agregación de logs diseñado para ser eficiente y escalable. Almacena logs de una manera similar a como Prometheus almacena métricas, indexando solo metadatos (etiquetas) en lugar del contenido completo del log.\n</em>   <strong>Promtail</strong>: Es el agente de Loki, encargado de descubrir, recolectar y enviar logs de las aplicaciones a Loki. En esta configuración, Promtail estará configurado para recolectar logs de otros contenedores Docker en el mismo host.\n*   <strong>Grafana</strong>: Es una plataforma de visualización y análisis de código abierto. La usaremos para consultar y visualizar los logs almacenados en Loki a través de su interfaz de usuario.\n\nEl <code>docker-compose.yml</code> define los tres servicios, sus configuraciones y cómo se conectan entre sí. Los archivos de configuración de Loki, Promtail y Grafana se montan como volúmenes para una fácil personalización.\n\n<strong>Pasos:</strong>\n1.  Guarda los archivos <code>docker-compose.yml</code>, <code>loki-config.yml</code>, <code>promtail-config.yml</code> y <code>grafana-datasource.yml</code> en el mismo directorio.\n2.  Ejecuta el comando <code>docker-compose up -d</code> para iniciar los contenedores.\n3.  Accede a Grafana en <code>http://localhost:3000</code>. El usuario y la contraseña por defecto son <code>admin/admin</code>. Se te pedirá que cambies la contraseña al iniciar sesión por primera vez.\n4.  Una vez en Grafana, la fuente de datos de Loki ya debería estar configurada. Navega a "Explore" y selecciona "Loki" como tu fuente de datos.\n5.  Puedes usar la barra de consulta de LogQL (lenguaje de consulta de Loki) para buscar logs. Por ejemplo, <code>{job="docker"}</code> mostrará todos los logs recolectados por Promtail.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>docker-compose.yml</h3><pre><code>version: "3.8"\n\nnetworks:\n  loki-grafana:\n\nservices:\n  loki:\n    image: grafana/loki:2.9.0\n    container_name: loki\n    ports:\n      - "3100:3100"\n    command: -config.file=/etc/loki/config.yml\n    volumes:\n      - ./loki-config.yml:/etc/loki/config.yml\n      - loki-data:/loki\n    networks:\n      - loki-grafana\n    restart: unless-stopped\n\n  promtail:\n    image: grafana/promtail:2.9.0\n    container_name: promtail\n    command: -config.file=/etc/promtail/config.yml\n    volumes:\n      - ./promtail-config.yml:/etc/promtail/config.yml\n      - /var/log:/var/log\n      - /var/lib/docker/containers:/var/lib/docker/containers:ro\n      - /var/run/docker.sock:/var/run/docker.sock:ro\n    networks:\n      - loki-grafana\n    restart: unless-stopped\n\n  grafana:\n    image: grafana/grafana:10.2.3\n    container_name: grafana\n    ports:\n      - "3000:3000"\n    volumes:\n      - grafana-data:/var/lib/grafana\n      - ./grafana-datasource.yml:/etc/grafana/provisioning/datasources/loki-datasource.yml\n    networks:\n      - loki-grafana\n    restart: unless-stopped\n\nvolumes:\n  loki-data:\n  grafana-data:</code></pre><h3>loki-config.yml</h3><pre><code>auth_enabled: false\n\nserver:\n  http_listen_port: 3100\n  grpc_listen_port: 9095\n\ncommon:\n  path_prefix: /loki\n  replication_factor: 1\n  storage_config:\n    boltdb_shipper:\n      active_index_directory: /loki/boltdb-shipper-active\n      cache_location: /loki/boltdb-shipper-cache\n      resync_interval: 5s\n    filesystem:\n      directory: /loki/chunks\n  ring:\n    kvstore:\n      store: boltdb\n    replication_factor: 1\n\nschema_config:\n  configs:\n    - from: 2020-10-27\n      store: boltdb-shipper\n      object_store: filesystem\n      schema: v11\n      period: 24h\n\ncompactor:\n  working_directory: /loki/boltdb-shipper-compactor\n  shared_store: filesystem</code></pre><h3>promtail-config.yml</h3><pre><code>server:\n  http_listen_port: 9080\n  grpc_listen_port: 0\n\npositions:\n  filename: /tmp/positions.yaml\n\nclients:\n  - url: http://loki:3100/loki/api/v1/push\n\nscrape_configs:\n  - job_name: docker\n    docker_sd_configs:\n      - host: unix:///var/run/docker.sock\n        refresh_interval: 5s\n    relabel_configs:\n      - source_labels: ['__meta_docker_container_name']\n        regex: '/(.*)'\n        target_label: 'container_name'\n      - source_labels: ['__meta_docker_container_id']\n        target_label: 'container_id'\n      - source_labels: ['__meta_docker_image_name']\n        target_label: 'image_name'\n\n      # Set 'job' label: prefer docker-compose service name, fallback to container name\n      - source_labels: ['__meta_docker_container_name']\n        regex: '/(.*)'\n        target_label: 'job'\n        replacement: '$1'\n      - source_labels: ['__meta_docker_container_label_com_docker_compose_service']\n        regex: '(.+)'\n        target_label: 'job'\n        replacement: '$1'\n\n      # Drop other internal Docker metadata labels\n      - regex: '__meta_docker_container_label_(.+)'\n        action: drop\n      - regex: '__meta_docker_network_id|__meta_docker_network_name|__meta_docker_network_endpoint_ip_address|__meta_docker_port_private|__meta_docker_port_public|__meta_docker_port_public_ip'\n        action: drop\n      - source_labels: ['__meta_docker_container_name']\n        target_label: '__host__'\n        replacement: 'localhost'</code></pre><h3>grafana-datasource.yml</h3><pre><code>apiVersion: 1\n\ndatasources:\n  - name: Loki\n    type: loki\n    access: proxy\n    orgId: 1\n    url: http://loki:3100\n    basicAuth: false\n    isDefault: true\n    version: 1\n    editable: true\n    jsonData:\n      maxLines: 1000</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExd4HpsX3rdO7MJvfsrjNlDcnw6OjZAzBFkMDu4A3HItxzyxniU1xcvv8a3QvpWpKwrD3dJAJ5Bvzvnu4QAVJERK1lTLQJGsvf54qH8U2rdNoVHuzayOmFrmsdMCBcYGYkyuXbZQOtzNh_zm3jyoBUMCVc8sZ4DfVt-awwy8QlKGo=" target="_blank" rel="noopener noreferrer">grafana.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKB6xGX5VVLJu3qLD9L0-wqG4aI9Z2i9SD5T6dxV3W5wP2hVZkbvlKaOZCg1UiGn5ZDXvghXcSSNwYFS0wWFwoUN2I8Oa4McQVdrYvgk-e3Lt-1yx75Wa_88HoCWn5cpbKpewHZ_st6KnOo2KeetNA88s2MWXnVp4=" target="_blank" rel="noopener noreferrer">grafana.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBU7eotmE9jaPAlB-92lgJAytqkH1OHcN1YFzL-SwQg9J0CMKdOpXrVTWhq0XLEHaIog_vdxlPMUpQpZLU5lagUZX_6cCQspVWDCZbZPdw1SojGX6hPCad5J0zP45CwkVdlkiygw4=" target="_blank" rel="noopener noreferrer">youtube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGsC1A5xiGfEKuMnLFKnNC2CAiDHy9vsOKWF2j33UqRhNF2Oo7soc0-tR9vHya_VdcC4V5EVi3kRquhwHTPXJBPzJFUVe7uOHO-rJ7SLFkfC4NkELGNXJVonIaYcbyhMnStPgow-7s=" target="_blank" rel="noopener noreferrer">youtube.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEkLOlIp8cujfpqJOadMf_LWT52xGkLkUVy7dzcTdE0qVAfjw-kFccAZtdUIJXBKMMzNuiuPSwPFhfv4nA4dKDJiRuvLm-HY0czeQnh86yFKojLPF8iPdVihd4=" target="_blank" rel="noopener noreferrer">github.com</a></li></ul>
-  </div>
-</body>
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Loki</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía te ayudará a levantar una instancia básica de Loki, Promtail y
+        Grafana localmente usando Docker Compose.\n\n<em>
+          <strong>Loki</strong>: Es un sistema de agregación de logs diseñado
+          para ser eficiente y escalable. Almacena logs de una manera similar a
+          como Prometheus almacena métricas, indexando solo metadatos
+          (etiquetas) en lugar del contenido completo del log.\n</em
+        >
+        <strong>Promtail</strong>: Es el agente de Loki, encargado de descubrir,
+        recolectar y enviar logs de las aplicaciones a Loki. En esta
+        configuración, Promtail estará configurado para recolectar logs de otros
+        contenedores Docker en el mismo host.\n* <strong>Grafana</strong>: Es
+        una plataforma de visualización y análisis de código abierto. La
+        usaremos para consultar y visualizar los logs almacenados en Loki a
+        través de su interfaz de usuario.\n\nEl
+        <code>docker-compose.yml</code> define los tres servicios, sus
+        configuraciones y cómo se conectan entre sí. Los archivos de
+        configuración de Loki, Promtail y Grafana se montan como volúmenes para
+        una fácil personalización.\n\n<strong>Pasos:</strong>\n1. Guarda los
+        archivos <code>docker-compose.yml</code>, <code>loki-config.yml</code>,
+        <code>promtail-config.yml</code> y
+        <code>grafana-datasource.yml</code> en el mismo directorio.\n2. Ejecuta
+        el comando <code>docker-compose up -d</code> para iniciar los
+        contenedores.\n3. Accede a Grafana en
+        <code>http://localhost:3000</code>. El usuario y la contraseña por
+        defecto son <code>admin/admin</code>. Se te pedirá que cambies la
+        contraseña al iniciar sesión por primera vez.\n4. Una vez en Grafana, la
+        fuente de datos de Loki ya debería estar configurada. Navega a "Explore"
+        y selecciona "Loki" como tu fuente de datos.\n5. Puedes usar la barra de
+        consulta de LogQL (lenguaje de consulta de Loki) para buscar logs. Por
+        ejemplo, <code>{job="docker"}</code> mostrará todos los logs
+        recolectados por Promtail.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: "3.8"\n\nnetworks:\n  loki-grafana:\n\nservices:\n  loki:\n    image: grafana/loki:2.9.0\n    container_name: loki\n    ports:\n      - "3100:3100"\n    command: -config.file=/etc/loki/config.yml\n    volumes:\n      - ./loki-config.yml:/etc/loki/config.yml\n      - loki-data:/loki\n    networks:\n      - loki-grafana\n    restart: unless-stopped\n\n  promtail:\n    image: grafana/promtail:2.9.0\n    container_name: promtail\n    command: -config.file=/etc/promtail/config.yml\n    volumes:\n      - ./promtail-config.yml:/etc/promtail/config.yml\n      - /var/log:/var/log\n      - /var/lib/docker/containers:/var/lib/docker/containers:ro\n      - /var/run/docker.sock:/var/run/docker.sock:ro\n    networks:\n      - loki-grafana\n    restart: unless-stopped\n\n  grafana:\n    image: grafana/grafana:10.2.3\n    container_name: grafana\n    ports:\n      - "3000:3000"\n    volumes:\n      - grafana-data:/var/lib/grafana\n      - ./grafana-datasource.yml:/etc/grafana/provisioning/datasources/loki-datasource.yml\n    networks:\n      - loki-grafana\n    restart: unless-stopped\n\nvolumes:\n  loki-data:\n  grafana-data:</code></pre>
+      <h3>loki-config.yml</h3>
+      <pre><code>auth_enabled: false\n\nserver:\n  http_listen_port: 3100\n  grpc_listen_port: 9095\n\ncommon:\n  path_prefix: /loki\n  replication_factor: 1\n  storage_config:\n    boltdb_shipper:\n      active_index_directory: /loki/boltdb-shipper-active\n      cache_location: /loki/boltdb-shipper-cache\n      resync_interval: 5s\n    filesystem:\n      directory: /loki/chunks\n  ring:\n    kvstore:\n      store: boltdb\n    replication_factor: 1\n\nschema_config:\n  configs:\n    - from: 2020-10-27\n      store: boltdb-shipper\n      object_store: filesystem\n      schema: v11\n      period: 24h\n\ncompactor:\n  working_directory: /loki/boltdb-shipper-compactor\n  shared_store: filesystem</code></pre>
+      <h3>promtail-config.yml</h3>
+      <pre><code>server:\n  http_listen_port: 9080\n  grpc_listen_port: 0\n\npositions:\n  filename: /tmp/positions.yaml\n\nclients:\n  - url: http://loki:3100/loki/api/v1/push\n\nscrape_configs:\n  - job_name: docker\n    docker_sd_configs:\n      - host: unix:///var/run/docker.sock\n        refresh_interval: 5s\n    relabel_configs:\n      - source_labels: ['__meta_docker_container_name']\n        regex: '/(.*)'\n        target_label: 'container_name'\n      - source_labels: ['__meta_docker_container_id']\n        target_label: 'container_id'\n      - source_labels: ['__meta_docker_image_name']\n        target_label: 'image_name'\n\n      # Set 'job' label: prefer docker-compose service name, fallback to container name\n      - source_labels: ['__meta_docker_container_name']\n        regex: '/(.*)'\n        target_label: 'job'\n        replacement: '$1'\n      - source_labels: ['__meta_docker_container_label_com_docker_compose_service']\n        regex: '(.+)'\n        target_label: 'job'\n        replacement: '$1'\n\n      # Drop other internal Docker metadata labels\n      - regex: '__meta_docker_container_label_(.+)'\n        action: drop\n      - regex: '__meta_docker_network_id|__meta_docker_network_name|__meta_docker_network_endpoint_ip_address|__meta_docker_port_private|__meta_docker_port_public|__meta_docker_port_public_ip'\n        action: drop\n      - source_labels: ['__meta_docker_container_name']\n        target_label: '__host__'\n        replacement: 'localhost'</code></pre>
+      <h3>grafana-datasource.yml</h3>
+      <pre><code>apiVersion: 1\n\ndatasources:\n  - name: Loki\n    type: loki\n    access: proxy\n    orgId: 1\n    url: http://loki:3100\n    basicAuth: false\n    isDefault: true\n    version: 1\n    editable: true\n    jsonData:\n      maxLines: 1000</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExd4HpsX3rdO7MJvfsrjNlDcnw6OjZAzBFkMDu4A3HItxzyxniU1xcvv8a3QvpWpKwrD3dJAJ5Bvzvnu4QAVJERK1lTLQJGsvf54qH8U2rdNoVHuzayOmFrmsdMCBcYGYkyuXbZQOtzNh_zm3jyoBUMCVc8sZ4DfVt-awwy8QlKGo="
+            target="_blank"
+            rel="noopener noreferrer"
+            >grafana.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKB6xGX5VVLJu3qLD9L0-wqG4aI9Z2i9SD5T6dxV3W5wP2hVZkbvlKaOZCg1UiGn5ZDXvghXcSSNwYFS0wWFwoUN2I8Oa4McQVdrYvgk-e3Lt-1yx75Wa_88HoCWn5cpbKpewHZ_st6KnOo2KeetNA88s2MWXnVp4="
+            target="_blank"
+            rel="noopener noreferrer"
+            >grafana.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBU7eotmE9jaPAlB-92lgJAytqkH1OHcN1YFzL-SwQg9J0CMKdOpXrVTWhq0XLEHaIog_vdxlPMUpQpZLU5lagUZX_6cCQspVWDCZbZPdw1SojGX6hPCad5J0zP45CwkVdlkiygw4="
+            target="_blank"
+            rel="noopener noreferrer"
+            >youtube.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGsC1A5xiGfEKuMnLFKnNC2CAiDHy9vsOKWF2j33UqRhNF2Oo7soc0-tR9vHya_VdcC4V5EVi3kRquhwHTPXJBPzJFUVe7uOHO-rJ7SLFkfC4NkELGNXJVonIaYcbyhMnStPgow-7s="
+            target="_blank"
+            rel="noopener noreferrer"
+            >youtube.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEkLOlIp8cujfpqJOadMf_LWT52xGkLkUVy7dzcTdE0qVAfjw-kFccAZtdUIJXBKMMzNuiuPSwPFhfv4nA4dKDJiRuvLm-HY0czeQnh86yFKojLPF8iPdVihd4="
+            target="_blank"
+            rel="noopener noreferrer"
+            >github.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

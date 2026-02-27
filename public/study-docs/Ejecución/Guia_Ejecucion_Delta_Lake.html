@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia_Ejecucion_Delta Lake</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia_Ejecucion_Delta Lake</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,81 +52,177 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Guia_Ejecucion_Delta Lake</h1>
-    <h2>Explicación</h2><p>Esta guía le permitirá configurar una instancia local básica de Delta Lake utilizando Apache Spark y JupyterLab, orquestada con <code>docker-compose</code>. La configuración incluye:</p><ul><li>  <strong>Spark Master</strong>: El nodo principal de Apache Spark que coordina el clúster.</li><li>  <strong>Spark Worker</strong>: Un nodo trabajador de Spark que ejecuta tareas computacionales.</li><li>  <strong>JupyterLab con PySpark y Delta Lake</strong>: Un entorno interactivo de desarrollo donde podrá escribir y ejecutar código Python (PySpark) para interactuar con Delta Lake. Este servicio se construirá a partir de un <code>Dockerfile</code> personalizado que añade las librerías <code>delta-spark</code> y <code>jupyterlab</code> a una imagen base de Spark.</li></ul><p>La persistencia de los datos de Delta Lake se gestionará mediante un volumen de Docker (<code>delta_lake_data</code>) compartido entre los servicios, asegurando que sus tablas Delta Lake no se pierdan al reiniciar los contenedores.</p><h3>Pasos para ejecutar:</h3><p>1.  <strong>Cree la estructura de archivos:</strong> Cree un directorio para su proyecto (ej. <code>delta-lake-local</code>) y dentro de él, cree una carpeta llamada <code>notebooks</code> para almacenar sus cuadernos de Jupyter. Asegúrese de que <code>docker-compose.yml</code> y <code>Dockerfile.spark-delta</code> estén en el directorio raíz del proyecto.</p><pre><code>    mkdir delta-lake-local
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Guia_Ejecucion_Delta Lake</h1>
+      <h2>Explicación</h2>
+      <p>
+        Esta guía le permitirá configurar una instancia local básica de Delta
+        Lake utilizando Apache Spark y JupyterLab, orquestada con
+        <code>docker-compose</code>. La configuración incluye:
+      </p>
+      <ul>
+        <li>
+          <strong>Spark Master</strong>: El nodo principal de Apache Spark que
+          coordina el clúster.
+        </li>
+        <li>
+          <strong>Spark Worker</strong>: Un nodo trabajador de Spark que ejecuta
+          tareas computacionales.
+        </li>
+        <li>
+          <strong>JupyterLab con PySpark y Delta Lake</strong>: Un entorno
+          interactivo de desarrollo donde podrá escribir y ejecutar código
+          Python (PySpark) para interactuar con Delta Lake. Este servicio se
+          construirá a partir de un <code>Dockerfile</code> personalizado que
+          añade las librerías <code>delta-spark</code> y
+          <code>jupyterlab</code> a una imagen base de Spark.
+        </li>
+      </ul>
+      <p>
+        La persistencia de los datos de Delta Lake se gestionará mediante un
+        volumen de Docker (<code>delta_lake_data</code>) compartido entre los
+        servicios, asegurando que sus tablas Delta Lake no se pierdan al
+        reiniciar los contenedores.
+      </p>
+      <h3>Pasos para ejecutar:</h3>
+      <p>
+        1. <strong>Cree la estructura de archivos:</strong> Cree un directorio
+        para su proyecto (ej. <code>delta-lake-local</code>) y dentro de él,
+        cree una carpeta llamada <code>notebooks</code> para almacenar sus
+        cuadernos de Jupyter. Asegúrese de que <code>docker-compose.yml</code> y
+        <code>Dockerfile.spark-delta</code> estén en el directorio raíz del
+        proyecto.
+      </p>
+      <pre><code>    mkdir delta-lake-local
     cd delta-lake-local
     mkdir notebooks
-    # Cree los archivos docker-compose.yml y Dockerfile.spark-delta aquí</code></pre><p>2.  <strong>Ejecute los contenedores:</strong> Abra una terminal en el directorio <code>delta-lake-local</code> y ejecute el comando proporcionado en <code>runCommands</code>.</p><p>3.  <strong>Acceda a JupyterLab:</strong> Una vez que los contenedores estén en funcionamiento, acceda a JupyterLab abriendo su navegador web y navegando a <code>http://localhost:8888</code>.</p><p>4.  <strong>Pruebe Delta Lake:</strong> Dentro de JupyterLab, cree un nuevo <code>Python 3 (PySpark)</code> notebook y pegue el siguiente código para probar la funcionalidad de Delta Lake:</p><pre><code>    from pyspark.sql import SparkSession
+    # Cree los archivos docker-compose.yml y Dockerfile.spark-delta aquí</code></pre>
+      <p>
+        2. <strong>Ejecute los contenedores:</strong> Abra una terminal en el
+        directorio <code>delta-lake-local</code> y ejecute el comando
+        proporcionado en <code>runCommands</code>.
+      </p>
+      <p>
+        3. <strong>Acceda a JupyterLab:</strong> Una vez que los contenedores
+        estén en funcionamiento, acceda a JupyterLab abriendo su navegador web y
+        navegando a <code>http://localhost:8888</code>.
+      </p>
+      <p>
+        4. <strong>Pruebe Delta Lake:</strong> Dentro de JupyterLab, cree un
+        nuevo <code>Python 3 (PySpark)</code> notebook y pegue el siguiente
+        código para probar la funcionalidad de Delta Lake:
+      </p>
+      <pre><code>    from pyspark.sql import SparkSession
     from delta.tables import *
 
     # Inicializa la sesión de Spark con soporte para Delta Lake
@@ -173,7 +271,16 @@
     df_version_0.show()
 
     spark.stop()
-    print("Spark Session stopped.")</code></pre><p>Para detener y limpiar los contenedores, use <code>docker-compose down</code> en el mismo directorio.</p><h2>Comandos de Ejecución</h2><pre><code>docker-compose up -d</code></pre><h2>Archivos de Configuración</h2><h3>Dockerfile.spark-delta</h3><pre><code># Usa una imagen base de Spark que incluya Python y Java.
+    print("Spark Session stopped.")</code></pre>
+      <p>
+        Para detener y limpiar los contenedores, use
+        <code>docker-compose down</code> en el mismo directorio.
+      </p>
+      <h2>Comandos de Ejecución</h2>
+      <pre><code>docker-compose up -d</code></pre>
+      <h2>Archivos de Configuración</h2>
+      <h3>Dockerfile.spark-delta</h3>
+      <pre><code># Usa una imagen base de Spark que incluya Python y Java.
 FROM apache/spark:3.5.0-java17
 
 # Cambia a usuario root para instalar dependencias del sistema
@@ -197,7 +304,9 @@ EXPOSE 8888
 # Comando por defecto para JupyterLab.
 # Este comando será sobrescrito por docker-compose.yml para añadir la configuración de Spark.
 # --NotebookApp.token='' --NotebookApp.password='' permite el acceso sin token/contraseña, adecuado para desarrollo local.
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.password=''"]</code></pre><h3>docker-compose.yml</h3><pre><code>version: '3.8'
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.password=''"]</code></pre>
+      <h3>docker-compose.yml</h3>
+      <pre><code>version: '3.8'
 
 services:
   spark-master:
@@ -254,8 +363,50 @@ services:
       - spark-master # Asegura que el master se inicie antes que JupyterLab
 
 volumes:
-  delta_lake_data: # Define un volumen para la persistencia de los datos de Delta Lake</code></pre><h2>Recursos y Tutoriales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHNeBxZMpMGU3oDFZRsWhaIfetFBefqvYRmr8Py4cvfNk7eFDmVqpDYMAYkRJ0ts8DA2XEkDTjHN7Kd0FICrTPn4R0CX1kLrtEd23XzD-kTlNsTKcoMAdIhchH60jTJr3M6cjwjmLa7dOjXVBF_Auzb" target="_blank" rel="noopener noreferrer">netlify.app</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbN2HxBjrGe9yd3MxWiK9HtRZh8bnAYHVoSiso_cS_-x06ulR8Yn2UhptZO73BhMQfv6sNFxnCeiHuvqyEH51X7KGq3_Ewpp5zFCQLyGrVCKgr_OvWMhAtPYNolbqn3s1cXw==" target="_blank" rel="noopener noreferrer">delta.io</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGS_ou1KAbJkj5Ppog6092c4Y6VeCSLrFVGFAyU6BSOfWyMeDnxKq-M3T7VS7ZLs8zTXliWcZ06RWgTcIhyVy4irowx_VI2-rR2S4G0WWMzZkh8EY75uiBW2PCOsro8G4LH9OAsfAyl" target="_blank" rel="noopener noreferrer">datacamp.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiA0U2z7RITjMVkWUkgEzHCLEBKrPoBfdkwCPDA9zoRT-2FRzBbSq6Jy_-Cv_AqfwJn2D5acCfqFyftw_i1_F7hlV6GEYf_z2JHS9Cti2wc5zvwbwiw9CfvtyIW8dTpKyYW1O_" target="_blank" rel="noopener noreferrer">netlify.app</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPQ1an4C4POZZsxM1VzP87UnuEiwVpwdrJ9ieKEj6nPN8DOhoUI3vH8J0yLPPqSfJNYNB5ekuQBC1sxcYWxYF1-f8uXnr_qQa61b7_dLVdxus17rREWbyhVshElZ8TPbbDuPlhvCp3AfhWJgA9HV9gVhLmTzPTwHxnNqeGIjIIffQhacOFBblr" target="_blank" rel="noopener noreferrer">medium.com</a></li></ul>
-  </div>
-</body>
+  delta_lake_data: # Define un volumen para la persistencia de los datos de Delta Lake</code></pre>
+      <h2>Recursos y Tutoriales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHNeBxZMpMGU3oDFZRsWhaIfetFBefqvYRmr8Py4cvfNk7eFDmVqpDYMAYkRJ0ts8DA2XEkDTjHN7Kd0FICrTPn4R0CX1kLrtEd23XzD-kTlNsTKcoMAdIhchH60jTJr3M6cjwjmLa7dOjXVBF_Auzb"
+            target="_blank"
+            rel="noopener noreferrer"
+            >netlify.app</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbN2HxBjrGe9yd3MxWiK9HtRZh8bnAYHVoSiso_cS_-x06ulR8Yn2UhptZO73BhMQfv6sNFxnCeiHuvqyEH51X7KGq3_Ewpp5zFCQLyGrVCKgr_OvWMhAtPYNolbqn3s1cXw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >delta.io</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGS_ou1KAbJkj5Ppog6092c4Y6VeCSLrFVGFAyU6BSOfWyMeDnxKq-M3T7VS7ZLs8zTXliWcZ06RWgTcIhyVy4irowx_VI2-rR2S4G0WWMzZkh8EY75uiBW2PCOsro8G4LH9OAsfAyl"
+            target="_blank"
+            rel="noopener noreferrer"
+            >datacamp.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiA0U2z7RITjMVkWUkgEzHCLEBKrPoBfdkwCPDA9zoRT-2FRzBbSq6Jy_-Cv_AqfwJn2D5acCfqFyftw_i1_F7hlV6GEYf_z2JHS9Cti2wc5zvwbwiw9CfvtyIW8dTpKyYW1O_"
+            target="_blank"
+            rel="noopener noreferrer"
+            >netlify.app</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPQ1an4C4POZZsxM1VzP87UnuEiwVpwdrJ9ieKEj6nPN8DOhoUI3vH8J0yLPPqSfJNYNB5ekuQBC1sxcYWxYF1-f8uXnr_qQa61b7_dLVdxus17rREWbyhVshElZ8TPbbDuPlhvCp3AfhWJgA9HV9gVhLmTzPTwHxnNqeGIjIIffQhacOFBblr"
+            target="_blank"
+            rel="noopener noreferrer"
+            >medium.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-

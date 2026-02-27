@@ -1,47 +1,52 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AWS SQS vs. Azure Service Bus vs. Google Cloud Pub/Sub vs. Kafka (con KRaft) vs. Redis Pub/Sub</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      AWS SQS vs. Azure Service Bus vs. Google Cloud Pub/Sub vs. Kafka (con
+      KRaft) vs. Redis Pub/Sub
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,79 +55,1955 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>AWS SQS vs. Azure Service Bus vs. Google Cloud Pub/Sub vs. Kafka (con KRaft) vs. Redis Pub/Sub</h1>
-    <p>Aquí tienes una comparación técnica detallada y estructurada entre <strong>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></strong>, <strong>Google Cloud <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></strong>, <strong>Azure <span class="tooltip" data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos.">Service Bus</span></strong>, <strong>AWS SQS</strong> y <strong>Kafka (con KRaft)</strong>.</p><p>---</p><h3>Tabla de Resumen Comparativa</h3><table><thead><tr><th>Característica Clave</th><th>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></th><th>Google Cloud <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></th><th>Azure <span class="tooltip" data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos.">Service Bus</span></th><th>AWS SQS</th><th>Kafka (con KRaft)</th></tr></thead><tbody><tr><td><strong>Arquitectura</strong></td><td><strong>In-memory</strong>, <strong><span class="tooltip" data-tooltip-text="Un patrón de comunicación en el que un remitente envía un mensaje y no espera una respuesta o confirmación de recepción. Es útil para operaciones no críticas o cuando la respuesta no es necesaria, mejorando la eficiencia al no bloquear el remitente.">fire-and-forget</span></strong> (<span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> puro)</td><td><strong><span class="tooltip" data-tooltip-text="Un modelo de ejecución en la nube donde el proveedor de la nube gestiona dinámicamente la asignación de recursos de máquina. El código se ejecuta en contenedores efímeros y sin estado, y los precios se basan en el número real de ejecuciones, no en servidores pre-alquilados.">Serverless</span></strong>, <strong>global</strong>, <strong>fully managed</strong> <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></td><td><strong>Managed enterprise messaging</strong>, Queues & Topics</td><td><strong>Managed queueing</strong>, Standard & <span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span></td><td><strong>Distributed streaming platform</strong>, Log-based, Persistent, KRaft</td></tr><tr><td><strong>Modelo de Mensajería</strong></td><td><strong>Publish/Subscribe</strong> (canales)</td><td><strong>Publish/Subscribe</strong> (<span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span>/suscripciones)</td><td><strong>Queues</strong> (<span class="tooltip" data-tooltip-text="Acrónimo de &quot;Peer-to-Peer&quot;. Ver &quot;peer-to-peer&quot;.">P2P</span>) & <strong>Topics</strong> (<span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>)</td><td><strong>Queues</strong> (<span class="tooltip" data-tooltip-text="Acrónimo de &quot;Peer-to-Peer&quot;. Ver &quot;peer-to-peer&quot;.">P2P</span>), con <span class="tooltip" data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción.">fan-out</span> vía SNS</td><td><strong>Publish/Subscribe</strong> (<span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span>/particiones)</td></tr><tr><td><strong>Persistencia/Durabilidad</strong></td><td><strong>No persistente</strong> (mensajes efímeros)</td><td><strong>Persistente</strong> (hasta 7 días, configurable)</td><td><strong>Altamente persistente</strong></td><td><strong>Persistente</strong> (hasta 14 días)</td><td><strong>Persistentemente almacenado en disco</strong> (configurable)</td></tr><tr><td><strong>Garantías de Entrega</strong></td><td><strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que un mensaje se entregará como máximo una vez. Puede que no se entregue en caso de fallo, pero nunca se duplicará.">At-most-once</span></strong></td><td><strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes.">At-least-once</span></strong></td><td><strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes.">At-least-once</span></strong>, <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar.">exactly-once</span></strong> (para Premium con sesiones)</td><td><strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes.">At-least-once</span></strong> (Standard), <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar.">exactly-once</span></strong> (<span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span>)</td><td><strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes.">At-least-once</span></strong> (con control del consumidor)</td></tr><tr><td><strong>Rendimiento Típico</strong></td><td><strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> sub-ms</strong>, alto <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong></td><td><strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> baja</strong> (ms-decenas de ms), muy alto <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong></td><td><strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> media</strong> (decenas-cientos de ms), <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> medio-alto</td><td><strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> baja</strong> (ms-decenas de ms), muy alto <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong></td><td><strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> muy baja</strong> (pocos ms), <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> extremadamente alto</td></tr><tr><td><strong>Escalabilidad</strong></td><td>Limitada a instancia, sin escalado horizontal inherente para <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></td><td><strong>Auto-escalado ilimitado</strong>, <strong>global</strong></td><td><strong>Auto-escalado</strong> a nivel de tier, premium con recursos dedicados</td><td><strong>Auto-escalado ilimitado</strong></td><td><strong>Horizontalmente escalable</strong> (brokers, particiones), KRaft simplifica</td></tr><tr><td><strong>Casos de Uso Principal</strong></td><td>Notificaciones en tiempo real, chat, IPC efímero</td><td>Arquitecturas <strong><span class="tooltip" data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento.">event-driven</span></strong> globales, ingesta de datos en tiempo real</td><td>Mensajería empresarial compleja, transacciones, integración de sistemas</td><td>Desacoplamiento de microservicios, colas de tareas, procesamiento asíncrono</td><td><strong>Stream processing</strong>, <strong><span class="tooltip" data-tooltip-text="Un patrón de diseño en el que todos los cambios en el estado de una aplicación se almacenan como una secuencia de eventos inmutables. En lugar de guardar el estado actual, se guarda el historial de cambios.">event sourcing</span></strong>, <span class="tooltip" data-tooltip-text="Una serie de etapas de procesamiento de datos conectadas en secuencia, donde la salida de una etapa es la entrada de la siguiente. Común en sistemas de CI/CD y procesamiento de datos.">pipelines</span> de datos, logs</td></tr></tbody></table><p>---</p><h3>Análisis Detallado</h3><h2>Arquitectura y Modelo Principal</h2><p><strong>Punto Clave:</strong> Cada tecnología adopta un modelo fundamentalmente distinto, desde el efímero y basado en memoria de <strong>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></strong> hasta la plataforma de streaming persistente y distribuida de <strong>Kafka</strong>, pasando por los servicios gestionados basados en colas o <span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span> de las nubes.</p><h3>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></h3><ul><li>  <strong>Modelo:</strong> Es un servicio de <strong>publish/subscribe</strong> dentro del servidor <strong>Redis</strong>, que es un almacén de datos <strong>en memoria</strong>.</li><li>  <strong>Funcionamiento:</strong> Los <strong>publicadores</strong> envían mensajes a <strong>canales</strong>, y los <strong>suscriptores</strong> escuchan esos canales.</li><li>  <strong>Persistencia:</strong> Los mensajes son <strong>efímeros</strong>. Una vez que se publican, si no hay suscriptores conectados o si un suscriptor se desconecta, el mensaje se pierde. No hay <strong>durabilidad</strong> inherente.</li><li>  <strong>Garantías:</strong> Ofrece garantía de entrega <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que un mensaje se entregará como máximo una vez. Puede que no se entregue en caso de fallo, pero nunca se duplicará.">at-most-once</span></strong>. Si el suscriptor está lento o se desconecta, puede perder mensajes.</li><li>  <strong>Uso:</strong> Ideal para comunicación <strong><span class="tooltip" data-tooltip-text="Un patrón de comunicación en el que un remitente envía un mensaje y no espera una respuesta o confirmación de recepción. Es útil para operaciones no críticas o cuando la respuesta no es necesaria, mejorando la eficiencia al no bloquear el remitente.">fire-and-forget</span></strong> donde la <strong>baja <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span></strong> es crucial y la pérdida de mensajes es aceptable.</li></ul><h3>Google Cloud <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></h3><ul><li>  <strong>Modelo:</strong> Un servicio de mensajería <strong><span class="tooltip" data-tooltip-text="Un modelo de ejecución en la nube donde el proveedor de la nube gestiona dinámicamente la asignación de recursos de máquina. El código se ejecuta en contenedores efímeros y sin estado, y los precios se basan en el número real de ejecuciones, no en servidores pre-alquilados.">serverless</span></strong> y <strong>globalmente distribuido</strong> que implementa el patrón <strong>publish/subscribe</strong>.</li><li>  <strong>Funcionamiento:</strong> Los <strong>publicadores</strong> envían mensajes a <strong><span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span></strong>, y los <strong>suscriptores</strong> (que están vinculados a <strong>suscripciones</strong>) reciben mensajes de esos <span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span>.</li><li>  <strong>Tipos de Suscripción:</strong> Admite suscripciones de tipo <strong>Push</strong> (<span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> entrega mensajes a un webhook) y <strong>Pull</strong> (los suscriptores solicitan mensajes).</li><li>  <strong>Persistencia:</strong> Los mensajes son <strong>persistentes</strong> y se retienen por un período configurable (hasta 7 días por defecto) hasta que son confirmados por un suscriptor.</li><li>  <strong>Garantías:</strong> Proporciona garantía de entrega <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes.">at-least-once</span></strong>.</li><li>  <strong>Características clave:</strong> <strong><span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span> global</strong>, <strong>encripción</strong> en tránsito y en reposo, <strong>dead-letter topics</strong>.</li></ul><h3>Azure <span class="tooltip" data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos.">Service Bus</span></h3><ul><li>  <strong>Modelo:</strong> Un servicio de mensajería empresarial <strong>gestionado</strong> que ofrece <strong>colos</strong> (punto a punto) y <strong><span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span>/suscripciones</strong> (publish/subscribe).</li><li>  <strong>Funcionamiento:</strong></li><li>   -   <strong>Colas:</strong> Un remitente envía mensajes, y un solo receptor los recibe.</li><li>   -   <strong><span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">Tópicos</span>:</strong> Un remitente envía un mensaje a un tópico, y múltiples <strong>suscripciones</strong> pueden recibir una copia de ese mensaje.</li><li>  <strong>Características avanzadas:</strong> Soporta <strong>sesiones de mensajes</strong> (para agrupar y ordenar mensajes), <strong>transacciones</strong>, <strong>detección de duplicados</strong>, <strong>dead-lettering</strong>, y <strong>filtrado de mensajes</strong>.</li><li>  <strong>Tiers:</strong> Ofrece tiers <strong>Standard</strong> y <strong>Premium</strong>. El tier Premium proporciona rendimiento predecible y aislamiento de red con recursos dedicados.</li><li>  <strong>Garantías:</strong> Ofrece garantía de entrega <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes.">at-least-once</span></strong>, y con <strong>sesiones de mensajes</strong> en el tier Premium, puede aproximarse a <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar.">exactly-once</span></strong> para un conjunto de mensajes.</li></ul><h3>AWS SQS</h3><ul><li>  <strong>Modelo:</strong> Un servicio de <strong>cola de mensajes gestionada</strong> que permite desacoplar y escalar microservicios, sistemas distribuidos y aplicaciones sin servidor.</li><li>  <strong>Funcionamiento:</strong> Los componentes envían mensajes a una cola, y otros componentes los extraen para procesarlos. Es un modelo <strong><span class="tooltip" data-tooltip-text="Un modelo de comunicación en el que el consumidor solicita activamente (hace &quot;pull&quot;) los mensajes de la fuente (como un broker) cuando está listo para procesarlos. Es lo contrario al modelo &quot;push-based&quot;.">pull-based</span></strong>.</li><li>  <strong>Tipos de Colas:</strong></li><li>   -   <strong>Standard Queues:</strong> Ofrecen <strong>máximo <span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong>, garantía <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes.">at-least-once</span></strong> y <strong><span class="tooltip" data-tooltip-text="El sistema intenta mantener el orden de los mensajes pero no lo garantiza, especialmente durante fallos o re-entregas. Ofrece mayor rendimiento a cambio de una garantía de orden más débil.">best-effort ordering</span></strong> (los mensajes suelen entregarse en el orden en que se enviaron, pero no siempre).</li><li>   -   <strong><span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span> Queues:</strong> Garantizan <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar.">exactly-once</span> processing</strong> y <strong>strict ordering</strong> (los mensajes se entregan exactamente en el orden en que se enviaron). Tienen un menor <span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span> que las Standard.</li><li>  <strong>Persistencia:</strong> Los mensajes se almacenan duraderamente hasta que se eliminan o expiran (hasta 14 días).</li><li>  <strong>Características clave:</strong> <strong>Visibilidad de mensajes</strong> (un mensaje no es visible para otros consumidores mientras se procesa), <strong>dead-letter queues</strong>.</li></ul><h3>Kafka (con KRaft)</h3><ul><li>  <strong>Modelo:</strong> Una <strong>plataforma de streaming distribuida</strong> diseñada para construir <span class="tooltip" data-tooltip-text="Una serie de etapas de procesamiento de datos conectadas en secuencia, donde la salida de una etapa es la entrada de la siguiente. Común en sistemas de CI/CD y procesamiento de datos.">pipelines</span> de datos en tiempo real y aplicaciones de streaming. Su arquitectura se basa en un <strong>log de transacciones distribuido, inmutable y persistente</strong>.</li><li>  <strong>Funcionamiento:</strong> Los <strong>productores</strong> escriben eventos (mensajes) en <strong><span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span></strong>. Cada tópico se divide en <strong>particiones</strong>, que son <strong>logs inmutables y ordenados</strong>. Los <strong>consumidores</strong> leen eventos de las particiones, rastreando su progreso con <strong><span class="tooltip" data-tooltip-text="En sistemas como Kafka, un offset es un puntero o marcador que indica la posición de un consumidor dentro de una partición de un tópico. Actúa como un marcador de libro para saber qué mensajes ya han sido leídos.">offsets</span></strong>.</li><li>  <strong>Persistencia:</strong> Los mensajes se almacenan de forma <strong>persistente en disco</strong> por un tiempo configurable, lo que permite la relectura de eventos.</li><li>  <strong><span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span>:</strong> Las particiones se replican entre <strong>brokers</strong> para <strong>alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span></strong> y <strong><span class="tooltip" data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen.">tolerancia a fallos</span></strong>.</li><li>  <strong>KRaft:</strong> (Kafka <span class="tooltip" data-tooltip-text="Un algoritmo de consenso diseñado para ser más comprensible que Paxos. Se utiliza en sistemas distribuidos para gestionar un log replicado y garantizar que los nodos se pongan de acuerdo sobre el estado del sistema.">Raft</span>) Reemplaza a <strong>ZooKeeper</strong> para la gestión de metadatos del clúster. Simplifica la arquitectura, mejora la escalabilidad y reduce la sobrecarga operativa, permitiendo que el clúster de <strong>Kafka</strong> se autogestione.</li><li>  <strong>Garantías:</strong> Proporciona garantía de entrega <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes.">at-least-once</span></strong> por defecto. Con un manejo cuidadoso de los <strong><span class="tooltip" data-tooltip-text="En sistemas como Kafka, un offset es un puntero o marcador que indica la posición de un consumidor dentro de una partición de un tópico. Actúa como un marcador de libro para saber qué mensajes ya han sido leídos.">offsets</span></strong> del consumidor y la lógica de la aplicación, se puede lograr un procesamiento <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar.">exactly-once</span></strong> para ciertas integraciones.</li></ul><h2>Rendimiento y Escalabilidad</h2><p><strong>Punto Clave:</strong> <strong>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></strong> ofrece la <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span></strong> más baja pero escalabilidad limitada para <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> puro, mientras que <strong>Kafka</strong> y las soluciones en la nube (<strong>GCP <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></strong>, <strong>AWS SQS</strong>) ofrecen una escalabilidad masiva y <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> excepcional, cada una con características de rendimiento diferenciadas.</p><h3>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></h3><ul><li>  <strong>Rendimiento:</strong> <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> extremadamente baja</strong> (sub-milisegundo) debido a su naturaleza <strong>en memoria</strong>. Capaz de manejar un <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> muy alto (cientos de miles de mensajes por segundo) en una sola instancia.</li><li>  <strong>Escalabilidad:</strong> Limitada por los recursos de una única instancia de <strong>Redis</strong>. Si bien los <strong>clientes</strong> pueden escalar, el <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span> de <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span> en sí no se distribuye horizontalmente de forma nativa para las suscripciones. No tiene mecanismos de persistencia o reintento de entrega incorporados.</li><li>  <strong>Fiabilidad:</strong> Baja por diseño para <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>; los mensajes no se persisten y se pierden si no hay suscriptores conectados o si estos se desconectan.</li></ul><h3>Google Cloud <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></h3><ul><li>  <strong>Rendimiento:</strong> <strong>Baja <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span></strong> (decenas a cientos de milisegundos) para un servicio global. Capaz de manejar un <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> extremadamente alto (millones de mensajes por segundo), diseñado para cargas de trabajo masivas.</li><li>  <strong>Escalabilidad:</strong> <strong>Totalmente gestionado</strong> y <strong>auto-escalable</strong> por <strong>Google</strong>. Puede escalar desde unos pocos mensajes por segundo hasta millones sin intervención manual. La infraestructura subyacente de <strong>Google</strong> proporciona una <strong>alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span></strong> y <strong>distribución global</strong>.</li><li>  <strong>Fiabilidad:</strong> <strong>Alta durabilidad</strong> y <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span>, <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> automática de mensajes.</li></ul><h3>Azure <span class="tooltip" data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos.">Service Bus</span></h3><ul><li>  <strong>Rendimiento:</strong></li><li>   -   <strong>Standard Tier:</strong> <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> moderada</strong> (decenas a cientos de milisegundos) y <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> de miles de mensajes por segundo. Compartido con otros clientes.</li><li>   -   <strong>Premium Tier:</strong> <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> más baja y predecible</strong> (decenas de milisegundos) y <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> mucho mayor (decenas de miles de mensajes por segundo o más) debido a los recursos dedicados.</li><li>  <strong>Escalabilidad:</strong> <strong>Gestionado por Azure</strong>, escalas según el tier. El tier Premium ofrece una escalabilidad más predecible y dedicada. Las unidades de mensajería permiten escalar el <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> para los <strong>namespaces</strong> premium.</li><li>  <strong>Fiabilidad:</strong> <strong>Alta durabilidad</strong> con almacenamiento replicado y mecanismos de recuperación.</li></ul><h3>AWS SQS</h3><ul><li>  <strong>Rendimiento:</strong></li><li>   -   <strong>Standard Queues:</strong> <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> baja</strong> (decenas de milisegundos) y <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> prácticamente ilimitado (miles a cientos de miles de mensajes por segundo) sin costo adicional por mensajes de gran volumen.</li><li>   -   <strong><span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span> Queues:</strong> <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> similar</strong> pero con un <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> significativamente menor (hasta 300 mensajes/segundo por defecto, 3000 con batching por ID de grupo) debido a las garantías de orden estricto.</li><li>  <strong>Escalabilidad:</strong> <strong>Totalmente gestionado</strong> y <strong>auto-escalable</strong> para manejar cualquier volumen de mensajes, desde uno hasta millones, sin necesidad de aprovisionamiento. <strong>Alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span></strong> integrada en múltiples zonas de <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span>.</li><li>  <strong>Fiabilidad:</strong> <strong>Alta durabilidad</strong> de mensajes con redundancia y almacenamiento replicado.</li></ul><h3>Kafka (con KRaft)</h3><ul><li>  <strong>Rendimiento:</strong> <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">Latencia</span> muy baja</strong> (pocos milisegundos) y <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span> extremadamente alto</strong> (cientos de miles a millones de mensajes por segundo por <span class="tooltip" data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada.">broker</span>/clúster), diseñado para <strong>procesamiento de streams</strong> en tiempo real.</li><li>  <strong>Escalabilidad:</strong> <strong>Horizontalmente escalable</strong> añadiendo más <strong>brokers</strong> y <strong>particiones</strong>. El rendimiento escala linealmente con la adición de recursos. <strong>KRaft</strong> simplifica la gestión del clúster y elimina el cuello de botella de <strong>ZooKeeper</strong>, mejorando la escalabilidad operativa.</li><li>  <strong>Fiabilidad:</strong> <strong>Alta durabilidad</strong> y <strong><span class="tooltip" data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen.">tolerancia a fallos</span></strong> gracias a la <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span> de particiones entre brokers. Los datos se persisten en disco durante períodos configurables, lo que permite la recuperación y relectura de datos.</li></ul><h2>Ecosistema y Curva de Aprendizaje</h2><p><strong>Punto Clave:</strong> <strong>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></strong> y <strong>AWS SQS</strong> tienen la curva de aprendizaje más baja debido a su simplicidad. Los servicios cloud gestionados (<strong>GCP <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></strong>, <strong>Azure <span class="tooltip" data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos.">Service Bus</span></strong>) requieren familiaridad con su ecosistema. <strong>Kafka</strong> presenta la curva de aprendizaje más empinada, pero ofrece el ecosistema más amplio y potente para el procesamiento de datos en tiempo real.</p><h3>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></h3><ul><li>  <strong>Ecosistema:</strong> Parte del vasto ecosistema de <strong>Redis</strong>. Cuenta con librerías cliente en prácticamente todos los lenguajes de programación. Se integra bien con otras funcionalidades de <strong>Redis</strong> (caché, estructuras de datos).</li><li>  <strong>Curva de Aprendizaje:</strong> <strong>Muy baja</strong>. La API es extremadamente simple (<code>PUBLISH</code>, <code>SUBSCRIBE</code>, <code>UNSUBSCRIBE</code>). No hay conceptos complejos de configuración o gestión. Ideal para equipos con experiencia mínima en mensajería.</li></ul><h3>Google Cloud <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></h3><ul><li>  <strong>Ecosistema:</strong> Típicamente integrado con otros servicios de <strong>Google Cloud Platform (GCP)</strong>, como <strong>Cloud Functions</strong>, <strong>Cloud Dataflow</strong>, <strong>Cloud Storage</strong> y <strong>BigQuery</strong>. Ofrece <strong>SDKs</strong> bien documentados y una <strong>API REST</strong>.</li><li>  <strong>Curva de Aprendizaje:</strong> <strong>Moderada</strong>. El uso básico es sencillo y bien documentado. Sin embargo, comprender la estructura de proyectos de <strong>GCP</strong>, la gestión de identidades y accesos (IAM) y la integración con otros servicios de GCP añade algo de complejidad. Los conceptos de <span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span> y suscripciones son claros.</li></ul><h3>Azure <span class="tooltip" data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos.">Service Bus</span></h3><ul><li>  <strong>Ecosistema:</strong> Fuertemente integrado con el ecosistema de <strong>Azure</strong>, incluyendo <strong>Azure Functions</strong>, <strong>Logic Apps</strong>, <strong>Event Grid</strong>, y servicios de monitoreo. Soporta protocolos estándar como <strong><span class="tooltip" data-tooltip-text="Protocolo Avanzado de Cola de Mensajes (Advanced Message Queuing Protocol). Un estándar de protocolo abierto para middleware orientado a mensajes, utilizado por brokers como RabbitMQ.">AMQP</span> 1.0</strong> y <strong>HTTP/REST</strong>.</li><li>  <strong>Curva de Aprendizaje:</strong> <strong>Moderada a alta</strong>. El uso básico de colas y <span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">tópicos</span> es relativamente sencillo. Sin embargo, el dominio de características avanzadas como <strong>sesiones de mensajes</strong>, <strong>transacciones</strong>, <strong>detección de duplicados</strong> y la gestión de permisos dentro de <strong>Azure</strong> puede requerir más esfuerzo y experiencia. La elección entre tiers (Standard vs. Premium) también añade una capa de complejidad.</li></ul><h3>AWS SQS</h3><ul><li>  <strong>Ecosistema:</strong> Profundamente integrado con otros servicios de <strong>AWS</strong>, como <strong>AWS Lambda</strong> (para consumidores sin servidor), <strong>AWS SNS</strong> (para patrones de <span class="tooltip" data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción.">fan-out</span>), <strong>EC2</strong>, <strong>ECS</strong>, y servicios de monitoreo como <strong>CloudWatch</strong>. Dispone de <strong>SDKs</strong> robustos para múltiples lenguajes.</li><li>  <strong>Curva de Aprendizaje:</strong> <strong>Baja</strong>. La API es muy simple y fácil de usar. La principal complejidad reside en entender las diferencias entre las <strong>Standard Queues</strong> y las <strong><span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span> Queues</strong> y cuándo usar cada una, además de configurar correctamente las <strong>Visibility Timeout</strong> y <strong>Dead-Letter Queues</strong>.</li></ul><h3>Kafka (con KRaft)</h3><ul><li>  <strong>Ecosistema:</strong> <strong>El más grande y maduro</strong> para el procesamiento de datos en streaming. Incluye <strong>Kafka Connect</strong> (para integración con bases de datos y otros sistemas), <strong>Kafka Streams</strong> (para construir aplicaciones de procesamiento de streams), <strong>KSQL DB</strong> (SQL para streams), y una vasta cantidad de conectores y marcos de trabajo de terceros como <strong>Apache Flink</strong> y <strong>Apache Spark Streaming</strong>.</li><li>  <strong>Curva de Aprendizaje:</strong> <strong>Alta</strong>. Requiere un conocimiento profundo de conceptos de sistemas distribuidos, como <strong>particiones</strong>, <strong><span class="tooltip" data-tooltip-text="En sistemas como Kafka, un offset es un puntero o marcador que indica la posición de un consumidor dentro de una partición de un tópico. Actúa como un marcador de libro para saber qué mensajes ya han sido leídos.">offsets</span></strong>, <strong>grupos de consumidores</strong>, <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">replicación</span>, y garantías de entrega. La operación de un clúster de <strong>Kafka</strong> (incluso con <strong>KRaft</strong> que simplifica la gestión de metadatos) sigue siendo compleja y requiere experiencia especializada. Las versiones gestionadas como <strong>AWS MSK</strong> o <strong>Confluent Cloud</strong> reducen la carga operativa, pero los conceptos subyacentes de <strong>Kafka</strong> aún deben dominarse.</li></ul><h2>Casos de Uso Ideales</h2><p><strong>Punto Clave:</strong> La elección depende de la necesidad de <strong>persistencia</strong>, <strong>garantías de entrega</strong>, <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span></strong>, <strong>escalabilidad</strong> y la complejidad de los patrones de mensajería requeridos.</p><h3>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></h3><ul><li>  <strong>Notificaciones en tiempo real:</strong> Chat, actualizaciones de dashboards en vivo, feed de noticias, donde la pérdida ocasional de un mensaje es aceptable a cambio de <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> mínima</strong>.</li><li>  <strong>Comunicación inter-proceso (IPC) efímera:</strong> Para servicios estrechamente acoplados que necesitan una comunicación ultrarrápida sin necesidad de persistencia de mensajes.</li><li>  <strong>Difusión de eventos simples:</strong> Cuando un evento necesita ser enviado a muchos suscriptores rápidamente sin garantías de entrega.</li><li>  <strong>Ejecución de comandos remotos:</strong> Desencadenar acciones en clientes conectados.</li></ul><h3>Google Cloud <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></h3><ul><li>  <strong>Arquitecturas basadas en eventos:</strong> Desacoplamiento de microservicios, construcción de sistemas reactivos.</li><li>  <strong>Ingesta de datos en tiempo real:</strong> Recopilación de telemetría, eventos de usuario, logs de miles de fuentes para procesamiento posterior.</li><li>  <strong><span class="tooltip" data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción.">Fan-out</span> global:</strong> Cuando un mensaje debe ser entregado a un gran número de consumidores distribuidos geográficamente.</li><li>  <strong>Integración entre servicios GCP:</strong> Conectar <strong>Cloud Functions</strong>, <strong>Dataflow</strong>, <strong>BigQuery</strong> de manera eficiente.</li></ul><h3>Azure <span class="tooltip" data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos.">Service Bus</span></h3><ul><li>  <strong>Mensajería empresarial:</strong> Aplicaciones que requieren transacciones, ordenamiento estricto (con <strong>sesiones de mensajes</strong>), detección de duplicados, y garantía de entrega para flujos de trabajo críticos de negocio.</li><li>  <strong>Integración de sistemas legacy:</strong> Proporciona un middleware de mensajería fiable para conectar sistemas heterogéneos.</li><li>  <strong>Procesamiento asíncrono de tareas:</strong> Colas para trabajos de fondo, donde la fiabilidad y el orden son importantes.</li><li>  <strong>Patrones de mensajería complejos:</strong> Competencia entre consumidores, solicitudes/respuestas a través de colas temporales.</li></ul><h3>AWS SQS</h3><ul><li>  <strong>Desacoplamiento de microservicios:</strong> La forma más común de usar SQS, permitiendo que los servicios funcionen de forma independiente y asíncrona.</li><li>  <strong>Colas de tareas:</strong> Procesamiento de tareas de fondo de larga ejecución sin bloquear la aplicación principal.</li><li>  <strong>Procesamiento por lotes:</strong> Recopilación de un gran número de mensajes para su procesamiento eficiente en lotes.</li><li>  <strong>Integración con <span class="tooltip" data-tooltip-text="Un modelo de ejecución en la nube donde el proveedor de la nube gestiona dinámicamente la asignación de recursos de máquina. El código se ejecuta en contenedores efímeros y sin estado, y los precios se basan en el número real de ejecuciones, no en servidores pre-alquilados.">Serverless</span>:</strong> Ideal como activador para <strong>AWS Lambda</strong> para procesamiento de eventos.</li><li>  <strong>Escenarios de <span class="tooltip" data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción.">Fan-out</span> simple:</strong> Cuando se combina con <strong>AWS SNS</strong> (SNS publica en un tema, SQS suscribe al tema).</li></ul><h3>Kafka (con KRaft)</h3><ul><li>  <strong>Plataformas de streaming de datos:</strong> El "nervio central" para arquitecturas <strong><span class="tooltip" data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento.">event-driven</span></strong> a gran escala, procesando datos en tiempo real.</li><li>  <strong><span class="tooltip" data-tooltip-text="Un patrón de diseño en el que todos los cambios en el estado de una aplicación se almacenan como una secuencia de eventos inmutables. En lugar de guardar el estado actual, se guarda el historial de cambios.">Event sourcing</span>:</strong> Almacenar el estado de la aplicación como una secuencia de eventos inmutables, lo que permite la reconstrucción del estado en cualquier momento.</li><li>  <strong>Log aggregation:</strong> Recopilar y centralizar logs de múltiples servicios en tiempo real para análisis y monitoreo.</li><li>  <strong>Change Data Capture (CDC):</strong> <span class="tooltip" data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura.">Replicación</span> de cambios de bases de datos a otros sistemas en tiempo real.</li><li>  <strong>Microservicios con eventos:</strong> Comunicación <strong><span class="tooltip" data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento.">event-driven</span></strong> entre microservicios, donde <strong>Kafka</strong> actúa como un bus de eventos persistente.</li></ul><p>---</p><h2>Conclusión y Veredicto</h2><p>La elección de la tecnología de mensajería depende en gran medida de los requisitos específicos del proyecto en términos de <strong><span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span></strong>, <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong>, <strong>persistencia</strong>, <strong>garantías de entrega</strong>, <strong>escalabilidad</strong>, complejidad del ecosistema y presupuesto.</p><ul><li>  <strong>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>:</strong> Es el campeón de la <strong>velocidad</strong> y la <strong>baja <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span></strong>, ideal para notificaciones en tiempo real donde los mensajes son <strong>efímeros</strong> y su pérdida ocasional es aceptable. Su simplicidad lo hace fácil de implementar para comunicaciones <strong>in-app</strong> o <strong>IPC</strong> básicas.</li><li>  <strong>AWS SQS:</strong> La opción predeterminada para <strong>desacoplar microservicios</strong> en <strong>AWS</strong>. Es simple, <strong>escalable ilimitadamente</strong>, <strong>altamente duradero</strong> y económico para colas de tareas y procesamiento asíncrono. Elija SQS cuando necesite una cola de mensajes fiable con garantías de entrega <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes.">at-least-once</span></strong> (o <strong><span class="tooltip" data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar.">exactly-once</span></strong> con <span class="tooltip" data-tooltip-text="Siglas de &quot;First-In, First-Out&quot; (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.">FIFO</span>) y no necesite las capacidades de un bus de eventos en tiempo real.</li><li>  <strong>Google Cloud <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span>:</strong> La solución <strong><span class="tooltip" data-tooltip-text="Un modelo de ejecución en la nube donde el proveedor de la nube gestiona dinámicamente la asignación de recursos de máquina. El código se ejecuta en contenedores efímeros y sin estado, y los precios se basan en el número real de ejecuciones, no en servidores pre-alquilados.">serverless</span></strong> y <strong>global</strong> para <strong>GCP</strong>. Es ideal para arquitecturas <strong><span class="tooltip" data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento.">event-driven</span></strong> que requieren <strong>alta escalabilidad</strong>, <strong>durabilidad</strong> y <strong><span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span> global</strong> sin la carga operativa de gestionar la infraestructura. Es un excelente punto de entrada para la ingesta de datos en tiempo real y el <strong><span class="tooltip" data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción.">fan-out</span></strong> masivo.</li><li>  <strong>Azure <span class="tooltip" data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos.">Service Bus</span>:</strong> La mejor opción para <strong>mensajería empresarial</strong> en <strong>Azure</strong>, especialmente cuando se requieren patrones de mensajería avanzados como <strong>transacciones</strong>, <strong>sesiones de mensajes</strong> para ordenar y agrupar, <strong>detección de duplicados</strong> o integración con sistemas heredados. Su tier Premium ofrece rendimiento dedicado para cargas de trabajo críticas.</li><li>  <strong>Kafka (con KRaft):</strong> Es la <strong>plataforma de streaming</strong> por excelencia para construir sistemas de <strong>procesamiento de datos en tiempo real</strong> a gran escala, <strong><span class="tooltip" data-tooltip-text="Un patrón de diseño en el que todos los cambios en el estado de una aplicación se almacenan como una secuencia de eventos inmutables. En lugar de guardar el estado actual, se guarda el historial de cambios.">event sourcing</span></strong>, <strong>log aggregation</strong> y el <strong>nervio central</strong> de una arquitectura <strong><span class="tooltip" data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento.">event-driven</span></strong> compleja. Ofrece un <strong><span class="tooltip" data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo.">throughput</span></strong> inigualable, <strong>baja <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span></strong> y <strong>persistencia a largo plazo</strong> de los eventos. La gestión de un clúster de <strong>Kafka</strong> es la más compleja, pero <strong>KRaft</strong> simplifica la configuración y operación.</li></ul><p><strong>Combinaciones:</strong> Es común combinar estas tecnologías. Por ejemplo:</p><ul><li>  <strong>Kafka</strong> puede ser la fuente de verdad persistente, con <strong>Redis <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></strong> utilizado para difundir rápidamente resultados procesados de <strong>Kafka Streams</strong> a interfaces de usuario en tiempo real.</li><li>  <strong>AWS SNS</strong> puede actuar como un <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">pub/sub</span> de bajo coste para <span class="tooltip" data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción.">fan-out</span>, con <strong>AWS SQS</strong> como suscriptor duradero para cada microservicio.</li><li>  <strong>GCP <span class="tooltip" data-tooltip-text="Acrónimo de &quot;Publish/Subscribe&quot; (Publicar/Suscribir). Un patrón de mensajería donde los &quot;publicadores&quot; envían mensajes a un tema o canal, sin saber quiénes son los &quot;suscriptores&quot;. Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.">Pub/Sub</span></strong> puede ingestar datos en tiempo real, que luego son procesados por <strong>Dataflow</strong> y almacenados en <strong>BigQuery</strong>, mientras que <strong>Cloud Functions</strong> reaccionan a eventos específicos.</li></ul><p>En resumen, la elección debe alinearse con los requisitos de <strong>rendimiento, durabilidad, complejidad de los patrones de mensajería y la experiencia operativa del equipo</strong>.</p>
-  </div>
-</body>
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>
+        AWS SQS vs. Azure Service Bus vs. Google Cloud Pub/Sub vs. Kafka (con
+        KRaft) vs. Redis Pub/Sub
+      </h1>
+      <p>
+        Aquí tienes una comparación técnica detallada y estructurada entre
+        <strong
+          >Redis
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          ></strong
+        >,
+        <strong
+          >Google Cloud
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          ></strong
+        >,
+        <strong
+          >Azure
+          <span
+            class="tooltip"
+            data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos."
+            >Service Bus</span
+          ></strong
+        >, <strong>AWS SQS</strong> y <strong>Kafka (con KRaft)</strong>.
+      </p>
+      <p>---</p>
+      <h3>Tabla de Resumen Comparativa</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Característica Clave</th>
+            <th>
+              Redis
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+            </th>
+            <th>
+              Google Cloud
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+            </th>
+            <th>
+              Azure
+              <span
+                class="tooltip"
+                data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos."
+                >Service Bus</span
+              >
+            </th>
+            <th>AWS SQS</th>
+            <th>Kafka (con KRaft)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Arquitectura</strong></td>
+            <td>
+              <strong>In-memory</strong>,
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Un patrón de comunicación en el que un remitente envía un mensaje y no espera una respuesta o confirmación de recepción. Es útil para operaciones no críticas o cuando la respuesta no es necesaria, mejorando la eficiencia al no bloquear el remitente."
+                  >fire-and-forget</span
+                ></strong
+              >
+              (<span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+              puro)
+            </td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Un modelo de ejecución en la nube donde el proveedor de la nube gestiona dinámicamente la asignación de recursos de máquina. El código se ejecuta en contenedores efímeros y sin estado, y los precios se basan en el número real de ejecuciones, no en servidores pre-alquilados."
+                  >Serverless</span
+                ></strong
+              >, <strong>global</strong>, <strong>fully managed</strong>
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+            </td>
+            <td>
+              <strong>Managed enterprise messaging</strong>, Queues & Topics
+            </td>
+            <td>
+              <strong>Managed queueing</strong>, Standard &
+              <span
+                class="tooltip"
+                data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+                >FIFO</span
+              >
+            </td>
+            <td>
+              <strong>Distributed streaming platform</strong>, Log-based,
+              Persistent, KRaft
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Modelo de Mensajería</strong></td>
+            <td><strong>Publish/Subscribe</strong> (canales)</td>
+            <td>
+              <strong>Publish/Subscribe</strong> (<span
+                class="tooltip"
+                data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+                >tópicos</span
+              >/suscripciones)
+            </td>
+            <td>
+              <strong>Queues</strong> (<span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Peer-to-Peer". Ver "peer-to-peer".'
+                >P2P</span
+              >) & <strong>Topics</strong> (<span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >)
+            </td>
+            <td>
+              <strong>Queues</strong> (<span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Peer-to-Peer". Ver "peer-to-peer".'
+                >P2P</span
+              >), con
+              <span
+                class="tooltip"
+                data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción."
+                >fan-out</span
+              >
+              vía SNS
+            </td>
+            <td>
+              <strong>Publish/Subscribe</strong> (<span
+                class="tooltip"
+                data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+                >tópicos</span
+              >/particiones)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Persistencia/Durabilidad</strong></td>
+            <td><strong>No persistente</strong> (mensajes efímeros)</td>
+            <td><strong>Persistente</strong> (hasta 7 días, configurable)</td>
+            <td><strong>Altamente persistente</strong></td>
+            <td><strong>Persistente</strong> (hasta 14 días)</td>
+            <td>
+              <strong>Persistentemente almacenado en disco</strong>
+              (configurable)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Garantías de Entrega</strong></td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Una garantía de entrega que asegura que un mensaje se entregará como máximo una vez. Puede que no se entregue en caso de fallo, pero nunca se duplicará."
+                  >At-most-once</span
+                ></strong
+              >
+            </td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes."
+                  >At-least-once</span
+                ></strong
+              >
+            </td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes."
+                  >At-least-once</span
+                ></strong
+              >,
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar."
+                  >exactly-once</span
+                ></strong
+              >
+              (para Premium con sesiones)
+            </td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes."
+                  >At-least-once</span
+                ></strong
+              >
+              (Standard),
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar."
+                  >exactly-once</span
+                ></strong
+              >
+              (<span
+                class="tooltip"
+                data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+                >FIFO</span
+              >)
+            </td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes."
+                  >At-least-once</span
+                ></strong
+              >
+              (con control del consumidor)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Rendimiento Típico</strong></td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                  >Latencia</span
+                >
+                sub-ms</strong
+              >, alto
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+                  >throughput</span
+                ></strong
+              >
+            </td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                  >Latencia</span
+                >
+                baja</strong
+              >
+              (ms-decenas de ms), muy alto
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+                  >throughput</span
+                ></strong
+              >
+            </td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                  >Latencia</span
+                >
+                media</strong
+              >
+              (decenas-cientos de ms),
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+                  >throughput</span
+                ></strong
+              >
+              medio-alto
+            </td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                  >Latencia</span
+                >
+                baja</strong
+              >
+              (ms-decenas de ms), muy alto
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+                  >throughput</span
+                ></strong
+              >
+            </td>
+            <td>
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+                  >Latencia</span
+                >
+                muy baja</strong
+              >
+              (pocos ms),
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+                  >throughput</span
+                ></strong
+              >
+              extremadamente alto
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Escalabilidad</strong></td>
+            <td>
+              Limitada a instancia, sin escalado horizontal inherente para
+              <span
+                class="tooltip"
+                data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+                >Pub/Sub</span
+              >
+            </td>
+            <td>
+              <strong>Auto-escalado ilimitado</strong>, <strong>global</strong>
+            </td>
+            <td>
+              <strong>Auto-escalado</strong> a nivel de tier, premium con
+              recursos dedicados
+            </td>
+            <td><strong>Auto-escalado ilimitado</strong></td>
+            <td>
+              <strong>Horizontalmente escalable</strong> (brokers, particiones),
+              KRaft simplifica
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Casos de Uso Principal</strong></td>
+            <td>Notificaciones en tiempo real, chat, IPC efímero</td>
+            <td>
+              Arquitecturas
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento."
+                  >event-driven</span
+                ></strong
+              >
+              globales, ingesta de datos en tiempo real
+            </td>
+            <td>
+              Mensajería empresarial compleja, transacciones, integración de
+              sistemas
+            </td>
+            <td>
+              Desacoplamiento de microservicios, colas de tareas, procesamiento
+              asíncrono
+            </td>
+            <td>
+              <strong>Stream processing</strong>,
+              <strong
+                ><span
+                  class="tooltip"
+                  data-tooltip-text="Un patrón de diseño en el que todos los cambios en el estado de una aplicación se almacenan como una secuencia de eventos inmutables. En lugar de guardar el estado actual, se guarda el historial de cambios."
+                  >event sourcing</span
+                ></strong
+              >,
+              <span
+                class="tooltip"
+                data-tooltip-text="Una serie de etapas de procesamiento de datos conectadas en secuencia, donde la salida de una etapa es la entrada de la siguiente. Común en sistemas de CI/CD y procesamiento de datos."
+                >pipelines</span
+              >
+              de datos, logs
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>---</p>
+      <h3>Análisis Detallado</h3>
+      <h2>Arquitectura y Modelo Principal</h2>
+      <p>
+        <strong>Punto Clave:</strong> Cada tecnología adopta un modelo
+        fundamentalmente distinto, desde el efímero y basado en memoria de
+        <strong
+          >Redis
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          ></strong
+        >
+        hasta la plataforma de streaming persistente y distribuida de
+        <strong>Kafka</strong>, pasando por los servicios gestionados basados en
+        colas o
+        <span
+          class="tooltip"
+          data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+          >tópicos</span
+        >
+        de las nubes.
+      </p>
+      <h3>
+        Redis
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Modelo:</strong> Es un servicio de
+          <strong>publish/subscribe</strong> dentro del servidor
+          <strong>Redis</strong>, que es un almacén de datos
+          <strong>en memoria</strong>.
+        </li>
+        <li>
+          <strong>Funcionamiento:</strong> Los
+          <strong>publicadores</strong> envían mensajes a
+          <strong>canales</strong>, y los <strong>suscriptores</strong> escuchan
+          esos canales.
+        </li>
+        <li>
+          <strong>Persistencia:</strong> Los mensajes son
+          <strong>efímeros</strong>. Una vez que se publican, si no hay
+          suscriptores conectados o si un suscriptor se desconecta, el mensaje
+          se pierde. No hay <strong>durabilidad</strong> inherente.
+        </li>
+        <li>
+          <strong>Garantías:</strong> Ofrece garantía de entrega
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una garantía de entrega que asegura que un mensaje se entregará como máximo una vez. Puede que no se entregue en caso de fallo, pero nunca se duplicará."
+              >at-most-once</span
+            ></strong
+          >. Si el suscriptor está lento o se desconecta, puede perder mensajes.
+        </li>
+        <li>
+          <strong>Uso:</strong> Ideal para comunicación
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un patrón de comunicación en el que un remitente envía un mensaje y no espera una respuesta o confirmación de recepción. Es útil para operaciones no críticas o cuando la respuesta no es necesaria, mejorando la eficiencia al no bloquear el remitente."
+              >fire-and-forget</span
+            ></strong
+          >
+          donde la
+          <strong
+            >baja
+            <span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >latencia</span
+            ></strong
+          >
+          es crucial y la pérdida de mensajes es aceptable.
+        </li>
+      </ul>
+      <h3>
+        Google Cloud
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Modelo:</strong> Un servicio de mensajería
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un modelo de ejecución en la nube donde el proveedor de la nube gestiona dinámicamente la asignación de recursos de máquina. El código se ejecuta en contenedores efímeros y sin estado, y los precios se basan en el número real de ejecuciones, no en servidores pre-alquilados."
+              >serverless</span
+            ></strong
+          >
+          y <strong>globalmente distribuido</strong> que implementa el patrón
+          <strong>publish/subscribe</strong>.
+        </li>
+        <li>
+          <strong>Funcionamiento:</strong> Los
+          <strong>publicadores</strong> envían mensajes a
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+              >tópicos</span
+            ></strong
+          >, y los <strong>suscriptores</strong> (que están vinculados a
+          <strong>suscripciones</strong>) reciben mensajes de esos
+          <span
+            class="tooltip"
+            data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+            >tópicos</span
+          >.
+        </li>
+        <li>
+          <strong>Tipos de Suscripción:</strong> Admite suscripciones de tipo
+          <strong>Push</strong> (<span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          >
+          entrega mensajes a un webhook) y <strong>Pull</strong> (los
+          suscriptores solicitan mensajes).
+        </li>
+        <li>
+          <strong>Persistencia:</strong> Los mensajes son
+          <strong>persistentes</strong> y se retienen por un período
+          configurable (hasta 7 días por defecto) hasta que son confirmados por
+          un suscriptor.
+        </li>
+        <li>
+          <strong>Garantías:</strong> Proporciona garantía de entrega
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes."
+              >at-least-once</span
+            ></strong
+          >.
+        </li>
+        <li>
+          <strong>Características clave:</strong>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+              >Replicación</span
+            >
+            global</strong
+          >, <strong>encripción</strong> en tránsito y en reposo,
+          <strong>dead-letter topics</strong>.
+        </li>
+      </ul>
+      <h3>
+        Azure
+        <span
+          class="tooltip"
+          data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos."
+          >Service Bus</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Modelo:</strong> Un servicio de mensajería empresarial
+          <strong>gestionado</strong> que ofrece <strong>colos</strong> (punto a
+          punto) y
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+              >tópicos</span
+            >/suscripciones</strong
+          >
+          (publish/subscribe).
+        </li>
+        <li><strong>Funcionamiento:</strong></li>
+        <li>
+          - <strong>Colas:</strong> Un remitente envía mensajes, y un solo
+          receptor los recibe.
+        </li>
+        <li>
+          -
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+              >Tópicos</span
+            >:</strong
+          >
+          Un remitente envía un mensaje a un tópico, y múltiples
+          <strong>suscripciones</strong> pueden recibir una copia de ese
+          mensaje.
+        </li>
+        <li>
+          <strong>Características avanzadas:</strong> Soporta
+          <strong>sesiones de mensajes</strong> (para agrupar y ordenar
+          mensajes), <strong>transacciones</strong>,
+          <strong>detección de duplicados</strong>,
+          <strong>dead-lettering</strong>, y
+          <strong>filtrado de mensajes</strong>.
+        </li>
+        <li>
+          <strong>Tiers:</strong> Ofrece tiers <strong>Standard</strong> y
+          <strong>Premium</strong>. El tier Premium proporciona rendimiento
+          predecible y aislamiento de red con recursos dedicados.
+        </li>
+        <li>
+          <strong>Garantías:</strong> Ofrece garantía de entrega
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes."
+              >at-least-once</span
+            ></strong
+          >, y con <strong>sesiones de mensajes</strong> en el tier Premium,
+          puede aproximarse a
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar."
+              >exactly-once</span
+            ></strong
+          >
+          para un conjunto de mensajes.
+        </li>
+      </ul>
+      <h3>AWS SQS</h3>
+      <ul>
+        <li>
+          <strong>Modelo:</strong> Un servicio de
+          <strong>cola de mensajes gestionada</strong> que permite desacoplar y
+          escalar microservicios, sistemas distribuidos y aplicaciones sin
+          servidor.
+        </li>
+        <li>
+          <strong>Funcionamiento:</strong> Los componentes envían mensajes a una
+          cola, y otros componentes los extraen para procesarlos. Es un modelo
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text='Un modelo de comunicación en el que el consumidor solicita activamente (hace "pull") los mensajes de la fuente (como un broker) cuando está listo para procesarlos. Es lo contrario al modelo "push-based".'
+              >pull-based</span
+            ></strong
+          >.
+        </li>
+        <li><strong>Tipos de Colas:</strong></li>
+        <li>
+          - <strong>Standard Queues:</strong> Ofrecen
+          <strong
+            >máximo
+            <span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >throughput</span
+            ></strong
+          >, garantía
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes."
+              >at-least-once</span
+            ></strong
+          >
+          y
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El sistema intenta mantener el orden de los mensajes pero no lo garantiza, especialmente durante fallos o re-entregas. Ofrece mayor rendimiento a cambio de una garantía de orden más débil."
+              >best-effort ordering</span
+            ></strong
+          >
+          (los mensajes suelen entregarse en el orden en que se enviaron, pero
+          no siempre).
+        </li>
+        <li>
+          -
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+              >FIFO</span
+            >
+            Queues:</strong
+          >
+          Garantizan
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar."
+              >exactly-once</span
+            >
+            processing</strong
+          >
+          y <strong>strict ordering</strong> (los mensajes se entregan
+          exactamente en el orden en que se enviaron). Tienen un menor
+          <span
+            class="tooltip"
+            data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+            >throughput</span
+          >
+          que las Standard.
+        </li>
+        <li>
+          <strong>Persistencia:</strong> Los mensajes se almacenan duraderamente
+          hasta que se eliminan o expiran (hasta 14 días).
+        </li>
+        <li>
+          <strong>Características clave:</strong>
+          <strong>Visibilidad de mensajes</strong> (un mensaje no es visible
+          para otros consumidores mientras se procesa),
+          <strong>dead-letter queues</strong>.
+        </li>
+      </ul>
+      <h3>Kafka (con KRaft)</h3>
+      <ul>
+        <li>
+          <strong>Modelo:</strong> Una
+          <strong>plataforma de streaming distribuida</strong> diseñada para
+          construir
+          <span
+            class="tooltip"
+            data-tooltip-text="Una serie de etapas de procesamiento de datos conectadas en secuencia, donde la salida de una etapa es la entrada de la siguiente. Común en sistemas de CI/CD y procesamiento de datos."
+            >pipelines</span
+          >
+          de datos en tiempo real y aplicaciones de streaming. Su arquitectura
+          se basa en un
+          <strong
+            >log de transacciones distribuido, inmutable y persistente</strong
+          >.
+        </li>
+        <li>
+          <strong>Funcionamiento:</strong> Los
+          <strong>productores</strong> escriben eventos (mensajes) en
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+              >tópicos</span
+            ></strong
+          >. Cada tópico se divide en <strong>particiones</strong>, que son
+          <strong>logs inmutables y ordenados</strong>. Los
+          <strong>consumidores</strong> leen eventos de las particiones,
+          rastreando su progreso con
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="En sistemas como Kafka, un offset es un puntero o marcador que indica la posición de un consumidor dentro de una partición de un tópico. Actúa como un marcador de libro para saber qué mensajes ya han sido leídos."
+              >offsets</span
+            ></strong
+          >.
+        </li>
+        <li>
+          <strong>Persistencia:</strong> Los mensajes se almacenan de forma
+          <strong>persistente en disco</strong> por un tiempo configurable, lo
+          que permite la relectura de eventos.
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+              >Replicación</span
+            >:</strong
+          >
+          Las particiones se replican entre <strong>brokers</strong> para
+          <strong
+            >alta
+            <span
+              class="tooltip"
+              data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+              >disponibilidad</span
+            ></strong
+          >
+          y
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen."
+              >tolerancia a fallos</span
+            ></strong
+          >.
+        </li>
+        <li>
+          <strong>KRaft:</strong> (Kafka
+          <span
+            class="tooltip"
+            data-tooltip-text="Un algoritmo de consenso diseñado para ser más comprensible que Paxos. Se utiliza en sistemas distribuidos para gestionar un log replicado y garantizar que los nodos se pongan de acuerdo sobre el estado del sistema."
+            >Raft</span
+          >) Reemplaza a <strong>ZooKeeper</strong> para la gestión de metadatos
+          del clúster. Simplifica la arquitectura, mejora la escalabilidad y
+          reduce la sobrecarga operativa, permitiendo que el clúster de
+          <strong>Kafka</strong> se autogestione.
+        </li>
+        <li>
+          <strong>Garantías:</strong> Proporciona garantía de entrega
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes."
+              >at-least-once</span
+            ></strong
+          >
+          por defecto. Con un manejo cuidadoso de los
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="En sistemas como Kafka, un offset es un puntero o marcador que indica la posición de un consumidor dentro de una partición de un tópico. Actúa como un marcador de libro para saber qué mensajes ya han sido leídos."
+              >offsets</span
+            ></strong
+          >
+          del consumidor y la lógica de la aplicación, se puede lograr un
+          procesamiento
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar."
+              >exactly-once</span
+            ></strong
+          >
+          para ciertas integraciones.
+        </li>
+      </ul>
+      <h2>Rendimiento y Escalabilidad</h2>
+      <p>
+        <strong>Punto Clave:</strong>
+        <strong
+          >Redis
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          ></strong
+        >
+        ofrece la
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          ></strong
+        >
+        más baja pero escalabilidad limitada para
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+        puro, mientras que <strong>Kafka</strong> y las soluciones en la nube
+        (<strong
+          >GCP
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          ></strong
+        >, <strong>AWS SQS</strong>) ofrecen una escalabilidad masiva y
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+            >throughput</span
+          ></strong
+        >
+        excepcional, cada una con características de rendimiento diferenciadas.
+      </p>
+      <h3>
+        Redis
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Rendimiento:</strong>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >
+            extremadamente baja</strong
+          >
+          (sub-milisegundo) debido a su naturaleza <strong>en memoria</strong>.
+          Capaz de manejar un
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >throughput</span
+            ></strong
+          >
+          muy alto (cientos de miles de mensajes por segundo) en una sola
+          instancia.
+        </li>
+        <li>
+          <strong>Escalabilidad:</strong> Limitada por los recursos de una única
+          instancia de <strong>Redis</strong>. Si bien los
+          <strong>clientes</strong> pueden escalar, el
+          <span
+            class="tooltip"
+            data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+            >broker</span
+          >
+          de
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          >
+          en sí no se distribuye horizontalmente de forma nativa para las
+          suscripciones. No tiene mecanismos de persistencia o reintento de
+          entrega incorporados.
+        </li>
+        <li>
+          <strong>Fiabilidad:</strong> Baja por diseño para
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          >; los mensajes no se persisten y se pierden si no hay suscriptores
+          conectados o si estos se desconectan.
+        </li>
+      </ul>
+      <h3>
+        Google Cloud
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Rendimiento:</strong>
+          <strong
+            >Baja
+            <span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >latencia</span
+            ></strong
+          >
+          (decenas a cientos de milisegundos) para un servicio global. Capaz de
+          manejar un
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >throughput</span
+            ></strong
+          >
+          extremadamente alto (millones de mensajes por segundo), diseñado para
+          cargas de trabajo masivas.
+        </li>
+        <li>
+          <strong>Escalabilidad:</strong>
+          <strong>Totalmente gestionado</strong> y
+          <strong>auto-escalable</strong> por <strong>Google</strong>. Puede
+          escalar desde unos pocos mensajes por segundo hasta millones sin
+          intervención manual. La infraestructura subyacente de
+          <strong>Google</strong> proporciona una
+          <strong
+            >alta
+            <span
+              class="tooltip"
+              data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+              >disponibilidad</span
+            ></strong
+          >
+          y <strong>distribución global</strong>.
+        </li>
+        <li>
+          <strong>Fiabilidad:</strong> <strong>Alta durabilidad</strong> y
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >,
+          <span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          >
+          automática de mensajes.
+        </li>
+      </ul>
+      <h3>
+        Azure
+        <span
+          class="tooltip"
+          data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos."
+          >Service Bus</span
+        >
+      </h3>
+      <ul>
+        <li><strong>Rendimiento:</strong></li>
+        <li>
+          - <strong>Standard Tier:</strong>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >
+            moderada</strong
+          >
+          (decenas a cientos de milisegundos) y
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >throughput</span
+            ></strong
+          >
+          de miles de mensajes por segundo. Compartido con otros clientes.
+        </li>
+        <li>
+          - <strong>Premium Tier:</strong>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >
+            más baja y predecible</strong
+          >
+          (decenas de milisegundos) y
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >throughput</span
+            ></strong
+          >
+          mucho mayor (decenas de miles de mensajes por segundo o más) debido a
+          los recursos dedicados.
+        </li>
+        <li>
+          <strong>Escalabilidad:</strong> <strong>Gestionado por Azure</strong>,
+          escalas según el tier. El tier Premium ofrece una escalabilidad más
+          predecible y dedicada. Las unidades de mensajería permiten escalar el
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >throughput</span
+            ></strong
+          >
+          para los <strong>namespaces</strong> premium.
+        </li>
+        <li>
+          <strong>Fiabilidad:</strong> <strong>Alta durabilidad</strong> con
+          almacenamiento replicado y mecanismos de recuperación.
+        </li>
+      </ul>
+      <h3>AWS SQS</h3>
+      <ul>
+        <li><strong>Rendimiento:</strong></li>
+        <li>
+          - <strong>Standard Queues:</strong>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >
+            baja</strong
+          >
+          (decenas de milisegundos) y
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >throughput</span
+            ></strong
+          >
+          prácticamente ilimitado (miles a cientos de miles de mensajes por
+          segundo) sin costo adicional por mensajes de gran volumen.
+        </li>
+        <li>
+          -
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+              >FIFO</span
+            >
+            Queues:</strong
+          >
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >
+            similar</strong
+          >
+          pero con un
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >throughput</span
+            ></strong
+          >
+          significativamente menor (hasta 300 mensajes/segundo por defecto, 3000
+          con batching por ID de grupo) debido a las garantías de orden
+          estricto.
+        </li>
+        <li>
+          <strong>Escalabilidad:</strong>
+          <strong>Totalmente gestionado</strong> y
+          <strong>auto-escalable</strong> para manejar cualquier volumen de
+          mensajes, desde uno hasta millones, sin necesidad de
+          aprovisionamiento.
+          <strong
+            >Alta
+            <span
+              class="tooltip"
+              data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+              >disponibilidad</span
+            ></strong
+          >
+          integrada en múltiples zonas de
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >.
+        </li>
+        <li>
+          <strong>Fiabilidad:</strong> <strong>Alta durabilidad</strong> de
+          mensajes con redundancia y almacenamiento replicado.
+        </li>
+      </ul>
+      <h3>Kafka (con KRaft)</h3>
+      <ul>
+        <li>
+          <strong>Rendimiento:</strong>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >Latencia</span
+            >
+            muy baja</strong
+          >
+          (pocos milisegundos) y
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >throughput</span
+            >
+            extremadamente alto</strong
+          >
+          (cientos de miles a millones de mensajes por segundo por
+          <span
+            class="tooltip"
+            data-tooltip-text="Un intermediario de software que gestiona el flujo de mensajes entre servicios. Traduce un mensaje del protocolo del remitente al del receptor, permitiendo la comunicación desacoplada."
+            >broker</span
+          >/clúster), diseñado para <strong>procesamiento de streams</strong> en
+          tiempo real.
+        </li>
+        <li>
+          <strong>Escalabilidad:</strong>
+          <strong>Horizontalmente escalable</strong> añadiendo más
+          <strong>brokers</strong> y <strong>particiones</strong>. El
+          rendimiento escala linealmente con la adición de recursos.
+          <strong>KRaft</strong> simplifica la gestión del clúster y elimina el
+          cuello de botella de <strong>ZooKeeper</strong>, mejorando la
+          escalabilidad operativa.
+        </li>
+        <li>
+          <strong>Fiabilidad:</strong> <strong>Alta durabilidad</strong> y
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La capacidad de un sistema para continuar operando sin interrupción en caso de que uno o más de sus componentes fallen."
+              >tolerancia a fallos</span
+            ></strong
+          >
+          gracias a la
+          <span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          >
+          de particiones entre brokers. Los datos se persisten en disco durante
+          períodos configurables, lo que permite la recuperación y relectura de
+          datos.
+        </li>
+      </ul>
+      <h2>Ecosistema y Curva de Aprendizaje</h2>
+      <p>
+        <strong>Punto Clave:</strong>
+        <strong
+          >Redis
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          ></strong
+        >
+        y <strong>AWS SQS</strong> tienen la curva de aprendizaje más baja
+        debido a su simplicidad. Los servicios cloud gestionados (<strong
+          >GCP
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >Pub/Sub</span
+          ></strong
+        >,
+        <strong
+          >Azure
+          <span
+            class="tooltip"
+            data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos."
+            >Service Bus</span
+          ></strong
+        >) requieren familiaridad con su ecosistema.
+        <strong>Kafka</strong> presenta la curva de aprendizaje más empinada,
+        pero ofrece el ecosistema más amplio y potente para el procesamiento de
+        datos en tiempo real.
+      </p>
+      <h3>
+        Redis
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Ecosistema:</strong> Parte del vasto ecosistema de
+          <strong>Redis</strong>. Cuenta con librerías cliente en prácticamente
+          todos los lenguajes de programación. Se integra bien con otras
+          funcionalidades de <strong>Redis</strong> (caché, estructuras de
+          datos).
+        </li>
+        <li>
+          <strong>Curva de Aprendizaje:</strong> <strong>Muy baja</strong>. La
+          API es extremadamente simple (<code>PUBLISH</code>,
+          <code>SUBSCRIBE</code>, <code>UNSUBSCRIBE</code>). No hay conceptos
+          complejos de configuración o gestión. Ideal para equipos con
+          experiencia mínima en mensajería.
+        </li>
+      </ul>
+      <h3>
+        Google Cloud
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Ecosistema:</strong> Típicamente integrado con otros servicios
+          de <strong>Google Cloud Platform (GCP)</strong>, como
+          <strong>Cloud Functions</strong>, <strong>Cloud Dataflow</strong>,
+          <strong>Cloud Storage</strong> y <strong>BigQuery</strong>. Ofrece
+          <strong>SDKs</strong> bien documentados y una
+          <strong>API REST</strong>.
+        </li>
+        <li>
+          <strong>Curva de Aprendizaje:</strong> <strong>Moderada</strong>. El
+          uso básico es sencillo y bien documentado. Sin embargo, comprender la
+          estructura de proyectos de <strong>GCP</strong>, la gestión de
+          identidades y accesos (IAM) y la integración con otros servicios de
+          GCP añade algo de complejidad. Los conceptos de
+          <span
+            class="tooltip"
+            data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+            >tópicos</span
+          >
+          y suscripciones son claros.
+        </li>
+      </ul>
+      <h3>
+        Azure
+        <span
+          class="tooltip"
+          data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos."
+          >Service Bus</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Ecosistema:</strong> Fuertemente integrado con el ecosistema
+          de <strong>Azure</strong>, incluyendo
+          <strong>Azure Functions</strong>, <strong>Logic Apps</strong>,
+          <strong>Event Grid</strong>, y servicios de monitoreo. Soporta
+          protocolos estándar como
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Protocolo Avanzado de Cola de Mensajes (Advanced Message Queuing Protocol). Un estándar de protocolo abierto para middleware orientado a mensajes, utilizado por brokers como RabbitMQ."
+              >AMQP</span
+            >
+            1.0</strong
+          >
+          y <strong>HTTP/REST</strong>.
+        </li>
+        <li>
+          <strong>Curva de Aprendizaje:</strong>
+          <strong>Moderada a alta</strong>. El uso básico de colas y
+          <span
+            class="tooltip"
+            data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+            >tópicos</span
+          >
+          es relativamente sencillo. Sin embargo, el dominio de características
+          avanzadas como <strong>sesiones de mensajes</strong>,
+          <strong>transacciones</strong>,
+          <strong>detección de duplicados</strong> y la gestión de permisos
+          dentro de <strong>Azure</strong> puede requerir más esfuerzo y
+          experiencia. La elección entre tiers (Standard vs. Premium) también
+          añade una capa de complejidad.
+        </li>
+      </ul>
+      <h3>AWS SQS</h3>
+      <ul>
+        <li>
+          <strong>Ecosistema:</strong> Profundamente integrado con otros
+          servicios de <strong>AWS</strong>, como
+          <strong>AWS Lambda</strong> (para consumidores sin servidor),
+          <strong>AWS SNS</strong> (para patrones de
+          <span
+            class="tooltip"
+            data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción."
+            >fan-out</span
+          >), <strong>EC2</strong>, <strong>ECS</strong>, y servicios de
+          monitoreo como <strong>CloudWatch</strong>. Dispone de
+          <strong>SDKs</strong> robustos para múltiples lenguajes.
+        </li>
+        <li>
+          <strong>Curva de Aprendizaje:</strong> <strong>Baja</strong>. La API
+          es muy simple y fácil de usar. La principal complejidad reside en
+          entender las diferencias entre las <strong>Standard Queues</strong> y
+          las
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+              >FIFO</span
+            >
+            Queues</strong
+          >
+          y cuándo usar cada una, además de configurar correctamente las
+          <strong>Visibility Timeout</strong> y
+          <strong>Dead-Letter Queues</strong>.
+        </li>
+      </ul>
+      <h3>Kafka (con KRaft)</h3>
+      <ul>
+        <li>
+          <strong>Ecosistema:</strong>
+          <strong>El más grande y maduro</strong> para el procesamiento de datos
+          en streaming. Incluye <strong>Kafka Connect</strong> (para integración
+          con bases de datos y otros sistemas),
+          <strong>Kafka Streams</strong> (para construir aplicaciones de
+          procesamiento de streams), <strong>KSQL DB</strong> (SQL para
+          streams), y una vasta cantidad de conectores y marcos de trabajo de
+          terceros como <strong>Apache Flink</strong> y
+          <strong>Apache Spark Streaming</strong>.
+        </li>
+        <li>
+          <strong>Curva de Aprendizaje:</strong> <strong>Alta</strong>. Requiere
+          un conocimiento profundo de conceptos de sistemas distribuidos, como
+          <strong>particiones</strong>,
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="En sistemas como Kafka, un offset es un puntero o marcador que indica la posición de un consumidor dentro de una partición de un tópico. Actúa como un marcador de libro para saber qué mensajes ya han sido leídos."
+              >offsets</span
+            ></strong
+          >, <strong>grupos de consumidores</strong>,
+          <span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >replicación</span
+          >, y garantías de entrega. La operación de un clúster de
+          <strong>Kafka</strong> (incluso con <strong>KRaft</strong> que
+          simplifica la gestión de metadatos) sigue siendo compleja y requiere
+          experiencia especializada. Las versiones gestionadas como
+          <strong>AWS MSK</strong> o <strong>Confluent Cloud</strong> reducen la
+          carga operativa, pero los conceptos subyacentes de
+          <strong>Kafka</strong> aún deben dominarse.
+        </li>
+      </ul>
+      <h2>Casos de Uso Ideales</h2>
+      <p>
+        <strong>Punto Clave:</strong> La elección depende de la necesidad de
+        <strong>persistencia</strong>, <strong>garantías de entrega</strong>,
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          ></strong
+        >, <strong>escalabilidad</strong> y la complejidad de los patrones de
+        mensajería requeridos.
+      </p>
+      <h3>
+        Redis
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Notificaciones en tiempo real:</strong> Chat, actualizaciones
+          de dashboards en vivo, feed de noticias, donde la pérdida ocasional de
+          un mensaje es aceptable a cambio de
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >latencia</span
+            >
+            mínima</strong
+          >.
+        </li>
+        <li>
+          <strong>Comunicación inter-proceso (IPC) efímera:</strong> Para
+          servicios estrechamente acoplados que necesitan una comunicación
+          ultrarrápida sin necesidad de persistencia de mensajes.
+        </li>
+        <li>
+          <strong>Difusión de eventos simples:</strong> Cuando un evento
+          necesita ser enviado a muchos suscriptores rápidamente sin garantías
+          de entrega.
+        </li>
+        <li>
+          <strong>Ejecución de comandos remotos:</strong> Desencadenar acciones
+          en clientes conectados.
+        </li>
+      </ul>
+      <h3>
+        Google Cloud
+        <span
+          class="tooltip"
+          data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+          >Pub/Sub</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Arquitecturas basadas en eventos:</strong> Desacoplamiento de
+          microservicios, construcción de sistemas reactivos.
+        </li>
+        <li>
+          <strong>Ingesta de datos en tiempo real:</strong> Recopilación de
+          telemetría, eventos de usuario, logs de miles de fuentes para
+          procesamiento posterior.
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción."
+              >Fan-out</span
+            >
+            global:</strong
+          >
+          Cuando un mensaje debe ser entregado a un gran número de consumidores
+          distribuidos geográficamente.
+        </li>
+        <li>
+          <strong>Integración entre servicios GCP:</strong> Conectar
+          <strong>Cloud Functions</strong>, <strong>Dataflow</strong>,
+          <strong>BigQuery</strong> de manera eficiente.
+        </li>
+      </ul>
+      <h3>
+        Azure
+        <span
+          class="tooltip"
+          data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos."
+          >Service Bus</span
+        >
+      </h3>
+      <ul>
+        <li>
+          <strong>Mensajería empresarial:</strong> Aplicaciones que requieren
+          transacciones, ordenamiento estricto (con
+          <strong>sesiones de mensajes</strong>), detección de duplicados, y
+          garantía de entrega para flujos de trabajo críticos de negocio.
+        </li>
+        <li>
+          <strong>Integración de sistemas legacy:</strong> Proporciona un
+          middleware de mensajería fiable para conectar sistemas heterogéneos.
+        </li>
+        <li>
+          <strong>Procesamiento asíncrono de tareas:</strong> Colas para
+          trabajos de fondo, donde la fiabilidad y el orden son importantes.
+        </li>
+        <li>
+          <strong>Patrones de mensajería complejos:</strong> Competencia entre
+          consumidores, solicitudes/respuestas a través de colas temporales.
+        </li>
+      </ul>
+      <h3>AWS SQS</h3>
+      <ul>
+        <li>
+          <strong>Desacoplamiento de microservicios:</strong> La forma más común
+          de usar SQS, permitiendo que los servicios funcionen de forma
+          independiente y asíncrona.
+        </li>
+        <li>
+          <strong>Colas de tareas:</strong> Procesamiento de tareas de fondo de
+          larga ejecución sin bloquear la aplicación principal.
+        </li>
+        <li>
+          <strong>Procesamiento por lotes:</strong> Recopilación de un gran
+          número de mensajes para su procesamiento eficiente en lotes.
+        </li>
+        <li>
+          <strong
+            >Integración con
+            <span
+              class="tooltip"
+              data-tooltip-text="Un modelo de ejecución en la nube donde el proveedor de la nube gestiona dinámicamente la asignación de recursos de máquina. El código se ejecuta en contenedores efímeros y sin estado, y los precios se basan en el número real de ejecuciones, no en servidores pre-alquilados."
+              >Serverless</span
+            >:</strong
+          >
+          Ideal como activador para <strong>AWS Lambda</strong> para
+          procesamiento de eventos.
+        </li>
+        <li>
+          <strong
+            >Escenarios de
+            <span
+              class="tooltip"
+              data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción."
+              >Fan-out</span
+            >
+            simple:</strong
+          >
+          Cuando se combina con <strong>AWS SNS</strong> (SNS publica en un
+          tema, SQS suscribe al tema).
+        </li>
+      </ul>
+      <h3>Kafka (con KRaft)</h3>
+      <ul>
+        <li>
+          <strong>Plataformas de streaming de datos:</strong> El "nervio
+          central" para arquitecturas
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento."
+              >event-driven</span
+            ></strong
+          >
+          a gran escala, procesando datos en tiempo real.
+        </li>
+        <li>
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un patrón de diseño en el que todos los cambios en el estado de una aplicación se almacenan como una secuencia de eventos inmutables. En lugar de guardar el estado actual, se guarda el historial de cambios."
+              >Event sourcing</span
+            >:</strong
+          >
+          Almacenar el estado de la aplicación como una secuencia de eventos
+          inmutables, lo que permite la reconstrucción del estado en cualquier
+          momento.
+        </li>
+        <li>
+          <strong>Log aggregation:</strong> Recopilar y centralizar logs de
+          múltiples servicios en tiempo real para análisis y monitoreo.
+        </li>
+        <li>
+          <strong>Change Data Capture (CDC):</strong>
+          <span
+            class="tooltip"
+            data-tooltip-text="El proceso de crear y mantener múltiples copias de los mismos datos en diferentes bases de datos. Se utiliza para mejorar la disponibilidad, la tolerancia a fallos y la escalabilidad de lectura."
+            >Replicación</span
+          >
+          de cambios de bases de datos a otros sistemas en tiempo real.
+        </li>
+        <li>
+          <strong>Microservicios con eventos:</strong> Comunicación
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento."
+              >event-driven</span
+            ></strong
+          >
+          entre microservicios, donde <strong>Kafka</strong> actúa como un bus
+          de eventos persistente.
+        </li>
+      </ul>
+      <p>---</p>
+      <h2>Conclusión y Veredicto</h2>
+      <p>
+        La elección de la tecnología de mensajería depende en gran medida de los
+        requisitos específicos del proyecto en términos de
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+            >latencia</span
+          ></strong
+        >,
+        <strong
+          ><span
+            class="tooltip"
+            data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+            >throughput</span
+          ></strong
+        >, <strong>persistencia</strong>, <strong>garantías de entrega</strong>,
+        <strong>escalabilidad</strong>, complejidad del ecosistema y
+        presupuesto.
+      </p>
+      <ul>
+        <li>
+          <strong
+            >Redis
+            <span
+              class="tooltip"
+              data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+              >Pub/Sub</span
+            >:</strong
+          >
+          Es el campeón de la <strong>velocidad</strong> y la
+          <strong
+            >baja
+            <span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >latencia</span
+            ></strong
+          >, ideal para notificaciones en tiempo real donde los mensajes son
+          <strong>efímeros</strong> y su pérdida ocasional es aceptable. Su
+          simplicidad lo hace fácil de implementar para comunicaciones
+          <strong>in-app</strong> o <strong>IPC</strong> básicas.
+        </li>
+        <li>
+          <strong>AWS SQS:</strong> La opción predeterminada para
+          <strong>desacoplar microservicios</strong> en <strong>AWS</strong>. Es
+          simple, <strong>escalable ilimitadamente</strong>,
+          <strong>altamente duradero</strong> y económico para colas de tareas y
+          procesamiento asíncrono. Elija SQS cuando necesite una cola de
+          mensajes fiable con garantías de entrega
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una garantía de entrega que asegura que cada mensaje se entregará al menos una vez. Puede resultar en la entrega de mensajes duplicados, por lo que los consumidores deben ser idempotentes."
+              >at-least-once</span
+            ></strong
+          >
+          (o
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una garantía de entrega en sistemas de mensajería que asegura que cada mensaje se entregará y procesará exactamente una vez. Es la garantía más fuerte pero también la más compleja de implementar."
+              >exactly-once</span
+            ></strong
+          >
+          con
+          <span
+            class="tooltip"
+            data-tooltip-text='Siglas de "First-In, First-Out" (Primero en entrar, primero en salir). Es un método para organizar y manipular una cola de datos, donde el primer elemento añadido es el primero en ser procesado.'
+            >FIFO</span
+          >) y no necesite las capacidades de un bus de eventos en tiempo real.
+        </li>
+        <li>
+          <strong
+            >Google Cloud
+            <span
+              class="tooltip"
+              data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+              >Pub/Sub</span
+            >:</strong
+          >
+          La solución
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un modelo de ejecución en la nube donde el proveedor de la nube gestiona dinámicamente la asignación de recursos de máquina. El código se ejecuta en contenedores efímeros y sin estado, y los precios se basan en el número real de ejecuciones, no en servidores pre-alquilados."
+              >serverless</span
+            ></strong
+          >
+          y <strong>global</strong> para <strong>GCP</strong>. Es ideal para
+          arquitecturas
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento."
+              >event-driven</span
+            ></strong
+          >
+          que requieren <strong>alta escalabilidad</strong>,
+          <strong>durabilidad</strong> y
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+              >disponibilidad</span
+            >
+            global</strong
+          >
+          sin la carga operativa de gestionar la infraestructura. Es un
+          excelente punto de entrada para la ingesta de datos en tiempo real y
+          el
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción."
+              >fan-out</span
+            ></strong
+          >
+          masivo.
+        </li>
+        <li>
+          <strong
+            >Azure
+            <span
+              class="tooltip"
+              data-tooltip-text="Un bus de servicios empresariales. Específicamente, Azure Service Bus es un servicio de mensajería en la nube completamente gestionado que permite desacoplar aplicaciones y servicios, ofreciendo colas y tópicos."
+              >Service Bus</span
+            >:</strong
+          >
+          La mejor opción para <strong>mensajería empresarial</strong> en
+          <strong>Azure</strong>, especialmente cuando se requieren patrones de
+          mensajería avanzados como <strong>transacciones</strong>,
+          <strong>sesiones de mensajes</strong> para ordenar y agrupar,
+          <strong>detección de duplicados</strong> o integración con sistemas
+          heredados. Su tier Premium ofrece rendimiento dedicado para cargas de
+          trabajo críticas.
+        </li>
+        <li>
+          <strong>Kafka (con KRaft):</strong> Es la
+          <strong>plataforma de streaming</strong> por excelencia para construir
+          sistemas de <strong>procesamiento de datos en tiempo real</strong> a
+          gran escala,
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Un patrón de diseño en el que todos los cambios en el estado de una aplicación se almacenan como una secuencia de eventos inmutables. En lugar de guardar el estado actual, se guarda el historial de cambios."
+              >event sourcing</span
+            ></strong
+          >, <strong>log aggregation</strong> y el
+          <strong>nervio central</strong> de una arquitectura
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="Una arquitectura de software (Arquitectura Orientada a Eventos) en la que los componentes del sistema reaccionan a la producción, detección y consumo de eventos. Promueve el bajo acoplamiento."
+              >event-driven</span
+            ></strong
+          >
+          compleja. Ofrece un
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="La cantidad de trabajo o datos que un sistema puede procesar en un período de tiempo determinado. A menudo se mide en transacciones por segundo o solicitudes por segundo."
+              >throughput</span
+            ></strong
+          >
+          inigualable,
+          <strong
+            >baja
+            <span
+              class="tooltip"
+              data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+              >latencia</span
+            ></strong
+          >
+          y <strong>persistencia a largo plazo</strong> de los eventos. La
+          gestión de un clúster de <strong>Kafka</strong> es la más compleja,
+          pero <strong>KRaft</strong> simplifica la configuración y operación.
+        </li>
+      </ul>
+      <p>
+        <strong>Combinaciones:</strong> Es común combinar estas tecnologías. Por
+        ejemplo:
+      </p>
+      <ul>
+        <li>
+          <strong>Kafka</strong> puede ser la fuente de verdad persistente, con
+          <strong
+            >Redis
+            <span
+              class="tooltip"
+              data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+              >Pub/Sub</span
+            ></strong
+          >
+          utilizado para difundir rápidamente resultados procesados de
+          <strong>Kafka Streams</strong> a interfaces de usuario en tiempo real.
+        </li>
+        <li>
+          <strong>AWS SNS</strong> puede actuar como un
+          <span
+            class="tooltip"
+            data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+            >pub/sub</span
+          >
+          de bajo coste para
+          <span
+            class="tooltip"
+            data-tooltip-text="Un patrón de mensajería donde un solo mensaje se entrega a múltiples destinos o consumidores simultáneamente. Es la base de los sistemas de publicación/suscripción."
+            >fan-out</span
+          >, con <strong>AWS SQS</strong> como suscriptor duradero para cada
+          microservicio.
+        </li>
+        <li>
+          <strong
+            >GCP
+            <span
+              class="tooltip"
+              data-tooltip-text='Acrónimo de "Publish/Subscribe" (Publicar/Suscribir). Un patrón de mensajería donde los "publicadores" envían mensajes a un tema o canal, sin saber quiénes son los "suscriptores". Los suscriptores reciben los mensajes de los temas que les interesan, creando un sistema altamente desacoplado.'
+              >Pub/Sub</span
+            ></strong
+          >
+          puede ingestar datos en tiempo real, que luego son procesados por
+          <strong>Dataflow</strong> y almacenados en <strong>BigQuery</strong>,
+          mientras que <strong>Cloud Functions</strong> reaccionan a eventos
+          específicos.
+        </li>
+      </ul>
+      <p>
+        En resumen, la elección debe alinearse con los requisitos de
+        <strong
+          >rendimiento, durabilidad, complejidad de los patrones de mensajería y
+          la experiencia operativa del equipo</strong
+        >.
+      </p>
+    </div>
+  </body>
 </html>
-

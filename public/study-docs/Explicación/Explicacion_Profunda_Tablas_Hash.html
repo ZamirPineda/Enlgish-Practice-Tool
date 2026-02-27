@@ -1,47 +1,49 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Explicacion_Profunda_Tablas Hash</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0f172a; /* slate-900 */
-      color: #d1d5db; /* slate-300 */
-      padding: clamp(1rem, 3vw, 2rem);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .prose-invert {
-      --tw-prose-body: #d1d5db;
-      --tw-prose-headings: #f8fafc;
-      --tw-prose-links: #38bdf8;
-      --tw-prose-bold: #f8fafc;
-      --tw-prose-bullets: #38bdf8;
-      --tw-prose-hr: #334155;
-      --tw-prose-quotes: #f1f5f9;
-      --tw-prose-quote-borders: #334155;
-      --tw-prose-code: #f472b6;
-      --tw-prose-pre-code: #e5e7eb;
-      --tw-prose-pre-bg: #1e293b;
-    }
-    .prose-invert h1 {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explicacion_Profunda_Tablas Hash</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a; /* slate-900 */
+        color: #d1d5db; /* slate-300 */
+        padding: clamp(1rem, 3vw, 2rem);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .prose-invert {
+        --tw-prose-body: #d1d5db;
+        --tw-prose-headings: #f8fafc;
+        --tw-prose-links: #38bdf8;
+        --tw-prose-bold: #f8fafc;
+        --tw-prose-bullets: #38bdf8;
+        --tw-prose-hr: #334155;
+        --tw-prose-quotes: #f1f5f9;
+        --tw-prose-quote-borders: #334155;
+        --tw-prose-code: #f472b6;
+        --tw-prose-pre-code: #e5e7eb;
+        --tw-prose-pre-bg: #1e293b;
+      }
+      .prose-invert h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
         color: #f8fafc;
-    }
-    .prose-invert h2 {
+      }
+      .prose-invert h2 {
         border-bottom: 1px solid #334155;
         padding-bottom: 0.5em;
         margin-top: 2em;
@@ -50,78 +52,1315 @@
         line-height: 2rem;
         font-weight: 700;
         color: #f8fafc;
-    }
-    .prose-invert h3 {
+      }
+      .prose-invert h3 {
         color: #7dd3fc;
         margin-top: 1.6em;
         margin-bottom: 0.8em;
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 600;
-    }
-    .prose-invert code:not(pre > code) {
-      background-color: #334155;
-      padding: 0.2em 0.4em;
-      border-radius: 0.25rem;
-      font-size: 0.9em;
-    }
-    .prose-invert code::before, .prose-invert code::after { content: none !important; }
-    .prose-invert pre { border: 1px solid #334155; padding: 1em; border-radius: 0.5rem; overflow-x: auto;}
-    .prose-invert ul { padding-left: 1.25rem; }
-    .prose-invert li { margin-top: 0.5em; margin-bottom: 0.5em; }
-    .prose-invert table { width: 100%; border-collapse: collapse; margin-top: 1.5em; margin-bottom: 1.5em; font-size: 0.9em; }
-    .prose-invert th, .prose-invert td { border: 1px solid #334155; padding: 0.75em 1em; text-align: left; vertical-align: top; }
-    .prose-invert th { background-color: #1e293b; font-weight: 600; color: #e2e8f0; }
-    .prose-invert tr:nth-child(even) td { background-color: rgba(30, 41, 59, 0.5); }
-    .tooltip {
-      position: relative;
-      cursor: help;
-      border-bottom: 2px dotted #38bdf8;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .tooltip:hover { color: #7dd3fc; }
-    .tooltip::after {
-      content: attr(data-tooltip-text);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1e293b;
-      color: #d1d5db;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #334155;
-      font-size: 0.875rem;
-      line-height: 1.4;
-      width: 300px;
-      max-width: 80vw;
-      text-align: left;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-      z-index: 10;
-      border-bottom: none;
-      font-family: 'Inter', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-    .tooltip:hover::after {
-      visibility: visible;
-      opacity: 1;
-    }
-    .accordion-item { border-bottom: 1px solid #334155; }
-    .accordion-question { font-weight: 600; }
-    .accordion-answer { padding: 1em; background-color: #1e293b; }
-  </style>
-
-</head>
-<body>
-  <div class="container prose prose-invert">
-    <h1>Explicacion_Profunda_Tablas Hash</h1>
-    <h2>Explicación Profunda de Tablas Hash</h2><p>Las tablas hash (Hash Tables), también conocidas como mapas hash, diccionarios o mapas asociativos, son una de las estructuras de datos más fundamentales y eficientes en la informática, utilizadas para almacenar pares clave-valor. Su objetivo principal es permitir la búsqueda, inserción y eliminación de elementos en tiempo promedio constante (O(1)).</p><h3>Conceptos Fundamentales</h3><p>La idea central de una tabla hash es mapear claves a posiciones (índices) en un arreglo subyacente de forma muy eficiente. Este mapeo se realiza mediante una <strong>función hash</strong>. En lugar de buscar un elemento por su clave recorriendo una lista (O(N)) o un árbol (O(log N)), la función hash nos indica directamente dónde debería estar el elemento en el arreglo.</p><p>1.  <strong>Par Clave-Valor:</strong> Cada elemento almacenado es un par <code>(clave, valor)</code>. La clave es única y se utiliza para identificar y recuperar el valor asociado.</p><p>2.  <strong>Función Hash:</strong> Es un algoritmo que toma una clave como entrada y produce un número entero (el "valor hash" o "código hash"). Este número entero se utiliza luego para calcular el índice en el arreglo donde se almacenará el par clave-valor.</p><ul><li>   *   Debe ser <strong>determinista</strong>: Siempre produce el mismo resultado para la misma entrada.</li><li>   *   Debe ser <strong>eficiente</strong>: Calcular el hash no debe consumir mucho tiempo.</li><li>   *   Debe <strong>distribuir bien</strong> las claves: Idealmente, diferentes claves deberían producir diferentes valores hash, y los valores hash deberían estar uniformemente distribuidos a lo largo del rango de índices disponibles, para minimizar colisiones.</li></ul><p>3.  <strong>Colisión:</strong> Ocurre cuando dos claves diferentes producen el mismo valor hash. Resolver estas colisiones es un aspecto crucial del diseño de tablas hash.</p><p>4.  <strong>Arreglo (Buckets):</strong> La tabla hash interna es un arreglo. Cada posición en este arreglo se llama "bucket" (cubeta). El índice calculado a partir del valor hash dirige el par clave-valor a un bucket específico.</p><h3>Arquitectura Interna</h3><p>Una tabla hash consta de varios componentes clave que trabajan juntos:</p><p>1.  <strong>Función Hash (Hash Function):</strong></p><ul><li>   *   <code>índice = hash(clave) % tamaño_arreglo</code></li><li>   *   La función <code>hash(clave)</code> genera un número entero grande. Luego, el operador módulo (<code>%</code>) se utiliza para mapear este número entero a un índice válido dentro de los límites del arreglo subyacente.</li><li>   *   La calidad de esta función es vital para el rendimiento. Una mala función hash puede llevar a muchas colisiones y degradar el rendimiento a O(N).</li></ul><p>2.  <strong>Arreglo (Buckets o Tabla):</strong></p><ul><li>   *   Es la estructura de almacenamiento principal. Cada elemento del arreglo es un "bucket".</li><li>   *   Cuando se inserta un par <code>(clave, valor)</code>, la función hash calcula el índice del bucket donde debe ir.</li></ul><p>3.  <strong>Estrategias de Resolución de Colisiones:</strong> Es el mecanismo más importante para manejar la situación cuando dos claves diferentes se mapean al mismo bucket.</p><ul><li>   *   <strong>Encadenamiento (Chaining):</strong></li><li>       *   Cada bucket del arreglo no almacena directamente un par <code>(clave, valor)</code>, sino un puntero a una estructura de datos (típicamente una lista enlazada, pero puede ser un árbol binario de búsqueda balanceado como un Red-Black Tree en Java 8+) que contiene todos los pares clave-valor que han colisionado en ese bucket.</li><li>       *   <strong>Inserción:</strong> Calcula el hash, va al bucket, y añade el nuevo par al final de la lista de ese bucket. Si la clave ya existe, actualiza el valor.</li><li>       *   <strong>Búsqueda/Eliminación:</strong> Calcula el hash, va al bucket, y recorre la lista enlazada (o el árbol) de ese bucket, comparando las claves hasta encontrar la correcta usando el método <code>equals()</code>.</li><li>       *   <strong>Ventaja:</strong> Más simple de implementar, menos sensible al factor de carga, fácil de manejar eliminaciones.</li><li>       *   <strong>Desventaja:</strong> <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">Overhead</span> de memoria por los punteros en las listas, puede requerir más recorrido si las listas son largas.</li><li>   *   <strong>Sondeo Abierto (Open Addressing):</strong></li><li>       *   En lugar de almacenar una lista, cada bucket almacena directamente un par <code>(clave, valor)</code>. Si el bucket calculado por el hash ya está ocupado, la tabla "sondea" (busca) otros buckets hasta encontrar uno vacío.</li><li>       *   <strong>Tipos de Sondeo:</strong></li><li>           *   <strong>Sondeo Lineal (Linear Probing):</strong> <code>(hash(clave) + i) % tamaño_arreglo</code>, donde <code>i</code> se incrementa (0, 1, 2, ...) hasta encontrar un bucket vacío. Crea "agrupamientos primarios".</li><li>           *   <strong>Sondeo Cuadrático (Quadratic Probing):</strong> <code>(hash(clave) + i*i) % tamaño_arreglo</code>, donde <code>i</code> se incrementa. Ayuda a reducir agrupamientos primarios, pero puede crear "agrupamientos secundarios".</li><li>           *   <strong>Doble Hashing (Double Hashing):</strong> Utiliza una segunda función hash para determinar el tamaño del paso de sondeo: <code>(hash1(clave) + i * hash2(clave)) % tamaño_arreglo</code>. Ofrece la mejor distribución.</li><li>       *   <strong>Inserción:</strong> Sondea hasta encontrar un bucket vacío y lo ocupa.</li><li>       *   <strong>Búsqueda:</strong> Sondea usando la misma secuencia hasta encontrar la clave o un bucket vacío (lo que significa que la clave no está presente).</li><li>       *   <strong>Eliminación:</strong> Compleja, ya que dejar un bucket vacío puede romper la cadena de sondeo para otras claves. A menudo se marcan los buckets como "eliminados lógicamente" en lugar de vaciarlos físicamente.</li><li>       *   <strong>Ventaja:</strong> Mejor rendimiento de caché debido a la localidad de referencia, no hay <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">overhead</span> de punteros, potencialmente más eficiente en memoria si el factor de carga es bajo.</li><li>       *   <strong>Desventaja:</strong> Más compleja de implementar, muy sensible al factor de carga (degrada rápidamente con factores de carga altos), la eliminación es complicada.</li></ul><p>4.  <strong>Factor de Carga (Load Factor):</strong></p><ul><li>   *   <code>factor_carga = número_elementos / tamaño_arreglo</code></li><li>   *   Mide cuán "llena" está la tabla. Un factor de carga alto significa más colisiones y listas más largas (en encadenamiento) o más sondeos (en sondeo abierto), lo que degrada el rendimiento.</li><li>   *   Cada implementación de tabla hash define un umbral para el factor de carga (comúnmente 0.7 o 0.75 para encadenamiento, y mucho menor para sondeo abierto, e.g., 0.5).</li></ul><p>5.  <strong>Rehashing (Redimensionamiento):</strong></p><ul><li>   *   Cuando el factor de carga excede el umbral, la tabla se "redimensiona" (rehashing).</li><li>   *   Se crea un nuevo arreglo subyacente, generalmente el doble de grande que el anterior.</li><li>   *   Todos los elementos existentes se reinsertan en el nuevo arreglo utilizando la (posiblemente nueva) función hash y el nuevo tamaño.</li><li>   *   <strong>Costo:</strong> El rehashing es una operación O(N) (donde N es el número de elementos), ya que requiere recorrer y rehashear todos los elementos. Sin embargo, debido a que ocurre con poca frecuencia (solo cuando la tabla se llena lo suficiente), su costo se "amortiza" a lo largo de muchas operaciones de inserción, manteniendo el tiempo promedio en O(1).</li></ul><h3>Modelo de Datos/Comunicación</h3><p>Las tablas hash operan con pares <code>(clave, valor)</code>:</p><ul><li>  <strong>Claves:</strong> Deben ser objetos que puedan ser "hasheables" (es decir, deben tener un método <code>hashCode()</code> que cumpla con ciertas propiedades) y "comparables por igualdad" (un método <code>equals()</code> que determine si dos claves son lógicamente idénticas). Es <strong>altamente recomendable que las claves sean inmutables</strong>, ya que si una clave mutable se modifica después de ser insertada, su <code>hashCode()</code> podría cambiar, haciendo que el elemento sea inrecuperable o "perdido" dentro de la tabla.</li><li>  <strong>Valores:</strong> Pueden ser de cualquier tipo y no tienen restricciones especiales.</li></ul><p>La comunicación con una tabla hash se realiza a través de operaciones como:</p><ul><li>  <code>put(clave, valor)</code>: Inserta o actualiza un par.</li><li>  <code>get(clave)</code>: Recupera el valor asociado a una clave.</li><li>  <code>remove(clave)</code>: Elimina un par de la tabla.</li><li>  <code>containsKey(clave)</code>: Verifica si una clave existe.</li><li>  <code>size()</code>: Retorna el número de elementos.</li></ul><h3>Ventajas Clave y Desventajas</h3><p><strong>Ventajas Clave:</strong></p><p>1.  <strong>Rendimiento Promedio O(1):</strong> Esta es la ventaja más significativa. Las operaciones básicas (inserción, eliminación, búsqueda) se completan en tiempo constante en promedio, lo que las hace extremadamente rápidas para grandes volúmenes de datos.</p><p>2.  <strong>Eficiencia en el uso de memoria (comparado con árboles balanceados):</strong> Aunque tienen un <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">overhead</span> de memoria (punteros en encadenamiento o buckets vacíos en sondeo abierto), generalmente son más eficientes en memoria que estructuras como los árboles binarios de búsqueda balanceados que requieren nodos más complejos y más punteros.</p><p>3.  <strong>Versatilidad:</strong> Son la base para la implementación de diccionarios, conjuntos (sets), cachés, y muchos otros componentes de software.</p><p>4.  <strong>Simpleza Conceptual (en su forma básica):</strong> La idea de mapear una clave a un índice es intuitiva, aunque la implementación detallada de la resolución de colisiones y el rehashing puede ser compleja.</p><p><strong>Desventajas Clave:</strong></p><p>1.  <strong>Rendimiento en el Peor Caso O(N):</strong> Si la función hash es pobre o si se producen muchas colisiones (por ejemplo, debido a una distribución adversa de las claves, o un ataque de denegación de servicio que explota la función hash), las operaciones pueden degenerar a O(N). El rehashing también es O(N) en el peor caso.</p><p>2.  <strong>Consumo de Memoria:</strong> Si se mantiene un factor de carga bajo para asegurar un buen rendimiento (especialmente en sondeo abierto), puede haber una cantidad significativa de memoria sin usar (buckets vacíos). En encadenamiento, el <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">overhead</span> de los punteros para las listas enlazadas puede ser considerable.</p><p>3.  <strong>No Mantiene Orden:</strong> Las tablas hash no garantizan ningún orden de las claves (ni de inserción, ni orden natural). Si el orden es importante, se requieren estructuras de datos adicionales (como <code>LinkedHashMap</code> en Java, que usa una lista enlazada para mantener el orden de inserción, o <code>TreeMap</code> que usa un árbol balanceado).</p><p>4.  <strong>Sensibilidad a la Función Hash:</strong> La calidad del rendimiento depende críticamente de la función hash. Una función hash mal diseñada puede causar agrupamientos severos, invalidando la ventaja O(1).</p><p>5.  <strong>Coste de Rehashing:</strong> Aunque amortizado, un rehashing puede ser una operación costosa que causa una pausa perceptible si la tabla es muy grande y se ejecuta en un momento crítico.</p><h2>Preguntas de Entrevista sobre Tablas Hash</h2><h3>Pregunta 1: Explica la relación contractual entre los métodos <code>hashCode()</code> y <code>equals()</code> en Java (o equivalentes en otros lenguajes) y por qué es crucial para el correcto funcionamiento de una tabla hash.</h3><p><strong>Respuesta Detallada:</strong></p><p>La relación contractual entre <code>hashCode()</code> y <code>equals()</code> es fundamental para el correcto funcionamiento de cualquier estructura de datos que dependa del hashing, como <code>HashMap</code>, <code>HashSet</code> o <code>Hashtable</code>. Este contrato, establecido por la especificación de Java (y adoptado por principios similares en otros lenguajes):</p><p>1.  <em></em>Si dos objetos son iguales según el método <code>equals(Object)</code> (es decir, <code>obj1.equals(obj2)</code> devuelve <code>true</code>), entonces deben tener el mismo valor <code>hashCode()</code> (es decir, <code>obj1.hashCode() == obj2.hashCode()</code> debe ser <code>true</code>).<em></em></p><p>2.  <em></em>Si dos objetos tienen el mismo valor <code>hashCode()</code>, NO necesariamente deben ser iguales según el método <code>equals()</code>.<em></em> Esto es lo que se conoce como una colisión de hash (hash collision).</p><p>3.  <em></em>Si dos objetos son diferentes según el método <code>equals()</code>, NO necesariamente deben tener un <code>hashCode()</code> diferente.<em></em> Nuevamente, esto es una colisión de hash.</p><p><strong>Por qué es crucial para una tabla hash:</strong></p><ul><li>  <strong>Búsqueda (get):</strong> Cuando se busca una clave <code>K</code> en una tabla hash, primero se calcula <code>K.hashCode()</code> para determinar el bucket donde <code>K</code> debería estar. Luego, dentro de ese bucket (que podría ser una lista de elementos si hay colisiones), la tabla hash itera sobre los elementos y usa <code>K.equals(elemento_en_bucket)</code> para encontrar la clave exacta. Si el contrato se rompe, y dos objetos <code>equals()</code> tienen diferentes <code>hashCode()</code>, la tabla hash calculará un bucket incorrecto para el objeto lógicamente igual y no lo encontrará.</li><li>  <strong>Inserción (put):</strong> Similarmente, al insertar un par <code>(K, V)</code>, se calcula <code>K.hashCode()</code> para encontrar el bucket. Si ya existe una clave lógicamente igual en ese bucket, <code>equals()</code> se usa para detectarla y actualizar su valor. Si <code>hashCode()</code> no cumple el contrato, un objeto lógicamente igual podría terminar en un bucket diferente, llevando a duplicados o a que una actualización falle.</li><li>  <strong>Integridad de la Estructura:</strong> El contrato garantiza que si la tabla hash contiene un objeto <code>A</code>, y luego se busca un objeto <code>B</code> que es lógicamente igual a <code>A</code> (según <code>equals()</code>), <code>B</code> será encontrado correctamente. Sin este contrato, el <code>hashCode()</code> de <code>B</code> podría apuntar a un bucket vacío o a uno sin <code>A</code>, incluso si <code>B</code> es el mismo concepto lógico que <code>A</code>.</li></ul><p><strong>En resumen:</strong> <code>hashCode()</code> es para la eficiencia (encontrar el bucket rápido), y <code>equals()</code> es para la corrección (encontrar el elemento exacto dentro del bucket). Ambos deben trabajar en armonía.</p><h3>Pregunta 2: Compara y contrasta las dos principales estrategias de resolución de colisiones: encadenamiento (chaining) y sondeo abierto (open addressing). ¿Cuándo elegirías una sobre la otra?</h3><p><strong>Respuesta Detallada:</strong></p><p>Las dos estrategias fundamentales para manejar colisiones son el encadenamiento y el sondeo abierto.</p><p><strong>Encadenamiento (Chaining):</strong></p><ul><li>  <strong>Concepto:</strong> Cada slot (bucket) en el arreglo de la tabla hash almacena un puntero a una estructura de datos (comúnmente una lista enlazada, pero puede ser un árbol binario de búsqueda balanceado como un Red-Black Tree para mejorar el peor caso a O(log N) cuando la lista se vuelve muy larga). Todos los elementos que colisionan en un mismo hash se almacenan en esa estructura.</li><li>  <strong>Operaciones:</strong> Para buscar, insertar o eliminar, se calcula el hash, se va al bucket correspondiente y luego se recorre la lista (o árbol) de ese bucket para encontrar/manipular el elemento deseado usando <code>equals()</code>.</li><li>  <strong>Ventajas:</strong></li><li>   *   <strong>Menos sensible al factor de carga:</strong> Puede manejar factores de carga mayores a 1 (más elementos que buckets) con una degradación más gradual del rendimiento.</li><li>   *   <strong>Fácil eliminación:</strong> La eliminación es sencilla, ya que solo implica quitar un nodo de la lista.</li><li>   *   <strong>Menos propenso a agrupamientos:</strong> No sufre de los agrupamientos primarios y secundarios del sondeo abierto.</li><li>   *   <strong>Implementación más simple</strong> para las operaciones básicas.</li><li>  <strong>Desventajas:</strong></li><li>   *   <strong><span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">Overhead</span> de memoria:</strong> Cada elemento en las listas enlazadas requiere espacio adicional para el puntero <code>next</code>.</li><li>   *   <strong>Rendimiento de caché:</strong> Menor localidad de referencia, ya que los nodos de la lista pueden estar dispersos en memoria.</li></ul><p><strong>Sondeo Abierto (Open Addressing):</strong></p><ul><li>  <strong>Concepto:</strong> Todos los elementos se almacenan directamente dentro del arreglo de la tabla hash. Si un bucket calculado por el hash ya está ocupado, la tabla "sondea" (busca) secuencialmente otros buckets adyacentes hasta encontrar uno vacío.</li><li>  <strong>Tipos de Sondeo:</strong> Lineal, cuadrático, doble hashing.</li><li>  <strong>Operaciones:</strong> Para buscar, insertar o eliminar, se calcula el hash y se sondea el arreglo siguiendo la secuencia de sondeo hasta encontrar el elemento (usando <code>equals()</code>) o un bucket vacío.</li><li>  <strong>Ventajas:</strong></li><li>   *   <strong>Mejor rendimiento de caché:</strong> Los elementos están empaquetados más densamente en el arreglo, mejorando la localidad de referencia.</li><li>   *   <strong>No hay <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">overhead</span> de punteros:</strong> No se necesitan punteros <code>next</code> para las listas.</li><li>   *   <strong>Potencialmente más rápido</strong> con factores de carga bajos.</li><li>  <strong>Desventajas:</strong></li><li>   *   <strong>Muy sensible al factor de carga:</strong> El rendimiento se degrada drásticamente a medida que el factor de carga se acerca a 1. Típicamente, el factor de carga máximo recomendado es 0.5 a 0.7.</li><li>   *   <strong>Problemas de agrupamiento:</strong> El sondeo lineal puede crear "agrupamientos primarios" (grandes bloques de buckets ocupados), mientras que el sondeo cuadrático puede crear "agrupamientos secundarios".</li><li>   *   <strong>Eliminación compleja:</strong> La eliminación de un elemento puede romper una secuencia de sondeo para otros elementos, lo que a menudo requiere "marcadores de borrado" (tombstones) que ocupan espacio y complican las búsquedas.</li><li>   *   <strong>Mayor complejidad de implementación.</strong></li></ul><p><strong>¿Cuándo elegir uno sobre el otro?</strong></p><ul><li>  <strong>Elige Encadenamiento si:</strong></li><li>   *   Necesitas alta flexibilidad con el factor de carga.</li><li>   *   Las eliminaciones son frecuentes y deben ser eficientes.</li><li>   *   El tamaño de los objetos clave-valor es pequeño en comparación con el tamaño de los punteros (el <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">overhead</span> del puntero es menos significativo).</li><li>   *   No te preocupan tanto los fallos de caché o la localidad de referencia.</li><li>   *   La implementación del lenguaje ya lo soporta (ej., <code>HashMap</code> de Java).</li><li>  <strong>Elige Sondeo Abierto si:</strong></li><li>   *   La memoria es extremadamente crítica y el <span class="tooltip" data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí.">overhead</span> de punteros es inaceptable.</li><li>   *   Puedes garantizar un factor de carga bajo.</li><li>   *   Las inserciones y búsquedas son más comunes que las eliminaciones, o las eliminaciones se manejan con marcadores de borrado.</li><li>   *   El rendimiento de caché es una preocupación primordial.</li><li>   *   Estás dispuesto a invertir más en la complejidad de la implementación.</li></ul><p>En la práctica, el encadenamiento es a menudo la opción predeterminada en muchas implementaciones de librerías estándar debido a su robustez y simplicidad relativa.</p><h3>Pregunta 3: Explica el concepto de factor de carga (load factor) en una tabla hash y cómo se relaciona con el proceso de rehashing (redimensionamiento). ¿Qué implicaciones de rendimiento tiene?</h3><p><strong>Respuesta Detallada:</strong></p><p>El <strong>factor de carga</strong> de una tabla hash es una métrica crucial que indica qué tan "llena" está la tabla. Se calcula como:</p><p><code>Factor de Carga = (Número de elementos almacenados) / (Número total de buckets en el arreglo)</code></p><p>Por ejemplo, si una tabla hash tiene 100 buckets y almacena 70 elementos, su factor de carga es 0.7.</p><p><strong>Importancia del Factor de Carga:</strong></p><p>El factor de carga impacta directamente el rendimiento de las operaciones de la tabla hash (inserción, búsqueda, eliminación).</p><ul><li>  <strong>Factor de carga bajo:</strong> Más buckets vacíos, menos colisiones esperadas. Esto resulta en operaciones más rápidas (más cercanas a O(1)) porque las listas de colisiones son cortas o el sondeo encuentra un bucket rápidamente. Sin embargo, usa más memoria de la necesaria.</li><li>  <strong>Factor de carga alto:</strong> Más buckets ocupados, mayor probabilidad de colisiones. Esto alarga las listas en el encadenamiento o requiere más pasos de sondeo en el sondeo abierto, degradando el rendimiento hacia O(N).</li></ul><p><strong>Rehashing (Redimensionamiento):</strong></p><p>Para mantener un rendimiento óptimo (cercano a O(1)), las tablas hash suelen tener un <strong>umbral de factor de carga</strong> predefinido (por ejemplo, 0.75 en <code>HashMap</code> de Java). Cuando el factor de carga actual de la tabla excede este umbral, se desencadena el proceso de <strong>rehashing</strong> (o redimensionamiento).</p><p>El rehashing implica los siguientes pasos:</p><p>1.  <strong>Crear un nuevo arreglo:</strong> Se asigna un nuevo arreglo de buckets, generalmente de un tamaño mayor que el actual (comúnmente el doble de tamaño, o el siguiente número primo si se usa un tamaño primo para los buckets).</p><p>2.  <strong>Re-calcular hashes y reubicar elementos:</strong> Cada elemento existente en la tabla antigua debe ser reinsertado en el nuevo arreglo. Para cada elemento, se calcula su <code>hashCode()</code> y se aplica la operación módulo con el <strong>nuevo tamaño del arreglo</strong> para determinar su nueva posición.</p><p>3.  <strong>Descartar el arreglo antiguo:</strong> Una vez que todos los elementos han sido transferidos al nuevo arreglo, el arreglo original puede ser liberado.</p><p><strong>Implicaciones de Rendimiento:</strong></p><ul><li>  <strong>Costo de la Operación:</strong> El rehashing es una operación costosa en términos de tiempo. Requiere iterar sobre todos los <code>N</code> elementos existentes y recalcular su hash y posición, lo que lo convierte en una operación <strong>O(N)</strong>.</li><li>  <strong>Impacto Amortizado:</strong> Aunque un rehashing individual es O(N), se realiza con poca frecuencia (solo cuando la tabla se llena lo suficiente). Si la tabla crece exponencialmente (duplicando su tamaño), la suma total del costo de todos los rehashing distribuidos a lo largo de un gran número de inserciones se "amortiza" de manera que el costo promedio por inserción sigue siendo <strong>O(1)</strong>.</li><li>  <strong>Pausas (Latency Spikes):</strong> En sistemas sensibles al rendimiento en tiempo real, un rehashing de una tabla muy grande puede causar una pausa perceptible (un "latency spike") en la aplicación, ya que todas las demás operaciones de la tabla hash podrían bloquearse hasta que el rehashing haya terminado. Este es un punto a considerar en arquitecturas de alta <span class="tooltip" data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime).">disponibilidad</span>.</li></ul><p>En resumen, el factor de carga es un equilibrio entre el uso de memoria y el rendimiento. El rehashing es el mecanismo que permite a las tablas hash mantener su rendimiento promedio O(1) a medida que crecen, pero introduce picos de <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> en el peor caso.</p><h3>Pregunta 4: ¿Por qué es una buena práctica (y a menudo crucial) usar objetos inmutables como claves en una tabla hash? ¿Qué problemas podrían surgir si una clave mutable se modifica después de ser insertada?</h3><p><strong>Respuesta Detallada:</strong></p><p>Es una práctica fundamental y altamente recomendada usar objetos <strong>inmutables</strong> como claves en una tabla hash. Un objeto inmutable es aquel cuyo estado no puede ser modificado después de su creación.</p><p><strong>Problemas con Claves Mutables:</strong></p><p>Si se utiliza un objeto mutable como clave y este objeto se modifica <strong>después de haber sido insertado</strong> en la tabla hash, pueden surgir problemas graves:</p><p>1.  <strong>Pérdida del Elemento:</strong></p><ul><li>   *   Cuando un objeto <code>K</code> se inserta en una tabla hash, su <code>K.hashCode()</code> se calcula y se utiliza para determinar el bucket donde se almacenará.</li><li>   *   Si el estado interno de <code>K</code> se modifica <em>después</em> de la inserción, y esa modificación afecta los campos utilizados para calcular <code>hashCode()</code>, entonces <code>K.hashCode()</code> producirá un valor <strong>diferente</strong> si se calcula de nuevo.</li><li>   *   Cuando se intente recuperar el valor asociado a <code>K</code> usando <code>get(K)</code>, la tabla hash calculará el <em>nuevo</em> <code>hashCode()</code>, que apuntará a un bucket diferente al original. Como resultado, la tabla no encontrará el elemento, aunque lógicamente sigue presente en algún lugar del bucket original (al que ahora no se puede acceder con el nuevo hash). El elemento se considera "perdido".</li></ul><p>2.  <strong>Duplicados Inesperados:</strong></p><ul><li>   *   Si se intenta insertar un objeto mutable <code>K'</code> (que es lógicamente igual a una clave <code>K</code> ya existente en la tabla) <em>después</em> de que <code>K</code> haya sido modificado, <code>K'</code> podría calcular un <code>hashCode()</code> diferente al original de <code>K</code>.</li><li>   *   Esto llevaría a que <code>K'</code> se inserte en un bucket diferente, resultando en que la tabla contenga dos entradas para lo que lógicamente debería ser la misma clave.</li></ul><p><strong>Ejemplo:</strong></p><p>Imagina una clave <code>Persona(nombre, apellido)</code>:</p><p>1.  <code>p = new Persona("Juan", "Perez")</code></p><p>2.  <code>map.put(p, "Valor de Juan")</code> -> <code>p.hashCode()</code> se calcula (basado en "Juan", "Perez"), y se inserta en el <code>bucket_X</code>.</p><p>3.  <code>p.setNombre("Pedro")</code> -> ¡El estado de la clave <code>p</code> ha cambiado!</p><p>4.  <code>map.get(p)</code> -> Se calcula <code>p.hashCode()</code> de nuevo (basado en "Pedro", "Perez"). Este nuevo hash probablemente apunta a <code>bucket_Y</code>.</p><p>5.  <code>bucket_Y</code> no contiene el elemento original. La búsqueda falla, y el valor "Valor de Juan" es inrecuperable por esa clave <code>p</code> modificada.</p><p><strong>En resumen:</strong> La inmutabilidad de las claves garantiza que su <code>hashCode()</code> y su comportamiento <code>equals()</code> permanezcan consistentes durante toda su vida en la tabla hash, asegurando que los elementos puedan ser encontrados y gestionados correctamente. Si las claves deben ser mutables por algún motivo, la responsabilidad recae en el desarrollador para asegurarse de que la clave no se modifique mientras está en la tabla hash, o se debe eliminar y reinsertar la clave si se modifica.</p><h3>Pregunta 5: ¿Cómo puede una función hash mal diseñada o predecible ser explotada para lanzar ataques de Denegación de Servicio (DoS), y qué estrategias se utilizan para mitigar este riesgo?</h3><p><strong>Respuesta Detallada:</strong></p><p>Una función hash mal diseñada o predecible puede ser una vulnerabilidad crítica en aplicaciones que utilizan tablas hash, haciéndolas susceptibles a ataques de Denegación de Servicio (DoS).</p><p><strong>Mecanismo del Ataque:</strong></p><p>El ataque se basa en explotar el peor caso de rendimiento de una tabla hash, que es O(N). Si un atacante puede generar un gran número de claves que todas producen el mismo valor hash (o valores hash que colisionan frecuentemente en el mismo bucket), todas las operaciones (inserción, búsqueda, eliminación) sobre esas claves se degradarán de O(1) promedio a O(N).</p><p>1.  <strong>Identificación de la Función Hash:</strong> El atacante primero necesita conocer o deducir la función hash utilizada por el sistema objetivo (por ejemplo, el <code>hashCode()</code> predeterminado de <code>String</code> en Java, o funciones hash comunes de librerías).</p><p>2.  <strong>Generación de Claves Colisionadoras:</strong> Una vez que se conoce la función hash, el atacante puede generar un gran conjunto de claves que deliberadamente producen el mismo valor hash (o un conjunto pequeño de valores hash). Hay herramientas y técnicas para generar estas "hash collisions" de forma determinista para muchas funciones hash comunes.</p><p>3.  <strong>Sobrecarga del Sistema:</strong> El atacante entonces envía una carga útil (payload) al sistema que consiste en un gran número de estas claves colisionadoras. Por ejemplo, en una aplicación web que acepta parámetros en un formulario o en un cuerpo JSON, estas claves podrían ser nombres de campos o atributos.</p><p>4.  <strong>Degradación del Rendimiento:</strong> Cuando la aplicación procesa esta entrada y las inserta en una tabla hash interna (por ejemplo, para almacenar parámetros de solicitud, variables de sesión, etc.), todas las claves colisionan en los mismos pocos buckets. Si la tabla hash usa encadenamiento, esto resulta en listas de colisiones extremadamente largas. Cada operación en estas claves ahora requiere O(N) tiempo (donde N es el número de claves colisionadoras en ese bucket), en lugar de O(1).</p><p>5.  <strong>Denegación de Servicio:</strong> Un pequeño número de peticiones bien elaboradas puede consumir una cantidad desproporcionada de recursos de la CPU del servidor, llevando a que el servidor se vuelva lento, no responda o incluso falle, denegando el servicio a usuarios legítimos.</p><p><strong>Estrategias para Mitigar el Riesgo:</strong></p><p>1.  <strong>Funciones Hash Resistentes a Colisiones (Cryptographic Hash Functions o Hash Aleatorios):</strong></p><ul><li>   *   Utilizar funciones hash que sean difíciles de predecir y diseñar para resistir la generación de colisiones maliciosas. Esto a menudo implica el uso de "semillas" aleatorias (random seeds) que cambian con cada ejecución del programa o con cada tabla hash. La semilla se incorpora en el cálculo del hash, haciendo que las colisiones sean únicas para cada instancia y difíciles de predecir.</li><li>   *   Ejemplos: <code>SipHash</code> (utilizado por Python y Rust para <code>String</code> hashing por defecto), <code>FNV-1a</code> (con randomización).</li></ul><p>2.  <strong>Límites de Tiempo/Recursos:</strong></p><ul><li>   *   Implementar límites en el tiempo de procesamiento para operaciones con tablas hash o en la cantidad de memoria que una única solicitud puede consumir. Si una operación excede el límite, se aborta la solicitud.</li><li>   *   Limitar el tamaño de las entradas del usuario que pueden ser procesadas en tablas hash.</li></ul><p>3.  <strong>Monitoreo y Detección de Ataques:</strong></p><ul><li>   *   Monitorear el uso de CPU y el rendimiento de las tablas hash. Picos inusuales pueden indicar un ataque.</li><li>   *   Implementar sistemas de detección de intrusiones (IDS) que puedan identificar patrones de tráfico asociados con ataques DoS basados en colisiones de hash.</li></ul><p>4.  <strong>Uso de Estructuras de Datos Alternativas para Colisiones:</strong></p><ul><li>   *   Algunas implementaciones (como <code>HashMap</code> en Java 8+) cambian dinámicamente de listas enlazadas a árboles binarios de búsqueda balanceados (Red-Black Trees) dentro de un bucket si la lista de colisiones excede un cierto umbral. Esto mejora el peor caso de O(N) a O(log N) para un bucket, haciendo el ataque menos efectivo, aunque no lo elimina por completo.</li></ul><p>5.  <strong>Validación y Saneamiento de Entradas:</strong></p><ul><li>   *   Aunque no es una solución directa, validar y sanear todas las entradas del usuario puede reducir la superficie de ataque general.</li></ul><p>La clave es hacer que la generación de colisiones sea lo suficientemente difícil o costosa para el atacante, o que el impacto de una colisión sea menos severo en el sistema.</p><h3>Pregunta 6: Describe un escenario en el que una tabla hash, a pesar de su rendimiento promedio O(1), podría convertirse en un cuello de botella significativo en una aplicación. ¿Cómo se mitigaría?</h3><p><strong>Respuesta Detallada:</strong></p><p>Un escenario común donde una tabla hash puede convertirse en un cuello de botella significativo es en aplicaciones <strong>altamente concurrentes</strong> con un alto volumen de operaciones de escritura o acceso a los mismos buckets, o en situaciones donde se produce un <strong>rehashing frecuente y/o costoso</strong>.</p><p><em></em>Escenario: Contention en un <code>HashMap</code> estándar en un entorno multihilo.<em></em></p><p>Imagina una aplicación de servidor web (e.g., Spring Boot, Node.js) que gestiona sesiones de usuario o un caché de objetos. Múltiples hilos (cada uno manejando una solicitud de usuario) necesitan acceder y modificar un <code>HashMap</code> global (o un <code>HashMap</code> grande accesible por muchos hilos) para estas sesiones/caché.</p><p>1.  <strong>Problema de Sincronización:</strong> Un <code>HashMap</code> estándar (como <code>java.util.HashMap</code>) <strong>no es thread-safe</strong>. Si múltiples hilos intentan modificarlo concurrentemente (ej. <code>put</code>, <code>remove</code>), puede llevar a condiciones de carrera, corrupción de datos e incluso bucles infinitos en el caso de encadenamiento.</p><p>2.  <em></em>Uso de <code>Collections.synchronizedMap</code> o <code>Hashtable</code>:<em></em> Para hacerlo seguro, se podría envolverlo con <code>Collections.synchronizedMap</code> o usar la antigua <code>java.util.Hashtable</code>. Sin embargo, estas soluciones utilizan un <strong>bloqueo a nivel de tabla completa</strong>. Esto significa que solo un hilo puede realizar una operación en la tabla en un momento dado.</p><ul><li>   *   <strong>Cuello de botella:</strong> Con un alto volumen de solicitudes y muchos hilos compitiendo por el acceso a la tabla, este bloqueo global convierte las operaciones O(1) en un cuello de botella serializado. Los hilos pasan la mayor parte de su tiempo esperando el bloqueo, en lugar de realizar el trabajo útil. El rendimiento no escala con el número de núcleos o hilos.</li></ul><p>3.  <strong>Rehashing Concurrente (Peor Caso):</strong> Si el <code>HashMap</code> sincronizado necesita realizar un rehashing mientras hay mucha contención, la operación O(N) se realiza bajo un bloqueo global. Esto puede congelar (o ralentizar drásticamente) todas las demás operaciones de la tabla durante un período más largo, impactando severamente la <span class="tooltip" data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor.">latencia</span> de la aplicación.</p><p><strong>Mitigación:</strong></p><p>La solución principal para este tipo de cuello de botella en entornos concurrentes es utilizar implementaciones de tablas hash diseñadas específicamente para la concurrencia, como el <em></em><code>ConcurrentHashMap</code> en Java<em></em> o estructuras similares en otros lenguajes (ej., <code>ConcurrentDictionary</code> en C#).</p><p>1.  <strong>Bloqueo Segmentado (Java 7 y anteriores):</strong></p><ul><li>   *   <code>ConcurrentHashMap</code> tradicionalmente dividía el arreglo de buckets en múltiples "segmentos" o "particiones", cada uno con su propio bloqueo.</li><li>   *   Esto permitía que múltiples hilos operaran en diferentes segmentos simultáneamente sin interferencia, mejorando significativamente la concurrencia.</li><li>   *   Un hilo que modifica un bucket en un segmento no bloquea a otro hilo que modifica un bucket en un segmento diferente.</li></ul><p>2.  <strong>Bloqueo a Nivel de Nodo/Bucket (Java 8 y posteriores):</strong></p><ul><li>   *   Las versiones más recientes de <code>ConcurrentHashMap</code> han evolucionado para usar un enfoque más granular, con bloqueos a nivel de nodo o bucket. Cuando un hilo necesita modificar un bucket, solo bloquea ese bucket específico (o el nodo que está modificando en la lista/árbol de colisiones).</li><li>   *   También emplean técnicas como la programación sin bloqueos (lock-free programming) para operaciones de lectura (<code>get</code>), mejorando aún más el paralelismo.</li><li>   *   Para el rehashing, <code>ConcurrentHashMap</code> implementa un rehashing "escalonado" o "paralelo" que no bloquea toda la tabla durante mucho tiempo. Los elementos se migran gradualmente, permitiendo que las operaciones continúen mientras el rehashing está en curso.</li></ul><p><strong>Otras estrategias de mitigación:</strong></p><ul><li>  <strong>Optimización de la función hash:</strong> Asegurar que las claves tengan una función hash bien distribuida para minimizar la contención en buckets específicos.</li><li>  <strong>Aumentar el tamaño inicial:</strong> Si el número de elementos es conocido, inicializar la tabla con un tamaño más grande para reducir la frecuencia de rehashing.</li><li>  <strong>Cachés distribuidos:</strong> Para escenarios de caché distribuida, considerar el uso de soluciones externas como Redis o Memcached, que están diseñadas para manejar alta concurrencia y <span class="tooltip" data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL.">escalabilidad horizontal</span>.</li></ul><p>En resumen, aunque una tabla hash estándar es O(1) en promedio, la contención por sincronización en entornos multihilo o un rehashing mal gestionado pueden convertirla en un cuello de botella severo. La mitigación se logra con estructuras de datos concurrentes especializadas que utilizan estrategias de bloqueo más granulares o enfoques sin bloqueo.</p><h3>Pregunta 7: Dada la tarea de implementar una función hash para objetos complejos (e.g., un objeto <code>Persona</code> con <code>nombre</code>, <code>apellido</code>, <code>edad</code>), ¿qué principios seguirías para asegurar una buena distribución y rendimiento?</h3><p><strong>Respuesta Detallada:</strong></p><p>Al implementar una función hash para un objeto complejo, el objetivo es producir un valor entero que:</p><p>1.  <strong>Sea determinista:</strong> Siempre el mismo resultado para el mismo objeto.</p><p>2.  <em></em>Sea consistente con <code>equals()</code>:<em></em> Si dos objetos son <code>equals()</code>, deben tener el mismo <code>hashCode()</code>.</p><p>3.  <strong>Distribuya bien los valores hash:</strong> Minimizar colisiones para diferentes objetos.</p><p>4.  <strong>Sea eficiente:</strong> Calcular el hash no debe ser lento.</p><p>Aquí están los principios y pasos que seguiría:</p><p>1.  <em></em>Identificar Campos Relevantes para <code>equals()</code>:<em></em></p><ul><li>   *   Primero, define qué campos hacen que dos objetos <code>Persona</code> sean lógicamente iguales. Por ejemplo, <code>nombre</code> y <code>apellido</code> pueden ser suficientes, o quizás se necesite un <code>id</code> único. Todos los campos utilizados en <code>equals()</code> <em>deben</em> ser usados en <code>hashCode()</code>.</li><li>   *   <strong>Ejemplo:</strong> Para <code>Persona(String nombre, String apellido, int edad)</code>, si <code>equals()</code> considera <code>nombre</code> y <code>apellido</code>, entonces <code>hashCode()</code> debe usar al menos estos dos. Si <code>edad</code> también influye en <code>equals()</code>, también debe influir en <code>hashCode()</code>.</li></ul><p>2.  <strong>Inicializar con un Valor No Cero (Semilla):</strong></p><ul><li>   *   Comienza el cálculo del hash con un número primo pequeño y no cero (ej., 17 o 31). Esto ayuda a asegurar que los objetos con muchos campos nulos o con hashes de 0 no terminen todos en el mismo bucket inicial.</li><li>   *   <code>int result = 17;</code></li></ul><p>3.  <em></em>Incorporar <code>hashCode()</code> de Cada Campo Relevante:<em></em></p><ul><li>   *   Para cada campo relevante (los usados en <code>equals()</code>), combina su <code>hashCode()</code> con el resultado actual.</li><li>   *   La fórmula comúnmente utilizada es: <code>result = 31 * result + field.hashCode();</code></li><li>   *   El número 31 es un número primo y se usa comúnmente porque:</li><li>       *   <code>31 * i</code> se puede optimizar por los compiladores a <code>(i << 5) - i</code>, que es una operación de bit rápido.</li><li>       *   Los números primos ayudan a dispersar mejor los valores hash.</li><li>   <em>   </em>*Manejo de <code>null</code>:<em></em> Si un campo puede ser <code>null</code>, su <code>hashCode()</code> se considera 0. <code>result = 31 * result + (field == null ? 0 : field.hashCode());</code></li><li>   *   <strong>Tipos Primitivos:</strong></li><li>       *   <code>int</code>: Simplemente usa el valor del <code>int</code>: <code>result = 31 * result + intField;</code></li><li>       *   <code>long</code>: Para un <code>long</code>, se suelen combinar las dos mitades del <code>long</code>: <code>result = 31 * result + (int) (longField ^ (longField >>> 32));</code></li><li>       *   <code>boolean</code>: <code>result = 31 * result + (booleanField ? 1 : 0);</code></li><li>       *   <code>float</code>/<code>double</code>: Utiliza sus respectivas funciones <code>Float.floatToIntBits()</code> o <code>Double.doubleToLongBits()</code> para obtener una representación entera y luego maneja como <code>int</code>/<code>long</code>.</li></ul><p>4.  <strong>Consideraciones Adicionales:</strong></p><ul><li>   *   <strong>Orden de los campos:</strong> El orden en que se combinan los hashes de los campos importa. Una convención es usar el mismo orden que en el método <code>equals()</code>.</li><li>   *   <strong>Campos de Colección (Listas, Sets):</strong> Para campos que son colecciones, se debe iterar sobre sus elementos y combinar los hashes de cada elemento, o usar el <code>hashCode()</code> de la colección si está bien implementado (e.g., <code>List.hashCode()</code> en Java).</li><li>   *   <strong>Evitar Campos Volátiles/Mutables:</strong> Si un campo es mutable, pero no se incluye en <code>equals()</code>, no debería incluirse en <code>hashCode()</code>. Si un campo es mutable y <em>sí</em> se incluye en <code>equals()</code>, entonces el objeto mismo no debe usarse como clave en un hash map si su estado puede cambiar después de ser insertado.</li></ul><p><em></em>Ejemplo para <code>Persona(String nombre, String apellido, int edad)</code>:<em></em></p><pre><code>public final class Persona { // final para inmutabilidad, recomendado para claves
+      }
+      .prose-invert code:not(pre > code) {
+        background-color: #334155;
+        padding: 0.2em 0.4em;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      .prose-invert code::before,
+      .prose-invert code::after {
+        content: none !important;
+      }
+      .prose-invert pre {
+        border: 1px solid #334155;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+      }
+      .prose-invert ul {
+        padding-left: 1.25rem;
+      }
+      .prose-invert li {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+      }
+      .prose-invert table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        font-size: 0.9em;
+      }
+      .prose-invert th,
+      .prose-invert td {
+        border: 1px solid #334155;
+        padding: 0.75em 1em;
+        text-align: left;
+        vertical-align: top;
+      }
+      .prose-invert th {
+        background-color: #1e293b;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+      .prose-invert tr:nth-child(even) td {
+        background-color: rgba(30, 41, 59, 0.5);
+      }
+      .tooltip {
+        position: relative;
+        cursor: help;
+        border-bottom: 2px dotted #38bdf8;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .tooltip:hover {
+        color: #7dd3fc;
+      }
+      .tooltip::after {
+        content: attr(data-tooltip-text);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #d1d5db;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #334155;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        width: 300px;
+        max-width: 80vw;
+        text-align: left;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out;
+        z-index: 10;
+        border-bottom: none;
+        font-family: "Inter", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: normal;
+      }
+      .tooltip:hover::after {
+        visibility: visible;
+        opacity: 1;
+      }
+      .accordion-item {
+        border-bottom: 1px solid #334155;
+      }
+      .accordion-question {
+        font-weight: 600;
+      }
+      .accordion-answer {
+        padding: 1em;
+        background-color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container prose prose-invert">
+      <h1>Explicacion_Profunda_Tablas Hash</h1>
+      <h2>Explicación Profunda de Tablas Hash</h2>
+      <p>
+        Las tablas hash (Hash Tables), también conocidas como mapas hash,
+        diccionarios o mapas asociativos, son una de las estructuras de datos
+        más fundamentales y eficientes en la informática, utilizadas para
+        almacenar pares clave-valor. Su objetivo principal es permitir la
+        búsqueda, inserción y eliminación de elementos en tiempo promedio
+        constante (O(1)).
+      </p>
+      <h3>Conceptos Fundamentales</h3>
+      <p>
+        La idea central de una tabla hash es mapear claves a posiciones
+        (índices) en un arreglo subyacente de forma muy eficiente. Este mapeo se
+        realiza mediante una <strong>función hash</strong>. En lugar de buscar
+        un elemento por su clave recorriendo una lista (O(N)) o un árbol (O(log
+        N)), la función hash nos indica directamente dónde debería estar el
+        elemento en el arreglo.
+      </p>
+      <p>
+        1. <strong>Par Clave-Valor:</strong> Cada elemento almacenado es un par
+        <code>(clave, valor)</code>. La clave es única y se utiliza para
+        identificar y recuperar el valor asociado.
+      </p>
+      <p>
+        2. <strong>Función Hash:</strong> Es un algoritmo que toma una clave
+        como entrada y produce un número entero (el "valor hash" o "código
+        hash"). Este número entero se utiliza luego para calcular el índice en
+        el arreglo donde se almacenará el par clave-valor.
+      </p>
+      <ul>
+        <li>
+          * Debe ser <strong>determinista</strong>: Siempre produce el mismo
+          resultado para la misma entrada.
+        </li>
+        <li>
+          * Debe ser <strong>eficiente</strong>: Calcular el hash no debe
+          consumir mucho tiempo.
+        </li>
+        <li>
+          * Debe <strong>distribuir bien</strong> las claves: Idealmente,
+          diferentes claves deberían producir diferentes valores hash, y los
+          valores hash deberían estar uniformemente distribuidos a lo largo del
+          rango de índices disponibles, para minimizar colisiones.
+        </li>
+      </ul>
+      <p>
+        3. <strong>Colisión:</strong> Ocurre cuando dos claves diferentes
+        producen el mismo valor hash. Resolver estas colisiones es un aspecto
+        crucial del diseño de tablas hash.
+      </p>
+      <p>
+        4. <strong>Arreglo (Buckets):</strong> La tabla hash interna es un
+        arreglo. Cada posición en este arreglo se llama "bucket" (cubeta). El
+        índice calculado a partir del valor hash dirige el par clave-valor a un
+        bucket específico.
+      </p>
+      <h3>Arquitectura Interna</h3>
+      <p>
+        Una tabla hash consta de varios componentes clave que trabajan juntos:
+      </p>
+      <p>1. <strong>Función Hash (Hash Function):</strong></p>
+      <ul>
+        <li>* <code>índice = hash(clave) % tamaño_arreglo</code></li>
+        <li>
+          * La función <code>hash(clave)</code> genera un número entero grande.
+          Luego, el operador módulo (<code>%</code>) se utiliza para mapear este
+          número entero a un índice válido dentro de los límites del arreglo
+          subyacente.
+        </li>
+        <li>
+          * La calidad de esta función es vital para el rendimiento. Una mala
+          función hash puede llevar a muchas colisiones y degradar el
+          rendimiento a O(N).
+        </li>
+      </ul>
+      <p>2. <strong>Arreglo (Buckets o Tabla):</strong></p>
+      <ul>
+        <li>
+          * Es la estructura de almacenamiento principal. Cada elemento del
+          arreglo es un "bucket".
+        </li>
+        <li>
+          * Cuando se inserta un par <code>(clave, valor)</code>, la función
+          hash calcula el índice del bucket donde debe ir.
+        </li>
+      </ul>
+      <p>
+        3. <strong>Estrategias de Resolución de Colisiones:</strong> Es el
+        mecanismo más importante para manejar la situación cuando dos claves
+        diferentes se mapean al mismo bucket.
+      </p>
+      <ul>
+        <li>* <strong>Encadenamiento (Chaining):</strong></li>
+        <li>
+          * Cada bucket del arreglo no almacena directamente un par
+          <code>(clave, valor)</code>, sino un puntero a una estructura de datos
+          (típicamente una lista enlazada, pero puede ser un árbol binario de
+          búsqueda balanceado como un Red-Black Tree en Java 8+) que contiene
+          todos los pares clave-valor que han colisionado en ese bucket.
+        </li>
+        <li>
+          * <strong>Inserción:</strong> Calcula el hash, va al bucket, y añade
+          el nuevo par al final de la lista de ese bucket. Si la clave ya
+          existe, actualiza el valor.
+        </li>
+        <li>
+          * <strong>Búsqueda/Eliminación:</strong> Calcula el hash, va al
+          bucket, y recorre la lista enlazada (o el árbol) de ese bucket,
+          comparando las claves hasta encontrar la correcta usando el método
+          <code>equals()</code>.
+        </li>
+        <li>
+          * <strong>Ventaja:</strong> Más simple de implementar, menos sensible
+          al factor de carga, fácil de manejar eliminaciones.
+        </li>
+        <li>
+          * <strong>Desventaja:</strong>
+          <span
+            class="tooltip"
+            data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+            >Overhead</span
+          >
+          de memoria por los punteros en las listas, puede requerir más
+          recorrido si las listas son largas.
+        </li>
+        <li>* <strong>Sondeo Abierto (Open Addressing):</strong></li>
+        <li>
+          * En lugar de almacenar una lista, cada bucket almacena directamente
+          un par <code>(clave, valor)</code>. Si el bucket calculado por el hash
+          ya está ocupado, la tabla "sondea" (busca) otros buckets hasta
+          encontrar uno vacío.
+        </li>
+        <li>* <strong>Tipos de Sondeo:</strong></li>
+        <li>
+          * <strong>Sondeo Lineal (Linear Probing):</strong>
+          <code>(hash(clave) + i) % tamaño_arreglo</code>, donde
+          <code>i</code> se incrementa (0, 1, 2, ...) hasta encontrar un bucket
+          vacío. Crea "agrupamientos primarios".
+        </li>
+        <li>
+          * <strong>Sondeo Cuadrático (Quadratic Probing):</strong>
+          <code>(hash(clave) + i*i) % tamaño_arreglo</code>, donde
+          <code>i</code> se incrementa. Ayuda a reducir agrupamientos primarios,
+          pero puede crear "agrupamientos secundarios".
+        </li>
+        <li>
+          * <strong>Doble Hashing (Double Hashing):</strong> Utiliza una segunda
+          función hash para determinar el tamaño del paso de sondeo:
+          <code>(hash1(clave) + i * hash2(clave)) % tamaño_arreglo</code>.
+          Ofrece la mejor distribución.
+        </li>
+        <li>
+          * <strong>Inserción:</strong> Sondea hasta encontrar un bucket vacío y
+          lo ocupa.
+        </li>
+        <li>
+          * <strong>Búsqueda:</strong> Sondea usando la misma secuencia hasta
+          encontrar la clave o un bucket vacío (lo que significa que la clave no
+          está presente).
+        </li>
+        <li>
+          * <strong>Eliminación:</strong> Compleja, ya que dejar un bucket vacío
+          puede romper la cadena de sondeo para otras claves. A menudo se marcan
+          los buckets como "eliminados lógicamente" en lugar de vaciarlos
+          físicamente.
+        </li>
+        <li>
+          * <strong>Ventaja:</strong> Mejor rendimiento de caché debido a la
+          localidad de referencia, no hay
+          <span
+            class="tooltip"
+            data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+            >overhead</span
+          >
+          de punteros, potencialmente más eficiente en memoria si el factor de
+          carga es bajo.
+        </li>
+        <li>
+          * <strong>Desventaja:</strong> Más compleja de implementar, muy
+          sensible al factor de carga (degrada rápidamente con factores de carga
+          altos), la eliminación es complicada.
+        </li>
+      </ul>
+      <p>4. <strong>Factor de Carga (Load Factor):</strong></p>
+      <ul>
+        <li>* <code>factor_carga = número_elementos / tamaño_arreglo</code></li>
+        <li>
+          * Mide cuán "llena" está la tabla. Un factor de carga alto significa
+          más colisiones y listas más largas (en encadenamiento) o más sondeos
+          (en sondeo abierto), lo que degrada el rendimiento.
+        </li>
+        <li>
+          * Cada implementación de tabla hash define un umbral para el factor de
+          carga (comúnmente 0.7 o 0.75 para encadenamiento, y mucho menor para
+          sondeo abierto, e.g., 0.5).
+        </li>
+      </ul>
+      <p>5. <strong>Rehashing (Redimensionamiento):</strong></p>
+      <ul>
+        <li>
+          * Cuando el factor de carga excede el umbral, la tabla se
+          "redimensiona" (rehashing).
+        </li>
+        <li>
+          * Se crea un nuevo arreglo subyacente, generalmente el doble de grande
+          que el anterior.
+        </li>
+        <li>
+          * Todos los elementos existentes se reinsertan en el nuevo arreglo
+          utilizando la (posiblemente nueva) función hash y el nuevo tamaño.
+        </li>
+        <li>
+          * <strong>Costo:</strong> El rehashing es una operación O(N) (donde N
+          es el número de elementos), ya que requiere recorrer y rehashear todos
+          los elementos. Sin embargo, debido a que ocurre con poca frecuencia
+          (solo cuando la tabla se llena lo suficiente), su costo se "amortiza"
+          a lo largo de muchas operaciones de inserción, manteniendo el tiempo
+          promedio en O(1).
+        </li>
+      </ul>
+      <h3>Modelo de Datos/Comunicación</h3>
+      <p>Las tablas hash operan con pares <code>(clave, valor)</code>:</p>
+      <ul>
+        <li>
+          <strong>Claves:</strong> Deben ser objetos que puedan ser "hasheables"
+          (es decir, deben tener un método <code>hashCode()</code> que cumpla
+          con ciertas propiedades) y "comparables por igualdad" (un método
+          <code>equals()</code> que determine si dos claves son lógicamente
+          idénticas). Es
+          <strong>altamente recomendable que las claves sean inmutables</strong
+          >, ya que si una clave mutable se modifica después de ser insertada,
+          su <code>hashCode()</code> podría cambiar, haciendo que el elemento
+          sea inrecuperable o "perdido" dentro de la tabla.
+        </li>
+        <li>
+          <strong>Valores:</strong> Pueden ser de cualquier tipo y no tienen
+          restricciones especiales.
+        </li>
+      </ul>
+      <p>
+        La comunicación con una tabla hash se realiza a través de operaciones
+        como:
+      </p>
+      <ul>
+        <li><code>put(clave, valor)</code>: Inserta o actualiza un par.</li>
+        <li>
+          <code>get(clave)</code>: Recupera el valor asociado a una clave.
+        </li>
+        <li><code>remove(clave)</code>: Elimina un par de la tabla.</li>
+        <li><code>containsKey(clave)</code>: Verifica si una clave existe.</li>
+        <li><code>size()</code>: Retorna el número de elementos.</li>
+      </ul>
+      <h3>Ventajas Clave y Desventajas</h3>
+      <p><strong>Ventajas Clave:</strong></p>
+      <p>
+        1. <strong>Rendimiento Promedio O(1):</strong> Esta es la ventaja más
+        significativa. Las operaciones básicas (inserción, eliminación,
+        búsqueda) se completan en tiempo constante en promedio, lo que las hace
+        extremadamente rápidas para grandes volúmenes de datos.
+      </p>
+      <p>
+        2.
+        <strong
+          >Eficiencia en el uso de memoria (comparado con árboles
+          balanceados):</strong
+        >
+        Aunque tienen un
+        <span
+          class="tooltip"
+          data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+          >overhead</span
+        >
+        de memoria (punteros en encadenamiento o buckets vacíos en sondeo
+        abierto), generalmente son más eficientes en memoria que estructuras
+        como los árboles binarios de búsqueda balanceados que requieren nodos
+        más complejos y más punteros.
+      </p>
+      <p>
+        3. <strong>Versatilidad:</strong> Son la base para la implementación de
+        diccionarios, conjuntos (sets), cachés, y muchos otros componentes de
+        software.
+      </p>
+      <p>
+        4. <strong>Simpleza Conceptual (en su forma básica):</strong> La idea de
+        mapear una clave a un índice es intuitiva, aunque la implementación
+        detallada de la resolución de colisiones y el rehashing puede ser
+        compleja.
+      </p>
+      <p><strong>Desventajas Clave:</strong></p>
+      <p>
+        1. <strong>Rendimiento en el Peor Caso O(N):</strong> Si la función hash
+        es pobre o si se producen muchas colisiones (por ejemplo, debido a una
+        distribución adversa de las claves, o un ataque de denegación de
+        servicio que explota la función hash), las operaciones pueden degenerar
+        a O(N). El rehashing también es O(N) en el peor caso.
+      </p>
+      <p>
+        2. <strong>Consumo de Memoria:</strong> Si se mantiene un factor de
+        carga bajo para asegurar un buen rendimiento (especialmente en sondeo
+        abierto), puede haber una cantidad significativa de memoria sin usar
+        (buckets vacíos). En encadenamiento, el
+        <span
+          class="tooltip"
+          data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+          >overhead</span
+        >
+        de los punteros para las listas enlazadas puede ser considerable.
+      </p>
+      <p>
+        3. <strong>No Mantiene Orden:</strong> Las tablas hash no garantizan
+        ningún orden de las claves (ni de inserción, ni orden natural). Si el
+        orden es importante, se requieren estructuras de datos adicionales (como
+        <code>LinkedHashMap</code> en Java, que usa una lista enlazada para
+        mantener el orden de inserción, o <code>TreeMap</code> que usa un árbol
+        balanceado).
+      </p>
+      <p>
+        4. <strong>Sensibilidad a la Función Hash:</strong> La calidad del
+        rendimiento depende críticamente de la función hash. Una función hash
+        mal diseñada puede causar agrupamientos severos, invalidando la ventaja
+        O(1).
+      </p>
+      <p>
+        5. <strong>Coste de Rehashing:</strong> Aunque amortizado, un rehashing
+        puede ser una operación costosa que causa una pausa perceptible si la
+        tabla es muy grande y se ejecuta en un momento crítico.
+      </p>
+      <h2>Preguntas de Entrevista sobre Tablas Hash</h2>
+      <h3>
+        Pregunta 1: Explica la relación contractual entre los métodos
+        <code>hashCode()</code> y <code>equals()</code> en Java (o equivalentes
+        en otros lenguajes) y por qué es crucial para el correcto funcionamiento
+        de una tabla hash.
+      </h3>
+      <p><strong>Respuesta Detallada:</strong></p>
+      <p>
+        La relación contractual entre <code>hashCode()</code> y
+        <code>equals()</code> es fundamental para el correcto funcionamiento de
+        cualquier estructura de datos que dependa del hashing, como
+        <code>HashMap</code>, <code>HashSet</code> o <code>Hashtable</code>.
+        Este contrato, establecido por la especificación de Java (y adoptado por
+        principios similares en otros lenguajes):
+      </p>
+      <p>
+        1. <em></em>Si dos objetos son iguales según el método
+        <code>equals(Object)</code> (es decir,
+        <code>obj1.equals(obj2)</code> devuelve <code>true</code>), entonces
+        deben tener el mismo valor <code>hashCode()</code> (es decir,
+        <code>obj1.hashCode() == obj2.hashCode()</code> debe ser
+        <code>true</code>).<em></em>
+      </p>
+      <p>
+        2. <em></em>Si dos objetos tienen el mismo valor
+        <code>hashCode()</code>, NO necesariamente deben ser iguales según el
+        método <code>equals()</code>.<em></em> Esto es lo que se conoce como una
+        colisión de hash (hash collision).
+      </p>
+      <p>
+        3. <em></em>Si dos objetos son diferentes según el método
+        <code>equals()</code>, NO necesariamente deben tener un
+        <code>hashCode()</code> diferente.<em></em> Nuevamente, esto es una
+        colisión de hash.
+      </p>
+      <p><strong>Por qué es crucial para una tabla hash:</strong></p>
+      <ul>
+        <li>
+          <strong>Búsqueda (get):</strong> Cuando se busca una clave
+          <code>K</code> en una tabla hash, primero se calcula
+          <code>K.hashCode()</code> para determinar el bucket donde
+          <code>K</code> debería estar. Luego, dentro de ese bucket (que podría
+          ser una lista de elementos si hay colisiones), la tabla hash itera
+          sobre los elementos y usa
+          <code>K.equals(elemento_en_bucket)</code> para encontrar la clave
+          exacta. Si el contrato se rompe, y dos objetos
+          <code>equals()</code> tienen diferentes <code>hashCode()</code>, la
+          tabla hash calculará un bucket incorrecto para el objeto lógicamente
+          igual y no lo encontrará.
+        </li>
+        <li>
+          <strong>Inserción (put):</strong> Similarmente, al insertar un par
+          <code>(K, V)</code>, se calcula <code>K.hashCode()</code> para
+          encontrar el bucket. Si ya existe una clave lógicamente igual en ese
+          bucket, <code>equals()</code> se usa para detectarla y actualizar su
+          valor. Si <code>hashCode()</code> no cumple el contrato, un objeto
+          lógicamente igual podría terminar en un bucket diferente, llevando a
+          duplicados o a que una actualización falle.
+        </li>
+        <li>
+          <strong>Integridad de la Estructura:</strong> El contrato garantiza
+          que si la tabla hash contiene un objeto <code>A</code>, y luego se
+          busca un objeto <code>B</code> que es lógicamente igual a
+          <code>A</code> (según <code>equals()</code>), <code>B</code> será
+          encontrado correctamente. Sin este contrato, el
+          <code>hashCode()</code> de <code>B</code> podría apuntar a un bucket
+          vacío o a uno sin <code>A</code>, incluso si <code>B</code> es el
+          mismo concepto lógico que <code>A</code>.
+        </li>
+      </ul>
+      <p>
+        <strong>En resumen:</strong> <code>hashCode()</code> es para la
+        eficiencia (encontrar el bucket rápido), y <code>equals()</code> es para
+        la corrección (encontrar el elemento exacto dentro del bucket). Ambos
+        deben trabajar en armonía.
+      </p>
+      <h3>
+        Pregunta 2: Compara y contrasta las dos principales estrategias de
+        resolución de colisiones: encadenamiento (chaining) y sondeo abierto
+        (open addressing). ¿Cuándo elegirías una sobre la otra?
+      </h3>
+      <p><strong>Respuesta Detallada:</strong></p>
+      <p>
+        Las dos estrategias fundamentales para manejar colisiones son el
+        encadenamiento y el sondeo abierto.
+      </p>
+      <p><strong>Encadenamiento (Chaining):</strong></p>
+      <ul>
+        <li>
+          <strong>Concepto:</strong> Cada slot (bucket) en el arreglo de la
+          tabla hash almacena un puntero a una estructura de datos (comúnmente
+          una lista enlazada, pero puede ser un árbol binario de búsqueda
+          balanceado como un Red-Black Tree para mejorar el peor caso a O(log N)
+          cuando la lista se vuelve muy larga). Todos los elementos que
+          colisionan en un mismo hash se almacenan en esa estructura.
+        </li>
+        <li>
+          <strong>Operaciones:</strong> Para buscar, insertar o eliminar, se
+          calcula el hash, se va al bucket correspondiente y luego se recorre la
+          lista (o árbol) de ese bucket para encontrar/manipular el elemento
+          deseado usando <code>equals()</code>.
+        </li>
+        <li><strong>Ventajas:</strong></li>
+        <li>
+          * <strong>Menos sensible al factor de carga:</strong> Puede manejar
+          factores de carga mayores a 1 (más elementos que buckets) con una
+          degradación más gradual del rendimiento.
+        </li>
+        <li>
+          * <strong>Fácil eliminación:</strong> La eliminación es sencilla, ya
+          que solo implica quitar un nodo de la lista.
+        </li>
+        <li>
+          * <strong>Menos propenso a agrupamientos:</strong> No sufre de los
+          agrupamientos primarios y secundarios del sondeo abierto.
+        </li>
+        <li>
+          * <strong>Implementación más simple</strong> para las operaciones
+          básicas.
+        </li>
+        <li><strong>Desventajas:</strong></li>
+        <li>
+          *
+          <strong
+            ><span
+              class="tooltip"
+              data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+              >Overhead</span
+            >
+            de memoria:</strong
+          >
+          Cada elemento en las listas enlazadas requiere espacio adicional para
+          el puntero <code>next</code>.
+        </li>
+        <li>
+          * <strong>Rendimiento de caché:</strong> Menor localidad de
+          referencia, ya que los nodos de la lista pueden estar dispersos en
+          memoria.
+        </li>
+      </ul>
+      <p><strong>Sondeo Abierto (Open Addressing):</strong></p>
+      <ul>
+        <li>
+          <strong>Concepto:</strong> Todos los elementos se almacenan
+          directamente dentro del arreglo de la tabla hash. Si un bucket
+          calculado por el hash ya está ocupado, la tabla "sondea" (busca)
+          secuencialmente otros buckets adyacentes hasta encontrar uno vacío.
+        </li>
+        <li>
+          <strong>Tipos de Sondeo:</strong> Lineal, cuadrático, doble hashing.
+        </li>
+        <li>
+          <strong>Operaciones:</strong> Para buscar, insertar o eliminar, se
+          calcula el hash y se sondea el arreglo siguiendo la secuencia de
+          sondeo hasta encontrar el elemento (usando <code>equals()</code>) o un
+          bucket vacío.
+        </li>
+        <li><strong>Ventajas:</strong></li>
+        <li>
+          * <strong>Mejor rendimiento de caché:</strong> Los elementos están
+          empaquetados más densamente en el arreglo, mejorando la localidad de
+          referencia.
+        </li>
+        <li>
+          *
+          <strong
+            >No hay
+            <span
+              class="tooltip"
+              data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+              >overhead</span
+            >
+            de punteros:</strong
+          >
+          No se necesitan punteros <code>next</code> para las listas.
+        </li>
+        <li>
+          * <strong>Potencialmente más rápido</strong> con factores de carga
+          bajos.
+        </li>
+        <li><strong>Desventajas:</strong></li>
+        <li>
+          * <strong>Muy sensible al factor de carga:</strong> El rendimiento se
+          degrada drásticamente a medida que el factor de carga se acerca a 1.
+          Típicamente, el factor de carga máximo recomendado es 0.5 a 0.7.
+        </li>
+        <li>
+          * <strong>Problemas de agrupamiento:</strong> El sondeo lineal puede
+          crear "agrupamientos primarios" (grandes bloques de buckets ocupados),
+          mientras que el sondeo cuadrático puede crear "agrupamientos
+          secundarios".
+        </li>
+        <li>
+          * <strong>Eliminación compleja:</strong> La eliminación de un elemento
+          puede romper una secuencia de sondeo para otros elementos, lo que a
+          menudo requiere "marcadores de borrado" (tombstones) que ocupan
+          espacio y complican las búsquedas.
+        </li>
+        <li>* <strong>Mayor complejidad de implementación.</strong></li>
+      </ul>
+      <p><strong>¿Cuándo elegir uno sobre el otro?</strong></p>
+      <ul>
+        <li><strong>Elige Encadenamiento si:</strong></li>
+        <li>* Necesitas alta flexibilidad con el factor de carga.</li>
+        <li>* Las eliminaciones son frecuentes y deben ser eficientes.</li>
+        <li>
+          * El tamaño de los objetos clave-valor es pequeño en comparación con
+          el tamaño de los punteros (el
+          <span
+            class="tooltip"
+            data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+            >overhead</span
+          >
+          del puntero es menos significativo).
+        </li>
+        <li>
+          * No te preocupan tanto los fallos de caché o la localidad de
+          referencia.
+        </li>
+        <li>
+          * La implementación del lenguaje ya lo soporta (ej.,
+          <code>HashMap</code> de Java).
+        </li>
+        <li><strong>Elige Sondeo Abierto si:</strong></li>
+        <li>
+          * La memoria es extremadamente crítica y el
+          <span
+            class="tooltip"
+            data-tooltip-text="El costo computacional adicional (como CPU, memoria, ancho de banda) requerido para realizar una tarea, más allá del trabajo útil en sí."
+            >overhead</span
+          >
+          de punteros es inaceptable.
+        </li>
+        <li>* Puedes garantizar un factor de carga bajo.</li>
+        <li>
+          * Las inserciones y búsquedas son más comunes que las eliminaciones, o
+          las eliminaciones se manejan con marcadores de borrado.
+        </li>
+        <li>* El rendimiento de caché es una preocupación primordial.</li>
+        <li>
+          * Estás dispuesto a invertir más en la complejidad de la
+          implementación.
+        </li>
+      </ul>
+      <p>
+        En la práctica, el encadenamiento es a menudo la opción predeterminada
+        en muchas implementaciones de librerías estándar debido a su robustez y
+        simplicidad relativa.
+      </p>
+      <h3>
+        Pregunta 3: Explica el concepto de factor de carga (load factor) en una
+        tabla hash y cómo se relaciona con el proceso de rehashing
+        (redimensionamiento). ¿Qué implicaciones de rendimiento tiene?
+      </h3>
+      <p><strong>Respuesta Detallada:</strong></p>
+      <p>
+        El <strong>factor de carga</strong> de una tabla hash es una métrica
+        crucial que indica qué tan "llena" está la tabla. Se calcula como:
+      </p>
+      <p>
+        <code
+          >Factor de Carga = (Número de elementos almacenados) / (Número total
+          de buckets en el arreglo)</code
+        >
+      </p>
+      <p>
+        Por ejemplo, si una tabla hash tiene 100 buckets y almacena 70
+        elementos, su factor de carga es 0.7.
+      </p>
+      <p><strong>Importancia del Factor de Carga:</strong></p>
+      <p>
+        El factor de carga impacta directamente el rendimiento de las
+        operaciones de la tabla hash (inserción, búsqueda, eliminación).
+      </p>
+      <ul>
+        <li>
+          <strong>Factor de carga bajo:</strong> Más buckets vacíos, menos
+          colisiones esperadas. Esto resulta en operaciones más rápidas (más
+          cercanas a O(1)) porque las listas de colisiones son cortas o el
+          sondeo encuentra un bucket rápidamente. Sin embargo, usa más memoria
+          de la necesaria.
+        </li>
+        <li>
+          <strong>Factor de carga alto:</strong> Más buckets ocupados, mayor
+          probabilidad de colisiones. Esto alarga las listas en el
+          encadenamiento o requiere más pasos de sondeo en el sondeo abierto,
+          degradando el rendimiento hacia O(N).
+        </li>
+      </ul>
+      <p><strong>Rehashing (Redimensionamiento):</strong></p>
+      <p>
+        Para mantener un rendimiento óptimo (cercano a O(1)), las tablas hash
+        suelen tener un <strong>umbral de factor de carga</strong> predefinido
+        (por ejemplo, 0.75 en <code>HashMap</code> de Java). Cuando el factor de
+        carga actual de la tabla excede este umbral, se desencadena el proceso
+        de <strong>rehashing</strong> (o redimensionamiento).
+      </p>
+      <p>El rehashing implica los siguientes pasos:</p>
+      <p>
+        1. <strong>Crear un nuevo arreglo:</strong> Se asigna un nuevo arreglo
+        de buckets, generalmente de un tamaño mayor que el actual (comúnmente el
+        doble de tamaño, o el siguiente número primo si se usa un tamaño primo
+        para los buckets).
+      </p>
+      <p>
+        2. <strong>Re-calcular hashes y reubicar elementos:</strong> Cada
+        elemento existente en la tabla antigua debe ser reinsertado en el nuevo
+        arreglo. Para cada elemento, se calcula su <code>hashCode()</code> y se
+        aplica la operación módulo con el
+        <strong>nuevo tamaño del arreglo</strong> para determinar su nueva
+        posición.
+      </p>
+      <p>
+        3. <strong>Descartar el arreglo antiguo:</strong> Una vez que todos los
+        elementos han sido transferidos al nuevo arreglo, el arreglo original
+        puede ser liberado.
+      </p>
+      <p><strong>Implicaciones de Rendimiento:</strong></p>
+      <ul>
+        <li>
+          <strong>Costo de la Operación:</strong> El rehashing es una operación
+          costosa en términos de tiempo. Requiere iterar sobre todos los
+          <code>N</code> elementos existentes y recalcular su hash y posición,
+          lo que lo convierte en una operación <strong>O(N)</strong>.
+        </li>
+        <li>
+          <strong>Impacto Amortizado:</strong> Aunque un rehashing individual es
+          O(N), se realiza con poca frecuencia (solo cuando la tabla se llena lo
+          suficiente). Si la tabla crece exponencialmente (duplicando su
+          tamaño), la suma total del costo de todos los rehashing distribuidos a
+          lo largo de un gran número de inserciones se "amortiza" de manera que
+          el costo promedio por inserción sigue siendo <strong>O(1)</strong>.
+        </li>
+        <li>
+          <strong>Pausas (Latency Spikes):</strong> En sistemas sensibles al
+          rendimiento en tiempo real, un rehashing de una tabla muy grande puede
+          causar una pausa perceptible (un "latency spike") en la aplicación, ya
+          que todas las demás operaciones de la tabla hash podrían bloquearse
+          hasta que el rehashing haya terminado. Este es un punto a considerar
+          en arquitecturas de alta
+          <span
+            class="tooltip"
+            data-tooltip-text="La garantía de que un sistema está operativo y accesible para los usuarios cuando lo necesitan. A menudo se mide como un porcentaje de tiempo de actividad (uptime)."
+            >disponibilidad</span
+          >.
+        </li>
+      </ul>
+      <p>
+        En resumen, el factor de carga es un equilibrio entre el uso de memoria
+        y el rendimiento. El rehashing es el mecanismo que permite a las tablas
+        hash mantener su rendimiento promedio O(1) a medida que crecen, pero
+        introduce picos de
+        <span
+          class="tooltip"
+          data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+          >latencia</span
+        >
+        en el peor caso.
+      </p>
+      <h3>
+        Pregunta 4: ¿Por qué es una buena práctica (y a menudo crucial) usar
+        objetos inmutables como claves en una tabla hash? ¿Qué problemas podrían
+        surgir si una clave mutable se modifica después de ser insertada?
+      </h3>
+      <p><strong>Respuesta Detallada:</strong></p>
+      <p>
+        Es una práctica fundamental y altamente recomendada usar objetos
+        <strong>inmutables</strong> como claves en una tabla hash. Un objeto
+        inmutable es aquel cuyo estado no puede ser modificado después de su
+        creación.
+      </p>
+      <p><strong>Problemas con Claves Mutables:</strong></p>
+      <p>
+        Si se utiliza un objeto mutable como clave y este objeto se modifica
+        <strong>después de haber sido insertado</strong> en la tabla hash,
+        pueden surgir problemas graves:
+      </p>
+      <p>1. <strong>Pérdida del Elemento:</strong></p>
+      <ul>
+        <li>
+          * Cuando un objeto <code>K</code> se inserta en una tabla hash, su
+          <code>K.hashCode()</code> se calcula y se utiliza para determinar el
+          bucket donde se almacenará.
+        </li>
+        <li>
+          * Si el estado interno de <code>K</code> se modifica
+          <em>después</em> de la inserción, y esa modificación afecta los campos
+          utilizados para calcular <code>hashCode()</code>, entonces
+          <code>K.hashCode()</code> producirá un valor
+          <strong>diferente</strong> si se calcula de nuevo.
+        </li>
+        <li>
+          * Cuando se intente recuperar el valor asociado a
+          <code>K</code> usando <code>get(K)</code>, la tabla hash calculará el
+          <em>nuevo</em> <code>hashCode()</code>, que apuntará a un bucket
+          diferente al original. Como resultado, la tabla no encontrará el
+          elemento, aunque lógicamente sigue presente en algún lugar del bucket
+          original (al que ahora no se puede acceder con el nuevo hash). El
+          elemento se considera "perdido".
+        </li>
+      </ul>
+      <p>2. <strong>Duplicados Inesperados:</strong></p>
+      <ul>
+        <li>
+          * Si se intenta insertar un objeto mutable <code>K'</code> (que es
+          lógicamente igual a una clave <code>K</code> ya existente en la tabla)
+          <em>después</em> de que <code>K</code> haya sido modificado,
+          <code>K'</code> podría calcular un <code>hashCode()</code> diferente
+          al original de <code>K</code>.
+        </li>
+        <li>
+          * Esto llevaría a que <code>K'</code> se inserte en un bucket
+          diferente, resultando en que la tabla contenga dos entradas para lo
+          que lógicamente debería ser la misma clave.
+        </li>
+      </ul>
+      <p><strong>Ejemplo:</strong></p>
+      <p>Imagina una clave <code>Persona(nombre, apellido)</code>:</p>
+      <p>1. <code>p = new Persona("Juan", "Perez")</code></p>
+      <p>
+        2. <code>map.put(p, "Valor de Juan")</code> ->
+        <code>p.hashCode()</code> se calcula (basado en "Juan", "Perez"), y se
+        inserta en el <code>bucket_X</code>.
+      </p>
+      <p>
+        3. <code>p.setNombre("Pedro")</code> -> ¡El estado de la clave
+        <code>p</code> ha cambiado!
+      </p>
+      <p>
+        4. <code>map.get(p)</code> -> Se calcula <code>p.hashCode()</code> de
+        nuevo (basado en "Pedro", "Perez"). Este nuevo hash probablemente apunta
+        a <code>bucket_Y</code>.
+      </p>
+      <p>
+        5. <code>bucket_Y</code> no contiene el elemento original. La búsqueda
+        falla, y el valor "Valor de Juan" es inrecuperable por esa clave
+        <code>p</code> modificada.
+      </p>
+      <p>
+        <strong>En resumen:</strong> La inmutabilidad de las claves garantiza
+        que su <code>hashCode()</code> y su comportamiento
+        <code>equals()</code> permanezcan consistentes durante toda su vida en
+        la tabla hash, asegurando que los elementos puedan ser encontrados y
+        gestionados correctamente. Si las claves deben ser mutables por algún
+        motivo, la responsabilidad recae en el desarrollador para asegurarse de
+        que la clave no se modifique mientras está en la tabla hash, o se debe
+        eliminar y reinsertar la clave si se modifica.
+      </p>
+      <h3>
+        Pregunta 5: ¿Cómo puede una función hash mal diseñada o predecible ser
+        explotada para lanzar ataques de Denegación de Servicio (DoS), y qué
+        estrategias se utilizan para mitigar este riesgo?
+      </h3>
+      <p><strong>Respuesta Detallada:</strong></p>
+      <p>
+        Una función hash mal diseñada o predecible puede ser una vulnerabilidad
+        crítica en aplicaciones que utilizan tablas hash, haciéndolas
+        susceptibles a ataques de Denegación de Servicio (DoS).
+      </p>
+      <p><strong>Mecanismo del Ataque:</strong></p>
+      <p>
+        El ataque se basa en explotar el peor caso de rendimiento de una tabla
+        hash, que es O(N). Si un atacante puede generar un gran número de claves
+        que todas producen el mismo valor hash (o valores hash que colisionan
+        frecuentemente en el mismo bucket), todas las operaciones (inserción,
+        búsqueda, eliminación) sobre esas claves se degradarán de O(1) promedio
+        a O(N).
+      </p>
+      <p>
+        1. <strong>Identificación de la Función Hash:</strong> El atacante
+        primero necesita conocer o deducir la función hash utilizada por el
+        sistema objetivo (por ejemplo, el <code>hashCode()</code> predeterminado
+        de <code>String</code> en Java, o funciones hash comunes de librerías).
+      </p>
+      <p>
+        2. <strong>Generación de Claves Colisionadoras:</strong> Una vez que se
+        conoce la función hash, el atacante puede generar un gran conjunto de
+        claves que deliberadamente producen el mismo valor hash (o un conjunto
+        pequeño de valores hash). Hay herramientas y técnicas para generar estas
+        "hash collisions" de forma determinista para muchas funciones hash
+        comunes.
+      </p>
+      <p>
+        3. <strong>Sobrecarga del Sistema:</strong> El atacante entonces envía
+        una carga útil (payload) al sistema que consiste en un gran número de
+        estas claves colisionadoras. Por ejemplo, en una aplicación web que
+        acepta parámetros en un formulario o en un cuerpo JSON, estas claves
+        podrían ser nombres de campos o atributos.
+      </p>
+      <p>
+        4. <strong>Degradación del Rendimiento:</strong> Cuando la aplicación
+        procesa esta entrada y las inserta en una tabla hash interna (por
+        ejemplo, para almacenar parámetros de solicitud, variables de sesión,
+        etc.), todas las claves colisionan en los mismos pocos buckets. Si la
+        tabla hash usa encadenamiento, esto resulta en listas de colisiones
+        extremadamente largas. Cada operación en estas claves ahora requiere
+        O(N) tiempo (donde N es el número de claves colisionadoras en ese
+        bucket), en lugar de O(1).
+      </p>
+      <p>
+        5. <strong>Denegación de Servicio:</strong> Un pequeño número de
+        peticiones bien elaboradas puede consumir una cantidad desproporcionada
+        de recursos de la CPU del servidor, llevando a que el servidor se vuelva
+        lento, no responda o incluso falle, denegando el servicio a usuarios
+        legítimos.
+      </p>
+      <p><strong>Estrategias para Mitigar el Riesgo:</strong></p>
+      <p>
+        1.
+        <strong
+          >Funciones Hash Resistentes a Colisiones (Cryptographic Hash Functions
+          o Hash Aleatorios):</strong
+        >
+      </p>
+      <ul>
+        <li>
+          * Utilizar funciones hash que sean difíciles de predecir y diseñar
+          para resistir la generación de colisiones maliciosas. Esto a menudo
+          implica el uso de "semillas" aleatorias (random seeds) que cambian con
+          cada ejecución del programa o con cada tabla hash. La semilla se
+          incorpora en el cálculo del hash, haciendo que las colisiones sean
+          únicas para cada instancia y difíciles de predecir.
+        </li>
+        <li>
+          * Ejemplos: <code>SipHash</code> (utilizado por Python y Rust para
+          <code>String</code> hashing por defecto), <code>FNV-1a</code> (con
+          randomización).
+        </li>
+      </ul>
+      <p>2. <strong>Límites de Tiempo/Recursos:</strong></p>
+      <ul>
+        <li>
+          * Implementar límites en el tiempo de procesamiento para operaciones
+          con tablas hash o en la cantidad de memoria que una única solicitud
+          puede consumir. Si una operación excede el límite, se aborta la
+          solicitud.
+        </li>
+        <li>
+          * Limitar el tamaño de las entradas del usuario que pueden ser
+          procesadas en tablas hash.
+        </li>
+      </ul>
+      <p>3. <strong>Monitoreo y Detección de Ataques:</strong></p>
+      <ul>
+        <li>
+          * Monitorear el uso de CPU y el rendimiento de las tablas hash. Picos
+          inusuales pueden indicar un ataque.
+        </li>
+        <li>
+          * Implementar sistemas de detección de intrusiones (IDS) que puedan
+          identificar patrones de tráfico asociados con ataques DoS basados en
+          colisiones de hash.
+        </li>
+      </ul>
+      <p>
+        4.
+        <strong
+          >Uso de Estructuras de Datos Alternativas para Colisiones:</strong
+        >
+      </p>
+      <ul>
+        <li>
+          * Algunas implementaciones (como <code>HashMap</code> en Java 8+)
+          cambian dinámicamente de listas enlazadas a árboles binarios de
+          búsqueda balanceados (Red-Black Trees) dentro de un bucket si la lista
+          de colisiones excede un cierto umbral. Esto mejora el peor caso de
+          O(N) a O(log N) para un bucket, haciendo el ataque menos efectivo,
+          aunque no lo elimina por completo.
+        </li>
+      </ul>
+      <p>5. <strong>Validación y Saneamiento de Entradas:</strong></p>
+      <ul>
+        <li>
+          * Aunque no es una solución directa, validar y sanear todas las
+          entradas del usuario puede reducir la superficie de ataque general.
+        </li>
+      </ul>
+      <p>
+        La clave es hacer que la generación de colisiones sea lo suficientemente
+        difícil o costosa para el atacante, o que el impacto de una colisión sea
+        menos severo en el sistema.
+      </p>
+      <h3>
+        Pregunta 6: Describe un escenario en el que una tabla hash, a pesar de
+        su rendimiento promedio O(1), podría convertirse en un cuello de botella
+        significativo en una aplicación. ¿Cómo se mitigaría?
+      </h3>
+      <p><strong>Respuesta Detallada:</strong></p>
+      <p>
+        Un escenario común donde una tabla hash puede convertirse en un cuello
+        de botella significativo es en aplicaciones
+        <strong>altamente concurrentes</strong> con un alto volumen de
+        operaciones de escritura o acceso a los mismos buckets, o en situaciones
+        donde se produce un <strong>rehashing frecuente y/o costoso</strong>.
+      </p>
+      <p>
+        <em></em>Escenario: Contention en un <code>HashMap</code> estándar en un
+        entorno multihilo.<em></em>
+      </p>
+      <p>
+        Imagina una aplicación de servidor web (e.g., Spring Boot, Node.js) que
+        gestiona sesiones de usuario o un caché de objetos. Múltiples hilos
+        (cada uno manejando una solicitud de usuario) necesitan acceder y
+        modificar un <code>HashMap</code> global (o un
+        <code>HashMap</code> grande accesible por muchos hilos) para estas
+        sesiones/caché.
+      </p>
+      <p>
+        1. <strong>Problema de Sincronización:</strong> Un
+        <code>HashMap</code> estándar (como <code>java.util.HashMap</code>)
+        <strong>no es thread-safe</strong>. Si múltiples hilos intentan
+        modificarlo concurrentemente (ej. <code>put</code>,
+        <code>remove</code>), puede llevar a condiciones de carrera, corrupción
+        de datos e incluso bucles infinitos en el caso de encadenamiento.
+      </p>
+      <p>
+        2. <em></em>Uso de <code>Collections.synchronizedMap</code> o
+        <code>Hashtable</code>:<em></em> Para hacerlo seguro, se podría
+        envolverlo con <code>Collections.synchronizedMap</code> o usar la
+        antigua <code>java.util.Hashtable</code>. Sin embargo, estas soluciones
+        utilizan un <strong>bloqueo a nivel de tabla completa</strong>. Esto
+        significa que solo un hilo puede realizar una operación en la tabla en
+        un momento dado.
+      </p>
+      <ul>
+        <li>
+          * <strong>Cuello de botella:</strong> Con un alto volumen de
+          solicitudes y muchos hilos compitiendo por el acceso a la tabla, este
+          bloqueo global convierte las operaciones O(1) en un cuello de botella
+          serializado. Los hilos pasan la mayor parte de su tiempo esperando el
+          bloqueo, en lugar de realizar el trabajo útil. El rendimiento no
+          escala con el número de núcleos o hilos.
+        </li>
+      </ul>
+      <p>
+        3. <strong>Rehashing Concurrente (Peor Caso):</strong> Si el
+        <code>HashMap</code> sincronizado necesita realizar un rehashing
+        mientras hay mucha contención, la operación O(N) se realiza bajo un
+        bloqueo global. Esto puede congelar (o ralentizar drásticamente) todas
+        las demás operaciones de la tabla durante un período más largo,
+        impactando severamente la
+        <span
+          class="tooltip"
+          data-tooltip-text="El retraso o tiempo que tarda en transferirse un paquete de datos desde su origen hasta su destino. En el contexto de las APIs, es el tiempo entre la solicitud del cliente y la respuesta del servidor."
+          >latencia</span
+        >
+        de la aplicación.
+      </p>
+      <p><strong>Mitigación:</strong></p>
+      <p>
+        La solución principal para este tipo de cuello de botella en entornos
+        concurrentes es utilizar implementaciones de tablas hash diseñadas
+        específicamente para la concurrencia, como el <em></em
+        ><code>ConcurrentHashMap</code> en Java<em></em> o estructuras similares
+        en otros lenguajes (ej., <code>ConcurrentDictionary</code> en C#).
+      </p>
+      <p>1. <strong>Bloqueo Segmentado (Java 7 y anteriores):</strong></p>
+      <ul>
+        <li>
+          * <code>ConcurrentHashMap</code> tradicionalmente dividía el arreglo
+          de buckets en múltiples "segmentos" o "particiones", cada uno con su
+          propio bloqueo.
+        </li>
+        <li>
+          * Esto permitía que múltiples hilos operaran en diferentes segmentos
+          simultáneamente sin interferencia, mejorando significativamente la
+          concurrencia.
+        </li>
+        <li>
+          * Un hilo que modifica un bucket en un segmento no bloquea a otro hilo
+          que modifica un bucket en un segmento diferente.
+        </li>
+      </ul>
+      <p>
+        2.
+        <strong>Bloqueo a Nivel de Nodo/Bucket (Java 8 y posteriores):</strong>
+      </p>
+      <ul>
+        <li>
+          * Las versiones más recientes de <code>ConcurrentHashMap</code> han
+          evolucionado para usar un enfoque más granular, con bloqueos a nivel
+          de nodo o bucket. Cuando un hilo necesita modificar un bucket, solo
+          bloquea ese bucket específico (o el nodo que está modificando en la
+          lista/árbol de colisiones).
+        </li>
+        <li>
+          * También emplean técnicas como la programación sin bloqueos
+          (lock-free programming) para operaciones de lectura
+          (<code>get</code>), mejorando aún más el paralelismo.
+        </li>
+        <li>
+          * Para el rehashing, <code>ConcurrentHashMap</code> implementa un
+          rehashing "escalonado" o "paralelo" que no bloquea toda la tabla
+          durante mucho tiempo. Los elementos se migran gradualmente,
+          permitiendo que las operaciones continúen mientras el rehashing está
+          en curso.
+        </li>
+      </ul>
+      <p><strong>Otras estrategias de mitigación:</strong></p>
+      <ul>
+        <li>
+          <strong>Optimización de la función hash:</strong> Asegurar que las
+          claves tengan una función hash bien distribuida para minimizar la
+          contención en buckets específicos.
+        </li>
+        <li>
+          <strong>Aumentar el tamaño inicial:</strong> Si el número de elementos
+          es conocido, inicializar la tabla con un tamaño más grande para
+          reducir la frecuencia de rehashing.
+        </li>
+        <li>
+          <strong>Cachés distribuidos:</strong> Para escenarios de caché
+          distribuida, considerar el uso de soluciones externas como Redis o
+          Memcached, que están diseñadas para manejar alta concurrencia y
+          <span
+            class="tooltip"
+            data-tooltip-text="La capacidad de aumentar el rendimiento de un sistema añadiendo más máquinas o nodos. Es típico de las arquitecturas de microservicios y bases de datos NoSQL."
+            >escalabilidad horizontal</span
+          >.
+        </li>
+      </ul>
+      <p>
+        En resumen, aunque una tabla hash estándar es O(1) en promedio, la
+        contención por sincronización en entornos multihilo o un rehashing mal
+        gestionado pueden convertirla en un cuello de botella severo. La
+        mitigación se logra con estructuras de datos concurrentes especializadas
+        que utilizan estrategias de bloqueo más granulares o enfoques sin
+        bloqueo.
+      </p>
+      <h3>
+        Pregunta 7: Dada la tarea de implementar una función hash para objetos
+        complejos (e.g., un objeto <code>Persona</code> con <code>nombre</code>,
+        <code>apellido</code>, <code>edad</code>), ¿qué principios seguirías
+        para asegurar una buena distribución y rendimiento?
+      </h3>
+      <p><strong>Respuesta Detallada:</strong></p>
+      <p>
+        Al implementar una función hash para un objeto complejo, el objetivo es
+        producir un valor entero que:
+      </p>
+      <p>
+        1. <strong>Sea determinista:</strong> Siempre el mismo resultado para el
+        mismo objeto.
+      </p>
+      <p>
+        2. <em></em>Sea consistente con <code>equals()</code>:<em></em> Si dos
+        objetos son <code>equals()</code>, deben tener el mismo
+        <code>hashCode()</code>.
+      </p>
+      <p>
+        3. <strong>Distribuya bien los valores hash:</strong> Minimizar
+        colisiones para diferentes objetos.
+      </p>
+      <p>
+        4. <strong>Sea eficiente:</strong> Calcular el hash no debe ser lento.
+      </p>
+      <p>Aquí están los principios y pasos que seguiría:</p>
+      <p>
+        1. <em></em>Identificar Campos Relevantes para <code>equals()</code>:<em
+        ></em>
+      </p>
+      <ul>
+        <li>
+          * Primero, define qué campos hacen que dos objetos
+          <code>Persona</code> sean lógicamente iguales. Por ejemplo,
+          <code>nombre</code> y <code>apellido</code> pueden ser suficientes, o
+          quizás se necesite un <code>id</code> único. Todos los campos
+          utilizados en <code>equals()</code> <em>deben</em> ser usados en
+          <code>hashCode()</code>.
+        </li>
+        <li>
+          * <strong>Ejemplo:</strong> Para
+          <code>Persona(String nombre, String apellido, int edad)</code>, si
+          <code>equals()</code> considera <code>nombre</code> y
+          <code>apellido</code>, entonces <code>hashCode()</code> debe usar al
+          menos estos dos. Si <code>edad</code> también influye en
+          <code>equals()</code>, también debe influir en
+          <code>hashCode()</code>.
+        </li>
+      </ul>
+      <p>2. <strong>Inicializar con un Valor No Cero (Semilla):</strong></p>
+      <ul>
+        <li>
+          * Comienza el cálculo del hash con un número primo pequeño y no cero
+          (ej., 17 o 31). Esto ayuda a asegurar que los objetos con muchos
+          campos nulos o con hashes de 0 no terminen todos en el mismo bucket
+          inicial.
+        </li>
+        <li>* <code>int result = 17;</code></li>
+      </ul>
+      <p>
+        3. <em></em>Incorporar <code>hashCode()</code> de Cada Campo
+        Relevante:<em></em>
+      </p>
+      <ul>
+        <li>
+          * Para cada campo relevante (los usados en <code>equals()</code>),
+          combina su <code>hashCode()</code> con el resultado actual.
+        </li>
+        <li>
+          * La fórmula comúnmente utilizada es:
+          <code>result = 31 * result + field.hashCode();</code>
+        </li>
+        <li>* El número 31 es un número primo y se usa comúnmente porque:</li>
+        <li>
+          * <code>31 * i</code> se puede optimizar por los compiladores a
+          <code>(i << 5) - i</code>, que es una operación de bit rápido.
+        </li>
+        <li>* Los números primos ayudan a dispersar mejor los valores hash.</li>
+        <li>
+          <em> </em>*Manejo de <code>null</code>:<em></em> Si un campo puede ser
+          <code>null</code>, su <code>hashCode()</code> se considera 0.
+          <code
+            >result = 31 * result + (field == null ? 0 :
+            field.hashCode());</code
+          >
+        </li>
+        <li>* <strong>Tipos Primitivos:</strong></li>
+        <li>
+          * <code>int</code>: Simplemente usa el valor del <code>int</code>:
+          <code>result = 31 * result + intField;</code>
+        </li>
+        <li>
+          * <code>long</code>: Para un <code>long</code>, se suelen combinar las
+          dos mitades del <code>long</code>:
+          <code
+            >result = 31 * result + (int) (longField ^ (longField >>>
+            32));</code
+          >
+        </li>
+        <li>
+          * <code>boolean</code>:
+          <code>result = 31 * result + (booleanField ? 1 : 0);</code>
+        </li>
+        <li>
+          * <code>float</code>/<code>double</code>: Utiliza sus respectivas
+          funciones <code>Float.floatToIntBits()</code> o
+          <code>Double.doubleToLongBits()</code> para obtener una representación
+          entera y luego maneja como <code>int</code>/<code>long</code>.
+        </li>
+      </ul>
+      <p>4. <strong>Consideraciones Adicionales:</strong></p>
+      <ul>
+        <li>
+          * <strong>Orden de los campos:</strong> El orden en que se combinan
+          los hashes de los campos importa. Una convención es usar el mismo
+          orden que en el método <code>equals()</code>.
+        </li>
+        <li>
+          * <strong>Campos de Colección (Listas, Sets):</strong> Para campos que
+          son colecciones, se debe iterar sobre sus elementos y combinar los
+          hashes de cada elemento, o usar el <code>hashCode()</code> de la
+          colección si está bien implementado (e.g.,
+          <code>List.hashCode()</code> en Java).
+        </li>
+        <li>
+          * <strong>Evitar Campos Volátiles/Mutables:</strong> Si un campo es
+          mutable, pero no se incluye en <code>equals()</code>, no debería
+          incluirse en <code>hashCode()</code>. Si un campo es mutable y
+          <em>sí</em> se incluye en <code>equals()</code>, entonces el objeto
+          mismo no debe usarse como clave en un hash map si su estado puede
+          cambiar después de ser insertado.
+        </li>
+      </ul>
+      <p>
+        <em></em>Ejemplo para
+        <code>Persona(String nombre, String apellido, int edad)</code>:<em></em>
+      </p>
+      <pre><code>public final class Persona { // final para inmutabilidad, recomendado para claves
     private final String nombre;
     private final String apellido;
     private final int edad;
@@ -152,8 +1391,191 @@
         result = 31 * result + edad; // Incorporar hash de edad (int primitivo)
         return result;
     }
-}</code></pre><p>Al seguir estos principios, se puede construir una función <code>hashCode()</code> robusta y eficiente que garantice el correcto funcionamiento y buen rendimiento de las tablas hash.</p><h2><span class="tooltip" data-tooltip-text="Un &quot;tópico&quot; es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.">Tópicos</span> Avanzados y Errores Comunes</h2><h3>Tópico Avanzado: <code>ConcurrentHashMap</code> y la Evolución de la Concurrencia</h3><p><code>ConcurrentHashMap</code> en Java es un ejemplo paradigmático de cómo las tablas hash se adaptan a entornos de alta concurrencia. Antes de Java 8, <code>ConcurrentHashMap</code> utilizaba una estrategia de "bloqueo segmentado" (array de <code>Segment</code>s, cada uno con su propio <code>ReentrantLock</code>), lo que permitía que múltiples hilos escribieran concurrentemente en diferentes segmentos. Esto escalaba bien para operaciones de escritura en distintos segmentos y operaciones de lectura casi sin bloqueo.</p><p>A partir de Java 8, la arquitectura cambió drásticamente para mejorar aún más la escalabilidad. Eliminó los <code>Segment</code>s y adoptó un enfoque más granular de "nodos encadenados/árboles con spinlocks". Para cada bucket, si el número de colisiones excede un umbral (8 por defecto), la lista enlazada de colisiones se convierte en un árbol binario de búsqueda balanceado (Red-Black Tree). Esto garantiza que las operaciones en un bucket (incluso con muchas colisiones) tengan un rendimiento de O(log N) en el peor caso, en lugar de O(N). Para la concurrencia, <code>ConcurrentHashMap</code> utiliza <code>CAS</code> (Compare-And-Swap) para la mayoría de las operaciones de lectura/inserción, y <code>synchronized</code> (o bloqueos más ligeros) solo cuando es estrictamente necesario para modificar la estructura del bucket o durante el rehashing.</p><p>Este diseño híbrido (bloqueos finos + árboles para colisiones + operaciones sin bloqueo para lecturas) permite un alto rendimiento en escenarios multihilo, mitigando los problemas de contención y de degradación O(N) por colisiones masivas.</p><h3>Error Común 1: No Sobrescribir <code>hashCode()</code> y <code>equals()</code> o Hacerlo Incorrectamente</h3><p>Este es, con diferencia, el error más frecuente y crítico al usar objetos personalizados como claves en tablas hash.</p><ul><li>  <strong>Olvidar sobrescribir:</strong> Si una clase personalizada no sobrescribe <code>hashCode()</code> ni <code>equals()</code>, heredará las implementaciones de <code>Object</code>. <code>Object.equals()</code> solo compara referencias (identidad de objeto), y <code>Object.hashCode()</code> devuelve un valor derivado de la dirección de memoria del objeto. Esto significa que dos objetos lógicamente idénticos (ej. dos objetos <code>Persona</code> con el mismo nombre y apellido) serán tratados como diferentes por la tabla hash, llevando a duplicados o a la imposibilidad de recuperar elementos.</li><li>  <em></em>Sobrescribir <code>equals()</code> pero no <code>hashCode()</code>:<em></em> Viola el contrato fundamental (<code>obj1.equals(obj2)</code> implica <code>obj1.hashCode() == obj2.hashCode()</code>). La tabla hash puede encontrar el bucket incorrecto, o no encontrar el objeto buscado.</li><li>  <em></em>Sobrescribir <code>hashCode()</code> pero no <code>equals()</code>:<em></em> Simplemente es incorrecto. <code>hashCode()</code> podría producir el mismo hash para dos objetos diferentes, pero <code>equals()</code> diría que son diferentes, insertándolos como duplicados o no permitiendo reemplazarlos.</li><li>  <strong>Implementación incorrecta:</strong> Errores como usar solo un subconjunto de los campos de <code>equals()</code> en <code>hashCode()</code>, o una mala implementación del algoritmo de combinación de hashes, pueden causar una distribución pobre o romper el contrato, llevando a problemas de rendimiento o corrección.</li></ul><p><strong>Solución:</strong> Siempre que una clase se vaya a usar como clave en una tabla hash, sobrescribe <code>equals()</code> y <code>hashCode()</code> siguiendo el contrato y usando todos los campos relevantes que definen la igualdad lógica del objeto. Muchos IDEs ofrecen generación automática de estos métodos, lo que ayuda a evitar errores comunes.</p><h3>Error Común 2: Usar Claves Mutables que Modifican su Estado</h3><p>Como se discutió en las preguntas de entrevista, usar objetos mutables como claves es una fuente común de errores sutiles y difíciles de depurar. Si el estado de una clave se modifica <em>después</em> de que el par clave-valor haya sido insertado en la tabla hash, y esta modificación afecta el <code>hashCode()</code> del objeto, el elemento se vuelve "perdido" dentro de la tabla. El <code>hashCode()</code> calculado para una búsqueda posterior apuntará a un bucket diferente al original, haciendo que el elemento sea inalcanzable.</p><p><strong>Solución:</strong></p><p>1.  <strong>Preferir claves inmutables:</strong> La mejor práctica es siempre usar objetos inmutables (como <code>String</code>, <code>Integer</code>, o clases personalizadas bien diseñadas para ser inmutables) como claves.</p><p>2.  <strong>Si una clave mutable es necesaria:</strong></p><ul><li>   <em>   Asegúrate de que la clave </em>no se modifique* mientras está en la tabla hash.</li><li>   *   Si se debe modificar, el flujo de trabajo correcto es:</li></ul><p>        1.  Eliminar la clave antigua de la tabla (<code>remove(oldKey)</code>).</p><p>        2.  Modificar la clave.</p><p>        3.  Reinsertar la clave modificada con su nuevo valor (<code>put(modifiedKey, value)</code>).</p><p>    Esto asegura que la tabla hash recalcule la posición del elemento y mantenga su integridad.</p><h2>Recursos Adicionales</h2><ul><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGP-kMgqWx6aE3az1cdKh6mjpyPNvaSydlxFswe4VuiWfTN416I-Z_sAeL8WpC2HvvIHIHGazSEuIhF4-_-vqzXbBU5oAESfqRBHscPulFN835mojR8MGLyABLtCjF_rLGW-xeguD1ygj1K1PmErtsFMj9w0QIOmEZD3fFerHOJdncPm-o=" target="_blank" rel="noopener noreferrer">ionos.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqNsevffI1VpEp2G6_xfdzLWqs7iqkEH0ke4Vef7a1nMrtGYQfPrLy_3MUjhK-2W6EhVJGoh6wrPADCl3rOxwIXid6gD_8JBTavfYu5ys6PnkR1oorS5LZML0iikuMGpR5Hb69yKsvIOYpu-635IYcF5QJMUw=" target="_blank" rel="noopener noreferrer">uc3m.es</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4wGSvQlJ2uJFRBtjO1Ti3eKD-7qSmLijLGlFYC9HAN_1O8s3VhVfPWQmx9V63TJD_TKo6a3Y1DJ6fGl6SqZhTVyBWapAYOyTcbKGvK6cYNPvaNpwVIcvA5wj4oIiOAKHdEQ==" target="_blank" rel="noopener noreferrer">wikipedia.org</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQMMMl4_YbTc3nHOcrih7-D4e9lJoAn4WV0t28K5VSiwrwkfBHPUO-Ifqva4XHgG_Fg6XPSCw-j58YpTv4_m4e0793zV29K0eBYfJ-eJpx9ZWf8TqNTCwZMT1PFR_S4pMOvZs91W-07tEXW19wggTY4eTP8O4ipEEbc1EhmCJ4KtSlADfS338lvNeLse5mIzLKVIbG8KB300QYOMCZhMltyoL1IQCiIqPJpvcmMaE-aw==" target="_blank" rel="noopener noreferrer">microsoft.com</a></li><li><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH7CuBICaliWS0F1f0iMUhOvI8KN4U_5Dh41LWQWZsIS1jIghRVTjcrUUg0ARYKgiyPq-mXfjFviG6ckN1NyoEOLrwmXLcV0YLyIsIlf_jrU85CuimyVB28CamttoYCtnVigtPadA==" target="_blank" rel="noopener noreferrer">youtube.com</a></li></ul>
-  </div>
-</body>
+}</code></pre>
+      <p>
+        Al seguir estos principios, se puede construir una función
+        <code>hashCode()</code> robusta y eficiente que garantice el correcto
+        funcionamiento y buen rendimiento de las tablas hash.
+      </p>
+      <h2>
+        <span
+          class="tooltip"
+          data-tooltip-text='Un "tópico" es un canal con nombre al que los productores envían mensajes en un sistema de publicación/suscripción. Los consumidores se suscriben a los tópicos que les interesan para recibir sus mensajes.'
+          >Tópicos</span
+        >
+        Avanzados y Errores Comunes
+      </h2>
+      <h3>
+        Tópico Avanzado: <code>ConcurrentHashMap</code> y la Evolución de la
+        Concurrencia
+      </h3>
+      <p>
+        <code>ConcurrentHashMap</code> en Java es un ejemplo paradigmático de
+        cómo las tablas hash se adaptan a entornos de alta concurrencia. Antes
+        de Java 8, <code>ConcurrentHashMap</code> utilizaba una estrategia de
+        "bloqueo segmentado" (array de <code>Segment</code>s, cada uno con su
+        propio <code>ReentrantLock</code>), lo que permitía que múltiples hilos
+        escribieran concurrentemente en diferentes segmentos. Esto escalaba bien
+        para operaciones de escritura en distintos segmentos y operaciones de
+        lectura casi sin bloqueo.
+      </p>
+      <p>
+        A partir de Java 8, la arquitectura cambió drásticamente para mejorar
+        aún más la escalabilidad. Eliminó los <code>Segment</code>s y adoptó un
+        enfoque más granular de "nodos encadenados/árboles con spinlocks". Para
+        cada bucket, si el número de colisiones excede un umbral (8 por
+        defecto), la lista enlazada de colisiones se convierte en un árbol
+        binario de búsqueda balanceado (Red-Black Tree). Esto garantiza que las
+        operaciones en un bucket (incluso con muchas colisiones) tengan un
+        rendimiento de O(log N) en el peor caso, en lugar de O(N). Para la
+        concurrencia, <code>ConcurrentHashMap</code> utiliza
+        <code>CAS</code> (Compare-And-Swap) para la mayoría de las operaciones
+        de lectura/inserción, y <code>synchronized</code> (o bloqueos más
+        ligeros) solo cuando es estrictamente necesario para modificar la
+        estructura del bucket o durante el rehashing.
+      </p>
+      <p>
+        Este diseño híbrido (bloqueos finos + árboles para colisiones +
+        operaciones sin bloqueo para lecturas) permite un alto rendimiento en
+        escenarios multihilo, mitigando los problemas de contención y de
+        degradación O(N) por colisiones masivas.
+      </p>
+      <h3>
+        Error Común 1: No Sobrescribir <code>hashCode()</code> y
+        <code>equals()</code> o Hacerlo Incorrectamente
+      </h3>
+      <p>
+        Este es, con diferencia, el error más frecuente y crítico al usar
+        objetos personalizados como claves en tablas hash.
+      </p>
+      <ul>
+        <li>
+          <strong>Olvidar sobrescribir:</strong> Si una clase personalizada no
+          sobrescribe <code>hashCode()</code> ni <code>equals()</code>, heredará
+          las implementaciones de <code>Object</code>.
+          <code>Object.equals()</code> solo compara referencias (identidad de
+          objeto), y <code>Object.hashCode()</code> devuelve un valor derivado
+          de la dirección de memoria del objeto. Esto significa que dos objetos
+          lógicamente idénticos (ej. dos objetos <code>Persona</code> con el
+          mismo nombre y apellido) serán tratados como diferentes por la tabla
+          hash, llevando a duplicados o a la imposibilidad de recuperar
+          elementos.
+        </li>
+        <li>
+          <em></em>Sobrescribir <code>equals()</code> pero no
+          <code>hashCode()</code>:<em></em> Viola el contrato fundamental (<code
+            >obj1.equals(obj2)</code
+          >
+          implica <code>obj1.hashCode() == obj2.hashCode()</code>). La tabla
+          hash puede encontrar el bucket incorrecto, o no encontrar el objeto
+          buscado.
+        </li>
+        <li>
+          <em></em>Sobrescribir <code>hashCode()</code> pero no
+          <code>equals()</code>:<em></em> Simplemente es incorrecto.
+          <code>hashCode()</code> podría producir el mismo hash para dos objetos
+          diferentes, pero <code>equals()</code> diría que son diferentes,
+          insertándolos como duplicados o no permitiendo reemplazarlos.
+        </li>
+        <li>
+          <strong>Implementación incorrecta:</strong> Errores como usar solo un
+          subconjunto de los campos de <code>equals()</code> en
+          <code>hashCode()</code>, o una mala implementación del algoritmo de
+          combinación de hashes, pueden causar una distribución pobre o romper
+          el contrato, llevando a problemas de rendimiento o corrección.
+        </li>
+      </ul>
+      <p>
+        <strong>Solución:</strong> Siempre que una clase se vaya a usar como
+        clave en una tabla hash, sobrescribe <code>equals()</code> y
+        <code>hashCode()</code> siguiendo el contrato y usando todos los campos
+        relevantes que definen la igualdad lógica del objeto. Muchos IDEs
+        ofrecen generación automática de estos métodos, lo que ayuda a evitar
+        errores comunes.
+      </p>
+      <h3>Error Común 2: Usar Claves Mutables que Modifican su Estado</h3>
+      <p>
+        Como se discutió en las preguntas de entrevista, usar objetos mutables
+        como claves es una fuente común de errores sutiles y difíciles de
+        depurar. Si el estado de una clave se modifica <em>después</em> de que
+        el par clave-valor haya sido insertado en la tabla hash, y esta
+        modificación afecta el <code>hashCode()</code> del objeto, el elemento
+        se vuelve "perdido" dentro de la tabla. El
+        <code>hashCode()</code> calculado para una búsqueda posterior apuntará a
+        un bucket diferente al original, haciendo que el elemento sea
+        inalcanzable.
+      </p>
+      <p><strong>Solución:</strong></p>
+      <p>
+        1. <strong>Preferir claves inmutables:</strong> La mejor práctica es
+        siempre usar objetos inmutables (como <code>String</code>,
+        <code>Integer</code>, o clases personalizadas bien diseñadas para ser
+        inmutables) como claves.
+      </p>
+      <p>2. <strong>Si una clave mutable es necesaria:</strong></p>
+      <ul>
+        <li>
+          <em> Asegúrate de que la clave </em>no se modifique* mientras está en
+          la tabla hash.
+        </li>
+        <li>* Si se debe modificar, el flujo de trabajo correcto es:</li>
+      </ul>
+      <p>
+        1. Eliminar la clave antigua de la tabla (<code>remove(oldKey)</code>).
+      </p>
+      <p>2. Modificar la clave.</p>
+      <p>
+        3. Reinsertar la clave modificada con su nuevo valor (<code
+          >put(modifiedKey, value)</code
+        >).
+      </p>
+      <p>
+        Esto asegura que la tabla hash recalcule la posición del elemento y
+        mantenga su integridad.
+      </p>
+      <h2>Recursos Adicionales</h2>
+      <ul>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGP-kMgqWx6aE3az1cdKh6mjpyPNvaSydlxFswe4VuiWfTN416I-Z_sAeL8WpC2HvvIHIHGazSEuIhF4-_-vqzXbBU5oAESfqRBHscPulFN835mojR8MGLyABLtCjF_rLGW-xeguD1ygj1K1PmErtsFMj9w0QIOmEZD3fFerHOJdncPm-o="
+            target="_blank"
+            rel="noopener noreferrer"
+            >ionos.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqNsevffI1VpEp2G6_xfdzLWqs7iqkEH0ke4Vef7a1nMrtGYQfPrLy_3MUjhK-2W6EhVJGoh6wrPADCl3rOxwIXid6gD_8JBTavfYu5ys6PnkR1oorS5LZML0iikuMGpR5Hb69yKsvIOYpu-635IYcF5QJMUw="
+            target="_blank"
+            rel="noopener noreferrer"
+            >uc3m.es</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4wGSvQlJ2uJFRBtjO1Ti3eKD-7qSmLijLGlFYC9HAN_1O8s3VhVfPWQmx9V63TJD_TKo6a3Y1DJ6fGl6SqZhTVyBWapAYOyTcbKGvK6cYNPvaNpwVIcvA5wj4oIiOAKHdEQ=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >wikipedia.org</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQMMMl4_YbTc3nHOcrih7-D4e9lJoAn4WV0t28K5VSiwrwkfBHPUO-Ifqva4XHgG_Fg6XPSCw-j58YpTv4_m4e0793zV29K0eBYfJ-eJpx9ZWf8TqNTCwZMT1PFR_S4pMOvZs91W-07tEXW19wggTY4eTP8O4ipEEbc1EhmCJ4KtSlADfS338lvNeLse5mIzLKVIbG8KB300QYOMCZhMltyoL1IQCiIqPJpvcmMaE-aw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >microsoft.com</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH7CuBICaliWS0F1f0iMUhOvI8KN4U_5Dh41LWQWZsIS1jIghRVTjcrUUg0ARYKgiyPq-mXfjFviG6ckN1NyoEOLrwmXLcV0YLyIsIlf_jrU85CuimyVB28CamttoYCtnVigtPadA=="
+            target="_blank"
+            rel="noopener noreferrer"
+            >youtube.com</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>
-
