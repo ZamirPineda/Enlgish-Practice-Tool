@@ -1,15 +1,23 @@
 import React from "react";
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import ErrorHunterView from "./ErrorHunterView";
 import { errorHunterRounds } from "../data/errorHunter";
 
 describe("ErrorHunterView", () => {
+  beforeEach(() => {
+    vi.spyOn(Math, "random").mockReturnValue(0.9999999);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   test("renders title and default level timer", () => {
     render(<ErrorHunterView />);
 
     expect(screen.getByText("Error Hunter")).toBeInTheDocument();
-    expect(screen.getByText(/⏱\s38s/)).toBeInTheDocument();
+    expect(screen.getByText("38s")).toBeInTheDocument();
   });
 
   test("switches to C1 level and updates timer", () => {
@@ -19,7 +27,7 @@ describe("ErrorHunterView", () => {
       screen.getByRole("button", { name: "Set error hunter level C1" }),
     );
 
-    expect(screen.getByText(/⏱\s28s/)).toBeInTheDocument();
+    expect(screen.getByText("28s")).toBeInTheDocument();
   });
 
   test("adds score after entering a correct correction", () => {

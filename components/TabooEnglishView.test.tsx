@@ -1,9 +1,17 @@
 import React from "react";
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import TabooEnglishView from "./TabooEnglishView";
 
 describe("TabooEnglishView", () => {
+  beforeEach(() => {
+    vi.spyOn(Math, "random").mockReturnValue(0.9999999);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   test("renders title and forbidden words section", () => {
     render(<TabooEnglishView />);
 

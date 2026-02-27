@@ -1,14 +1,22 @@
 import React from "react";
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import CollocationSprintView from "./CollocationSprintView";
 
 describe("CollocationSprintView", () => {
+  beforeEach(() => {
+    vi.spyOn(Math, "random").mockReturnValue(0.9999999);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   test("renders title and default timer", () => {
     render(<CollocationSprintView />);
 
     expect(screen.getByText("Collocation Sprint")).toBeInTheDocument();
-    expect(screen.getByText(/⏱\s34s/)).toBeInTheDocument();
+    expect(screen.getByText("34s")).toBeInTheDocument();
   });
 
   test("validates correct pair", () => {

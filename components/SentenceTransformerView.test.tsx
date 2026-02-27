@@ -1,5 +1,5 @@
 import React from "react";
-import { beforeEach, describe, test, expect } from "vitest";
+import { beforeEach, afterEach, describe, test, expect, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import SentenceTransformerView from "./SentenceTransformerView";
 import {
@@ -11,6 +11,11 @@ describe("SentenceTransformerView", () => {
   beforeEach(() => {
     localStorage.clear();
     clearAnalyticsEventsForTesting();
+    vi.spyOn(Math, "random").mockReturnValue(0.9999999);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   test("renders title and transformation label", () => {

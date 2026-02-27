@@ -1,16 +1,24 @@
 import React from "react";
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import SpeedBuilderView from "./SpeedBuilderView";
 import { speedBuilderRounds } from "../data/speedBuilder";
 
 describe("SpeedBuilderView", () => {
+  beforeEach(() => {
+    vi.spyOn(Math, "random").mockReturnValue(0.9999999);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   test("renders title and first round counter", () => {
     render(<SpeedBuilderView />);
 
     expect(screen.getByText("Speed Builder")).toBeInTheDocument();
     expect(screen.getByText(/Ronda 1/)).toBeInTheDocument();
-    expect(screen.getByText(/⏱\s55s/)).toBeInTheDocument();
+    expect(screen.getByText("55s")).toBeInTheDocument();
   });
 
   test("switches to B2 level with lower timer and no beginner hint", () => {
@@ -18,7 +26,7 @@ describe("SpeedBuilderView", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Set level B2" }));
 
-    expect(screen.getByText(/⏱\s35s/)).toBeInTheDocument();
+    expect(screen.getByText("35s")).toBeInTheDocument();
     expect(
       screen.queryByRole("button", { name: "Show hint" }),
     ).not.toBeInTheDocument();

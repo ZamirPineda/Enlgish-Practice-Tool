@@ -1,5 +1,5 @@
 import React from "react";
-import { beforeEach, describe, test, expect } from "vitest";
+import { beforeEach, afterEach, describe, test, expect, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import ParaphraseDuelView from "./ParaphraseDuelView";
 import { paraphraseDuelRounds } from "../data/paraphraseDuel";
@@ -12,13 +12,18 @@ describe("ParaphraseDuelView", () => {
   beforeEach(() => {
     localStorage.clear();
     clearAnalyticsEventsForTesting();
+    vi.spyOn(Math, "random").mockReturnValue(0.9999999);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   test("renders title and default timer", () => {
     render(<ParaphraseDuelView />);
 
     expect(screen.getByText("Paraphrase Duel")).toBeInTheDocument();
-    expect(screen.getByText(/⏱\s38s/)).toBeInTheDocument();
+    expect(screen.getByText("38s")).toBeInTheDocument();
   });
 
   test("accepts a correct paraphrase", () => {
