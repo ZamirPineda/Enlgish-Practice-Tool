@@ -365,4 +365,133 @@ export const speedBuilderRounds: SpeedBuilderRound[] = [
     tags: ["Communication", "Performance"],
     level: "C1",
   },
+  {
+    id: "b2-tech-1",
+    sentence:
+      "We need to ensure backward compatibility before merging this pull request",
+    tags: ["Technology", "Engineering"],
+    level: "B2",
+  },
+  {
+    id: "b2-tech-2",
+    sentence: "The new architecture significantly reduces technical debt",
+    tags: ["Technology", "Architecture"],
+    level: "B2",
+  },
+  {
+    id: "b2-tech-3",
+    sentence: "Are we ready to deploy the hotfix to production environments",
+    tags: ["Technology", "Deployment"],
+    level: "B2",
+  },
+  {
+    id: "b2-tech-4",
+    sentence: "This framework standardizes our approach to state management",
+    tags: ["Technology", "Frontend"],
+    level: "B2",
+  },
+  {
+    id: "b2-tech-5",
+    sentence: "Please document the edge cases for the new authentication flow",
+    tags: ["Technology", "Documentation"],
+    level: "B2",
+  },
+  {
+    id: "b2-tech-6",
+    sentence:
+      "We should implement rate limiting to protect the database from abuse",
+    tags: ["Technology", "Security"],
+    level: "B2",
+  },
+  {
+    id: "c1-tech-1",
+    sentence:
+      "The monolithic codebase is systematically being decoupled into microservices",
+    tags: ["Technology", "Architecture"],
+    level: "C1",
+  },
+  {
+    id: "c1-tech-2",
+    sentence:
+      "Mitigating memory leaks in this component requires a deep understanding of closures",
+    tags: ["Technology", "Performance"],
+    level: "C1",
+  },
+  {
+    id: "c1-tech-3",
+    sentence:
+      "Had we provisioned enough instances the outage might have been averted",
+    tags: ["Technology", "Infrastructure", "Reflection"],
+    level: "C1",
+  },
+  {
+    id: "c1-tech-4",
+    sentence:
+      "It is paramount that we enforce strict type checking across all repositories",
+    tags: ["Technology", "Standards"],
+    level: "C1",
+  },
+  {
+    id: "c1-tech-5",
+    sentence:
+      "Leveraging asynchronous iteration drastically improved the data ingestion pipeline",
+    tags: ["Technology", "Optimization"],
+    level: "C1",
+  },
+  {
+    id: "c1-tech-6",
+    sentence:
+      "The underlying vulnerability stems from an insecure deserialization flaw",
+    tags: ["Technology", "Security"],
+    level: "C1",
+  },
+  {
+    id: "c1-tech-7",
+    sentence:
+      "Scaling horizontally allows us to handle traffic bursts without performance degradation",
+    tags: ["Technology", "Infrastructure"],
+    level: "C1",
+  },
+  {
+    id: "c1-tech-8",
+    sentence:
+      "This paradigm shift largely obsoletes our legacy deployment workflows",
+    tags: ["Technology", "Strategy"],
+    level: "C1",
+  },
+  {
+    id: "b2-startup-1",
+    sentence:
+      "We are currently seeking seed funding to accelerate our product roadmap",
+    tags: ["Business", "Startup"],
+    level: "B2",
+  },
+  {
+    id: "b2-startup-2",
+    sentence:
+      "Finding an early product market fit is our absolute priority right now",
+    tags: ["Business", "Startup", "Strategy"],
+    level: "B2",
+  },
+  {
+    id: "c1-startup-1",
+    sentence:
+      "Pivoting the business model at this stage entails considerable structural risk",
+    tags: ["Business", "Startup", "Risk"],
+    level: "C1",
+  },
+  {
+    id: "c1-startup-2",
+    sentence:
+      "The venture capitalists were skeptical of our aggressive customer acquisition cost projections",
+    tags: ["Business", "Finance", "Startup"],
+    level: "C1",
+  },
+  {
+    id: "c1-startup-3",
+    sentence:
+      "Bootstrapping constrained our resources but ultimately fostered greater operational discipline",
+    tags: ["Business", "Startup", "Reflection"],
+    level: "C1",
+  },
 ];

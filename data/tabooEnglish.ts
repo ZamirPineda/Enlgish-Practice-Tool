@@ -170,4 +170,204 @@ export const tabooEnglishRounds: TabooEnglishRound[] = [
     tags: ["Academic", "Debate"],
     level: "C1",
   },
+  {
+    id: "b2-6",
+    targetWord: "deployment",
+    forbiddenWords: ["release", "production", "code"],
+    sampleClue: "The process of making a software system available for use.",
+    tags: ["Technology"],
+    level: "B2",
+  },
+  {
+    id: "b2-7",
+    targetWord: "bandwidth",
+    forbiddenWords: ["internet", "speed", "capacity"],
+    sampleClue:
+      "The maximum rate of data transfer across a given path, or mental capacity to handle tasks.",
+    tags: ["Technology", "Work"],
+    level: "B2",
+  },
+  {
+    id: "b2-8",
+    targetWord: "leverage",
+    forbiddenWords: ["use", "advantage", "power"],
+    sampleClue:
+      "Using something to maximum advantage, often in business or finance.",
+    tags: ["Business", "Strategy"],
+    level: "B2",
+  },
+  {
+    id: "b2-9",
+    targetWord: "scalability",
+    forbiddenWords: ["grow", "handle", "size"],
+    sampleClue:
+      "A system's ability to cope with an increasing amount of work or users.",
+    tags: ["Technology", "Architecture"],
+    level: "B2",
+  },
+  {
+    id: "b2-10",
+    targetWord: "onboarding",
+    forbiddenWords: ["new", "employee", "welcome"],
+    sampleClue: "The process of integrating a new worker into an organization.",
+    tags: ["Work", "HR"],
+    level: "B2",
+  },
+  {
+    id: "b2-11",
+    targetWord: "milestone",
+    forbiddenWords: ["goal", "project", "point"],
+    sampleClue: "A significant event or stage in the development of a project.",
+    tags: ["Work", "Planning"],
+    level: "B2",
+  },
+  {
+    id: "c1-6",
+    targetWord: "bottleneck",
+    forbiddenWords: ["slow", "delay", "process"],
+    sampleClue:
+      "A point of congestion in a system that slows down the overall performance.",
+    tags: ["Technology", "Business"],
+    level: "C1",
+  },
+  {
+    id: "c1-7",
+    targetWord: "ubiquitous",
+    forbiddenWords: ["everywhere", "common", "found"],
+    sampleClue:
+      "Present, appearing, or found everywhere, like smartphones today.",
+    tags: ["Academic", "Technology"],
+    level: "C1",
+  },
+  {
+    id: "c1-8",
+    targetWord: "deprecated",
+    forbiddenWords: ["old", "use", "function"],
+    sampleClue:
+      "Software features that are discouraged because they have been superseded.",
+    tags: ["Technology", "Programming"],
+    level: "C1",
+  },
+  {
+    id: "c1-9",
+    targetWord: "subsequent",
+    forbiddenWords: ["after", "next", "following"],
+    sampleClue: "Coming after something in time; following.",
+    tags: ["Academic", "Business"],
+    level: "C1",
+  },
+  {
+    id: "c1-10",
+    targetWord: "paradigm",
+    forbiddenWords: ["model", "example", "shift"],
+    sampleClue: "A typical example or pattern of something; a model.",
+    tags: ["Academic", "Strategy"],
+    level: "C1",
+  },
+  {
+    id: "c1-11",
+    targetWord: "synergy",
+    forbiddenWords: ["work", "together", "combine"],
+    sampleClue:
+      "The interaction of two or more agents to produce a combined effect greater than the sum of their separate effects.",
+    tags: ["Business"],
+    level: "C1",
+  },
+  {
+    id: "b1-6",
+    targetWord: "browser",
+    forbiddenWords: ["internet", "chrome", "web"],
+    sampleClue:
+      "A software application for accessing information on the World Wide Web.",
+    tags: ["Technology", "Daily Life"],
+    level: "B1",
+  },
+  {
+    id: "b1-7",
+    targetWord: "password",
+    forbiddenWords: ["secret", "word", "login"],
+    sampleClue:
+      "A secret sequence of characters used to gain access to a system.",
+    tags: ["Technology", "Security"],
+    level: "B1",
+  },
+  {
+    id: "a2-6",
+    targetWord: "keyboard",
+    forbiddenWords: ["type", "computer", "letters"],
+    sampleClue: "The set of keys you press to write on a computer.",
+    tags: ["Technology"],
+    level: "A2",
+  },
+  {
+    id: "a2-7",
+    targetWord: "mouse",
+    forbiddenWords: ["click", "animal", "computer"],
+    sampleClue:
+      "A device you move with your hand to control the pointer on a screen.",
+    tags: ["Technology", "Daily Life"],
+    level: "A2",
+  },
+  {
+    id: "b2-12",
+    targetWord: "dashboard",
+    forbiddenWords: ["screen", "data", "metrics"],
+    sampleClue:
+      "A visual interface that provides at-a-glance views of key performance indicators.",
+    tags: ["Technology", "Business"],
+    level: "B2",
+  },
+  {
+    id: "b2-13",
+    targetWord: "freelance",
+    forbiddenWords: ["work", "boss", "independent"],
+    sampleClue:
+      "Working for different companies at different times rather than being permanently employed by one company.",
+    tags: ["Work", "Business"],
+    level: "B2",
+  },
+  {
+    id: "c1-12",
+    targetWord: "refactoring",
+    forbiddenWords: ["code", "rewrite", "clean"],
+    sampleClue:
+      "The process of restructuring existing computer code without changing its external behavior.",
+    tags: ["Technology", "Programming"],
+    level: "C1",
+  },
+  {
+    id: "c1-13",
+    targetWord: "consensus",
+    forbiddenWords: ["agree", "group", "decision"],
+    sampleClue: "A general agreement among a group of people.",
+    tags: ["Business", "Meetings"],
+    level: "C1",
+  },
+  {
+    id: "b2-14",
+    targetWord: "algorithm",
+    forbiddenWords: ["math", "rules", "code"],
+    sampleClue:
+      "A sequence of instructions or a set of rules used by a computer.",
+    tags: ["Technology", "Academic"],
+    level: "B2",
+  },
+  {
+    id: "b1-8",
+    targetWord: "database",
+    forbiddenWords: ["store", "information", "data"],
+    sampleClue:
+      "An organized collection of structured information, usually stored electronically.",
+    tags: ["Technology"],
+    level: "B1",
+  },
+  {
+    id: "c1-14",
+    targetWord: "agile",
+    forbiddenWords: ["fast", "sprint", "methodology"],
+    sampleClue:
+      "A project management framework focusing on iterative and incremental steps.",
+    tags: ["Technology", "Work"],
+    level: "C1",
+  },
 ];

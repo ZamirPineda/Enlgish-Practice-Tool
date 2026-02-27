@@ -174,4 +174,182 @@ export const sentenceTransformerRounds: SentenceTransformerRound[] = [
     tags: ["Academic"],
     level: "C1",
   },
+  {
+    id: "b2-6",
+    baseSentence:
+      "The deployment failed due to a missing environment variable.",
+    mode: "conditional",
+    expectedSentence:
+      "If the deployment had not failed due to a missing environment variable it would have succeeded.",
+    tags: ["Technology"],
+    level: "B2",
+  },
+  {
+    id: "b2-7",
+    baseSentence: "They plan to refactor the legacy code over the weekend.",
+    mode: "negative",
+    expectedSentence:
+      "They do not plan to refactor the legacy code over the weekend.",
+    tags: ["Technology", "Work"],
+    level: "B2",
+  },
+  {
+    id: "b2-8",
+    baseSentence: "The stakeholders agreed to the revised timeline.",
+    mode: "question",
+    expectedSentence: "Did the stakeholders agree to the revised timeline?",
+    tags: ["Business", "Meetings"],
+    level: "B2",
+  },
+  {
+    id: "b2-9",
+    baseSentence: "The team prioritizes technical debt over new features.",
+    mode: "negative",
+    expectedSentence:
+      "The team does not prioritize technical debt over new features.",
+    tags: ["Technology", "Strategy"],
+    level: "B2",
+  },
+  {
+    id: "b2-10",
+    baseSentence:
+      "The new framework improved application performance significantly.",
+    mode: "conditional",
+    expectedSentence:
+      "If the new framework improved application performance significantly we should adopt it globally.",
+    tags: ["Technology", "Performance"],
+    level: "B2",
+  },
+  {
+    id: "c1-6",
+    baseSentence:
+      "The security audit revealed several critical vulnerabilities in the architecture.",
+    mode: "question",
+    expectedSentence:
+      "Did the security audit reveal several critical vulnerabilities in the architecture?",
+    tags: ["Security", "Technology"],
+    level: "C1",
+  },
+  {
+    id: "c1-7",
+    baseSentence: "The board recognized the strategic value of the merger.",
+    mode: "negative",
+    expectedSentence:
+      "The board did not recognize the strategic value of the merger.",
+    tags: ["Business", "Strategy"],
+    level: "C1",
+  },
+  {
+    id: "c1-8",
+    baseSentence:
+      "We allocate sufficient resources to research and development.",
+    mode: "conditional",
+    expectedSentence:
+      "If we allocate sufficient resources to research and development we will maintain our competitive edge.",
+    tags: ["Business", "Strategy"],
+    level: "C1",
+  },
+  {
+    id: "c1-9",
+    baseSentence: "The migration process disrupted the production environment.",
+    mode: "negative",
+    expectedSentence:
+      "The migration process did not disrupt the production environment.",
+    tags: ["Technology", "Infrastructure"],
+    level: "C1",
+  },
+  {
+    id: "c1-10",
+    baseSentence:
+      "The predictive model accurately forecasted the market downturn.",
+    mode: "question",
+    expectedSentence:
+      "Did the predictive model accurately forecast the market downturn?",
+    tags: ["Analysis", "Business"],
+    level: "C1",
+  },
+  {
+    id: "b2-11",
+    baseSentence: "The API endpoint handles concurrent requests efficiently.",
+    mode: "question",
+    expectedSentence:
+      "Does the API endpoint handle concurrent requests efficiently?",
+    tags: ["Technology", "Performance"],
+    level: "B2",
+  },
+  {
+    id: "b2-12",
+    baseSentence: "Optimizing the database queries reduced latency by half.",
+    mode: "negative",
+    expectedSentence:
+      "Optimizing the database queries did not reduce latency by half.",
+    tags: ["Technology", "Optimization"],
+    level: "B2",
+  },
+  {
+    id: "b2-13",
+    baseSentence:
+      "We finish the regression testing before the release candidate.",
+    mode: "conditional",
+    expectedSentence:
+      "If we finish the regression testing before the release candidate we can deploy on Friday.",
+    tags: ["Technology", "Testing"],
+    level: "B2",
+  },
+  {
+    id: "c1-11",
+    baseSentence:
+      "The algorithm struggles to process unstructured data at scale.",
+    mode: "negative",
+    expectedSentence:
+      "The algorithm does not struggle to process unstructured data at scale.",
+    tags: ["Technology", "Data"],
+    level: "C1",
+  },
+  {
+    id: "c1-12",
+    baseSentence: "They implemented a robust disaster recovery plan.",
+    mode: "question",
+    expectedSentence: "Did they implement a robust disaster recovery plan?",
+    tags: ["Technology", "Infrastructure"],
+    level: "C1",
+  },
+  {
+    id: "c1-13",
+    baseSentence:
+      "The unexpected network partition compromised the distributed consensus.",
+    mode: "conditional",
+    expectedSentence:
+      "If the unexpected network partition had compromised the distributed consensus the system would have halted.",
+    tags: ["Technology", "Architecture"],
+    level: "C1",
+  },
+  {
+    id: "b2-14",
+    baseSentence: "The marketing campaign generated high quality leads.",
+    mode: "negative",
+    expectedSentence:
+      "The marketing campaign did not generate high quality leads.",
+    tags: ["Business", "Marketing"],
+    level: "B2",
+  },
+  {
+    id: "c1-14",
+    baseSentence:
+      "The asynchronous operations inadvertently introduced a race condition.",
+    mode: "question",
+    expectedSentence:
+      "Did the asynchronous operations inadvertently introduce a race condition?",
+    tags: ["Technology", "Programming"],
+    level: "C1",
+  },
+  {
+    id: "c1-15",
+    baseSentence: "The company adopts a microservices architecture.",
+    mode: "conditional",
+    expectedSentence:
+      "If the company adopts a microservices architecture it will improve scalability.",
+    tags: ["Technology", "Architecture"],
+    level: "C1",
+  },
 ];
