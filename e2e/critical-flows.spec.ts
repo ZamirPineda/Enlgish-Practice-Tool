@@ -32,11 +32,11 @@ test("loads app and navigates main routes", async ({ page }) => {
   await openApp(page);
   await expect(page.getByText("Stop Game")).toBeVisible();
 
-  await page.goto("/#/study");
+  await page.goto("./#/study");
   await expect(page).toHaveURL(/#\/study/);
   await expect(page.getByText("Practice Mode")).toBeVisible();
 
-  await page.goto("/#/vault");
+  await page.goto("./#/vault");
   await expect(page).toHaveURL(/#\/vault/);
   await expect(
     page.getByRole("heading", { name: "Vocabulary Vault" }),
@@ -45,7 +45,7 @@ test("loads app and navigates main routes", async ({ page }) => {
 
 test("adds item to Vault and keeps it after reload", async ({ page }) => {
   await openApp(page);
-  await page.goto("/#/vault");
+  await page.goto("./#/vault");
   await page.getByRole("button", { name: "+ Add Word" }).click();
 
   await page.getByPlaceholder("e.g. Ubiquitous").fill("E2E Persistence Word");
