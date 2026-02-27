@@ -23,6 +23,10 @@ function resolveBase(env: Record<string, string | undefined>) {
     process.env.VITE_BASE_PATH = env.VITE_BASE_PATH;
   }
 
+  if (typeof viteConfig !== "function") {
+    throw new Error("Expected viteConfig export to be a config function");
+  }
+
   const resolved = viteConfig({ mode: "development", command: "serve" }).base;
 
   if (previousRepository === undefined) {
