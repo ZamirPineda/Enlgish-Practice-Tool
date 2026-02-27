@@ -72,7 +72,7 @@ test("adds item to Vault and keeps it after reload", async ({ page }) => {
 
 test("starts review session and completes 3 steps", async ({ page }) => {
   await openApp(page);
-  await page.goto("/#/vault");
+  await page.goto("./#/vault");
   const starterKit = page
     .locator("section")
     .filter({ hasText: "High-Frequency Starter Kit" });
