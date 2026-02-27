@@ -23,10 +23,7 @@ function resolveBase(env: Record<string, string | undefined>) {
     process.env.VITE_BASE_PATH = env.VITE_BASE_PATH;
   }
 
-  const resolved =
-    typeof viteConfig === "function"
-      ? viteConfig({ mode: "development", command: "serve" }).base
-      : viteConfig.base;
+  const resolved = viteConfig({ mode: "development", command: "serve" }).base;
 
   if (previousRepository === undefined) {
     delete process.env.GITHUB_REPOSITORY;
