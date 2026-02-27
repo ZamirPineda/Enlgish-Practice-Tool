@@ -62,7 +62,10 @@ function resolveManualChunk(id: string) {
     throw new Error("Expected manualChunks to be a function");
   }
 
-  return manualChunks(id);
+  return manualChunks(id, {
+    getModuleInfo: () => null,
+    getModuleIds: function* () {},
+  });
 }
 
 describe("vite base path", () => {
