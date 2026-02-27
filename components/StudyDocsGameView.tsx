@@ -3,6 +3,7 @@ import Card from "./ui/Card";
 import Button from "./ui/Button";
 import { trackActivity } from "../utils/activityTracker";
 import { trackAnalyticsEvent } from "../utils/analytics";
+import { playGameSound } from "../utils/audioUtils";
 
 interface FileNode {
   name: string;
@@ -478,6 +479,9 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
   useEffect(() => {
     if (gameState !== "playing") return;
     if (timeLeft <= 0 || lives <= 0) {
+      if (timeLeft <= 0 && gameState === "playing") {
+        playGameSound("timeout");
+      }
       finishGame();
       return;
     }
@@ -513,6 +517,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     setLastResult(isCorrect ? "correct" : "wrong");
 
     if (isCorrect) {
+      playGameSound("correct");
       trackAnalyticsEvent("item_correct", {
         game: "study_docs_game",
         question: currentRound.prompt,
@@ -523,6 +528,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
         return nextStreak;
       });
     } else {
+      playGameSound("wrong");
       trackAnalyticsEvent("item_wrong", {
         game: "study_docs_game",
         question: currentRound.prompt,
@@ -593,6 +599,12 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
 
       {gameState === "playing" && currentRound && (
         <>
+          <div className="w-full h-3 bg-surface-2 rounded-full overflow-hidden shadow-inner mb-4 border border-border">
+            <div
+              className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= GAME_DURATION_SECONDS / 2 ? "bg-amber-400" : "bg-success"}`}
+              style={{ width: `${(timeLeft / GAME_DURATION_SECONDS) * 100}%` }}
+            />
+          </div>
           <Card>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
               <div className="bg-surface-2 rounded-xl p-3 border border-border">
@@ -646,15 +658,17 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
                 const isCorrect = option === currentRound.correctAnswer;
 
                 let stateClass =
-                  "bg-surface-2 hover:bg-surface-hover border-border";
+                  "bg-surface-2 hover:bg-surface-hover border-border transform hover:scale-[1.02] active:scale-[0.98]";
                 if (selectedOption) {
                   if (isCorrect) {
-                    stateClass = "bg-success/20 border-success text-success";
+                    stateClass =
+                      "bg-success/20 border-success text-success scale-[1.02] shadow-[0_0_15px_rgba(34,197,94,0.3)] z-10 animate-[bounce_0.5s_ease-in-out]";
                   } else if (isSelected) {
-                    stateClass = "bg-rose-500/20 border-rose-500 text-rose-400";
+                    stateClass =
+                      "bg-rose-500/20 border-rose-500 text-rose-400 scale-[0.98] animate-[shake_0.4s_ease-in-out]";
                   } else {
                     stateClass =
-                      "bg-surface-2 border-border text-text-secondary";
+                      "bg-surface-2 border-border text-text-secondary opacity-50";
                   }
                 }
 
@@ -663,7 +677,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
                     key={option}
                     onClick={() => handleAnswer(option)}
                     disabled={!!selectedOption || isRoundLoading}
-                    className={`w-full text-left rounded-xl border p-4 min-h-[60px] transition-colors ${stateClass}`}
+                    className={`w-full text-left rounded-xl border p-4 min-h-[60px] transition-all duration-200 ${stateClass}`}
                   >
                     <span className="font-semibold">{option}</span>
                   </button>
@@ -685,20 +699,102 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
       )}
 
       {gameState === "finished" && (
-        <Card className="text-center space-y-4">
-          <h3 className="text-2xl font-black text-text-primary">
-            Fin del juego
-          </h3>
-          <p className="text-text-secondary">Score final: {score}</p>
-          <p className="text-text-secondary">Mejor score: {bestScore}</p>
-          <div className="flex items-center justify-center gap-3">
-            <Button variant="primary" onClick={() => void startGame()}>
-              Jugar otra vez
-            </Button>
-            <Button variant="secondary" onClick={() => setGameState("idle")}>
-              Volver
-            </Button>
-          </div>
+        <Card className="max-w-xl mx-auto w-full p-8 text-center space-y-8 animate-fade-in shadow-2xl border-t-4 border-accent bg-surface-1">
+          {(() => {
+            const gradeInfo = (() => {
+              if (score >= 200)
+                return {
+                  grade: "S",
+                  color: "text-fuchsia-400",
+                  message: "¡Maestro de Documentos!",
+                };
+              if (score >= 100)
+                return {
+                  grade: "A",
+                  color: "text-emerald-400",
+                  message: "¡Excelente Trabajo!",
+                };
+              if (score >= 50)
+                return {
+                  grade: "B",
+                  color: "text-sky-400",
+                  message: "¡Gran Esfuerzo!",
+                };
+              if (score >= 20)
+                return {
+                  grade: "C",
+                  color: "text-amber-400",
+                  message: "¡Buen Intento!",
+                };
+              return {
+                grade: "D",
+                color: "text-slate-400",
+                message: "¡Sigue Practicando!",
+              };
+            })();
+
+            return (
+              <>
+                <div>
+                  <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-2">
+                    ¡Juego Terminado!
+                  </h2>
+                  <p className="text-text-secondary text-lg">
+                    {gradeInfo.message}
+                  </p>
+                </div>
+
+                <div className="flex justify-center items-center gap-8 py-4">
+                  <div className="text-center">
+                    <div className="text-sm font-bold text-text-muted uppercase tracking-widest mb-1">
+                      Rango
+                    </div>
+                    <div
+                      className={`text-7xl font-black ${gradeInfo.color} drop-shadow-lg animate-bounce`}
+                    >
+                      {gradeInfo.grade}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
+                    <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
+                      Score Final
+                    </div>
+                    <div className="text-3xl font-black text-success-hover">
+                      {score}
+                    </div>
+                  </div>
+                  <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
+                    <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
+                      Mejor Score
+                    </div>
+                    <div className="text-3xl font-black text-amber-500">
+                      🏅 {bestScore}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <Button
+                    variant="primary"
+                    onClick={() => void startGame()}
+                    className="w-full sm:w-auto py-3 px-8 text-lg font-bold"
+                  >
+                    Jugar de nuevo
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => setGameState("idle")}
+                    className="w-full sm:w-auto py-3 px-8 text-lg"
+                  >
+                    Volver al menú
+                  </Button>
+                </div>
+              </>
+            );
+          })()}
         </Card>
       )}
     </div>

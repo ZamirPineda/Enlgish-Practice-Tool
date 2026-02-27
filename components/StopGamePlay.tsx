@@ -700,17 +700,28 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
               ))}
           </div>
 
-          <Button
-            onClick={() => {
-              setShowSummary(false);
-              setIsPlaying(false);
-            }}
-            variant="primary"
-            fullWidth
-            className="py-3 text-lg"
-          >
-            Back to Menu
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+            <Button
+              onClick={() => {
+                setShowSummary(false);
+                startGame();
+              }}
+              variant="primary"
+              className="w-full sm:w-auto py-3 px-8 text-lg font-bold flex-1"
+            >
+              Play Again
+            </Button>
+            <Button
+              onClick={() => {
+                setShowSummary(false);
+                setIsPlaying(false);
+              }}
+              variant="secondary"
+              className="w-full sm:w-auto py-3 px-8 text-lg flex-1"
+            >
+              Back to Menu
+            </Button>
+          </div>
         </Card>
       </div>
     );

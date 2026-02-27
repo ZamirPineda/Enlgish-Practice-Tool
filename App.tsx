@@ -13,6 +13,7 @@ import { createNewSrsItem } from "./utils/srs";
 import { SrsVocabularyItem } from "./types";
 import { APP_VERSION } from "./utils/appVersion";
 import { AppSettings, loadSettings, saveSettings } from "./utils/settingsStore";
+import { useGlobalXp } from "./utils/xpStore";
 import { ToastContainer, toast } from "./components/ui/Toast";
 
 // Views
@@ -222,6 +223,8 @@ const App: React.FC = () => {
   const [isOffline, setIsOffline] = React.useState(!navigator.onLine);
   const [deferredPrompt, setDeferredPrompt] = React.useState<any>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const { level, currentLevelXp, nextLevelXp, progressPercentage } =
+    useGlobalXp();
 
   const {
     needRefresh: [needRefresh],
@@ -384,15 +387,18 @@ const App: React.FC = () => {
 
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-2 bg-surface-2 px-3 py-1.5 rounded-full border border-border">
-              <div className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
+              <div className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)] animate-pulse"></div>
               <span className="text-xs font-bold text-text-secondary">
-                Lvl 1
+                Lvl {level}
               </span>
-              <div className="w-24 h-1.5 bg-border rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-sky-400 to-emerald-400 w-1/3"></div>
+              <div className="w-24 h-1.5 bg-surface-1 rounded-full overflow-hidden shadow-inner border border-border">
+                <div
+                  className="h-full bg-gradient-to-r from-sky-400 to-emerald-400 transition-all duration-1000 ease-out"
+                  style={{ width: `${progressPercentage}%` }}
+                ></div>
               </div>
-              <span className="text-xs font-black text-text-secondary">
-                350 XP
+              <span className="text-[10px] font-black text-text-muted">
+                {currentLevelXp}/{nextLevelXp}
               </span>
             </div>
             <button

@@ -5,7 +5,9 @@ import {
   sentenceTransformerRounds,
   type SentenceTransformerRound,
 } from "../data/sentenceTransformer";
+import { addGlobalXp } from "../utils/xpStore";
 import { trackAnalyticsEvent } from "../utils/analytics";
+import { playGameSound } from "../utils/audioUtils";
 
 type TransformerLevel = SentenceTransformerRound["level"];
 
@@ -73,11 +75,18 @@ const SentenceTransformerView: React.FC = () => {
   const [totalScore, setTotalScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS.B1);
 
-  const rounds = useMemo(
-    () =>
-      sentenceTransformerRounds.filter((item) => item.level === selectedLevel),
-    [selectedLevel],
-  );
+  const rounds = useMemo(() => {
+    const levelRounds = sentenceTransformerRounds.filter(
+      (item) => item.level === selectedLevel,
+    );
+    // Simple Fisher-Yates shuffle for replayability
+    const shuffled = [...levelRounds];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }, [selectedLevel]);
 
   const round = rounds[roundIndex];
   const roundTime = ROUND_TIME_SECONDS[selectedLevel];
@@ -98,6 +107,9 @@ const SentenceTransformerView: React.FC = () => {
       setTimeLeft((previous) => {
         if (previous <= 1) {
           window.clearInterval(timerId);
+          if (previous === 1 && !submitted) {
+            playGameSound("timeout");
+          }
           return 0;
         }
         return previous - 1;
@@ -156,6 +168,7 @@ const SentenceTransformerView: React.FC = () => {
 
     setSubmitted(true);
     if (passesFlexibleValidation) {
+      playGameSound("correct");
       const multiplier = LEVEL_SCORE_MULTIPLIER[round.level];
       const points = Math.round((105 + timeLeft * 2) * multiplier);
       setCorrectCount((previous) => previous + 1);
@@ -170,6 +183,7 @@ const SentenceTransformerView: React.FC = () => {
       return;
     }
 
+    playGameSound("wrong");
     const errorType = !modeConstraint ? "mode_mismatch" : "similarity_low";
     trackAnalyticsEvent("item_wrong", {
       game: "sentence_transformer",
@@ -199,6 +213,12 @@ const SentenceTransformerView: React.FC = () => {
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
 
+  useEffect(() => {
+    if (isComplete && totalScore > 0) {
+      addGlobalXp(totalScore);
+    }
+  }, [isComplete, totalScore]);
+
   return (
     <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-24 sm:pb-8">
       <div className="max-w-4xl mx-auto space-y-6">
@@ -225,8 +245,17 @@ const SentenceTransformerView: React.FC = () => {
                 ))}
               </div>
             </div>
-            <div className="text-xs font-black uppercase tracking-widest text-amber-400">
-              ⏱ {timeLeft}s
+            <div className="w-full sm:w-auto flex-1 max-w-xs">
+              <div className="flex justify-between text-xs font-black uppercase tracking-widest text-amber-400 mb-1">
+                <span>⏱ Tiempo</span>
+                <span>{timeLeft}s</span>
+              </div>
+              <div className="w-full h-2 bg-surface-2 rounded-full overflow-hidden shadow-inner border border-border">
+                <div
+                  className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= roundTime / 2 ? "bg-amber-400" : "bg-success"}`}
+                  style={{ width: `${(timeLeft / roundTime) * 100}%` }}
+                />
+              </div>
             </div>
           </div>
         </Card>
@@ -292,16 +321,93 @@ const SentenceTransformerView: React.FC = () => {
         </Card>
 
         <Card>
-          <p className="text-sm text-text-secondary">
-            Score total:{" "}
-            <span className="font-black text-text-primary">{totalScore}</span>{" "}
-            pts
-          </p>
-          <p className="text-sm text-text-secondary mt-1">
-            Aciertos:{" "}
-            <span className="font-black text-text-primary">{correctCount}</span>{" "}
-            / {roundIndex + (submitted ? 1 : 0)}
-          </p>
+          {isComplete ? (
+            <div className="text-center space-y-6 animate-fade-in py-4">
+              {(() => {
+                const percentage = correctCount / rounds.length;
+                let grade = "D";
+                let gradeColor = "text-slate-400";
+                let message = "Keep practicing!";
+                if (percentage >= 0.9) {
+                  grade = "S";
+                  gradeColor = "text-fuchsia-400";
+                  message = "Transform Master!";
+                } else if (percentage >= 0.75) {
+                  grade = "A";
+                  gradeColor = "text-emerald-400";
+                  message = "Excellent Syntax!";
+                } else if (percentage >= 0.5) {
+                  grade = "B";
+                  gradeColor = "text-sky-400";
+                  message = "Solid Work!";
+                } else if (percentage >= 0.25) {
+                  grade = "C";
+                  gradeColor = "text-amber-400";
+                  message = "Good Effort!";
+                }
+
+                return (
+                  <>
+                    <div>
+                      <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-1">
+                        Sesión Completada
+                      </h2>
+                      <p className="text-text-secondary">{message}</p>
+                    </div>
+
+                    <div className="flex justify-center items-center py-2">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-text-muted uppercase tracking-widest mb-1">
+                          Rango
+                        </div>
+                        <div
+                          className={`text-6xl font-black ${gradeColor} drop-shadow-lg animate-bounce`}
+                        >
+                          {grade}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
+
+              <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                <div className="bg-surface-2 p-3 rounded-xl border border-border">
+                  <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
+                    Score Final
+                  </div>
+                  <div className="text-2xl font-black text-success-hover">
+                    {totalScore}
+                  </div>
+                </div>
+                <div className="bg-surface-2 p-3 rounded-xl border border-border">
+                  <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
+                    Aciertos
+                  </div>
+                  <div className="text-2xl font-black text-accent-hover">
+                    {correctCount}/{rounds.length}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <p className="text-sm text-text-secondary">
+                Score total:{" "}
+                <span className="font-black text-text-primary">
+                  {totalScore}
+                </span>{" "}
+                pts
+              </p>
+              <p className="text-sm text-text-secondary mt-1">
+                Aciertos:{" "}
+                <span className="font-black text-text-primary">
+                  {correctCount}
+                </span>{" "}
+                / {roundIndex + (submitted ? 1 : 0)}
+              </p>
+            </div>
+          )}
         </Card>
       </div>
     </div>

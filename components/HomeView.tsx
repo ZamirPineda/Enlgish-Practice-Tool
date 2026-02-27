@@ -22,6 +22,11 @@ import {
   Zap,
   Search,
   ArrowRight,
+  MessageSquare,
+  Repeat,
+  Calculator,
+  Laptop,
+  RefreshCw,
 } from "lucide-react";
 
 const VAULT_DECK_KEY = "vocab-vault-deck";
@@ -54,6 +59,69 @@ const getDayOfYearUtc = (date: Date): number => {
   );
   return Math.floor((current - start) / 86400000);
 };
+
+const FEATURED_GAMES = [
+  {
+    id: "collocation",
+    path: "/collocation-sprint",
+    title: "Collocations",
+    desc: "Aprende qué palabras van juntas.",
+    icon: Flame,
+    color: "text-orange-500",
+    border: "border-orange-500",
+    bg: "bg-orange-50",
+  },
+  {
+    id: "taboo",
+    path: "/taboo-english",
+    title: "Taboo English",
+    desc: "Describe sin usar las palabras prohibidas.",
+    icon: MessageSquare,
+    color: "text-purple-500",
+    border: "border-purple-500",
+    bg: "bg-purple-50",
+  },
+  {
+    id: "speed",
+    path: "/speed-builder",
+    title: "Speed Builder",
+    desc: "Ordena las palabras rápidamente.",
+    icon: Zap,
+    color: "text-amber-500",
+    border: "border-amber-500",
+    bg: "bg-amber-50",
+  },
+  {
+    id: "transformer",
+    path: "/sentence-transformer",
+    title: "Transformer",
+    desc: "Practica tu agilidad convirtiendo oraciones.",
+    icon: RefreshCw,
+    color: "text-sky-500",
+    border: "border-sky-500",
+    bg: "bg-sky-50",
+  },
+  {
+    id: "error",
+    path: "/error-hunter",
+    title: "Error Hunter",
+    desc: "Encuentra el error gramatical oculto.",
+    icon: Search,
+    color: "text-rose-500",
+    border: "border-rose-500",
+    bg: "bg-rose-50",
+  },
+  {
+    id: "math",
+    path: "/math-game",
+    title: "Math Quiz",
+    desc: "Prueba tu vocabulario matemático.",
+    icon: Calculator,
+    color: "text-indigo-500",
+    border: "border-indigo-500",
+    bg: "bg-indigo-50",
+  },
+];
 
 const HomeView: React.FC = () => {
   const currentWeekKey = getIsoWeekKey(new Date());
@@ -105,6 +173,11 @@ const HomeView: React.FC = () => {
 
   const dailyPhraseKey = dailyPhrase.text.trim().toLowerCase();
   const isDailyPhraseAdded = Boolean(deck[dailyPhraseKey]);
+
+  const featuredGame = useMemo(() => {
+    const day = getDayOfYearUtc(new Date());
+    return FEATURED_GAMES[day % FEATURED_GAMES.length];
+  }, []);
 
   const handleAddDailyPhrase = () => {
     if (isDailyPhraseAdded) return;
@@ -225,96 +298,234 @@ const HomeView: React.FC = () => {
           </Card>
         </section>
 
-        {/* Quick Actions */}
+        {/* Daily Featured Game */}
         <section>
-          <h2 className="text-xl font-bold text-text-primary mb-4">
-            Quick Actions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <Link to="/vault" className="group block">
-              <Card
-                interactive
-                className="h-full p-6 border-t-4 border-accent bg-surface-1"
-              >
-                <div className="mb-4 text-accent group-hover:scale-110 transition-transform origin-left">
-                  <Library className="w-10 h-10" />
+          <Link to={featuredGame.path} className="block group">
+            <Card
+              className={`p-5 md:p-6 border-l-4 ${featuredGame.border} hover:bg-surface-hover transition-colors`}
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`p-3 rounded-xl ${featuredGame.bg} ${featuredGame.color} group-hover:scale-110 transition-transform`}
+                  >
+                    <featuredGame.icon className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <p
+                      className={`text-xs font-bold uppercase tracking-widest ${featuredGame.color} mb-1`}
+                    >
+                      Juego del Día
+                    </p>
+                    <h2 className="text-xl font-bold text-text-primary">
+                      {featuredGame.title}
+                    </h2>
+                    <p className="text-sm text-text-secondary hidden md:block">
+                      {featuredGame.desc}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-text-primary mb-2">
-                  Vocabulary Vault
-                </h3>
-                <p className="text-text-secondary text-sm">
-                  Review your saved words and learn new ones with spaced
-                  repetition.
-                </p>
-              </Card>
-            </Link>
+                <div
+                  className={`flex items-center gap-2 font-bold ${featuredGame.color} group-hover:translate-x-1 transition-transform bg-surface-2 px-4 py-2 rounded-lg`}
+                >
+                  Jugar <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+            </Card>
+          </Link>
+        </section>
 
-            <Link to="/stop" className="group block">
+        {/* Games & Tools Hub */}
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold text-text-primary">
+              Games & Tools Hub
+            </h2>
+            <div className="flex items-center gap-2 md:hidden text-xs font-bold uppercase tracking-widest text-text-muted">
+              <span>Desliza</span> <ArrowRight className="w-3 h-3" />
+            </div>
+          </div>
+
+          {/* Horizontal scroll on mobile, grid on desktop */}
+          <div className="flex overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 snap-x snap-mandatory hide-scrollbar">
+            <Link
+              to="/stop"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
               <Card
                 interactive
-                className="h-full p-6 border-t-4 border-emerald-500 bg-surface-1"
+                className="h-full p-5 border-t-4 border-emerald-500 bg-surface-1 flex flex-col"
               >
-                <div className="mb-4 text-emerald-500 group-hover:scale-110 transition-transform origin-left">
-                  <Gamepad2 className="w-10 h-10" />
+                <div className="mb-3 text-emerald-500 group-hover:scale-110 transition-transform origin-left">
+                  <Gamepad2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-text-primary mb-2">
+                <h3 className="text-lg font-bold text-text-primary mb-1">
                   Stop Game
                 </h3>
-                <p className="text-text-secondary text-sm">
-                  Test your vocabulary speed and accuracy in this fun mini-game.
+                <p className="text-text-secondary text-xs flex-1">
+                  Vocabulario rápido. Encuentra palabras que empiecen con una
+                  letra.
                 </p>
               </Card>
             </Link>
 
-            <Link to="/study" className="group block">
+            <Link
+              to="/speed-builder"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
               <Card
                 interactive
-                className="h-full p-6 border-t-4 border-purple-500 bg-surface-1"
+                className="h-full p-5 border-t-4 border-amber-500 bg-surface-1 flex flex-col"
               >
-                <div className="mb-4 text-purple-500 group-hover:scale-110 transition-transform origin-left">
-                  <BookOpen className="w-10 h-10" />
+                <div className="mb-3 text-amber-500 group-hover:scale-110 transition-transform origin-left">
+                  <Zap className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-text-primary mb-2">
-                  Study Decks
-                </h3>
-                <p className="text-text-secondary text-sm">
-                  Browse curated lists of words, minimal pairs, and phrases by
-                  level.
-                </p>
-              </Card>
-            </Link>
-
-            <Link to="/speed-builder" className="group block">
-              <Card
-                interactive
-                className="h-full p-6 border-t-4 border-amber-500 bg-surface-1"
-              >
-                <div className="mb-4 text-amber-500 group-hover:scale-110 transition-transform origin-left">
-                  <Zap className="w-10 h-10" />
-                </div>
-                <h3 className="text-xl font-bold text-text-primary mb-2">
+                <h3 className="text-lg font-bold text-text-primary mb-1">
                   Speed Builder
                 </h3>
-                <p className="text-text-secondary text-sm">
-                  Build correct sentences by ordering words as fast as you can.
+                <p className="text-text-secondary text-xs flex-1">
+                  Ordena palabras para formar oraciones correctas contra el
+                  tiempo.
                 </p>
               </Card>
             </Link>
 
-            <Link to="/error-hunter" className="group block">
+            <Link
+              to="/error-hunter"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
               <Card
                 interactive
-                className="h-full p-6 border-t-4 border-rose-500 bg-surface-1"
+                className="h-full p-5 border-t-4 border-rose-500 bg-surface-1 flex flex-col"
               >
-                <div className="mb-4 text-rose-500 group-hover:scale-110 transition-transform origin-left">
-                  <Search className="w-10 h-10" />
+                <div className="mb-3 text-rose-500 group-hover:scale-110 transition-transform origin-left">
+                  <Search className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-text-primary mb-2">
+                <h3 className="text-lg font-bold text-text-primary mb-1">
                   Error Hunter
                 </h3>
-                <p className="text-text-secondary text-sm">
-                  Find and fix one grammar mistake per sentence before time runs
-                  out.
+                <p className="text-text-secondary text-xs flex-1">
+                  Encuentra y corrige el error gramatical oculto.
+                </p>
+              </Card>
+            </Link>
+
+            <Link
+              to="/paraphrase-duel"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
+              <Card
+                interactive
+                className="h-full p-5 border-t-4 border-blue-500 bg-surface-1 flex flex-col"
+              >
+                <div className="mb-3 text-blue-500 group-hover:scale-110 transition-transform origin-left">
+                  <Repeat className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Paraphrase Duel
+                </h3>
+                <p className="text-text-secondary text-xs flex-1">
+                  Reescribe oraciones usando conectores específicos.
+                </p>
+              </Card>
+            </Link>
+
+            <Link
+              to="/collocation-sprint"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
+              <Card
+                interactive
+                className="h-full p-5 border-t-4 border-orange-500 bg-surface-1 flex flex-col"
+              >
+                <div className="mb-3 text-orange-500 group-hover:scale-110 transition-transform origin-left">
+                  <Flame className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Collocations
+                </h3>
+                <p className="text-text-secondary text-xs flex-1">
+                  Une verbos con sus sustantivos correctos rápidamente.
+                </p>
+              </Card>
+            </Link>
+
+            <Link
+              to="/taboo-english"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
+              <Card
+                interactive
+                className="h-full p-5 border-t-4 border-purple-500 bg-surface-1 flex flex-col"
+              >
+                <div className="mb-3 text-purple-500 group-hover:scale-110 transition-transform origin-left">
+                  <MessageSquare className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Taboo English
+                </h3>
+                <p className="text-text-secondary text-xs flex-1">
+                  Describe una palabra sin usar términos prohibidos.
+                </p>
+              </Card>
+            </Link>
+
+            <Link
+              to="/sentence-transformer"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
+              <Card
+                interactive
+                className="h-full p-5 border-t-4 border-sky-500 bg-surface-1 flex flex-col"
+              >
+                <div className="mb-3 text-sky-500 group-hover:scale-110 transition-transform origin-left">
+                  <RefreshCw className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Transformer
+                </h3>
+                <p className="text-text-secondary text-xs flex-1">
+                  Convierte a negativas, preguntas o condicionales.
+                </p>
+              </Card>
+            </Link>
+
+            <Link
+              to="/math-game"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
+              <Card
+                interactive
+                className="h-full p-5 border-t-4 border-indigo-500 bg-surface-1 flex flex-col"
+              >
+                <div className="mb-3 text-indigo-500 group-hover:scale-110 transition-transform origin-left">
+                  <Calculator className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Math Quiz
+                </h3>
+                <p className="text-text-secondary text-xs flex-1">
+                  Prueba rápida de fórmulas de cálculo y álgebra en inglés.
+                </p>
+              </Card>
+            </Link>
+
+            <Link
+              to="/docs-quiz"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
+              <Card
+                interactive
+                className="h-full p-5 border-t-4 border-slate-500 bg-surface-1 flex flex-col"
+              >
+                <div className="mb-3 text-slate-500 group-hover:scale-110 transition-transform origin-left">
+                  <Laptop className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Tech Interview
+                </h3>
+                <p className="text-text-secondary text-xs flex-1">
+                  Preguntas teóricas de software engineering.
                 </p>
               </Card>
             </Link>

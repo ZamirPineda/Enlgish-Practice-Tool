@@ -5,6 +5,9 @@ import {
   speedBuilderRounds,
   type SpeedBuilderRound,
 } from "../data/speedBuilder";
+import { addGlobalXp } from "../utils/xpStore";
+import { trackAnalyticsEvent } from "../utils/analytics";
+import { playGameSound } from "../utils/audioUtils";
 
 type SpeedBuilderLevel = SpeedBuilderRound["level"];
 const LEVEL_ORDER: SpeedBuilderLevel[] = ["A1", "A2", "B1", "B2", "C1"];
@@ -48,7 +51,16 @@ const shuffleWords = (sentence: string): string[] => {
 const SpeedBuilderView: React.FC = () => {
   const [selectedLevel, setSelectedLevel] = useState<SpeedBuilderLevel>("A2");
   const rounds = useMemo(() => {
-    return speedBuilderRounds.filter((item) => item.level === selectedLevel);
+    const levelRounds = speedBuilderRounds.filter(
+      (item) => item.level === selectedLevel,
+    );
+    // Simple Fisher-Yates shuffle for replayability
+    const shuffled = [...levelRounds];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
   }, [selectedLevel]);
 
   const [roundIndex, setRoundIndex] = useState(0);
@@ -85,6 +97,9 @@ const SpeedBuilderView: React.FC = () => {
       setTimeLeft((previous) => {
         if (previous <= 1) {
           window.clearInterval(timerId);
+          if (previous === 1 && !submitted) {
+            playGameSound("timeout");
+          }
           return 0;
         }
         return previous - 1;
@@ -146,14 +161,27 @@ const SpeedBuilderView: React.FC = () => {
     setSubmitted(true);
     setTimeoutReached(false);
     if (nextIsCorrect) {
+      playGameSound("correct");
       setCorrectCount((previous) => previous + 1);
       const roundPoints = basePoints + timeBonus;
       setLastRoundPoints(roundPoints);
       setTotalScore((previous) => previous + roundPoints);
+      trackAnalyticsEvent("item_correct", {
+        game: "speed_builder",
+        level: round.level,
+        sentence: expectedSentence,
+      });
       return;
     }
 
+    playGameSound("wrong");
     setLastRoundPoints(0);
+    trackAnalyticsEvent("item_wrong", {
+      game: "speed_builder",
+      level: round.level,
+      sentence: expectedSentence,
+      errorType: "order",
+    });
   };
 
   const handleNextRound = () => {
@@ -180,6 +208,12 @@ const SpeedBuilderView: React.FC = () => {
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
+
+  useEffect(() => {
+    if (isComplete && totalScore > 0) {
+      addGlobalXp(totalScore);
+    }
+  }, [isComplete, totalScore]);
 
   const hintText = useMemo(() => {
     const words = round.sentence.split(/\s+/);
@@ -218,8 +252,17 @@ const SpeedBuilderView: React.FC = () => {
             <div className="text-xs font-bold uppercase tracking-widest text-text-secondary">
               Ronda {roundIndex + 1} / {rounds.length}
             </div>
-            <div className="text-xs font-black uppercase tracking-widest text-amber-400">
-              ⏱ {timeLeft}s
+            <div className="w-full sm:w-auto flex-1 max-w-xs">
+              <div className="flex justify-between text-xs font-black uppercase tracking-widest text-amber-400 mb-1">
+                <span>⏱ Tiempo</span>
+                <span>{timeLeft}s</span>
+              </div>
+              <div className="w-full h-2 bg-surface-2 rounded-full overflow-hidden shadow-inner border border-border">
+                <div
+                  className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= roundTime / 2 ? "bg-amber-400" : "bg-success"}`}
+                  style={{ width: `${(timeLeft / roundTime) * 100}%` }}
+                />
+              </div>
             </div>
           </div>
         </Card>
@@ -357,20 +400,73 @@ const SpeedBuilderView: React.FC = () => {
 
         <Card>
           {isComplete ? (
-            <div className="space-y-2">
-              <p className="text-sm text-text-secondary">
-                Resultado final de sesión
-              </p>
-              <p className="text-2xl font-black text-text-primary">
-                {totalScore} pts
-              </p>
-              <p className="text-sm text-text-secondary">
-                Aciertos:{" "}
-                <span className="font-black text-text-primary">
-                  {correctCount}
-                </span>{" "}
-                / {rounds.length}
-              </p>
+            <div className="text-center space-y-6 animate-fade-in py-4">
+              {(() => {
+                const percentage = correctCount / rounds.length;
+                let grade = "D";
+                let gradeColor = "text-slate-400";
+                let message = "Keep practicing!";
+                if (percentage >= 0.9) {
+                  grade = "S";
+                  gradeColor = "text-fuchsia-400";
+                  message = "Speed Builder Master!";
+                } else if (percentage >= 0.75) {
+                  grade = "A";
+                  gradeColor = "text-emerald-400";
+                  message = "Excellent Speed!";
+                } else if (percentage >= 0.5) {
+                  grade = "B";
+                  gradeColor = "text-sky-400";
+                  message = "Great Work!";
+                } else if (percentage >= 0.25) {
+                  grade = "C";
+                  gradeColor = "text-amber-400";
+                  message = "Good Effort!";
+                }
+
+                return (
+                  <>
+                    <div>
+                      <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-1">
+                        Sesión Completada
+                      </h2>
+                      <p className="text-text-secondary">{message}</p>
+                    </div>
+
+                    <div className="flex justify-center items-center py-2">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-text-muted uppercase tracking-widest mb-1">
+                          Rango
+                        </div>
+                        <div
+                          className={`text-6xl font-black ${gradeColor} drop-shadow-lg animate-bounce`}
+                        >
+                          {grade}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
+
+              <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                <div className="bg-surface-2 p-3 rounded-xl border border-border">
+                  <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
+                    Score Final
+                  </div>
+                  <div className="text-2xl font-black text-success-hover">
+                    {totalScore}
+                  </div>
+                </div>
+                <div className="bg-surface-2 p-3 rounded-xl border border-border">
+                  <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
+                    Aciertos
+                  </div>
+                  <div className="text-2xl font-black text-accent-hover">
+                    {correctCount}/{rounds.length}
+                  </div>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="space-y-2">
