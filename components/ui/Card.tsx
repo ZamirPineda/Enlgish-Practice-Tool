@@ -14,7 +14,13 @@ const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <div
-      className={`bg-surface-1 border border-border rounded-2xl p-4 sm:p-6 ${elevated ? "shadow-md" : ""} ${interactive ? "md:hover:-translate-y-1 md:hover:shadow-lg transition-all duration-200 cursor-pointer" : ""} ${className}`.trim()}
+      className={`bg-surface-1/95 border border-border/80 rounded-2xl p-4 sm:p-6 ${
+        elevated ? "shadow-xl shadow-black/5 backdrop-blur-xl" : ""
+      } ${
+        interactive
+          ? "md:hover:-translate-y-1 md:hover:shadow-2xl md:hover:shadow-accent/20 md:hover:border-accent/30 transition-all duration-300 cursor-pointer"
+          : "transition-all duration-300"
+      } ${className}`.trim()}
       {...props}
     >
       {children}

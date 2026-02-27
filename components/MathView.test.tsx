@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import MathView from "./MathView";
 import { describe, test, expect, vi } from "vitest";
 import React from "react";
@@ -18,7 +19,11 @@ vi.mock("./MathGameView", () => ({
 
 describe("MathView Accessibility", () => {
   test("toggle button has correct role and attributes", () => {
-    render(<MathView />);
+    render(
+      <MemoryRouter>
+        <MathView />
+      </MemoryRouter>,
+    );
 
     // Look for the toggle button. It should ideally be found by role="switch"
     // but initially it might not have it, so we'll try to find it by its context or class if role fails.
@@ -37,7 +42,11 @@ describe("MathView Accessibility", () => {
   });
 
   test("game tab renders Math game view", () => {
-    render(<MathView />);
+    render(
+      <MemoryRouter>
+        <MathView />
+      </MemoryRouter>,
+    );
 
     fireEvent.click(screen.getByRole("tab", { name: /Juego/i }));
 

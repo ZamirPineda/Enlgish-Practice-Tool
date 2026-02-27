@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import LatexRenderer from "./LatexRenderer";
 import {
   calculusTopic,
@@ -65,7 +66,18 @@ const CheckIcon = () => (
 );
 
 const MathView: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<MathTab>("calculus");
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState<MathTab>(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get("tab") as MathTab;
+    return tab || "calculus";
+  });
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get("tab") as MathTab;
+    if (tab) setActiveTab(tab);
+  }, [location.search]);
   const [isStudyMode, setIsStudyMode] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [copiedFormula, setCopiedFormula] = useState<string | null>(null);

@@ -1,3 +1,5 @@
+import { getStreakFreezes } from "./xpStore";
+
 const GLOBAL_ACTIVITY_KEY = "global-daily-activity";
 
 interface DailyActivity {
@@ -57,6 +59,10 @@ export const getGlobalStreak = (): { current: number; best: number } => {
 
   let expectedNextDay = -1;
 
+  // Track consumed freezes for logic
+  let consumedFreezes = 0;
+  let initialFreezes = getStreakFreezes();
+
   for (let i = 0; i < dates.length; i++) {
     const dStr = dates[i];
     const timestamp = new Date(dStr).getTime();
@@ -65,11 +71,35 @@ export const getGlobalStreak = (): { current: number; best: number } => {
       tempStreak = 1;
     } else {
       // Check if it's the exact next day
-      if (Math.abs(timestamp - expectedNextDay) < 1000 * 60 * 60 * 24 * 1.5) {
-        // within 36 hours to account for DST
+      const daysDiff = Math.round(
+        (timestamp - expectedNextDay) / (1000 * 60 * 60 * 24),
+      );
+
+      if (daysDiff <= 0) {
+        // Less than 24h due to timezone/DST, perfectly valid next day or same day
         tempStreak++;
+      } else if (daysDiff > 0 && daysDiff <= initialFreezes - consumedFreezes) {
+        // Missed some days, but we have enough freezes to cover the gap
+        consumedFreezes += daysDiff;
+        tempStreak += 1; // You don't get streak points for missed days, you just don't lose the streak
+
+        // Remove freeze from storage right now if we are on the current streak evaluation
+        if (typeof window !== "undefined" && window.localStorage) {
+          const actualFreezes = parseInt(
+            localStorage.getItem("skillpal-streak-freezes") || "0",
+            10,
+          );
+          if (actualFreezes >= daysDiff) {
+            localStorage.setItem(
+              "skillpal-streak-freezes",
+              (actualFreezes - daysDiff).toString(),
+            );
+            window.dispatchEvent(new Event("streakFreezesUpdated"));
+          }
+        }
       } else {
         tempStreak = 1; // broken streak
+        consumedFreezes = 0; // reset logic consumed freezes for the new streak
       }
     }
 

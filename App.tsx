@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   NavLink,
+  Link,
   Navigate,
   useLocation,
 } from "react-router-dom";
@@ -15,6 +16,7 @@ import { APP_VERSION } from "./utils/appVersion";
 import { AppSettings, loadSettings, saveSettings } from "./utils/settingsStore";
 import { useGlobalXp } from "./utils/xpStore";
 import { ToastContainer, toast } from "./components/ui/Toast";
+import { getRankForLevel } from "./utils/levelRanks";
 
 // Views
 const HomeView = lazy(() => import("./components/HomeView"));
@@ -42,6 +44,10 @@ const MathView = lazy(() => import("./components/MathView"));
 const StudyDocsView = lazy(() => import("./components/StudyDocsView"));
 const StatsView = lazy(() => import("./components/StatsView"));
 const SettingsView = lazy(() => import("./components/SettingsView"));
+const CodeSyntaxBuilderView = lazy(
+  () => import("./components/CodeSyntaxBuilderView"),
+);
+const CodeBugHunterView = lazy(() => import("./components/CodeBugHunterView"));
 
 const ONBOARDING_STEPS = [
   {
@@ -215,6 +221,86 @@ const MobileNavItem = ({
   </NavLink>
 );
 
+const AnimatedRoutes = ({
+  settings,
+  addToVault,
+  handleSettingsChange,
+}: {
+  settings: AppSettings;
+  addToVault: (word: string, def: string, opts?: any) => void;
+  handleSettingsChange: (updates: Partial<AppSettings>) => void;
+}) => {
+  const location = useLocation();
+
+  return (
+    <div
+      key={location.pathname}
+      className="animate-fade-in flex-1 flex flex-col min-h-0"
+    >
+      <Routes>
+        <Route path="/" element={<HomeView />} />
+        <Route
+          path="/stop"
+          element={
+            <StopGameView
+              onPlayWord={playNativeTTS}
+              isWordAudioLoading={null}
+              ttsAutoPlay={settings.ttsAutoPlay}
+              onAddToVault={addToVault}
+            />
+          }
+        />
+        <Route
+          path="/study"
+          element={
+            <StudyDeckView
+              onPlayWord={playNativeTTS}
+              isWordAudioLoading={null}
+              onAddToVault={addToVault}
+            />
+          }
+        />
+        <Route
+          path="/personal"
+          element={<PersonalPhrasesView onPlayAudio={playNativeTTS} />}
+        />
+        <Route
+          path="/vault"
+          element={
+            <VocabularyVaultView
+              onPlayWord={playNativeTTS}
+              confirmDialogsEnabled={settings.confirmDialogs}
+            />
+          }
+        />
+        <Route path="/speed-builder" element={<SpeedBuilderView />} />
+        <Route path="/error-hunter" element={<ErrorHunterView />} />
+        <Route path="/paraphrase-duel" element={<ParaphraseDuelView />} />
+        <Route path="/collocation-sprint" element={<CollocationSprintView />} />
+        <Route path="/taboo-english" element={<TabooEnglishView />} />
+        <Route
+          path="/sentence-transformer"
+          element={<SentenceTransformerView />}
+        />
+        <Route path="/stats" element={<StatsView />} />
+        <Route path="/calculus" element={<MathView />} />
+        <Route path="/docs" element={<StudyDocsView />} />
+        <Route path="/syntax-builder" element={<CodeSyntaxBuilderView />} />
+        <Route path="/bug-hunter" element={<CodeBugHunterView />} />
+        <Route
+          path="/settings"
+          element={
+            <SettingsView
+              settings={settings}
+              onSettingsChange={handleSettingsChange}
+            />
+          }
+        />
+      </Routes>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const [settings, setSettings] = React.useState<AppSettings>(() =>
     loadSettings(),
@@ -225,6 +311,8 @@ const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const { level, currentLevelXp, nextLevelXp, progressPercentage } =
     useGlobalXp();
+
+  const currentRank = React.useMemo(() => getRankForLevel(level), [level]);
 
   const {
     needRefresh: [needRefresh],
@@ -374,9 +462,18 @@ const App: React.FC = () => {
         </a>
         <header className="sticky top-0 p-3 sm:p-4 border-b flex flex-wrap justify-between items-center gap-3 sm:gap-4 z-50 shadow-lg relative bg-surface-1/95 backdrop-blur border-border">
           <div className="flex items-center gap-3">
-            <h1 className="text-lg md:text-xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent truncate">
-              ENGLISH PAL
-            </h1>
+            <Link
+              to="/"
+              className="hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded-lg"
+            >
+              <h1 className="text-lg md:text-xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent truncate cursor-pointer flex items-center gap-0.5">
+                <span className="text-sky-500">S</span>ki
+                <span className="text-emerald-400 text-xl md:text-2xl -mt-0.5">
+                  LL
+                </span>
+                Pal
+              </h1>
+            </Link>
             {isOffline && (
               <span className="px-2 py-0.5 bg-red-500/20 text-red-400 text-xs font-bold rounded-full flex items-center gap-1">
                 <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse"></span>
@@ -386,10 +483,16 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-2 bg-surface-2 px-3 py-1.5 rounded-full border border-border">
+            <Link
+              to="/stats"
+              className="hidden md:flex items-center gap-2 bg-surface-2 px-3 py-1.5 rounded-full border border-border hover:bg-surface-hover hover:scale-105 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus cursor-pointer"
+              title={`${currentRank.title} (Level ${level})`}
+            >
               <div className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)] animate-pulse"></div>
-              <span className="text-xs font-bold text-text-secondary">
-                Lvl {level}
+              <span
+                className={`text-[10px] font-black uppercase tracking-wider ${currentRank.color}`}
+              >
+                Lvl {level} • {currentRank.emoji} {currentRank.title}
               </span>
               <div className="w-24 h-1.5 bg-surface-1 rounded-full overflow-hidden shadow-inner border border-border">
                 <div
@@ -400,7 +503,7 @@ const App: React.FC = () => {
               <span className="text-[10px] font-black text-text-muted">
                 {currentLevelXp}/{nextLevelXp}
               </span>
-            </div>
+            </Link>
             <button
               onClick={handleInstallClick}
               className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-sky-500/20 text-sky-600 dark:text-sky-400 hover:bg-sky-500/30 rounded-lg text-sm font-bold transition-colors"
@@ -475,9 +578,11 @@ const App: React.FC = () => {
               <NavItem to="/paraphrase-duel">🧠 Paraphrase Duel</NavItem>
               <NavItem to="/collocation-sprint">🔗 Collocation Sprint</NavItem>
               <NavItem to="/taboo-english">🚫 Taboo English</NavItem>
-              <NavItem to="/sentence-transformer">
-                🧬 Sentence Transformer
-              </NavItem>
+              <NavItem to="/calculus?tab=game">🔢 Math Quiz</NavItem>
+              <NavItem to="/docs?mode=quiz">📝 Docs Quiz</NavItem>
+              <NavItem to="/docs?mode=game">🎯 Docs Hunt</NavItem>
+              <NavItem to="/syntax-builder">⌨️ Syntax Builder</NavItem>
+              <NavItem to="/bug-hunter">🐛 Bug Hunter</NavItem>
             </NavGroup>
             <NavGroup title="Herramientas" icon="🛠️">
               <NavItem to="/calculus">∫ Math</NavItem>
@@ -532,13 +637,13 @@ const App: React.FC = () => {
                   {/* Use a dropdown-like structure or just links for STOP modes on mobile drawer to match desktop */}
                   <div className="pl-4 border-l-2 border-surface-2 ml-2 flex flex-col gap-2">
                     <span className="text-xs font-bold text-text-secondary uppercase tracking-widest pl-2 pt-2">
-                      STOP Game Modes
+                      Games
                     </span>
                     <NavItem to="/stop?mode=browse">
                       🎲 Browse Dictionary
                     </NavItem>
                     <NavItem to="/stop?mode=study">📚 Flashcards</NavItem>
-                    <NavItem to="/stop?mode=game">🎮 Play Game</NavItem>
+                    <NavItem to="/stop?mode=game">🎮 Stop Game</NavItem>
                     <NavItem to="/speed-builder">⚡ Speed Builder</NavItem>
                     <NavItem to="/error-hunter">🕵️ Error Hunter</NavItem>
                     <NavItem to="/paraphrase-duel">🧠 Paraphrase Duel</NavItem>
@@ -549,12 +654,17 @@ const App: React.FC = () => {
                     <NavItem to="/sentence-transformer">
                       🧬 Sentence Transformer
                     </NavItem>
+                    <NavItem to="/calculus?tab=game">🔢 Math Quiz</NavItem>
+                    <NavItem to="/docs?mode=quiz">📝 Docs Quiz</NavItem>
+                    <NavItem to="/docs?mode=game">🎯 Docs Hunt</NavItem>
+                    <NavItem to="/syntax-builder">⌨️ Syntax Builder</NavItem>
+                    <NavItem to="/bug-hunter">🐛 Bug Hunter</NavItem>
                   </div>
 
                   <NavItem to="/study">📚 Review Deck</NavItem>
                   <NavItem to="/personal">👤 Scripts</NavItem>
-                  <NavItem to="/calculus">∫ Math</NavItem>
-                  <NavItem to="/docs">📖 Docs</NavItem>
+                  <NavItem to="/calculus">∫ Math Tools</NavItem>
+                  <NavItem to="/docs">📖 Docs Tools</NavItem>
                   <NavItem to="/stats">📊 Stats</NavItem>
                   <NavItem to="/settings">⚙️ Settings</NavItem>
                 </div>
@@ -578,67 +688,11 @@ const App: React.FC = () => {
               </div>
             }
           >
-            <Routes>
-              <Route path="/" element={<HomeView />} />
-              <Route
-                path="/stop"
-                element={
-                  <StopGameView
-                    onPlayWord={playNativeTTS}
-                    isWordAudioLoading={null}
-                    ttsAutoPlay={settings.ttsAutoPlay}
-                    onAddToVault={addToVault}
-                  />
-                }
-              />
-              <Route
-                path="/study"
-                element={
-                  <StudyDeckView
-                    onPlayWord={playNativeTTS}
-                    isWordAudioLoading={null}
-                    onAddToVault={addToVault}
-                  />
-                }
-              />
-              <Route
-                path="/personal"
-                element={<PersonalPhrasesView onPlayAudio={playNativeTTS} />}
-              />
-              <Route
-                path="/vault"
-                element={
-                  <VocabularyVaultView
-                    onPlayWord={playNativeTTS}
-                    confirmDialogsEnabled={settings.confirmDialogs}
-                  />
-                }
-              />
-              <Route path="/speed-builder" element={<SpeedBuilderView />} />
-              <Route path="/error-hunter" element={<ErrorHunterView />} />
-              <Route path="/paraphrase-duel" element={<ParaphraseDuelView />} />
-              <Route
-                path="/collocation-sprint"
-                element={<CollocationSprintView />}
-              />
-              <Route path="/taboo-english" element={<TabooEnglishView />} />
-              <Route
-                path="/sentence-transformer"
-                element={<SentenceTransformerView />}
-              />
-              <Route path="/stats" element={<StatsView />} />
-              <Route path="/calculus" element={<MathView />} />
-              <Route path="/docs" element={<StudyDocsView />} />
-              <Route
-                path="/settings"
-                element={
-                  <SettingsView
-                    settings={settings}
-                    onSettingsChange={handleSettingsChange}
-                  />
-                }
-              />
-            </Routes>
+            <AnimatedRoutes
+              settings={settings}
+              addToVault={addToVault}
+              handleSettingsChange={handleSettingsChange}
+            />
           </Suspense>
         </main>
         <footer className="hidden md:block px-4 py-2 text-xs border-t bg-surface-1 border-border text-text-muted">

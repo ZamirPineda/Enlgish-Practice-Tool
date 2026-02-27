@@ -13,6 +13,10 @@ export function playNativeTTS(text: string) {
 
   const speak = () => {
     const settings = loadSettings();
+
+    // Check if sounds are globally enabled
+    if (!settings.soundEnabled) return;
+
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";
     utterance.rate = settings.ttsSpeed; // Use user's preferred speed
@@ -54,6 +58,9 @@ export function playGameSound(
   type: "correct" | "wrong" | "tick" | "timeout" | "start",
 ) {
   if (!audioCtx) return;
+
+  const settings = loadSettings();
+  if (!settings.soundEnabled) return;
 
   // Resume context if needed (browsers suspend it until user interaction)
   if (audioCtx.state === "suspended") {

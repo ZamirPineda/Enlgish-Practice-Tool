@@ -31,10 +31,10 @@ export default defineConfig(({ mode }) => {
           navigateFallback: `${basePath}offline.html`,
         },
         manifest: {
-          name: "English Practice Pal",
-          short_name: "English Pal",
+          name: "SkillPal",
+          short_name: "SkillPal",
           description:
-            "English study tool with vocabulary and spaced repetition",
+            "Your daily interactive practice tool for English, Code, Math, and beyond.",
           start_url: basePath,
           scope: basePath,
           display: "standalone",
@@ -98,6 +98,37 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": path.resolve(__dirname, "."),
       },
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              if (
+                id.includes("react/") ||
+                id.includes("react-dom/") ||
+                id.includes("react-router-dom")
+              ) {
+                return "vendor-react";
+              }
+              if (id.includes("lucide-react")) {
+                return "vendor-icons";
+              }
+              if (id.includes("katex")) {
+                return "vendor-math";
+              }
+              return "vendor"; // catch-all for other dependencies
+            }
+            if (
+              id.includes("/data/stop_categories/") ||
+              id.includes("/data/stopGameData")
+            ) {
+              return "game-data";
+            }
+          },
+        },
+      },
+      chunkSizeWarningLimit: 1500,
     },
   };
 });

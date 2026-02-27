@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import LatexRenderer from "./LatexRenderer";
-import { addGlobalXp } from "../utils/xpStore";
+import { addGlobalXp, progressQuest } from "../utils/xpStore";
 import { trackAnalyticsEvent } from "../utils/analytics";
 import { playGameSound } from "../utils/audioUtils";
 import { algebraTopic, calculusTopic, geometryTopic } from "../data/math";
@@ -153,6 +153,12 @@ const MathGameView: React.FC = () => {
     if (score > 0) {
       addGlobalXp(score);
     }
+
+    setTimeout(() => {
+      progressQuest("play_game", 1, "math");
+      progressQuest("play_game", 1, "any");
+    }, 1500);
+
     setBestScore((previousBest) => {
       const nextBest = Math.max(previousBest, score);
       localStorage.setItem(BEST_SCORE_KEY, String(nextBest));
@@ -202,6 +208,10 @@ const MathGameView: React.FC = () => {
         game: "math_game",
         question: currentQuestion.prompt,
       });
+
+      progressQuest("correct_answers", 1, "math");
+      progressQuest("correct_answers", 1, "any");
+
       setStreak((previous) => {
         const next = previous + 1;
         setScore((currentScore) => currentScore + 10 + previous * 2);

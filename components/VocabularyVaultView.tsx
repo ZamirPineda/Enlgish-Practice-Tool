@@ -9,6 +9,7 @@ import {
   calculateSrsData,
 } from "../utils/srs";
 import { trackAnalyticsEvent } from "../utils/analytics";
+import { progressQuest } from "../utils/xpStore";
 import ReviewSession from "./ReviewSession";
 import SpeechPracticeButton from "./SpeechPracticeButton";
 import { PlayIcon, TrashIcon } from "./Icons";
@@ -542,6 +543,15 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       position: currentIndex + 1,
       total: reviewItems.length,
     });
+
+    // Quest progression
+    progressQuest("study_cards", 1, "vault");
+    progressQuest("study_cards", 1, "any");
+    if (wasCorrect) {
+      progressQuest("correct_answers", 1, "vault");
+      progressQuest("correct_answers", 1, "any");
+    }
+
     setDeck((prev) => ({
       ...prev,
       [item.word.trim().toLowerCase()]: updatedItem,
@@ -1001,20 +1011,25 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
         {activeTab === "collection" && (
           <div className="animate-fade-in space-y-6">
             {totalInDeck === 0 ? (
-              <Card className="p-8 text-center">
-                <h2 className="text-2xl font-black text-text-primary mb-2">
+              <Card className="p-12 text-center flex flex-col items-center justify-center border-dashed border-2 border-border/80 bg-surface-1/50 backdrop-blur-sm animate-fade-in shadow-xl">
+                <div className="w-24 h-24 bg-surface-2 rounded-full flex items-center justify-center mb-6 shadow-inner ring-4 ring-surface-1 transform hover:scale-110 transition-transform">
+                  <span className="text-4xl drop-shadow-sm">🗃️</span>
+                </div>
+                <h2 className="text-2xl font-black text-text-primary mb-3">
                   Your Vault is empty
                 </h2>
-                <p className="text-text-secondary text-sm mb-6">
-                  Import sample / Add first word
+                <p className="text-text-secondary text-base mb-8 max-w-sm mx-auto leading-relaxed">
+                  Import our curated sample deck to get started immediately, or
+                  add your first word manually.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md">
                   <Button
                     onClick={handleImportSample}
                     variant="secondary"
                     size="lg"
+                    className="flex-1 py-4 text-base shadow-sm"
                   >
-                    Import sample
+                    Import Sample
                   </Button>
                   <Button
                     onClick={() => {
@@ -1023,8 +1038,9 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     }}
                     variant="primary"
                     size="lg"
+                    className="flex-1 py-4 text-base"
                   >
-                    Add first word
+                    + Add Word
                   </Button>
                 </div>
               </Card>

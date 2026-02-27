@@ -4,6 +4,7 @@ export interface AppSettings {
   ttsAutoPlay: boolean;
   ttsSpeed: number;
   confirmDialogs: boolean;
+  soundEnabled: boolean;
   hasCompletedOnboarding: boolean;
   weeklyGoalSessions: number;
 }
@@ -36,6 +37,8 @@ const normalizeSettings = (input: unknown): AppSettings => {
     ttsSpeed: typeof parsed.ttsSpeed === "number" ? parsed.ttsSpeed : 0.9,
     confirmDialogs:
       typeof parsed.confirmDialogs === "boolean" ? parsed.confirmDialogs : true,
+    soundEnabled:
+      typeof parsed.soundEnabled === "boolean" ? parsed.soundEnabled : true,
     hasCompletedOnboarding:
       typeof parsed.hasCompletedOnboarding === "boolean"
         ? parsed.hasCompletedOnboarding

@@ -9,6 +9,8 @@ import {
 import { getIsoWeekKey } from "../utils/srs";
 import { AppSettings, loadSettings } from "../utils/settingsStore";
 import { AnalyticsEventName, getAnalyticsEvents } from "../utils/analytics";
+import { useGlobalXp } from "../utils/xpStore";
+import { getRankForLevel } from "../utils/levelRanks";
 import Heatmap from "./Heatmap";
 import ViewToolbar from "./ui/ViewToolbar";
 
@@ -253,6 +255,8 @@ const StatsView: React.FC = () => {
   );
   const [settings] = useState<AppSettings>(() => loadSettings());
   const [analyticsEvents] = useState(() => getAnalyticsEvents());
+  const { level } = useGlobalXp();
+  const currentRank = useMemo(() => getRankForLevel(level), [level]);
 
   const metrics = useMemo(
     () =>
@@ -373,27 +377,42 @@ const StatsView: React.FC = () => {
             </h1>
           }
           right={
-            <Link
-              to="/vault"
-              className="inline-flex items-center justify-center min-h-[40px] px-4 py-2 rounded-lg bg-accent/20 hover:bg-accent/30 transition-colors text-accent font-bold text-sm"
-            >
-              Open Vault
-            </Link>
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex flex-col items-end mr-2">
+                <span className="text-xs text-text-muted font-bold uppercase tracking-wider">
+                  Level {level}
+                </span>
+                <span className={`text-sm font-black ${currentRank.color}`}>
+                  {currentRank.emoji} {currentRank.title}
+                </span>
+              </div>
+              <Link
+                to="/vault"
+                className="inline-flex items-center justify-center min-h-[40px] px-4 py-2 rounded-lg bg-accent/20 hover:bg-accent/30 transition-colors text-accent font-bold text-sm"
+              >
+                Open Vault
+              </Link>
+            </div>
           }
         />
 
         {metrics.totalCards === 0 ? (
-          <section className="bg-surface-1 border border-border rounded-2xl p-8 text-center">
-            <h2 className="text-text-primary text-2xl font-black mb-3">
+          <section className="bg-surface-1 border border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center animate-fade-in shadow-xl shadow-black/5">
+            <div className="w-24 h-24 bg-surface-2 rounded-full flex items-center justify-center mb-6 shadow-inner ring-4 ring-surface-1">
+              <span className="text-4xl drop-shadow-sm opacity-80 filter grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+                📊
+              </span>
+            </div>
+            <h2 className="text-text-primary text-3xl font-black mb-3 text-transparent bg-clip-text bg-gradient-to-r from-text-primary to-text-secondary">
               No data yet
             </h2>
-            <p className="text-text-secondary mb-6 max-w-md mx-auto">
+            <p className="text-text-secondary mb-8 max-w-md mx-auto leading-relaxed text-base">
               Start your first review session in the Vocabulary Vault to unlock
-              your learning statistics and track your progress.
+              your learning statistics and track your progress over time.
             </p>
             <Link
               to="/vault"
-              className="inline-flex px-6 py-3 rounded-xl bg-accent hover:bg-accent-hover transition-colors text-white font-black"
+              className="inline-flex px-8 py-4 rounded-xl bg-accent hover:bg-accent-hover transition-all duration-300 text-white font-black shadow-[0_8px_30px_rgb(0,0,0,0.12)] shadow-accent/20 hover:-translate-y-1 hover:shadow-accent/40"
             >
               Start first session
             </Link>
@@ -732,9 +751,14 @@ const StatsView: React.FC = () => {
                     Category Accuracy
                   </h2>
                   {metrics.categoryAccuracy.length === 0 ? (
-                    <p className="text-text-muted text-center py-8">
-                      No category data available yet.
-                    </p>
+                    <div className="flex flex-col items-center justify-center py-10 bg-surface-2/50 rounded-xl border border-dashed border-border/60">
+                      <span className="text-3xl mb-3 opacity-40 filter grayscale">
+                        🏷️
+                      </span>
+                      <p className="text-text-muted text-sm font-bold">
+                        No category data available yet.
+                      </p>
+                    </div>
                   ) : (
                     <div className="space-y-4">
                       {metrics.categoryAccuracy.map((item) => (
@@ -767,9 +791,14 @@ const StatsView: React.FC = () => {
                     CEFR Level Breakdown
                   </h2>
                   {metrics.levelBreakdown.length === 0 ? (
-                    <p className="text-text-muted text-center py-8">
-                      No level tags (A1, B2, etc.) found in your cards.
-                    </p>
+                    <div className="flex flex-col items-center justify-center py-10 bg-surface-2/50 rounded-xl border border-dashed border-border/60">
+                      <span className="text-3xl mb-3 opacity-40 filter grayscale">
+                        🎓
+                      </span>
+                      <p className="text-text-muted text-sm font-bold">
+                        No level tags (A1, B2, etc.) found in your cards.
+                      </p>
+                    </div>
                   ) : (
                     <div className="flex flex-wrap gap-4">
                       {metrics.levelBreakdown.map((item) => (

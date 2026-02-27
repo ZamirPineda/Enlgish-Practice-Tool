@@ -299,14 +299,14 @@ describe("VocabularyVaultView flows", () => {
 
     expect(screen.getByText("Your Vault is empty")).toBeInTheDocument();
     expect(
-      screen.getByText("Import sample / Add first word"),
+      screen.getByText(/Import our curated sample deck/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Import sample" }),
+      screen.getByRole("button", { name: "Import Sample" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Add first word" }),
-    ).toBeInTheDocument();
+      screen.getAllByRole("button", { name: "+ Add Word" }).length,
+    ).toBeGreaterThanOrEqual(1);
   });
 
   test("empty vault: import sample fills the collection", async () => {
@@ -314,9 +314,11 @@ describe("VocabularyVaultView flows", () => {
       <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
     );
     fireEvent.click(screen.getByRole("button", { name: /My Collection/i }));
-    fireEvent.click(screen.getByRole("button", { name: "Import sample" }));
+    fireEvent.click(screen.getByRole("button", { name: "Import Sample" }));
 
-    expect(await screen.findByText("Acknowledge")).toBeInTheDocument();
+    expect(
+      await screen.findByPlaceholderText(/Search by word/i),
+    ).toBeInTheDocument();
   });
 
   test("speaking analytics: logs speaking_used when playing word audio", () => {

@@ -17,6 +17,7 @@ import {
   levenshteinDistance,
   getToleranceForWordStr,
 } from "../utils/stringUtils";
+import { useGlobalXp, progressQuest } from "../utils/xpStore";
 import Card from "./ui/Card";
 import Input from "./ui/Input";
 import Button from "./ui/Button";
@@ -445,6 +446,10 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         ],
       }));
 
+      // Reward daily quest
+      progressQuest("correct_answers", 1, "stop");
+      progressQuest("correct_answers", 1, "any");
+
       // Clear the hint for the next round immediately, though pickNextChallenge does this too
       setHintedWord(null);
 
@@ -592,6 +597,13 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             </h2>
             <p className="text-text-secondary text-lg">{gradeInfo.message}</p>
           </div>
+
+          {/* This is rendered when game is over, we trigger the game played quest automatically when this mounts */}
+          {(() => {
+            progressQuest("play_game", 1, "stop");
+            progressQuest("play_game", 1, "any");
+            return null;
+          })()}
 
           <div className="flex justify-center items-center gap-8 py-4">
             <div className="text-center">
@@ -809,7 +821,19 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                       ? "Listening..."
                       : "Type or speak your answer..."
                   }
-                  className={`text-center text-xl py-4 pr-12 transition-all duration-300 ${micState === "listening" ? "ring-2 ring-red-500/50 bg-red-500/5" : ""} ${waitingForContinue ? "opacity-50 cursor-not-allowed" : ""}`}
+                  className={`text-center text-xl py-4 pr-12 transition-all duration-300 outline-none rounded-xl border border-border bg-surface-1 text-text-primary
+                    ${
+                      micState === "listening"
+                        ? "ring-4 ring-red-500/60 bg-red-500/10 shadow-[0_0_25px_rgba(239,68,68,0.6)] border-red-500/50"
+                        : "focus:ring-2 focus:ring-focus"
+                    } 
+                    ${waitingForContinue ? "opacity-50 cursor-not-allowed" : ""}
+                    ${
+                      feedback?.type === "error"
+                        ? "animate-shake border-red-500 bg-red-500/10 text-red-500 ring-2 ring-red-500/50"
+                        : ""
+                    }
+                  `}
                   autoFocus
                   disabled={waitingForContinue}
                 />
@@ -818,9 +842,9 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                   onClick={
                     micState === "listening" ? stopListening : startListening
                   }
-                  className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors z-10 ${
+                  className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all duration-300 z-10 ${
                     micState === "listening"
-                      ? "bg-red-500/20 text-red-500 hover:bg-red-500/30 animate-pulse ring-2 ring-red-500 ring-offset-2 ring-offset-surface-1"
+                      ? "bg-red-500 text-white hover:bg-red-600 animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.8)] scale-110"
                       : "text-text-muted hover:text-text-primary hover:bg-surface-hover"
                   }`}
                   disabled={feedback !== null || waitingForContinue}

@@ -10,6 +10,7 @@ import { AppSettings, loadSettings } from "../utils/settingsStore";
 import { createNewSrsItem, getIsoWeekKey } from "../utils/srs";
 import { getGlobalStreak } from "../utils/activityTracker";
 import { dailyPhrases } from "../data/dailyPhrases";
+import { useGlobalXp } from "../utils/xpStore";
 import Card from "./ui/Card";
 import Heatmap from "./Heatmap";
 import ViewToolbar from "./ui/ViewToolbar";
@@ -27,6 +28,9 @@ import {
   Calculator,
   Laptop,
   RefreshCw,
+  Target,
+  Code2,
+  Bug,
 } from "lucide-react";
 
 const VAULT_DECK_KEY = "vocab-vault-deck";
@@ -195,6 +199,8 @@ const HomeView: React.FC = () => {
     localStorage.setItem(VAULT_DECK_KEY, JSON.stringify(nextDeck));
   };
 
+  const { quests } = useGlobalXp();
+
   return (
     <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-24 sm:pb-8 animate-fade-in">
       <div className="max-w-5xl mx-auto space-y-8">
@@ -298,43 +304,93 @@ const HomeView: React.FC = () => {
           </Card>
         </section>
 
-        {/* Daily Featured Game */}
+        {/* Daily Featured Game & Quests */}
         <section>
-          <Link to={featuredGame.path} className="block group">
-            <Card
-              className={`p-5 md:p-6 border-l-4 ${featuredGame.border} hover:bg-surface-hover transition-colors`}
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <div
-                    className={`p-3 rounded-xl ${featuredGame.bg} ${featuredGame.color} group-hover:scale-110 transition-transform`}
-                  >
-                    <featuredGame.icon className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <p
-                      className={`text-xs font-bold uppercase tracking-widest ${featuredGame.color} mb-1`}
-                    >
-                      Juego del Día
-                    </p>
-                    <h2 className="text-xl font-bold text-text-primary">
-                      {featuredGame.title}
-                    </h2>
-                    <p className="text-sm text-text-secondary hidden md:block">
-                      {featuredGame.desc}
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`flex items-center gap-2 font-bold ${featuredGame.color} group-hover:translate-x-1 transition-transform bg-surface-2 px-4 py-2 rounded-lg`}
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* Featured Game of the Day */}
+            <div className="md:w-1/2 flex flex-col">
+              <h3 className="text-sm font-black uppercase tracking-widest text-text-muted mb-4 flex items-center gap-2">
+                <Zap className="w-4 h-4 text-amber-500" /> Juego del Día
+              </h3>
+              <Link to={featuredGame.path} className="group flex-1 flex">
+                <Card
+                  className={`w-full p-5 md:p-6 border-l-4 ${featuredGame.border} hover:bg-surface-hover hover:-translate-y-1 transition-all shadow-md group-hover:shadow-xl`}
                 >
-                  Jugar <ArrowRight className="w-4 h-4" />
-                </div>
-              </div>
-            </Card>
-          </Link>
-        </section>
+                  <div className="flex flex-col h-full gap-4">
+                    <div className="flex items-start justify-between">
+                      <div
+                        className={`p-3 rounded-xl ${featuredGame.bg} ${featuredGame.color} group-hover:scale-110 transition-transform`}
+                      >
+                        <featuredGame.icon className="w-8 h-8" />
+                      </div>
+                      <span className="hidden sm:inline-flex bg-surface-2 text-xs font-black px-3 py-1 rounded-full text-text-secondary border border-border">
+                        Recomendado
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <h2
+                        className={`text-xl font-black ${featuredGame.color} mb-2`}
+                      >
+                        {featuredGame.title}
+                      </h2>
+                      <p className="text-sm text-text-secondary">
+                        {featuredGame.desc}
+                      </p>
+                    </div>
+                    <div
+                      className={`flex items-center gap-2 font-bold ${featuredGame.color} group-hover:translate-x-1 transition-transform mt-auto`}
+                    >
+                      Jugar <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </Card>
+              </Link>
+            </div>
 
+            {/* Daily Quests Section */}
+            <div className="md:w-1/2 flex flex-col">
+              <h3 className="text-sm font-black uppercase tracking-widest text-text-muted mb-4 flex items-center gap-2">
+                <Target className="w-4 h-4 text-emerald-500" /> Daily Quests
+              </h3>
+              <Card className="flex-1 p-5 border border-border bg-surface-1 shadow-sm flex flex-col justify-center gap-3">
+                {quests.map((quest) => {
+                  const pct = Math.min(
+                    100,
+                    (quest.current / quest.target) * 100,
+                  );
+                  return (
+                    <div
+                      key={quest.id}
+                      className={`p-3 rounded-xl border ${quest.completed ? "bg-emerald-500/10 border-emerald-500/30" : "bg-surface-2 border-border"} transition-colors`}
+                    >
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="font-bold text-sm text-text-primary flex items-center gap-2">
+                          {quest.completed ? "✅" : "🎯"} {quest.description}
+                        </div>
+                        <span className="text-xs font-black text-accent bg-accent/10 px-2 py-0.5 rounded-full inline-flex items-center whitespace-nowrap">
+                          +{quest.reward} XP
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1 h-2 bg-surface-1 rounded-full overflow-hidden border border-border/50">
+                          <div
+                            className={`h-full transition-all duration-1000 ${quest.completed ? "bg-emerald-500" : "bg-accent"}`}
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                        <span
+                          className={`text-xs font-black tabular-nums ${quest.completed ? "text-emerald-500" : "text-text-muted"}`}
+                        >
+                          {quest.current} / {quest.target}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </Card>
+            </div>
+          </div>
+        </section>
         {/* Games & Tools Hub */}
         <section>
           <div className="flex items-center justify-between mb-4">
@@ -365,6 +421,47 @@ const HomeView: React.FC = () => {
                 <p className="text-text-secondary text-xs flex-1">
                   Vocabulario rápido. Encuentra palabras que empiecen con una
                   letra.
+                </p>
+              </Card>
+            </Link>
+
+            <Link
+              to="/syntax-builder"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
+              <Card
+                interactive
+                className="h-full p-5 border-t-4 border-blue-400 bg-surface-1 flex flex-col"
+              >
+                <div className="mb-3 text-blue-400 group-hover:scale-110 transition-transform origin-left">
+                  <Code2 className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Code Syntax Builder
+                </h3>
+                <p className="text-text-secondary text-xs flex-1">
+                  Reconstruye comandos y sintaxis de código contra el tiempo.
+                </p>
+              </Card>
+            </Link>
+
+            <Link
+              to="/bug-hunter"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
+              <Card
+                interactive
+                className="h-full p-5 border-t-4 border-red-400 bg-surface-1 flex flex-col"
+              >
+                <div className="mb-3 text-red-400 group-hover:scale-110 transition-transform origin-left">
+                  <Bug className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Code Bug Hunter
+                </h3>
+                <p className="text-text-secondary text-xs flex-1">
+                  Encuentra y selecciona el bug en el bloque de código antes de
+                  que acabe el tiempo.
                 </p>
               </Card>
             </Link>

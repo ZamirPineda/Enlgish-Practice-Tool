@@ -3,7 +3,7 @@ import Card from "./ui/Card";
 import Button from "./ui/Button";
 import { trackAnalyticsEvent } from "../utils/analytics";
 import { playGameSound } from "../utils/audioUtils";
-import { addGlobalXp } from "../utils/xpStore";
+import { addGlobalXp, progressQuest } from "../utils/xpStore";
 import { docsQuizQuestions, QuizQuestion } from "../data/docs_quiz";
 
 type GameState = "idle" | "playing" | "finished";
@@ -56,6 +56,11 @@ const StudyDocsQuizView: React.FC = () => {
       localStorage.setItem(BEST_SCORE_KEY, String(nextBest));
       return nextBest;
     });
+
+    setTimeout(() => {
+      progressQuest("play_game", 1, "quiz");
+      progressQuest("play_game", 1, "any");
+    }, 1000);
   };
 
   useEffect(() => {
@@ -111,6 +116,10 @@ const StudyDocsQuizView: React.FC = () => {
         game: "study_docs_quiz",
         question: currentRound.question,
       });
+
+      progressQuest("correct_answers", 1, "quiz");
+      progressQuest("correct_answers", 1, "any");
+
       setStreak((previous) => {
         const nextStreak = previous + 1;
         setScore((currentScore) => currentScore + 15 + previous * 5);

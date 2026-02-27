@@ -28,19 +28,20 @@ describe("HomeView", () => {
     ).toBeInTheDocument();
   });
 
-  test("adds daily phrase to vault and updates CTA", () => {
+  test("adds daily phrase to vault and updates CTA", async () => {
     render(
       <MemoryRouter>
         <HomeView />
       </MemoryRouter>,
     );
 
+    vi.useRealTimers();
     fireEvent.click(
       screen.getByRole("button", { name: "Add phrase to Vault" }),
     );
 
     expect(
-      screen.getByRole("button", { name: "Added to Vault" }),
+      await screen.findByRole("button", { name: "Added to Vault" }),
     ).toBeDisabled();
 
     const savedDeck = JSON.parse(

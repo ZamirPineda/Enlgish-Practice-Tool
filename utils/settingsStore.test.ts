@@ -21,6 +21,7 @@ describe("settingsStore", () => {
       ttsAutoPlay: true,
       ttsSpeed: 0.9,
       confirmDialogs: true,
+      soundEnabled: true,
       hasCompletedOnboarding: false,
       weeklyGoalSessions: 5,
     });
@@ -35,6 +36,7 @@ describe("settingsStore", () => {
         ttsAutoPlay: false,
         ttsSpeed: 1.2,
         confirmDialogs: false,
+        soundEnabled: false,
         hasCompletedOnboarding: true,
         weeklyGoalSessions: 8,
       }),
@@ -46,6 +48,7 @@ describe("settingsStore", () => {
       ttsAutoPlay: false,
       ttsSpeed: 1.2,
       confirmDialogs: false,
+      soundEnabled: false,
       hasCompletedOnboarding: true,
       weeklyGoalSessions: 8,
     });
@@ -63,6 +66,7 @@ describe("settingsStore", () => {
       ttsAutoPlay: false,
       ttsSpeed: 1.0,
       confirmDialogs: true,
+      soundEnabled: true,
       hasCompletedOnboarding: true,
       weeklyGoalSessions: 6,
     });
@@ -75,6 +79,7 @@ describe("settingsStore", () => {
         ttsAutoPlay: false,
         ttsSpeed: 1.0,
         confirmDialogs: true,
+        soundEnabled: true,
         hasCompletedOnboarding: true,
         weeklyGoalSessions: 6,
       }),

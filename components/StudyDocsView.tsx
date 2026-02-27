@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import StudyDocsGameView from "./StudyDocsGameView";
 import StudyDocsQuizView from "./StudyDocsQuizView";
 
@@ -21,9 +22,18 @@ const StudyDocsView: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [copiedLink, setCopiedLink] = useState(false);
   const [zenMode, setZenMode] = useState(false);
-  const [viewMode, setViewMode] = useState<"reader" | "game" | "quiz">(
-    "reader",
-  );
+  const location = useLocation();
+  const [viewMode, setViewMode] = useState<"reader" | "game" | "quiz">(() => {
+    const params = new URLSearchParams(location.search);
+    const mode = params.get("mode") as "reader" | "game" | "quiz";
+    return mode || "reader";
+  });
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const mode = params.get("mode") as "reader" | "game" | "quiz";
+    if (mode) setViewMode(mode);
+  }, [location.search]);
   const workerRef = useRef<Worker | null>(null);
 
   useEffect(() => {

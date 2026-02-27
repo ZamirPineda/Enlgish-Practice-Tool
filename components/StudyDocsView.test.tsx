@@ -2,6 +2,7 @@ import React from "react";
 import { describe, test, expect, beforeEach, vi } from "vitest";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import StudyDocsView from "./StudyDocsView";
 
 class WorkerMock {
@@ -24,7 +25,11 @@ describe("StudyDocsView", () => {
   });
 
   test("delegates document search to the worker and renders async results", async () => {
-    render(<StudyDocsView />);
+    render(
+      <MemoryRouter>
+        <StudyDocsView />
+      </MemoryRouter>,
+    );
 
     const worker = WorkerMock.instances[0];
     expect(worker.postMessage).toHaveBeenCalledWith({ term: "" });
@@ -53,7 +58,11 @@ describe("StudyDocsView", () => {
   });
 
   test("switches to docs game mode", async () => {
-    render(<StudyDocsView />);
+    render(
+      <MemoryRouter>
+        <StudyDocsView />
+      </MemoryRouter>,
+    );
 
     const worker = WorkerMock.instances[0];
     act(() => {
