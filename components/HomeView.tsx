@@ -478,6 +478,26 @@ const HomeView: React.FC = () => {
             </Link>
 
             <Link
+              to="/diplomatic-reviewer"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
+              <Card
+                interactive
+                className="h-full p-5 border-t-4 border-violet-500 bg-surface-1 flex flex-col"
+              >
+                <div className="mb-3 text-violet-500 group-hover:scale-110 transition-transform origin-left">
+                  <MessageCircleHeart className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Diplomatic Review
+                </h3>
+                <p className="text-text-secondary text-xs flex-1">
+                  Mejora tus soft skills y feedback.
+                </p>
+              </Card>
+            </Link>
+
+            <Link
               to="/speed-builder"
               className="group block min-w-[260px] md:min-w-0 snap-start"
             >

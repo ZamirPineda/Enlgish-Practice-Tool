@@ -132,6 +132,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [isPracticeMode, setIsPracticeMode] = useState(false);
+  const [perspective, setPerspective] = useState<"male" | "female">("male");
   const [revealedScripts, setRevealedScripts] = useState<Set<string>>(
     new Set(),
   );
@@ -210,11 +211,8 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
             My Personal Scripts
           </h1>
           <p className="text-text-secondary">
-            Customized responses for{" "}
-            <span className="font-semibold text-text-primary">
-              Zamir Pineda
-            </span>
-            . Learn to sound like a native when talking about your own life.
+            Learn to sound like a native when talking about your own life,
+            customized by perspective.
           </p>
         </div>
 
@@ -249,20 +247,34 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
               </button>
             </div>
 
-            <button
-              onClick={() => {
-                setIsPracticeMode(!isPracticeMode);
-                if (isPracticeMode) setRevealedScripts(new Set());
-              }}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
-                isPracticeMode
-                  ? "bg-accent/20 text-accent border border-accent/50"
-                  : "bg-surface-hover text-text-secondary hover:bg-surface-2 border border-transparent"
-              }`}
-            >
-              {isPracticeMode ? <EyeOffIcon /> : <EyeIcon />}
-              Practice Mode {isPracticeMode ? "ON" : "OFF"}
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() =>
+                  setPerspective(perspective === "male" ? "female" : "male")
+                }
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+                  perspective === "female"
+                    ? "bg-pink-500/20 text-pink-500 border border-pink-500/50 hover:bg-pink-500/30"
+                    : "bg-blue-500/20 text-blue-500 border border-blue-500/50 hover:bg-blue-500/30"
+                }`}
+              >
+                {perspective === "female" ? "👩 Female" : "👨 Male"} View
+              </button>
+              <button
+                onClick={() => {
+                  setIsPracticeMode(!isPracticeMode);
+                  if (isPracticeMode) setRevealedScripts(new Set());
+                }}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+                  isPracticeMode
+                    ? "bg-accent/20 text-accent border border-accent/50"
+                    : "bg-surface-hover text-text-secondary hover:bg-surface-2 border border-transparent"
+                }`}
+              >
+                {isPracticeMode ? <EyeOffIcon /> : <EyeIcon />}
+                Practice Mode {isPracticeMode ? "ON" : "OFF"}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -308,147 +320,158 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
 
                 {expandedCategories.has(category.title) && (
                   <div className="p-6 grid gap-6 bg-surface-1">
-                    {category.scripts.map((script) => (
-                      <div
-                        key={script.id}
-                        className="bg-surface-2/50 rounded-xl p-5 border border-border shadow-sm"
-                      >
-                        <div className="flex items-start justify-between mb-4 border-b border-border pb-3">
-                          <div>
-                            <span className="text-xs font-bold text-accent uppercase tracking-wider">
-                              The Question / Situation
-                            </span>
-                            <h3 className="text-lg font-semibold text-text-primary mt-1">
-                              "{script.question}"
-                            </h3>
-                            <p className="text-xs text-text-muted mt-1">
-                              Context: {script.context}
-                            </p>
-                          </div>
-                        </div>
+                    {category.scripts.map((script) => {
+                      const currentFormal =
+                        perspective === "female" && script.formalFemale
+                          ? script.formalFemale
+                          : script.formal;
+                      const currentCasual =
+                        perspective === "female" && script.casualFemale
+                          ? script.casualFemale
+                          : script.casual;
 
-                        <div className="grid md:grid-cols-2 gap-4">
-                          {/* Formal Answer */}
-                          <div
-                            className={`bg-surface-1 rounded-lg p-4 border-l-4 border-purple-500 transition-all shadow-sm ${isPracticeMode && !revealedScripts.has(`${script.id}-formal`) ? "cursor-pointer hover:bg-surface-hover" : ""}`}
-                            onClick={() => toggleReveal(script.id, "formal")}
-                          >
-                            <div className="flex justify-between items-start mb-2">
-                              <span className="text-xs font-bold text-purple-400 uppercase">
-                                Formal / Professional
+                      return (
+                        <div
+                          key={script.id}
+                          className="bg-surface-2/50 rounded-xl p-5 border border-border shadow-sm"
+                        >
+                          <div className="flex items-start justify-between mb-4 border-b border-border pb-3">
+                            <div>
+                              <span className="text-xs font-bold text-accent uppercase tracking-wider">
+                                The Question / Situation
                               </span>
-                              <div className="flex items-center gap-1">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleCopy(script.formal);
-                                  }}
-                                  className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
-                                  title="Copy to clipboard"
-                                >
-                                  {copiedText === script.formal ? (
-                                    <CheckIcon />
-                                  ) : (
-                                    <CopyIcon />
-                                  )}
-                                </button>
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    onPlayAudio(script.formal);
-                                  }}
-                                  className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
-                                  title="Listen"
-                                  aria-label={`Listen to formal response: ${script.formal}`}
-                                >
-                                  <PlayIcon />
-                                </button>
-                              </div>
-                            </div>
-                            <div
-                              className={`transition-all duration-300 ${isPracticeMode && !revealedScripts.has(`${script.id}-formal`) ? "blur-sm opacity-50 select-none" : "blur-none opacity-100"}`}
-                            >
-                              <p className="text-text-primary leading-relaxed">
-                                "{script.formal}"
+                              <h3 className="text-lg font-semibold text-text-primary mt-1">
+                                "{script.question}"
+                              </h3>
+                              <p className="text-xs text-text-muted mt-1">
+                                Context: {script.context}
                               </p>
                             </div>
-                            {isPracticeMode &&
-                              !revealedScripts.has(`${script.id}-formal`) && (
-                                <div className="mt-2 text-center text-xs text-purple-400 font-medium">
-                                  Click to reveal
-                                </div>
-                              )}
                           </div>
 
-                          {/* Casual Answer */}
-                          <div
-                            className={`bg-surface-1 rounded-lg p-4 border-l-4 border-emerald-500 transition-all shadow-sm ${isPracticeMode && !revealedScripts.has(`${script.id}-casual`) ? "cursor-pointer hover:bg-surface-hover" : ""}`}
-                            onClick={() => toggleReveal(script.id, "casual")}
-                          >
-                            <div className="flex justify-between items-start mb-2">
-                              <span className="text-xs font-bold text-emerald-400 uppercase">
-                                Casual / Friends
-                              </span>
-                              <div className="flex items-center gap-1">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleCopy(script.casual);
-                                  }}
-                                  className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
-                                  title="Copy to clipboard"
-                                >
-                                  {copiedText === script.casual ? (
-                                    <CheckIcon />
-                                  ) : (
-                                    <CopyIcon />
-                                  )}
-                                </button>
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    onPlayAudio(script.casual);
-                                  }}
-                                  className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
-                                  title="Listen"
-                                  aria-label={`Listen to casual response: ${script.casual}`}
-                                >
-                                  <PlayIcon />
-                                </button>
-                              </div>
-                            </div>
+                          <div className="grid md:grid-cols-2 gap-4">
+                            {/* Formal Answer */}
                             <div
-                              className={`transition-all duration-300 ${isPracticeMode && !revealedScripts.has(`${script.id}-casual`) ? "blur-sm opacity-50 select-none" : "blur-none opacity-100"}`}
+                              className={`bg-surface-1 rounded-lg p-4 border-l-4 border-purple-500 transition-all shadow-sm ${isPracticeMode && !revealedScripts.has(`${script.id}-formal`) ? "cursor-pointer hover:bg-surface-hover" : ""}`}
+                              onClick={() => toggleReveal(script.id, "formal")}
                             >
-                              <p className="text-text-primary leading-relaxed">
-                                "{script.casual}"
+                              <div className="flex justify-between items-start mb-2">
+                                <span className="text-xs font-bold text-purple-400 uppercase">
+                                  Formal / Professional
+                                </span>
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleCopy(currentFormal);
+                                    }}
+                                    className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
+                                    title="Copy to clipboard"
+                                  >
+                                    {copiedText === currentFormal ? (
+                                      <CheckIcon />
+                                    ) : (
+                                      <CopyIcon />
+                                    )}
+                                  </button>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      onPlayAudio(currentFormal);
+                                    }}
+                                    className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
+                                    title="Listen"
+                                    aria-label={`Listen to formal response: ${currentFormal}`}
+                                  >
+                                    <PlayIcon />
+                                  </button>
+                                </div>
+                              </div>
+                              <div
+                                className={`transition-all duration-300 ${isPracticeMode && !revealedScripts.has(`${script.id}-formal`) ? "blur-sm opacity-50 select-none" : "blur-none opacity-100"}`}
+                              >
+                                <p className="text-text-primary leading-relaxed">
+                                  "{currentFormal}"
+                                </p>
+                              </div>
+                              {isPracticeMode &&
+                                !revealedScripts.has(`${script.id}-formal`) && (
+                                  <div className="mt-2 text-center text-xs text-purple-400 font-medium">
+                                    Click to reveal
+                                  </div>
+                                )}
+                            </div>
+
+                            {/* Casual Answer */}
+                            <div
+                              className={`bg-surface-1 rounded-lg p-4 border-l-4 border-emerald-500 transition-all shadow-sm ${isPracticeMode && !revealedScripts.has(`${script.id}-casual`) ? "cursor-pointer hover:bg-surface-hover" : ""}`}
+                              onClick={() => toggleReveal(script.id, "casual")}
+                            >
+                              <div className="flex justify-between items-start mb-2">
+                                <span className="text-xs font-bold text-emerald-400 uppercase">
+                                  Casual / Friends
+                                </span>
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleCopy(currentCasual);
+                                    }}
+                                    className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
+                                    title="Copy to clipboard"
+                                  >
+                                    {copiedText === currentCasual ? (
+                                      <CheckIcon />
+                                    ) : (
+                                      <CopyIcon />
+                                    )}
+                                  </button>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      onPlayAudio(currentCasual);
+                                    }}
+                                    className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-2 rounded-md transition-colors"
+                                    title="Listen"
+                                    aria-label={`Listen to casual response: ${currentCasual}`}
+                                  >
+                                    <PlayIcon />
+                                  </button>
+                                </div>
+                              </div>
+                              <div
+                                className={`transition-all duration-300 ${isPracticeMode && !revealedScripts.has(`${script.id}-casual`) ? "blur-sm opacity-50 select-none" : "blur-none opacity-100"}`}
+                              >
+                                <p className="text-text-primary leading-relaxed">
+                                  "{currentCasual}"
+                                </p>
+                              </div>
+                              {isPracticeMode &&
+                                !revealedScripts.has(`${script.id}-casual`) && (
+                                  <div className="mt-2 text-center text-xs text-emerald-400 font-medium">
+                                    Click to reveal
+                                  </div>
+                                )}
+                            </div>
+                          </div>
+
+                          {/* Native Tip */}
+                          <div className="mt-4 bg-amber-500/10 rounded-lg p-3 border border-amber-500/20 flex items-start gap-3">
+                            <div className="mt-0.5 flex-shrink-0 text-amber-500">
+                              <BulbIcon />
+                            </div>
+                            <div>
+                              <span className="text-xs font-bold text-amber-500 uppercase block mb-1">
+                                Native Nuance
+                              </span>
+                              <p className="text-sm text-text-secondary">
+                                {script.nativeTip}
                               </p>
                             </div>
-                            {isPracticeMode &&
-                              !revealedScripts.has(`${script.id}-casual`) && (
-                                <div className="mt-2 text-center text-xs text-emerald-400 font-medium">
-                                  Click to reveal
-                                </div>
-                              )}
                           </div>
                         </div>
-
-                        {/* Native Tip */}
-                        <div className="mt-4 bg-amber-500/10 rounded-lg p-3 border border-amber-500/20 flex items-start gap-3">
-                          <div className="mt-0.5 flex-shrink-0 text-amber-500">
-                            <BulbIcon />
-                          </div>
-                          <div>
-                            <span className="text-xs font-bold text-amber-500 uppercase block mb-1">
-                              Native Nuance
-                            </span>
-                            <p className="text-sm text-text-secondary">
-                              {script.nativeTip}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </div>

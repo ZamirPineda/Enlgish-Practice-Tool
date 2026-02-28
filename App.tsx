@@ -590,6 +590,9 @@ const App: React.FC = () => {
               <NavItem to="/docs?mode=game">🎯 Docs Hunt</NavItem>
               <NavItem to="/syntax-builder">⌨️ Syntax Builder</NavItem>
               <NavItem to="/bug-hunter">🐛 Bug Hunter</NavItem>
+              <NavItem to="/diplomatic-reviewer">
+                💬 Diplomatic Reviewer
+              </NavItem>
             </NavGroup>
             <NavGroup title="Herramientas" icon="🛠️">
               <NavItem to="/calculus">∫ Math</NavItem>
@@ -666,6 +669,9 @@ const App: React.FC = () => {
                     <NavItem to="/docs?mode=game">🎯 Docs Hunt</NavItem>
                     <NavItem to="/syntax-builder">⌨️ Syntax Builder</NavItem>
                     <NavItem to="/bug-hunter">🐛 Bug Hunter</NavItem>
+                    <NavItem to="/diplomatic-reviewer">
+                      💬 Diplomatic Reviewer
+                    </NavItem>
                   </div>
 
                   <NavItem to="/study">📚 Review Deck</NavItem>

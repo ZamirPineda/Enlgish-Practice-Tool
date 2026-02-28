@@ -291,6 +291,8 @@ export interface PersonalScript {
   context: string;
   formal: string;
   casual: string;
+  formalFemale?: string;
+  casualFemale?: string;
   nativeTip: string;
 }
 
