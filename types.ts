@@ -1,3 +1,5 @@
+import { type Card as FsrsCard } from "ts-fsrs";
+
 export enum EnglishLevel {
   A1 = "A1 (Beginner)",
   A2 = "A2 (Elementary)",
@@ -64,6 +66,7 @@ export interface SrsVocabularyItem {
   lapses?: number;
   nextReviewDate: string; // YYYY-MM-DD
   status: "new" | "learning" | "mastered";
+  fsrsData?: FsrsCard; // For Phase 7 FSRS integration
 }
 
 // This is the structure the AI will return

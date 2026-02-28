@@ -8,6 +8,7 @@ import {
   getWeeklyBossReviewItems,
 } from "./srs";
 import { SrsVocabularyItem } from "../types";
+import { Rating } from "ts-fsrs";
 
 describe("createNewSrsItem", () => {
   const MOCK_TODAY = new Date("2024-02-20T00:00:00.000Z");
@@ -27,16 +28,19 @@ describe("createNewSrsItem", () => {
 
     const result = createNewSrsItem(word, definition);
 
-    expect(result).toEqual({
-      word,
-      definition,
-      repetition: 0,
-      efactor: 2.5,
-      interval: 0,
-      lapses: 0,
-      nextReviewDate: "2024-02-20",
-      status: "new",
-    });
+    expect(result).toEqual(
+      expect.objectContaining({
+        word,
+        definition,
+        repetition: 0,
+        efactor: 2.5,
+        interval: 0,
+        lapses: 0,
+        nextReviewDate: "2024-02-20",
+        status: "new",
+      }),
+    );
+    expect(result.fsrsData).toBeDefined();
   });
 });
 
@@ -116,19 +120,15 @@ describe("getDueReviewWords", () => {
   });
 });
 
-describe("calculateSrsData", () => {
-  // Mock the date to ensure deterministic results
+describe("calculateSrsData (FSRS)", () => {
   const MOCK_TODAY = new Date("2023-01-01T00:00:00.000Z");
-  let randomSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     vi.useFakeTimers();
     vi.setSystemTime(MOCK_TODAY);
-    randomSpy = vi.spyOn(Math, "random").mockReturnValue(0.5);
   });
 
   afterEach(() => {
-    randomSpy.mockRestore();
     vi.useRealTimers();
   });
 
@@ -142,128 +142,58 @@ describe("calculateSrsData", () => {
     status: "new",
   });
 
-  describe("when answer is correct", () => {
-    it("handles the first review (repetition 0 -> 1)", () => {
+  describe("when answer is correct (fallback to Good)", () => {
+    it("handles the first review", () => {
       const item = createBaseItem();
       const result = calculateSrsData(item, true);
 
       expect(result.repetition).toBe(1);
-      expect(result.interval).toBe(1);
-      expect(result.nextReviewDate).toBe("2023-01-02"); // Today + 1 day
-      expect(result.efactor).toBeGreaterThan(2.5); // Should increase slightly
+      // Good on New card sets 10min interval, so 0 days
+      expect(result.interval).toBe(0);
+      expect(result.nextReviewDate).toBe("2023-01-01");
       expect(result.status).toBe("learning");
-    });
-
-    it("handles the second review (repetition 1 -> 2)", () => {
-      const item = { ...createBaseItem(), repetition: 1, interval: 1 };
-      const result = calculateSrsData(item, true);
-
-      expect(result.repetition).toBe(2);
-      expect(result.interval).toBe(6);
-      expect(result.nextReviewDate).toBe("2023-01-07"); // Today + 6 days
-      expect(result.status).toBe("learning");
-    });
-
-    it("calculates subsequent intervals based on efactor (repetition > 2)", () => {
-      // interval * efactor => 6 * 2.6 (approx) => ~15.6 => 16
-      const item = {
-        ...createBaseItem(),
-        repetition: 2,
-        interval: 6,
-        efactor: 2.6,
-      };
-      const result = calculateSrsData(item, true);
-
-      expect(result.repetition).toBe(3);
-      expect(result.interval).toBe(16); // Math.round(6 * 2.6) = 16
-      // 2023-01-01 + 16 days = 2023-01-17
-      expect(result.nextReviewDate).toBe("2023-01-17");
-    });
-
-    it("applies positive fuzzing to spread review dates", () => {
-      randomSpy.mockReturnValue(1);
-      const item = {
-        ...createBaseItem(),
-        repetition: 2,
-        interval: 20,
-        efactor: 2,
-      };
-      const result = calculateSrsData(item, true);
-
-      expect(result.interval).toBe(42); // Math.round(40 * 1.05) = 42
-      expect(result.nextReviewDate).toBe("2023-02-12");
-    });
-
-    it("applies negative fuzzing to spread review dates", () => {
-      randomSpy.mockReturnValue(0);
-      const item = {
-        ...createBaseItem(),
-        repetition: 2,
-        interval: 20,
-        efactor: 2,
-      };
-      const result = calculateSrsData(item, true);
-
-      expect(result.interval).toBe(38); // Math.round(40 * 0.95) = 38
-      expect(result.nextReviewDate).toBe("2023-02-08");
-    });
-
-    it('transitions status to "mastered" when interval > 14', () => {
-      // interval * efactor => 6 * 2.6 => 16 (> 14)
-      const item = {
-        ...createBaseItem(),
-        repetition: 2,
-        interval: 6,
-        efactor: 2.6,
-      };
-      const result = calculateSrsData(item, true);
-
-      expect(result.status).toBe("mastered");
-    });
-
-    it('keeps status as "mastered" if already mastered', () => {
-      const item: SrsVocabularyItem = {
-        ...createBaseItem(),
-        status: "mastered",
-        repetition: 5,
-        interval: 20,
-      };
-      const result = calculateSrsData(item, true);
-
-      expect(result.status).toBe("mastered");
-      expect(result.interval).toBeGreaterThan(20);
     });
   });
 
-  describe("when answer is incorrect", () => {
-    it("resets repetition and interval", () => {
+  describe("when specific ratings are provided", () => {
+    it("handles Rating.Easy for a new card", () => {
+      const item = createBaseItem();
+      const result = calculateSrsData(item, true, Rating.Easy);
+
+      expect(result.repetition).toBe(1);
+      // Easy skips to Review usually
+      expect(result.interval).toBeGreaterThan(0);
+    });
+
+    it("handles Rating.Again (Fail) for a new card", () => {
       const item = {
         ...createBaseItem(),
         repetition: 5,
         interval: 20,
-        efactor: 2.8,
       };
-      const result = calculateSrsData(item, false);
+      const result = calculateSrsData(item, false, Rating.Again);
 
-      expect(result.repetition).toBe(0);
-      expect(result.interval).toBe(1);
-      expect(result.nextReviewDate).toBe("2023-01-02"); // Today + 1 day
+      // Reps increment, interval drops to 0 (learning steps)
+      expect(result.repetition).toBeGreaterThan(0);
+      expect(result.interval).toBe(0);
+      expect(result.lapses).toBe(0); // Lapses is 0 for failing a brand-new internal FSRS card
       expect(result.status).toBe("learning");
-
-      // Current implementation preserves efactor on failure
-      expect(result.efactor).toBe(2.8);
     });
+  });
 
-    it('downgrades status from "mastered" to "learning"', () => {
-      const item: SrsVocabularyItem = {
-        ...createBaseItem(),
-        status: "mastered",
-        repetition: 5,
-        interval: 20,
-      };
-      const result = calculateSrsData(item, false);
+  describe("preservation of fsrsData", () => {
+    it("saves and reuses explicit FSRS state", () => {
+      const item = createBaseItem();
+      const firstReview = calculateSrsData(item, true, Rating.Good);
 
-      expect(result.status).toBe("learning");
+      expect(firstReview.fsrsData).toBeDefined();
+
+      // Ensure mock time advances
+      vi.setSystemTime(new Date("2023-01-01T00:15:00.000Z")); // 15 mins later
+      const secondReview = calculateSrsData(firstReview, true, Rating.Good);
+
+      expect(secondReview.repetition).toBe(2);
+      expect(secondReview.interval).toBeGreaterThan(0); // Graduates from learning to Review (1+ days)
     });
   });
 });

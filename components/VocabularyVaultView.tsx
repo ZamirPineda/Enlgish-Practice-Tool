@@ -7,9 +7,11 @@ import {
   getIsoWeekKey,
   getWeeklyBossReviewItems,
   calculateSrsData,
+  migrateDeckToFsrsIfNeeded,
 } from "../utils/srs";
 import { trackAnalyticsEvent } from "../utils/analytics";
 import { progressQuest } from "../utils/xpStore";
+import { Rating } from "ts-fsrs";
 import ReviewSession from "./ReviewSession";
 import SpeechPracticeButton from "./SpeechPracticeButton";
 import { PlayIcon, TrashIcon } from "./Icons";
@@ -156,9 +158,18 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const [deck, setDeck] = useState<Record<string, SrsVocabularyItem>>(() => {
     try {
       const saved = localStorage.getItem("vocab-vault-deck");
-      return saved
-        ? normalizeDeck(JSON.parse(saved) as Record<string, SrsVocabularyItem>)
-        : {};
+      if (!saved) return {};
+
+      let parsedDeck = normalizeDeck(
+        JSON.parse(saved) as Record<string, SrsVocabularyItem>,
+      );
+
+      const migratedDeck = migrateDeckToFsrsIfNeeded(parsedDeck);
+      if (migratedDeck) {
+        parsedDeck = migratedDeck;
+      }
+
+      return parsedDeck;
     } catch (e) {
       console.error("Failed to load deck from storage", e);
       return {};
@@ -530,9 +541,9 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     event.target.value = "";
   };
 
-  const handleReviewComplete = (wasCorrect: boolean) => {
+  const handleReviewComplete = (wasCorrect: boolean, rating?: Rating) => {
     const item = reviewItems[currentIndex];
-    const updatedItem = calculateSrsData(item, wasCorrect);
+    const updatedItem = calculateSrsData(item, wasCorrect, rating);
     reviewSessionStatsRef.current.attempts += 1;
     if (wasCorrect) {
       reviewSessionStatsRef.current.correct += 1;

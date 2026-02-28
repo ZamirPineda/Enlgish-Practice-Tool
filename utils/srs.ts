@@ -1,7 +1,17 @@
 import { SrsVocabularyItem } from "../types";
+import {
+  fsrs,
+  Rating,
+  createEmptyCard,
+  type Card as FsrsCard,
+  State,
+} from "ts-fsrs";
 
 const INITIAL_EFACTOR = 2.5;
-const INTERVAL_FUZZ_PERCENT = 0.05;
+
+const f = fsrs({
+  request_retention: 0.9,
+});
 
 const formatDateKey = (date: Date): string => {
   const year = date.getUTCFullYear();
@@ -18,65 +28,56 @@ const getTodayUtcDate = (): Date => {
 };
 
 /**
- * Calculates the next review data for an SRS item based on the SM-2 algorithm.
+ * Calculates the next review data for an SRS item based on the FSRS algorithm.
+ * It maps the old 'correct' boolean to Good (3) or Again (1) if no explicit rating is provided.
  */
 export function calculateSrsData(
   item: SrsVocabularyItem,
   correct: boolean,
+  rating?: Rating,
 ): SrsVocabularyItem {
-  const today = getTodayUtcDate();
+  const now = new Date();
 
-  if (correct) {
-    const repetition = item.repetition + 1;
-    let interval: number;
+  // Default to Good or Again if no explicit FSRS rating is given
+  const actualRating = rating ?? (correct ? Rating.Good : Rating.Again);
 
-    if (repetition === 1) {
-      interval = 1;
-    } else if (repetition === 2) {
-      interval = 6;
-    } else {
-      interval = Math.round(item.interval * item.efactor);
-    }
-    const intervalMultiplier =
-      1 + (Math.random() * 2 - 1) * INTERVAL_FUZZ_PERCENT;
-    interval = Math.max(1, Math.round(interval * intervalMultiplier));
-
-    const quality = 5;
-    const efactor = Math.max(
-      1.3,
-      item.efactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)),
-    );
-
-    const nextReviewDate = new Date(today);
-    nextReviewDate.setUTCDate(today.getUTCDate() + interval);
-
-    let status: "learning" | "mastered" = "learning";
-    if (interval > 14 || item.status === "mastered") {
-      status = "mastered";
-    }
-
-    return {
-      ...item,
-      repetition,
-      efactor,
-      interval,
-      lapses: item.lapses ?? 0,
-      nextReviewDate: formatDateKey(nextReviewDate),
-      status,
-    };
+  // Fallback to a new card if fsrsData was not migrated for some reason
+  let card: FsrsCard;
+  if (item.fsrsData) {
+    card = item.fsrsData;
+    // We need to ensure stringified dates from local storage are parsed back into Date objects
+    if (typeof card.due === "string") card.due = new Date(card.due);
+    if (typeof card.last_review === "string")
+      card.last_review = new Date(card.last_review);
   } else {
-    const nextReviewDate = new Date(today);
-    nextReviewDate.setUTCDate(today.getUTCDate() + 1);
-
-    return {
-      ...item,
-      repetition: 0,
-      interval: 1,
-      lapses: (item.lapses ?? 0) + 1,
-      nextReviewDate: formatDateKey(nextReviewDate),
-      status: "learning",
-    };
+    card = createEmptyCard(now);
   }
+
+  // FSRS calculate repetitions
+  const schedulingCards = f.repeat(card, now);
+  const recordLog = schedulingCards[actualRating];
+  const updatedCard = Object.assign({}, recordLog.card); // Remove immutable references if any
+
+  let status: "new" | "learning" | "mastered" = "learning";
+  if (updatedCard.state === State.New) {
+    status = "new";
+  } else if (
+    updatedCard.state === State.Review &&
+    updatedCard.scheduled_days > 14
+  ) {
+    status = "mastered";
+  }
+
+  return {
+    ...item,
+    repetition: updatedCard.reps, // Keep old SM-2 fields semi-updated for UX/stats
+    efactor: item.efactor || INITIAL_EFACTOR,
+    interval: updatedCard.scheduled_days,
+    lapses: updatedCard.lapses,
+    nextReviewDate: formatDateKey(updatedCard.due),
+    status,
+    fsrsData: updatedCard,
+  };
 }
 
 /**
@@ -87,7 +88,9 @@ export function createNewSrsItem(
   word: string,
   definition: string,
 ): SrsVocabularyItem {
-  const today = formatDateKey(new Date());
+  const now = new Date();
+  const today = formatDateKey(now);
+  const card = createEmptyCard(now); // Initialize default FSRS card
 
   return {
     word,
@@ -98,6 +101,7 @@ export function createNewSrsItem(
     lapses: 0,
     nextReviewDate: today, // Review immediately
     status: "new",
+    fsrsData: card,
   };
 }
 
@@ -204,3 +208,70 @@ export function getWeeklyBossReviewItems(
 
 export const getSrsLocalStorageKey = (level: string) =>
   `srs-vocabulary-deck-${level}`;
+
+/**
+ * Migrates a legacy SM-2 item to an FSRS card if it's missing 'fsrsData'.
+ */
+export function migrateSrsItemToFsrs(
+  item: SrsVocabularyItem,
+): SrsVocabularyItem {
+  if (item.fsrsData) return item;
+
+  const now = new Date();
+  const card = createEmptyCard(now);
+
+  card.due = new Date(`${item.nextReviewDate}T00:00:00Z`);
+  card.scheduled_days = item.interval;
+  card.elapsed_days = item.interval;
+  card.reps = item.repetition;
+  card.lapses = item.lapses || 0;
+
+  if (item.status === "mastered" || item.interval > 14) {
+    card.state = State.Review;
+  } else if (item.interval > 0) {
+    card.state = State.Learning; // Or Review if it graduated, but Learning is safer fallback
+  } else {
+    card.state = State.New;
+  }
+
+  // Approximate default stability and difficulty if they are zero
+  card.stability = item.interval > 0 ? item.interval : 0;
+  // SM-2 efactor 2.5 -> diff ~ 5, SM-2 efactor 1.3 -> diff ~ 10
+  const difficultyMatch = Math.min(
+    10,
+    Math.max(1, 10 - ((item.efactor - 1.3) / 1.2) * 9),
+  );
+  card.difficulty = difficultyMatch;
+
+  const lastReview = new Date(card.due);
+  lastReview.setUTCDate(lastReview.getUTCDate() - item.interval);
+  card.last_review = lastReview;
+
+  return {
+    ...item,
+    fsrsData: card,
+  };
+}
+
+/**
+ * Checks a deck and returns a migrated copy if any items were missing FSRS data.
+ * Returns null if no migration was needed.
+ */
+export function migrateDeckToFsrsIfNeeded(
+  deck: Record<string, SrsVocabularyItem>,
+): Record<string, SrsVocabularyItem> | null {
+  if (!deck) return null;
+  let neededMigration = false;
+  const newDeck: Record<string, SrsVocabularyItem> = {};
+
+  for (const [key, item] of Object.entries(deck)) {
+    if (!item.fsrsData) {
+      neededMigration = true;
+      newDeck[key] = migrateSrsItemToFsrs(item);
+    } else {
+      newDeck[key] = item;
+    }
+  }
+
+  return neededMigration ? newDeck : null;
+}

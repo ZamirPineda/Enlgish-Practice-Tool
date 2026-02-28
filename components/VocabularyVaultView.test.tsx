@@ -98,7 +98,7 @@ describe("VocabularyVaultView flows", () => {
     fireEvent.click(
       await screen.findByRole("button", { name: /Show Answer/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /^Got it/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^Easy/i }));
 
     await waitFor(() => {
       expect(
@@ -110,7 +110,7 @@ describe("VocabularyVaultView flows", () => {
       localStorage.getItem("vocab-vault-deck") || "{}",
     );
     expect(savedDeck.hello.repetition).toBe(1);
-    expect(savedDeck.hello.interval).toBe(1);
+    expect(savedDeck.hello.interval).toBeGreaterThan(0);
 
     const events = JSON.parse(
       localStorage.getItem(ANALYTICS_EVENTS_KEY) || "[]",
@@ -188,7 +188,7 @@ describe("VocabularyVaultView flows", () => {
     fireEvent.click(
       await screen.findByRole("button", { name: /Show Answer/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /^Got it/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^Easy/i }));
 
     await waitFor(() => {
       expect(screen.getByText("2 day streak · best 2")).toBeInTheDocument();
@@ -380,7 +380,7 @@ describe("VocabularyVaultView flows", () => {
     fireEvent.click(
       await screen.findByRole("button", { name: /Show Answer/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /^Got it/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^Easy/i }));
 
     await waitFor(() => {
       expect(

@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { SrsVocabularyItem } from "../types";
 import { SpeakerIcon } from "./Icons";
+import { fsrs, Rating, createEmptyCard } from "ts-fsrs";
+
+const f = fsrs({
+  request_retention: 0.9,
+});
 
 interface ReviewSessionProps {
   item: SrsVocabularyItem;
   progress: { current: number; total: number };
-  onComplete: (wasCorrect: boolean) => void;
+  onComplete: (wasCorrect: boolean, rating?: Rating) => void;
   onFinishSession: () => void;
   onPlayAudio: (text: string) => void;
   onSpeakingUsed?: (source: "review_audio") => void;
@@ -20,12 +25,77 @@ const ReviewSession: React.FC<ReviewSessionProps> = ({
   onSpeakingUsed,
 }) => {
   const [isRevealed, setIsRevealed] = useState(false);
+  const [predictions, setPredictions] = useState<Record<Rating, string> | null>(
+    null,
+  );
 
   // Memoize handleResult to use in effect
-  const handleResult = useCallback((correct: boolean) => {
-    onComplete(correct);
-    setIsRevealed(false);
-  }, [onComplete]);
+  const handleResult = useCallback(
+    (correct: boolean, rating: Rating) => {
+      onComplete(correct, rating);
+      setIsRevealed(false);
+      setPredictions(null);
+    },
+    [onComplete],
+  );
+
+  useEffect(() => {
+    if (item && isRevealed) {
+      try {
+        const now = new Date();
+        let card = item.fsrsData;
+
+        if (!card) {
+          card = createEmptyCard(now);
+        } else {
+          // parse dates from localStorage strings
+          if (typeof card.due === "string") card.due = new Date(card.due);
+          if (typeof card.last_review === "string")
+            card.last_review = new Date(card.last_review);
+        }
+
+        const schedulingCards = f.repeat(card, now);
+
+        const formatPredictedTime = (scheduled_days: number, due: Date) => {
+          if (scheduled_days === 0) {
+            const diffMins = Math.max(
+              1,
+              Math.round((due.getTime() - now.getTime()) / 60000),
+            );
+            if (diffMins < 60) return `<${diffMins}m`;
+            return `${Math.round(diffMins / 60)}h`;
+          } else if (scheduled_days < 30) {
+            return `${scheduled_days}d`;
+          } else if (scheduled_days < 365) {
+            return `${(scheduled_days / 30).toFixed(1)}mo`;
+          } else {
+            return `${(scheduled_days / 365).toFixed(1)}y`;
+          }
+        };
+
+        setPredictions({
+          [Rating.Again]: formatPredictedTime(
+            schedulingCards[Rating.Again].card.scheduled_days,
+            schedulingCards[Rating.Again].card.due,
+          ),
+          [Rating.Hard]: formatPredictedTime(
+            schedulingCards[Rating.Hard].card.scheduled_days,
+            schedulingCards[Rating.Hard].card.due,
+          ),
+          [Rating.Good]: formatPredictedTime(
+            schedulingCards[Rating.Good].card.scheduled_days,
+            schedulingCards[Rating.Good].card.due,
+          ),
+          [Rating.Easy]: formatPredictedTime(
+            schedulingCards[Rating.Easy].card.scheduled_days,
+            schedulingCards[Rating.Easy].card.due,
+          ),
+        } as Record<Rating, string>);
+      } catch (e) {
+        console.error("FSRS prediction error:", e);
+      }
+    }
+  }, [item, isRevealed]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -49,10 +119,14 @@ const ReviewSession: React.FC<ReviewSessionProps> = ({
           setIsRevealed(true);
         }
       } else {
-        if (e.key === "1" || e.code === "ArrowLeft") {
-          handleResult(false);
-        } else if (e.key === "2" || e.code === "ArrowRight") {
-          handleResult(true);
+        if (e.key === "1") {
+          handleResult(false, Rating.Again);
+        } else if (e.key === "2") {
+          handleResult(true, Rating.Hard);
+        } else if (e.key === "3" || e.code === "Space") {
+          handleResult(true, Rating.Good);
+        } else if (e.key === "4") {
+          handleResult(true, Rating.Easy);
         }
       }
     };
@@ -133,25 +207,68 @@ const ReviewSession: React.FC<ReviewSessionProps> = ({
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <button
-                onClick={() => handleResult(false)}
-                className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 font-bold py-4 rounded-xl transition-all group relative"
+                onClick={() => handleResult(false, Rating.Again)}
+                className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 py-3 rounded-xl transition-all group relative flex flex-col items-center justify-center"
                 aria-label="Forgot it (Press 1)"
               >
-                Forgot it 😓
-                <span className="absolute top-2 right-2 opacity-70 text-[10px] font-normal border border-red-400/30 px-1.5 py-0.5 rounded hidden sm:inline-block">
+                <span className="font-bold mb-1 group-hover:scale-105 transition-transform">
+                  Again
+                </span>
+                <span className="text-xs opacity-80">
+                  {predictions ? predictions[Rating.Again] : "..."}
+                </span>
+                <span className="absolute top-1.5 right-2 opacity-50 text-[9px] font-normal border border-red-400/30 px-1 py-0 rounded hidden md:inline-block">
                   1
                 </span>
               </button>
+
               <button
-                onClick={() => handleResult(true)}
-                className="bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-bold py-4 rounded-xl transition-all group relative"
-                aria-label="Got it (Press 2)"
+                onClick={() => handleResult(true, Rating.Hard)}
+                className="bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 text-orange-400 py-3 rounded-xl transition-all group relative flex flex-col items-center justify-center"
+                aria-label="Hard (Press 2)"
               >
-                Got it! 🚀
-                <span className="absolute top-2 right-2 opacity-70 text-[10px] font-normal border border-emerald-400/30 px-1.5 py-0.5 rounded hidden sm:inline-block">
+                <span className="font-bold mb-1 group-hover:scale-105 transition-transform">
+                  Hard
+                </span>
+                <span className="text-xs opacity-80">
+                  {predictions ? predictions[Rating.Hard] : "..."}
+                </span>
+                <span className="absolute top-1.5 right-2 opacity-50 text-[9px] font-normal border border-orange-400/30 px-1 py-0 rounded hidden md:inline-block">
                   2
+                </span>
+              </button>
+
+              <button
+                onClick={() => handleResult(true, Rating.Good)}
+                className="bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 text-sky-400 py-3 rounded-xl transition-all group relative flex flex-col items-center justify-center shadow-[0_0_15px_rgba(14,165,233,0.15)] ring-1 ring-sky-500/50"
+                aria-label="Good (Press 3)"
+              >
+                <span className="font-bold mb-1 group-hover:scale-105 transition-transform">
+                  Good
+                </span>
+                <span className="text-xs opacity-80">
+                  {predictions ? predictions[Rating.Good] : "..."}
+                </span>
+                <span className="absolute top-1.5 right-2 opacity-50 text-[9px] font-normal border border-sky-400/30 px-1 py-0 rounded hidden md:inline-block">
+                  3/Space
+                </span>
+              </button>
+
+              <button
+                onClick={() => handleResult(true, Rating.Easy)}
+                className="bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 py-3 rounded-xl transition-all group relative flex flex-col items-center justify-center"
+                aria-label="Easy (Press 4)"
+              >
+                <span className="font-bold mb-1 group-hover:scale-105 transition-transform">
+                  Easy
+                </span>
+                <span className="text-xs opacity-80">
+                  {predictions ? predictions[Rating.Easy] : "..."}
+                </span>
+                <span className="absolute top-1.5 right-2 opacity-50 text-[9px] font-normal border border-emerald-400/30 px-1 py-0 rounded hidden md:inline-block">
+                  4
                 </span>
               </button>
             </div>
