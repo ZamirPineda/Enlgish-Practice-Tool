@@ -19,7 +19,7 @@ Aplicación web (React + Vite + TypeScript) para practicar inglés con varias mo
 ### Mínimos para desarrollo local
 
 - **Node.js 20+** (el workflow de CI usa Node 20)
-- **npm 10+** (recomendado con Node 20)
+- **pnpm 9+** (recomendado con Node 20)
 
 ### Opcionales (scripts auxiliares)
 
@@ -36,13 +36,13 @@ git clone https://github.com/ZamirPineda/Enlgish-Practice-Tool.git
 cd Enlgish-Practice-Tool
 
 # 3) Instalar dependencias
-npm install
+pnpm install
 ```
 
 ## Ejecutar en local (desarrollo)
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 - Vite está configurado en `vite.config.ts` para correr en:
@@ -55,7 +55,7 @@ npm run dev
 ### Generar build estático
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Salida en carpeta `dist/`.
@@ -63,7 +63,7 @@ Salida en carpeta `dist/`.
 ### Probar build localmente
 
 ```bash
-npm run preview
+pnpm run preview
 ```
 
 > La base de Vite ahora se resuelve automáticamente:
@@ -83,43 +83,43 @@ npm run preview
 ### Tests
 
 ```bash
-npm test
+pnpm test
 ```
 
 Para ejecución no interactiva (útil en CI/local):
 
 ```bash
-npm run test:ci
+pnpm run test:ci
 ```
 
 Pruebas end-to-end (Playwright):
 
 ```bash
-npx playwright install chromium
-npm run test:e2e
+pnpm exec playwright install chromium
+pnpm run test:e2e
 ```
 
 ### Lint
 
 ```bash
-npm run lint
+pnpm run lint
 ```
 
 ### Formato (Prettier)
 
 ```bash
-npm run format
+pnpm run format
 ```
 
 ### Typecheck
 
 ```bash
-npm run typecheck
+pnpm run typecheck
 ```
 
 ### Pre-commit (Husky + lint-staged)
 
-Al instalar dependencias (`npm install`) se activa Husky vía script `prepare`.
+Al instalar dependencias (`pnpm install`) se activa Husky vía script `prepare`.
 
 En cada commit, el hook `pre-commit` ejecuta `lint-staged` sobre archivos staged:
 
@@ -175,20 +175,20 @@ node scripts/import-study-docs.js
 
 ## Troubleshooting
 
-### 1) `npm run dev` falla porque el puerto 3000 está ocupado
+### 1) `pnpm run dev` falla porque el puerto 3000 está ocupado
 
 El proyecto fija el puerto `3000` en `vite.config.ts`.
 
 - Cierra el proceso que use ese puerto, o
 - ajusta temporalmente el puerto en `vite.config.ts`.
 
-### 2) `npm run build` muestra warning de chunk grande
+### 2) `pnpm run build` muestra warning de chunk grande
 
 Es un warning conocido de Vite por tamaño de bundle, no un error bloqueante.
 
-### 3) `npm test` actualmente reporta fallos
+### 3) `pnpm test` actualmente reporta fallos
 
-La infraestructura de tests existe, pero hay pruebas que ya fallan en el estado actual del repositorio (pendiente de corrección funcional). Esto no bloquea `npm run dev` ni `npm run build`.
+La infraestructura de tests existe, pero hay pruebas que ya fallan en el estado actual del repositorio (pendiente de corrección funcional). Esto no bloquea `pnpm run dev` ni `pnpm run build`.
 
 ### 4) `Error: STUDIO_PATH environment variable is not set`
 
@@ -200,7 +200,7 @@ Verifica `VITE_BASE_PATH` si necesitas forzar una base específica. En GitHub Pa
 
 ## Roadmap (corto)
 
-- Agregar script de lint (`npm run lint`) y reglas compartidas.
+- Agregar script de lint (`pnpm run lint`) y reglas compartidas.
 - Corregir y estabilizar la suite de tests existente.
 - Documentar flujos de datos de cada módulo (STOP, Deck, Vault, Docs).
 - Refinar guía de release/versionado.

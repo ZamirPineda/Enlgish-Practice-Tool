@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   dependency-audit:
-    name: npm audit (high/critical)
+    name: pnpm audit (high/critical)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,12 +22,19 @@ jobs:
         uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           node-version: 20
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
+        with:
+          version: 9
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
       - name: Fail on high/critical vulnerabilities
-        run: npm audit --audit-level=high
+        run: pnpm audit --audit-level=high
 
   secret-scan:
     name: Secret scan (gitleaks)

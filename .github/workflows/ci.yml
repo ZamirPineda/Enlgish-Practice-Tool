@@ -15,72 +15,46 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Detect package manager
-        id: pm
-        shell: bash
-        run: |
-          if [ -f package-lock.json ]; then
-            echo "manager=npm" >> "$GITHUB_OUTPUT"
-            echo "install=npm install" >> "$GITHUB_OUTPUT"
-            echo "lockfile=package-lock.json" >> "$GITHUB_OUTPUT"
-          elif [ -f pnpm-lock.yaml ]; then
-            echo "manager=pnpm" >> "$GITHUB_OUTPUT"
-            echo "install=pnpm install --frozen-lockfile" >> "$GITHUB_OUTPUT"
-            echo "lockfile=pnpm-lock.yaml" >> "$GITHUB_OUTPUT"
-          elif [ -f yarn.lock ]; then
-            echo "manager=yarn" >> "$GITHUB_OUTPUT"
-            echo "install=yarn install --immutable" >> "$GITHUB_OUTPUT"
-            echo "lockfile=yarn.lock" >> "$GITHUB_OUTPUT"
-          else
-            echo "No lockfile found (package-lock.json, pnpm-lock.yaml, yarn.lock)." >&2
-            exit 1
-          fi
-
       - name: Setup Node
         uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           node-version: 20
-          cache: ${{ steps.pm.outputs.manager }}
-          cache-dependency-path: ${{ steps.pm.outputs.lockfile }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Setup pnpm
-        if: steps.pm.outputs.manager == 'pnpm'
         uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
         with:
           version: 9
-
-      - name: Setup yarn
-        if: steps.pm.outputs.manager == 'yarn'
-        run: corepack enable
 
       - name: Restore Vite cache
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: |
             node_modules/.vite
-          key: ${{ runner.os }}-vite-${{ steps.pm.outputs.manager }}-${{ hashFiles('package-lock.json', 'pnpm-lock.yaml', 'yarn.lock', 'vite.config.ts') }}
+          key: ${{ runner.os }}-vite-pnpm-${{ hashFiles('pnpm-lock.yaml', 'vite.config.ts') }}
           restore-keys: |
-            ${{ runner.os }}-vite-${{ steps.pm.outputs.manager }}-
+            ${{ runner.os }}-vite-pnpm-
 
       - name: Install dependencies
-        run: ${{ steps.pm.outputs.install }}
+        run: pnpm install --frozen-lockfile
 
       - name: Typecheck
-        run: ${{ steps.pm.outputs.manager }} run typecheck
+        run: pnpm run typecheck
 
       - name: Lint
-        run: ${{ steps.pm.outputs.manager }} run lint
+        run: pnpm run lint
 
       - name: Test
-        run: ${{ steps.pm.outputs.manager }} run test:ci -- --coverage
+        run: pnpm run test:ci -- --coverage
 
       - name: Install Playwright browsers
         if: github.event_name == 'pull_request'
-        run: npx playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: E2E tests
         if: github.event_name == 'pull_request'
-        run: ${{ steps.pm.outputs.manager }} run test:e2e
+        run: pnpm run test:e2e
 
       - name: Upload Playwright artifacts
         if: failure() && github.event_name == 'pull_request'
@@ -101,4 +75,4 @@ jobs:
           if-no-files-found: ignore
 
       - name: Build
-        run: ${{ steps.pm.outputs.manager }} run build
+        run: pnpm run build

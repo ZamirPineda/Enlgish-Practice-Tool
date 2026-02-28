@@ -3,7 +3,7 @@
 ## 1) Stack y gestor de dependencias detectado
 
 - **Stack principal:** Frontend React + Vite + TypeScript.
-- **Gestor de dependencias:** **npm** (`package.json`, `package-lock.json`).
+- **Gestor de dependencias:** **pnpm** (`package.json`, `pnpm-lock.yaml`).
 - **CI existente:** `.github/workflows/deploy.yml` (deploy a GitHub Pages).
 
 ## 2) Auditoría de vulnerabilidades de dependencias
@@ -11,14 +11,14 @@
 ### Comandos ejecutados
 
 ```bash
-npm install
-npm audit --json
+pnpm install
+pnpm audit --json
 ```
 
 ### Resultado
 
 - Estado: **sin vulnerabilidades**.
-- Resumen reportado por `npm audit`:
+- Resumen reportado por `pnpm audit`:
   - critical: 0
   - high: 0
   - moderate: 0
@@ -71,14 +71,14 @@ Coincidencias encontradas en documentación/ejemplos (placeholders):
 1. **Dependabot semanal**
    - Archivo: `.github/dependabot.yml`
    - Ecosistemas:
-     - npm
-     - github-actions
+   - pnpm
+   - github-actions
 
 2. **Workflow de seguridad en CI**
    - Archivo: `.github/workflows/security-audit.yml`
    - Jobs:
-     - `npm audit --audit-level=high` (falla ante high/critical)
-     - `gitleaks/gitleaks-action@v2` para detección de secretos
+   - `pnpm audit --audit-level=high` (falla ante high/critical)
+   - `gitleaks/gitleaks-action@v2` para detección de secretos
 
 3. **Hardening de archivos sensibles**
    - `.gitignore` actualizado para ignorar:
@@ -90,8 +90,8 @@ Coincidencias encontradas en documentación/ejemplos (placeholders):
 
 ## 6) Notas de validación
 
-- Build verificado: `npm run build` ✅
-- Tests verificados: `npm run test:ci` ✅
+- Build verificado: `pnpm run build` ✅
+- Tests verificados: `pnpm run test:ci` ✅
 
 ## 7) Actualización de remediation (2026-02-19)
 
@@ -100,7 +100,7 @@ Coincidencias encontradas en documentación/ejemplos (placeholders):
 - **Resueltas (high):**
   - `minimatch < 10.2.1` (ReDoS, GHSA-3ppc-4f35-3m26)
 - **Pendientes (moderate, no bloquean el check de CI actual):**
-  - `ajv < 8.18.0` vía `@eslint/eslintrc` en ESLint 8 (`npm audit` reporta _No fix available_ sin saltar a ESLint 10).
+  - `ajv < 8.18.0` vía `@eslint/eslintrc` en ESLint 8 (`pnpm audit` reporta _No fix available_ sin saltar a ESLint 10).
 
 ### Cambios aplicados
 
@@ -113,21 +113,21 @@ Coincidencias encontradas en documentación/ejemplos (placeholders):
 }
 ```
 
-3. Se regeneró `package-lock.json`.
+3. Se regeneró `pnpm-lock.yaml`.
 
 ### Resultado verificado
 
-- `npm audit --audit-level=high` ✅ **exit code 0** (sin high/critical).
-- `npm run lint` ✅
-- `npm run typecheck` ✅
-- `npm run test:ci` ✅
-- `npm run build` ✅
+- `pnpm audit --audit-level=high` ✅ **exit code 0** (sin high/critical).
+- `pnpm run lint` ✅
+- `pnpm run typecheck` ✅
+- `pnpm run test:ci` ✅
+- `pnpm run build` ✅
 
 ### Reproducción local
 
 ```bash
-npm ci
-npm audit --audit-level=high
+pnpm install --frozen-lockfile
+pnpm audit --audit-level=high
 ```
 
 ## 8) Hardening de GitHub Actions (2026-02-19)
