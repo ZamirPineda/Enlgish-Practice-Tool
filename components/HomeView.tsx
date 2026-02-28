@@ -31,6 +31,7 @@ import {
   Target,
   Code2,
   Bug,
+  MessageCircleHeart,
 } from "lucide-react";
 
 const VAULT_DECK_KEY = "vocab-vault-deck";
@@ -104,6 +105,16 @@ const FEATURED_GAMES = [
     color: "text-sky-500",
     border: "border-sky-500",
     bg: "bg-sky-50",
+  },
+  {
+    id: "diplomatic",
+    path: "/diplomatic-reviewer",
+    title: "Diplomatic Review",
+    desc: "Mejora tus soft skills y feedback.",
+    icon: MessageCircleHeart,
+    color: "text-violet-500",
+    border: "border-violet-500",
+    bg: "bg-violet-50",
   },
   {
     id: "error",

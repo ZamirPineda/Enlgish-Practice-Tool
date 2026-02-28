@@ -5,6 +5,7 @@ import { codeBugsData, type CodeBugPrompt } from "../data/codeBugsData";
 import { addGlobalXp, progressQuest } from "../utils/xpStore";
 import { trackAnalyticsEvent } from "../utils/analytics";
 import { playGameSound } from "../utils/audioUtils";
+import { Plus } from "lucide-react";
 
 const ROUND_TIME_SECONDS = 30;
 const BASE_POINTS_PER_CORRECT = 100;
@@ -268,10 +269,42 @@ const CodeBugHunterView: React.FC = () => {
             </div>
           ) : null}
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             {submitted && !isComplete ? (
               <Button onClick={handleNextRound} variant="success" size="lg">
                 Siguiente Bug
+              </Button>
+            ) : null}
+
+            {submitted && !isCorrect && round ? (
+              <Button
+                onClick={() => {
+                  import("../utils/srs").then(({ createNewSrsItem }) => {
+                    const deck = JSON.parse(
+                      localStorage.getItem("vocab-vault-deck") || "{}",
+                    );
+                    const newId = `bug-${Date.now()}`;
+                    deck[newId] = createNewSrsItem(
+                      `Bug: ${round.language}`,
+                      round.explanation,
+                    );
+                    localStorage.setItem(
+                      "vocab-vault-deck",
+                      JSON.stringify(deck),
+                    );
+
+                    import("./ui/Toast").then(({ toast }) => {
+                      toast.success("Bug agregado a tu Vocabulary Vault");
+                    });
+                  });
+                }}
+                variant="secondary"
+                size="md"
+                className="ml-auto"
+                title="Save this explanation to review later"
+              >
+                <Plus size={16} className="mr-1" />
+                Add to Vault
               </Button>
             ) : null}
 

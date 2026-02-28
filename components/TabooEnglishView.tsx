@@ -8,6 +8,7 @@ import {
 import { addGlobalXp } from "../utils/xpStore";
 import { trackAnalyticsEvent } from "../utils/analytics";
 import { playGameSound } from "../utils/audioUtils";
+import { Plus } from "lucide-react";
 
 type TabooLevel = TabooEnglishRound["level"];
 
@@ -286,6 +287,36 @@ const TabooEnglishView: React.FC = () => {
             {submitted && !isComplete ? (
               <Button onClick={handleNext} variant="success" size="lg">
                 Next round
+              </Button>
+            ) : null}
+            {submitted && !isCorrect && round ? (
+              <Button
+                onClick={() => {
+                  import("../utils/srs").then(({ createNewSrsItem }) => {
+                    const deck = JSON.parse(
+                      localStorage.getItem("vocab-vault-deck") || "{}",
+                    );
+                    const newId = `taboo-${Date.now()}`;
+                    deck[newId] = createNewSrsItem(
+                      `Taboo: ${round.targetWord}`,
+                      `Forbidden: ${round.forbiddenWords.join(", ")}`,
+                    );
+                    localStorage.setItem(
+                      "vocab-vault-deck",
+                      JSON.stringify(deck),
+                    );
+
+                    import("./ui/Toast").then(({ toast }) => {
+                      toast.success("Palabra Taboo guardada en tu Vault");
+                    });
+                  });
+                }}
+                variant="secondary"
+                size="md"
+                title="Save this Taboo word to review later"
+              >
+                <Plus size={16} className="mr-1" />
+                Add to Vault
               </Button>
             ) : null}
             {isComplete ? (

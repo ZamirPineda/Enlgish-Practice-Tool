@@ -48,6 +48,9 @@ const CodeSyntaxBuilderView = lazy(
   () => import("./components/CodeSyntaxBuilderView"),
 );
 const CodeBugHunterView = lazy(() => import("./components/CodeBugHunterView"));
+const DiplomaticReviewerView = lazy(
+  () => import("./components/DiplomaticReviewerView"),
+);
 
 const ONBOARDING_STEPS = [
   {
@@ -287,6 +290,10 @@ const AnimatedRoutes = ({
         <Route path="/docs" element={<StudyDocsView />} />
         <Route path="/syntax-builder" element={<CodeSyntaxBuilderView />} />
         <Route path="/bug-hunter" element={<CodeBugHunterView />} />
+        <Route
+          path="/diplomatic-reviewer"
+          element={<DiplomaticReviewerView />}
+        />
         <Route
           path="/settings"
           element={

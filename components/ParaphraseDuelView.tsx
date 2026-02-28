@@ -8,6 +8,7 @@ import {
 import { addGlobalXp } from "../utils/xpStore";
 import { trackAnalyticsEvent } from "../utils/analytics";
 import { playGameSound } from "../utils/audioUtils";
+import { Plus } from "lucide-react";
 
 type DuelLevel = ParaphraseDuelRound["level"];
 
@@ -288,6 +289,36 @@ const ParaphraseDuelView: React.FC = () => {
             {submitted && !isComplete ? (
               <Button onClick={handleNext} variant="success" size="lg">
                 Next round
+              </Button>
+            ) : null}
+            {submitted && !isCorrect && round ? (
+              <Button
+                onClick={() => {
+                  import("../utils/srs").then(({ createNewSrsItem }) => {
+                    const deck = JSON.parse(
+                      localStorage.getItem("vocab-vault-deck") || "{}",
+                    );
+                    const newId = `para-${Date.now()}`;
+                    deck[newId] = createNewSrsItem(
+                      `Paraphrase: ${round.sentence}`,
+                      `Accepted: ${round.acceptedAnswers[0]}`,
+                    );
+                    localStorage.setItem(
+                      "vocab-vault-deck",
+                      JSON.stringify(deck),
+                    );
+
+                    import("./ui/Toast").then(({ toast }) => {
+                      toast.success("Frase agregada a tu Vocabulary Vault");
+                    });
+                  });
+                }}
+                variant="secondary"
+                size="md"
+                title="Save this paraphrase to review later"
+              >
+                <Plus size={16} className="mr-1" />
+                Add to Vault
               </Button>
             ) : null}
             {isComplete ? (
