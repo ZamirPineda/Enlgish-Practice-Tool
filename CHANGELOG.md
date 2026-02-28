@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.18.1](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.18.0...english-practice-pal-v1.18.1) (2026-02-28)
+
+
+### Bug Fixes
+
+* **deps:** remediate npm audit vulnerabilities in lockfile ([f0360a5](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/f0360a5167269271af623034d986d899b8835983))
+* **deps:** resolve npm audit high vulnerabilities via lockfile updates ([6ead8af](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/6ead8af5d5a03f48da3f8f5f7ca71525dcada06e))
+* **deps:** resolve npm audit high/moderate findings in lockfile ([1416c81](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/1416c818294d05ab4261803e09bfaa186c591f96))
+* remove risky react chunk split causing blank production screen ([1cc1c51](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/1cc1c51325596f4bad76c4e8f87d424d5740bc02))
+* resolve blank page by making Vite base path environment-aware ([f86d9bb](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/f86d9bb482ad095a1c341c8654b36db932db1f07))
+* resolve npm audit high vulnerabilities in lockfile ([ffc89c2](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/ffc89c2185aba9e7013c26b3411665ea1b30cf17))
+* resolve npm audit high vulnerabilities in lockfile ([1065cc4](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/1065cc460aa361d7b23bfc668ee3cd6e978b1edd))
+* resolve npm audit vulnerabilities in lockfile ([a2bf2fa](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/a2bf2fad0e141c908f840e363064ee12359cd69e))
+* satisfy rollup manualChunks meta args in vite config test ([2416deb](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/2416deba15f6d0d50acfa798cb58be64c94faa83))
+
 ## [1.18.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.17.0...english-practice-pal-v1.18.0) (2026-02-24)
 
 
