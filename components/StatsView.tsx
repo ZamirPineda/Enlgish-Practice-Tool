@@ -13,6 +13,25 @@ import { useGlobalXp } from "../utils/xpStore";
 import { getRankForLevel } from "../utils/levelRanks";
 import Heatmap from "./Heatmap";
 import ViewToolbar from "./ui/ViewToolbar";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  BarChart,
+  Bar,
+} from "recharts";
+import {
+  buildDailyActivityData,
+  buildGameDistributionData,
+} from "../utils/chartData";
 
 const VAULT_DECK_KEY = "vocab-vault-deck";
 const VAULT_PROGRESS_KEY = "vocab-vault-progress";
@@ -235,6 +254,7 @@ const ClockIcon = () => (
 
 const StatsView: React.FC = () => {
   const currentWeekKey = getIsoWeekKey(new Date());
+  const [activeTab, setActiveTab] = useState<"overview" | "charts">("overview");
   const [analyticsRange, setAnalyticsRange] = useState<"week" | "30d">("week");
   const [selectedErrorGame, setSelectedErrorGame] = useState<string>("all");
 
@@ -354,6 +374,15 @@ const StatsView: React.FC = () => {
     );
   }, [analyticsErrorBreakdown, selectedErrorGame]);
 
+  const dailyActivityData = useMemo(
+    () => buildDailyActivityData(analyticsEvents, 14),
+    [analyticsEvents],
+  );
+  const gameDistributionData = useMemo(
+    () => buildGameDistributionData(filteredAnalytics),
+    [filteredAnalytics],
+  );
+
   const sessionStartsDelta =
     analyticsSummary.session_start - previousAnalyticsSummary.session_start;
   const sessionEndsDelta =
@@ -396,6 +425,21 @@ const StatsView: React.FC = () => {
           }
         />
 
+        <div className="flex bg-surface-2 p-1 rounded-xl w-fit">
+          <button
+            onClick={() => setActiveTab("overview")}
+            className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "overview" ? "bg-surface-1 text-text-primary shadow-sm" : "text-text-muted hover:text-text-primary"}`}
+          >
+            Overview
+          </button>
+          <button
+            onClick={() => setActiveTab("charts")}
+            className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "charts" ? "bg-surface-1 text-text-primary shadow-sm" : "text-text-muted hover:text-text-primary"}`}
+          >
+            Stats for Nerds
+          </button>
+        </div>
+
         {metrics.totalCards === 0 ? (
           <section className="bg-surface-1 border border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center animate-fade-in shadow-xl shadow-black/5">
             <div className="w-24 h-24 bg-surface-2 rounded-full flex items-center justify-center mb-6 shadow-inner ring-4 ring-surface-1">
@@ -417,7 +461,7 @@ const StatsView: React.FC = () => {
               Start first session
             </Link>
           </section>
-        ) : (
+        ) : activeTab === "overview" ? (
           <>
             {/* Top KPI Cards */}
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -873,6 +917,155 @@ const StatsView: React.FC = () => {
               </div>
             </div>
           </>
+        ) : (
+          <div className="space-y-6 animate-fade-in">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Daily Activity Chart */}
+              <section className="bg-surface-1 border border-border rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-lg font-black text-text-primary">
+                      Playtime Trend
+                    </h2>
+                    <p className="text-sm text-text-muted">
+                      Total interactions over the last 14 days
+                    </p>
+                  </div>
+                </div>
+                <div className="h-72 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart
+                      data={dailyActivityData}
+                      margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                    >
+                      <defs>
+                        <linearGradient
+                          id="colorAttempts"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#38bdf8"
+                            stopOpacity={0.3}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#38bdf8"
+                            stopOpacity={0}
+                          />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        stroke="#334155"
+                        vertical={false}
+                      />
+                      <XAxis
+                        dataKey="date"
+                        stroke="#94a3b8"
+                        fontSize={12}
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <YAxis
+                        stroke="#94a3b8"
+                        fontSize={12}
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "#1e293b",
+                          borderColor: "#334155",
+                          borderRadius: "12px",
+                          color: "#f8fafc",
+                        }}
+                        itemStyle={{ color: "#38bdf8" }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="attempts"
+                        stroke="#38bdf8"
+                        strokeWidth={3}
+                        fillOpacity={1}
+                        fill="url(#colorAttempts)"
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </section>
+
+              {/* Game Distribution Pie Chart */}
+              <section className="bg-surface-1 border border-border rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-lg font-black text-text-primary">
+                      Game Distribution
+                    </h2>
+                    <p className="text-sm text-text-muted">
+                      Where you spend your time
+                    </p>
+                  </div>
+                </div>
+                {gameDistributionData.length === 0 ? (
+                  <div className="h-72 w-full flex items-center justify-center">
+                    <p className="text-text-muted text-sm font-bold">
+                      No game data yet.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="h-72 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={gameDistributionData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={90}
+                          paddingAngle={5}
+                          dataKey="value"
+                          animationDuration={1000}
+                        >
+                          {gameDistributionData.map((entry, index) => (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={entry.fill}
+                              stroke="rgba(255,255,255,0.05)"
+                              strokeWidth={2}
+                            />
+                          ))}
+                        </Pie>
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: "#1e293b",
+                            borderColor: "#334155",
+                            borderRadius: "12px",
+                            color: "#f8fafc",
+                          }}
+                        />
+                        <Legend
+                          verticalAlign="bottom"
+                          height={36}
+                          iconType="circle"
+                          formatter={(value) => (
+                            <span
+                              style={{ color: "#cbd5e1", fontSize: "13px" }}
+                            >
+                              {value}
+                            </span>
+                          )}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
+              </section>
+            </div>
+          </div>
         )}
       </div>
     </div>
