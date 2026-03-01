@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.18.2](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.18.1...english-practice-pal-v1.18.2) (2026-03-01)
+
+
+### Bug Fixes
+
+* **ci:** setup pnpm before setup-node cache ([7dcde6e](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/7dcde6e598919601c8b25c187cfdb096a6d8ae6b))
+* **ci:** use packageManager pnpm version in actions ([6de0e6c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/6de0e6c2e92333b68b87fc2dadf4c0f224829d63))
+* **security:** remediate pnpm audit high vulnerabilities ([fb78383](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/fb78383052b5638072b9a9adb2c0c3829ec5eba0))
+
 ## [1.18.1](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.18.0...english-practice-pal-v1.18.1) (2026-02-28)
 
 ### Bug Fixes
