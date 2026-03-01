@@ -1348,12 +1348,14 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 accept="application/json,.json"
                 onChange={handleImportFile}
                 className="w-full mb-4 text-sm text-text-secondary"
+                aria-label="Upload JSON backup file"
               />
               <textarea
                 value={importText}
                 onChange={(e) => setImportText(e.target.value)}
                 placeholder="Paste code here..."
                 className="w-full h-32 bg-surface-2 border border-border rounded-2xl p-4 text-text-primary text-xs font-mono mb-4 focus:ring-2 focus:ring-focus outline-none"
+                aria-label="Paste JSON backup code"
               />
               <Button
                 onClick={handleImport}
