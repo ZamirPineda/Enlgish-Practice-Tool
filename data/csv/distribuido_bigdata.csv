@@ -1,0 +1,99 @@
+¿Qué arquitectura utiliza Hadoop para el almacenamiento y la computación distribuida?,"Utiliza una arquitectura 'shared nothing' (nada compartido), donde cada nodo tiene su propia CPU, almacenamiento y memoria."
+"En Hadoop, ¿qué componente se encarga del almacenamiento distribuido de datos?","El HDFS (Hadoop Distributed File System), que divide y almacena los datos en múltiples 'Data Nodes'."
+El componente de Hadoop responsable de la negociación de recursos y la distribución de código a los nodos de datos es _____.,YARN (Yet Another Resource Negotiator).
+"Según el teorema CAP, ¿qué dos propiedades garantiza un sistema de base de datos CP durante una partición de red?",Consistencia (Consistency) y Tolerancia a la Partición (Partition Tolerance).
+"¿Qué dos propiedades garantiza un sistema de base de datos AP, como Apache Cassandra, según el teorema CAP?",Disponibilidad (Availability) y Tolerancia a la Partición (Partition Tolerance).
+¿Cómo se clasifica MongoDB según el teorema CAP por defecto?,Se clasifica como un sistema CP (Consistencia y Tolerancia a la Partición).
+"En Apache Cassandra, ¿qué fórmula se debe cumplir para lograr una consistencia fuerte en las operaciones?","La suma de los niveles de consistencia de lectura (R) y escritura (W) debe ser mayor que el factor de replicación (N), es decir, R + W > N."
+Término: Consistencia eventual (Eventual Consistency),"Definición: Un modelo de consistencia en sistemas distribuidos que garantiza que, si no se realizan nuevas actualizaciones, todas las réplicas eventualmente convergerán al mismo valor."
+"En el contexto de bases de datos NoSQL, ¿qué es un modelo de datos de 'documento'?","Un modelo donde los datos se almacenan como documentos estructurados, típicamente en formato JSON o BSON, como en MongoDB."
+¿Qué modelo de datos utiliza Apache Cassandra y HBase?,"Utilizan un modelo de datos de 'columna ancha' (wide-column), donde las filas pueden tener diferentes números de columnas."
+"La arquitectura de Apache Cassandra se describe como _____, donde no hay un nodo maestro y todos los nodos son iguales.",peer-to-peer (entre pares)
+¿Qué arquitectura utiliza MongoDB para su replicación de datos?,"Utiliza un modelo primario/secundario (primary/secondary), donde un nodo primario maneja todas las operaciones de escritura."
+"En MongoDB, el proceso de distribuir grandes conjuntos de datos en múltiples máquinas se conoce como _____.",Sharding (fragmentación).
+"¿Cuál base de datos, Cassandra o HBase, generalmente ofrece un mejor rendimiento en operaciones de escritura y por qué?","Cassandra, porque puede escribir datos en el 'commit log' y en la 'memtable' simultáneamente, mientras que HBase requiere pasos adicionales a través de ZooKeeper."
+¿Por qué HBase suele tener un mejor rendimiento de lectura que Cassandra?,"Porque HBase escribe todos los datos en un único servidor (primario por región) y utiliza el HDFS con filtros bloom y cachés de bloques, acelerando la recuperación."
+Término: Procesamiento de flujos (Stream Processing),Definición: Un sistema de procesamiento de datos diseñado para manejar flujos continuos de datos en tiempo real o casi real.
+¿Cuál es la principal diferencia entre el modelo de procesamiento de Apache Spark Streaming y Apache Flink?,"Spark Streaming utiliza micro-lotes (micro-batching), mientras que Flink procesa los eventos uno por uno (true event-at-a-time)."
+"En el procesamiento de flujos, ¿qué significa 'stateful processing' (procesamiento con estado)?",Es la capacidad de un motor de streaming para recordar información (estado) a través de múltiples eventos para realizar operaciones como agregaciones o uniones.
+¿Qué mecanismo utilizan Flink y Spark para garantizar la tolerancia a fallos en el procesamiento con estado?,"Utilizan 'checkpointing', que guarda periódicamente una instantánea del estado de la aplicación y su posición en las fuentes de entrada."
+El mecanismo en los sistemas de streaming que maneja situaciones donde los productores generan datos más rápido de lo que los consumidores pueden procesarlos se llama _____.,Backpressure (contrapresión).
+"¿Qué garantía de entrega es el estándar de oro en el procesamiento de flujos, asegurando que cada evento se procesa solo una vez?",La semántica 'exactly-once' (exactamente una vez).
+"En Apache Storm, ¿cuál es el nombre del componente que actúa como fuente de los flujos de datos en una topología?",Un 'Spout'.
+"En una topología de Apache Storm, un _____ procesa los flujos de tuplas entrantes, realiza cálculos y puede emitir nuevas tuplas.",Bolt
+¿Para qué tipo de caso de uso es Apache Flink generalmente considerado superior a Apache Spark?,Para aplicaciones que requieren un procesamiento de flujos de latencia ultra baja (milisegundos) y un manejo de estado complejo.
+Término: Arquitectura de Kafka,Definición: Una plataforma de streaming de eventos distribuida basada en un 'commit log' (registro de confirmaciones) distribuido.
+"En Kafka, ¿cómo se llaman los flujos de registros con nombre a los que los productores escriben y los consumidores leen?",Topics (temas).
+"Para lograr escalabilidad y paralelismo, los 'topics' de Kafka se dividen en múltiples _____.",Partitions (particiones).
+"En Kafka, el desacoplamiento de productores y consumidores permite que múltiples consumidores procesen datos de forma _____ sin impactarse entre sí.",independiente
+¿Cuál es la principal diferencia arquitectónica entre Apache Kafka y Apache Pulsar en cuanto al almacenamiento?,"Kafka acopla el servicio y el almacenamiento en los 'brokers', mientras que Pulsar los desacopla, usando Apache BookKeeper para el almacenamiento persistente."
+¿Qué sistema de mensajería tradicional implementa el protocolo AMQP 0-9-1 y opera con un sistema de entrega basado en 'push'?,RabbitMQ.
+"En comparación con Kafka y Pulsar, ¿cuál es la principal limitación de RabbitMQ para casos de uso de 'event streaming' a gran escala?",RabbitMQ está diseñado para retener mensajes por un corto tiempo y carece de primitivas de sistemas distribuidos como el consumo paralelo ordenado.
+¿Qué servicio de coordinación distribuida utiliza Kafka para gestionar y coordinar los 'brokers' en versiones anteriores a KRaft?,Apache ZooKeeper.
+Término: Quorum (en sistemas distribuidos),Definición: El número mínimo de servidores requeridos para que un servicio distribuido (como ZooKeeper) funcione y almacene datos de manera segura.
+¿Qué algoritmo de consenso utilizan etcd y Consul para garantizar la consistencia distribuida?,El algoritmo Raft.
+¿Cuál es la principal diferencia de enfoque entre Consul y etcd?,"Consul ofrece un paquete completo con descubrimiento de servicios, chequeo de salud y soporte multi-datacenter, mientras que etcd se enfoca en ser un almacén clave-valor simple y confiable."
+¿Qué herramienta de coordinación es la base de datos de facto para los clústeres de Kubernetes?,etcd.
+La capacidad de Consul para descubrir servicios usando consultas estándar de DNS se logra a través de su _____ integrado.,interfaz DNS
+"En la comparación entre HBase y Cassandra, ¿cuál depende de un sistema externo (HDFS) para sus capacidades de almacenamiento de datos?",HBase.
+El protocolo de comunicación peer-to-peer que utiliza Cassandra para que los nodos intercambien información sobre el estado del clúster se llama _____.,gossip protocol
+Término: Delta Lake,"Definición: Una capa de almacenamiento de código abierto que aporta transacciones ACID, manejo escalable de metadatos y unifica el procesamiento de datos en streaming y por lotes a los data lakes."
+¿Qué plataforma de análisis unificado proporciona herramientas y servicios integrados sobre Delta Lake?,Databricks.
+Snowflake se describe como una base de datos de _____ (procesamiento masivo en paralelo) totalmente relacional y compatible con ACID.,MPP (Massively Parallel Processing)
+"En la arquitectura de Snowflake, ¿cómo se logra la escalabilidad independiente de almacenamiento y cómputo?","El almacenamiento es centralizado en la nube, mientras que el cómputo se realiza en 'Virtual Warehouses' independientes que pueden escalarse por separado."
+¿Cuál es la principal diferencia en el modelo de procesamiento de datos entre Apache Hadoop (MapReduce) y Apache Spark?,"Hadoop MapReduce escribe los resultados intermedios en disco, mientras que Spark aprovecha el cómputo en memoria, haciéndolo mucho más rápido para tareas iterativas."
+"A diferencia de la arquitectura 'shared-disk' de Oracle RAC, la arquitectura 'shared-nothing' de Oracle Sharding proporciona _____ y aislamiento de fallos.",escalabilidad lineal
+¿Qué característica de Apache Flink le permite manejar estados de aplicación masivos de manera eficiente?,Su método de checkpointing asíncrono e incremental.
+"El motor de búsqueda y análisis distribuido de código abierto construido sobre Apache Lucene, ideal para analítica de logs y búsqueda de texto completo, es _____.",Elasticsearch.
+Redis es un almacén de datos en memoria de tipo _____ diseñado para un acceso de muy baja latencia.,clave-valor (key-value)
+¿Cuál es el propósito principal de la 'frozen tier' en la arquitectura de Elasticsearch?,"Optimizar la relación costo-rendimiento almacenando datos históricos en almacenamiento de objetos más económico, manteniéndolos consultables."
+"En Spark Structured Streaming, para aplanar un campo JSON anidado como `company_info.name` a un campo de nivel superior `company_name`, ¿qué método se utiliza?",Se utiliza el método `select` especificando la ruta completa del campo anidado y un alias.
+"Para realizar la deduplicación de datos en un DataFrame de Spark Streaming basado en la columna 'symbol', se usa el método _____.","`.dropDuplicates(""symbol"")`"
+"En Flink SQL, ¿cómo se realiza la deduplicación para obtener la primera fila por cada valor distinto en la columna 'symbol'?",Usando una subconsulta con la función de ventana `ROW_NUMBER()` particionada por 'symbol' y ordenada por 'proctime'.
+Término: Apache Ignite,"Definición: Una plataforma de computación en memoria que ofrece un data grid, compute grid, y streaming grid, permitiendo escalar aplicaciones sin reemplazar las bases de datos existentes."
+Una de las características clave de Apache Ignite que lo diferencia de Spark es su capacidad para _____ en memoria.,compartir estado (share state)
+"En la arquitectura 'shared-nothing', ¿cómo se evita que los recursos compartidos se conviertan en un cuello de botella?","Cada nodo es independiente y no comparte recursos como CPU, memoria o almacenamiento en disco, eliminando puntos únicos de fallo."
+La técnica fundamental para que cada nodo en una arquitectura 'shared-nothing' sea independiente es la _____ de datos.,partición o sharding
+¿Qué ventaja principal ofrece Apache Pulsar en entornos multi-tenant en comparación con Kafka?,"Pulsar fue diseñado desde el principio con soporte para multi-tenancy, ofreciendo un fuerte aislamiento entre tenants."
+"En Kafka Streams, un almacén de estado local generalmente está respaldado por _____ o mapas hash en memoria.",RocksDB
+¿Qué componente del ecosistema Hadoop contiene las bibliotecas y utilidades Java esenciales necesarias para los otros módulos?,Hadoop Common.
+"El modelo de programación original para el procesamiento de datos en Hadoop, que consta de una fase Map y una fase Reduce, es _____.",MapReduce.
+¿Qué es la 'localidad de datos' (Data Locality) en Hadoop?,"Es el principio de mover el cómputo a donde están los datos, en lugar de mover grandes volúmenes de datos a través de la red hacia el cómputo."
+"En la arquitectura de Presto/Trino, ¿cuál es la función del nodo 'Coordinator'?","Recibir consultas SQL, analizarlas, planificar la ejecución distribuida y agregar los resultados finales de los nodos 'Worker'."
+La capacidad de Presto/Trino para consultar datos de múltiples fuentes diferentes dentro de una sola consulta se conoce como _____.,consultas federadas (federated queries)
+"¿Qué sistema de almacenamiento de objetos especializado, desplegado como un único binario y con soporte nativo para la API S3, se enfoca en la simplicidad y el rendimiento?",MinIO.
+"A diferencia de MinIO, ¿qué plataforma de almacenamiento unificada proporciona almacenamiento de bloques, archivos y objetos en un solo sistema?",Ceph.
+"El principio de consenso distribuido que siguen algoritmos como Paxos y Raft, que requiere un _____ para confirmar un valor, es fundamental para su fiabilidad.",voto mayoritario del quórum (quorum majority vote)
+¿Cuál es la principal desventaja de la arquitectura de replicación activa-activa en bases de datos?,Las escrituras en múltiples réplicas pueden entrar en conflicto y causar problemas de consistencia de datos.
+Término: Kafka Connect,"Definición: Un framework para construir y ejecutar productores y consumidores de datos reutilizables que conectan Kafka con otros sistemas como bases de datos, almacenes clave-valor y sistemas de búsqueda."
+¿Qué biblioteca de Kafka permite a los desarrolladores implementar aplicaciones cliente elásticas y escalables para el procesamiento de flujos?,Kafka Streams.
+"En ZooKeeper, la estructura de datos que utiliza para la coordinación es un _____ jerárquico distribuido.",sistema de archivos (file system)
+"Las unidades de datos en el sistema de archivos de ZooKeeper, análogas a los archivos y directorios, se denominan _____.",znodes
+¿Qué servicio gestionado de AWS es equivalente a Apache Hadoop para el procesamiento de big data?,AWS EMR (Elastic MapReduce).
+"El servicio de Google Cloud que simplifica el procesamiento de datos tanto en tiempo real como por lotes, de manera serverless, es _____.",Google Cloud Dataflow.
+¿Qué servicio de Microsoft Azure está diseñado para analizar y procesar grandes volúmenes de datos en vivo de diversas fuentes?,Microsoft Azure Stream Analytics.
+"En el contexto de Kafka, ¿qué son los ISR (In-Sync Replicas)?",Son el conjunto de réplicas que están completamente al día con el líder de una partición.
+"El reemplazo de ZooKeeper en las arquitecturas modernas de Kafka, que utiliza el consenso Raft para la gestión de metadatos, se conoce como _____.",KRaft (Kafka Raft metadata mode).
+Para qué caso de uso se recomienda principalmente MongoDB?,"Para casos de uso centrados en documentos con esquemas flexibles, que se benefician de la agilidad del desarrollador y una fuerte consistencia."
+¿Qué caso de uso es ideal para Apache Cassandra?,"Cargas de trabajo con muchas escrituras, distribuidas globalmente y de alto rendimiento, donde la disponibilidad y la escalabilidad son críticas."
+"La característica 'Tunable Consistency' de Cassandra permite a los usuarios seleccionar un _____, que establece cuántas réplicas deben confirmar una operación.",nivel de consistencia (consistency level)
+"En la arquitectura de MongoDB, un grupo de instancias que mantienen el mismo conjunto de datos se denomina _____.",replica set (conjunto de réplicas)
+¿Qué es un 'failover' en el contexto de bases de datos como MongoDB?,"Es el proceso automático por el cual, si un nodo primario falla, los nodos secundarios eligen un nuevo primario para continuar las operaciones."
+"En Flink, el término _____ se refiere a la implementación de la infraestructura que gestiona cómo se almacena, accede y recupera el estado.",State Backend
+¿Por qué la capacidad de Apache Ignite para realizar 'joins' distribuidos entre cachés particionadas y replicadas es una característica destacada?,"Porque permite realizar consultas SQL complejas sobre datos distribuidos de manera extremadamente rápida, aprovechando los índices en memoria."
+"En el debate Hazelcast vs. Ignite, ¿cuál de los dos ofrece un soporte más rico y completo para consultas SQL, incluyendo joins distribuidos?",Apache Ignite.
+El enfoque de Apache Ignite para el almacenamiento de datos que ofrece tiempos de respuesta de microsegundos para datos calientes y ratios configurables de memoria a disco se describe como _____.,memory-first (la memoria primero)
+"¿Qué plataforma de microservicios, ideal para crear topologías complejas de pipelines de datos, utiliza aplicaciones Spring Boot?",Spring Cloud Data Flow.
+"El framework de procesamiento de flujos distribuido que crea aplicaciones con estado que pueden procesar datos en tiempo real de diversas fuentes, incluyendo Apache Kafka, es _____.",Apache Samza.
+"En comparación con el procesamiento de flujos, el _____ es más adecuado para trabajos ETL (Extract, Transform, Load) a gran escala y de alta eficiencia.",procesamiento por lotes (batch processing)
+"En un sistema distribuido, ¿por qué es importante un mecanismo de detección de 'deadlocks' (bloqueos mutuos)?","Porque permite identificar y resolver situaciones en las que dos o más procesos se bloquean mutuamente, esperando recursos que el otro posee."
+"La capacidad de Apache Flink para integrar con gestores de recursos de clúster populares como Hadoop YARN, Apache Mesos y Kubernetes le proporciona una amplia _____.",integración (wide-ranging integration)
+¿Cuál es la principal ventaja de la arquitectura 'shared nothing' en términos de tolerancia a fallos?,"La falla de un nodo no afecta a los otros, ya que no hay recursos compartidos que se conviertan en un punto único de fallo."
+"A diferencia de Redis, que es principalmente un almacén clave-valor, ¿qué funcionalidad principal ofrece Elasticsearch?",Ofrece capacidades avanzadas de búsqueda de texto completo y análisis distribuido.
+"En la arquitectura de HBase, ¿qué componente es responsable de coordinar y mantener el estado del clúster?",ZooKeeper.
+¿Qué es la 'replicación' en el contexto de bases de datos distribuidas?,Es el proceso de crear y mantener múltiples copias de los datos en diferentes nodos para garantizar la disponibilidad y la durabilidad.
+"En el contexto de streaming, la diferencia entre 'event time' y 'processing time' es que el primero se basa en el momento en que _____ y el segundo cuando _____.",el evento ocurrió originalmente / el evento es procesado por el sistema
+"¿Qué plataforma se describe como un 'DataOps platform' que ofrece CDC gestionado, pipelines de ETL y transformaciones de SQL en streaming?",Estuary Flow.
+El mecanismo en Kafka que permite el almacenamiento de datos a largo plazo mediante la eliminación o combinación de registros antiguos con la misma clave se conoce como _____.,log compaction (compactación de logs)
+"En un clúster de Oracle RAC, ¿qué componente permite el acceso concurrente a los archivos de la base de datos desde todas las instancias?",Oracle Automatic Storage Management (ASM).
+¿Qué tecnología de Oracle permite la conmutación por error automática y transparente de las conexiones de aplicaciones activas a una instancia superviviente?,Application Continuity (AC).

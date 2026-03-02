@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import { diplomaticRounds, type DiplomaticRound } from "../data/diplomaticData";
@@ -22,6 +22,10 @@ const DiplomaticReviewerView: React.FC = () => {
   }, []);
 
   const [roundIndex, setRoundIndex] = useState(0);
+  const sessionStartTime = useRef<number>(Date.now());
+  useEffect(() => {
+    trackAnalyticsEvent("session_start", { game: "diplomatic_reviewer" });
+  }, []);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(
     null,
   );
@@ -151,6 +155,12 @@ const DiplomaticReviewerView: React.FC = () => {
   };
 
   const handleRestart = () => {
+    trackAnalyticsEvent("session_end", {
+      game: "diplomatic_reviewer",
+      duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+    });
+    sessionStartTime.current = Date.now();
+    trackAnalyticsEvent("session_start", { game: "diplomatic_reviewer" });
     setRoundIndex(0);
     setSelectedOptionIndex(null);
     setSubmitted(false);
@@ -162,6 +172,15 @@ const DiplomaticReviewerView: React.FC = () => {
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
+
+  useEffect(() => {
+    if (isComplete) {
+      trackAnalyticsEvent("session_end", {
+        game: "diplomatic_reviewer",
+        duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+      });
+    }
+  }, [isComplete]);
 
   // Add XP when the game (all 5 rounds) finishes
   useEffect(() => {

@@ -31,6 +31,8 @@ import {
 import {
   buildDailyActivityData,
   buildGameDistributionData,
+  GAME_CATEGORY,
+  getGameFromEvent,
 } from "../utils/chartData";
 
 const VAULT_DECK_KEY = "vocab-vault-deck";
@@ -255,6 +257,9 @@ const ClockIcon = () => (
 const StatsView: React.FC = () => {
   const currentWeekKey = getIsoWeekKey(new Date());
   const [activeTab, setActiveTab] = useState<"overview" | "charts">("overview");
+  const [categoryFilter, setCategoryFilter] = useState<
+    "all" | "english" | "math" | "dev"
+  >("all");
   const [analyticsRange, setAnalyticsRange] = useState<"week" | "30d">("week");
   const [selectedErrorGame, setSelectedErrorGame] = useState<string>("all");
 
@@ -287,32 +292,99 @@ const StatsView: React.FC = () => {
       ),
     [deck, progress, weeklyActivity],
   );
+  const computedWeeklySummary = useMemo(() => {
+    let rawEvents = analyticsEvents;
+
+    // Apply category filter before deriving weekly summary metrics
+    if (categoryFilter !== "all") {
+      rawEvents = rawEvents.filter((event) => {
+        const game = getGameFromEvent(event);
+        const category = GAME_CATEGORY[game] || "english";
+        return category === categoryFilter;
+      });
+    }
+
+    const currentWeekEvents = rawEvents.filter(
+      (event) => getIsoWeekKey(new Date(event.timestamp)) === currentWeekKey,
+    );
+
+    let sessions = 0;
+    let correct = 0;
+    let attempts = 0;
+    let studySeconds = 0;
+
+    currentWeekEvents.forEach((event) => {
+      if (event.name === "session_start") sessions++;
+      if (event.name === "item_correct") {
+        correct++;
+        attempts++;
+      }
+      if (event.name === "item_wrong") {
+        attempts++;
+      }
+      if (
+        event.name === "session_end" &&
+        typeof event.payload.duration === "number"
+      ) {
+        studySeconds += event.payload.duration;
+      }
+    });
+
+    const accuracy = attempts > 0 ? (correct / attempts) * 100 : 0;
+
+    return {
+      sessions,
+      accuracy: Math.round(accuracy),
+      studyMinutes: Math.round(studySeconds / 60),
+    };
+  }, [analyticsEvents, currentWeekKey, categoryFilter]);
+
   const weeklyGoalProgress = Math.min(
     100,
-    (metrics.weeklySummary.sessions / settings.weeklyGoalSessions) * 100,
+    (computedWeeklySummary.sessions / settings.weeklyGoalSessions) * 100,
   );
 
   const filteredAnalytics = useMemo(() => {
+    let result = analyticsEvents;
+
+    if (categoryFilter !== "all") {
+      result = result.filter((event) => {
+        const game = getGameFromEvent(event);
+        const category = GAME_CATEGORY[game] || "english"; // default english
+        return category === categoryFilter;
+      });
+    }
+
     if (analyticsRange === "week") {
-      return analyticsEvents.filter(
+      return result.filter(
         (event) => getIsoWeekKey(new Date(event.timestamp)) === currentWeekKey,
       );
     }
 
     const cutoff = new Date();
     cutoff.setDate(cutoff.getDate() - 30);
-    return analyticsEvents.filter(
+    return result.filter(
       (event) => new Date(event.timestamp).getTime() >= cutoff.getTime(),
     );
-  }, [analyticsEvents, analyticsRange, currentWeekKey]);
+  }, [analyticsEvents, analyticsRange, currentWeekKey, categoryFilter]);
 
   const previousAnalytics = useMemo(() => {
+    let result = analyticsEvents;
+
+    if (categoryFilter !== "all") {
+      result = result.filter((event) => {
+        const game = getGameFromEvent(event);
+        const category = GAME_CATEGORY[game] || "english";
+        return category === categoryFilter;
+      });
+    }
+
     if (analyticsRange === "week") {
       const previousWeekDate = new Date();
       previousWeekDate.setDate(previousWeekDate.getDate() - 7);
       const previousWeekKey = getIsoWeekKey(previousWeekDate);
 
-      return analyticsEvents.filter(
+      return result.filter(
         (event) => getIsoWeekKey(new Date(event.timestamp)) === previousWeekKey,
       );
     }
@@ -323,11 +395,11 @@ const StatsView: React.FC = () => {
     const previousEnd = new Date(now);
     previousEnd.setDate(previousEnd.getDate() - 30);
 
-    return analyticsEvents.filter((event) => {
+    return result.filter((event) => {
       const time = new Date(event.timestamp).getTime();
       return time >= previousStart.getTime() && time < previousEnd.getTime();
     });
-  }, [analyticsEvents, analyticsRange]);
+  }, [analyticsEvents, analyticsRange, categoryFilter]);
 
   const analyticsSummary = useMemo(() => {
     return buildAnalyticsSummary(filteredAnalytics);
@@ -374,10 +446,17 @@ const StatsView: React.FC = () => {
     );
   }, [analyticsErrorBreakdown, selectedErrorGame]);
 
-  const dailyActivityData = useMemo(
-    () => buildDailyActivityData(analyticsEvents, 14),
-    [analyticsEvents],
-  );
+  const dailyActivityData = useMemo(() => {
+    let result = analyticsEvents;
+    if (categoryFilter !== "all") {
+      result = result.filter((event) => {
+        const game = getGameFromEvent(event);
+        const category = GAME_CATEGORY[game] || "english";
+        return category === categoryFilter;
+      });
+    }
+    return buildDailyActivityData(result, 14);
+  }, [analyticsEvents, categoryFilter]);
   const gameDistributionData = useMemo(
     () => buildGameDistributionData(filteredAnalytics),
     [filteredAnalytics],
@@ -425,19 +504,33 @@ const StatsView: React.FC = () => {
           }
         />
 
-        <div className="flex bg-surface-2 p-1 rounded-xl w-fit">
-          <button
-            onClick={() => setActiveTab("overview")}
-            className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "overview" ? "bg-surface-1 text-text-primary shadow-sm" : "text-text-muted hover:text-text-primary"}`}
-          >
-            Overview
-          </button>
-          <button
-            onClick={() => setActiveTab("charts")}
-            className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "charts" ? "bg-surface-1 text-text-primary shadow-sm" : "text-text-muted hover:text-text-primary"}`}
-          >
-            Stats for Nerds
-          </button>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="flex bg-surface-2 p-1 rounded-xl w-fit">
+            <button
+              onClick={() => setActiveTab("overview")}
+              className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "overview" ? "bg-surface-1 text-text-primary shadow-sm" : "text-text-muted hover:text-text-primary"}`}
+            >
+              Overview
+            </button>
+            <button
+              onClick={() => setActiveTab("charts")}
+              className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "charts" ? "bg-surface-1 text-text-primary shadow-sm" : "text-text-muted hover:text-text-primary"}`}
+            >
+              Stats for Nerds
+            </button>
+          </div>
+
+          <div className="flex bg-surface-2 p-1 rounded-xl w-fit">
+            {(["all", "english", "math", "dev"] as const).map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setCategoryFilter(filter)}
+                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all capitalize ${categoryFilter === filter ? "bg-accent text-white shadow-sm" : "text-text-muted hover:text-text-primary"}`}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
         </div>
 
         {metrics.totalCards === 0 ? (
@@ -561,7 +654,7 @@ const StatsView: React.FC = () => {
                     Sessions
                   </p>
                   <p className="text-2xl font-black text-text-primary">
-                    {metrics.weeklySummary.sessions}
+                    {computedWeeklySummary.sessions}
                   </p>
                 </article>
                 <article className="bg-surface-2 border border-border rounded-xl p-4">
@@ -569,7 +662,7 @@ const StatsView: React.FC = () => {
                     Accuracy
                   </p>
                   <p className="text-2xl font-black text-emerald-400">
-                    {metrics.weeklySummary.accuracy}%
+                    {computedWeeklySummary.accuracy}%
                   </p>
                 </article>
                 <article className="bg-surface-2 border border-border rounded-xl p-4">
@@ -577,7 +670,7 @@ const StatsView: React.FC = () => {
                     Study Time
                   </p>
                   <p className="text-2xl font-black text-purple-400">
-                    {metrics.weeklySummary.studyMinutes} min
+                    {computedWeeklySummary.studyMinutes} min
                   </p>
                 </article>
                 <article className="bg-surface-2 border border-border rounded-xl p-4">
@@ -601,7 +694,7 @@ const StatsView: React.FC = () => {
                     Weekly goal progress
                   </p>
                   <p className="text-xs font-bold text-text-secondary uppercase tracking-widest">
-                    {metrics.weeklySummary.sessions} /{" "}
+                    {computedWeeklySummary.sessions} /{" "}
                     {settings.weeklyGoalSessions}
                   </p>
                 </div>

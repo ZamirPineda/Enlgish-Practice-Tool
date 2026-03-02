@@ -1,0 +1,89 @@
+¿Cuál es la abstracción arquitectónica central de Apache Kafka?,Un registro de confirmaciones (commit log) replicado y tolerante a fallos.
+"¿Qué protocolo está diseñado para implementar RabbitMQ, proporcionando un enrutamiento de mensajes flexible y sofisticado?",El Protocolo Avanzado de Puesta en Cola de Mensajes (AMQP).
+¿Para qué tipo de entornos fue concebido principalmente NATS?,Entornos de computación nativos de la nube y de borde (edge computing) que demandan alta velocidad y simplicidad operativa.
+"En la comparación entre Kafka, RabbitMQ y NATS, ¿cuál es descrito como una ""plataforma de streaming distribuida""?",Apache Kafka.
+"RabbitMQ opera como un intermediario inteligente, mientras que Kafka sigue un paradigma de _____, donde el consumidor es el inteligente.",intermediario tonto (dumb broker)
+"A diferencia de Kafka que siempre es una plataforma de streaming duradera, NATS puede actuar como un bus de mensajes de latencia ultrabaja para comunicación _____ y como una plataforma de streaming duradera.",transitoria
+¿Cómo logra el entorno de ejecución de Erlang en RabbitMQ distribuir el trabajo entre todos los núcleos de CPU disponibles sin configuración manual?,"Siempre que el número de colas, conexiones y canales exceda el número de núcleos."
+"Término: Arquitectura de ""nada compartido"" (Shared-nothing) en Erlang.","Definición: Un modelo de procesos ligeros aislados que mejora la tolerancia a fallos, conteniendo el fallo de una conexión individual."
+"¿Qué tipo de recolección de basura utiliza Erlang para minimizar las pausas globales de ""detener el mundo"" (stop-the-world) en RabbitMQ?",Recolección de basura por proceso.
+¿Cuál es la principal diferencia a nivel de protocolo entre AMQP 0-9-1 y AMQP 1.0?,"AMQP 0-9-1 es un protocolo a nivel de aplicación que prescribe el comportamiento del bróker, mientras que AMQP 1.0 es un protocolo a nivel de transporte con menos requisitos semánticos."
+"¿Cuántos procesos de Erlang requería el plugin de AMQP 1.0 en RabbitMQ 3.13 por sesión, en comparación con la implementación nativa en la versión 4.0?","Aproximadamente 15 procesos en la versión 3.13, reducido a un solo proceso en la versión 4.0."
+"¿Qué mecanismo de control de flujo utiliza AMQP 0-9-1, que opera a nivel de canal?",El mecanismo de prefetch `basic.qos`.
+"En AMQP 1.0, el control de flujo se implementa a nivel de enlace (link-level) a través de un sistema basado en _____, donde el receptor concede permiso al emisor para enviar mensajes.",créditos
+"¿Qué tipo de exchange especializado en RabbitMQ utiliza un hash de la clave de enrutamiento para seleccionar exactamente una cola, asegurando el ordenamiento causal?",El Exchange de Hash Consistente (Consistent Hash Exchange).
+¿Qué sistema de almacenamiento de metadatos reemplazó a Mnesia en la serie RabbitMQ 4.x?,Khepri.
+¿Cuál era la principal debilidad de Mnesia como almacén de metadatos en RabbitMQ que llevaba a escenarios de cerebro dividido (split-brain)?,"Su recuperación de fallos durante particiones de red, que asumía que se podían descartar datos de un lado de la partición."
+"En entornos de contenedores como Kubernetes, ¿por qué se desaconseja usar un umbral de memoria relativo (`vm_memory_high_watermark`) para RabbitMQ?",Porque la detección de memoria puede ser poco fiable.
+¿Cuál es la práctica común para configurar el `disk_free_limit` en RabbitMQ en relación con la RAM total?,Establecerlo en 2.0 veces la RAM total para asegurar que el bróker pueda volcar toda su memoria a disco.
+"En el modelo de datos de RabbitMQ, los mensajes son _____ (se eliminan después del consumo), mientras que en Kafka, el consumo es no destructivo a través del seguimiento de desplazamientos (offsets).",destructivos
+Tanto RabbitMQ 4.x (con Quorum Queues/Khepri) como Apache Kafka (con KRaft) utilizan _____ como su protocolo de alta disponibilidad (HA) para el consenso.,Raft
+"¿Qué información, además de los metadatos, no se replica por defecto en todos los nodos de un clúster de RabbitMQ?","Las colas de mensajes, que residen en un solo nodo por defecto."
+¿Qué deben compartir dos nodos de RabbitMQ para poder comunicarse y formar un clúster?,El mismo secreto compartido llamado la cookie de Erlang.
+¿Qué permisos de archivo (en notación UNIX) debe tener el archivo de la cookie de Erlang por seguridad?,"Debe ser accesible solo por el propietario (por ejemplo, permisos `600`)."
+"Cuando una herramienta CLI como `rabbitmqctl` falla la autenticación, una de las sugerencias comunes es un desajuste en el nombre de host o que la _____ no está configurada correctamente.",cookie
+¿Por qué se recomienda encarecidamente un número impar de nodos en un clúster de RabbitMQ?,"Porque características como las colas de quórum requieren un consenso entre los miembros del clúster, lo cual necesita una mayoría clara."
+"Durante un reinicio progresivo de un clúster, ¿qué comando de `rabbitmq-diagnostics` es adecuado como sondeo de salud porque no espera que un nodo esté completamente arrancado y sincronizado?",El comando `rabbitmq-diagnostics ping`.
+"El plugin de _____ permite transmitir mensajes entre brókeres de RabbitMQ que pueden estar en diferentes dominios administrativos, versiones o centros de datos.",Federation
+¿Qué característica clave del plugin de Federation lo hace adecuado para redes de área amplia (WAN)?,Su comunicación es totalmente asíncrona y tolera bien la conectividad intermitente.
+"Para configurar Federation en RabbitMQ, primero se deben definir uno o más _____ y luego se deben declarar una o más políticas que coincidan con los exchanges o colas a federar.",upstreams
+"El modelo de entrega de mensajes de RabbitMQ es `push-based`, donde los mensajes se entregan a los consumidores a medida que están disponibles, a diferencia del modelo `pull-based` de Kafka. Verdadero o Falso?",Verdadero.
+"En una comparación de rendimiento, Kafka generalmente ofrece mayor _____, mientras que RabbitMQ tiene menor _____ para mensajes individuales.",rendimiento (throughput) / latencia (latency)
+¿Qué característica de la UI de gestión de RabbitMQ permite exportar toda la configuración de tiempo de ejecución y topología (pero no los mensajes)?,La función de exportación/importación de topología.
+"¿Qué componente de Prometheus está diseñado para escenarios donde el modelo de extracción (pull) no es factible, como en trabajos por lotes de corta duración?",El Pushgateway.
+Métrica de Canal RabbitMQ: `Unacknowledged message count`,"Definición: El número de mensajes en tránsito, que ya han sido entregados a la aplicación consumidora pero aún no han sido confirmados (acknowledged)."
+Métrica de Canal RabbitMQ: `Consumer prefetch`,Definición: El número máximo de mensajes en tránsito (no confirmados) para cada suscripción de consumidor.
+Métrica de Cola RabbitMQ: `Queue length`,"Definición: El número total de mensajes en la cola, incluidos los mensajes no confirmados (unacknowledged)."
+¿Qué archivo se genera cuando RabbitMQ se bloquea (crashea) y es crucial para la investigación post-mortem?,El archivo de volcado de memoria `erl_crash.dump`.
+¿Qué acción protectora toma RabbitMQ cuando su uso de memoria alcanza la `memory watermark`?,"Activa una alarma de memoria, lo que bloquea a los publicadores y detiene el flujo de mensajes en el clúster."
+El valor por defecto de `vm_memory_high_watermark` en versiones antiguas de RabbitMQ era 0.4 (40%). ¿Por qué se consideró aumentarlo en la versión 4.0?,Porque el valor de 0.4 se consideraba demasiado conservador y un desperdicio de los recursos del sistema con las mejoras en Erlang y RabbitMQ.
+La arquitectura moderna de RabbitMQ aprovecha las colas de quórum con consenso _____ para una mayor fiabilidad.,Raft
+¿Qué dos elementos se replican automáticamente en todos los nodos de un clúster de RabbitMQ?,"Hosts virtuales, exchanges, usuarios y permisos."
+¿Cuál es el propósito de un `Erlang cookie` en RabbitMQ?,Autenticar la comunicación entre los nodos del clúster y entre los nodos y las herramientas de línea de comandos (CLI).
+¿Qué comando de `rabbitmqctl` se utiliza para otorgar permisos a un usuario en un host virtual específico?,El comando `set_permissions`.
+"Si un consumidor recibe un mensaje pero se desconecta antes de confirmarlo (acknowledging), ¿qué hará RabbitMQ con ese mensaje?",Lo considerará no entregado y lo volverá a entregar al siguiente consumidor suscrito disponible.
+"Para que un mensaje sea persistente y sobreviva a un reinicio del bróker en RabbitMQ, ¿qué tres condiciones deben cumplirse?","Debe tener su modo de entrega establecido en 2 (persistente), ser publicado en un exchange duradero y llegar a una cola duradera."
+¿Qué significa poner un canal de RabbitMQ en modo de confirmación (confirm mode)?,"Significa que el bróker confirmará la recepción de los mensajes publicados en ese canal, permitiendo al publicador verificar la entrega."
+"Un nodo de RabbitMQ que almacena todos los metadatos (colas, exchanges, etc.) solo en RAM se llama un nodo _____, mientras que uno que también los guarda en disco se llama un nodo _____.",RAM / disco
+¿En qué escenario de uso es particularmente beneficioso usar nodos RAM en un clúster de RabbitMQ?,"En escenarios con un uso intensivo de RPC, donde se crean y destruyen cientos de colas de respuesta por segundo."
+¿Qué argumento de declaración de cola se utiliza para crear una cola reflejada (mirrored queue) en todas las nodos del clúster?,El argumento `x-ha-policy` con el valor `all`.
+¿Qué herramienta se puede utilizar como balanceador de carga para distribuir conexiones de clientes entre los nodos de un clúster de RabbitMQ?,HAProxy.
+¿Qué componente del runtime de Erlang es responsable de resolver los nombres de los nodos en un host a un puerto de comunicación entre nodos?,epmd (Erlang Port Mapper Daemon).
+"Por defecto, el runtime de Erlang iniciará un _____ por cada núcleo de CPU que detecte para asignar trabajo a los hilos del kernel.",planificador (scheduler)
+¿Qué significa el término `poison pill` en el contexto de las colas de mensajes?,"Un mensaje que causa que un consumidor se bloquee o falle repetidamente, impidiendo el procesamiento de mensajes posteriores en la cola."
+"En el control de flujo de AMQP 1.0, el campo _____ en la trama de flujo (flow frame) informa al consumidor cuántos mensajes están disponibles en la cola.",available
+"Dentro de una conexión AMQP 1.0, un cliente puede iniciar múltiples _____, que son análogas a los canales en AMQP 0.9.1.",sesiones (sessions)
+¿Cuál es la principal filosofía arquitectónica de RabbitMQ en contraste con Kafka?,"RabbitMQ es un bróker de mensajes versátil para distribución fiable de tareas y enrutamiento complejo, mientras que Kafka es un registro distribuido para streaming de datos masivos."
+¿Qué modo de consumo utilizan las `streams` de RabbitMQ que las diferencia de las colas tradicionales?,"Permiten un consumo repetible (lecturas repetibles), similar al modelo de Kafka."
+"Para filtrar mensajes en un `stream` de RabbitMQ del lado del servidor, se puede utilizar un filtro _____, mientras que del lado del cliente se puede aplicar un _____.",Bloom / post-filtro (postFilter)
+"En las expresiones de filtro AMQP para streams de RabbitMQ, los campos no cualificados por defecto se refieren a las _____.",propiedades de la aplicación (application properties)
+¿Qué tres operadores lógicos son totalmente compatibles con las expresiones de filtro AMQP de RabbitMQ?,"AND, OR, y NOT."
+"¿Qué tipo de predicado lógico, que utiliza los comodines '%' y '_', es compatible con los filtros de stream de RabbitMQ?",El predicado `LIKE`.
+¿Qué efecto tiene configurar `+MMscs 1024` como argumento de la VM de Erlang para RabbitMQ?,Pre-asigna un bloque contiguo de memoria de 1 GiB al iniciar el nodo para reducir la fragmentación y la latencia de asignación.
+El límite por defecto del número de procesos de Erlang en un nodo RabbitMQ es de aproximadamente 1 millón. ¿Mediante qué variable de entorno se puede ajustar este límite?,`RABBITMQ_MAX_NUMBER_OF_PROCESSES`.
+"En la salida de herramientas como `top`, ¿cómo se contabilizará típicamente el tiempo que los planificadores de Erlang pasan en espera activa (busy waiting)?",Como tiempo del sistema (system time).
+¿Qué es un `split-brain` en el contexto de sistemas distribuidos como RabbitMQ?,"Es una condición en la que un sistema redundante (maestro/réplica) se divide debido a una falla de comunicación, y ambas partes creen que son el maestro al mismo tiempo."
+"En RabbitMQ, ¿qué componente es responsable de registrar todos los datos que no son mensajes, como usuarios, permisos y definiciones de exchanges y colas?",El almacén de metadatos (metadata store).
+El patrón de desacoplamiento donde un mensaje se publica y el publicador no espera una respuesta se conoce como ____.,dispara y olvida (fire-and-forget)
+"En un clúster de RabbitMQ, la declaración de un exchange o cola en un nodo hace que sus metadatos se repliquen y sean visibles desde _____ los nodos del clúster.",todos
+El patrón de Remote Procedure Call (RPC) sobre RabbitMQ requiere un mecanismo para que el servidor envíe una respuesta de vuelta al cliente. ¿Cómo se logra esto típicamente?,"El cliente crea una cola de respuesta temporal y exclusiva, y pasa su nombre en la propiedad `reply_to` del mensaje de solicitud."
+Término: Exchange de tipo `fanout` en RabbitMQ.,"Definición: Un exchange que enruta una copia de cada mensaje recibido a todas las colas que están vinculadas a él, ignorando la clave de enrutamiento."
+Término: Exchange de tipo `topic` en RabbitMQ.,Definición: Un exchange que enruta mensajes a colas basándose en una coincidencia de patrones entre la clave de enrutamiento del mensaje y el patrón de vinculación de la cola.
+¿Qué comando de la línea de comandos de RabbitMQ te permite ver el estado de los enlaces de federación en un nodo?,`rabbitmqctl federation_status`
+¿Qué sucede con un mensaje publicado en un exchange si no hay ninguna cola vinculada que coincida con su clave de enrutamiento?,El mensaje es descartado (desaparece).
+"La UI de gestión de RabbitMQ se volverá más lenta a medida que aumente el número de conexiones, canales y colas debido a la sobrecarga de _____, filtrado y paginación de los resultados.",agregación
+¿Cuál es un efecto secundario desafortunado de la agregación de métricas de todos los nodos en la UI de gestión durante una partición de red?,"La agregación puede expirar (timeout), haciendo que falten datos cruciales para diagnosticar el impacto de la partición."
+¿A qué se debe la mejora significativa de rendimiento de AMQP 1.0 nativo en RabbitMQ 4.0 en comparación con el antiguo enfoque de plugin?,"Reduce la sobrecarga de ~15 procesos de Erlang a 1 por sesión, disminuyendo drásticamente el uso de memoria y CPU."
+El mecanismo de control de flujo basado en créditos de AMQP 1.0 permite que las aplicaciones consumidoras ajusten dinámicamente cuántos mensajes están dispuestas a recibir de colas específicas. ¿Qué tipo de mecanismo es este?,"Un mecanismo ""pull-based""."
+"¿Qué significa que el consumo en RabbitMQ es ""destructivo""?","Que una vez que un mensaje es consumido y confirmado por un consumidor, se elimina permanentemente de la cola."
+El consumo en Kafka es no destructivo y permite la relectura de mensajes. ¿Cómo logra esto un consumidor?,Haciendo un seguimiento de su posición en el registro (log) mediante un puntero llamado offset.
+"Mientras que Kafka garantiza el orden de los mensajes por _____, RabbitMQ lo garantiza por _____.",partición / cola
+Término: Quorum Queues en RabbitMQ.,Definición: Un tipo de cola replicada moderna que utiliza el protocolo Raft para enfocarse en la seguridad de los datos y la alta disponibilidad.
+"En una topología de clúster de RabbitMQ, ¿qué datos son replicados en todos los nodos por defecto?","Todos los datos y estados requeridos para la operación del bróker, como usuarios, vhosts, permisos, exchanges y políticas, con la excepción de los mensajes en las colas."
+"Si el archivo de la cookie de Erlang se coloca incorrectamente o su valor no coincide entre nodos, ¿qué error de distribución de Erlang es probable que ocurra?","Un error de autenticación, a menudo con el mensaje `TCP connection succeeded but Erlang distribution failed`."
+"En el plugin Federation de RabbitMQ, los enlaces pueden ser unidireccionales o bidireccionales y se configuran mediante _____ que definen cómo conectarse a otros nodos.",upstreams
+"A diferencia de un clúster que requiere enlaces LAN fiables, el plugin _____ de RabbitMQ está diseñado para ser amigable con la WAN y tolerar conectividad intermitente.",Federation
+¿Qué son los `feature flags` en RabbitMQ?,Permiten a RabbitMQ coordinar cómo se despliegan las nuevas características introducidas durante y después de una actualización.
+"Si la tasa de mensajes entrantes a una cola de RabbitMQ es consistentemente más alta que la tasa de mensajes salientes, ¿qué problema indica esto?",Que no hay consumidores conectados a la cola o que los consumidores no pueden mantener el ritmo de la carga.
+"RabbitMQ utiliza el runtime de Erlang, que tiene un límite en el número de procesos ligeros. ¿Qué puede requerir un ajuste de este límite?",Un número particularmente alto de conexiones concurrentes o un número muy grande de colas.
+¿Qué opción de configuración del runtime de Erlang deshabilita la espera activa especulativa para reducir el uso de CPU en sistemas con recursos limitados?,`+sbwt none`.

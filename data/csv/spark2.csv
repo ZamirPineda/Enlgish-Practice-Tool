@@ -1,0 +1,98 @@
+¿Qué es Apache Spark?,Un motor de computación unificado y un conjunto de librerías para el procesamiento de datos en paralelo en clústeres de computadoras.
+¿Qué es un RDD (Resilient Distributed Dataset)?,"Una colección de elementos distribuida, tolerante a fallos, que puede ser operada en paralelo."
+¿Cuáles son los dos tipos principales de operaciones en los RDDs?,Transformaciones y acciones.
+"En Spark, una transformación que devuelve un nuevo RDD con un elemento por cada elemento de entrada es _____.",map()
+¿Qué hace la transformación `filter()` en un RDD?,Devuelve un nuevo RDD que contiene solo los elementos del RDD original que cumplen una condición.
+¿Cuál es la diferencia entre `map()` y `flatMap()`?,"`flatMap()` puede producir múltiples elementos de salida por cada elemento de entrada, mientras que `map()` produce solo uno."
+¿Cuál es el propósito de una 'acción' en Spark?,Desencadenar el cálculo en un RDD y devolver un resultado al programa driver o escribirlo en un almacenamiento externo.
+¿Qué hace el método `persist()` o `cache()` en un RDD o DataFrame?,Solicita a Spark que mantenga el conjunto de datos en memoria (o en disco) a través de las operaciones para un acceso más rápido.
+Concepto: Pair RDD,"Definición: Un RDD que contiene tuplas clave-valor, lo que permite operaciones especiales como `reduceByKey()` y `join()`."
+¿Qué hace la transformación `reduceByKey()` en un pair RDD?,Agrega los valores para cada clave usando una función asociativa y conmutativa.
+¿Cuál es la diferencia de rendimiento clave entre `reduceByKey` y `groupByKey`?,"`reduceByKey` realiza una agregación parcial en cada nodo trabajador antes del 'shuffle', mientras que `groupByKey` transfiere todos los valores para una clave a un solo nodo."
+¿Qué es un 'schema' en el contexto de un DataFrame de Spark?,Una estructura que define los nombres de las columnas y sus tipos de datos.
+El principal punto de entrada para la funcionalidad de DataFrame y SQL en Spark 2.0 y superior es el objeto _____.,SparkSession
+¿Cómo se crea una vista temporal a partir de un DataFrame para poder consultarla con SQL?,"Usando el método `createOrReplaceTempView(""nombre_vista"")`."
+¿Cuáles son los dos tipos de transformaciones en Spark Streaming (DStreams)?,Transformaciones sin estado (stateless) y con estado (stateful).
+Un DStream (Discretized Stream) es una secuencia de _____ que llegan a lo largo del tiempo.,RDDs
+¿Cuál es el propósito del 'checkpointing' en Spark Streaming?,Guardar periódicamente el estado en un sistema de archivos fiable para permitir la recuperación tras un fallo del driver.
+Concepto: Transformación sin estado (Stateless),"Definición: Una transformación en streaming donde el procesamiento de cada lote no depende de los datos de lotes anteriores (ej: `map()`, `filter()`)."
+Concepto: Transformación con estado (Stateful),Definición: Una transformación en streaming que utiliza datos o estado intermedio de lotes anteriores para generar los resultados del lote actual (ej: `updateStateByKey()`).
+¿Qué función se utiliza para realizar operaciones sobre un intervalo de tiempo deslizante en un DStream?,La transformación `window()`.
+"En MLlib, ¿qué objeto representa un punto de datos para algoritmos de aprendizaje supervisado, conteniendo características y una etiqueta?",Un objeto `LabeledPoint`.
+¿Cuál es la diferencia entre un vector denso y un vector disperso (sparse) en MLlib?,"Un vector denso almacena todos sus valores, mientras que un vector disperso almacena solo los valores no nulos y sus índices."
+¿Para qué se utiliza una variable de 'broadcast' en Spark?,Para enviar eficientemente una variable grande de solo lectura a todos los nodos de trabajo para su uso en una o más operaciones de Spark.
+¿Para qué se utiliza un 'acumulador' (accumulator) en Spark?,"Para agregar valores de los nodos de trabajo de vuelta al programa driver de forma eficiente y tolerante a fallos, como contadores o sumas."
+¿En qué tipo de operación de Spark se deben usar los acumuladores para un conteo fiable y de valor absoluto?,"Deben usarse dentro de una acción, como `foreach()`, para garantizar que la actualización de cada tarea se aplique solo una vez."
+¿Qué hace `coalesce()` y en qué se diferencia de `repartition()`?,"`coalesce()` reduce el número de particiones y evita un 'shuffle' completo, mientras que `repartition()` puede aumentar o disminuir las particiones e siempre incurre en un 'shuffle' completo."
+¿Qué es una UDF (User-Defined Function) en Spark?,Una función creada por el usuario que se puede registrar y utilizar en consultas de Spark SQL o con DataFrames para realizar transformaciones personalizadas.
+¿Cuál es el propósito del optimizador Catalyst en Spark SQL?,"Traducir las consultas de DataFrames, Datasets y SQL a un plan de ejecución físico optimizado que se ejecuta sobre RDDs."
+¿Qué es un 'cross-join' (o producto cartesiano) y por qué debe usarse con precaución?,"Es una unión que combina cada fila de la tabla izquierda con cada fila de la tabla derecha, lo que puede provocar una explosión en el número de filas del resultado."
+"Mencione dos de las seis fuentes de datos ""centrales"" soportadas por Spark.","CSV, JSON, Parquet, ORC, JDBC y archivos de texto."
+¿Para qué se utiliza la opción `inferSchema` al leer fuentes de datos como CSV?,Para que Spark analice automáticamente los datos y deduzca los tipos de datos de cada columna.
+¿Qué es el formato de archivo Parquet y por qué es popular en el ecosistema de big data?,Es un formato de almacenamiento columnar que es eficiente para consultas analíticas porque puede leer solo las columnas necesarias.
+"En Structured Streaming, ¿qué es un 'output sink'?","Es el destino donde se escriben los resultados de una consulta de streaming, como un sistema de archivos, Kafka o una tabla en memoria."
+¿Qué significa el modo de salida 'complete' en Structured Streaming?,"Que en cada disparo (trigger), se reescribe toda la tabla de resultados actualizada en el 'sink'."
+"En Structured Streaming, ¿qué es un 'trigger' (disparador)?","Define cuándo se procesan los datos y se actualizan los resultados, por ejemplo, cada cierto intervalo de tiempo o tan pronto como lleguen nuevos datos."
+¿Qué es el 'event time' en el procesamiento de flujos y por qué es importante?,"Es la marca de tiempo en la que ocurrió el evento en el sistema de origen, y es crucial para manejar datos desordenados o tardíos correctamente."
+¿Qué permite hacer la operación `mapGroupsWithState` en Structured Streaming?,Mantener y actualizar un estado arbitrario definido por el usuario para cada grupo (clave) en un flujo de datos.
+¿Cuál es la diferencia entre aprendizaje supervisado y no supervisado?,"El aprendizaje supervisado utiliza datos con etiquetas históricas para entrenar un modelo, mientras que el no supervisado encuentra patrones en datos sin etiquetas."
+"En MLlib, el proceso de convertir datos brutos a una forma numérica adecuada para los algoritmos se llama _____.",ingeniería de características (feature engineering)
+¿Qué es un 'Pipeline' de Spark en el contexto de MLlib?,Una secuencia de etapas (Transformers y Estimators) que se ejecutan en orden para formar un flujo de trabajo de aprendizaje automático.
+¿Cuál es la diferencia entre un `Transformer` y un `Estimator` en MLlib?,"Un `Transformer` convierte un DataFrame en otro, mientras que un `Estimator` se ajusta (entrena) a un DataFrame para producir un `Transformer`."
+¿Para qué se utiliza el algoritmo PageRank en el análisis de grafos?,Para medir la importancia relativa de cada nodo (vértice) dentro de un grafo.
+¿Qué dos componentes se necesitan para crear un objeto GraphFrame?,Un DataFrame de vértices ('vertices') y un DataFrame de aristas ('edges').
+"En la arquitectura de clúster de Spark, ¿cuál es el rol del 'programa driver'?","Aloja el objeto `SparkContext`, declara las transformaciones y acciones, y coordina la ejecución en los 'executors'."
+¿Cuál es el rol de un 'executor' en un clúster de Spark?,"Es un proceso que se ejecuta en un nodo de trabajo, responsable de ejecutar las tareas y mantener los datos en memoria o en disco."
+Nombra dos gestores de clústeres sobre los que Spark puede ejecutarse.,"Standalone, Apache Mesos y Hadoop YARN."
+¿Cuál es el propósito del script `spark-submit`?,Enviar una aplicación Spark para su ejecución en un clúster.
+¿Qué es un 'DAG' (Directed Acyclic Graph) en Spark?,Es un grafo de las operaciones (RDDs y sus transformaciones) que Spark construye. Las acciones desencadenan la ejecución de este grafo.
+¿Qué es una 'etapa' (stage) en el plan de ejecución de Spark?,Un conjunto de tareas que se pueden ejecutar en paralelo sin necesidad de una reorganización de datos ('shuffle').
+¿Qué es una 'tarea' (task) en Spark?,"Es la unidad de trabajo más pequeña que se envía a un 'executor' para ser ejecutada, generalmente operando sobre una partición de datos."
+"La operación `leftOuterJoin` combina dos RDDs de pares por clave, pero mantiene todas las claves de ¿cuál RDD?",Del RDD izquierdo (el que invoca la operación).
+¿Cuál es el propósito de la transformación `partitionBy` en un pair RDD?,"Reparticionar el RDD según un particionador específico, como `HashPartitioner`, lo que puede optimizar operaciones futuras basadas en clave."
+"Para crear un RDD clave-valor (pair RDD) a partir de un RDD regular en Python, la función `map` debe devolver un RDD compuesto de _____.",tuplas
+¿Qué es el objeto `SparkContext`?,Es el punto de entrada principal a la funcionalidad de Spark y representa la conexión con un clúster de Spark.
+¿Para qué se utiliza el método `SparkContext.wholeTextFiles()`?,Para leer un directorio que contiene múltiples archivos de texto pequeños y devolver un RDD de pares donde la clave es la ruta del archivo.
+¿Qué es un SequenceFile en el ecosistema Hadoop?,Un formato de archivo plano que consiste en pares binarios clave-valor.
+Spark SQL puede conectarse a una instalación existente de Hive colocando qué archivo de configuración en el directorio `conf` de Spark?,El archivo `hive-site.xml`.
+"En Spark SQL, un `Row` object permite el acceso a las columnas por número de columna y, en Python, también por _____.",nombre de columna (ej: `row.column_name`)
+¿Cuál es el propósito de la operación `updateStateByKey` en DStreams?,Mantener y actualizar un estado para cada clave a lo largo del tiempo en un DStream de pares clave-valor.
+¿Qué hace un transformador `HashingTF` en MLlib?,Mapea una secuencia de términos (palabras) a un vector de características de frecuencia de términos con un tamaño fijo.
+¿Qué hace el método `pipe()` en un RDD?,Permite canalizar elementos del RDD a un proceso de sistema externo (como un script de R o Perl) que se ejecuta en cada partición.
+"¿Qué hace la acción `collect()`, y cuál es un problema potencial al usarla?","Recupera todos los elementos del conjunto de datos como un array en el programa driver, lo que puede causar un error de memoria si el conjunto de datos es muy grande."
+¿Qué método permite obtener una muestra aleatoria de filas de un DataFrame?,El método `sample()`.
+"Al trabajar con datos numéricos en un DataFrame, ¿qué función calcula la correlación entre dos columnas?",La función `corr()`.
+¿Qué hace la operación `pivot` en un DataFrame?,"Convierte una fila en una columna, agregando valores según una función para cada nueva columna."
+"En Spark SQL, una diferencia clave entre una tabla y una vista es que las vistas son básicamente _____ que se pueden consultar con SQL.",DataFrames
+¿Qué significa que una subconsulta sea 'correlacionada'?,Significa que la subconsulta interna utiliza información del ámbito externo de la consulta.
+¿Cuál es el propósito del método `checkpoint()` en un RDD?,"Marca el RDD para ser guardado en un archivo en un almacenamiento fiable, truncando su linaje para acortar la cadena de dependencias."
+"En un despliegue sobre YARN, ¿cuáles son los dos modos de despliegue para una aplicación Spark?",Modo clúster (cluster mode) y modo cliente (client mode).
+¿Qué es un 'servicio de shuffle externo' y qué beneficio proporciona?,"Permite almacenar los bloques de 'shuffle' fuera de los 'executors', de modo que los resultados del 'shuffle' estén disponibles incluso si los 'executors' son eliminados."
+¿Cuál es una causa común de un error `OutOfMemoryError` en el driver de Spark?,Recolectar demasiados datos en el driver usando `collect()`.
+¿Cuál es la ventaja del procesamiento de flujos sobre trabajos por lotes repetidos para actualizar resultados?,"El procesamiento de flujos puede ser más eficiente al incrementalizar el cálculo, procesando solo los datos nuevos en lugar de volver a escanear todo el conjunto de datos."
+"En MLlib, ¿cuál es un caso de uso común para los algoritmos de 'recomendación'?",Sugerir productos o ítems a los usuarios basándose en sus preferencias explícitas (calificaciones) o implícitas (comportamiento).
+¿Cuál es un caso de uso común para los algoritmos de 'clustering'?,"La segmentación de usuarios, agrupándolos según atributos o comportamientos compartidos."
+"En MLlib, ¿qué hace un transformador `Normalizer`?","Escala los vectores de características individuales para que tengan una norma unitaria (por defecto, la norma L2)."
+¿Cuál es el propósito de `SQLTransformer` en una Pipeline de ML?,Permite aplicar una transformación definida por el usuario mediante una consulta SQL sobre los datos de entrada.
+¿Cuál es el propósito de la 'indexación' de características categóricas en aprendizaje automático?,Convertir una variable categórica (como una cadena de texto) en una variable numérica que los algoritmos puedan utilizar.
+"En el algoritmo ALS para recomendación, ¿qué es la 'estrategia de arranque en frío' (cold-start strategy)?",Define cómo manejar las predicciones para usuarios o ítems que no estaban presentes en el conjunto de entrenamiento.
+¿Qué identifica el algoritmo `connectedComponents` en GraphFrames?,Los subgrafos en los que cualquier par de nodos está conectado entre sí por caminos.
+El método `cache()` en un DataFrame es un atajo para usar `persist()` con ¿qué nivel de almacenamiento?,MEMORY_AND_DISK.
+¿Qué es la 'evaluación perezosa' (lazy evaluation) en Spark?,"Es el principio por el cual Spark no ejecuta las transformaciones hasta que se invoca una acción, lo que le permite optimizar el plan de ejecución."
+Almacenar en caché objetos serializados (`MEMORY_ONLY_SER`) puede reducir sustancialmente el tiempo dedicado a _____ en la JVM.,la recolección de basura (garbage collection)
+¿Cuál es el propósito de la transformación `window` en Spark Streaming?,"Permite aplicar transformaciones sobre una ventana deslizante de datos, agrupando eventos que ocurren dentro de un intervalo de tiempo."
+El algoritmo k-means es un tipo de algoritmo de aprendizaje _____.,no supervisado (clustering)
+¿Qué hace la función `explode` en Spark SQL y en la API de DataFrame?,Crea una nueva fila por cada elemento en un array o mapa de una columna.
+¿Cuál es el propósito de la clase `StorageLevel` al persistir un RDD?,"Permite especificar cómo se debe almacenar el RDD, por ejemplo, solo en memoria, en memoria y disco, serializado, etc."
+¿Qué hace la acción `collectAsMap()` en un pair RDD?,Devuelve los pares clave-valor del RDD como un mapa al programa driver.
+"En la API estructurada, ¿cómo se añade una nueva columna a un DataFrame?","Usando el método `withColumn(""nuevo_nombre"", expresion_columna)`."
+¿Qué hace la transformación `orderBy()` (o `sort()`)?,Devuelve un nuevo DataFrame con las filas ordenadas por una o más columnas especificadas.
+¿Para qué se utiliza la función `avg` en una agregación de DataFrame?,Para calcular el promedio (media) de los valores en una columna.
+¿Cuál es el propósito de un 'equi-join'?,"Es el tipo de unión más común, donde las filas se combinan si los valores de las claves especificadas en ambos conjuntos de datos son iguales."
+¿Qué hace el modo de salida 'append' en Structured Streaming?,Solo las nuevas filas añadidas a la tabla de resultados desde el último disparo se escriben en el 'sink'.
+Un _____ define los nombres de las columnas y los tipos de un DataFrame.,esquema (schema)
+¿Cuál es la diferencia clave entre un DataFrame y un Dataset en Spark?,"Los Datasets proporcionan seguridad de tipos en tiempo de compilación (type-safety) y una vista orientada a objetos de los datos, mientras que los DataFrames no."
+"Para crear una función definida por el usuario (UDF) en PySpark, se importa `udf` desde ¿qué módulo?",pyspark.sql.functions
+¿Qué transformación se utiliza para convertir un RDD en un DataFrame?,El método `toDF()`.
+"En Spark Streaming, la tolerancia a fallos se logra recalculando el estado a partir del _____ de los RDDs.",linaje (lineage)
+"En MLlib, el problema que resuelve la regresión logística es un problema de _____.",clasificación

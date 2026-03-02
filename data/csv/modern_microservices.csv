@@ -1,0 +1,159 @@
+"¿Qué patrón arquitectónico propone un componente del lado del servidor para cada aplicación de front-end, mejorando así la experiencia del usuario?",El patrón Back-End for Front-End (BFF).
+El patrón Back-End for Front-End (BFF) es una variante del patrón _____ _____.,API Gateway.
+¿Cuál es uno de los objetivos principales del patrón BFF en cuanto a la obtención de datos?,Evitar la sobrecarga de obtención de datos (over-fetching) y el exceso de solicitudes (over-requesting) en el lado del cliente.
+"En una arquitectura BFF, el equipo responsable de la interfaz de usuario también debería supervisar el _____.",BFF.
+¿Bajo qué circunstancia principal se debe evitar el uso del patrón BFF?,Cuando se tiene una única interfaz para comunicarse con los servicios de back-end.
+¿Qué beneficio de seguridad clave ofrece la capa BFF?,Puede ocultar información sensible de los servicios de back-end antes de enviar la respuesta a los clientes.
+¿Qué protocolo de API puede lograr una latencia hasta 10 veces menor que REST en cargas de trabajo de IA en producción?,gRPC.
+"¿Para qué escenario es ideal GraphQL, especialmente en aplicaciones de IA?","Para la agregación de datos complejos, como en paneles de control de Machine Learning."
+"¿Por qué REST sigue siendo una opción viable para APIs públicas a gran escala, como las de OpenAI?","Por su amplio soporte en el ecosistema y ciclos de desarrollo más rápidos, no por limitaciones del protocolo."
+"En GraphQL, ¿qué funcionalidad se debe deshabilitar en producción para evitar la exposición de esquemas sensibles?",La introspección.
+"¿Qué estándar de autenticación es agnóstico al protocolo y se recomienda para REST, GraphQL y gRPC?",OAuth 2.0.
+"En la arquitectura de RabbitMQ, los _____ reciben mensajes de los productores y los enrutan según reglas y atributos.",Exchanges (Intercambios).
+"En RabbitMQ, las colas (queues) almacenan mensajes hasta que son consumidos y están conectadas a los exchanges mediante _____.",Bindings (Enlaces).
+"Entre Kafka y RabbitMQ, ¿cuál ofrece un rendimiento (throughput) significativamente mayor, capaz de manejar millones de mensajes por segundo?",Apache Kafka.
+¿En qué condición RabbitMQ puede lograr una latencia de extremo a extremo más baja que Kafka?,Únicamente con volúmenes de mensajes (throughput) significativamente más bajos.
+¿Qué sistema es más adecuado para el procesamiento y análisis de datos en tiempo real y la agregación de logs a gran escala?,Apache Kafka.
+"El costo por byte escrito tiende a ser menor en Kafka debido a su diseño eficiente, lo que lo convierte en una opción más _____.",rentable (cost-efficient).
+"Según el Richardson Maturity Model, el Nivel 3, el más alto de madurez para una API REST, se conoce como _____.",Hypermedia Controls (HATEOAS).
+"Una API REST en el Nivel 0 del Richardson Maturity Model utiliza HTTP meramente como transporte para llamadas a procedimientos remotos, un estilo conocido como _____.",The Swamp of POX (Plain Old XML/JSON).
+"¿Qué nivel del Richardson Maturity Model introduce el uso correcto de los verbos HTTP (GET, POST, PUT, DELETE) y los códigos de estado?",Nivel 2: HTTP Verbs.
+¿Qué herramienta de código abierto es un estándar de facto para implementar Change Data Capture (CDC) basado en logs de transacciones?,Debezium.
+"El método más eficiente de Change Data Capture (CDC), que lee directamente los logs de transacciones de la base de datos, se conoce como CDC _____.",basado en logs (log-based).
+¿Qué protocolo de mensajería es extremadamente ligero (encabezado de 2 bytes) y está optimizado para dispositivos IoT en redes poco fiables?,MQTT (Message Queuing Telemetry Transport).
+"Para asegurar la fiabilidad en la recepción de webhooks, ¿qué propiedad debe tener un consumidor para manejar reintentos y mensajes duplicados sin problemas?",Idempotencia.
+"La práctica recomendada para procesar un webhook es: verificar la firma, _____ el mensaje para procesamiento asíncrono y devolver inmediatamente una respuesta 2xx.",encolar (enqueue).
+¿Cuál es uno de los principales desafíos al implementar el patrón BFF?,La duplicación de lógica de negocio entre los diferentes BFFs si no se gestiona correctamente.
+El tráfico de comunicación que va desde un cliente externo hacia los microservicios internos se denomina tráfico _____.,Norte-Sur (North-South).
+El tráfico de comunicación interna entre diferentes microservicios se denomina tráfico _____.,Este-Oeste (East-West).
+"¿Qué componente de arquitectura gestiona principalmente el tráfico Norte-Sur, actuando como punto de entrada único?",Un API Gateway.
+"¿Qué componente de arquitectura gestiona principalmente el tráfico Este-Oeste, controlando la comunicación entre servicios?",Una malla de servicios (Service Mesh).
+"Debido a su naturaleza binaria y al uso de HTTP/2, gRPC consume hasta un 40% menos de CPU y un 30% menos de memoria que _____ para cargas de trabajo equivalentes.",REST.
+"En Kafka, el orden de los mensajes está garantizado dentro de una única _____, pero no entre ellas.",partición.
+"El modelo arquitectónico de RabbitMQ se describe como ""broker complejo, consumidor simple"", mientras que Kafka sigue un modelo de ""_____ _____ , _____ _____.""","broker simple, consumidor inteligente."
+"¿Qué componente en un ecosistema de Kafka actúa como un repositorio central para esquemas de mensajes, garantizando la compatibilidad de datos?",El Schema Registry.
+El protocolo _____ proporciona un canal de comunicación unidireccional donde el servidor puede empujar actualizaciones al cliente sobre HTTP estándar.,Server-Sent Events (SSE).
+"A diferencia de SSE, el protocolo _____ establece un canal de comunicación bidireccional y full-dúplex entre cliente y servidor.",WebSocket.
+¿Qué desventaja tiene el patrón BFF en términos de esfuerzo de desarrollo y mantenimiento?,Incrementa los costos y la complejidad al tener que mantener múltiples backends.
+¿Qué patrón de diseño de software se recomienda usar junto con Kafka para definir y desacoplar microservicios basados en dominios de negocio?,Domain-Driven Design (DDD).
+"En Domain-Driven Design (DDD), un _____ _____ define los límites de un modelo de dominio particular dentro del sistema.",Contexto Delimitado (Bounded Context).
+La capa que traduce entre diferentes modelos de dominio en contextos delimitados para prevenir la corrupción de un modelo por otro se llama _____ _____ _____.,Capa Anticorrupción (Anti-Corruption Layer).
+"Para verificar la autenticidad de un webhook, se debe validar una _____ criptográfica (comúnmente HMAC) incluida en la solicitud.",firma.
+Una estrategia de reintento para webhooks fallidos que incrementa el tiempo de espera entre cada intento se conoce como _____ _____.,retroceso exponencial (exponential backoff).
+"Para protegerse contra ataques de repetición (replay attacks) en webhooks, se debe verificar una _____ y rechazar mensajes que sean demasiado antiguos.",marca de tiempo (timestamp).
+"Un _____ es un servidor que actúa como un proxy inverso, recibiendo solicitudes de clientes y reenviándolas a los microservicios apropiados.",API Gateway.
+¿Verdadero o Falso? Un API Gateway y una Malla de Servicios son mutuamente excluyentes y no pueden coexistir en la misma arquitectura.,"Falso, pueden coexistir; el API Gateway maneja el tráfico externo y la Malla de Servicios el interno."
+Término: Serialización en gRPC.,Definición: Es el proceso de convertir datos estructurados a un formato binario eficiente utilizando Protocol Buffers (protobuf) para la transmisión.
+El uso de _____ _____ en Kafka Connect permite realizar transformaciones ligeras de datos directamente en el pipeline sin necesidad de un procesador de streams externo.,Single Message Transforms (SMTs).
+"En un Schema Registry, el nivel de compatibilidad _____ permite que los consumidores nuevos puedan leer datos escritos con esquemas antiguos.",BACKWARD.
+"En un Schema Registry, el nivel de compatibilidad _____ permite que los consumidores antiguos puedan leer datos escritos con esquemas nuevos.",FORWARD.
+La práctica de capturar y poner en cola eventos de webhook que fallan repetidamente en una _____ _____ _____ (DLQ) permite su análisis y reprocesamiento posterior.,cola de mensajes fallidos (dead-letter queue).
+"A diferencia de REST, que utiliza HTTP/1.1, gRPC aprovecha _____ para obtener un mayor rendimiento a través de características como el multiplexado de flujos.",HTTP/2.
+¿Qué limitación de REST soluciona GraphQL al permitir que el cliente solicite exactamente los campos de datos que necesita?,El sobre-abastecimiento (over-fetching) y el sub-abastecimiento (under-fetching) de datos.
+¿Cuál es la principal ventaja de Kafka sobre los sistemas de mensajería tradicionales en términos de datos históricos?,La capacidad de almacenar flujos de eventos de forma duradera y permitir que los consumidores los reprocesen desde cualquier punto en el tiempo.
+"En el patrón BFF, ¿qué son los DTO (Data Transfer Objects)?","Son clases utilizadas para transferir datos entre las capas de la aplicación, adaptando la información de los microservicios al formato que necesita el cliente específico."
+"Una de las principales ventajas de una Malla de Servicios (Service Mesh) es la _____ integrada, que proporciona métricas, registros y trazas de forma nativa.",observabilidad.
+"¿Qué mecanismo de seguridad, a menudo gestionado por una Malla de Servicios, garantiza que toda la comunicación entre servicios esté cifrada?",mTLS (mutual TLS).
+"El patrón en el que un servicio publica un evento sin saber quién lo consumirá, permitiendo una comunicación asíncrona y desacoplada, se conoce como _____.",Publicación/Suscripción (Publish/Subscribe).
+¿Por qué el CDC (Change Data Capture) basado en logs tiene un impacto mínimo en la base de datos de producción en comparación con el basado en consultas?,Porque lee el log de transacciones de forma pasiva en lugar de ejecutar consultas adicionales contra las tablas de datos.
+"En el contexto de webhooks, ¿qué significa la recomendación ""Acknowledge Fast, Process Async""?",Significa responder inmediatamente con un código de éxito (2xx) y realizar el procesamiento real de los datos en un trabajo de fondo (asíncrono).
+¿Cuál es la función principal de un broker en protocolos como MQTT o RabbitMQ?,Actúa como un intermediario que recibe mensajes de los publicadores y los distribuye a los suscriptores interesados.
+"El protocolo AMQP, implementado por RabbitMQ, define la semántica de los servicios del lado del servidor y un _____ _____ _____ común para la comunicación.",protocolo a nivel de cable (wire-level protocol).
+"Kafka fue diseñado para ser un sistema de _____ _____ distribuido, no solo una cola de mensajes tradicional.",registro de transacciones (commit log).
+¿Qué ventaja ofrece Kafka para la resiliencia de los consumidores?,"Si un consumidor falla, puede reanudar el procesamiento desde el último offset confirmado sin perder datos."
+"En el desarrollo de microservicios, la práctica de empaquetar y desplegar cada servicio de forma independiente se ve facilitada por tecnologías como _____.",Contenedores (ej. Docker).
+"En una arquitectura de microservicios, ¿por qué es crucial la descentralización de la gestión de datos?","Para asegurar que cada microservicio sea autónomo y pueda evolucionar independientemente, gestionando su propia base de datos."
+"¿Qué principio de REST dicta que cada solicitud del cliente debe contener toda la información necesaria para ser procesada, sin que el servidor almacene estado del cliente?",Stateless (Sin estado).
+"En una API RESTful, el principio de _____ _____ permite que las respuestas del servidor sean almacenadas en caché por el cliente para mejorar el rendimiento.",Cacheable.
+¿Qué componente de una Malla de Servicios se despliega junto a cada instancia de microservicio para interceptar todo el tráfico de red?,Un proxy sidecar (como Envoy).
+La parte de la Malla de Servicios que gestiona y configura los proxies sidecar se conoce como el _____ _____.,Plano de Control (Control Plane).
+"¿Qué es la ""semántica de entrega exactamente una vez"" (exactly-once semantics) en Kafka Connect?","Es una garantía de que cada registro se procesa y se escribe en el sistema de destino exactamente una vez, incluso en caso de fallos."
+"En Kafka Connect, un _____ _____ se utiliza para capturar registros problemáticos que no se pueden procesar, evitando que el pipeline se detenga.",Dead-Letter Queue (DLQ).
+"En el contexto de las bases de datos, ¿qué operaciones captura un sistema de CDC?","Captura las operaciones de inserción (INSERT), actualización (UPDATE) y eliminación (DELETE) a nivel de fila."
+¿Cuál es una de las principales ventajas de usar gRPC para la comunicación interna entre microservicios?,"Su alto rendimiento, baja latencia y el uso de contratos de API fuertemente tipados a través de Protocol Buffers."
+"En el patrón BFF, ¿por qué es beneficioso que el BFF y la UI sean mantenidos por el mismo equipo?",Facilita la adaptación de la API a los requisitos de la UI y simplifica la coordinación de los despliegues.
+"Un _____ _____ puede actuar como un agregador de solicitudes, reduciendo la cantidad de llamadas de red que un cliente debe hacer a múltiples microservicios.",API Gateway o un BFF.
+¿Qué significa que Kafka proporciona persistencia de mensajes?,"Que los mensajes se almacenan en disco de forma duradera y no se eliminan después de ser consumidos, a menos que se configure una política de retención."
+"En RabbitMQ, un exchange de tipo _____ envía una copia del mensaje a todas las colas que están enlazadas a él.",fanout.
+"En RabbitMQ, un exchange de tipo _____ enruta mensajes a colas basándose en una coincidencia exacta de la clave de enrutamiento (routing key).",direct.
+"En RabbitMQ, un exchange de tipo _____ enruta mensajes a colas basándose en la coincidencia de patrones en la clave de enrutamiento.",topic.
+¿Cuál es un inconveniente del CDC basado en triggers en comparación con el basado en logs?,Añade una carga adicional a la base de datos de producción y puede complicar las modificaciones del esquema.
+El atributo _____ en un DTO de .NET con System.Text.Json se puede usar para evitar que una propiedad se serialice y se envíe al cliente.,[JsonIgnore].
+Un beneficio clave del patrón BFF es la mejora de la _____ y la _____ del equipo de desarrollo del cliente.,autonomía y agilidad.
+"La principal diferencia funcional entre SSE y WebSockets es que SSE es _____, mientras que WebSockets es _____.","unidireccional, bidireccional."
+Término: Richardson Maturity Model - Nivel 1.,"Definición: Introduce el concepto de recursos, donde se utilizan URIs individuales para diferentes entidades (ej. /users, /products)."
+¿Qué es la limitación de tasa (rate limiting) en el contexto de una API?,Es una estrategia para controlar la cantidad de solicitudes que un cliente puede hacer a una API en un período de tiempo determinado.
+La capacidad de Kafka para _____ _____ es crucial para casos de uso como la reconstrucción de estado o la corrección de errores en consumidores.,reproducir mensajes (message replay).
+"Una Malla de Servicios puede implementar automáticamente características de resiliencia como reintentos, timeouts y _____ _____.",interruptores de circuito (circuit breakers).
+¿Cuál es la principal desventaja de la comunicación directa cliente-a-microservicio en una arquitectura grande?,"El cliente se acopla fuertemente a los endpoints internos, lo que dificulta la evolución de los microservicios."
+"El patrón BFF ayuda a optimizar el rendimiento para clientes con restricciones, como aplicaciones móviles, al proporcionar _____ más ligeros y específicos.",payloads (cargas útiles).
+"En la comunicación asíncrona, ¿qué papel juega una cola de mensajes en el desacoplamiento de servicios?","Permite que el productor envíe un mensaje sin esperar a que el consumidor esté disponible para procesarlo, eliminando la dependencia temporal."
+"¿Por qué el factor ""experiencia del equipo"" es a menudo decisivo al elegir un protocolo de API como REST, gRPC o GraphQL?","Porque un equipo puede ser más productivo con una tecnología que conoce bien, incluso si otra es teóricamente de mayor rendimiento."
+Término: gRPC Streaming.,Definición: Una característica de gRPC que permite la transmisión continua de datos en una o ambas direcciones (cliente-servidor) sobre una única conexión HTTP/2.
+Una API REST madura (Nivel 3) proporciona enlaces en sus respuestas que guían al cliente sobre las siguientes acciones posibles. Esto se conoce como _____.,HATEOAS (Hypermedia as the Engine of Application State).
+"Para la comunicación interna de alto rendimiento entre servicios en un entorno políglota, _____ es a menudo la opción recomendada.",gRPC.
+"Para una API pública que necesita máxima compatibilidad y facilidad de uso para desarrolladores de terceros, _____ es a menudo la opción recomendada.",REST.
+"En el patrón BFF, cada BFF está estrechamente _____ a una experiencia de usuario particular.",vinculado (entangled/connected).
+Una de las ventajas del patrón BFF es que el BFF y la UI representan una única _____ de despliegue.,unidad.
+"En gRPC, los _____ _____ se utilizan para definir la estructura de los mensajes y los servicios de forma independiente del lenguaje.",Protocol Buffers (protobuf).
+El proceso de validar una firma HMAC en un webhook implica recalcular el hash del cuerpo de la solicitud usando un _____ _____ y compararlo con el valor de la cabecera.,secreto compartido (shared secret).
+¿Qué herramienta de Kafka Connect permite la integración de bases de datos relacionales capturando cambios en tiempo real?,Conectores de CDC como Debezium.
+El principio de _____ de _____ en el diseño de microservicios aboga por desacoplar las aplicaciones de front-end y back-end.,separación de intereses (separation of concerns).
+"En el contexto de Kafka, ¿qué son los Conectores (Connectors)?",Son componentes listos para usar que ayudan a mover datos de forma fiable entre Kafka y otros sistemas como bases de datos o almacenes de objetos.
+La biblioteca _____ en Kafka permite construir aplicaciones y microservicios de procesamiento de flujos en tiempo real.,Kafka Streams.
+"Para evitar la duplicación de código en el patrón BFF, una buena práctica es extraer la lógica común a _____ compartidas.",librerías.
+Un desafío del patrón BFF es la gestión de la _____ y la _____ de múltiples backends.,escalabilidad y el rendimiento.
+"El protocolo WebSocket inicia su comunicación con un ""apretón de manos"" (handshake) que actualiza una conexión _____ a una conexión WebSocket.",HTTP.
+La _____ de esquemas en Kafka Connect es crucial para mantener la consistencia y compatibilidad de los datos a medida que los formatos evolucionan.,evolución.
+Término: Kafka Topic.,Definición: Una categoría o nombre de feed al que se publican los registros (mensajes) en Kafka.
+"En Kafka, los consumidores leen de los topics en grupos. Cada partición de un topic es asignada a exactamente un consumidor dentro de un _____ _____.",grupo de consumidores (consumer group).
+¿Cuál es la principal función de un balanceador de carga (Load Balancer) en una arquitectura de microservicios?,Distribuir el tráfico de red entrante de manera uniforme entre múltiples instancias de un servicio para mejorar la fiabilidad y escalabilidad.
+La práctica de implementar cambios en una nueva versión de un servicio a un pequeño subconjunto de usuarios antes de un despliegue completo se llama _____ _____.,despliegue canario (canary release).
+"¿Qué es un ""descubrimiento de servicios"" (service discovery) en un entorno de microservicios?",Es el proceso mediante el cual los servicios se localizan y se comunican entre sí dinámicamente sin necesidad de direcciones IP codificadas.
+"El patrón de _____ _____ consiste en tener una base de datos por servicio, lo que refuerza la autonomía y el desacoplamiento.",base de datos por servicio (database per service).
+"En REST, ¿qué verbo HTTP es idempotente y se utiliza para crear o reemplazar un recurso en una URI conocida?",PUT.
+"En REST, ¿qué verbo HTTP se utiliza para aplicar modificaciones parciales a un recurso?",PATCH.
+"En REST, el verbo HTTP _____ se utiliza para enviar datos a un recurso para su procesamiento, como la creación de una nueva entidad.",POST.
+Término: Idempotencia en HTTP.,"Definición: Una operación es idempotente si realizarla múltiples veces produce el mismo resultado que realizarla una sola vez (ej. GET, PUT, DELETE)."
+¿Por qué es importante el versionado de APIs en una arquitectura de microservicios?,Para permitir que las APIs evolucionen sin romper la compatibilidad con los clientes que dependen de versiones anteriores.
+"En el contexto de Kafka, ¿qué es un ""offset""?","Es un identificador único y secuencial que Kafka asigna a cada registro dentro de una partición, indicando su posición."
+La replicación en Kafka asegura la _____ _____ y la _____ de los datos al mantener copias de las particiones en múltiples brokers.,tolerancia a fallos y la durabilidad.
+"En Domain-Driven Design (DDD), el _____ _____ es el lenguaje compartido entre los desarrolladores y los expertos del dominio para describir el negocio.",lenguaje ubicuo (ubiquitous language).
+"El patrón BFF permite a cada equipo de front-end _____ de forma independiente, ya que controlan su propio servicio de back-end.",evolucionar o iterar.
+La comunicación entre un BFF y los microservicios aguas abajo (downstream) es un ejemplo de tráfico _____.,Este-Oeste (East-West).
+Un beneficio de la Malla de Servicios es la aplicación de políticas de seguridad y comunicación de forma _____ sin modificar el código del microservicio.,transparente.
+"La principal desventaja del protocolo WebSocket es su _____ en comparación con HTTP, ya que no se beneficia de la infraestructura web estándar como cachés.",complejidad.
+¿Qué tecnología es más adecuada para un panel de control que necesita agregar datos de múltiples modelos de IA y ofrecer actualizaciones en tiempo real a través de suscripciones?,GraphQL.
+"Para asegurar que un consumidor de webhook no procese un evento dos veces, este debe almacenar el _____ _____ de cada evento recibido.",ID de entrega (delivery ID).
+"¿Qué es el ""Principio de Responsabilidad Única"" (Single Responsibility Principle) y cómo se aplica a los microservicios?","Establece que un componente debe tener una única razón para cambiar; en microservicios, significa que cada servicio debe enfocarse en una capacidad de negocio específica."
+"El uso de _____ _____ en una API GraphQL permite a los clientes descubrir el esquema disponible, lo cual debe ser desactivado en entornos de producción por seguridad.",introspección de esquema (schema introspection).
+La principal ventaja de Kafka en términos de escalabilidad es su capacidad para escalar horizontalmente añadiendo más _____ al clúster.,brokers.
+Término: Kafka Consumer Lag.,Definición: Es la diferencia entre el último offset producido en una partición y el último offset consumido por un grupo de consumidores.
+"En el contexto de la seguridad de API, _____ _____ 2.0 es el estándar de la industria para la delegación de autorización.",OAuth.
+"El patrón _____ _____ utiliza un servicio dedicado para la autenticación y autorización, emitiendo tokens que los microservicios pueden validar.",Token de Seguridad (Security Token).
+"A diferencia de REST, GraphQL expone un único _____ para todas las consultas y mutaciones.",endpoint.
+"En GraphQL, las operaciones que modifican datos del lado del servidor se llaman _____.",mutaciones (mutations).
+"En GraphQL, las operaciones que leen o recuperan datos se llaman _____.",consultas (queries).
+"La comunicación en gRPC es _____ por defecto, lo que significa que el cliente espera una respuesta del servidor antes de continuar.",síncrona (request-response).
+"En Kafka, una política de _____ define cuánto tiempo se conservan los mensajes en un topic antes de ser eliminados.",retención (retention policy).
+"El desacoplamiento que ofrece el patrón BFF permite que los equipos de front-end y back-end trabajen en _____, mejorando la velocidad de desarrollo.",paralelo.
+"Cuando una API Gateway realiza la terminación SSL, se encarga del cifrado y descifrado _____, liberando a los microservicios de esa tarea.",TLS/SSL.
+"El patrón de _____ _____ centraliza la lógica de enrutamiento, composición y traducción de protocolos en un único punto de entrada.",API Gateway.
+"La capacidad de una API de ser auto-descriptiva, donde las respuestas contienen enlaces a acciones relacionadas, es el núcleo del principio _____.",HATEOAS.
+El uso de _____ _____ en Kafka Connect permite la validación automática de esquemas y la gestión de la evolución del esquema.,Schema Registry.
+"En el patrón de saga, una _____ _____ se utiliza para revertir las operaciones de una transacción distribuida que ha fallado.",transacción de compensación (compensating transaction).
+¿Cuál es un caso de uso común para Apache Kafka en el diseño de sistemas?,Actuar como un bus de eventos central para la comunicación asíncrona entre microservicios.
+Una de las desventajas del patrón BFF es que puede convertirse en un _____ _____ _____ si no se diseña e implementa correctamente.,cuello de botella (bottleneck).
+"Para la comunicación en tiempo real en una aplicación de chat, _____ sería una opción de protocolo más adecuada que SSE.",WebSockets.
+"Para notificaciones de noticias en vivo o un feed de redes sociales, el protocolo _____ es una opción eficiente y simple para empujar datos del servidor al cliente.",Server-Sent Events (SSE).
+"El patrón API Gateway puede simplificar la arquitectura para los clientes, pero puede convertirse en un _____ si no se gestiona bien.",monolito.
+Término: Contrato de API.,"Definición: Una especificación formal (como OpenAPI o un archivo .proto) que define cómo los clientes deben interactuar con una API, incluyendo endpoints, métodos y estructuras de datos."
+¿Cuál es una ventaja de usar un formato de serialización binario como Protocol Buffers sobre JSON?,"Es más compacto y rápido de analizar, lo que resulta en un menor uso de ancho de banda y menor latencia."
+"En una arquitectura de microservicios, el patrón _____ _____ se utiliza para agregar los resultados de múltiples llamadas a servicios en una única respuesta.",Agregación de Servicios (Service Aggregation).
+"El uso de la replicación de colas en RabbitMQ, conocida como _____ _____, proporciona alta disponibilidad para los mensajes.",colas espejadas (mirrored queues).
+"Kafka Connect, Kafka Streams y ksqlDB son componentes del _____ _____ de Kafka.",ecosistema de procesamiento de flujos (stream processing).
+"En Domain-Driven Design, el uso de eventos para comunicar cambios entre contextos delimitados promueve un _____ acoplamiento.",bajo.
+"Una de las principales responsabilidades de un API Gateway es la _____ de solicitudes, que implica verificar la identidad del cliente.",autenticación.
+Una Malla de Servicios facilita la implementación de pruebas _____ al permitir el enrutamiento de tráfico basado en porcentajes a diferentes versiones de un servicio.,A/B.
+El propósito del patrón BFF es _____ las aplicaciones de front-end de los servicios de back-end.,desacoplar.
+¿Qué ventaja tiene el patrón BFF para los equipos que trabajan en diferentes partes de una aplicación?,"Permite la responsabilidad compartida del equipo, ya que los equipos de front-end y back-end pueden trabajar de forma más aislada."

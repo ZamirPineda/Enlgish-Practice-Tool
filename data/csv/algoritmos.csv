@@ -1,0 +1,92 @@
+¿Qué modelan naturalmente las estructuras de datos de tipo grafo?,"Relaciones, interacciones e interdependencias complejas entre objetos."
+"En el modelo de programación Bulk Synchronous Parallel (BSP), la computación sobre vértices se representa como una secuencia de _____.",supersteps (superpasos)
+"¿Qué sistema, introducido por Google, fue la primera implementación de BSP con una API nativa para la programación de algoritmos de grafos?",El sistema Pregel.
+¿Cuál es el paradigma de computación que popularizó el sistema Pregel?,"Un paradigma de computación ""piensa como un vértice"" (think like a vertex)."
+"En Pregel, ¿cómo se minimiza la sobrecarga de comunicación entre máquinas?","Preservando la localidad de los datos, asegurando que el cómputo se realiza sobre datos almacenados localmente."
+"¿Qué abstracción introduce GraphX, que extiende el Resilient Distributed Dataset (RDD) de Spark?","El Resilient Distributed Graph (RDG), que asocia registros con vértices y aristas en un grafo."
+"Según el estudio experimental, ¿qué sistema de procesamiento de grafos mostró la menor utilización de CPU en promedio?",GraphLab.
+¿Qué es la partición de grafos balanceada y por qué es un problema computacionalmente difícil?,Es un problema NP-completo que busca dividir un grafo en componentes de tamaño similar minimizando las conexiones entre ellos.
+El algoritmo distribuido JA-BE-JA utiliza búsqueda local y _____ para la partición de grafos.,simulated annealing (recocido simulado)
+¿Cuáles son los dos tipos de particionamiento de grafos que aborda el algoritmo JA-BE-JA?,Particionamiento por corte de aristas (edge-cut) y particionamiento por corte de vértices (vertex-cut).
+¿Qué es una tabla hash o tabla de troceado?,"Una estructura de datos que utiliza una función hash para mapear claves a índices en un arreglo, permitiendo búsquedas, inserciones y eliminaciones rápidas."
+"En las tablas hash, ¿qué ocurre cuando dos claves diferentes generan el mismo índice?",Ocurre una colisión.
+¿Cuál es la técnica de resolución de colisiones en tablas hash donde cada ranura del arreglo apunta a una lista de elementos que colisionaron en esa ranura?,Encadenamiento (chaining).
+¿Para qué tipo de grafos se aplica un algoritmo de ordenamiento topológico?,Grafos dirigidos acíclicos (DAGs).
+"En el contexto de grafos, ¿qué es la densidad?","La relación entre el número real de aristas y el número máximo posible de aristas, definida como $e / (v(v-1)/2)$."
+¿Cuál es la complejidad temporal en el peor de los casos del algoritmo de ordenamiento Bubble Sort?,$O(n^2)$.
+¿Qué es el costo amortizado por operación en una secuencia de $n$ operaciones?,El costo total de las operaciones dividido por $n$.
+¿Para qué tipo de estructuras de datos es útil el análisis amortizado?,"Para estructuras que ocasionalmente incurren en un gran costo para reequilibrar o mejorar su estado interno, pero donde tales operaciones no ocurren con frecuencia."
+"En una arquitectura NUMA, ¿qué sucede si un proceso accede a memoria que no es local a su procesador?",El acceso es más lento porque debe usar las interconexiones entre procesadores.
+"En la jerarquía de cachés de una CPU moderna, ¿cuáles son los dos tipos de caché L1?",La caché L1d para datos y la caché L1i para instrucciones.
+¿Cuáles son las tres partes que componen una dirección de memoria en el contexto de una caché?,"Tag (etiqueta), Set index (índice de conjunto) y Block offset (desplazamiento de bloque)."
+"¿Qué principio establece que si un programa accede a una ubicación de memoria, es muy probable que vuelva a acceder a la misma ubicación en un futuro cercano?",El principio de localidad temporal.
+¿Qué construcción de programación es un impulsor principal de la localidad temporal?,Los bucles (loops).
+"¿Qué principio establece que si un programa accede a una ubicación de memoria, es muy probable que también acceda a ubicaciones cercanas?",El principio de localidad espacial.
+¿Qué es un DAG en el contexto de Airflow?,Una especificación de las dependencias entre tareas que define el orden en que deben ejecutarse.
+¿Cuál es la complejidad temporal promedio del algoritmo QuickSort?,$\Theta(n \log(n))$.
+¿Cuál es la complejidad de espacio en el peor de los casos para el algoritmo Heapsort?,$O(1)$.
+¿Qué es un filtro de Bloom?,Una estructura de datos probabilística eficiente en espacio que se utiliza para probar si un elemento es miembro de un conjunto.
+¿Qué tipo de error puede producir un filtro de Bloom al consultar la pertenencia de un elemento?,"Puede producir falsos positivos (indicar que un elemento está en el conjunto cuando no lo está), pero nunca falsos negativos."
+"En un filtro de Bloom, un array de $m$ bits se inicializa a 0 y se utilizan $k$ _____ diferentes.",funciones de hash
+Mencione una aplicación de los filtros de Bloom en sistemas de bases de datos como Bigtable o Cassandra.,"Reducir las búsquedas en disco para filas o columnas que no existen, mejorando el rendimiento de las consultas."
+¿Qué son los filtros de Bloom escalables (Scalable Bloom filters)?,"Una variante que puede adaptarse dinámicamente al número de elementos almacenados, asegurando una probabilidad máxima de falsos positivos."
+¿Qué permiten los filtros de Bloom en capas (Layered Bloom filters)?,Rastrear cuántas veces se ha añadido un elemento al filtro de Bloom.
+¿Garantiza el algoritmo de búsqueda en profundidad (DFS) el camino más corto entre dos nodos?,"No, DFS puede encontrar una solución, pero no necesariamente la más directa, ya que explora una ruta a fondo antes de retroceder."
+"En el análisis de conjuntos de datos disjuntos con compresión de caminos, ¿cuál es el costo amortizado de la operación `find`?","Es casi constante, específicamente $O(\log^* n)$, donde $\log^*$ es el logaritmo iterado."
+¿Por qué los bucles son excelentes ejemplos de localidad temporal?,"Porque el cuerpo del bucle se ejecuta muchas veces, accediendo repetidamente a las mismas instrucciones y variables."
+"En una caché, ¿qué función cumple la etiqueta (tag)?",Suministra los bits restantes de la dirección de memoria para distinguir entre diferentes ubicaciones que mapean al mismo bloque de caché.
+"¿Qué característica define a los algoritmos ""cache-oblivious"" (ajenos a la caché)?","Son eficientes en el uso de la caché pero no requieren ajuste de parámetros dependientes del hardware, como el tamaño de la caché."
+¿Cuál es la complejidad de caché del algoritmo iterativo estándar para multiplicar dos matrices de $n \times n$?,"$\Omega(n^3)$, que es el peor comportamiento asintótico posible para un algoritmo con trabajo $O(n^3)$."
+"En procesamiento de grafos, ¿qué tipo de algoritmos ofrecen más oportunidades para mejorar la localidad de memoria?","Los algoritmos ""all-active"", como PageRank, donde todos o la mayoría de los vértices están activos en cada iteración."
+¿Qué es la complejidad espacial de un algoritmo?,Mide cómo cambia el consumo de memoria adicional de un algoritmo al variar el volumen de datos de entrada.
+Un algoritmo que no crea estructuras de datos dependientes del tamaño de la entrada tiene una complejidad espacial de _____.,$O(1)$ o espacio constante
+El framework LMAX Disruptor utiliza una estructura de datos circular basada en un array llamada _____ para la comunicación entre hilos.,ring buffer (búfer anular)
+¿Qué problema común en las implementaciones de colas concurrentes busca evitar el LMAX Disruptor?,"La contención de escritura en la cabeza, la cola y el tamaño de la cola, y la ineficiencia de la caché debido al 'false sharing'."
+¿Cuál es la diferencia principal entre el Count-Min Sketch y el Count Sketch en cuanto al tipo de error?,"Count-Min Sketch tiene un error unilateral (la estimación nunca es menor que el valor real), mientras que Count Sketch tiene un error bilateral (la estimación puede ser mayor o menor)."
+¿Para qué problema se utiliza comúnmente la estructura de datos Count-Min Sketch?,Para estimar la frecuencia de elementos en un flujo de datos (data stream) a gran escala y con baja latencia.
+"En Airflow, ¿qué sucede con las tareas dependientes de una tarea que se salta (skipped) si la regla de activación (trigger rule) es `all_success`?",También se saltarán en cascada.
+¿Qué son los grafos dirigidos acíclicos (DAGs) y qué representan comúnmente?,"Son grafos con aristas dirigidas que no contienen ciclos, y comúnmente representan dependencias o relaciones de precedencia."
+"En investigación observacional, ¿por qué es crucial ajustar las variables de confusión (confounders)?","Para eliminar sesgos y poder identificar una relación causal, comparando grupos que sean lo más similares posible."
+¿Por qué los algoritmos sin bloqueo (lock-free) tienden a superar a sus contrapartes con bloqueo bajo alta contención?,"Porque evitan o reducen el número de cambios de contexto del sistema operativo, lo que mejora el rendimiento general del sistema."
+"El algoritmo de ordenamiento Merge Sort tiene una complejidad espacial de _____, debido a las copias temporales que se crean durante la fusión.",$O(n)$
+¿Qué es una memoria Write-Back (WB)?,"Un tipo de memoria caché donde los datos modificados se escriben de nuevo en la memoria principal solo cuando la línea de caché es desalojada, a diferencia de Write-Through que escribe inmediatamente."
+El filtro de Bloom Racional (Rational Bloom filter) es una variante que permite un número de funciones de hash _____ en lugar de entero.,racional (no entero)
+¿Qué ventaja ofrece el filtro de Bloom Racional sobre el filtro de Bloom tradicional en términos de tasa de falsos positivos?,"Puede lograr una tasa de falsos positivos menor o igual a la de un filtro de Bloom normal, al aproximarse mejor al número óptimo de funciones de hash."
+¿Qué es la partición de grafos en streaming (streaming graph partitioning)?,"Es el proceso de particionar un grafo a medida que sus vértices y aristas llegan secuencialmente, sin tener el grafo completo disponible de antemano."
+¿Qué es el 'false sharing' en programación multihilo?,"Es una condición de degradación del rendimiento que ocurre cuando hilos en diferentes procesadores modifican variables que no están relacionadas, pero que residen en la misma línea de caché."
+¿Cómo se puede mitigar el 'false sharing' para variables globales?,"Asegurando que las variables accedidas por diferentes hilos estén en líneas de caché distintas, por ejemplo, mediante alineación de memoria (padding)."
+¿Qué garantiza el algoritmo de búsqueda en anchura (BFS) en grafos no ponderados?,Encuentra el camino más corto desde el nodo de inicio a todos los demás nodos.
+La búsqueda en anchura (BFS) se implementa típicamente de forma iterativa utilizando una estructura de datos de tipo _____.,cola (queue)
+"El modelo de programación de grafos _____ se enfoca en procesar las aristas de forma independiente, lo cual puede llevar a un acceso a memoria más secuencial.",centrado en aristas (edge-centric)
+¿Qué es un árbol binario?,"Una estructura de datos de tipo árbol en la que cada nodo puede tener como máximo dos hijos, denominados hijo izquierdo e hijo derecho."
+¿Qué propiedad fundamental define a un árbol binario de búsqueda (BST)?,"Para cualquier nodo, todos los valores en su subárbol izquierdo son menores que su valor, y todos los valores en su subárbol derecho son mayores."
+¿Qué son los punteros de peligro (hazard pointers)?,"Una técnica de reclamación de memoria segura para objetos dinámicos sin bloqueo, donde cada hilo indica los nodos a los que está a punto de acceder."
+¿Cuándo un hilo puede reclamar de forma segura un nodo retirado utilizando punteros de peligro?,"Cuando, después de una revisión, el nodo retirado no coincide con ninguno de los punteros de peligro de los otros hilos."
+"La propiedad que define la semántica de las estructuras de datos concurrentes, requiriendo que cada operación parezca tener efecto instantáneamente en algún punto entre su invocación y respuesta, se llama _____.",linearizability (linealizabilidad)
+¿Qué es la contención de operaciones (operation contention) en estructuras de datos concurrentes?,"Ocurre cuando una operación afecta frecuentemente el resultado de otra operación que ocurre poco después, como escrituras y lecturas en un objeto popular."
+"A diferencia de un filtro de Bloom, un sketch de conteo de distintos como HyperLogLog no intenta almacenar todos los ítems, sino que mantiene su tamaño pequeño. ¿Qué valor almacena HLL en cada uno de sus 'bins' o registros?",Solo el valor máximo observado de una métrica derivada del hash (como la posición del primer 1).
+¿Qué son las tres operaciones costosas al buscar un ítem en una tabla hash?,"1. Hashear la clave, 2. Mapear el hash a una ranura (módulo), y 3. Acceder a la memoria de esa ranura."
+"¿Qué operación atómica es fundamental para muchas implementaciones de bloqueo en arquitecturas como ARM, y consta de una carga y un almacenamiento condicional?","Load-Link / Store-Conditional (LL/SC), en ARM se usan las instrucciones LDREX y STREX."
+¿Qué es un acceso a memoria no temporal (non-temporal memory access)?,"Es una instrucción que escribe datos directamente en la memoria principal, evitando que se carguen en la jerarquía de caché, lo cual es útil para datos que no se reutilizarán pronto."
+El ordenamiento topológico se puede implementar usando una búsqueda en profundidad (DFS). ¿En qué momento se añade un nodo a la estructura que dará el orden final?,Un nodo se añade después de que todos sus descendientes (nodos a los que apunta) hayan sido visitados.
+¿Qué son los locks de lectura-escritura (Readers–writer locks)?,"Un mecanismo de sincronización que permite el acceso concurrente a múltiples lectores, pero requiere acceso exclusivo para un único escritor."
+¿Qué problema puede ocurrir si dos hilos con locks de lectura intentan actualizarlos a locks de escritura simultáneamente?,Se produce un deadlock (interbloqueo).
+"Además del confinamiento y la inmutabilidad, ¿cuál es la tercera forma principal de lograr seguridad en hilos (thread safety)?",Usar tipos de datos seguros para hilos (threadsafe data types) para almacenar los datos mutables compartidos.
+¿Qué técnica utiliza HyperLogLog para agregar los valores de sus registros y mitigar el impacto de valores atípicos (outliers)?,La media armónica.
+¿Qué es un árbol de segmentos (Segment Tree)?,"Una estructura de datos en forma de árbol que almacena información sobre intervalos o segmentos de un arreglo, permitiendo responder eficientemente a consultas de rango."
+¿Para qué tipo de operaciones es eficiente un árbol de segmentos?,"Para consultas de rango como suma, mínimo o máximo en un intervalo $[l...r]$ y actualizaciones de elementos individuales, ambas en tiempo $O(\log n)$."
+¿Qué son los árboles de segmentos persistentes y cuál es una de sus aplicaciones?,Son árboles de segmentos que conservan versiones anteriores al ser modificados. Se usan en sistemas de control de versiones como Git para gestionar el historial de cambios.
+"En el diseño de sistemas de componentes de entidad (ECS), ¿qué son los componentes?","Son tipos de datos simples (plain datatypes) sin comportamiento, que contienen solo datos."
+"En el modelo ECS, las _____ son funciones que se aplican a entidades que tienen un conjunto específico de componentes.",sistemas (systems)
+¿Qué propiedad de los árboles rojo-negros los hace valiosos para aplicaciones en tiempo real?,"Ofrecen garantías de tiempo en el peor de los casos ($O(\log n)$) para inserción, eliminación y búsqueda."
+"En Linux, el planificador Completely Fair Scheduler y la llamada al sistema epoll utilizan internamente _____ para gestionar sus datos.",árboles rojo-negros (red-black trees)
+¿Qué es la memoización?,"Una técnica de optimización, utilizada en programación dinámica, que consiste en almacenar los resultados de subproblemas para evitar volver a calcularlos."
+"La programación dinámica con memoización sigue un enfoque _____, mientras que la tabulación sigue un enfoque _____.",top-down (de arriba hacia abajo); bottom-up (de abajo hacia arriba)
+¿Cuál es la complejidad temporal y espacial del algoritmo de Kahn para el ordenamiento topológico?,La complejidad temporal es $O(V+E)$ y la complejidad de espacio auxiliar es $O(V)$.
+El acceso a cualquier elemento de un arreglo es una operación de tiempo constante ($O(1)$) porque sus elementos se almacenan en ubicaciones de memoria _____.,contiguas
+¿Qué es una estructura de datos Trie o árbol de prefijos?,Una estructura de datos en forma de árbol utilizada para almacenar un conjunto dinámico o un arreglo asociativo donde las claves suelen ser cadenas de caracteres.
+¿Qué es la arquitectura de memoria NUMA?,"Non-Uniform Memory Architecture, donde el tiempo de acceso a la memoria depende de la ubicación de la memoria en relación con un procesador."
+"En una arquitectura multi-core, ¿qué es el protocolo de coherencia de caché MESI?","Un protocolo que gestiona el estado de las líneas de caché (Modified, Exclusive, Shared, Invalid) para mantener la consistencia de los datos entre los cachés de diferentes núcleos."
+¿Qué es la paginación en la gestión de memoria de un sistema operativo?,"Un esquema que permite que el espacio de direcciones físicas de un proceso no sea contiguo, dividiendo la memoria virtual en bloques de tamaño fijo llamados páginas."
+"Para acelerar la traducción de direcciones virtuales a físicas, las CPUs utilizan una caché especial llamada _____.",Translation Lookaside Buffer (TLB)
+¿Qué es el problema ABA en la programación concurrente sin bloqueo?,"Ocurre cuando una ubicación de memoria se lee una vez (valor A), es modificada por otro hilo (a B y luego de vuelta a A), y luego se lee de nuevo, haciendo que el primer hilo crea erróneamente que no ha habido cambios."

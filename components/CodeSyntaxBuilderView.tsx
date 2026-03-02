@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import { codeSyntaxData, type CodeSyntaxPrompt } from "../data/codeSyntaxData";
@@ -57,6 +57,10 @@ const CodeSyntaxBuilderView: React.FC = () => {
   }, []);
 
   const [roundIndex, setRoundIndex] = useState(0);
+  const sessionStartTime = useRef<number>(Date.now());
+  useEffect(() => {
+    trackAnalyticsEvent("session_start", { game: "code_syntax_builder" });
+  }, []);
   const [selectedTokens, setSelectedTokens] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
@@ -182,6 +186,12 @@ const CodeSyntaxBuilderView: React.FC = () => {
   };
 
   const handleRestart = () => {
+    trackAnalyticsEvent("session_end", {
+      game: "code_syntax_builder",
+      duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+    });
+    sessionStartTime.current = Date.now();
+    trackAnalyticsEvent("session_start", { game: "code_syntax_builder" });
     setRoundIndex(0);
     setSelectedTokens([]);
     setSubmitted(false);
@@ -193,6 +203,15 @@ const CodeSyntaxBuilderView: React.FC = () => {
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
+
+  useEffect(() => {
+    if (isComplete) {
+      trackAnalyticsEvent("session_end", {
+        game: "code_syntax_builder",
+        duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+      });
+    }
+  }, [isComplete]);
 
   useEffect(() => {
     if (isComplete && totalScore > 0) {

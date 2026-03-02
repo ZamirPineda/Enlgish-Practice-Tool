@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import { trackAnalyticsEvent } from "../utils/analytics";
@@ -22,6 +22,7 @@ const shuffle = <T,>(items: T[]): T[] => {
 };
 
 const StudyDocsQuizView: React.FC = () => {
+  const sessionStartTime = useRef<number>(Date.now());
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timeLeft, setTimeLeft] = useState(TIME_PER_QUESTION);
   const [lives, setLives] = useState(INITIAL_LIVES);
@@ -46,6 +47,10 @@ const StudyDocsQuizView: React.FC = () => {
 
   const finishGame = () => {
     setGameState("finished");
+    trackAnalyticsEvent("session_end", {
+      game: "study_docs_quiz",
+      duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+    });
     setSelectedOption(null);
     setLastResult(null);
     if (score > 0) {

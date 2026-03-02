@@ -1,0 +1,80 @@
+¿Cuál es el propósito de una operación agregada en el contexto de Java Streams?,Realizar una tarea en el stream como un todo en lugar de procesar elementos individuales secuencialmente.
+"¿Qué característica de los streams indica que los elementos no se almacenan en memoria, sino que se procesan a medida que se recorren?","Los streams son estructuras de datos que procesan elementos expresando cálculos sobre ellos, no los almacenan."
+Diferencia fundamental entre colecciones y streams respecto a la mutabilidad.,"Las colecciones son mutables (se pueden añadir/eliminar elementos), mientras que los streams son inmutables."
+¿Por qué un stream solo se puede usar una vez?,"Porque una vez que se invoca una operación terminal, el stream se considera consumido y no puede ser reutilizado."
+Concepto: Ejecución perezosa (Lazy execution).,Las operaciones intermedias no se ejecutan hasta que se invoca una operación terminal en el pipeline del stream.
+"¿Qué interfaz de Java **no** implementan los streams, lo que impide usarlos directamente en un bucle for-each?",La interfaz Iterable.
+¿Cuál es la diferencia entre iteración externa e interna en Java?,"La iteración externa usa iteradores explícitos, mientras que la interna es manejada implícitamente por la API de Streams."
+¿Qué interfaz define la funcionalidad básica ofrecida por todos los streams y extiende de AutoCloseable?,BaseStream.
+¿En qué casos es estrictamente necesario cerrar un stream de forma explícita?,"Solo cuando el stream está respaldado por recursos externos, como un archivo."
+¿Qué garantiza que una operación en un stream secuencial ordenado sea determinista?,Que la ejecución produzca el mismo resultado siempre que se use la misma fuente de datos y el mismo pipeline.
+¿Qué métodos de las interfaces de stream crean streams infinitos?,Los métodos factoría generate() e iterate().
+¿Qué operación intermedia se debe usar para limitar el tamaño de un stream infinito antes de llamar a una operación terminal?,limit(maxSize).
+¿Cuál es la función del método factoría `Stream.empty()`?,Crear un stream que no contiene elementos.
+El método _____ de la clase Arrays permite crear un stream a partir de un array de objetos o primitivos.,stream()
+¿Qué excepción lanza `Stream.of(arg)` si el argumento pasado es nulo?,NullPointerException.
+"¿Cuál es la diferencia entre `IntStream.range(start, end)` e `IntStream.rangeClosed(start, end)`?","range() es exclusivo del límite superior, mientras que rangeClosed() es inclusivo."
+¿Qué método de la clase Random genera un stream infinito de valores double entre $0.0$ y $1.0$?,doubles().
+¿Qué operación intermedia transforma cada elemento del stream aplicando una función uno-a-uno?,map().
+¿Cuál es el propósito principal de la operación `flatMap`?,Transformar cada elemento en un stream y aplanar todos esos streams en uno solo.
+¿Qué diferencia a una operación terminal de una operación intermedia?,"La operación terminal inicia el procesamiento, consume el stream y no devuelve otro stream."
+Concepto: Operación sin estado (Stateless operation).,"Operación que procesa cada elemento de forma independiente, sin considerar elementos previos o futuros."
+Concepto: Operación con estado (Stateful operation).,Operación que requiere procesar múltiples elementos o el stream completo antes de producir un resultado (ej. sorted o distinct).
+"¿Qué método de cortocircuito devuelve un subconjunto de elementos que cumplen un predicado, deteniéndose al primer fallo?",takeWhile().
+¿Qué garantiza la estabilidad de la operación `distinct()` en streams ordenados?,Garantiza que se conserve la primera aparición de un elemento duplicado según el orden de encuentro.
+¿Cuál es la función de `skip(n)` en un pipeline de stream?,Descartar los primeros $n$ elementos del stream y devolver un stream con el resto.
+"¿Qué operación intermedia permite inspeccionar los elementos de un stream (por ejemplo, para depuración) sin alterarlos?",peek().
+¿Qué método de BaseStream se usa para obtener un stream que se ejecutará de forma secuencial?,sequential().
+Diferencia entre `anyMatch` y `allMatch` respecto a sus resultados.,anyMatch devuelve true si al menos un elemento cumple el predicado; allMatch requiere que todos lo cumplan.
+¿Qué devuelve la operación terminal `findAny()`?,"Un Optional que describe algún elemento del stream, o un Optional vacío si el stream no tiene elementos."
+¿Por qué `findFirst()` puede ser más costoso que `findAny()` en streams paralelos?,"Porque findFirst() debe respetar el orden de encuentro, mientras que findAny() puede devolver cualquier elemento encontrado primero."
+¿Qué operación terminal devuelve el número total de elementos procesados en el pipeline?,count().
+¿Qué devuelve `min(Comparator)` si el stream está vacío?,Un objeto Optional vacío.
+"En la operación `reduce(identity, accumulator)`, ¿qué ocurre si el stream está vacío?",Se devuelve el valor de identidad proporcionado.
+¿Qué función cumple el 'combiner' en una operación de reducción paralela?,Fusionar los resultados parciales calculados por diferentes hilos en un único valor final.
+Concepto: Reducción mutable.,"Operación que acumula los elementos del stream en un contenedor de resultados mutable, como un ArrayList o StringBuilder."
+¿Cuáles son los tres argumentos requeridos por el método `collect()`?,"Un Supplier (proveedor), un Accumulator (acumulador) y un Combiner (combinador)."
+¿Qué método de la interfaz Stream devuelve una lista inmutable de los elementos resultantes?,toList().
+¿Qué recolector de la clase Collectors organiza los elementos en un mapa basado en una clave booleana?,partitioningBy().
+¿Cuál es la función del recolector `joining()`?,Concatenar los elementos de tipo CharSequence en una sola cadena String.
+¿Qué recolector de Collectors devuelve un Map donde los valores son listas de elementos que comparten la misma clave?,groupingBy().
+¿Qué método de Collectors permite transformar el resultado de un recolector mediante una función finalizadora?,collectingAndThen().
+El método factoría de stream que acepta una semilla y una función para generar elementos ordenados es _____.,iterate()
+"¿Qué método de las interfaces de stream numérico permite obtener un objeto que contiene conteo, suma, mínimo, máximo y promedio?",summaryStatistics().
+"¿Qué significa que un parámetro de comportamiento de un stream sea ""sin interferencia""?",Significa que no debe modificar la fuente de datos del stream durante el procesamiento del pipeline.
+¿Por qué las operaciones `map` y `filter` se consideran sin estado (stateless)?,Porque pueden procesar un elemento sin necesidad de conocer información sobre otros elementos del stream.
+¿Qué método de BaseStream se utiliza para habilitar el procesamiento en paralelo de un stream?,parallel().
+"¿Qué operación intermedia de ordenación (`sorted`) se considera una operación con estado ""pesada""?",Se considera pesada porque debe almacenar todos los elementos del stream antes de poder emitir el primero ordenado.
+¿Qué método de `IntStream` convierte los valores primitivos a sus respectivos objetos envolventes (Integer)?,boxed().
+¿Qué ocurre si se aplica la operación `count()` sobre un stream infinito?,La operación nunca terminará.
+¿Cuál es el tipo de retorno de `Collectors.counting()`?,"Collector<T, ?, Long>."
+¿Qué método permite crear un stream a partir de un subrango específico de un array?,"Arrays.stream(array, fromIndex, toIndex)."
+¿Qué operación se prefiere para mejorar el rendimiento: `skip` antes de `map` o `map` antes de `skip`?,"skip antes de map, para evitar transformaciones innecesarias en elementos que serán descartados."
+¿Cuál es la diferencia entre `map` y `mapMulti`?,"map es una transformación 1-a-1, mientras que mapMulti es una transformación 1-a-muchos más eficiente que flatMap en ciertos casos."
+¿Qué método de Collectors se utiliza para agrupar elementos y contarlos simultáneamente?,"groupingBy(classifier, counting())."
+"¿Qué operación terminal permite realizar una acción en cada elemento respetando el orden de encuentro, incluso en paralelo?",forEachOrdered().
+¿Qué recolector se usa para encontrar el elemento máximo dentro de un grupo definido por `groupingBy`?,maxBy().
+¿Cómo se obtiene un stream de caracteres a partir de un String en Java?,"Usando el método chars(), que devuelve un IntStream de los valores Unicode."
+¿Qué recolector de Collectors es equivalente a realizar una reducción de stream con un valor de identidad y un acumulador?,reducing().
+¿Qué método de `Files` permite buscar archivos en una jerarquía de directorios devolviendo un Stream de Paths?,find().
+¿Qué significa que una operación sea de cortocircuito (short-circuit)?,Que la operación puede producir un resultado o un stream finito sin procesar todos los elementos de la fuente.
+¿Qué recolector de Collectors permite aplanar streams resultantes de una transformación dentro de otro recolector?,flatMapping().
+¿Cuál es la diferencia entre `groupingBy` y `groupingByConcurrent`?,groupingByConcurrent usa un mapa concurrente y es más eficiente para streams paralelos desordenados.
+¿Qué método de `Collectors` se usa para calcular el promedio de una propiedad numérica de los objetos en un stream?,"averagingInt(), averagingLong() o averagingDouble()."
+¿Qué recolector se utiliza para concatenar los resultados de un stream en una lista mutable específica (ej. LinkedList)?,toCollection(LinkedList::new).
+¿Qué operación terminal se usa para obtener un array de objetos `Object[]` a partir de un stream?,toArray().
+¿Por qué `unordered()` puede mejorar el rendimiento de `distinct()` en un stream paralelo?,"Porque elimina la necesidad de mantener el orden de encuentro, reduciendo la sobrecarga de sincronización."
+¿Qué método de Collectors permite sumar valores numéricos derivados de los elementos del stream?,"summingInt(), summingLong() o summingDouble()."
+¿Qué interfaz funcional representa el acumulador en la operación `collect()` de tres argumentos?,"BiConsumer<R, T>."
+¿Cuál es el valor de retorno de `Optional.orElse(defaultValue)` si el Optional contiene un valor?,El valor contenido en el Optional.
+"¿Qué método de `Stream` permite combinar dos streams, concatenándolos?","Stream.concat(a, b)."
+¿Qué método de stream numérico se utiliza para encontrar el valor máximo sin usar un comparador?,"max() (devuelve un OptionalInt, OptionalLong o OptionalDouble)."
+¿Qué recolector de Collectors es útil para realizar dos recolecciones diferentes sobre los mismos elementos y combinar sus resultados?,teeing() (mencionado como recolector avanzado en Java moderno).
+¿Qué garantiza que un stream paralelo sea determinista en sus resultados?,Que la fuente de datos esté ordenada y las operaciones respeten el orden de encuentro (encounter order).
+¿Qué método de BaseStream comprueba si el stream se ejecutará en paralelo?,isParallel().
+¿Qué interfaz funcional es el parámetro de la operación intermedia `filter()`?,Predicate<? super T>.
+¿Qué recolector de Collectors se usa para agrupar elementos y aplicar un filtro antes de la reducción?,filtering().
+"En `Collectors.toMap`, ¿para qué sirve el tercer argumento (mergeFunction)?",Para resolver conflictos de colisión cuando dos elementos mapean a la misma clave.
+¿Qué método de `Stream` se utiliza para obtener una versión paralela de un stream secuencial?,parallel().
+¿Cómo se llama la propiedad de un acumulador en `reduce` que permite procesar elementos en cualquier par y luego combinarlos?,Asociatividad.
+"¿Qué método de `Stream` devuelve el primer elemento encontrado en un stream, respetando el orden si existe?",findFirst().

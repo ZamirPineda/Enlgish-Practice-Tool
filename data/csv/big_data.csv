@@ -1,0 +1,80 @@
+¿Qué unidad de información digital se compone de un grupo de 8 bits?,Un byte (o un carácter).
+Definición de datos estructurados.,"Datos organizados que siguen un formato específico, generalmente almacenados en bases de datos relacionales."
+"¿Qué tipo de datos incluye texto, imágenes, videos y publicaciones en redes sociales que carecen de un formato rígido?",Datos no estructurados.
+¿Qué son los datos semiestructurados?,Datos que no cumplen con un esquema rígido pero contienen elementos organizativos como etiquetas o metadatos.
+"¿Cuáles son las tres ""V"" fundamentales que caracterizan al Big Data?","Volumen, Velocidad y Variedad."
+"En el contexto de Big Data, ¿a qué se refiere la ""Veracidad""?","A la calidad, confiabilidad y exactitud de los datos recopilados."
+¿Qué término describe la inconsistencia o fluctuaciones en la estructura y formato de los grandes volúmenes de datos?,Variabilidad.
+¿Cuál es la principal diferencia de almacenamiento entre un Data Warehouse y un Data Lake?,"El Data Warehouse almacena datos estructurados, mientras que el Data Lake admite datos estructurados, semiestructurados y no estructurados."
+¿Qué ventaja ofrece un Data Lakehouse sobre un Data Lake tradicional respecto a la integridad de los datos?,"El cumplimiento de las propiedades ACID (Atomicidad, Consistencia, Aislamiento y Durabilidad)."
+"¿Cómo se denomina la estructura jerárquica de almacenamiento que utiliza directorios, subdirectorios y protocolos como NFS o SMB?",File Storage (Almacenamiento de archivos).
+¿En qué tipo de almacenamiento los datos se dividen en trozos identificados por un ID único y se gestionan en discos separados?,Block Storage (Almacenamiento por bloques).
+"¿Qué método de almacenamiento es ideal para datos no estructurados al tratarlos como unidades con ID único, atributos y metadatos?",Object Storage (Almacenamiento de objetos).
+¿Cuáles son los seis tipos de datos soportados por el formato JSON?,"String, Number, Boolean, Array, Object y Null."
+¿Por qué el formato Parquet se considera un formato de almacenamiento columnar o híbrido?,"Porque organiza los datos por columnas para optimizar lecturas y agregaciones, dividiéndolos en grupos de filas (Row Groups)."
+"¿Qué beneficio ofrece la compresión ""Snappy"" en los archivos Parquet?",Reduce los costes de almacenamiento y mejora la eficiencia de las operaciones de entrada/salida (I/O).
+"En el diseño interno de Parquet, ¿qué es un ""Column Chunk""?",Un fragmento de los datos de una columna específica dentro de un grupo de filas (Row Group).
+"¿Qué técnica de optimización en Spark permite reducir el número de archivos pequeños en Parquet sin realizar un ""full shuffle""?",Coalesce.
+¿Qué función de codificación en Parquet almacena la longitud del prefijo de la entrada anterior más el sufijo actual?,Delta Strings (codificación incremental).
+"En un archivo CSV, ¿qué propósito cumple la fila de encabezado (header row)?",Proporcionar etiquetas descriptivas para los datos contenidos en cada columna.
+¿Cuál es el lenguaje nativo en el que está escrito Apache Spark?,Scala.
+"Según el estudio comparativo, ¿qué lenguaje demostró mejor rendimiento al procesar archivos CSV pequeños ($5$ MB)?",Python (con $6.71$ segundos).
+¿Qué lenguaje resultó ser más eficiente para operaciones complejas de ETL con joins de gran tamaño en Spark?,Scala (con $374.42$ segundos en la prueba de mayor carga).
+¿Qué es Apache Iceberg?,Un formato de tabla analítica abierto que permite gestionar grandes volúmenes de datos con transacciones ACID y evolución de esquema.
+"¿Qué permite la ""evolución de esquema"" en Apache Iceberg?",Modificar la estructura de las tablas sin necesidad de reescribir todos los datos existentes.
+"En la arquitectura de Iceberg, ¿qué contiene el directorio de metadatos (metadata)?","Información sobre el esquema de la tabla, sus lotes (batches), historial de cambios y transacciones."
+¿Para qué sirve el parámetro `overwrite-mode=dynamic` al escribir en Iceberg con Spark?,Para optimizar el proceso de actualización de datos minimizando el número de lotes que deben ser sobreescritos.
+¿Qué es un Dataset en Apache Spark?,Una colección distribuida de datos que ofrece tipado fuerte y los beneficios del motor de ejecución optimizado de Spark SQL.
+¿En qué lenguajes de programación está disponible la API de Dataset?,Scala y Java.
+Definición de DataFrame en Spark.,"Un Dataset organizado en columnas con nombre, equivalente a una tabla en una base de datos relacional."
+¿Cuál es la propiedad de configuración de Hadoop para establecer la clave de acceso secreta de Amazon S3 en Spark?,fs.s3a.secret.key
+"¿Qué comando de `sbt` se utiliza para crear un ""fat jar"" del cliente jspark?",sbt assembly
+¿Qué prefijo debe tener la URL JDBC para conectar jspark con Databricks/Spark?,jdbc:hive2://
+"¿Qué comando ""mágico"" permite ejecutar sentencias SQL directamente en una celda de un notebook de PySpark?",%%sparksql
+¿Cuál es la función del conector BigQuery para Spark?,Permitir que el código de Spark cargue datos desde tablas de BigQuery y escriba los resultados de vuelta.
+"¿Qué es una ""Runtime Template"" (plantilla de sesión) en Spark Serverless de Google Cloud?",Un archivo de configuración que contiene los parámetros para ejecutar código Spark en una sesión interactiva.
+"¿Para qué sirve el ""Persistent History Server"" (PHS) en el ecosistema Dataproc?",Para permitir el acceso a los registros (logs) de las sesiones de Spark durante y después de su ejecución.
+¿Qué herramienta se utiliza para programar la ejecución de notebooks de Spark mediante Cloud Composer?,El Job Scheduler (basado en Apache Airflow).
+"En el diseño de Parquet, ¿qué representan los valores R (Repetition levels)?",Indican en qué nivel de una estructura anidada se repite un valor.
+"En el diseño de Parquet, ¿qué representan los valores D (Definition levels)?",Indican cuántos niveles de una estructura anidada opcional están realmente definidos (no son nulos).
+"¿Qué es la ""Evaluación Perezosa"" (Lazy Evaluation) en Spark?","Estrategia donde las transformaciones no se ejecutan inmediatamente, sino que se planifican hasta que se invoca una acción."
+"¿Qué permite la ""Ejecución Adaptativa de Consultas"" (Adaptive Query Execution - AQE)?",Optimizar el plan de ejecución de una consulta SQL en tiempo real basándose en las estadísticas de los datos intermedios.
+"¿Cuál es el tamaño por defecto de un ""Row Group"" en Parquet?",$128$ MB.
+¿Qué codificación en Parquet es la más simple y almacena los valores uno tras otro?,PLAIN.
+¿Qué sucede con los valores nulos de una columna al ser guardados en formato Parquet?,"No se almacenan físicamente, lo que ahorra espacio en disco."
+"En Spark SQL, ¿cómo se representa un DataFrame en el lenguaje Scala?",Como un alias de tipo de `Dataset[Row]`.
+¿Qué extensión de JupyterLab permite explorar datasets de BigQuery y editar archivos de Cloud Storage?,La extensión de Dataproc (o JupyterLab extension for Google Cloud).
+¿Qué protocolo de acceso se utiliza para leer archivos desde S3 en Spark de forma optimizada?,s3a://.
+¿Qué comando se usa para iniciar JupyterLab en un entorno virtual de Python?,jupyter lab
+¿Qué rol de IAM permite a un usuario crear sesiones de notebooks interactivos en Dataproc?,Dataproc Editor (roles/dataproc.editor).
+¿Cuál es el tiempo máximo de inactividad permitido para una sesión de Spark Serverless?,336 horas (14 días).
+"¿Qué permite el ""Dynamic Partition Pruning"" en el motor de Spark?",Evitar la lectura de particiones innecesarias en un join basándose en los resultados del filtrado de la otra tabla.
+"En Parquet, ¿cuál es el tamaño por defecto de una página (page)?",$1$ MB.
+¿Qué tipo de codificación en Parquet utiliza enteros de longitud variable para almacenar números?,Delta Encoding.
+¿Qué técnica en CSV se utiliza si un valor contiene comillas dobles internamente?,Escapar la comilla usando una barra invertida (\) antes de la misma.
+¿Qué componente de Spark gestiona los recursos y ejecuta las consultas en un entorno distribuido?,Spark Session.
+"En el estudio de rendimiento, ¿cuál fue el tiempo de Scala para procesar el archivo CSV de $1.6$ GB?",$47.72$ segundos.
+¿Para qué sirve el parámetro `inferSchema=true` al leer un CSV en Spark?,Para que Spark analice automáticamente el contenido del archivo y determine el tipo de dato de cada columna.
+¿Qué es un clúster de Dataproc en Compute Engine?,Un conjunto de máquinas virtuales gestionadas que ejecutan Hadoop y Spark para procesamiento de datos.
+"¿Qué significan las siglas PII, HIPAA y PCI en el contexto de seguridad de datos?","Regulaciones y estándares para proteger información personal identificable, datos de salud y datos de tarjetas de pago."
+¿Qué característica de Big Data se refiere al valor comercial que se puede extraer del análisis de grandes volúmenes?,Value (Valor).
+Diferencia entre `repartition()` y `coalesce()` en Spark.,"`repartition()` realiza un shuffle completo para redistribuir datos, mientras que `coalesce()` reduce el número de particiones minimizando el shuffle."
+"¿Qué es el ""Catalyst Optimizer""?",El motor de optimización de consultas de Spark SQL que genera planes de ejecución eficientes.
+¿Qué formato de almacenamiento es mejor para realizar operaciones OLTP (inserción y actualización rápida)?,Almacenamiento basado en filas (Row-based storage).
+¿Qué formato de almacenamiento es mejor para operaciones OLAP (análisis y agregaciones)?,Almacenamiento basado en columnas (Columnar storage).
+"En jspark, ¿cómo se definen las credenciales si no se usan argumentos de línea de comandos?",En el archivo de configuración `application.conf` dentro de la sección `credentials`.
+¿Qué permite la función `broadcast()` en un join de Spark?,Enviar una copia de un dataset pequeño a todos los nodos ejecutores para acelerar la unión con un dataset grande.
+¿Qué es una transacción ACID?,Un conjunto de propiedades que garantizan que las operaciones de base de datos se procesen de manera confiable.
+"En Iceberg, ¿qué indica el archivo `.parquet.crc`?",Es un archivo de control de redundancia cíclica para verificar la integridad del archivo Parquet asociado.
+"¿Qué es el ""Metadata Layer"" en un Data Lakehouse?","Una capa que gestiona transacciones y metadatos sobre archivos en almacenamiento de bajo coste, como S3 o ADLS."
+¿Cuál es la función del archivo `core-site.xml` en una configuración de Spark/Hadoop?,"Almacenar configuraciones a nivel de sitio, incluyendo credenciales de sistemas de archivos externos."
+¿Qué herramienta permite virtualizar el entorno de Python para instalar la extensión de JupyterLab?,pipenv.
+"¿Qué es un ""Executor Core"" en la configuración de Spark?",La unidad de procesamiento (CPU) asignada a un ejecutor para realizar tareas en paralelo.
+"¿Cuál es el propósito del ""Staging Bucket"" en las plantillas de Dataproc Serverless?",Almacenar temporalmente archivos necesarios para la ejecución del workload en Cloud Storage.
+¿Qué sucede si no se especifica una cuenta de servicio en una plantilla de Spark Serverless?,Se utiliza por defecto la cuenta de servicio predeterminada de Compute Engine.
+"En JSON, ¿cómo se representa un valor nulo?",Con la palabra clave `null`.
+"¿Qué técnica de compresión en Parquet es conocida como ""incremental encoding""?",Delta Strings.
+¿Qué significa que un DataFrame sea conceptualmente equivalente a una tabla en una base de datos relacional?,Que tiene una estructura definida por columnas con nombre y tipos de datos específicos.
+"Según la documentación de Spark 4.1.1, ¿Python soporta la API de Dataset?","No, debido a su naturaleza dinámica."
+¿Qué comando de `gcloud` se usa para inicializar la configuración del proyecto y la región?,gcloud init
+¿Cuál es la versión mínima de Python requerida para instalar la extensión de JupyterLab de Dataproc?,Python 3.11 o superior.

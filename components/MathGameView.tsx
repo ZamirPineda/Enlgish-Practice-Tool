@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import LatexRenderer from "./LatexRenderer";
@@ -115,6 +121,7 @@ const MathGameView: React.FC = () => {
     [],
   );
 
+  const sessionStartTime = useRef<number>(Date.now());
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION_SECONDS);
   const [lives, setLives] = useState(INITIAL_LIVES);
@@ -148,6 +155,10 @@ const MathGameView: React.FC = () => {
 
   const finishGame = useCallback(() => {
     setGameState("finished");
+    trackAnalyticsEvent("session_end", {
+      game: "math_game",
+      duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+    });
     setSelectedOption(null);
     setLastResult(null);
     if (score > 0) {
@@ -184,6 +195,8 @@ const MathGameView: React.FC = () => {
   }, [finishGame, gameState, lives, timeLeft]);
 
   const startGame = () => {
+    sessionStartTime.current = Date.now();
+    trackAnalyticsEvent("session_start", { game: "math_game" });
     if (questionBank.length === 0) return;
     setGameState("playing");
     setTimeLeft(GAME_DURATION_SECONDS);

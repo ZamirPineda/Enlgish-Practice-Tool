@@ -124,6 +124,7 @@ export const MILESTONE_TITLES: Record<string, string> = {
   "play_game:bug_hunter": "Code Bug Hunter",
   "play_game:syntax_builder": "Code Syntax Builder",
   "play_game:diplomatic": "Diplomatic Reviewer",
+  "play_game:test_tech": "Tech Interview Hub",
   "correct_answers:stop": "Respuestas STOP",
   "correct_answers:math": "Respuestas Math",
   "correct_answers:quiz": "Respuestas Docs",

@@ -1,0 +1,120 @@
+¿Qué servicio de gestión de datos de AWS se puede utilizar para publicar datos y hacerlos disponibles a través de una aplicación web personalizada?,Amazon DataZone.
+Amazon EMR es la plataforma de big data en la nube para procesar grandes cantidades de datos utilizando herramientas de código abierto como _____.,"Apache Spark, Apache Hive y Presto."
+¿Qué servicio de análisis de AWS está diseñado específicamente para la industria de servicios financieros (FSI)?,Amazon FinSpace.
+Amazon Kinesis Data Streams es un servicio de streaming de datos en tiempo real que puede capturar continuamente _____ de datos por segundo desde cientos de miles de fuentes.,gigabytes.
+¿Cuál es el servicio de inteligencia de negocios (BI) rápido y basado en la nube que facilita la entrega de información a todos en una organización?,Quick Suite (o QuickSight).
+¿Qué servicio web de AWS ayuda a procesar y mover datos de manera fiable entre diferentes servicios de cómputo y almacenamiento de AWS a intervalos especificados?,AWS Data Pipeline.
+"¿Cómo se llama el servicio que facilita la configuración de un repositorio de datos seguro, centralizado y curado en días?",AWS Lake Formation.
+¿Cuál es el nivel de certificación de AWS ideal para quienes son nuevos en la computación en la nube y cubre conceptos esenciales?,Nivel Fundacional (Foundational).
+La certificación AWS Certified Cloud Practitioner requiere tener al menos _____ de experiencia industrial básica en el dominio de AWS Cloud.,6 meses.
+¿Qué nivel de certificación de AWS requiere más de 2 años de experiencia diseñando arquitecturas o gestionando entornos de AWS?,Nivel Profesional (Professional).
+"Las certificaciones de _____ requieren un profundo conocimiento del dominio elegido, ya que el nivel del examen es bastante más alto.",Especialidad (Specialty).
+"Según AWS, su infraestructura es hasta _____ veces más eficiente energéticamente que los centros de datos locales tradicionales.",4.1.
+"¿Qué métrica se utiliza para medir la eficiencia de un centro de datos, donde una puntuación más baja indica mayor eficiencia?",Efectividad del Uso de Energía (Power Usage Effectiveness - PUE).
+"El PUE global de los centros de datos de AWS en 2024 fue de 1.15, mejor que el promedio de la industria de la nube pública de _____.",1.25.
+¿Qué métrica mide el volumen de agua extraída por kWh de carga de TI dentro de un centro de datos?,Efectividad del Uso del Agua (Water Usage Effectiveness - WUE).
+"¿Qué tipo de instancias de Amazon EC2, basadas en procesadores de AWS, utilizan hasta un 60% menos de energía que instancias comparables para el mismo rendimiento?",Instancias basadas en AWS Graviton.
+"En 2024, AWS comenzó a hacer la transición a _____ para alimentar los generadores de respaldo en sus centros de datos, reduciendo las emisiones de gases de efecto invernadero hasta en un 90%.",aceite vegetal hidrotratado (HVO) o diésel renovable.
+"AWS se ha comprometido a ser _____ para 2030, devolviendo más agua a las comunidades de la que consume.",agua positivo (water positive).
+¿Cuál es el servicio web de AWS que proporciona capacidad de cómputo segura y de tamaño variable (servidores virtuales) en la nube?,Amazon Elastic Compute Cloud (Amazon EC2).
+AWS _____ es una oferta de infraestructura de AWS optimizada para aplicaciones de computación de borde móvil en la red 5G.,Wavelength.
+"¿Qué oferta de nube integrada, desarrollada conjuntamente por AWS y VMware, permite a las organizaciones migrar y extender sus entornos locales basados en vSphere a la nube de AWS?",VMware Cloud on AWS.
+"El modelo de precios de AWS donde los clientes solo pagan por los servicios que consumen, sin costos iniciales ni compromisos a largo plazo, se llama _____.",pago por uso (pay-as-you-go).
+¿Qué herramienta oficial de AWS proporciona a los usuarios un pronóstico detallado de sus posibles costos en la nube?,AWS Pricing Calculator.
+"En AWS, el pilar de optimización de costos que implica hacer coincidir los tipos y tamaños de las instancias con los requisitos reales de la carga de trabajo se conoce como _____.",ajuste de tamaño (Right-Sizing).
+"Para cargas de trabajo predecibles, ¿qué opciones de precios de AWS ofrecen descuentos de hasta el 72% a cambio de un compromiso de uso?",Savings Plans o Instancias Reservadas.
+¿Qué tipo de instancias de Amazon EC2 permiten ejecutar cargas de trabajo tolerantes a fallos con descuentos de hasta el 90% sobre el precio bajo demanda?,Instancias Spot de Amazon EC2.
+"El servicio _____ proporciona recomendaciones para optimizar el uso de sus recursos de AWS, como la identificación de instancias EC2 inactivas.",AWS Cost Explorer o AWS Trusted Advisor.
+¿Cuál es la cuota de mercado de Amazon Web Services (AWS) en la infraestructura de nube global a partir del segundo trimestre de 2025?,30%.
+"En el mercado de infraestructura en la nube, Microsoft Azure ocupa el segundo lugar con una cuota de mercado del _____ en el segundo trimestre de 2025.",20%.
+"¿Qué servicio de AWS para ETL (Extract, Transform, Load) sin servidor se utiliza para preparar y transformar datos para el análisis?",AWS Glue.
+¿Cuál es el servicio de AWS para consultar datos de forma interactiva en S3 y otras fuentes utilizando SQL estándar?,Amazon Athena.
+"El servicio de AWS para construir, entrenar y desplegar modelos de aprendizaje automático se llama _____.",Amazon SageMaker.
+La integración de Amazon QuickSight con Amazon Q permite a los usuarios realizar consultas de datos en _____.,lenguaje natural.
+"A finales de 2025, la nube de AWS abarca 120 Zonas de Disponibilidad dentro de _____ Regiones Geográficas.",38.
+Las _____ son implementaciones de infraestructura de AWS que integran servicios de cómputo y almacenamiento de AWS dentro de los centros de datos de los proveedores de servicios de comunicaciones en el borde de la red 5G.,Zonas de Wavelength (Wavelength Zones).
+"Para una experiencia híbrida verdaderamente consistente, ¿qué servicio permite ejecutar la infraestructura y los servicios de AWS en las instalaciones?",AWS Outposts.
+"Definición: La columna vertebral de los servicios en la nube de AWS, que comprende cientos de centros de datos estratégicamente ubicados en todo el mundo.",Infraestructura Global de AWS (AWS Global Infrastructure).
+"Una Zona de Disponibilidad (AZ) de AWS consiste en uno o más _____ con energía, refrigeración y seguridad física independientes.",centros de datos discretos.
+¿Qué componentes de la infraestructura de AWS acercan los servicios principales de AWS a las principales ciudades para reducir la latencia para los usuarios finales?,Zonas Locales (Local Zones).
+Los _____ sirven como puntos finales de AWS para el almacenamiento en caché de contenido y son utilizados por servicios como CloudFront para optimizar la entrega de contenido.,Puntos de Presencia o Ubicaciones de Borde (Edge Locations).
+"¿Qué servicio de AWS IoT facilita la creación de gemelos digitales de sistemas del mundo real como edificios, fábricas o líneas de producción?",AWS IoT TwinMaker.
+"A partir del 15 de julio de 2025, los nuevos clientes de AWS reciben hasta _____ en créditos de AWS Free Tier.",$200.
+"¿Qué servicio de AWS IoT facilita la recolección, almacenamiento, organización y monitoreo de datos de equipos industriales a escala?",AWS IoT SiteWise.
+"El modelo de precios _____ de AWS le permite adaptar su negocio según la necesidad y no según los pronósticos, reduciendo el riesgo de sobreaprovisionamiento.",pago por uso (pay-as-you-go).
+"¿Qué servicio de AWS ofrece bases de datos relacionales administradas con motores comunes como MySQL, PostgreSQL y SQL Server?",Amazon RDS (Relational Database Service).
+"Para aplicaciones que necesitan una latencia constante de milisegundos de un solo dígito, ¿qué base de datos NoSQL totalmente administrada ofrece AWS?",Amazon DynamoDB.
+El servicio _____ es una red de entrega de contenido (CDN) global para acelerar la distribución de contenido web estático y dinámico.,Amazon CloudFront.
+AWS Shield protege contra ataques de _____.,Denegación de Servicio Distribuido (DDoS).
+"¿Qué servicio permite el control seguro y centralizado del acceso a los recursos de AWS mediante la creación de usuarios, grupos y roles?",AWS Identity & Access Management (IAM).
+El enfoque estratégico de AWS para 2025 posiciona la _____ como la base central de la infraestructura moderna.,inteligencia artificial (AI).
+"¿Qué servicio gestionado de AWS proporciona acceso a modelos de base (FMs) a través de una API, incluyendo la familia ""Nova"" de Amazon y modelos de terceros?",Amazon Bedrock.
+"En re:Invent 2025, AWS anunció _____, una nueva clase de agentes de IA que pueden trabajar de forma autónoma durante horas o días.",agentes de frontera (frontier agents).
+¿Cuál es el nuevo servicio anunciado en re:Invent 2025 que simplifica la personalización de modelos para construir agentes de IA más rápidos y eficientes?,Ajuste Fino por Refuerzo (Reinforcement Fine Tuning - RFT) en Amazon Bedrock.
+Amazon Bedrock AgentCore es una plataforma avanzada para construir y desplegar _____ de forma segura a escala.,agentes.
+La disponibilidad general de _____ permite a los sistemas de IA almacenar y consultar vectores de forma nativa en Amazon S3 para la búsqueda semántica.,Amazon S3 Vectors.
+"En re:Invent 2025, AWS anunció _____ para implementar infraestructura de IA de AWS totalmente gestionada en los centros de datos de los clientes.",AWS AI Factories.
+¿Qué nueva oferta de soporte de AWS combina la velocidad de la IA con la experiencia de los ingenieros de AWS para proporcionar tiempos de respuesta más rápidos?,"Nuevos y mejorados planes de AWS Support (por ejemplo, Business Support+)."
+"AWS _____ en vista previa multicloud está diseñado para simplificar la creación de conexiones con ancho de banda dedicado entre AWS y otros proveedores de servicios, comenzando con Google Cloud.",Interconnect.
+"El servicio AWS IoT _____ crea visualizaciones digitales utilizando mediciones y análisis de una variedad de sensores, cámaras y aplicaciones empresariales del mundo real.",TwinMaker.
+"Las _____ son ideales para aplicaciones de baja latencia como el streaming en vivo o la realidad aumentada, acercando las aplicaciones a los usuarios finales.",Zonas Locales de AWS (AWS Local Zones).
+¿Qué servicio de AWS proporciona herramientas para construir redes blockchain únicas y acceder a soluciones de socios validadas?,Blockchain on AWS.
+"En el tercer trimestre de 2025, el mercado global de infraestructura en la nube alcanzó los _____ mil millones de dólares.",$102.6.
+"La cuota de mercado combinada de AWS, Microsoft Azure y Google Cloud en el tercer trimestre de 2025 fue del _____.",66%.
+Amazon _____ es una base de datos relacional nativa de la nube que ofrece de 3 a 5 veces el rendimiento de las alternativas de código abierto.,Aurora.
+Las bases de datos _____ de AWS ofrecen opciones sin servidor que eliminan la necesidad de gestionar la capacidad al escalar instantáneamente bajo demanda.,totalmente gestionadas.
+¿Qué servicio de AWS para big data proporciona un marco de Hadoop gestionado para procesar enormes volúmenes de datos de manera eficiente?,Amazon EMR.
+"El servicio AWS _____ es un sistema operativo en tiempo real, de código abierto y neutral en la nube para dispositivos con recursos limitados como microcontroladores.",FreeRTOS.
+"¿Qué servicio de AWS permite el procesamiento local, la mensajería y la inferencia de ML en el borde, conectando de forma segura los dispositivos de borde a los servicios de AWS?",AWS IoT Greengrass.
+"Para el análisis de datos, ¿qué servicio sin servidor permite analizar datos en Amazon S3 usando SQL estándar?",Amazon Athena.
+¿Cuál es el almacén de datos en la nube de AWS que ofrece un rendimiento de precio hasta tres veces mejor que otras alternativas en la nube?,Amazon Redshift.
+AWS _____ aprovecha el aprendizaje automático para descubrir y clasificar datos sensibles almacenados en AWS.,Macie.
+¿Qué servicio de AWS realiza evaluaciones de seguridad automatizadas de las instancias EC2 para identificar vulnerabilidades?,Amazon Inspector.
+"Para el gobierno de recursos, AWS _____ rastrea las configuraciones de los recursos y los cambios a lo largo del tiempo.",Config.
+"El servicio _____ crea registros de eventos de la actividad del usuario y las llamadas a la API, lo que apoya el análisis de seguridad y la auditoría de cumplimiento.",AWS CloudTrail.
+"¿Qué servicio inspecciona los entornos de AWS y proporciona recomendaciones sobre optimización de costos, rendimiento y seguridad?",AWS Trusted Advisor.
+"La quinta generación del chip de CPU de AWS, anunciada en re:Invent 2025 y que ofrece el mejor rendimiento de precio, se llama _____.",Graviton5.
+Los _____ son los chips de AWS diseñados específicamente para el entrenamiento de aprendizaje profundo de alto rendimiento de modelos de IA generativa.,aceleradores AWS Trainium.
+"En AWS, una _____ es un área geográfica que contiene múltiples centros de datos físicos conocidos como Zonas de Disponibilidad (AZs).",Región.
+¿Qué servicio de AWS permite a los desarrolladores desplegar y escalar aplicaciones y servicios web sin preocuparse por la infraestructura subyacente?,AWS Elastic Beanstalk.
+"¿Cuál es la base de datos de grafos de AWS utilizada para casos de uso como detección de fraude, redes sociales y motores de recomendación?",Amazon Neptune.
+"La solución de AWS que permite ejecutar funciones de Lambda en cómputo de EC2, manteniendo la simplicidad sin servidor, se llama _____.",AWS Lambda Managed Instances.
+La nueva capacidad de AWS Lambda que permite construir aplicaciones que coordinan múltiples pasos de manera fiable durante largos períodos se llama _____.,AWS Lambda Durable Functions.
+"Para modernizar el código, el servicio impulsado por IA que aprende los patrones de una organización y automatiza las transformaciones se llama _____.",AWS Transform custom.
+¿Qué servicio de DNS web escalable de AWS se utiliza para enrutar a los usuarios finales a aplicaciones de Internet?,Amazon Route 53.
+"El servicio de almacenamiento de objetos de AWS conocido por su escalabilidad, durabilidad del 99.999999999% (11 nueves) y bajo costo es _____.",Amazon S3 (Simple Storage Service).
+"Para el archivado de datos a largo plazo y de bajo costo, ¿qué servicio de almacenamiento ofrece AWS?",Amazon S3 Glacier.
+AWS proporciona una conexión de red dedicada desde sus instalaciones a AWS a través del servicio _____.,AWS Direct Connect.
+¿Qué servicio de AWS proporciona control centralizado sobre las claves criptográficas utilizadas para proteger sus datos?,AWS KMS (Key Management Service).
+"La familia de modelos de base de Amazon, que ofrece un rendimiento de precio líder en la industria, se llama _____.",Amazon Nova.
+"¿Qué nuevo agente de AWS, en vista previa, actúa como un ingeniero de guardia autónomo para acelerar la respuesta a incidentes?",AWS DevOps Agent.
+"El nuevo agente de seguridad de AWS, _____, asegura las aplicaciones de forma proactiva desde el diseño hasta el despliegue mediante análisis de código impulsado por IA.",AWS Security Agent.
+Amazon _____ es la herramienta de IDE de ML basada en la web todo en uno que proporciona aplicaciones para todas las tareas comunes de ML.,SageMaker Studio.
+¿Cuál es la interfaz de ML sin código dentro de SageMaker que permite a los usuarios de negocio construir modelos de ML sin escribir código?,Amazon SageMaker Canvas.
+Amazon SageMaker _____ es un centro que proporciona modelos de ML entrenados y preconfigurados para ajustarlos y desplegarlos sin problemas.,JumpStart.
+"¿Cuál es el servicio de base de datos de series temporales de AWS, eficiente para aplicaciones de IoT, DevOps y telemetría industrial?",Amazon Timestream.
+"El servicio de base de datos NoSQL de tipo columna ancha de AWS, compatible con Apache Cassandra, se llama _____.",Amazon Keyspaces.
+"Para el 2024, Amazon igualó el 100% de la electricidad consumida por sus operaciones globales con fuentes de _____.",energía renovable.
+¿Cuál es el nivel de certificación de AWS que se basa en el nivel de asociado y requiere diseñar arquitecturas más complejas?,AWS Certified Solutions Architect – Professional.
+La plataforma _____ ofrece una interfaz de usuario unificada para la mayoría de los servicios de AWS.,AWS Management Console.
+¿Qué servicio de AWS se utiliza para ejecutar contenedores en una infraestructura gestionada por el cliente?,Amazon ECS Anywhere.
+"Para almacenar, gestionar y desplegar imágenes de contenedores, AWS ofrece el servicio _____.",Amazon Elastic Container Registry (ECR).
+"¿Cuál es la base de datos relacional de AWS que reduce el TCO en un 34% y tiene un retorno de la inversión de 5 meses, excluyendo Aurora?",Amazon RDS.
+"¿Qué servicio de caché en memoria de AWS, según IDC, tiene un ROI a tres años del 449%?",Amazon ElastiCache.
+Las instancias _____ de AWS están diseñadas para ser hasta un 40% más eficientes energéticamente que los chips Trainium2.,AWS Trainium3.
+Las instancias _____ ofrecen hasta un 50% de mejor rendimiento por vatio en comparación con instancias EC2 comparables para inferencia.,basadas en Inferentia2.
+"En el tercer trimestre de 2025, la tasa de crecimiento interanual de los ingresos de AWS se reaceleró al _____.",20%.
+"Los servicios de nube específicos de GenAI experimentaron un crecimiento explosivo, expandiéndose entre un _____ en el segundo trimestre de 2025.",140% y 180%.
+"Para el 2025, AWS ofrece más de _____ servicios completamente funcionales.",200.
+La certificación _____ se centra en asegurar los entornos de AWS y es ideal para profesionales de la seguridad.,AWS Certified Security – Specialty.
+El servicio de AWS para la orquestación y gestión de recursos en la nube para Kubernetes que elimina el mantenimiento de la infraestructura es _____.,Amazon EKS Capabilities.
+¿Qué nuevo modelo de precios de AWS ayuda a mantener la eficiencia de costos mientras proporciona flexibilidad con los servicios de bases de datos?,Database Savings Plans.
+Amazon _____ mejora el rendimiento de la base de datos de vectores y el costo con aceleración de GPU y auto-optimización.,OpenSearch Service.
+"¿Qué servicio de AWS permite el acceso a los datos de Amazon FSx for NetApp ONTAP como si estuvieran en S3, facilitando la integración con servicios de IA?",Puntos de Acceso de Amazon S3 (Amazon S3 Access Points).
+¿Qué es Amazon Bedrock Studio?,Una interfaz web que facilita a los desarrolladores la colaboración y construcción de aplicaciones de IA generativa.
+La versión 2023 de Amazon Linux (AL2023) mejora la postura de seguridad con políticas preconfiguradas y _____ habilitado por defecto.,IMDSv2 (Instance Metadata Service Version 2).
+¿Qué servicio de AWS permite ejecutar trabajos de procesamiento por lotes totalmente gestionados a cualquier escala?,AWS Batch.
+¿Qué permite AWS Auto Scaling?,Ajustar automáticamente la capacidad de los recursos de cómputo y bases de datos para satisfacer la demanda.
+El servicio AWS _____ unifica las estadísticas de carbono para el uso de la nube e incluye capacidades de informes de Alcance 3.,Customer Carbon Footprint Tool (CCFT).
+¿Qué programa de AWS permite a las organizaciones acceder al entrenamiento de modelos Nova para construir sus propios modelos de frontera personalizados?,Amazon Nova Forge.
+"¿Qué nuevo agente de Amazon Nova, ahora disponible de forma general, ayuda a los desarrolladores a construir agentes de IA que automatizan tareas basadas en navegador con más del 90% de fiabilidad?",Amazon Nova Act.

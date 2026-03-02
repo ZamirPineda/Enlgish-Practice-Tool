@@ -1,0 +1,117 @@
+"¿Qué determina la infraestructura crítica de una aplicación exitosa, decidiendo si puede escalar eficientemente o fallará bajo el peso de sus propios datos?",Una base de datos bien diseñada.
+¿Qué práctica de diseño de bases de datos se enfoca en estructurar los datos para reducir la redundancia y mejorar la integridad?,La normalización de la base de datos.
+"Para acelerar las operaciones de recuperación de datos en una base de datos, se debe implementar una estrategia de _____ adecuada.",indexación (indexing)
+¿Qué práctica de diseño mejora la legibilidad y el mantenimiento del esquema de una base de datos mediante la estandarización de los nombres de los objetos?,El uso de convenciones de nomenclatura consistentes.
+El uso eficiente de recursos y la garantía de la integridad de los datos se logran a través de la _____ de los tipos de datos.,optimización
+¿Cómo se denomina el principio que mantiene la consistencia lógica entre tablas relacionadas en una base de datos?,Integridad referencial.
+El seguimiento de la evolución del esquema de una base de datos a lo largo del tiempo se gestiona mediante _____ y _____.,documentación y versionado
+La escritura de consultas eficientes desde el inicio es parte de la práctica de diseño de _____ y _____ de consultas.,rendimiento y diseño
+"Según el Principio de Mínimo Privilegio en seguridad de bases de datos, ¿qué permisos se deben otorgar a los usuarios?",Únicamente los permisos mínimos necesarios para realizar sus funciones laborales.
+"Para proteger los datos almacenados en la base de datos y los que se mueven a través de la red, se deben usar algoritmos de _____ fuertes.",cifrado (encriptación)
+¿Qué técnica se debe usar en el código de la aplicación para prevenir ataques de inyección SQL?,Consultas parametrizadas o sentencias preparadas.
+"Para una seguridad robusta, se deben implementar políticas de contraseñas fuertes y habilitar la _____ para todos los usuarios de la base de datos.",autenticación multifactor (MFA)
+¿Qué herramienta es crucial para detectar comportamientos sospechosos e investigar incidentes de seguridad en una base de datos?,Los registros de auditoría (audit logs).
+¿Qué es la gestión de bases de datos (database management)?,"El uso sistemático de tecnología y procesos para organizar, almacenar y recuperar datos de manera eficiente, garantizando su integridad, disponibilidad y seguridad."
+Un software especializado para interactuar con los datos de una base de datos se conoce como _____.,Sistema de Gestión de Bases de Datos (DBMS)
+"Las bases de datos relacionales, o RDBMS, almacenan datos en _____ y _____ que forman tablas.",filas y columnas
+¿Qué se utiliza en las bases de datos relacionales para crear una relación entre dos o más tablas?,Una clave externa (foreign key).
+¿Qué tipo de base de datos almacena datos en documentos similares a objetos JSON?,Bases de datos de documentos.
+"En las bases de datos de _____, cada registro de datos está representado por una clave única y un valor asociado.",clave-valor
+¿Qué tipo de base de datos NoSQL organiza los datos en columnas en lugar de filas y es útil para conjuntos de datos amplios y dispersos?,Almacenes de familias de columnas (o de columna ancha).
+"Las bases de datos que almacenan información sobre personas, lugares y cosas en nodos, y las relaciones entre ellos en aristas, se llaman bases de datos de _____.",grafos
+Concepto: Cumplimiento de ACID.,"Un conjunto de propiedades (Atomicidad, Consistencia, Aislamiento, Durabilidad) que garantizan la fiabilidad, consistencia e integridad de las transacciones de bases de datos."
+"Debido a su esquema fijo, las bases de datos relacionales solo pueden almacenar datos _____.",estructurados
+¿Qué es una clave primaria (primary key)?,Una columna o un conjunto de columnas que identifica de forma única cada fila en una tabla.
+¿Qué es una clave externa (foreign key)?,"Una columna o un conjunto de columnas en una tabla que hace referencia a la clave primaria de otra tabla, estableciendo una relación."
+"Para que una tabla esté en la Primera Forma Normal (1NF), cada celda debe contener un solo valor, lo que se conoce como _____.",atomicidad
+La Segunda Forma Normal (2NF) requiere que una tabla esté en 1NF y que no tenga ninguna _____.,dependencia parcial
+"Para que una tabla esté en la Tercera Forma Normal (3NF), debe estar en 2NF y no tener ninguna _____.",dependencia transitiva
+¿Qué tipo de índice en una base de datos determina el orden físico en que los registros de la tabla se almacenan en el disco?,Índice agrupado (clustered index).
+¿Cuántos índices agrupados (clustered indexes) puede tener una tabla?,"Solo uno, porque los datos solo pueden estar ordenados físicamente de una manera."
+Un _____ es una estructura independiente de la tabla que contiene una copia de la columna indexada y un puntero hacia el registro real.,índice no agrupado (non-clustered index)
+¿Cuántos índices no agrupados (non-clustered indexes) puede tener una tabla en SQL Server?,Hasta 999.
+"En SQL Server, la creación de una restricción de _____ crea automáticamente un índice agrupado en esa columna.",clave primaria (primary key)
+¿Qué es la persistencia políglota (Polyglot Persistence)?,Es un enfoque que utiliza el motor de base de datos más adecuado para cada microservicio o funcionalidad específica de una aplicación.
+El Teorema CAP postula que en un sistema distribuido solo se pueden garantizar plenamente dos de tres propiedades. ¿Cuáles son estas tres propiedades?,"Consistencia (C), Disponibilidad (A) y Tolerancia a Particiones (P)."
+"En el contexto del Teorema CAP, ¿qué significa 'Consistencia'?",Que todos los clientes ven el mismo dato al mismo tiempo después de una escritura.
+"En el contexto del Teorema CAP, ¿qué significa 'Disponibilidad'?","Que el sistema siempre responde a las solicitudes, incluso si algún nodo falla."
+"En el contexto del Teorema CAP, ¿qué significa 'Tolerancia a Particiones'?",Que el sistema sigue funcionando a pesar de fallos en la comunicación de red entre nodos.
+"Las bases de datos NoSQL a menudo priorizan la disponibilidad y la tolerancia a particiones, lo que lleva a un modelo de consistencia _____.",eventual
+¿Qué tipo de base de datos está optimizada para almacenar y consultar embeddings vectoriales utilizados en aplicaciones de LLM y redes neuronales?,Base de datos de vectores (vector database).
+¿Qué arquitectura de IA se habilita mediante bases de datos de vectores para reducir las alucinaciones al recuperar contexto relevante de una base de conocimientos?,RAG (Retrieval-Augmented Generation).
+"PostgreSQL, tradicionalmente relacional, ha implementado el tipo de datos _____ para permitir consultas documentales con un rendimiento competitivo.",JSONB
+Un ejemplo de base de datos de documentos NoSQL es _____.,MongoDB
+Un ejemplo de base de datos de clave-valor NoSQL es _____.,Redis
+Un ejemplo de base de datos de columna ancha NoSQL es _____.,Apache Cassandra
+Un ejemplo de base de datos de grafos NoSQL es _____.,Neo4j
+"El sublenguaje de SQL que se ocupa de definir la estructura de los objetos de la base de datos (tablas, vistas) se llama _____.",Lenguaje de Definición de Datos (DDL).
+¿Qué comando DDL se utiliza para crear una nueva tabla en una base de datos?,CREATE TABLE
+¿Qué comando DDL se utiliza para modificar la estructura de una tabla existente?,ALTER TABLE
+"¿Qué comando DDL se utiliza para eliminar completamente una tabla, incluyendo su estructura y datos?",DROP TABLE
+"El sublenguaje de SQL que permite a los usuarios manipular los datos (insertar, modificar, eliminar) se llama _____.",Lenguaje de Manipulación de Datos (DML).
+¿Qué comando DML se utiliza para agregar nuevos registros a una tabla?,INSERT INTO
+¿Qué comando DML se utiliza para modificar los valores de registros existentes?,UPDATE
+¿Qué comando DML se utiliza para eliminar registros de una tabla?,DELETE FROM
+El sublenguaje de SQL centrado exclusivamente en la lectura y recuperación de información se llama _____.,Lenguaje de Consulta de Datos (DQL).
+¿Cuál es el comando principal del DQL para recuperar datos de una base de datos?,SELECT
+El sublenguaje de SQL que permite controlar el acceso a los datos y los permisos de los usuarios se llama _____.,Lenguaje de Control de Datos (DCL).
+¿Qué comando DCL se utiliza para otorgar permisos a un usuario?,GRANT
+¿Qué comando DCL se utiliza para revocar permisos previamente concedidos a un usuario?,REVOKE
+El sublenguaje de SQL para la administración de transacciones se llama _____.,Lenguaje de Control de Transacciones (TCL).
+¿Qué comando TCL se utiliza para guardar permanentemente los cambios realizados en una transacción?,COMMIT
+¿Qué comando TCL se utiliza para deshacer las modificaciones desde el último COMMIT?,ROLLBACK
+¿Puede una clave primaria contener valores nulos?,"No, una clave primaria no permite valores nulos para garantizar la identificación única de cada registro."
+¿Puede una clave externa contener valores duplicados?,"Sí, una clave externa puede contener valores duplicados, ya que varias filas en una tabla pueden hacer referencia a la misma fila en otra tabla."
+¿Cuál es el propósito principal de una clave externa?,Establecer y mantener la integridad referencial entre tablas relacionadas.
+¿Qué sucede si se intenta insertar un valor en una clave externa que no existe en la clave primaria a la que hace referencia?,La operación falla debido a una violación de la restricción de integridad referencial.
+¿Qué tipo de DBMS organiza los datos en una estructura similar a un árbol con relaciones padre-hijo?,Sistema de Gestión de Bases de Datos Jerárquico (Hierarchical DBMS).
+¿Cuál es la principal ventaja de un índice agrupado (clustered index) para las búsquedas por rango?,Son extremadamente rápidas porque los registros relacionados están físicamente contiguos en el disco.
+"El sobreuso de índices puede ralentizar las operaciones de _____, como INSERT, UPDATE y DELETE.",escritura
+Las bases de datos NoSQL son ideales para manejar datos no estructurados o _____ de manera eficiente.,semiestructurados
+"Mientras que las bases de datos SQL escalan verticalmente, las bases de datos NoSQL están diseñadas para escalar _____.",horizontalmente
+¿Qué DBMS popular es un sistema de base de datos objeto-relacional (ORDBMS) de código abierto conocido por su robustez y cumplimiento de estándares SQL?,PostgreSQL.
+¿Qué DBMS popular es conocido por ser una base de datos NoSQL orientada a documentos que utiliza documentos similares a JSON?,MongoDB.
+¿Qué DBMS es un almacén de datos en memoria de código abierto utilizado a menudo como caché o agente de mensajes?,Redis.
+¿Qué DBMS es un motor de búsqueda y análisis distribuido de código abierto basado en Apache Lucene?,Elasticsearch.
+"En una arquitectura de comercio electrónico híbrida, ¿qué tipo de base de datos sería ideal para gestionar pedidos y facturación donde la consistencia ACID es vital?",Una base de datos relacional como PostgreSQL.
+"En una arquitectura de comercio electrónico híbrida, ¿qué tipo de base de datos sería ideal para el catálogo de productos con atributos variables?",Una base de datos de documentos como MongoDB.
+"En una arquitectura de comercio electrónico híbrida, ¿qué tipo de base de datos sería ideal para un motor de recomendaciones basado en relaciones?",Una base de datos de grafos como Neo4j.
+¿Qué son los registros huérfanos (orphan records) en una base de datos relacional?,Son registros en una tabla secundaria cuya clave externa hace referencia a una clave primaria que ya no existe en la tabla principal.
+La Tercera Forma Normal (3NF) elimina las columnas que no dependen de la _____.,clave primaria
+"En un índice no agrupado, ¿qué contiene la estructura del índice además de la columna indexada?",Un puntero o localizador de fila que apunta a la ubicación del registro real en la tabla.
+El problema de consulta N+1 ocurre cuando una aplicación realiza una consulta inicial para recuperar una lista de elementos y luego _____ consultas adicionales para obtener detalles de cada elemento.,N
+El lenguaje de consulta utilizado por MongoDB se llama _____.,MongoDB Query Language (MQL)
+"MongoDB almacena datos en formato _____, que es una representación binaria de JSON.",BSON
+¿Cuál es la principal diferencia entre los modelos de consistencia de las bases de datos relacionales y no relacionales?,"Las relacionales garantizan consistencia estricta (ACID), mientras que las no relacionales a menudo optan por consistencia eventual."
+"El comando SQL `TRUNCATE` borra todos los datos de una tabla pero mantiene su _____, a diferencia de `DROP` que la elimina por completo.",estructura
+¿Qué cláusula SQL se utiliza para filtrar filas antes de cualquier agrupación o agregación?,WHERE
+¿Qué cláusula SQL se utiliza para filtrar los resultados de un `GROUP BY` después de la agregación?,HAVING
+"La virtualización de bases de datos abstrae la base de datos de su almacenamiento físico, permitiendo múltiples instancias _____ en el mismo hardware.",virtuales
+¿Qué estrategia de almacenamiento segmenta los datos en niveles según la frecuencia de uso y las necesidades de rendimiento?,Soluciones de almacenamiento por niveles (tiered storage).
+El uso de modelos de machine learning para predecir posibles fallos de la base de datos se conoce como _____.,análisis predictivo de fallos (predictive failure analytics)
+La combinación de bases de datos relacionales y no relacionales para abordar diversas necesidades de datos se conoce como modelos de bases de datos _____.,híbridos
+¿Qué es una vista indexada (Indexed View) en SQL Server?,"Es una vista cuyos resultados se precalculan y almacenan físicamente, permitiendo una recuperación de datos más rápida."
+"Al igual que una tabla, una vista indexada requiere un índice _____ único para poder materializar los datos.",agrupado (clustered)
+¿Cuál es la ventaja de rendimiento de una vista indexada?,"Mejora drásticamente el rendimiento de las consultas al evitar el cálculo repetido de los resultados, ya que estos están pre-almacenados."
+"Para evitar el `vendor lock-in`, es recomendable utilizar herramientas de base de datos que sean completamente de _____ y no `forks` propietarios.",código abierto (open source)
+Una base de datos que funciona directamente dentro de la aplicación sin requerir un proceso de servidor separado se considera _____.,sin servidor (serverless) o embebida
+SQLite es un ejemplo de una base de datos relacional _____ que almacena toda la base de datos en un único archivo físico.,sin servidor (serverless)
+"La práctica de analizar los patrones de consulta de una aplicación para aplicar índices estratégicamente a columnas usadas en cláusulas WHERE, JOIN y ORDER BY se llama _____.",indexar con intención
+El proceso de organizar las columnas y tablas de una base de datos para minimizar la redundancia de datos se denomina _____.,normalización
+La Forma Normal de Boyce-Codd (BCNF) es una versión más estricta de la _____.,Tercera Forma Normal (3NF)
+"En una base de datos NoSQL, el almacenamiento de datos como agrupaciones de pares clave-valor es la función de una base de datos _____.",clave-valor
+"En una base de datos de grafos, las relaciones entre entidades se almacenan como _____.",aristas (edges)
+La capacidad de una base de datos para manejar grandes volúmenes de datos y altas cargas de tráfico mediante la adición de más servidores se conoce como _____.,escalabilidad horizontal
+"La capacidad de una base de datos para manejar mayores cargas aumentando los recursos de un único servidor (CPU, RAM) se conoce como _____.",escalabilidad vertical
+La característica de bases de datos como Cassandra que permite la distribución de datos en varios centros de datos para resistir interrupciones regionales es su arquitectura _____.,descentralizada
+"¿Qué término describe el conjunto de herramientas que incluye Elasticsearch, Logstash y Kibana para la ingesta, búsqueda y visualización de datos?",Elastic Stack (anteriormente ELK Stack).
+"Una de las principales ventajas de usar convenciones de nomenclatura consistentes es que hace que el esquema sea _____, facilitando su comprensión.",autodocumentado
+El uso de un tipo de dato `INT` para una columna que solo almacenará valores booleanos (0 o 1) es un ejemplo de una mala práctica de _____.,optimización de tipos de datos
+¿Qué problema de rendimiento puede causar la fragmentación de índices?,Puede degradar severamente el rendimiento de las consultas al requerir más lecturas de página.
+"En sistemas con muchas operaciones de escritura (OLTP), un número excesivo de índices puede _____ el rendimiento.",reducir o afectar negativamente
+"En sistemas con muchas operaciones de lectura (OLAP), múltiples índices estratégicos pueden _____ significativamente el rendimiento.",mejorar o acelerar
+"En el diseño de bases de datos, ¿por qué es una buena práctica usar sustantivos en singular para los nombres de las tablas?","Porque cada fila de la tabla representa una única instancia de esa entidad (p. ej., una fila en la tabla `Cliente` es un solo cliente)."
+El uso de `snake_case` o `camelCase` para nombrar objetos de la base de datos es un ejemplo de una _____.,convención de nomenclatura
+¿Qué es un esquema de base de datos?,"Es el plano o la estructura lógica de una base de datos que define cómo se organizan los datos, sus relaciones y las restricciones impuestas."
+"La capacidad de una base de datos para soportar múltiples modelos de datos (como relacional, documental y de grafos) en un solo sistema se denomina _____.",multimodelo
+"Cuando una consulta utiliza todas las columnas que necesita directamente desde un índice sin acceder a la tabla base, se dice que el índice _____ la consulta.",cubre (covering index)

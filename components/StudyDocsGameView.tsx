@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import { trackActivity } from "../utils/activityTracker";
@@ -246,6 +246,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     [entries],
   );
 
+  const sessionStartTime = useRef<number>(Date.now());
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION_SECONDS);
   const [lives, setLives] = useState(INITIAL_LIVES);
@@ -464,6 +465,10 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
 
   const finishGame = () => {
     setGameState("finished");
+    trackAnalyticsEvent("session_end", {
+      game: "study_docs_game",
+      duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+    });
     setSelectedOption(null);
     setLastResult(null);
     if (score > 0) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import {
@@ -28,6 +28,10 @@ const LEVEL_SCORE_MULTIPLIER: Record<SprintLevel, number> = {
 const CollocationSprintView: React.FC = () => {
   const [selectedLevel, setSelectedLevel] = useState<SprintLevel>("B1");
   const [roundIndex, setRoundIndex] = useState(0);
+  const sessionStartTime = useRef<number>(Date.now());
+  useEffect(() => {
+    trackAnalyticsEvent("session_start", { game: "collocation_sprint" });
+  }, []);
   const [selectedVerb, setSelectedVerb] = useState("");
   const [selectedNoun, setSelectedNoun] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -161,6 +165,12 @@ const CollocationSprintView: React.FC = () => {
   };
 
   const handleRestart = () => {
+    trackAnalyticsEvent("session_end", {
+      game: "collocation_sprint",
+      duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+    });
+    sessionStartTime.current = Date.now();
+    trackAnalyticsEvent("session_start", { game: "collocation_sprint" });
     setRoundIndex(0);
     setSelectedVerb("");
     setSelectedNoun("");
@@ -171,6 +181,15 @@ const CollocationSprintView: React.FC = () => {
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
+
+  useEffect(() => {
+    if (isComplete) {
+      trackAnalyticsEvent("session_end", {
+        game: "collocation_sprint",
+        duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+      });
+    }
+  }, [isComplete]);
 
   useEffect(() => {
     if (isComplete && totalScore > 0) {

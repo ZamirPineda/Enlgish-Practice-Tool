@@ -1,0 +1,97 @@
+¿Qué es la arquitectura de microservicios?,"Es un enfoque de diseño donde una aplicación se construye como un conjunto de servicios pequeños e implementables de forma independiente, cada uno ejecutándose en su propio proceso y comunicándose a través de mecanismos ligeros."
+¿Cuál es el propósito principal del patrón API Gateway?,"Actuar como un único punto de entrada para todos los clientes, enrutando las solicitudes al microservicio apropiado en el backend y manejando preocupaciones transversales."
+Un ejemplo del mundo real del patrón API Gateway es _____ de Netflix.,Zuul
+¿En qué se diferencia el patrón Backends for Frontends (BFF) del patrón API Gateway?,"En el patrón BFF se crean backends separados y personalizados para cada tipo de frontend (web, móvil, etc.), en lugar de una única puerta de enlace para todos."
+¿Cómo gestiona el patrón Saga las transacciones distribuidas en microservicios?,"Divide una transacción global en una serie de transacciones locales coordinadas, utilizando transacciones compensatorias para deshacer los pasos si uno falla."
+"En el patrón Saga, la estrategia de _____ utiliza un servicio central para indicar a cada participante qué hacer a continuación.",orquestación
+"En el patrón Saga, la estrategia de _____ se basa en que cada servicio publique eventos que otros servicios escuchan y a los que reaccionan en cadena.",coreografía
+¿Qué son las transacciones compensatorias en el patrón Saga?,Son operaciones que revierten el efecto de un paso completado previamente en una saga cuando un paso posterior falla.
+¿Qué principio de consistencia de datos habilitan las Sagas en los microservicios?,Consistencia eventual.
+¿Qué significa el patrón 'Database per Service' (Base de datos por servicio)?,"Cada microservicio posee y gestiona su propia base de datos, y otros servicios no pueden acceder directamente a ella."
+¿Qué es la 'Persistencia Políglota' (Polyglot Persistence) en el contexto de microservicios?,"Es el uso de diferentes tipos de tecnologías de bases de datos para diferentes microservicios, eligiendo la mejor opción para las necesidades de cada servicio."
+¿Cuál es la función del patrón Sidecar?,Adjuntar un proceso o servicio auxiliar a un servicio principal para proporcionar capacidades comunes (como logging o monitoreo) sin sobrecargar el código del servicio principal.
+"En Kubernetes, el patrón Sidecar se utiliza comúnmente para inyectar un proxy _____ como parte de una malla de servicios (service mesh) como Istio.",Envoy
+"¿Qué significa el principio de 'Smart Endpoints, Dumb Pipes' (Extremos inteligentes, tuberías tontas)?","Significa que la lógica de negocio y el procesamiento deben residir en los microservicios (los extremos), mientras que los canales de comunicación (las tuberías) deben ser simples y sin lógica compleja."
+¿Cómo ayuda el patrón 'Consumer-Driven Contracts' (CDC) a evitar rupturas entre microservicios?,"Permite que los consumidores de una API definan sus expectativas en un contrato, que el proveedor utiliza para verificar que los cambios no romperán la integración."
+¿Cuál es el propósito del patrón Strangler Fig (Higuera Estranguladora)?,"Permitir la migración gradual de un sistema monolítico a microservicios, reemplazando incrementalmente partes del sistema antiguo hasta que pueda ser retirado."
+¿Cómo funciona la estrategia de despliegue 'Shadow Deployment' (Despliegue en Sombra)?,"Se duplica el tráfico de producción y se envía a una nueva versión del servicio en paralelo con la antigua, sin que la respuesta de la nueva versión afecte al usuario, para probarla bajo carga real."
+¿Por qué es preferible que los microservicios sean 'stateless' (sin estado)?,Porque simplifica el escalado horizontal y la resiliencia; cualquier instancia puede manejar cualquier solicitud sin depender del estado de interacciones previas.
+"En un servicio sin estado, ¿dónde se suele almacenar el estado necesario (como los datos de sesión)?","En un almacenamiento externo, como una base de datos o una caché, o se pasa en cada solicitud (por ejemplo, a través de tokens)."
+¿Qué es el patrón Circuit Breaker (Interruptor de circuito)?,"Es un patrón que evita que un servicio intente llamar continuamente a un servicio que está fallando, abriendo el 'circuito' para fallar rápidamente y darle tiempo al servicio defectuoso para recuperarse."
+¿Cuáles son los tres estados de un Circuit Breaker?,"Cerrado (Closed), Abierto (Open) y Semiabierto (Half-Open)."
+"En el patrón Circuit Breaker, el estado _____ permite que un número limitado de solicitudes de prueba pasen para verificar si el servicio se ha recuperado.",Semiabierto (Half-Open)
+¿Qué problema resuelve el patrón Bulkhead (Mamparo)?,"Aísla los elementos de una aplicación en pools, de modo que si uno falla, los demás pueden seguir funcionando, evitando fallos en cascada."
+¿Cuándo se debe utilizar el patrón Retry (Reintento)?,"Cuando una operación falla temporalmente debido a errores transitorios, como tiempos de espera de red o indisponibilidad breve del servicio."
+Una operación que puede reintentarse de forma segura sin causar efectos secundarios múltiples se conoce como una operación _____.,idempotente
+¿Qué es el patrón CQRS (Command Query Responsibility Segregation)?,"Es un patrón que segrega las operaciones que modifican datos (comandos) de las que leen datos (consultas), utilizando a menudo modelos de datos y almacenes diferentes para cada una."
+¿Qué es el patrón Event Sourcing (Fuente de eventos)?,"Es un patrón en el que el estado de una entidad de negocio se almacena como una secuencia de eventos ordenados en el tiempo, en lugar de solo el estado actual."
+¿Cómo se obtiene el estado actual de una entidad en el patrón Event Sourcing?,Se obtiene reproduciendo ('replaying') toda la secuencia de eventos que han afectado a esa entidad desde su creación.
+¿Qué es el Sharding de Datos (Fragmentación de Datos)?,"Es el proceso de dividir una base de datos en múltiples piezas más pequeñas (shards), donde cada una contiene un subconjunto de los datos, para mejorar la escalabilidad y el rendimiento."
+El principio de diseño de software que aboga por evitar la duplicación de lógica se conoce como _____.,DRY (Don't Repeat Yourself - No te repitas)
+El principio de diseño de software que establece que 'no vas a necesitarlo' para evitar la implementación de funcionalidades especulativas es _____.,YAGNI (You Aren't Gonna Need It)
+¿A qué se refiere el principio KISS en el desarrollo de software?,"Significa 'Keep It Simple, Stupid' (Mantenlo estúpidamente simple), y aboga por evitar la complejidad innecesaria en las soluciones."
+¿Cuál es la primera de las 'Ocho Falacias de la Computación Distribuida'?,La red es fiable.
+¿Cuál es la segunda de las 'Ocho Falacias de la Computación Distribuida'?,La latencia es cero.
+¿Cuál es la tercera de las 'Ocho Falacias de la Computación Distribuida'?,El ancho de banda es infinito.
+¿Cuál es la cuarta de las 'Ocho Falacias de la Computación Distribuida'?,La red es segura.
+¿Cuál es la quinta de las 'Ocho Falacias de la Computación Distribuida'?,La topología no cambia.
+¿Cuál es la sexta de las 'Ocho Falacias de la Computación Distribuida'?,Hay un solo administrador.
+¿Cuál es la séptima de las 'Ocho Falacias de la Computación Distribuida'?,El coste de transporte es cero.
+¿Cuál es la octava de las 'Ocho Falacias de la Computación Distribuida'?,La red es homogénea.
+El algoritmo de consenso _____ está diseñado para ser más comprensible que Paxos y se utiliza en sistemas como etcd (usado por Kubernetes).,Raft
+¿Cuáles son los tres subproblemas en los que Raft descompone el problema del consenso?,"Elección de líder (leader election), replicación de registros (log replication) y seguridad (safety)."
+¿Cómo resuelve Raft el problema de los 'split votes' (votos divididos) durante la elección de un líder?,Utiliza un tiempo de espera de elección aleatorio (randomized election timeout) para que los servidores no se conviertan en candidatos al mismo tiempo.
+"En Raft, ¿quién es responsable de gestionar el registro replicado y aceptar las entradas de los clientes?",El líder (leader).
+Una entrada de registro en Raft se considera 'committed' (confirmada) una vez que el líder la ha replicado en una _____ de los servidores.,mayoría
+¿Qué problema resuelve el patrón Transactional Outbox?,"El problema de la 'doble escritura' (dual-write), donde se necesita actualizar una base de datos y enviar un mensaje a un bróker de forma atómica."
+¿Cómo funciona el patrón Transactional Outbox?,"Almacena los eventos/mensajes en una tabla 'outbox' dentro de la misma transacción de base de datos que los datos de negocio, y un proceso separado los publica posteriormente."
+La primera 'S' en los principios SOLID representa el _____.,Principio de Responsabilidad Única (Single Responsibility Principle)
+La 'O' en los principios SOLID representa el _____.,Principio de Abierto/Cerrado (Open/Closed Principle)
+La 'L' en los principios SOLID representa el _____.,Principio de Sustitución de Liskov (Liskov Substitution Principle)
+La 'I' en los principios SOLID representa el _____.,Principio de Segregación de la Interfaz (Interface Segregation Principle)
+La 'D' en los principios SOLID representa el _____.,Principio de Inversión de Dependencia (Dependency Inversion Principle)
+¿Qué es una 'máquina de estados replicada' (replicated state machine)?,Es un enfoque en sistemas distribuidos donde máquinas de estado en varios servidores calculan copias idénticas del mismo estado para lograr tolerancia a fallos.
+El protocolo _____ es un protocolo de compromiso atómico que coordina si todos los participantes de una transacción distribuida deben confirmar (commit) o abortar (abort).,de dos fases (Two-Phase Commit - 2PC)
+¿Cuál es la principal desventaja del protocolo de compromiso de dos fases (2PC)?,"Es un protocolo bloqueante; si el coordinador falla, los participantes pueden quedar bloqueados y sin poder resolver la transacción hasta que se recupere."
+¿Qué es el patrón Materialized View (Vista Materializada)?,"Es una estrategia para mejorar el rendimiento de las consultas generando vistas de datos precalculadas y almacenadas físicamente, que se actualizan periódicamente."
+¿Cuál es la principal contrapartida del uso de vistas materializadas?,Los datos pueden estar desactualizados (stale) hasta el próximo refresco y requieren espacio de almacenamiento adicional.
+"El protocolo _____ se utiliza en sistemas distribuidos para la diseminación de información, detección de fallos y mantenimiento de la membresía del clúster de forma descentralizada.",Gossip
+"Sistemas como Apache Cassandra, Consul y Amazon Dynamo utilizan el protocolo _____ para la detección de fallos y el seguimiento de la membresía de nodos.",Gossip
+¿Qué es la arquitectura de Cero Confianza (Zero Trust Architecture - ZTA)?,"Es un marco de ciberseguridad basado en el principio de 'nunca confiar, siempre verificar', tratando cada solicitud de acceso como no confiable por defecto."
+El principio de _____ en la arquitectura de Cero Confianza asegura que a los usuarios y dispositivos se les concede solo el acceso mínimo necesario para sus tareas.,privilegio mínimo (least privilege)
+La _____ es una técnica clave en la Arquitectura de Cero Confianza para restringir el acceso a recursos específicos y limitar el movimiento lateral de un atacante.,micro-segmentación
+¿En qué se diferencia el handshake de TLS 1.3 del de TLS 1.2?,"TLS 1.3 reduce el handshake a un solo viaje de ida y vuelta (1-RTT) en comparación con los dos de TLS 1.2, haciéndolo más rápido y seguro."
+TLS 1.3 introduce una característica de reanudación de sesión llamada _____ que permite a los clientes enviar datos cifrados inmediatamente al reconectarse a un servidor conocido.,0-RTT (Zero Round-Trip Time)
+El desarrollo guiado por pruebas (Test-Driven Development - TDD) sigue un ciclo repetitivo de tres pasos conocido como _____.,Rojo - Verde - Refactorizar (Red - Green - Refactor)
+"En el contexto de TDD, ¿qué representa el paso 'Rojo'?",Escribir una prueba que falla porque la funcionalidad correspondiente aún no ha sido implementada.
+"En el contexto de TDD, ¿qué representa el paso 'Verde'?",Escribir la cantidad mínima de código funcional necesario para que la prueba que fallaba ahora pase.
+"En el contexto de TDD, ¿qué representa el paso 'Refactorizar'?",Mejorar la estructura del código recién escrito y del existente sin cambiar su comportamiento externo.
+¿Qué es el patrón Ambassador?,"Es un patrón de contenedor que actúa como un proxy, donde todas las interacciones de un contenedor de aplicación con el mundo exterior pasan a través del contenedor embajador."
+¿Cuál es la principal diferencia entre el patrón Sidecar y el patrón Ambassador?,"Un Sidecar mejora un contenedor principal, mientras que un Ambassador actúa como un intermediario obligatorio para la comunicación externa del contenedor principal."
+¿Qué es la Arquitectura Orientada a Eventos (Event-Driven Architecture - EDA)?,"Es un paradigma de arquitectura de software que promueve la producción, detección, consumo y reacción a eventos de forma asíncrona."
+"¿Qué tipo de consistencia es inevitable en sistemas distribuidos a gran escala, donde los cambios en un servicio se propagan a otros con el tiempo?",Consistencia eventual (Eventual Consistency).
+"Dentro de un sistema eventualmente consistente, el _____ es un componente que debe ser siempre internamente consistente para tomar decisiones fiables.",agregado (aggregate)
+¿Qué problema puede ocurrir si se implementa el patrón de reintento sin un mecanismo de protección como un interruptor de circuito?,"Puede exacerbar los fallos al aumentar la carga sobre un servicio que ya está fallando, creando una 'tormenta de reintentos'."
+"En una arquitectura basada en eventos, ¿qué tipo de mensaje se debe usar si un servicio publicador espera que algo específico suceda en otro servicio?","Debe enviar una solicitud asíncrona como un comando (command), en lugar de simplemente publicar un evento."
+¿Qué es el 'Principio de Responsabilidad Única' (Single Responsibility Principle)?,"Establece que una clase debe tener una, y solo una, razón para cambiar, lo que significa que debe tener una sola responsabilidad."
+¿Qué es el 'Principio de Abierto/Cerrado' (Open/Closed Principle)?,"Establece que las entidades de software (clases, módulos, funciones, etc.) deben estar abiertas a la extensión, pero cerradas a la modificación."
+¿Qué es el 'Principio de Inversión de Dependencia' (Dependency Inversion Principle)?,Establece que los módulos de alto nivel no deben depender de los módulos de bajo nivel; ambos deben depender de abstracciones.
+¿Cuál es el propósito del patrón Timeout (Tiempo de espera)?,"Evitar que un servicio espere indefinidamente una respuesta de otro, permitiendo que falle rápidamente para no bloquear recursos."
+"El patrón _____ se utiliza para aislar fallos, mientras que el patrón _____ se utiliza para prevenir fallos en cascada al detener las llamadas a un servicio que falla repetidamente.","Bulkhead (Mamparo), Circuit Breaker (Interruptor de circuito)"
+¿Por qué la idempotencia es una consideración importante al implementar el patrón de reintento?,"Para asegurar que reintentar una operación no cause efectos secundarios no deseados, como duplicar un cargo en una transacción de pago."
+¿Qué es un 'aggregate' en el contexto de Domain-Driven Design (DDD)?,"Es un clúster de objetos de dominio (entidades y objetos de valor) que pueden ser tratados como una sola unidad, sirviendo como un límite de consistencia transaccional."
+Una de las falacias de la computación distribuida es asumir que el coste de transporte es cero. ¿Qué costes reales implica?,"Implica costes financieros (hardware, cloud), así como costes de recursos computacionales (CPU, memoria) para serialización y deserialización de datos."
+¿Cómo mitiga el patrón API Gateway la falacia de que 'la red es segura'?,"Puede centralizar la aplicación de políticas de seguridad como la autenticación, autorización y limitación de velocidad (rate limiting) antes de que las solicitudes lleguen a los servicios internos."
+¿Qué significa el término 'atomicidad' en el contexto de las transacciones de bases de datos?,"Es la propiedad que garantiza que una transacción se trata como una única unidad de trabajo, que se completa en su totalidad o no se realiza en absoluto."
+El patrón Transactional Outbox ayuda a lograr la atomicidad entre una escritura en la base de datos y la publicación de un evento a un ____.,bróker de mensajes (message broker)
+"En el patrón Saga, la coreografía puede volverse difícil de gestionar a medida que aumenta el número de ____.",microservicios o participantes
+¿Qué desafío de diseño introduce el patrón 'Database per Service'?,"La implementación de consultas que necesitan unir datos de múltiples servicios se vuelve más compleja, ya que no se pueden usar joins de base de datos directos."
+"El patrón _____ es útil para modernizar aplicaciones heredadas, mientras que el patrón _____ es para probar nuevas versiones de servicios con tráfico de producción real sin afectar a los usuarios.","Strangler Fig, Shadow Deployment"
+"En el patrón Raft, si un líder se aísla por una partición de red, ¿qué sucede con el resto de los nodos?",Los nodos restantes en la partición mayoritaria detectarán la falta de heartbeats y elegirán un nuevo líder.
+¿Qué es el 'coste de acarreo' (cost of carry) de una característica presuntiva según el principio YAGNI?,"Es la complejidad añadida al código por una característica no utilizada, que dificulta y encarece la modificación y el desarrollo de otras características."
+¿Por qué el refactoring no viola el principio YAGNI?,"Porque el refactoring no añade nuevas capacidades, sino que mejora la estructura del código existente para que sea más fácil de modificar en el futuro."
+La comunicación entre microservicios puede ser síncrona (ej. RESTful HTTP) o asíncrona (ej. _____).,colas de mensajes o sistemas pub/sub
+¿Cuál es la función de una capa proxy en la implementación del patrón Strangler Fig?,"Interceptar las solicitudes entrantes y enrutarlas ya sea al sistema monolítico antiguo o a los nuevos microservicios, según la funcionalidad migrada."
+El patrón _____ combina los patrones CQRS y Event Sourcing para actualizar vistas de solo lectura en respuesta a eventos.,Materialized View (Vista Materializada)
+¿Cuál es un riesgo de seguridad al no considerar la falacia 'La red es segura'?,"Exponer los sistemas a ataques como man-in-the-middle, espionaje de datos (eavesdropping) o inyección de paquetes maliciosos."
+"En el patrón de mensajería asíncrona, ¿el servicio que publica un evento espera una respuesta inmediata?","No, el servicio publica el evento y continúa con su trabajo sin esperar una respuesta, desacoplando así los servicios."

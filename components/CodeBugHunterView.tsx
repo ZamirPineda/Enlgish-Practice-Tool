@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import { codeBugsData, type CodeBugPrompt } from "../data/codeBugsData";
@@ -41,6 +41,10 @@ const CodeBugHunterView: React.FC = () => {
   }, []);
 
   const [roundIndex, setRoundIndex] = useState(0);
+  const sessionStartTime = useRef<number>(Date.now());
+  useEffect(() => {
+    trackAnalyticsEvent("session_start", { game: "code_bug_hunter" });
+  }, []);
   const [selectedLine, setSelectedLine] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
@@ -141,6 +145,12 @@ const CodeBugHunterView: React.FC = () => {
   };
 
   const handleRestart = () => {
+    trackAnalyticsEvent("session_end", {
+      game: "code_bug_hunter",
+      duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+    });
+    sessionStartTime.current = Date.now();
+    trackAnalyticsEvent("session_start", { game: "code_bug_hunter" });
     setRoundIndex(0);
     setSelectedLine(null);
     setSubmitted(false);
@@ -152,6 +162,15 @@ const CodeBugHunterView: React.FC = () => {
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
+
+  useEffect(() => {
+    if (isComplete) {
+      trackAnalyticsEvent("session_end", {
+        game: "code_bug_hunter",
+        duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+      });
+    }
+  }, [isComplete]);
 
   useEffect(() => {
     if (isComplete && totalScore > 0) {

@@ -1,0 +1,73 @@
+¿Qué tres garantías establece el teorema CAP para los almacenes de datos distribuidos?,"Consistencia (Consistency), Disponibilidad (Availability) y Tolerancia a particiones (Partition Tolerance)."
+"Según el teorema CAP, un sistema distribuido puede garantizar como máximo _____ de las tres propiedades (Consistencia, Disponibilidad, Tolerancia a particiones) simultáneamente.",dos
+¿Qué aspecto de los sistemas distribuidos aborda el teorema PACELC que el teorema CAP no considera?,El compromiso entre latencia y consistencia cuando no hay particiones de red (el caso 'Else').
+"En el contexto de PACELC, si ocurre una partición (P), ¿entre qué dos propiedades debe elegir un sistema?",Debe elegir entre Disponibilidad (A) y Consistencia (C).
+"En un sistema PA/EL según PACELC, como Dynamo o Cassandra, ¿qué se prioriza en ausencia de particiones?",Se prioriza la baja latencia (L) sobre la consistencia (C).
+"Un sistema PC/EC según PACELC, como BigTable, siempre elegirá la _____ a costa de la disponibilidad y la latencia.",consistencia
+¿Cuál es la principal diferencia de alcance entre el sharding y el particionamiento de bases de datos?,"El sharding opera a través de múltiples bases de datos o servidores, mientras que el particionamiento ocurre dentro de una única base de datos."
+"El sharding es una forma de particionamiento _____, distribuido a través de múltiples máquinas.",horizontal
+¿Qué estrategia de distribución de datos es ideal para aplicaciones a gran escala que requieren escalabilidad horizontal?,El sharding (fragmentación).
+Concepto: Particionamiento vertical.,Definición: Método que divide una tabla en múltiples tablas que contienen menos columnas.
+¿Cuál es el objetivo principal de Apache Kafka en una arquitectura de streaming?,Actuar como un transporte duradero y de alto rendimiento para flujos de eventos ordenados.
+¿Cuál es la principal fortaleza de Apache Flink en comparación con Apache Kafka?,"Realizar cómputos con estado sobre datos en flujo, con baja latencia y semántica de procesamiento 'exactly-once'."
+"La abstracción central en Apache Kafka es un(a) _____ particionado en disco, mientras que en Apache Flink es un grafo de operadores distribuido en memoria.",log de solo apéndice (append-only log)
+"En Kafka, el orden de los mensajes solo se garantiza dentro de un(a) único/a _____.",partición
+"Para lograr tolerancia a fallos en Apache Flink, el sistema utiliza _____ consistentes del estado del operador.",checkpoints (puntos de control) con snapshots
+"En una arquitectura canónica de Flink y Kafka, ¿por qué es beneficioso que Kafka retenga los datos brutos?",Permite que el trabajo de Flink pueda reproducir el historial de datos cada vez que la lógica de procesamiento cambia.
+Concepto: Tiempo de evento (Event Time) en procesamiento de flujos.,"Definición: Es la marca de tiempo en la que se generó un evento, asignada en el sistema de origen y contenida en la carga útil del evento."
+Concepto: Tiempo de procesamiento (Processing Time) en procesamiento de flujos.,Definición: Es el tiempo del reloj del sistema (wall-clock time) en la máquina que está procesando el evento.
+"En Flink, ¿qué mecanismo se utiliza para manejar eventos desordenados y determinar cuándo una ventana de tiempo está completa?",Watermarks (marcas de agua).
+Un watermark con una marca de tiempo 'T' en un flujo de datos declara que no deberían llegar más eventos con una marca de tiempo _____ a 'T'.,anterior (más antigua que)
+"En Flink, ¿qué estrategia de watermarking es adecuada para flujos donde los eventos pueden llegar con un retraso máximo conocido?",La estrategia de 'bounded out-of-orderness watermarks'.
+"Al ajustar el retraso del watermark, un valor demasiado alto puede causar _____ en el procesamiento, mientras que uno demasiado bajo puede resultar en resultados incompletos.",mayor latencia
+¿Cuál es la función del 'checkpointing' en motores de procesamiento de flujos como Apache Flink?,Guardar periódicamente el estado de una aplicación para garantizar la tolerancia a fallos y la recuperación.
+"En Flink, el mecanismo de checkpointing se basa en un algoritmo de snapshotting distribuido llamado _____.",Asynchronous Barrier Snapshotting
+¿Qué es un 'checkpoint barrier' en el mecanismo de checkpointing de Flink?,Es un registro especial que fluye a través del grafo de operadores para alinear los snapshots de estado en todos los operadores.
+¿Cuál es la principal ventaja del checkpointing incremental sobre el checkpointing completo para estados grandes?,"Reduce la cantidad de datos escritos en cada checkpoint al guardar solo los cambios desde el último checkpoint, lo que acelera el proceso."
+¿Qué backend de estado en Flink es más adecuado para manejar estados muy grandes que no caben en memoria?,El backend de estado EmbeddedRocksDBStateBackend.
+"Los checkpoints _____ en Flink pausan momentáneamente el procesamiento para asegurar una consistencia fuerte, mientras que los checkpoints _____ permiten que el procesamiento continúe, siendo mejores para aplicaciones con baja latencia que toleran consistencia eventual.","alineados (aligned), no alineados (unaligned)"
+"Para lograr semántica 'exactly-once' de extremo a extremo entre Flink y Kafka, el 'sink' de Flink puede utilizar _____ de Kafka que se confirman al completarse un checkpoint.",transacciones de corta duración
+Concepto: Semántica 'At-most-once'.,Definición: Garantía de entrega donde un mensaje se entrega como máximo una vez; los mensajes pueden perderse en caso de fallo.
+Concepto: Semántica 'At-least-once'.,"Definición: Garantía de entrega donde los mensajes pueden entregarse más de una vez, pero no se pierde ninguno."
+"En Spark Structured Streaming, el directorio `_spark_metadata` es crucial para mantener la semántica 'exactly-once' cuando se escribe en qué tipo de 'sinks'?",En 'sinks' de archivos (file sinks).
+"Un 'sink' _____ es aquel que puede recibir la misma escritura varias veces sin cambiar el resultado final, lo que es crucial para la semántica 'exactly-once'.",idempotente
+"En Spark Structured Streaming, ¿qué son los 'Write-Ahead Logs' (WAL) y para qué se utilizan?",Son registros que capturan los datos recibidos antes de procesarlos para permitir la recuperación ante fallos sin pérdida de datos.
+"Para lograr la semántica 'exactly-once' al escribir en Kafka, el productor debe habilitar la idempotencia y el consumidor debe gestionar los 'offsets' transaccionalmente. ¿Verdadero o falso y por qué?","Verdadero, la idempotencia del productor evita duplicados en reintentos, y las transacciones aseguran que el 'offset' y el resultado se confirmen atómicamente."
+Concepto: Backpressure (contrapresión) en sistemas distribuidos.,"Definición: Una condición que ocurre cuando un sistema descendente no puede procesar el trabajo a la misma velocidad que lo recibe de un sistema ascendente, causando la acumulación de datos en búferes."
+"En la UI web de Flink, un operador que está completamente sobrecargado por backpressure se muestra de color _____.",negro
+"En la UI web de Flink, un operador que es el cuello de botella (completamente ocupado pero no bajo backpressure) se muestra de color _____.",rojo
+¿Cuál es una estrategia común para manejar el backpressure que implica que el consumidor envíe una señal al productor?,Ralentizar al productor (Slow down producer).
+"Si los mensajes más recientes son más importantes que los antiguos, ¿qué estrategia de manejo de backpressure se puede aplicar a la cola de mensajes?",Descartar los mensajes existentes (Drop existing messages).
+"La técnica de 'Reactive Streams' se basa en un control de flujo impulsado por la demanda, donde los suscriptores solicitan explícitamente datos a los publicadores. ¿Cómo se llama este mecanismo?",Backpressure.
+¿Qué es RocksDB y cuál es su principal caso de uso en motores de stream processing como Flink?,Es un almacén de clave-valor integrable de alto rendimiento que se utiliza como backend de estado para gestionar grandes cantidades de estado de operador localmente en disco.
+"La arquitectura interna de RocksDB se basa en un diseño de árbol _____, optimizado para altas tasas de escritura.",log-structured merge-tree (LSM)
+"En la arquitectura LSM de RocksDB, las escrituras recientes se almacenan en búferes en memoria llamados _____, antes de ser volcados a archivos inmutables en disco llamados SSTables.",MemTables
+El proceso en segundo plano en RocksDB que fusiona y organiza los archivos SSTables para mejorar el rendimiento de lectura y reducir el espacio en disco se llama _____.,compactación (compaction)
+"En Flink, la integración con RocksDB permite el checkpointing _____, que es una característica clave de rendimiento en despliegues a gran escala.",incremental
+¿Qué son las 'Column Families' en RocksDB y para qué se utilizan?,Son espacios de nombres lógicos dentro de una base de datos RocksDB que permiten optimizar patrones de acceso y configuraciones de rendimiento para diferentes tipos de estado.
+Concepto: Data Skew (sesgo de datos) en sistemas distribuidos.,"Definición: Una distribución desigual de datos o carga de trabajo entre los nodos de un sistema, lo que provoca que algunos nodos estén sobrecargados mientras otros están infrautilizados."
+¿Qué es la técnica de 'salting' para mitigar el data skew?,Consiste en añadir un prefijo aleatorio a las claves sesgadas para distribuir los datos de manera más uniforme entre las particiones.
+"En un join distribuido donde una de las tablas es pequeña, ¿qué técnica se puede utilizar para evitar el 'shuffling' masivo de datos y mitigar el data skew?",Broadcast join.
+"En Spark, ¿qué umbral configura el tamaño máximo de una tabla para que se realice un broadcast join automáticamente?",El umbral `spark.sql.autoBroadcastJoinThreshold`.
+Concepto: Idempotencia.,"Definición: Es la propiedad de una operación por la cual si se realiza varias veces, el resultado es el mismo que si se realizara una sola vez."
+¿Por qué la idempotencia es crucial en sistemas de pago distribuidos?,Para evitar efectos no deseados como cobros duplicados o pagos múltiples si una solicitud se reintenta debido a fallos de red o del sistema.
+Un patrón común para implementar idempotencia a nivel de API es requerir un(a) _____ único/a en cada solicitud.,token o clave de idempotencia (idempotency key)
+¿Qué mecanismo de base de datos se puede utilizar para garantizar la idempotencia de las inserciones de forma atómica?,Una restricción de unicidad (UNIQUE constraint) sobre una clave de negocio o un token de idempotencia.
+"En Kafka, configurar `acks=all` en el productor contribuye a la _____ al asegurar que el líder espera la confirmación de todas las réplicas 'in-sync'.",durabilidad y consistencia
+La métrica de 'consumer lag' en Kafka indica la diferencia de _____ entre el último mensaje producido en una partición y el último mensaje consumido por un grupo de consumidores.,offsets
+¿Cuál es el propósito del protocolo de 'two-phase commit' (2PC) utilizado en Flink?,"Asegurar que los cambios en fuentes y 'sinks' transaccionales se confirmen atómicamente, logrando semántica 'exactly-once'."
+"En una arquitectura push, ¿quién inicia la transferencia de datos?",El productor (o la fuente de datos).
+"En una arquitectura pull, ¿quién inicia la transferencia de datos?",El consumidor (o el destino de los datos).
+¿Qué tipo de arquitectura (push o pull) es generalmente preferible para sistemas de baja latencia en tiempo real como chats o notificaciones?,Arquitectura push.
+Un modelo híbrido común combina una notificación _____ para alertar sobre un evento y una operación _____ para obtener los detalles completos de dicho evento.,"push, pull"
+"En Flink, el parámetro `maxParallelism` se configura para permitir el _____ futuro de un trabajo utilizando el mismo 'savepoint'.",reescalado (scale-up)
+¿Cuál es la función del 'Write-Ahead Logging' (WAL) en RocksDB?,Garantizar la durabilidad de las escrituras al registrarlas en un log antes de aplicarlas en la MemTable en memoria.
+¿Qué es una 'hot key' en el contexto del data skew?,"Es una clave de particionamiento que aparece con una frecuencia desproporcionadamente alta, causando que una partición o nodo reciba una carga de trabajo excesiva."
+"El teorema CAP se aplica durante una partición de red, mientras que el teorema PACELC también considera el compromiso entre _____ y _____ durante la operación normal.","latencia (Latency), consistencia (Consistency)"
+"En el contexto de Reactive Streams, el método `Subscription.request(n)` es la forma en que el _____ señala su demanda de `n` elementos al _____.","suscriptor (subscriber), publicador (publisher)"
+¿Cómo se llama el modelo de consistencia que garantiza que todas las lecturas verán la escritura más reciente de forma inmediata?,Consistencia fuerte (Strong Consistency) o linealizabilidad.
+Concepto: Consistencia eventual (Eventual Consistency).,"Definición: Un modelo de consistencia que garantiza que, si no se realizan nuevas actualizaciones, todas las réplicas convergerán eventualmente al mismo estado."
+"En Flink, ¿qué son las 'late events' (eventos tardíos)?",Son eventos que llegan después de que el watermark del sistema ya ha superado su marca de tiempo de evento.
+¿Qué ventaja principal ofrece un 'distributed lock' en un sistema con múltiples nodos?,"Proporciona un mecanismo de exclusión mutua que es visible y respetado por todos los nodos, evitando condiciones de carrera en operaciones concurrentes."
+"Para evitar la pérdida de datos en Kafka durante el mantenimiento de un bróker, se recomienda un factor de replicación de tres y configurar `min.insync.replicas` en _____.",2
+"En un sistema de procesamiento de flujos, el 'windowing' es una técnica para dividir un flujo de datos ilimitado en _____ finitas sobre las cuales se pueden aplicar cómputos.",ventanas (buckets)

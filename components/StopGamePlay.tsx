@@ -18,6 +18,7 @@ import {
   getToleranceForWordStr,
 } from "../utils/stringUtils";
 import { useGlobalXp, progressQuest } from "../utils/xpStore";
+import { trackAnalyticsEvent } from "../utils/analytics";
 import Card from "./ui/Card";
 import Input from "./ui/Input";
 import Button from "./ui/Button";
@@ -77,6 +78,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     isSkip?: boolean;
   } | null>(null);
   const [timeLeft, setTimeLeft] = useState(30);
+  const [sessionStartTime, setSessionStartTime] = useState<number>(Date.now());
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   // Timer Countdown Effect
@@ -205,6 +207,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setCurrentStreak(0);
     setBestStreak(0);
     setGameStats({ correct: 0, skipped: 0, incorrect: 0, history: [] });
+    setSessionStartTime(Date.now());
     // Stop listening before starting a fresh game to ensure clean state
     stopListening();
     resetTranscript();
@@ -223,6 +226,18 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     if (score > 0) {
       trackActivity(1);
     }
+  };
+
+  const handleEndGame = () => {
+    const durationInSeconds = Math.round(
+      (Date.now() - sessionStartTime) / 1000,
+    );
+    trackAnalyticsEvent("session_end", {
+      game: "stop_game",
+      mode: selectedGroup,
+      duration: durationInSeconds,
+    });
+    setShowSummary(true);
   };
 
   const handleGetHint = () => {
@@ -276,6 +291,12 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         message: `${messagePrefix} A valid answer is: "${selectedWordForFeedback.word}". Added to Vault!`,
         isTimeout,
         isSkip,
+      });
+
+      trackAnalyticsEvent("item_wrong", {
+        game: "stop_game",
+        category: currentCategory,
+        errorType: isSkip ? "skipped" : isTimeout ? "timeout" : "wrong_word",
       });
 
       setGameStats((prev) => ({
@@ -445,6 +466,12 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           },
         ],
       }));
+
+      trackAnalyticsEvent("item_correct", {
+        game: "stop_game",
+        category: currentCategory,
+        duration: Math.max(1, difficulty - timeLeft),
+      });
 
       // Reward daily quest
       progressQuest("correct_answers", 1, "stop");
@@ -755,7 +782,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             )}
           </div>
           <button
-            onClick={() => setShowSummary(true)}
+            onClick={handleEndGame}
             className="text-text-muted hover:text-text-primary text-sm font-bold transition-colors"
           >
             End Game

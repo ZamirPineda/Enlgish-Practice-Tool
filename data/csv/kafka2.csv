@@ -1,0 +1,120 @@
+¿Cuáles son los tres objetivos fundamentales que se buscan en los sistemas de datos según Martin Kleppmann?,"Fiabilidad (Reliability), escalabilidad (Scalability) y mantenibilidad (Maintainability)."
+"En el contexto de sistemas distribuidos, ¿qué es la replicación (replication)?",Es el proceso de mantener una copia de los mismos datos en múltiples máquinas conectadas a través de una red.
+"La partición de datos, también conocida como _____, es una estrategia para distribuir una base de datos en múltiples máquinas.",sharding
+"En sistemas de datos, un error que está correlacionado entre nodos y tiende a causar más fallos que los fallos de hardware no correlacionados se conoce como _____.",error sistemático (systematic error)
+¿Qué efecto profundo tiene el modelo de datos elegido en una aplicación?,"Determina lo que el software puede y no puede hacer, afectando la simplicidad del código de la aplicación."
+¿Para qué tipo de estructura de datos es particularmente adecuado un modelo de datos de documento?,"Para datos con una estructura similar a un documento o árbol (relaciones uno a muchos), donde todo el árbol se carga a la vez."
+¿Cuál es el propósito principal de un índice en una base de datos?,Actuar como una estructura de datos adicional que ayuda a encontrar eficientemente el valor de una clave particular.
+¿Cuál es la principal desventaja de mantener índices adicionales en una base de datos?,"Incurre en una sobrecarga, especialmente en las escrituras, ya que el índice también debe actualizarse cada vez que se escriben datos."
+"Un diseño de almacenamiento donde los valores de cada columna se almacenan juntos, en lugar de por filas, se llama _____.",almacenamiento orientado a columnas (column-oriented storage)
+¿Qué es la compatibilidad hacia adelante (forward compatibility) en la evolución de esquemas de datos?,"Requiere que el código más antiguo ignore las adiciones realizadas por una versión más nueva del código, permitiendo la coexistencia."
+"En Kafka, ¿qué es un bróker (broker)?",Es un servidor único en un clúster de Kafka que almacena datos de temas y sirve peticiones de productores y consumidores.
+¿Qué rol desempeña el líder de una partición (partition leader) en Kafka?,Es el único bróker responsable de gestionar todas las lecturas y escrituras para esa partición específica.
+¿Cuál es la función de las réplicas seguidoras (follower replicas) en Kafka?,"Proporcionan redundancia copiando los mensajes del líder de la partición, permitiendo tomar el liderazgo si el líder falla."
+La herramienta de Kafka que consume mensajes de un clúster y los produce en otro se llama _____.,MirrorMaker
+"En una replicación basada en líder, ¿cómo se añade un nuevo seguidor (follower)?",Copiando una instantánea (snapshot) de la base de datos del líder y luego solicitando todos los cambios de datos ocurridos desde la instantánea.
+¿Qué se entiende por 'retraso de replicación' (replication lag)?,Es el tiempo que tarda un cambio realizado en el líder en reflejarse en un seguidor en un sistema de replicación asíncrona.
+Concepto: Consistencia eventual (Eventual Consistency).,"Definición: Una garantía de que, si no se realizan nuevas actualizaciones, todas las réplicas eventualmente convergerán al mismo valor."
+"En la replicación multilíder, ¿cuál es el principal desafío que debe abordarse cuando los mismos datos se modifican simultáneamente en diferentes centros de datos?",La resolución de conflictos de escritura (write conflict resolution).
+"En sistemas sin líder como Riak, los valores escritos simultáneamente que deben ser fusionados por el cliente se denominan _____.",hermanos (siblings)
+"Cuando se particionan índices secundarios, ¿qué es un índice global (global index)?","Un índice que cubre datos de todas las particiones, y que a su vez debe ser particionado para evitar cuellos de botella."
+¿Qué significa la serializabilidad (serializability) en el contexto del aislamiento ACID?,"Que el resultado de ejecutar transacciones concurrentes es el mismo que si se hubieran ejecutado en serie, una tras otra."
+La propiedad ACID que garantiza que una transacción se complete en su totalidad o no tenga ningún efecto se llama _____.,atomicidad (atomicity)
+¿Qué tipo de condición de carrera se previene con operaciones atómicas como 'comparar y establecer' (compare-and-set)?,"Las actualizaciones perdidas (lost updates), donde dos clientes leen, modifican y escriben el mismo objeto simultáneamente."
+"El problema de concurrencia donde una transacción lee algunos datos, otra transacción escribe datos que afectan a la primera, y la primera transacción es invalidada se llama _____.",sesgo de escritura (write skew)
+¿Cuál es la forma más simple de evitar problemas de concurrencia en transacciones?,Eliminar la concurrencia por completo ejecutando solo una transacción a la vez en serie (serial execution).
+El aislamiento de instantánea serializable (Serializable Snapshot Isolation - SSI) es una técnica de control de concurrencia _____.,optimista
+"En un sistema distribuido, si envías una petición y no recibes respuesta, ¿por qué es imposible saber la causa exacta del fallo?","Porque no se puede distinguir si la petición se perdió, el nodo remoto está caído o la respuesta se perdió."
+"Para medir el tiempo transcurrido (ej. timeouts) en un sistema distribuido, ¿qué tipo de reloj es generalmente seguro de usar?","Un reloj monotónico (monotonic clock), ya que no asume sincronización entre los relojes de diferentes nodos."
+La estrategia de resolución de conflictos que se basa en la marca de tiempo de un reloj local para decidir qué escritura conservar se llama _____ y es propensa a la pérdida de datos.,la última escritura gana (Last Write Wins - LWW)
+¿Qué garantía proporciona la linealizabilidad (linearizability) en un sistema distribuido?,"Hace que el sistema parezca tener una sola copia de los datos, y que todas las operaciones sobre ella sean atómicas y se ejecuten en un orden bien definido."
+La difusión de orden total (total order broadcast) es un protocolo que garantiza que todos los nodos entreguen los mismos mensajes en el _____.,mismo orden
+El problema de conseguir que varios nodos se pongan de acuerdo sobre algo en un sistema distribuido se conoce como _____.,consenso (consensus)
+¿Cuál es el propósito del algoritmo de confirmación en dos fases (Two-Phase Commit - 2PC)?,"Lograr la confirmación atómica de transacciones en múltiples nodos, asegurando que todos confirmen o todos aborten."
+Sistemas como ZooKeeper y etcd utilizan un algoritmo de _____ para replicar una pequeña cantidad de datos en todos los nodos.,difusión de orden total tolerante a fallos (fault-tolerant total order broadcast)
+¿Qué característica de ZooKeeper permite implementar un bloqueo distribuido (distributed lock)?,"Sus operaciones atómicas linealizables, como 'comparar y establecer' (compare-and-set)."
+"En Kafka, ¿qué es un grupo de consumidores (consumer group)?","Un conjunto de consumidores que cooperan para consumir datos de un tema, donde cada partición es asignada a un solo consumidor del grupo."
+¿Cuál es el principal mecanismo de escalabilidad para el consumo de datos en Kafka?,Añadir más consumidores a un grupo de consumidores para distribuir la carga de las particiones.
+¿Qué sucede si se añaden más consumidores a un grupo que el número de particiones de un tema en Kafka?,Los consumidores adicionales permanecerán inactivos (idle) ya que no hay particiones disponibles para asignarles.
+"En Kafka, el proceso de reasignar particiones entre los miembros de un grupo de consumidores se llama _____.",reequilibrio (rebalance)
+¿Qué ventaja ofrece la membresía de grupo estática (static group membership) en los consumidores de Kafka?,"Evita un reequilibrio completo del grupo cuando un consumidor se reinicia, ya que se le reasignan las mismas particiones que tenía antes."
+"En un consumidor de Kafka, el parámetro `fetch.min.bytes` controla la cantidad mínima de datos que el bróker debe tener antes de responder a una petición de obtención, reduciendo la carga en el _____ y el _____.","consumidor, bróker"
+¿Qué sucede si un consumidor de Kafka no envía un 'heartbeat' al coordinador del grupo dentro del `session.timeout.ms`?,Se considera muerto y el coordinador del grupo inicia un reequilibrio para reasignar sus particiones a otros miembros.
+"En Kafka, ¿qué es un 'offset' de consumidor?",Es un marcador que indica la posición del último mensaje que un consumidor ha procesado con éxito en una partición.
+"Si `enable.auto.commit` está activado en un consumidor de Kafka, ¿cuándo se confirman los offsets?","Periódicamente en segundo plano, según el intervalo definido en `auto.commit.interval.ms`."
+¿Qué método de la API de consumidor de Kafka ofrece una confirmación de offset síncrona y bloqueante?,`commitSync()`
+¿Por qué es importante el orden correcto de las confirmaciones de offset al usar `commitAsync()` en Kafka?,"Para evitar que una confirmación más antigua sobrescriba una más nueva en caso de reintentos, lo que podría causar más duplicados en un reequilibrio."
+"¿Qué clase en la API de cliente de Kafka se utiliza para la gestión programática de temas, grupos de consumidores y configuraciones?",AdminClient
+¿Qué es una réplica sincronizada (In-Sync Replica - ISR) en Kafka?,Es una réplica que se mantiene al día con el líder de la partición y es elegible para convertirse en el nuevo líder si el actual falla.
+¿Cuál es el riesgo de habilitar `unclean.leader.election.enable` en Kafka?,"Permite que una réplica no sincronizada se convierta en líder, lo que puede provocar la pérdida de mensajes."
+El parámetro de tema `min.insync.replicas` en Kafka especifica el número mínimo de réplicas que deben acusar recibo de una escritura para que esta se considere _____.,exitosa (successful)
+"En un productor de Kafka, ¿qué significa configurar `acks=0`?",El productor no espera ninguna confirmación del bróker y asume que el mensaje se envió tan pronto como se escribe en el socket.
+"En un productor de Kafka, ¿qué significa configurar `acks=1`?","El productor espera la confirmación solo del líder de la partición, sin esperar a las réplicas seguidoras."
+"En un productor de Kafka, ¿qué significa configurar `acks=all`?",El productor espera la confirmación del líder después de que todas las réplicas sincronizadas (ISRs) hayan recibido el mensaje.
+"Un error que puede resolverse intentando la misma operación de nuevo, como un fallo temporal de red, se conoce como _____.",error recuperable (retriable error)
+¿Qué problema resuelve el productor idempotente en Kafka?,"Evita la duplicación de mensajes causada por reintentos del productor, asegurando que los mensajes se escriban exactamente una vez."
+La semántica de procesamiento exactamente una vez (exactly-once semantics) en Kafka se logra combinando un productor idempotente con _____.,transacciones (transactions)
+¿Qué es un 'productor zombi' en el contexto de las transacciones de Kafka?,Una instancia anterior de un productor que se creía fallida pero que intenta confirmar una transacción después de que una nueva instancia ya haya comenzado a trabajar.
+"Para que un consumidor de Kafka solo lea mensajes de transacciones confirmadas, su `isolation.level` debe configurarse en _____.",read_committed
+¿Cuál es el propósito de Kafka Connect?,"Facilitar la integración de datos, transmitiendo datos de manera fiable y escalable entre Kafka y otros sistemas como bases de datos o motores de búsqueda."
+"En Kafka Connect, un conector que lee datos de un sistema externo y los escribe en Kafka se llama _____.",conector de origen (Source Connector)
+"En Kafka Connect, un conector que lee datos de Kafka y los escribe en un sistema externo se llama _____.",conector de sumidero (Sink Connector)
+"En Kafka, ¿cómo se logra la autenticación de clientes?",Mediante SASL (Simple Authentication and Security Layer) o mTLS/SSL.
+¿Qué son las ACLs (Access Control Lists) en Kafka?,"Son reglas que definen qué permisos (leer, escribir, etc.) tiene un principal (usuario) sobre un recurso específico (tema, grupo)."
+"Una métrica JMX clave para la salud del clúster de Kafka, que debe ser cero en un clúster sano, es el número de _____.",particiones sub-replicadas (UnderReplicatedPartitions)
+¿Qué es una topología (topology) en Kafka Streams?,Es un grafo acíclico dirigido (DAG) de procesadores de flujo (nodos) y flujos (aristas) que define la lógica de procesamiento de la aplicación.
+La unidad básica de paralelismo en una aplicación de Kafka Streams es una _____.,tarea (task)
+"La técnica de procesamiento por lotes que lee un conjunto de datos de entrada y produce un conjunto de datos de salida, sin responder a peticiones, se llama _____.",procesamiento por lotes (batch processing)
+"Un sistema que consume y procesa eventos poco después de que ocurren, operando sobre datos ilimitados, se conoce como _____.",procesador de flujos (stream processor)
+"En el procesamiento por lotes, ¿qué significa la 'materialización de estado intermedio'?",El proceso de escribir el resultado de una etapa del trabajo en un archivo temporal antes de que la siguiente etapa lo lea.
+La captura de cambios de datos (Change Data Capture - CDC) es el proceso de observar todos los cambios de datos en una base de datos y extraerlos en forma de _____.,flujo de eventos (stream of events)
+La filosofía de datos donde el registro de eventos es la fuente de verdad y la base de datos es una caché de su estado más reciente se resume en la frase: 'La verdad es el _____.',registro (log)
+¿Qué ventaja principal ofrecen los eventos inmutables en un sistema de flujo de datos?,"Facilitan la depuración y la auditoría, ya que capturan lo que realmente sucedió en un momento dado sin ser modificado."
+"En el procesamiento de flujos, ¿cuál es la diferencia entre el tiempo del evento (event time) y el tiempo de procesamiento (processing time)?","El tiempo del evento es cuándo ocurrió el evento en el mundo real, mientras que el tiempo de procesamiento es cuándo es observado por el procesador."
+¿Qué es un evento 'rezagado' (straggler event) en el procesamiento de flujos?,"Un evento que llega al procesador con un retraso significativo, después de que la ventana de tiempo a la que pertenece ya ha sido procesada."
+"En el procesamiento de flujos, ¿qué tipo de unión (join) busca eventos relacionados de dos flujos que ocurren dentro de una ventana de tiempo?",Unión de flujo con flujo (stream-stream join).
+Una operación que puede ser reintentada múltiples veces sin cambiar el resultado más allá de la aplicación inicial se describe como _____.,idempotente (idempotent)
+"Para asegurar la integridad de los datos, el proceso de verificar si los datos han sido corrompidos se conoce como _____.",auditoría (auditing)
+"Debido a los riesgos de seguridad y privacidad, los datos personales se han descrito como un 'activo _____' o 'material peligroso'.",tóxico (toxic asset)
+"En Kafka, ¿cuál es el sistema operativo recomendado para entornos de producción?","Linux, debido a su rendimiento y estabilidad para aplicaciones de servidor Java."
+"El recolector de basura de Java recomendado para ejecutar Kafka, especialmente con grandes montones de memoria (heaps), es el _____.",Garbage-First Garbage Collector (G1GC)
+"En la configuración de un productor de Kafka, `delivery.timeout.ms` establece un límite de tiempo superior para que un mensaje sea entregado, incluyendo _____ y _____.","reintentos, tiempo de espera de red"
+¿Qué hace el parámetro `batch.size` en un productor de Kafka?,Controla la cantidad máxima de datos en bytes que el productor agrupará en un solo lote antes de enviarlo al bróker.
+¿Por qué es Avro un buen formato de serialización para un sistema de mensajería como Kafka?,"Porque permite que el esquema evolucione de manera compatible, permitiendo que los consumidores lean mensajes con esquemas antiguos o nuevos."
+"En Kafka, las cuotas (quotas) se pueden aplicar dinámicamente a clientes específicos para limitar su tasa de producción o consumo de _____.",bytes
+La interfaz `ConsumerRebalanceListener` en la API de consumidor de Kafka permite a una aplicación ejecutar código personalizado cuando las particiones son _____ o _____ de un consumidor.,"asignadas (onPartitionsAssigned), revocadas (onPartitionsRevoked)"
+Una elección de líder 'sucia' (unclean) en Kafka se refiere a la elección de un nuevo líder para una partición que _____ estaba en el conjunto de réplicas sincronizadas.,no
+¿Qué es una compactación de registro (log compaction) en Kafka?,Es una política de retención que asegura que Kafka retenga al menos la última actualización para cada clave de mensaje dentro de una partición.
+"La métrica de JMX `RequestHandlerAvgIdlePercent` en un bróker de Kafka indica el porcentaje de tiempo que los hilos de manejo de peticiones están _____, siendo un indicador de la carga del bróker.",inactivos (idle)
+"En un clúster de Kafka bien equilibrado, la métrica `LeaderCount` debería estar distribuida de manera _____ entre todos los brókeres.",uniforme
+"Cuando un productor de Kafka recibe un error `LEADER_NOT_AVAILABLE`, ¿es este un error recuperable (retriable)?","Sí, porque el productor puede reintentar el envío después de que se elija un nuevo líder."
+¿Qué controla el parámetro de consumidor `auto.offset.reset`?,"Define desde dónde comenzará a leer un consumidor cuando no tiene un offset inicial confirmado, con opciones como 'earliest' o 'latest'."
+¿Cuál es la función del particionador (partitioner) en un productor de Kafka?,"Elegir la partición a la que se enviará un registro, generalmente basándose en la clave del registro para garantizar el orden por clave."
+"El parámetro `max.in.flight.requests.per.connection` en un productor de Kafka, si se establece en un valor mayor que 1, puede romper el orden de los mensajes si hay _____, a menos que la idempotencia esté activada.",reintentos (retries)
+"La herramienta `kafka-topics.sh` se utiliza para realizar operaciones de gestión de temas, como crear, modificar, eliminar y _____ información sobre ellos.",listar
+"La herramienta `kafka-consumer-groups.sh` permite inspeccionar el estado de los grupos de consumidores, incluyendo el _____ por partición.",retraso (lag)
+"Para asegurar que los mensajes de una partición se distribuyan entre diferentes racks de un centro de datos para una mayor disponibilidad, se debe configurar el parámetro `_____` en cada bróker.",broker.rack
+"El mecanismo de autenticación SASL que utiliza un nombre de usuario y una contraseña en texto plano, y que no es seguro sin SSL/TLS, se llama _____.",PLAIN
+El mecanismo de autenticación SASL que utiliza un protocolo de desafío-respuesta para evitar enviar contraseñas en texto plano se llama _____.,SCRAM (Salted Challenge Response Authentication Mechanism)
+"En Kafka, ¿qué permiso de ACL se requiere para que un productor escriba en un tema?",Topic:Write
+¿Qué es la elección de réplica preferida (preferred replica election) en Kafka?,"Un proceso administrativo para restaurar el liderazgo de las particiones a sus réplicas preferidas originales, ayudando a reequilibrar la carga del clúster."
+La herramienta de línea de comandos `kafka-dump-log.sh` es útil para _____ e inspeccionar el contenido de los archivos de segmento de registro de Kafka.,depurar (debug)
+"El almacenamiento en niveles (tiered storage) en Kafka permite mover segmentos de registro más antiguos a un almacenamiento de objetos más económico, mientras se mantiene una pequeña cantidad de datos en el almacenamiento local de _____ rendimiento.",alto
+"En Kafka Streams, el estado local de una tarea (por ejemplo, para agregaciones o uniones) se almacena típicamente en una base de datos embebida como _____.",RocksDB
+"Cuando una aplicación de Kafka Streams se reinicia, ¿cómo recupera su estado?","Restaurando el estado desde un changelog topic en Kafka, que contiene todos los cambios del estado local."
+¿Qué es una 'visión materializada' (materialized view)?,"Un conjunto de datos derivado, como un índice o una tabla de agregados, que se mantiene actualizado a partir de un conjunto de datos primario."
+"En arquitecturas de microservicios, la comunicación asíncrona a través de flujos de eventos es una alternativa a las llamadas síncronas de red como las API _____, promoviendo un acoplamiento más débil.",REST
+"En el control de concurrencia, ¿qué es un 'fantasma' (phantom)?",Un tipo de condición de carrera donde una escritura en una transacción cambia el resultado de una consulta de rango en otra transacción.
+El bloqueo de dos fases (Two-Phase Locking - 2PL) es una técnica de control de concurrencia _____.,pesimista
+"En un sistema distribuido, la suposición de que la red es fiable, la latencia es cero y el ancho de banda es infinito se conoce como las _____ de la computación distribuida.",falacias (fallacies)
+"La API AdminClient de Kafka está diseñada para ser asíncrona, devolviendo objetos `_____` que se completan cuando la operación en el bróker finaliza.",Future
+¿Qué significa que el modelo de datos de un sistema es 'evolucionable' (evolvable)?,Que permite realizar cambios en el esquema de los datos (schema evolution) de forma compatible con versiones antiguas y nuevas del software.
+"En Kafka, ¿cuál es el propósito de la configuración de cliente `client.dns.lookup`?","Controla cómo el cliente resuelve los nombres DNS, por ejemplo, para expandir un alias DNS a una lista completa de brókeres."
+"El método `consumer.poll()` en la API de consumidor de Kafka no solo recupera registros, sino que también es responsable de mantener la sesión activa mediante el envío de _____ en segundo plano.",heartbeats
+"En Kafka Connect, ¿cuál es la función de un convertidor (converter)?","Gestionar la serialización y deserialización de datos entre el formato del conector y el formato almacenado en Kafka (ej. JSON, Avro)."
+Una arquitectura de replicación entre múltiples centros de datos donde un centro de datos es el principal y los otros son pasivos se llama _____.,activa-pasiva (active-passive)
+Una arquitectura de replicación donde cada centro de datos sirve tráfico de lectura y escritura y replica datos a los demás se llama _____.,activa-activa (active-active)
+¿Qué problema se debe evitar en la replicación activa-activa con más de dos centros de datos?,"Bucles de replicación (replication loops), donde el mismo evento se replica indefinidamente entre los centros de datos."
+"En Kafka, ¿qué son las transformaciones de mensaje único (Single Message Transformations - SMTs) en Kafka Connect?","Son operaciones ligeras que modifican mensajes individuales a medida que pasan por un conector, sin necesidad de un framework de procesamiento de flujos."
+¿Cuál es la función del nodo controlador (controller) en un clúster de Kafka?,"Es un bróker elegido responsable de las tareas administrativas del clúster, como gestionar las elecciones de líderes de partición."
+"En Kafka, la época del controlador (controller epoch) es un número que se incrementa cada vez que se elige un nuevo controlador para evitar el problema de _____.",cerebro dividido (split-brain)

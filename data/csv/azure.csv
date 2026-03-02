@@ -1,0 +1,99 @@
+¿Qué porcentaje del mercado global de infraestructura en la nube poseía Amazon Web Services (AWS) en el segundo trimestre de 2025?,AWS poseía el 30% del mercado global de infraestructura en la nube.
+¿Cuál era la cuota de mercado de Microsoft Azure en el mercado de infraestructura en la nube en el segundo trimestre de 2025?,Microsoft Azure tenía una cuota de mercado del 20%.
+¿Qué cuota de mercado tenía Google Cloud en la infraestructura global de la nube en el segundo trimestre de 2025?,Google Cloud tenía una cuota de mercado del 13%.
+"En conjunto, ¿qué porcentaje del mercado de infraestructura en la nube controlaban los 'Tres Grandes' (AWS, Azure y Google Cloud) en el segundo trimestre de 2025?",Controlaban el 63% del mercado.
+¿A cuánto ascendieron los ingresos del mercado global de infraestructura en la nube en el segundo trimestre de 2025?,Los ingresos alcanzaron los 99 mil millones de dólares.
+¿Cuál fue el crecimiento interanual del mercado de infraestructura en la nube en el segundo trimestre de 2025?,El mercado creció un 25% interanual.
+¿En qué porcentaje crecieron los servicios en la nube específicos de GenAI en el segundo trimestre de 2025?,Los servicios en la nube específicos de GenAI crecieron un 160%.
+Término: Azure Kubernetes Service (AKS),Definición: Una plataforma de Kubernetes gestionada para desplegar y administrar aplicaciones en contenedores en Azure.
+¿Qué servicio de Azure permite ejecutar contenedores de Linux o Windows sin necesidad de crear máquinas virtuales?,Azure Container Instances (ACI).
+El servicio _____ es una solución de almacenamiento de objetos en Azure para almacenar grandes volúmenes de datos no estructurados como texto e imágenes.,Azure Blob Storage
+¿Qué servicio de red de Azure es el componente fundamental para una red privada y permite la comunicación entre recursos de Azure?,Azure Virtual Network (VNet).
+¿Cuál es el propósito de Azure Arc?,"Permite gestionar y gobernar servidores, clústeres de Kubernetes y aplicaciones desde una plataforma unificada en entornos multinube, locales y de borde."
+Término: Azure DevOps,Definición: Un conjunto de servicios que agiliza el ciclo de vida del desarrollo de software mejorando la colaboración entre los equipos de desarrollo y operaciones.
+¿Qué servicio dentro de Azure DevOps proporciona repositorios Git para el control de código fuente?,Azure Repos.
+El servicio de Azure DevOps que soporta la integración y entrega continuas (CI/CD) se llama _____.,Azure Pipelines
+"¿Qué certificación de Azure está diseñada para validar el conocimiento fundamental de los servicios en la nube como redes, almacenamiento y seguridad?",AZ-900: Microsoft Azure Fundamentals.
+Término: Azure AI Foundry,"Definición: Una plataforma de IA de extremo a extremo en Azure que ofrece modelos, herramientas y capacidades de monitoreo para diseñar y escalar aplicaciones de IA."
+"¿Qué nuevo servicio de base de datos NoSQL totalmente gestionado, anunciado en Ignite 2025 y ahora disponible de forma general, está diseñado para flexibilidad híbrida y multinube?",Azure DocumentDB.
+"Microsoft SQL Server 2025, ahora disponible de forma general, permite la replicación de datos a Microsoft OneLake mediante la duplicación de bases de datos en _____.",Microsoft Fabric
+"¿Cuál es el nombre del nuevo servicio de base de datos PostgreSQL en la nube de Azure, en vista previa privada, diseñado para aplicaciones de misión crítica?",Azure HorizonDB.
+"¿Qué nueva capacidad de Azure App Service, actualmente en vista previa, permite mover aplicaciones web .NET a la nube con cambios mínimos de configuración?",Managed Instance en Azure App Service.
+La última generación de _____ admite un rendimiento de almacenamiento remoto de hasta 20 Gbps y un ancho de banda de red de hasta 400 Gbps.,Azure Boost
+¿Qué es Azure Cobalt 200?,"Es la CPU Cobalt de nueva generación de Azure, basada en Arm y diseñada para potenciar aplicaciones nativas en la nube."
+"¿Qué nueva capacidad de Microsoft Entra, en vista previa, proporciona una solución de nivel empresarial para prevenir la proliferación de agentes y proteger sus identidades?",Microsoft Entra Agent ID.
+Término: Azure Machine Learning studio,Definición: Un recurso de alto nivel que proporciona un lugar centralizado para que científicos de datos y desarrolladores trabajen con artefactos para construir y desplegar modelos de aprendizaje automático.
+El servicio de Azure que se integra con Microsoft Copilot Studio para crear bots de IA de bajo código se llama _____.,Azure AI Bot Service
+"Con más de 60 regiones en todo el mundo, Azure garantiza que los datos cumplan con los requisitos locales de cumplimiento y regulatorios, una característica conocida como _____.",residencia de datos (data residency)
+¿Cómo se llama la capacidad de Azure que permite ejecutar algunos recursos en servidores propios mientras se utiliza la nube para otros?,Capacidad de nube híbrida.
+La certificación AI-102 de Microsoft corresponde al rol de _____.,Azure AI Engineer Associate
+¿Qué certificación está diseñada para el rol de Microsoft Azure Solutions Architect Expert?,AZ-305: Microsoft Azure Solutions Architect Expert.
+El servicio _____ proporciona máquinas virtuales IaaS y artefactos preconfigurados en entornos de laboratorio para desarrollo y pruebas.,Azure DevTest Labs
+¿Qué dos servicios principales ofrece Azure para automatizar cargas de trabajo y reducir errores operativos?,Azure Automation y Azure Logic Apps.
+"¿Cómo se llama la capa universal de contexto de Microsoft que combina inteligencia de Work IQ, Fabric IQ y Foundry IQ para agentes de IA?","Se trata de una nueva capa de contexto universal, no se le da un nombre único específico."
+Término: Fabric IQ,Definición: Una capacidad en vista previa que extiende la capa semántica unificada de Power BI a las operaciones de negocio para proporcionar una vista conectada en tiempo real de la empresa.
+¿Qué es Foundry IQ?,"Es la nueva generación de generación aumentada por recuperación (RAG), que ofrece una forma más inteligente de conectar agentes con datos desde una única base de conocimiento."
+"En el contexto de Microsoft Foundry, ¿qué son las herramientas de Protocolo de Contexto de Modelo (MCP)?",Son un catálogo unificado de herramientas que permiten a los desarrolladores enriquecer agentes con contexto de negocio en tiempo real y lógica personalizada.
+"El servicio _____ ofrece agentes alojados, memoria incorporada y flujos de trabajo de múltiples agentes en una plataforma gestionada e interoperable.",Foundry Agent Service
+¿Qué marco de código abierto de Microsoft unifica Semantic Kernel y AutoGen para un desarrollo de agentes unificado y resiliente?,Microsoft Agent Framework.
+"Microsoft mantiene entornos de Azure distintos para necesidades regulatorias específicas, como Commercial Cloud, _____ y China Cloud.",US Government Cloud
+¿Qué estándar de cumplimiento regional de Singapur figura en las ofertas de cumplimiento de Microsoft Azure?,Singapore MTCS Level 3.
+¿Qué estándar de cumplimiento relacionado con la industria de la salud en EE. UU. soporta Azure?,HIPAA (Health Insurance Portability and Accountability Act).
+El estándar de seguridad de la industria de tarjetas de pago que cumple Azure es _____.,PCI DSS (Payment Card Industry Data Security Standard)
+¿Qué servicio de base de datos de Azure ofrece bases de datos relacionales y no relacionales?,"Azure ofrece servicios separados, como Azure SQL Database (relacional) y Azure Cosmos DB (no relacional/multimodelo)."
+¿Qué es AKS Automatic?,Una versión de Azure Kubernetes Service que reduce la curva de aprendizaje y los riesgos de mala configuración al automatizar el mantenimiento del clúster.
+"¿Qué lenguaje de consulta es esencial para un Fabric Analytics Engineer Associate, además de SQL y DAX?",Kusto Query Language (KQL).
+"El modelo de Azure _____, que ahora soporta la generación de video a partir de imágenes, está disponible en las regiones de Suecia Central y Este de EE. UU. 2.",Sora
+¿Qué es la diarización en el contexto de los modelos de audio de Azure OpenAI?,"Es el proceso de identificar quién habló y cuándo en un flujo de audio, transformando conversaciones en transcripciones atribuidas a un hablante."
+¿Qué API de Azure OpenAI reúne las capacidades de las API de chat completions y assistants en una experiencia unificada?,La API Responses.
+Azure DocumentDB es un servicio NoSQL totalmente gestionado construido sobre tecnología de código abierto y compatible con los drivers de _____.,MongoDB
+Término: Azure Elastic SAN,Definición: Un servicio de almacenamiento que proporciona una experiencia de extremo a extremo comparable a las redes de área de almacenamiento (SAN) locales para aplicaciones críticas.
+El servicio _____ de Azure es una red de entrega de contenido (CDN) global que optimiza las experiencias del usuario entregando contenido desde el borde de la red.,Azure Front Door
+¿Qué iniciativa de Microsoft se centra en la inversión en la región de la UE para permitir que los clientes procesen y almacenen datos dentro de la UE?,EU Data Boundary for Microsoft Cloud.
+"¿Qué empresa de tecnología de GPU se ha integrado con los servicios de infraestructura de Azure AI, incluyendo la plataforma Blackwell?",NVIDIA.
+"Con la integración de Defender for Cloud y _____, se busca proteger las aplicaciones a lo largo de todo su ciclo de vida, desde el código hasta el tiempo de ejecución.",GitHub
+¿Qué servicio de Azure proporciona una vista unificada de los activos de IA agéntica para gestionar la postura de seguridad y reducir el riesgo?,Microsoft Defender (como parte de Microsoft Agent 365).
+Término: Regiones Soberanas de Azure,"Definición: Instancias de Azure diseñadas para cumplir con estrictos estándares de seguridad, cumplimiento y privacidad en regiones con fuertes restricciones regulatorias, como China y para el gobierno de EE. UU."
+¿A través de qué socio opera Microsoft su instancia de Azure en China para garantizar que todos los datos permanezcan dentro de las fronteras del país?,21Vianet (21VNET).
+El modelo de precios de Azure que permite a los clientes pagar solo por los recursos que consumen se conoce como _____.,pago por uso (pay-as-you-go)
+"¿Qué servicio de Azure permite conexiones de fibra privadas y dedicadas entre la infraestructura local y los centros de datos de Azure, sin pasar por la internet pública?",Azure ExpressRoute.
+¿Cuál es el propósito del servicio Azure Functions?,Es un servicio de computación sin servidor (serverless) que permite ejecutar código basado en eventos sin gestionar la infraestructura.
+La certificación AZ-500 de Microsoft está orientada al rol de _____.,Microsoft Azure Security Engineer Associate
+¿Qué nuevo modelo de lenguaje grande (LLM) de OpenAI fue introducido en Foundry en Ignite 2025?,GPT-5.1.
+"El servicio _____ de Azure se utiliza para crear, probar, desplegar y gestionar chatbots en múltiples canales.",Azure AI Bot Service
+¿Qué es el 'spillover' en el contexto de los despliegues provisionados de Azure OpenAI?,"Es una función que gestiona las fluctuaciones de tráfico en despliegues provisionados, redirigiendo los excesos a un despliegue estándar designado."
+El 'Model router' para Azure AI Foundry es un modelo de chat desplegable que automáticamente selecciona el mejor _____ para responder a una solicitud.,modelo de chat subyacente
+"Según un estudio de IDC, las empresas 'Frontier' (líderes en la adopción de IA) están logrando retornos _____ veces más altos que los adoptantes lentos.",tres
+¿Qué porcentaje de las empresas 'Frontier' están monetizando casos de uso de IA específicos de la industria para aumentar sus ingresos?,El 67%.
+¿Qué tipo de arquitectura de aplicaciones se beneficia enormemente del uso de Azure Kubernetes Service (AKS) para gestionar unidades de código acopladas de forma laxa?,Arquitectura de microservicios.
+"En Azure Machine Learning Studio, ¿qué función simplifica el desarrollo de aplicaciones de IA con modelos de lenguaje grandes (LLMs)?",Prompt flow.
+¿Cuál es el sistema operativo especializado que Microsoft Azure utiliza para su 'capa de tejido' (fabric layer)?,"Un sistema operativo especializado con el mismo nombre, Azure."
+"El componente de Azure que mantiene la escalabilidad y fiabilidad de los servicios en el centro de datos, gestionando la asignación de memoria y el balanceo de carga, es el _____.",Azure Fabric Controller
+"¿Qué API proporciona Azure para que un desarrollador interactúe con los servicios, construida sobre REST, HTTP y XML?","Azure proporciona una API construida sobre esos estándares, no tiene un nombre único y específico más allá de la 'API de Azure'."
+Azure soporta múltiples lenguajes de programación. ¿Cuáles son algunos ejemplos clave mencionados?,"C#, Python, JavaScript, Java y PHP."
+"¿En qué año se lanzó comercialmente Windows Azure, la versión inicial de la plataforma?",Se lanzó comercialmente en 2010.
+"¿Cuándo se cambió el nombre de Windows Azure a Microsoft Azure, marcando un cambio estratégico hacia el software de código abierto y IaaS?",En marzo de 2014.
+"Al final del año fiscal 2025, ¿cuántos centros de datos operaba Microsoft en más de 70 regiones?",Operaba más de 400 centros de datos.
+El modelo de transcripción de audio de OpenAI que ofrece diarización se llama _____.,gpt-4o-transcribe-diarize
+"Según un estudio de IDC, se estima que el número de empresas que utilizan IA agéntica se _____ en los próximos dos años.",triplicará
+"¿Qué servicio de seguridad de Microsoft ayuda a proteger los datos, las aplicaciones y las redes en la nube, y es una habilidad clave para un Azure Security Engineer?","Azure incluye múltiples servicios, pero el rol se centra en gestionar identidad y acceso, controles de seguridad y protección contra amenazas."
+¿Qué plan de soporte de Azure está incluido para todos los clientes y proporciona recursos de autoayuda y soporte de facturación?,El plan Básico.
+"¿Cuánto cuesta el plan de soporte 'Standard' de Azure por mes, que ofrece soporte técnico 24/7 para problemas críticos?",Cuesta 100 dólares al mes.
+"En diciembre de 2025, ¿qué especialización de Microsoft Azure fue renombrada a 'AI Apps on Microsoft Azure Specialization'?",La especialización 'Build AI Apps with Microsoft Azure'.
+Término: Azure DevTest Labs,Definición: Un servicio que permite crear y gestionar rápidamente entornos de desarrollo y pruebas en Azure utilizando plantillas reutilizables y artefactos.
+¿Qué servicio de Azure es una solución de base de datos relacional inteligente y totalmente gestionada?,Azure SQL Database.
+Azure Cosmos DB es un servicio de base de datos multimodelo distribuido globalmente. ¿Qué API es una de sus opciones para trabajar con datos de grafos?,La API Gremlin.
+El servicio de Azure que permite mapear una unidad de red desde ordenadores con Windows a Azure Storage se llama _____.,Azure Files (o Files service en una cuenta de almacenamiento)
+¿Cuál es el SLA (Acuerdo de Nivel de Servicio) de tiempo de actividad para Azure Machine Learning?,El SLA es del 99.9 por ciento de tiempo de actividad.
+"Para los modelos de audio de Azure OpenAI, ¿qué tecnología se añadió en abril de 2025 para permitir el streaming de audio en tiempo real y baja latencia?",WebRTC.
+"El modelo de generación de imágenes de última generación de OpenAI, disponible en Azure desde diciembre de 2025, se llama _____.",GPT-image-1.5
+"¿Cuál es el primer DPU (Unidad de Procesamiento de Datos) interno de Microsoft, diseñado para acelerar las tareas de red y almacenamiento?",Azure Boost DPU.
+"Azure Quantum Elements es un software para química computacional que combina IA, computación de alto rendimiento y _____.",procesadores cuánticos
+¿Qué lenguaje de programación cuántica desarrolló Microsoft para el desarrollo y simulación de algoritmos cuánticos?,Q# (pronunciado Q Sharp).
+¿Cuál fue una de las causas de una interrupción significativa de Azure el 29 de febrero de 2012?,Un código incorrecto para calcular las fechas del día bisiesto.
+"Según se informa, ¿qué grupo de hacktivistas se atribuyó un ataque DDoS contra el Portal de Azure en junio de 2023?",Anonymous Sudan.
+"El 29 de octubre de 2025, una interrupción global de Azure que afectó a Microsoft 365 y Xbox Live fue causada por una _____.",mala configuración de DNS
+Término: Azure Logic Apps,"Definición: Un servicio en la nube que ayuda a automatizar flujos de trabajo e integrar aplicaciones, datos, servicios y sistemas en empresas u organizaciones."
+El servicio _____ proporciona un inventario de todos los agentes en una organización y una evaluación de riesgos como parte de la gestión de la postura de seguridad de datos (DSPM).,Microsoft Purview
+¿Qué es 'Agent Mode' en Microsoft 365 Copilot para aplicaciones como PowerPoint?,"Es una capacidad que permite a Copilot crear, editar y formatear contenido de forma iterativa directamente dentro de la aplicación."
+"¿Qué protocolo se utiliza para estandarizar cómo los agentes de IA, como los de Copilot Studio, interactúan con Dataverse?",El Protocolo de Contexto de Modelo (MCP) de Dataverse.

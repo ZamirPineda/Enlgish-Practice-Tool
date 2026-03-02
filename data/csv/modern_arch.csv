@@ -1,0 +1,87 @@
+¿Qué es una arquitectura monolítica según la descripción tradicional?,Un diseño de software donde una aplicación se construye como una única unidad con una base de código compartida y componentes integrados.
+"En una arquitectura monolítica, ¿qué desafío principal surge al escalar la aplicación?","Requiere reproducir todo el sistema, lo cual es intensivo en recursos e ineficiente."
+¿Qué es la arquitectura de microservicios?,Un diseño que descompone una aplicación en servicios más pequeños e implementables que realizan funciones de negocio especializadas.
+¿Cuál es una ventaja clave de los microservicios en términos de escalabilidad?,"Permite el escalado dirigido de servicios individuales de forma autónoma, optimizando el uso de recursos."
+Una desventaja de la arquitectura de microservicios es la complicación en la _____ y la integración del sistema.,comunicación entre servicios
+¿Para qué tipo de aplicaciones son más adecuadas las arquitecturas monolíticas?,Aplicaciones más pequeñas y sencillas donde la simplicidad de desarrollo y despliegue son prioritarias.
+¿Para qué tipo de aplicaciones son preferibles las arquitecturas de microservicios?,"Sistemas grandes y complejos que requieren alta escalabilidad, flexibilidad y resiliencia."
+¿Qué principio de ingeniería de software aboga por dividir un sistema en secciones distintas y no superpuestas?,Separación de Intereses (Separation of Concerns - SoC).
+El principio _____ tiene como objetivo reducir la repetición de información y lógica en el desarrollo de software.,No te Repitas (Don't Repeat Yourself - DRY)
+"Según la ""Regla de Tres"" para aplicar DRY, ¿cuándo se debe abstraer un fragmento de código?","Después de que se haya duplicado al menos dos veces, para evitar una abstracción prematura."
+¿Qué son los principios SOLID?,"Un conjunto de cinco principios de diseño en programación orientada a objetos para crear software más comprensible, flexible y mantenible."
+"En SOLID, ¿qué significa el Principio de Responsabilidad Única (SRP)?","Una clase debe tener una sola razón para cambiar, es decir, un solo trabajo."
+El Principio de Abierto/Cerrado (OCP) de SOLID establece que las entidades de software deben estar abiertas para la _____ pero cerradas para la _____.,extensión; modificación
+¿Qué garantiza el Principio de Sustitución de Liskov (LSP)?,Que los subtipos deben ser sustituibles por sus tipos base sin alterar la corrección del programa.
+El Principio de Segregación de Interfaces (ISP) de SOLID sugiere crear interfaces más _____ y _____ en lugar de una grande y de propósito general.,pequeñas; específicas
+¿Qué dicta el Principio de Inversión de Dependencias (DIP) de SOLID?,Los módulos de alto nivel no deben depender de los de bajo nivel; ambos deben depender de abstracciones.
+¿Qué es una arquitectura por capas (n-tier)?,"Un patrón que organiza un sistema en capas horizontales, cada una con una responsabilidad específica, como la interfaz de usuario o la persistencia de datos."
+¿Cómo se restringe típicamente la comunicación en una arquitectura por capas estricta?,Una capa solo debe comunicarse con la capa inmediatamente inferior.
+¿Qué es la Arquitectura Orientada a Eventos (EDA)?,Un paradigma donde los componentes del sistema se comunican de forma asíncrona a través de la producción y consumo de eventos.
+"Un ejemplo de uso de la Arquitectura Orientada a Eventos es el procesamiento de datos de IoT, donde los sensores publican datos como _____ a una plataforma central.",eventos
+¿Qué enfoque de diseño de software centra el proceso de desarrollo en una comprensión profunda del dominio del negocio?,Diseño Orientado al Dominio (Domain-Driven Design - DDD).
+"En DDD, ¿qué es el Lenguaje Ubicuo?","Un lenguaje compartido que todos en el proyecto, tanto técnicos como expertos del dominio, utilizan para cerrar la brecha de comunicación."
+¿Qué es una arquitectura API-First?,"Un enfoque de diseño que trata las APIs de la aplicación como el producto principal, comenzando el desarrollo con su diseño y documentación."
+"La arquitectura _____ y nativa de la nube utiliza tecnologías como Docker y Kubernetes para crear aplicaciones resilientes, elásticas y fáciles de gestionar.",basada en contenedores
+¿Por qué es importante diseñar aplicaciones sin estado (stateless) en una arquitectura nativa de la nube?,Permite al orquestador escalar horizontalmente las instancias y reemplazar contenedores fallidos sin perder el contexto del usuario.
+¿Qué es la Infraestructura como Código (IaC)?,"El uso de herramientas como Terraform para definir y gestionar la infraestructura de la nube en código, haciéndola reproducible y versionable."
+¿Cuál es el principio fundamental de la Arquitectura Limpia (Clean Architecture)?,"La Regla de la Dependencia: las dependencias del código fuente solo pueden apuntar hacia adentro, hacia la lógica de negocio central."
+"En la Arquitectura Limpia, ¿qué capa contiene las reglas de negocio de toda la empresa y las estructuras de datos?",La capa de Entidades (Entities).
+"En la Arquitectura Limpia, la capa de _____ contiene las reglas de negocio específicas de la aplicación y orquesta el flujo de datos.",Casos de Uso (Use Cases)
+¿Qué es el patrón de arquitectura Serverless?,"Un diseño nativo de la nube donde los desarrolladores despliegan código como funciones sin gestionar servidores, y el proveedor de la nube asigna recursos dinámicamente."
+¿Cuál es una desventaja común de la arquitectura Serverless relacionada con la latencia inicial?,"El ""arranque en frío"" (cold start), que es un retraso durante la ejecución inicial de una función inactiva."
+El patrón _____ segrega las operaciones de lectura (Query) y escritura (Command) en modelos distintos para optimizar el rendimiento.,CQRS (Command Query Responsibility Segregation)
+¿Para qué tipo de sistemas es especialmente útil el patrón CQRS?,"Sistemas con muchas lecturas (high-read), como dashboards o herramientas de informes, donde las lecturas superan ampliamente a las escrituras."
+"¿Qué es la Arquitectura Hexagonal, también conocida como Puertos y Adaptadores?","Un patrón que aísla la lógica de negocio central de las preocupaciones externas (UI, base de datos) mediante el uso de puertos (interfaces) y adaptadores (implementaciones)."
+¿Cuál es una ventaja clave de la Arquitectura Hexagonal en términos de pruebas?,Mejora la capacidad de prueba (testability) al permitir que la lógica de negocio central se pruebe de forma aislada de los detalles técnicos.
+La arquitectura basada en espacio (space-based) está diseñada para manejar alta carga eliminando la _____ como un cuello de botella.,base de datos central
+"En la arquitectura basada en espacio, ¿qué son las Unidades de Procesamiento (Processing Units - PU)?","Unidades autónomas que contienen lógica de negocio, datos en memoria y, opcionalmente, mecanismos de mensajería o persistencia."
+"El patrón de arquitectura Cliente-Servidor divide el trabajo entre el cliente, que maneja la _____, y el servidor, que gestiona los datos y la lógica de negocio.",interfaz de usuario
+¿Qué patrón previene fallos en cascada en sistemas distribuidos bloqueando temporalmente las solicitudes a servicios que fallan?,El patrón Cortocircuito (Circuit Breaker).
+"La biblioteca Hystrix, desarrollada por Netflix, es un ejemplo de implementación del patrón _____.",Cortocircuito (Circuit Breaker)
+"¿Qué patrón de arquitectura, también conocido como plug-in, consiste en un sistema central y módulos de extensión?",Arquitectura de micronúcleo (Microkernel).
+"Un ejemplo de software que utiliza la arquitectura de micronúcleo es _____, que extiende su funcionalidad mediante temas y módulos.",WordPress o Drupal
+La arquitectura _____ descompone las tareas en una secuencia de pasos de procesamiento (filtros) conectados por canales (tuberías).,Tubería y Filtro (Pipe-Filter)
+"Una ventaja de la arquitectura Tubería y Filtro es que los filtros pueden ejecutarse de forma _____, mejorando el rendimiento en sistemas multinúcleo.",concurrente
+¿Qué es la Arquitectura Orientada a Servicios (SOA)?,"Un paradigma de diseño donde las aplicaciones se construyen para proporcionar servicios a otras aplicaciones a través de una red, utilizando protocolos de comunicación."
+"Un componente clave en algunas implementaciones de SOA es el _____, que actúa como un centro de comunicación para gestionar el enrutamiento de mensajes entre servicios.",Bus de Servicios Empresariales (Enterprise Service Bus - ESB)
+¿Cuál es la diferencia fundamental entre monolítico y microservicios en cuanto a la integración de componentes?,"En un monolito, los componentes están fuertemente acoplados en una sola unidad, mientras que en microservicios son servicios independientes y débilmente acoplados."
+¿Qué son los Micro-Frontends?,"Un patrón arquitectónico que extiende el concepto de microservicios al desarrollo del frontend, dividiéndolo en aplicaciones más pequeñas e implementables de forma independiente."
+"El principio de _____ en los micro-frontends asegura que si un micro-frontend falla, los demás continúan funcionando normalmente.",aislamiento de fallos (fault isolation)
+¿Qué tecnología ha surgido como el enfoque más popular para implementar micro-frontends debido a su flexibilidad en tiempo de ejecución y al intercambio inteligente de dependencias?,Module Federation.
+¿Cuándo NO se recomienda usar micro-frontends?,"En equipos pequeños (<10 desarrolladores), cuando no se necesitan despliegues independientes o cuando la simplicidad importa más que la autonomía del equipo."
+¿Qué es un Data Mesh?,"Un marco que descentraliza los datos dentro de una organización, permitiendo que diferentes grupos accedan, gestionen y analicen datos en modo de autoservicio."
+El principio de _____ en Data Mesh establece que cada equipo de dominio es responsable de gestionar sus propios datos.,propiedad del dominio (domain ownership)
+"El principio de ""Datos como Producto"" en Data Mesh aborda el problema de la calidad de los datos y los silos de datos al tratar los datos analíticos como un producto para los consumidores.","Verdadero, su objetivo es hacer los datos descubribles, comprensibles, confiables y de alta calidad para sus ""clientes""."
+"En Data Mesh, una plataforma de datos de _____ proporciona a los equipos de dominio las herramientas para gestionar datos de forma independiente.",autoservicio (self-serve)
+¿Qué es la gobernanza computacional federada en el contexto de Data Mesh?,"Un principio que equilibra la autonomía del dominio con estándares globales para garantizar la interoperabilidad, seguridad y cumplimiento de los datos en toda la organización."
+¿Por qué la adopción ciega de tendencias arquitectónicas puede ser peligrosa?,"Puede llevar a la sobreingeniería, a una falta de alineación con las necesidades del negocio y a brechas de habilidades en el equipo."
+"En arquitecturas descentralizadas como los microservicios, ¿por qué tienden a aumentar los costos de infraestructura?","Debido a la mayor complejidad en el despliegue, la redundancia de recursos y el aumento del tráfico de red entre servicios."
+¿Cómo se comparan SOA y microservicios en términos de granularidad del servicio?,"Los microservicios suelen ser de grano más fino, centrándose en una única capacidad de negocio, mientras que SOA puede tener servicios de grano más grueso que abarcan más funcionalidades."
+"En una arquitectura de micronúcleo, ¿cómo se comunican los componentes plug-in con el sistema central?","A través de interfaces bien definidas, y el sistema central puede usar un registro de plug-ins para descubrirlos e interactuar con ellos."
+"En el patrón Tubería y Filtro, el rendimiento de toda la arquitectura está limitado por el filtro más _____.",lento
+"¿Qué es la consistencia eventual, una consideración en sistemas distribuidos como CQRS con bases de datos separadas?","Es un estado en el que los datos de lectura pueden no reflejar inmediatamente los cambios más recientes, resultando en datos obsoletos por un corto período."
+"En la Arquitectura Limpia, los _____ actúan como un conjunto de convertidores, transformando datos entre el formato de los Casos de Uso y el de agencias externas como la base de datos.",Adaptadores de Interfaz (Interface Adapters)
+"Para implementar la Inversión de Dependencias, a menudo se utilizan frameworks de _____.",Inyección de Dependencias (Dependency Injection - DI)
+¿Qué es un Sistema Autónomo (Self-Contained System - SCS)?,"Una aplicación web autónoma que incluye la UI, la lógica y la persistencia, implementando un Bounded Context de DDD."
+¿Cuál es la forma de comunicación preferida entre Sistemas Autónomos (SCS) para mantener un bajo acoplamiento?,"La integración en la interfaz de usuario (UI integration), por ejemplo, mediante transclusión."
+¿Cómo se relaciona un Sistema Autónomo (SCS) con los microservicios?,Un SCS es un tipo de microservicio más restrictivo y de grano más grueso; un SCS puede contener internamente múltiples microservicios por razones técnicas.
+"En el patrón Maestro-Esclavo, ¿qué tipo de operaciones maneja la base de datos maestra?",Todas las operaciones de escritura.
+¿Qué tipo de operaciones manejan las bases de datos esclavas en el patrón Maestro-Esclavo?,Únicamente operaciones de lectura.
+"¿Qué es un ""Modulito"" (Modulith)?","Un enfoque híbrido que combina elementos de arquitecturas monolíticas y de microservicios, manteniendo una estructura unificada pero con una fuerte modularidad interna."
+Una desventaja de la arquitectura por capas es que el flujo de datos a través de cada capa puede impactar negativamente en el _____.,rendimiento
+La arquitectura basada en espacio se inspira en el concepto de _____ del cómputo paralelo.,espacio de tuplas (tuple space)
+¿Qué ventaja ofrece la arquitectura Serverless en cuanto a costos?,"Opera en un modelo de pago por uso, lo que puede llevar a ahorros significativos, especialmente para cargas de trabajo variables."
+"Al combinar CQRS con Event Sourcing, el almacén de eventos se convierte en el modelo de _____ y la única fuente de verdad.",escritura (write model)
+¿Qué desafío de gestión de estado se presenta en los micro-frontends?,Sincronizar el estado entre diferentes micro-frontends que son desarrollados y desplegados de forma independiente.
+"En el contexto de la nube, ¿qué son las sondas de preparación y actividad (readiness and liveness probes)?",Verificaciones de salud que aseguran que el tráfico solo se dirige a instancias de contenedores saludables y que las que fallan se reinician automáticamente.
+¿Cuál es el principal inconveniente de la arquitectura Cliente-Servidor en términos de fiabilidad?,"El tiempo de inactividad del servidor puede interrumpir a todos los clientes, ya que es un punto único de fallo."
+"La arquitectura de _____ permite el desarrollo, prueba y despliegue paralelo entre equipos de frontend y backend una vez que se define el contrato de la API.",API-First
+"En la evolución de la arquitectura, el paso de monolitos a SOA representó un cambio hacia la _____ y la interoperabilidad de servicios.",reutilización
+"La arquitectura de _____ se considera una extensión de los microservicios, reduciendo la granularidad del servicio a funciones individuales.",Serverless
+¿Qué patrón de diseño de SOA proporciona una interfaz unificada y de nivel superior a un conjunto de interfaces en un subsistema?,Fachada de Servicio (Service Facade).
+"En Data Mesh, ¿cuál es el propósito de la gobernanza federada?","Establecer políticas y estándares globales que aseguren la interoperabilidad y seguridad de los datos, manteniendo al mismo tiempo la autonomía del dominio."
+La arquitectura Lambda combina el procesamiento por _____ y en _____ para manejar grandes volúmenes de datos.,lotes (batch); tiempo real (real-time)
+¿Cómo simplifica la arquitectura Kappa a la arquitectura Lambda?,"Elimina la capa de procesamiento por lotes, centrándose únicamente en el procesamiento de flujos en tiempo real."
+"La arquitectura Lambda es ideal para análisis de datos _____, mientras que Kappa se enfoca en el procesamiento en tiempo real.",históricos
+¿Cuál es la principal ventaja de un monolito en las primeras etapas de un proyecto?,"Simplicidad en el desarrollo, pruebas y despliegue inicial debido a una única base de código."
+¿Qué es la arquitectura basada en celdas (cell-based)?,"Un enfoque que descompone los servicios internamente en celdas y utiliza capas delgadas para enrutar el tráfico a la celda correcta, mejorando el aislamiento de fallos."

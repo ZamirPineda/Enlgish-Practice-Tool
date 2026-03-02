@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 import { errorHunterRounds, type ErrorHunterRound } from "../data/errorHunter";
@@ -35,6 +35,10 @@ const normalizeSentence = (text: string) =>
 const ErrorHunterView: React.FC = () => {
   const [selectedLevel, setSelectedLevel] = useState<ErrorHunterLevel>("B1");
   const [roundIndex, setRoundIndex] = useState(0);
+  const sessionStartTime = useRef<number>(Date.now());
+  useEffect(() => {
+    trackAnalyticsEvent("session_start", { game: "error_hunter" });
+  }, []);
   const [answer, setAnswer] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
@@ -161,6 +165,12 @@ const ErrorHunterView: React.FC = () => {
   };
 
   const handleRestart = () => {
+    trackAnalyticsEvent("session_end", {
+      game: "error_hunter",
+      duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+    });
+    sessionStartTime.current = Date.now();
+    trackAnalyticsEvent("session_start", { game: "error_hunter" });
     setRoundIndex(0);
     setAnswer("");
     setSubmitted(false);
@@ -172,6 +182,15 @@ const ErrorHunterView: React.FC = () => {
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
+
+  useEffect(() => {
+    if (isComplete) {
+      trackAnalyticsEvent("session_end", {
+        game: "error_hunter",
+        duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+      });
+    }
+  }, [isComplete]);
 
   useEffect(() => {
     if (isComplete && totalScore > 0) {

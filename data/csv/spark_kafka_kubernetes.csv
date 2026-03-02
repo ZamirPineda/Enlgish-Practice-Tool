@@ -1,0 +1,118 @@
+¿Qué comando se utiliza para solucionar el problema de arranque de Liberica NIK en macOS Catalina y versiones posteriores?,Se ejecuta `sudo xattr -r -d com.apple.quarantine path/to/graalvm/folder/`.
+"Según la documentación de Bitnami, ¿cuál es el tiempo de respuesta objetivo para las preguntas en sus proyectos de GitHub en días laborables?",El equipo de soporte de Bitnami intenta responder cualquier pregunta recibida en un plazo de 24 horas en días laborables.
+"En un Dockerfile, ¿qué instrucción se recomienda para las imágenes base para mantener un tamaño reducido, como en el caso de la imagen Alpine?","La instrucción `FROM`, utilizando imágenes oficiales actuales y pequeñas como Alpine, que tiene menos de 6 MB."
+"Para excluir archivos no relevantes para la compilación de Docker sin reestructurar el repositorio de origen, se utiliza un archivo ____.",.dockerignore
+"En Docker, ¿qué significa que un contenedor debe ser efímero?","Significa que el contenedor puede ser detenido, destruido, reconstruido y reemplazado con una configuración y preparación mínimas."
+"Para asegurar que se utiliza la versión más reciente de una imagen base al construir una imagen de Docker, se puede usar el flag ____.",--pull
+"En el contexto de Kafka en Kubernetes, ¿cuál es el factor de replicación estándar recomendado para la producción?",Un factor de replicación de 3 es el estándar para producción.
+El parámetro `min.insync.replicas` en Kafka define el número mínimo de réplicas que deben confirmar una escritura para que se considere ____.,exitosa
+¿Qué herramienta de línea de comandos se utiliza para crear clústeres en Amazon EKS según la guía de AWS?,La herramienta `eksctl`.
+"En el Dockerfile de ejemplo de AWS para un microservicio Java, ¿qué imagen base de BellSoft se utiliza?",La imagen base utilizada es `bellsoft/liberica-openjdk-alpine-musl:17`.
+¿Cuál es la mejor práctica para los registros de imágenes en un entorno de producción de Kubernetes para mejorar la seguridad y el control?,Utilizar un registro de imágenes privado en lugar de uno público.
+"Para garantizar la integridad de las imágenes de contenedor en Kubernetes, ¿qué proceso se debe implementar?",Se debe implementar la firma y verificación de imágenes utilizando herramientas como Notary o Docker Content Trust (DCT).
+"En la arquitectura de Kubernetes, ¿cuál es el componente responsable de asegurar que los contenedores se estén ejecutando en un Pod y de comunicarse con el API server?",El Kubelet.
+"Kubernetes puede exponer un contenedor usando un nombre DNS o su propia dirección IP y, si el tráfico es alto, puede distribuir el tráfico de red. Esta característica se conoce como _____.",Balanceo de carga (Load Balancing)
+¿Qué propiedad de configuración de Spark se utiliza para especificar la imagen de contenedor a usar para la aplicación Spark en Kubernetes?,La propiedad `spark.kubernetes.container.image`.
+¿Qué comando de `kubectl` se utiliza para crear un nuevo namespace en Kubernetes?,`kubectl create namespace <nombre-del-namespace>`.
+"¿Qué opción de la JVM permite especificar exactamente cuántos núcleos de CPU debe usar la JVM, independientemente de la detección de contenedores?",La opción `-XX:ActiveProcessorCount`.
+"Para deshabilitar completamente el soporte de detección de contenedores en OpenJDK, se debe utilizar la opción de la JVM ____.",-XX:-UseContainerSupport
+El patrón de diseño en Kubernetes que consiste en un contenedor secundario que se ejecuta en el mismo Pod que la aplicación principal para proporcionar funcionalidades de soporte se llama _____.,patrón sidecar (sidecar pattern)
+"En el patrón sidecar, ¿qué recurso de Kubernetes comparten el contenedor de la aplicación principal y el contenedor sidecar?","Comparten el mismo Pod y, por lo tanto, el mismo espacio de red y volúmenes."
+"Para monitorear contenedores sidecar, se recomienda rastrear métricas a nivel de Pod, como el consumo de CPU y memoria, y un alto número de ____, que a menudo señala un error de configuración.",reinicios (restart count)
+"Según el video de Java Techie, ¿cuál es una de las principales ventajas del patrón sidecar en un entorno políglota?","El servicio principal no necesita saber en qué lenguaje está escrito el servicio sidecar, lo que permite flexibilidad y versatilidad."
+"En el ejemplo del video de Java Techie, ¿qué herramienta de orquestación se utiliza para ejecutar los contenedores del servicio principal y del sidecar en un único pod?",Se utiliza Kubernetes.
+Las compilaciones de Docker de varias etapas (multi-stage builds) permiten separar el entorno de compilación del entorno de ____.,ejecución (runtime)
+"En un Dockerfile de varias etapas, ¿cómo se copia un artefacto de una etapa anterior a la etapa actual?",Se utiliza la instrucción `COPY --from=<nombre-o-indice-de-la-etapa> <origen> <destino>`.
+¿Qué propiedad de configuración de Spark se utiliza para especificar el namespace de Kubernetes para ejecutar los pods del driver y los ejecutores?,La propiedad `spark.kubernetes.namespace`.
+"En Confluent, ¿qué biblioteca de Spring se utiliza para la integración con clientes estándar de Kafka y la API de Kafka Streams?",La biblioteca Spring for Apache Kafka.
+"En un entorno de microservicios gestionado con GitOps, ¿cómo se revierte un despliegue fallido para volver a un estado funcional?","Se revierte el commit anterior en el repositorio de Git, lo que desencadena el proceso de GitOps para aplicar el estado anterior."
+"En Strimzi, ¿qué tipo de almacenamiento se debe configurar en el recurso `Kafka` para utilizar volúmenes persistentes locales vinculados a un nodo específico?","Se deben usar Volúmenes Persistentes Locales (Local Persistent Volumes), que se configuran a través de una `StorageClass` y se especifican con `type: persistent-claim` en Strimzi."
+¿Qué tipo de almacenamiento en Strimzi es temporal y se pierde en cada actualización continua (rolling update)?,El almacenamiento de tipo `ephemeral`.
+Un error común en Kubernetes donde un pod se reinicia repetidamente en un bucle se conoce como _____.,CrashLoopBackOff
+"Comando `kubectl` para obtener información detallada de un pod, incluyendo eventos recientes:",`kubectl describe pod <nombre-del-pod>`.
+"En Kubernetes, ¿qué tipo de sonda (probe) se utiliza para verificar si un contenedor está listo para aceptar tráfico?",Sonda de preparación (Readiness Probe).
+"Si una sonda de actividad (Liveness Probe) falla repetidamente, ¿qué acción toma Kubernetes?",Kubernetes reinicia el contenedor.
+La sonda de _____ se utiliza en Kubernetes para dar tiempo adicional a los contenedores para completar su lógica de inicio antes de que las otras sondas comiencen.,arranque (Startup Probe)
+"En Strimzi, ¿qué recurso personalizado se utiliza para gestionar clústeres de Kafka?",El recurso personalizado `Kafka` (`kind: Kafka`).
+"Para configurar el número de nodos de bróker en un clúster de Kafka con Strimzi, se modifica la propiedad _____.",`spec.kafka.replicas`
+"En Strimzi, ¿cómo se habilita la exportación de métricas de Prometheus para los brókeres de Kafka?","Configurando la propiedad `spec.kafka.metrics` en el recurso `Kafka`, por ejemplo, asignándole un objeto vacío `{}`."
+La propiedad `rack.topologyKey` en la configuración de Kafka en Strimzi se usa para habilitar la _____.,conciencia de rack (rack awareness)
+"Para gestionar usuarios de Kafka de forma declarativa con Strimzi, se utiliza el recurso personalizado _____.",`KafkaUser`
+El operador de Strimzi que gestiona temas de Kafka a través de recursos `KafkaTopic` se llama ____.,Topic Operator
+"En Helm, ¿qué comando se utiliza para aplicar actualizaciones a una release existente?",`helm upgrade`.
+"Para pasar un archivo de valores de configuración al instalar o actualizar un chart de Helm, se usa el flag ____.",`--values` o `-f`
+La práctica de revisar las diferencias en los manifiestos renderizados antes de aplicar un cambio en un chart de Helm se conoce como ____.,diffing (hacer un diff)
+"Para evitar cambios inesperados en las imágenes base de Docker, es una buena práctica usar etiquetas ____ en lugar de `latest`.",específicas y estables (specific and stable tags)
+"En Kubernetes, la unidad de despliegue más pequeña y simple es el ____, que puede contener uno o más contenedores.",Pod
+¿Cuál es la función del Kube-proxy en un nodo trabajador de Kubernetes?,"Mantiene las reglas de red en los nodos, permitiendo la comunicación de red hacia los Pods desde dentro o fuera del clúster."
+El proceso de empaquetar una aplicación con todas sus librerías y configuraciones necesarias se conoce como _____.,Contenerización
+"En Docker, la instrucción _____ y _____ son funcionalmente similares, pero la segunda soporta la obtención de archivos desde URLs remotas y la extracción automática de archivos tar.",`COPY` y `ADD`
+¿Cuál es el propósito de los `labels` en los objetos de Kubernetes?,"Ayudan a organizar y seleccionar subconjuntos de objetos, como Pods, para diversas operaciones."
+"En el contexto de la seguridad de contenedores, ¿qué principio se cumple al ejecutar contenedores como usuarios no root por defecto?",El principio de mínimo privilegio (principle of least privilege).
+"En el ecosistema de Big Data, Kafka logra la escalabilidad horizontal dividiendo los temas en múltiples ____.",particiones
+"Si la opción `unclean.leader.election.enable` en Kafka se establece en `false`, se previene la pérdida de datos a costa de la ____.",disponibilidad
+¿Qué utilidad de AWS distribuye automáticamente el tráfico entrante a través de múltiples destinos como instancias EC2 o contenedores?,Elastic Load Balancing (ELB).
+"En un Dockerfile para una aplicación Java, ¿qué instrucción expone un puerto del contenedor?",La instrucción `EXPOSE`.
+"Para asegurar que las configuraciones del clúster sean inmutables, los charts de Helm de Bitnami montan los archivos de configuración como ____ de solo lectura.",ConfigMaps
+"El motor de análisis unificado de código abierto diseñado para el procesamiento de datos a gran escala, tanto en batch como en streaming, es _____.",Apache Spark
+"En Kubernetes, el componente del plano de control responsable de mantener el estado deseado del clúster se conoce como el _____.",Nodo maestro (Master Node)
+La característica de Kubernetes que reinicia automáticamente contenedores fallidos y los reemplaza o reprograma se llama _____.,Autoreparación (Self-Healing)
+"Para gestionar información sensible como contraseñas y tokens OAuth en Kubernetes, se utiliza el objeto ____.",Secret
+"En Java, ¿qué opciones de la JVM establecen el tamaño del heap como un porcentaje de la memoria disponible del contenedor?","`-XX:InitialRAMPercentage`, `-XX:MaxRAMPercentage`, y `-XX:MinRAMPercentage`."
+"Cuando tanto `-Xmx` como `-XX:MaxRAMPercentage` están configurados para la JVM, ¿cuál de ellos tiene precedencia?",La opción `-Xmx` (y `-Xms`) tiene precedencia.
+Un beneficio clave del patrón sidecar es que permite actualizar o reemplazar los componentes auxiliares de forma ____ a la aplicación principal.,independiente
+"Para definir un contenedor sidecar en el YAML de un Pod de Kubernetes, simplemente se añade otro contenedor en el array ____.",`spec.containers`
+"En un Dockerfile, ¿para qué se utiliza la instrucción `WORKDIR`?","Establece el directorio de trabajo para cualquier instrucción `RUN`, `CMD`, `ENTRYPOINT`, `COPY` y `ADD` que le siga."
+El error `ImagePullBackOff` en Kubernetes indica que el clúster no puede ____ la imagen del contenedor desde el registro.,descargar (pull)
+"En Strimzi, ¿qué propiedad se utiliza dentro de la configuración de un listener para restringir el acceso a nivel de red a aplicaciones o namespaces seleccionados?",La propiedad `networkPolicyPeers`.
+El componente de Strimzi que proporciona una interfaz RESTful para interactuar con un clúster de Kafka se llama ____.,Kafka Bridge
+¿Qué es el Cruise Control en el contexto de Strimzi?,Es una herramienta para reequilibrar la carga de trabajo de un clúster de Kafka generando y aplicando propuestas de optimización.
+"En Helm, ¿qué archivo se usa para definir los valores de configuración por defecto de un chart?",El archivo `values.yaml`.
+"Para anular un valor específico de un chart de Helm desde la línea de comandos sin usar un archivo, se puede utilizar el flag ____.",`--set`
+"En la monitorización de Kubernetes, la estrategia de tener un agente de monitorización por cada pod se logra comúnmente con el patrón ____.",sidecar
+Término en Kubernetes: Ingress,"Un objeto de la API que gestiona el acceso externo a los servicios en un clúster, típicamente tráfico HTTP y HTTPS."
+"En el archivo de despliegue (deployment.yaml) de Kubernetes, la propiedad `replicas` especifica el número deseado de ____.",Pods
+"El comando `kubectl get pods` muestra, entre otras cosas, el estado, el número de reinicios y la ____ de cada pod.",antigüedad (age)
+"En el contexto de Strimzi, ¿qué tipo de listener se configura para clientes externos que se conectan a través de un balanceador de carga de un proveedor de nube?",Un listener de tipo `loadbalancer`.
+"Para un clúster de ZooKeeper de cinco nodos, ¿cuántos nodos deben estar en funcionamiento como mínimo para mantener el quórum?",Se requieren al menos tres nodos en funcionamiento.
+¿Qué herramienta de la línea de comandos de AWS te ayuda a interactuar con los servicios de AWS a través de comandos en tu shell?,La Interfaz de Línea de Comandos de AWS (AWS CLI).
+"En el `pom.xml` de un proyecto Maven, las dependencias del proyecto se declaran dentro de la etiqueta ____.",`<dependencies>`
+¿Qué es un 'fat JAR' o 'uber JAR' en el contexto de las aplicaciones Java?,Es un archivo JAR que contiene tanto el código de la aplicación como todas sus dependencias en un único archivo.
+"En un Dockerfile, la instrucción `RUN` ejecuta comandos en una nueva capa sobre la imagen actual y ____ los cambios.",confirma (commits)
+"En Strimzi, el recurso personalizado `KafkaMirrorMaker2` se utiliza para la replicación de datos entre dos clústeres de Kafka y se basa en el framework ____.",Kafka Connect
+La herramienta Prometheus se utiliza ampliamente en el ecosistema de Kubernetes para recopilar métricas en formato de ____.,series de tiempo (time-series)
+"En Kubernetes, ¿qué objeto se utiliza para asegurar que un número mínimo de pods de una aplicación esté disponible durante interrupciones voluntarias?",Un PodDisruptionBudget (PDB).
+"Para configurar afinidad de pod en Kubernetes y asegurar que ciertos pods no se programen en el mismo nodo, se utiliza la regla ____.",`podAntiAffinity`
+"En Strimzi, ¿dónde se configura el uso de almacenamiento `jbod` (Just a Bunch Of Disks) para los brókeres de Kafka?","En la propiedad `spec.kafka.storage`, estableciendo `type` en `jbod` y definiendo los volúmenes en la propiedad `volumes`."
+"En un Dockerfile de varias etapas, la primera etapa, que incluye herramientas de compilación como Maven, se conoce comúnmente como la etapa de ____.",compilación (build stage)
+"La segunda etapa en un Dockerfile de varias etapas, que solo contiene el artefacto de la aplicación y el tiempo de ejecución, se llama la etapa de ____.",ejecución (runtime stage)
+"Para la autorización en Kafka con Strimzi, se puede usar `AclAuthorizer`, que gestiona el acceso a los brókeres mediante reglas ____.",ACL (Access Control List)
+"En la configuración de autenticación OAuth 2.0 en Strimzi, la propiedad `tokenEndpointUri` especifica la URL del servidor de autorización para obtener un ____.",token de acceso
+Comando `kubectl` para ver los logs de un contenedor específico dentro de un pod que tiene múltiples contenedores:,`kubectl logs <nombre-del-pod> -c <nombre-del-contenedor>`.
+"El concepto de que el software responsable de ejecutar contenedores, como Docker o containerd, se conoce en Kubernetes como el ____.",Container Runtime
+¿Qué herramienta de Spring permite crear servicios REST con anotaciones declarativas de Java para definir puntos finales HTTP?,Spring Web (o Spring MVC).
+"En Spring Boot, ¿qué archivo de propiedades se utiliza comúnmente para la configuración externa por defecto de la aplicación?",El archivo `application.properties` o `application.yaml`.
+"En Strimzi, la propiedad `deleteClaim` dentro de la configuración de `persistent-claim` storage, si se establece en `false`, ¿qué sucede con el PVC cuando se elimina el clúster?","El Persistent Volume Claim (PVC) no se elimina, preservando los datos."
+"En la configuración de un `Ingress` de Kubernetes, la sección `rules` define cómo se enruta el tráfico entrante a los ____.",Servicios (Services)
+¿Qué es un `ServiceAccount` en Kubernetes?,"Proporciona una identidad para los procesos que se ejecutan en un Pod, que puede ser utilizada para autenticarse en el servidor de la API."
+"En el patrón de microservicios, las preocupaciones transversales (cross-cutting concerns) como el logging y la monitorización son gestionadas idealmente por un servicio ____.","separado, como un sidecar"
+"En un archivo YAML de Kubernetes, `apiVersion: apps/v1` y `kind: Deployment` indican que se está definiendo un objeto de tipo ____.",Deployment
+"En Helm, para ver los valores de configuración de una release ya instalada, se utiliza el comando `helm get ____ <nombre-release>`.",values
+La característica de Kubernetes que permite escalar una aplicación hacia arriba o hacia abajo con un simple comando o automáticamente se conoce como _____.,Escalado horizontal (Horizontal Scaling)
+¿Qué significa la sigla CRI en el contexto de Kubernetes?,Significa Container Runtime Interface.
+El `Cluster Operator` de Strimzi es el componente principal que gestiona el ciclo de vida de los clústeres de ____ en Kubernetes.,Kafka
+"En la configuración de `livenessProbe` en Kubernetes, `initialDelaySeconds` define el tiempo de espera antes de que se realice la ____.",primera sonda (first probe)
+La propiedad `periodSeconds` en una sonda de Kubernetes especifica la ____ con la que se realiza la comprobación de salud.,frecuencia
+"En la configuración de autenticación de un listener de Kafka en Strimzi, se pueden usar tipos como `tls`, `scram-sha-512` y ____.",`oauth`
+¿Qué es la 'observabilidad' en el contexto de sistemas distribuidos como Kubernetes?,"Es la capacidad de medir el estado interno de un sistema a partir de los datos que genera, como logs, métricas y trazas."
+"Para evitar que Docker utilice la caché para una instrucción específica y todas las subsiguientes en una compilación, se puede usar el flag ____ en el comando `docker build`.",--no-cache
+"En una arquitectura de microservicios, ¿qué principio se viola cuando múltiples equipos implementan soluciones repetidas para necesidades comunes?","El principio ""Don't Repeat Yourself"" (DRY)."
+"En Strimzi, ¿cómo se puede configurar el registro (logging) para los componentes de Kafka utilizando una configuración externa en lugar de en línea?",Estableciendo `logging.type` en `external` y especificando el nombre de un ConfigMap en `logging.name`.
+El comando `kubectl top pod <nombre-del-pod>` se utiliza para ver el uso actual de ____ y ____ del pod.,CPU y memoria
+"En el contexto de la seguridad de Docker, el aislamiento de contenedores con un espacio de nombres de usuario ayuda a mitigar las vulnerabilidades de escalada de ____.",privilegios
+"En la configuración de un `Service` de Kubernetes de tipo `NodePort`, se expone el servicio en un puerto estático en la ____ de cada nodo.",dirección IP
+"Una de las ventajas de Apache Spark sobre MapReduce de Hadoop es su capacidad de computación en ____, que lo hace significativamente más rápido.",memoria (in-memory)
+"En el contexto de Strimzi y Kafka, la propiedad `superUsers` en la configuración de autorización define una lista de principales de usuario con ____.",derechos de acceso ilimitados
+"En un entorno GitOps, el estado deseado de la infraestructura y las aplicaciones se declara de forma declarativa en un repositorio ____.",Git
+"Para usar la autenticación mutua TLS (mTLS) en un listener de Kafka, tanto el cliente como el servidor se validan mutuamente mediante ____.",certificados
+"En Helm, la validación de esquemas (schema validation) se puede implementar usando un archivo llamado `____` para asegurar que solo se acepten entradas válidas.",values.schema.json

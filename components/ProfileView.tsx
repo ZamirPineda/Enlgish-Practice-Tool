@@ -9,7 +9,7 @@ import {
 import { AvatarRenderer } from "./AvatarRenderer";
 import { toast } from "./ui/Toast";
 import SettingsView from "./SettingsView";
-import { loadSettings, saveSettings } from "../utils/settingsStore";
+import { AppSettings } from "../utils/settingsStore";
 import Heatmap from "./Heatmap";
 import {
   useGlobalXp,
@@ -22,11 +22,18 @@ import { getRankForLevel } from "../utils/levelRanks";
 
 type ProfileTab = "account" | "settings" | "activity";
 
-export default function ProfileView() {
+interface ProfileViewProps {
+  settings: AppSettings;
+  onSettingsChange: (updates: Partial<AppSettings>) => void;
+}
+
+export default function ProfileView({
+  settings,
+  onSettingsChange,
+}: ProfileViewProps) {
   const [profile, setProfile] = useState<UserProfile>(() => loadProfile());
   const [seedInput, setSeedInput] = useState(profile.character.seed);
   const [activeTab, setActiveTab] = useState<ProfileTab>("account");
-  const [settings, setSettings] = useState(() => loadSettings());
   const { level, totalXp } = useGlobalXp();
   const currentRank = getRankForLevel(level);
 
@@ -66,10 +73,10 @@ export default function ProfileView() {
     handleChange("seed", randomSeed);
   };
 
-  const handleSettingsChange = (partialUpdate: Partial<typeof settings>) => {
-    const next = { ...settings, ...partialUpdate };
-    setSettings(next);
-    saveSettings(next);
+  const internalHandleSettingsChange = (
+    partialUpdate: Partial<typeof settings>,
+  ) => {
+    onSettingsChange(partialUpdate);
   };
 
   const avatarStyles: { id: AvatarStyle; name: string; emoji: string }[] = [
@@ -406,7 +413,7 @@ export default function ProfileView() {
               <div className="[&>div]:p-0 [&>div]:pb-4 [&>div]:sm:pb-0 [&>div]:overflow-visible [&>div]:h-auto [&>div]:flex-none">
                 <SettingsView
                   settings={settings}
-                  onSettingsChange={handleSettingsChange}
+                  onSettingsChange={internalHandleSettingsChange}
                 />
               </div>
             </div>

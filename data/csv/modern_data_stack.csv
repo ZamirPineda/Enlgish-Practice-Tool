@@ -1,0 +1,106 @@
+¿Qué proveedor de la nube se destaca por tener la gama más amplia de servicios y el mayor alcance global?,Amazon Web Services (AWS).
+¿En qué área sobresale Microsoft Azure en comparación con AWS y GCP?,"En la integración empresarial y las configuraciones de nube híbrida, especialmente para ecosistemas de Microsoft."
+Google Cloud Platform (GCP) es reconocido como líder en qué campos específicos?,"Análisis de datos, aprendizaje automático (ML) e inteligencia artificial (AI)."
+"En términos de rendimiento, ¿qué proveedor de la nube ofrece el rendimiento más consistente entre regiones debido a su extensa infraestructura global?",AWS.
+¿Para qué tipo de cargas de trabajo GCP a menudo ofrece un rendimiento superior?,Para cargas de trabajo de análisis de datos.
+El rendimiento de Azure es particularmente fuerte para _____.,aplicaciones y servicios centrados en Microsoft
+"Entre AWS, Azure y GCP, ¿cuál ofrece los modelos de precios más complejos pero potencialmente más rentables?","AWS, con opciones como instancias reservadas, precios spot y descuentos por compromiso."
+¿Qué proveedor de la nube es a menudo la opción más barata para clientes empresariales que ya utilizan servicios de Microsoft?,Microsoft Azure.
+"Además de las tarifas de servicio, ¿qué costos ocultos deben considerarse al estimar los gastos de la nube?","Costos de transferencia de datos (egreso), clases de almacenamiento premium y servicios de soporte."
+"Al evaluar el costo total de propiedad de la nube, ¿qué costos relacionados con el personal deben tenerse en cuenta?",El costo de capacitar al personal y potencialmente contratar personal especializado en la nube.
+Una de las principales desventajas de AWS es que puede abrumar a los recién llegados con su gran cantidad de _____.,servicios y opciones
+Una ventaja clave de Azure es su fácil integración y migración para los servicios existentes de _____.,Microsoft
+Una debilidad de GCP en comparación con AWS y Azure es su catálogo de servicios más _____ y su limitado soporte para casos de uso empresariales tradicionales.,limitado
+Término: Apache Spark,"Definición: Un motor de análisis unificado para el procesamiento de datos a gran escala, originalmente diseñado para análisis por lotes de alto rendimiento."
+Término: Apache Flink,Definición: Un motor de procesamiento distribuido que prioriza el flujo (stream-first) diseñado para manejar flujos de datos continuos e ilimitados con baja latencia.
+¿Cuál es la diferencia fundamental en el modelo de procesamiento entre Spark y Flink?,"Spark utiliza un modelo de micro-lotes para el streaming, mientras que Flink implementa un verdadero procesamiento de flujo evento por evento."
+"¿Qué framework, Spark o Flink, generalmente demuestra una latencia más baja en aplicaciones de streaming?","Flink, debido a su procesamiento evento por evento, a menudo logra latencias de milisegundos."
+¿Qué framework fue diseñado originalmente para el procesamiento por lotes y a menudo tiene una ventaja en esa área?,Apache Spark.
+¿Cómo trata Flink el procesamiento por lotes?,"Lo trata como un caso especial del procesamiento de flujos, donde el flujo es limitado."
+"En cuanto a la tolerancia a fallos, Spark utiliza un enfoque basado en _____ para reconstruir datos perdidos.",información de linaje (lineage)
+"Flink utiliza un mecanismo de _____ distribuido para la tolerancia a fallos, lo que permite una rápida recuperación desde puntos de control periódicos.",instantáneas (snapshotting)
+"¿Qué framework ofrece capacidades de ventanas (windowing) más avanzadas, como ventanas de tiempo de evento y de sesión?",Apache Flink.
+¿Para qué tipo de caso de uso se recomendaría elegir Apache Flink?,"Procesamiento de flujos en tiempo real con latencia muy baja, como detección de fraudes o procesamiento complejo de eventos."
+¿En qué escenarios es Apache Spark a menudo la mejor opción?,"Procesamiento por lotes de alto rendimiento, ETL y cuando se necesita una plataforma unificada para SQL, machine learning y grafos."
+La característica de Ejecución Adaptativa de Consultas (AQE) que optimiza los planes de consulta en tiempo de ejecución es una capacidad de _____.,Apache Spark
+¿Cuál es la principal diferencia arquitectónica entre Kafka y RabbitMQ?,"Kafka es un registro de confirmaciones distribuido (distributed commit log) para streaming de eventos, mientras que RabbitMQ es un agente de mensajes (message broker) tradicional."
+¿Qué sistema de mensajería utiliza un modelo 'pull' donde los consumidores extraen activamente los mensajes?,Apache Kafka.
+RabbitMQ utiliza un modelo '_____' donde el agente entrega mensajes a los consumidores.,push
+"Si el objetivo principal es un historial duradero y la capacidad de reproducir eventos a gran escala, ¿qué tecnología es más adecuada?","Apache Kafka, debido a su retención de mensajes en disco y el seguimiento de offsets."
+"Para enrutamiento complejo, colas de tareas y mensajería de baja latencia, ¿qué tecnología es la opción preferida?",RabbitMQ.
+"En términos de rendimiento, ¿cuál de los dos, Kafka o RabbitMQ, generalmente ofrece un mayor rendimiento (throughput)?","Kafka, que puede manejar miles de millones de mensajes por segundo."
+El orden de los mensajes en Kafka está garantizado estrictamente dentro de una _____.,partición
+¿Qué es OLTP?,"Procesamiento de Transacciones en Línea (Online Transaction Processing), optimizado para manejar un alto volumen de operaciones transaccionales simples en tiempo real."
+¿Qué es OLAP?,"Procesamiento Analítico en Línea (Online Analytical Processing), optimizado para consultar y analizar grandes volúmenes de datos históricos."
+"Los sistemas OLTP están optimizados para operaciones frecuentes de _____, mientras que los sistemas OLAP son de _____ intensivo.","escritura (insert, update, delete) / lectura"
+¿Qué tipo de esquema de base de datos se usa típicamente en sistemas OLTP para garantizar la integridad de los datos?,Esquemas normalizados.
+¿Qué tipo de esquema de base de datos se utiliza en sistemas OLAP para acelerar las consultas de lectura?,"Esquemas desnormalizados, como el esquema de estrella o copo de nieve."
+Procesar pagos con tarjeta de crédito o retiros en cajeros automáticos son ejemplos de casos de uso para sistemas _____.,OLTP
+Generar informes de ventas trimestrales o analizar tendencias de mercado son casos de uso típicos para sistemas _____.,OLAP
+¿Qué término describe la arquitectura que combina la flexibilidad de los data lakes con la fiabilidad y el rendimiento de los data warehouses?,Data Lakehouse.
+"En una arquitectura de datos moderna, ¿qué significa 'schema-on-read'?",Permite cargar datos en su formato original y aplicar una estructura (esquema) solo cuando se leen para su análisis.
+Nombra un formato de tabla abierta que agrega transacciones ACID a los data lakes.,"Delta Lake, Apache Iceberg o Apache Hudi."
+¿Cuál es el propósito de la Arquitectura Lambda en el procesamiento de datos?,Manejar el procesamiento de datos masivos utilizando una capa por lotes para datos históricos y una capa de velocidad para datos en tiempo real.
+¿Cómo simplifica la Arquitectura Kappa a la Arquitectura Lambda?,"Elimina la capa por lotes, manejando tanto el procesamiento en tiempo real como el reprocesamiento histórico a través de una única ruta de streaming."
+"En Kafka, ¿qué componente ha sido reemplazado por el protocolo KRaft?",Apache ZooKeeper.
+¿Cuál es uno de los principales beneficios de migrar de ZooKeeper a KRaft en Kafka?,"Operaciones simplificadas, ya que elimina la necesidad de gestionar un sistema distribuido separado."
+¿Cómo mejora KRaft la escalabilidad del clúster de Kafka?,Permite un mayor número de particiones y brokers al eliminar el cuello de botella de metadatos que representaba ZooKeeper.
+"En el modo KRaft, los metadatos del clúster de Kafka se almacenan como un _____ interno de Kafka.",tópico
+"A partir de la versión 4.0, _____ se convierte en la única forma de ejecutar clústeres de Kafka.",KRaft
+¿Qué es una estrategia de multi-nube?,"El uso de servicios de múltiples proveedores de nube para reducir la dependencia de un solo proveedor, mejorar la fiabilidad y optimizar las cargas de trabajo."
+¿Qué proveedor de la nube es ideal si una empresa está fuertemente invertida en el ecosistema de Microsoft?,Azure.
+¿Qué proveedor de la nube se recomienda para el desarrollo de aplicaciones nativas de la nube y el enfoque en análisis de datos y ML?,Google Cloud (GCP).
+"El servicio de cómputo principal en AWS se llama _____, en Azure se llama Virtual Machines y en GCP se llama Compute Engine.",EC2 (Elastic Compute Cloud)
+"El servicio de almacenamiento de objetos de AWS es S3, el de Azure es _____ y el de GCP es Cloud Storage.",Blob Storage
+"Para bases de datos relacionales gestionadas, AWS ofrece RDS, Azure ofrece _____ y GCP ofrece Cloud SQL.",Azure SQL Database
+¿Qué servicio de AWS se especializa en ofrecer funciones sin servidor?,AWS Lambda.
+Azure Arc es el servicio de Microsoft Azure diseñado para gestionar entornos de _____.,nube híbrida y multinube
+Google Cloud Anthos permite a los usuarios construir y gestionar aplicaciones _____ en múltiples nubes y en las instalaciones.,basadas en contenedores (Kubernetes)
+Un beneficio clave de usar una arquitectura de lago de datos (data lake) de código abierto es evitar el '_____'.,vendor lock-in (dependencia del proveedor)
+"En la arquitectura Medallion, la zona _____ contiene los datos crudos e inalterados tal como se ingirieron.",bronce
+"La zona _____ en la arquitectura Medallion contiene datos que han sido limpiados, filtrados y enriquecidos.",plata
+Los datos en la zona _____ de la arquitectura Medallion están altamente agregados y listos para el consumo por parte de analistas de negocio y herramientas de BI.,oro
+"¿Qué herramienta de orquestación de flujos de trabajo de código abierto es popular para definir, programar y monitorear flujos de trabajo como DAGs (Grafos Acíclicos Dirigidos)?",Apache Airflow.
+¿Qué formato de archivo columnar es comúnmente utilizado en los data lakes para un rendimiento analítico eficiente?,Apache Parquet o Apache ORC.
+¿Cuál es el principal desafío de una arquitectura ETL tradicional en términos de agilidad?,La falta de comunicación entre equipos y los largos tiempos de entrega para nuevas solicitudes de datos debido a su flujo rígido.
+La arquitectura de datos moderna colapsa silos de datos al unificar el almacenamiento de datos crudos y transformados en un _____.,cloud data lake
+"Una característica clave de la arquitectura de datos moderna es el '_____', que permite a los equipos acceder y analizar datos por sí mismos.",autoservicio (self-serve)
+¿Por qué la arquitectura de datos moderna es generalmente más rentable que las arquitecturas ETL tradicionales?,"Reduce la sobrecarga de gestión de datos al no requerir ETL y movimiento de datos, y los modelos de pago por uso son comunes."
+"Para soportar agentes de IA, los sistemas de datos necesitan proporcionar señales en tiempo real, memoria a corto plazo y _____.",contexto histórico
+"En una pila de datos moderna para IA, ¿qué rol cumplen Kafka y Flink?","Forman el sistema nervioso en tiempo real, proporcionando y procesando eventos en vivo para que los agentes perciban su entorno."
+"En un sistema de procesamiento de datos, la capacidad de manejar contrapresión (backpressure) es crucial para evitar que el sistema se sobrecargue. ¿Qué framework, Flink o Spark, es conocido por su mejor manejo de la contrapresión?",Apache Flink.
+"Una de las principales ventajas de Kafka es su alta _____, lo que lo hace ideal para procesar grandes volúmenes de datos de sensores o feeds de redes sociales.",capacidad de procesamiento (throughput)
+"En el contexto de la nube, ¿cuál es el propósito de una 'VPC' (Virtual Private Cloud)?",Proporcionar una sección lógicamente aislada de la nube pública donde se pueden lanzar recursos en una red virtual definida por el usuario.
+¿Qué significa 'ACID' en el contexto de las transacciones de bases de datos?,"Atomicidad, Consistencia, Aislamiento (Isolation) y Durabilidad."
+"Los formatos de tabla de lakehouse como Delta Lake, Iceberg y Hudi aportan propiedades _____ a los data lakes.",ACID
+"Si una organización necesita la selección de servicios más amplia y una infraestructura madura para escalar globalmente, ¿qué proveedor de nube debería elegir?",AWS.
+¿Qué es la 'computación sin servidor' (serverless computing)?,"Un modelo de ejecución en la nube donde el proveedor de la nube gestiona dinámicamente la asignación de recursos de máquina, y los precios se basan en el número real de recursos consumidos por una aplicación."
+"Para el almacenamiento de archivos distribuidos, HDFS es la opción tradicional de Hadoop, mientras que _____ y _____ son alternativas modernas de almacenamiento de objetos de código abierto.",MinIO / Ceph
+¿Qué es un 'catálogo de datos' en un data lake?,"Una herramienta que ayuda a los usuarios a encontrar, comprender y gobernar los datos, previniendo que el lago se convierta en un 'pantano de datos'."
+Nombra una herramienta de catálogo de datos de código abierto que se enfoca en el descubrimiento de datos y la experiencia del usuario.,Amundsen (de Lyft).
+"DataHub, de LinkedIn, es una plataforma de metadatos moderna que utiliza _____ para actualizaciones de metadatos casi en tiempo real.",streaming (a menudo a través de Kafka)
+La idea de que diferentes equipos de negocio deben poseer sus propios datos como un producto se conoce como _____.,Data Mesh
+¿Cuál es la principal diferencia entre las instancias spot y las instancias reservadas en AWS?,"Las instancias spot ofrecen grandes descuentos sobre la capacidad de cómputo no utilizada pero pueden ser interrumpidas, mientras que las instancias reservadas ofrecen descuentos a cambio de un compromiso a largo plazo (1 o 3 años)."
+"En el procesamiento de flujos, el 'exactamente una vez' (exactly-once) es una semántica de procesamiento que garantiza que cada evento se procese _____, incluso en caso de fallos.",una sola vez
+"¿Qué framework, Flink o Spark, es generalmente considerado más fuerte en proporcionar garantías de 'exactamente una vez' a nivel de operador?",Apache Flink.
+El desacoplamiento del almacenamiento y el cómputo en una arquitectura de data lake permite que cada uno _____ de forma independiente.,escale
+Una de las desventajas de RabbitMQ en comparación con Kafka es que escalar horizontalmente puede ser más _____.,complejo
+El enfoque de 'micro-lotes' de Spark para el streaming puede introducir una _____ más alta en comparación con el verdadero procesamiento de flujos de Flink.,latencia
+"Para las cargas de trabajo de IA/ML, ¿qué proveedor de la nube es a menudo la mejor opción gracias a su infraestructura AI-first y herramientas como Vertex AI y TensorFlow?",Google Cloud Platform (GCP).
+Término: Instancias de Máquinas Virtuales,"Definición: Recursos de cómputo escalables que emulan un ordenador físico, ofrecidos por proveedores de la nube como AWS EC2, Azure VMs o Google Compute Engine."
+El servicio Azure DevOps es una oferta de Microsoft para implementar prácticas de _____ a lo largo del ciclo de vida del desarrollo de software.,DevOps
+Término: Kubernetes (K8s),"Definición: Un sistema de orquestación de contenedores de código abierto para automatizar la implementación, el escalado y la gestión de aplicaciones en contenedores."
+"Los tres grandes proveedores de la nube ofrecen servicios gestionados de Kubernetes: AWS tiene EKS, Azure tiene _____ y GCP tiene GKE.",AKS (Azure Kubernetes Service)
+"En Flink, el soporte de primera clase para el procesamiento de flujos con estado (stateful stream processing) le permite manejar _____ de manera eficiente.",cálculos complejos a lo largo del tiempo
+"En Kafka, ¿qué son los 'offsets'?",Un puntero que un grupo de consumidores mantiene para rastrear qué mensajes ha procesado en una partición.
+¿Cuál es el propósito de un 'balanceador de carga' (load balancer) en una arquitectura de nube?,Distribuir el tráfico de red o de aplicaciones entrante entre múltiples servidores para garantizar que ningún servidor se sobrecargue.
+El modelo de precios 'pay-as-you-go' (pago por uso) es común en la nube y significa que los usuarios solo pagan por _____.,los recursos que consumen
+Una de las desventajas de GCP es que tiene una cuota de mercado más pequeña y una comunidad empresarial menos extensa en comparación con _____.,AWS y Azure
+¿Qué es la 'persistencia de mensajes' en un sistema de mensajería?,La capacidad del sistema para almacenar mensajes en un almacenamiento no volátil (como un disco) para que no se pierdan si el sistema se reinicia o falla.
+"¿Qué sistema, Kafka o RabbitMQ, ofrece una mayor durabilidad de los mensajes por diseño?","Kafka, porque escribe los mensajes en el disco de forma predeterminada."
+El concepto de 'zonas de disponibilidad' en la nube se refiere a _____.,"uno o más centros de datos discretos con energía, redes y refrigeración redundantes dentro de una región"
+¿Qué servicio de base de datos de GCP es conocido por su escalabilidad global y fuerte consistencia?,Cloud Spanner.
+"En el contexto de ETL, ¿qué significa la 'T' (Transformar)?","Aplicar reglas de negocio, limpiar, enriquecer o agregar los datos extraídos antes de cargarlos en el sistema de destino."
+"En un sistema de procesamiento de datos, ¿qué es un 'pipeline'?","Una secuencia de pasos de procesamiento de datos conectados, donde la salida de un elemento es la entrada del siguiente."
+La biblioteca MLlib es el componente de _____ de Apache Spark.,aprendizaje automático (machine learning)
+"Para cumplir con las regulaciones de soberanía de datos, las organizaciones a menudo deben asegurarse de que los datos se almacenen y procesen dentro de una _____ específica.",región geográfica

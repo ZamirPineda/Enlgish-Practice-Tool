@@ -32,6 +32,33 @@ const GAME_COLORS: Record<string, string> = {
   code_bug_hunter: "#ef4444", // red-500
   diplomatic_reviewer: "#6366f1", // indigo-500
   vault_review: "#38bdf8", // sky-400
+  stop_game: "#f97316", // orange-500
+  tech_trivia: "#22c55e", // green-500
+  tech_flashcards: "#3b82f6", // blue-500
+  tech_matchup: "#a855f7", // purple-500
+  tech_boss: "#ef4444", // red-500
+};
+
+export const GAME_CATEGORY: Record<string, "english" | "math" | "dev"> = {
+  math_game: "math",
+  tech_trivia: "dev",
+  tech_flashcards: "dev",
+  tech_matchup: "dev",
+  tech_boss: "dev",
+  code_syntax_builder: "dev",
+  code_bug_hunter: "dev",
+  // English ones default
+  docs_game: "english",
+  docs_quiz: "english",
+  speed_builder: "english",
+  error_hunter: "english",
+  paraphrase_duel: "english",
+  collocation_sprint: "english",
+  taboo_english: "english",
+  sentence_transformer: "english",
+  diplomatic_reviewer: "english",
+  vault_review: "english",
+  stop_game: "english",
 };
 
 export const buildDailyActivityData = (
@@ -78,6 +105,20 @@ export const buildDailyActivityData = (
   return Object.values(points);
 };
 
+export const getGameFromEvent = (event: AnalyticsEvent): string => {
+  if (typeof event.payload.game === "string") {
+    return event.payload.game;
+  }
+  if (
+    event.payload.mode === "daily" ||
+    event.payload.mode === "boss" ||
+    event.payload.mode === "objective"
+  ) {
+    return "vault_review";
+  }
+  return "unknown";
+};
+
 export const buildGameDistributionData = (
   events: AnalyticsEvent[],
 ): GameDistributionPoint[] => {
@@ -86,17 +127,7 @@ export const buildGameDistributionData = (
   events.forEach((event) => {
     if (event.name !== "item_correct" && event.name !== "item_wrong") return;
 
-    let game = "unknown";
-    if (typeof event.payload.game === "string") {
-      game = event.payload.game;
-    } else if (
-      event.payload.mode === "daily" ||
-      event.payload.mode === "boss" ||
-      event.payload.mode === "objective"
-    ) {
-      game = "vault_review";
-    }
-
+    let game = getGameFromEvent(event);
     distribution[game] = (distribution[game] || 0) + 1;
   });
 

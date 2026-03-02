@@ -1,0 +1,81 @@
+¿Qué es el ROP (Registro de Operaciones) en la arquitectura APX?,"Es un registro interno utilizado con fines de auditoría, fraude o informativos, que indica la finalización de cada transacción ejecutada."
+"Después de finalizar la transacción de la aplicación, las ejecuciones regresan a la capa de arquitectura de control para ejecutar las acciones ____.",posteriores
+¿Qué tipo de bases de datos soporta APX para ser utilizadas por las aplicaciones?,Bases de datos SQL y NOSQL.
+"En APX, la gestión de autorizaciones está delegada en módulos de _____ y módulos de Arquitectura.",Seguridad Lógica
+¿Cuál es la herramienta recomendada para la gestión de repositorios de código en el stack de desarrollo de APX?,Bitbucket.
+¿Qué versión de Java Development Kit (JDK) se recomienda encarecidamente para desarrollar con APX?,OpenJDK versión 8.
+¿Qué herramienta se utiliza para la gestión de artefactos construidos en el proceso de desarrollo de software APX?,Artifactory.
+¿Para qué se utiliza la APX CLI (Interfaz de línea de comandos)?,"Para crear proyectos tipo APX (librería, DTO, Transacción, etc.), administrar dependencias y gestionar utilidades."
+"Según la convención de nomenclatura de APX, ¿cómo debe ser el `groupId` para un componente DTO?",Debe seguir la sintaxis `com.bbva.{TU_UUAA}.dto.{TU_ELECCIÓN_DE_NOMBRE}`.
+"En la estructura de un test JUnit para una transacción APX, ¿qué identifica la parte 'UUAA' en el nombre de la clase `UUAAT00101ESTransactionTest`?",Identifica el código de la aplicación.
+"En la nomenclatura de librerías APX, ¿qué significa el sufijo 'IMPL' en un nombre como 'UUAARXXXIMPL'?",Indica que es la implementación de la biblioteca.
+"Según la convención de nomenclatura para los métodos de interfaz de una librería APX, ¿cuál es el prefijo obligatorio para cualquier nombre de método?",El prefijo obligatorio es 'execute'.
+"Para invocar desde una transacción una librería que accede a la base de datos, ¿qué método se utiliza para obtener la instancia de la librería?",Se utiliza el método `this.getServiceLibrary(UUAAR001.class)`.
+"En un archivo de propiedades SQL para JDBC en APX, ¿qué elemento precede a la consulta SQL para indicar la base de datos a utilizar?",El nombre lógico de la base de datos seguido de un punto y coma (ej. `db1;`).
+"Para crear una librería que usa el motor de reglas Drools en APX, ¿qué utilidad se debe agregar usando la APX CLI?",Se debe agregar la utilidad `drools`.
+¿Qué método se utiliza en una librería APX para invocar un servicio de backend a través de la utilidad de interconexión?,"Se utiliza el método `this.interBackendConnectionUtils.invoke(serviceName, paramsIn)`."
+"Para crear una librería que utiliza el Creador de Documentos para generar PDFs, ¿qué utilidad se debe agregar con la APX CLI?",Se debe agregar la utilidad `docgen`.
+"¿Qué motor es el principal en el contexto de APX, haciendo que las transacciones se implementen como un paquete (bundle)?",OSGi es el motor principal.
+"En el flujo de una transacción APX, ¿qué componente procesa la solicitud HTTP inicial y valida los parámetros de entrada?",El componente `PGRestService`.
+"En el archivo `pom.xml` de una transacción APX, ¿qué plugin de Maven se encarga de empaquetar el componente como un 'bundle' OSGi?",El plugin `Apache Felix` (maven-bundle-plugin).
+"En el `pom.xml` de una transacción APX, la propiedad `Bundle-Category` dentro de la configuración del plugin de Apache Felix debe tener el valor ____.",transaction
+¿Qué es la clase abstracta de una transacción en APX y qué métodos contiene?,"Contiene los métodos que acceden a los parámetros de la transacción, como los métodos 'get' para recuperar datos y 'set' para establecerlos."
+"Cuando se trabaja con fechas en APX, la arquitectura siempre usa la zona horaria _____ para devolver un parámetro de entrada de fecha.",UTC
+¿Cómo se define un objeto de transferencia de datos (DTO) en el contexto de APX?,"Son objetos simples o complejos que no deben contener lógica de negocio, solo mecanismos de serialización para transferir datos."
+"En una clase DTO de APX, ¿por qué es importante el atributo `serialVersionUID`?",Se utiliza durante la deserialización para verificar que el emisor y el receptor de un objeto serializado tengan cargadas clases compatibles.
+"En una librería APX, ¿en qué proyecto (interfaz o implementación) se deben declarar las dependencias de otras librerías o utilidades?",En el proyecto de implementación.
+"Según la tabla de dependencias de APX, ¿se puede agregar una dependencia a otra librería en el `pom.xml` de una librería de interfaz?","No, las dependencias de librerías solo se agregan en la librería de implementación."
+¿Cuál es el código de retorno en una respuesta APX que indica 'OK + consejo'?,El código de retorno es '04'.
+¿Qué código de retorno APX indica un rechazo con error grave y código de error?,El código de retorno es '12'.
+"Para obtener el valor de un parámetro de entrada de tipo DTO en una transacción APX, ¿qué método se utiliza?",Se utiliza el método `getEntityIn`.
+"Para enviar contenido a través de Multipart desde una transacción APX, ¿qué tipo de parámetro de salida se debe declarar?",Se debe declarar un parámetro de salida de tipo Archivo (File).
+¿Cuál es el tamaño máximo total de archivos que se puede recibir o enviar en una transacción APX a través de Multipart?,20971520 bytes (aproximadamente 20 MB).
+¿Qué método se utiliza en una transacción APX para recuperar parámetros recibidos a través del encabezado?,El método `getRequestHeader()`.
+¿Qué nivel de logging de SLF4j se utiliza para imprimir avisos o fallos no críticos que no impiden que la aplicación continúe su flujo?,El nivel `LOGGER.warn`.
+"En APX, la gravedad de un error o aviso que ocurre durante la ejecución debe ser determinada por la ______, ya que tiene el contexto de las librerías que orquesta.",transacción
+¿Cuál es el código de error de la arquitectura APX Online para 'EL USUARIO NO TIENE PERMISOS PARA EJECUTAR LA TRANSACCION'?,QWPO01211008.
+¿Qué significa el código de error `QWPO01211032` en la arquitectura online de APX?,Significa 'ERROR AL ACCEDER A LA BASE DE DATOS'.
+"Para definir la visibilidad de una librería APX y que pueda ser consumida por cualquier otra UUAA, ¿qué valor se debe asignar?",Se debe asignar un asterisco ('*').
+"Para enviar un evento durante la ejecución de una transacción a Upsilon, ¿qué método se debe utilizar?",El método `sendEvent`.
+"Para enviar un evento de forma asíncrona en las post-acciones de una transacción, ¿qué método se debe utilizar?",El método `addPostEvent`.
+"Para recuperar literales dinámicos desde una tabla de la base de datos en APX, ¿qué clase proporciona el método `getLiteralFromCode`?",La clase `AbstractLibrary`.
+"En la utilidad JDBC de APX, ¿qué excepción se lanza si una consulta no devuelve ningún resultado?",Se lanza `com.bbva.apx.exception.db.NoResultException`.
+¿Qué excepción de la utilidad JDBC de APX se captura al intentar insertar una clave duplicada?,Se captura `com.bbva.apx.exception.db.DuplicateKeyException`.
+Las plantillas para la utilidad Document Creator de APX deben estar escritas en _____ para generar PDFs.,Lenguaje XHTML
+"En la utilidad Document Creator de APX, ¿qué método se utiliza para transformar una lista de imágenes JPG en un PDF de varias páginas?","El método `imagesToPdf(List<InputStream> imageList, float imageDpi)`."
+¿Qué unidad de medida se utiliza para determinar el tamaño de las imágenes en plantillas RTF para evitar problemas de resolución?,Se utiliza el Twip (Twentleth of a Point).
+"Para forzar un salto de página antes de un elemento en un PDF generado con Document Creator, ¿qué propiedad CSS se debe utilizar?",La propiedad `page-break-before` con el valor `always`.
+"En la utilidad de reglas de APX, ¿qué método de `rulesUtils` se utiliza para ejecutar todas las reglas de la aplicación?",El método `fireAllRules`.
+"Para la precompilación de reglas en APX, se debe incluir un archivo llamado _____ en la ruta `/src/main/resources` del proyecto.",rules.txt
+"Al utilizar el API Connector de APX, ¿qué método se utiliza para obtener un token de Google Cloud Platform (GCP)?",El método `getGoogleCloudPlatformToken()`.
+"Para que el patrón Circuit Breaker funcione en el API Connector de APX, ¿qué propiedad de configuración debe establecerse en `true`?",`api.connector.<id>.circuitBreaker.enabled`.
+¿Qué utilidad APX se debe usar para invocar transacciones CICS en el host (exclusivo para EE. UU.)?,La utilidad CICS (`interBackendCicsUtils`).
+"En la utilidad Mongo de APX, ¿qué operación se utiliza para ejecutar un pipeline de agregación de datos?",La operación de agregación (`EnumOperation.AGREGGATES`).
+"En la utilidad Mongo de APX, el paradigma de procesamiento de datos para condensar grandes volúmenes se conoce como ____.",Map-Reduce
+La utilidad GRPC de APX se utilizará de forma predeterminada para invocaciones de tipo ____.,LRA (Long Running Actions)
+La utilidad Compress Manager de APX en modo ONLINE tiene una restricción de un máximo de ____ archivos permitidos para comprimir o descomprimir.,5
+¿Dónde se almacenan las credenciales en la arquitectura APX?,Se almacenan en Vault.
+"Para leer los archivos ROP almacenados en Epsilon, ¿qué herramienta CLI se recomienda utilizar?",Se recomienda usar la Ether CLI.
+En APX es posible acceder a las fechas contables. El método `this.getAccountingDateCurrentDate()` devuelve la fecha contable ____.,actual
+¿Qué librería de infraestructura de APX permite a las aplicaciones obtener la descripción de un literal de base de datos?,La librería QWYPR051.
+¿Para qué se utiliza la librería de infraestructura APX QWYPR053?,Permite a las aplicaciones insertar o actualizar descripciones de literales de bases de datos.
+La librería de infraestructura APX QWYPRX21 permite obtener información de las tablas de ____.,Canal-Medio-Servicio
+¿Qué librería de infraestructura APX se utiliza para validar el nivel de contenido de un usuario o lista de usuarios?,La librería QWYPRX25.
+La librería de infraestructura QWYPRX62 se utiliza para realizar operaciones relacionadas con el ____.,IBAN (cálculo y validación)
+¿Qué librería de arquitectura replica la funcionalidad de la rutina HOST QPIPRX80 para consultar tablas SGAT?,La librería QWYPRX80.
+"En la nueva forma de realizar tests unitarios en APX, se recomienda dejar de usar el contexto de Spring y utilizar _____ en su lugar.",Mockito
+El comando `apx check --test --repair` en la CLI de APX se utiliza para...,Presentar un esqueleto de la clase de prueba unitaria y ayudar a reparar la estructura de pruebas existente.
+¿Qué es una Unidad de Implementación (UD) en el contexto de APX?,"Es una agrupación de componentes APX (transacción, librería, DTO) que siguen el mismo ciclo de vida y se implementan en bloque."
+"En el modelo de branching de APX, ¿desde qué rama se originan las ramas de `feature`?",Se originan desde la rama `develop`.
+"Para corregir un error en una versión ya desplegada en Producción, ¿qué tipo de rama se debe crear según el modelo de APX?",Se debe crear una rama de `hotfix`.
+¿Qué herramienta se utiliza para la implementación de recursos en los diferentes entornos de APX?,La Consola Ether.
+"Para poder desplegar en el entorno de Producción (PRO), la versión de lanzamiento debe haber sido creada a partir de una ____ y no de una rama.",etiqueta (tag)
+¿Qué comando de la APX CLI se utiliza para verificar la versión instalada?,`apx version`.
+¿Qué comando de la APX CLI se utiliza para crear el esqueleto de una nueva transacción?,`apx init trx`.
+El comando `apx add dep` se utiliza para...,Agregar una dependencia (como un DTO o una librería) a un componente APX.
+"Para agregar la utilidad de acceso a base de datos a una librería, se debe ejecutar el comando `apx add util -n _____`.",jdbc
+¿Qué comando de la APX CLI se utiliza para desplegar un componente en el entorno local?,`apx deploy local`.
+"Para enviar una solicitud a una transacción en el entorno local usando la APX CLI, ¿qué comando se debe utilizar?",`apx send req`.
+"Según las directrices de codificación de APX, todo el desarrollo (clases, métodos, comentarios) debe estar definido en ____.",inglés
+La creación y gestión de hilos por parte de las aplicaciones en APX está ____.,prohibida
+La comunicación desde APX hacia servicios externos (NO APX) debe realizarse exclusivamente a través de la utilidad ____.,API Connector (APIConnector)

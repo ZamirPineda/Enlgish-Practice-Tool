@@ -1,0 +1,105 @@
+"¿Cuál era la cuota de mercado de Google Cloud en el tercer trimestre de 2025, según Synergy Research Group?",Google Cloud tenía una cuota de mercado del 13%.
+"En GCP, Vertex AI es la plataforma unificada para construir, desplegar y gestionar modelos de _____, incluyendo la familia Gemini.",Inteligencia Artificial (IA) y aprendizaje automático (ML)
+Término: Google Kubernetes Engine (GKE),"Definición: Un servicio gestionado de GCP para desplegar, gestionar y escalar aplicaciones en contenedores utilizando Kubernetes."
+¿Cuál es la principal diferencia arquitectónica entre una VPC de Google Cloud y las VNet/VPC de Azure y AWS?,"La VPC de Google Cloud es un recurso global que abarca múltiples regiones, mientras que en AWS y Azure son estrictamente regionales."
+¿Qué servicio de GCP proporciona máquinas virtuales (VM) bajo un modelo de Infraestructura como Servicio (IaaS)?,Compute Engine.
+"El servicio de almacenamiento de objetos seguro, duradero y escalable en GCP se conoce como _____.",Cloud Storage
+¿Para qué se utiliza BigQuery en el ecosistema de Google Cloud?,Es un almacén de datos (data warehouse) serverless y totalmente gestionado que permite consultas SQL rápidas sobre grandes conjuntos de datos.
+Término: Cloud Spanner,"Definición: Una base de datos relacional, distribuida globalmente y escalable horizontalmente que ofrece una consistencia sólida y alta disponibilidad."
+¿Qué dos tipos de descuentos por uso comprometido (CUDs) ofrece Google Cloud?,"Ofrece CUDs basados en recursos (para vCPUs, memoria, etc.) y CUDs basados en gasto (un compromiso de gasto mínimo por hora)."
+El servicio que permite a las VMs sin IP pública acceder a las APIs y servicios de Google de forma segura se llama _____.,Private Google Access (PGA)
+"¿Qué herramienta de CI/CD nativa de GCP automatiza la creación, prueba y despliegue de aplicaciones?",Cloud Build.
+"En el contexto de la seguridad de GCP, ¿qué gestiona Cloud Identity y qué gestiona IAM?","Cloud Identity gestiona la autenticación (quién eres), mientras que IAM gestiona la autorización (qué puedes hacer)."
+Término: App Engine,Definición: Una plataforma como servicio (PaaS) totalmente gestionada para crear y desplegar aplicaciones web y backends de IoT escalables.
+¿Qué tres roles primitivos existen en GCP IAM y por qué se recomienda evitarlos en entornos de producción?,"Propietario, Editor y Lector; se deben evitar porque son demasiado permisivos y no siguen el principio de mínimo privilegio."
+"Para conectar una red on-premises a una VPC de Google Cloud con conexiones de fibra privadas de alta velocidad (10-100 Gbps), se utilizaría _____.",Dedicated Interconnect
+"En el contexto de recuperación ante desastres de Cloud SQL, ¿qué es un ""failover"" completo?","Es un proceso que no solo promueve una réplica a primaria, sino que también recrea la arquitectura de DR completa, incluyendo una nueva instancia de standby y una réplica de lectura interregional."
+"El conjunto de herramientas de observabilidad de GCP, anteriormente conocido como Stackdriver, ahora se llama la suite de _____.",Cloud Operations
+¿Qué servicio de GCP se utiliza para la detección de DDoS y como Web Application Firewall (WAF)?,Cloud Armor.
+"El modelo de IA de Google para generación de video de alta calidad, anunciado en Next '25, se llama _____.",Veo 2
+Término: Cloud Run,"Definición: Un entorno totalmente gestionado para ejecutar contenedores sin estado (stateless) que escalan automáticamente, incluso a cero."
+"En el contexto de la facturación de GCP, ¿qué herramienta permite estimar costos antes de lanzar servicios?",La Calculadora de Precios de Google Cloud.
+La integración de _____ permite que los agentes de IA de SAP utilicen los modelos de lenguaje más avanzados de Google Cloud.,Gemini en el Generative AI Hub de SAP Business Technology Platform (BTP)
+¿Qué es Google Agentspace?,"Es una plataforma que unifica el acceso a agentes y aplicaciones empresariales, incluyendo agentes de SAP, para agilizar la automatización de tareas."
+El protocolo que permite a los agentes de IA de diferentes plataformas intercambiar información y colaborar de forma segura se llama _____.,Agent2Agent (A2A)
+Término: AlloyDB,"Definición: Un servicio de base de datos totalmente gestionado y compatible con PostgreSQL, diseñado para cargas de trabajo transaccionales y analíticas de alto rendimiento."
+"Las máquinas virtuales optimizadas para memoria M4 de Google Cloud ofrecen hasta un 127% más de rendimiento para cargas de trabajo SAP en comparación con generaciones anteriores, con un TCO _____ mejor.",36%
+"La suite _____ de GCP es una solución de IA conversacional pre-construida para transformar el servicio al cliente en centros de contacto, web y móvil.",Customer Engagement Suite
+"¿Qué solución de seguridad de Google Cloud unifica la visibilidad, detección de amenazas y la experiencia de Mandiant en una única plataforma?",Google Unified Security.
+Término: Dataflow,"Definición: Un servicio totalmente gestionado para ejecutar pipelines de procesamiento de datos en paralelo, tanto en modo batch como en streaming, utilizando Apache Beam."
+¿Cuál es el propósito del Agent Development Kit (ADK) de Google Cloud?,"Es un framework de código abierto que simplifica la creación de sistemas multi-agente complejos, manteniendo un control preciso sobre su comportamiento."
+"El hardware de aceleración de IA de diseño propio de Google, competidor de las GPU de Nvidia, se conoce como _____.",Tensor Processing Unit (TPU)
+"La versión de TPU v7, también conocida como Ironwood, ofrece un rendimiento de _____ de FP8 denso, comparable a la GPU B200 de Nvidia.",4.6 petaFLOPS
+Término: Firestore,"Definición: Una base de datos NoSQL flexible y escalable para desarrollo móvil, web y de servidores, que ofrece sincronización de datos en tiempo real."
+¿Qué es el Model Context Protocol (MCP) en el contexto de los agentes de IA de Google?,"Es un protocolo que permite a los agentes de IA conectarse y utilizar de forma segura herramientas y servicios empresariales como Google Maps, BigQuery y APIs de terceros."
+"GCP ofrece máquinas virtuales _____ que son de bajo costo y corta duración, ideales para cargas de trabajo tolerantes a fallos.",Preemptible o Spot VMs
+Término: Cloud DNS,"Definición: Un servicio de sistema de nombres de dominio (DNS) de alto rendimiento, resistente y global que publica tus nombres de dominio en el DNS global."
+El servicio de GCP que proporciona repositorios de Git privados totalmente gestionados se llama _____.,Cloud Source Repositories
+"Para el monitoreo en GCP, ¿cuál es la diferencia principal entre Cloud Monitoring y Cloud Logging?","Cloud Monitoring se centra en métricas de rendimiento y salud (datos numéricos de series temporales), mientras que Cloud Logging se centra en la recopilación y análisis de registros de eventos."
+Término: Cloud Functions (ahora parte de Cloud Run),Definición: Una plataforma de cómputo serverless y basada en eventos para crear funciones de un solo propósito que responden a eventos en la nube.
+"El servicio que ayuda a controlar el acceso a aplicaciones web y VMs basándose en la identidad del usuario y el contexto, sin necesidad de una VPN, es _____.",Identity-Aware Proxy (IAP)
+Término: Memorystore,"Definición: Un servicio de base de datos en memoria totalmente gestionado para Redis y Memcached, que ofrece latencias de menos de un milisegundo."
+"En 2025, el programa _____ ofrece a startups en etapa temprana hasta $350,000 en créditos de Google Cloud si su enfoque principal es la IA.",Google for Startups Cloud Program
+¿Qué servicio de GCP permite el descubrimiento y análisis de herramientas para mover aplicaciones a la nube?,Application Migration.
+Término: Security Command Center (SCC),"Definición: Una plataforma centralizada de gestión de seguridad y riesgos que ayuda a prevenir, detectar y responder a amenazas en los activos de Google Cloud."
+¿Cuál es el propósito de VPC Peering en Google Cloud?,"Permite la conectividad de red privada a través de dos redes de VPC, independientemente de si pertenecen al mismo proyecto u organización."
+"El modelo de texto a imagen de más alta calidad de Google, con capacidades mejoradas de generación e inpainting, se llama _____.",Imagen 3
+"Para cargas de trabajo de VMware en Google Cloud, el servicio específico y gestionado es _____.",Google Cloud VMware Engine (GCVE)
+Término: Pub/Sub,Definición: Un servicio de mensajería asíncrona y escalable que permite la comunicación entre aplicaciones independientes.
+El modelo de IA de Google DeepMind que puede predecir la estructura e interacciones de las moléculas de la vida con alta precisión es _____.,AlphaFold 3
+"Para automatizar el aprovisionamiento de infraestructura en GCP, una herramienta popular de Infraestructura como Código (IaC) es _____, que es compatible con la plataforma.",Terraform (o Cloud Deployment Manager)
+¿Qué servicio de GCP proporciona un proxy web seguro en la nube para proteger las cargas de trabajo?,Secure Web Proxy (SWP).
+"El nuevo servicio _____ actúa como un centro de comando central para todo el panorama de aplicaciones, proporcionando información sobre despliegues, salud y optimización.",Cloud Hub
+Término: Filestore,Definición: Un servicio de almacenamiento de archivos gestionado y de alto rendimiento para aplicaciones que requieren una interfaz de sistema de archivos y un sistema de archivos compartido (NFS).
+Las nuevas VMs C4D de Google Cloud se basan en la 5ª generación de procesadores _____ y el chip Titanium de Google.,AMD EPYC
+Término: Dataproc,"Definición: Un servicio rápido, fácil de usar y gestionado para ejecutar clústeres de Apache Spark y Apache Hadoop."
+El servicio _____ unifica datos distribuidos y automatiza la gestión y gobernanza para potenciar el análisis a escala.,Dataplex
+"Para la migración de bases de datos a Google Cloud con un tiempo de inactividad mínimo, ¿qué servicio gestionado se debe utilizar?",Database Migration Service (DMS).
+¿Qué ofrece Cloud Key Management (Cloud KMS)?,Un servicio centralizado de gestión de claves de cifrado que se pueden utilizar para cifrar datos en reposo en los servicios de Google Cloud.
+"El nuevo programa de partners de Google Cloud, que se implementará en 2026 y se centra en los resultados del cliente en lugar de los requisitos del programa, se llama _____.",Google Cloud Partner Network
+"La nueva capacidad _____ en BigQuery permite a los usuarios especificar un punto de corte en el tiempo al recuperar características para el entrenamiento de modelos, previniendo la fuga de datos.",Point-in-Time Lookup
+¿Qué permite la función ML.GENERATE_TEXT en BigQuery?,"Permite la generación y análisis de lenguaje natural directamente dentro de BigQuery, utilizando la integración con los modelos LLM de Vertex AI."
+Término: Vertex AI Search for commerce,"Definición: Un producto que combina capacidades de búsqueda, navegación y recomendaciones personalizadas de alta calidad para aplicaciones de comercio electrónico."
+"El modelo de IA de Google para la generación de audio y la comprensión, que puede crear voces personalizadas con solo 10 segundos de entrada de audio, se llama _____.",Chirp 3
+"Para el desarrollo local sin conexión a la nube, GCP proporciona _____ que simulan el comportamiento de servicios como Pub/Sub y Firestore.",Emuladores de Cloud
+¿Qué es la arquitectura Zero-Trust (ZTA) mencionada como el nuevo estándar para la ciberseguridad en servicios financieros?,"Es un modelo de seguridad que opera bajo la filosofía de ""nunca confiar, siempre verificar"", asumiendo que las amenazas pueden surgir desde cualquier lugar."
+"El almacenamiento en bloque más grande y rápido en cualquier nube pública, con exabytes de almacenamiento, es _____.",Hyperdisk Exapools
+Término: Cloud Trace,Definición: Un sistema de seguimiento distribuido que recopila datos de latencia de las aplicaciones para ayudar a depurar problemas de rendimiento.
+El nuevo servicio de almacenamiento zonal de Cloud Storage con latencia de lectura y escritura aleatoria de <1ms se llama _____.,Rapid Storage
+¿Cuál es el beneficio de los roles de IAM predefinidos sobre los roles primitivos?,"Los roles predefinidos ofrecen un control de acceso detallado y específico para cada servicio, alineándose con el principio de mínimo privilegio."
+"La red troncal global de Google, que ha evolucionado para soportar la era de la IA, se llama _____, y en 2023 escaló a 13.1 Pb/s.",Jupiter
+¿Qué servicio proporciona conectividad de red privada desde un centro de datos a GCP a través de un proveedor de servicios de red certificado?,Partner Interconnect.
+El nuevo _____ en Looker permite a los usuarios de negocio realizar pronósticos y detección de anomalías utilizando lenguaje natural.,Code Interpreter for Conversational Analytics
+"El modelo de IA de Google que es el primer modelo de texto a música listo para la empresa, transformando prompts en clips de 30 segundos, se llama _____.",Lyria
+"¿Qué son los ""sole-tenant nodes"" en Compute Engine?","Son servidores físicos dedicados a alojar únicamente las VMs de un cliente específico, utilizados para cumplir con requisitos de seguridad, licencia o aislamiento."
+El servicio de GCP _____ ayuda a las organizaciones a cumplir con regulaciones específicas (como ITAR) al aplicar controles de seguridad y cumplimiento en cargas de trabajo sensibles.,Assured Workloads
+"¿Qué nueva capacidad de GKE Autopilot, anunciada en Next '25, mejora el rendimiento?","Mejoras en la programación de pods, el tiempo de reacción al escalado y el ajuste de capacidad."
+Término: Cloud Deploy,"Definición: Un servicio para gestionar y ejecutar la entrega continua de aplicaciones a Google Kubernetes Engine, permitiendo el control del proceso de despliegue."
+El agente de seguridad de Google Cloud que realiza investigaciones dinámicas en nombre de los usuarios para analizar el contexto de cada alerta se llama _____.,Alert triage agent
+¿Qué es la compatibilidad con MongoDB en Firestore?,Permite a los desarrolladores utilizar la portabilidad de la API de MongoDB mientras aprovechan las características de Firestore como la replicación multirregional y el SLA del 99.999%.
+El servicio _____ proporciona conexiones dedicadas de alta velocidad y baja latencia entre infraestructuras on-premises y Google Cloud.,Cloud Interconnect
+"En BigQuery ML, ¿qué función se utiliza para realizar pronósticos de series temporales con modelos ARIMA_PLUS?",La función ML.EXPLAIN_FORECAST.
+"El nuevo servicio _____ proporciona una caché fuertemente consistente que funciona con buckets regionales para acercar los datos a las GPU/TPU, reduciendo la latencia.",Anywhere Cache
+Término: Google Cloud VMware Engine,Definición: Un servicio totalmente gestionado que permite ejecutar cargas de trabajo de VMware de forma nativa en Google Cloud.
+"¿Qué permite la función de ""consultas federadas"" en BigQuery?","Permite consultar datos que residen en fuentes externas (como Cloud SQL, Cloud Storage, AWS Glue) directamente desde BigQuery sin necesidad de cargarlos primero."
+"La nueva _____ de Vertex AI proporciona visibilidad sobre el uso, el rendimiento, la latencia y ayuda a solucionar errores para las iniciativas de IA.",Vertex AI Dashboards
+¿Qué es GKE Autopilot en comparación con el modo estándar de GKE?,"Autopilot es un modo de operación en el que GKE gestiona toda la infraestructura del clúster, incluyendo nodos y escalado, permitiendo a los usuarios centrarse solo en sus cargas de trabajo."
+"El servicio que ofrece un sistema de archivos paralelo, totalmente gestionado y de alto rendimiento, basado en DDN EXAScaler, se llama _____.",Google Cloud Managed Lustre
+"Para el control de acceso detallado a nivel de base de datos en Spanner, se utiliza _____, que va más allá de los roles de IAM a nivel de proyecto.",Fine-grained access control
+Término: Cloud Router,Definición: Un servicio totalmente gestionado que utiliza el Border Gateway Protocol (BGP) para anunciar rangos de direcciones IP entre una VPC y una red on-premises.
+"¿Qué permite la función de ""VPC Service Controls""?",Permite definir un perímetro de seguridad alrededor de los recursos de los servicios de Google Cloud para mitigar los riesgos de exfiltración de datos.
+La colaboración de Google Cloud con _____ permite que las cargas de trabajo de bases de datos Oracle se ejecuten de forma nativa en centros de datos de Google Cloud.,Oracle Cloud Infrastructure (OCI)
+Término: Looker,"Definición: Una plataforma de inteligencia de negocios (BI) y análisis de datos que ayuda a explorar, visualizar y compartir información de manera consistente."
+¿Qué característica de Cloud SQL para PostgreSQL previene reinicios por falta de memoria al cancelar de forma proactiva las consultas que consumen demasiada memoria?,El Memory Agent.
+"El nuevo _____, en versión preliminar, proporciona un enfoque visual de tipo lienzo para diseñar y modificar plantillas de aplicaciones.",Application Design Center
+Término: Cloud Composer,"Definición: Un servicio de orquestación de flujos de trabajo totalmente gestionado, basado en Apache Airflow, para crear, programar y supervisar pipelines."
+"¿Qué son los ""Alias IPs"" en el contexto de GKE?","Son rangos de IP secundarios asignados a una VM que permiten a GKE asignar direcciones IP a los pods desde un rango CIDR dentro de la VPC, mejorando la escalabilidad y la gestión de la red."
+"El servicio _____ proporciona un inventario de los activos en la nube con historial, permitiendo exportar metadatos de recursos en un momento dado.",Cloud Asset Inventory
+¿Cuál es la función del GKE Inference Gateway?,"Es una puerta de enlace que proporciona un balanceo de carga inteligente para servir modelos de IA a escala, optimizando el uso de recursos como las GPU."
+Término: Cloud Tasks,Definición: Un servicio totalmente gestionado que permite gestionar la ejecución de un gran número de tareas distribuidas de forma asíncrona.
+El servicio _____ permite ejecutar clústeres privados de GKE en hardware robusto desplegado en las instalaciones del cliente.,Google Distributed Cloud connected Appliance Service
+¿Qué mejora introduce el soporte para TLS 1.3 0-RTT en Cloud CDN?,Aumenta el rendimiento de la aplicación para las conexiones reanudadas al eliminar un viaje de ida y vuelta (round-trip) en el handshake de TLS.
+Término: Cloud VPN,Definición: Un servicio que crea túneles seguros sobre la internet pública entre una red local (on-premises) y la red VPC de Google Cloud usando el protocolo IPsec.
+"¿Qué es la función ""Object Contexts"" en Google Cloud Storage?","Es una nueva característica que proporciona una base para el almacenamiento semántico, permitiendo integrar Gemini con objetos de GCS y enriquecerlos de forma inteligente."
+"La tecnología _____ en la red de Google reduce los tiempos de mitigación de fallos de horas a minutos, mejorando la resiliencia.",Autonomous networking
+"Para la analítica de datos, ¿qué servicio es ideal para la integración de datos de tipo ETL (Extract, Transform, Load) con una interfaz gráfica?",Cloud Data Fusion.

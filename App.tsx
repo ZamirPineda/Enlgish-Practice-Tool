@@ -53,6 +53,33 @@ const DiplomaticReviewerView = lazy(
   () => import("./components/DiplomaticReviewerView"),
 );
 
+// Tech Games
+const TechHubView = lazy(() =>
+  import("./components/tech-games/TechHubView").then((m) => ({
+    default: m.TechHubView,
+  })),
+);
+const TechFlashcardsView = lazy(() =>
+  import("./components/tech-games/TechFlashcardsView").then((m) => ({
+    default: m.TechFlashcardsView,
+  })),
+);
+const TechTriviaSprintView = lazy(() =>
+  import("./components/tech-games/TechTriviaSprintView").then((m) => ({
+    default: m.TechTriviaSprintView,
+  })),
+);
+const TechMatchUpView = lazy(() =>
+  import("./components/tech-games/TechMatchUpView").then((m) => ({
+    default: m.TechMatchUpView,
+  })),
+);
+const TechBossView = lazy(() =>
+  import("./components/tech-games/TechBossView").then((m) => ({
+    default: m.TechBossView,
+  })),
+);
+
 const ONBOARDING_STEPS = [
   {
     title: "Add words to your Vault",
@@ -287,7 +314,15 @@ const AnimatedRoutes = ({
           element={<SentenceTransformerView />}
         />
         <Route path="/stats" element={<StatsView />} />
-        <Route path="/profile" element={<ProfileView />} />
+        <Route
+          path="/profile"
+          element={
+            <ProfileView
+              settings={settings}
+              onSettingsChange={handleSettingsChange}
+            />
+          }
+        />
         <Route path="/calculus" element={<MathView />} />
         <Route path="/docs" element={<StudyDocsView />} />
         <Route path="/syntax-builder" element={<CodeSyntaxBuilderView />} />
@@ -296,6 +331,20 @@ const AnimatedRoutes = ({
           path="/diplomatic-reviewer"
           element={<DiplomaticReviewerView />}
         />
+        <Route path="/tech-hub" element={<TechHubView />} />
+        <Route
+          path="/tech-games/flashcards/:deckId"
+          element={<TechFlashcardsView />}
+        />
+        <Route
+          path="/tech-games/trivia/:deckId"
+          element={<TechTriviaSprintView />}
+        />
+        <Route
+          path="/tech-games/matchup/:deckId"
+          element={<TechMatchUpView />}
+        />
+        <Route path="/tech-games/boss/:deckId" element={<TechBossView />} />
         <Route
           path="/settings"
           element={
@@ -594,6 +643,7 @@ const App: React.FC = () => {
               <NavItem to="/docs?mode=game">🎯 Docs Hunt</NavItem>
               <NavItem to="/syntax-builder">⌨️ Syntax Builder</NavItem>
               <NavItem to="/bug-hunter">🐛 Bug Hunter</NavItem>
+              <NavItem to="/tech-hub">💻 Tech Hub</NavItem>
               <NavItem to="/diplomatic-reviewer">
                 💬 Diplomatic Reviewer
               </NavItem>
@@ -679,6 +729,7 @@ const App: React.FC = () => {
                     <NavItem to="/docs?mode=game">🎯 Docs Hunt</NavItem>
                     <NavItem to="/syntax-builder">⌨️ Syntax Builder</NavItem>
                     <NavItem to="/bug-hunter">🐛 Bug Hunter</NavItem>
+                    <NavItem to="/tech-hub">💻 Tech Hub</NavItem>
                     <NavItem to="/diplomatic-reviewer">
                       💬 Diplomatic Reviewer
                     </NavItem>
