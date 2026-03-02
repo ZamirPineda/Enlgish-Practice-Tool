@@ -661,7 +661,7 @@ const App: React.FC = () => {
               />
               <div
                 id="mobile-nav-drawer"
-                className="absolute top-full left-0 right-0 bg-surface-1 border-b border-border shadow-2xl md:hidden flex flex-col p-4 gap-2 z-50 max-h-[calc(100dvh-4.25rem)] overflow-y-auto"
+                className="absolute top-full left-0 right-0 bg-surface-1 border-b border-border shadow-2xl md:hidden flex flex-col p-4 gap-2 z-50 max-h-[calc(100dvh-9rem)] overflow-y-auto"
                 role="dialog"
                 aria-label="Mobile navigation"
                 aria-modal="true"
@@ -691,7 +691,6 @@ const App: React.FC = () => {
                   className="flex flex-col gap-2"
                 >
                   <NavItem to="/">🏠 Home</NavItem>
-
                   {/* Aprender */}
                   <div className="pl-4 border-l-2 border-surface-2 ml-2 flex flex-col gap-2">
                     <span className="text-xs font-bold text-text-secondary uppercase tracking-widest pl-2 pt-2">
@@ -707,7 +706,6 @@ const App: React.FC = () => {
                     </NavItem>
                     <NavItem to="/stop?mode=study">📚 Flashcards</NavItem>
                   </div>
-
                   {/* Games */}
                   <div className="pl-4 border-l-2 border-surface-2 ml-2 flex flex-col gap-2">
                     <span className="text-xs font-bold text-text-secondary uppercase tracking-widest pl-2 pt-2">
@@ -734,9 +732,9 @@ const App: React.FC = () => {
                       💬 Diplomatic Reviewer
                     </NavItem>
                   </div>
-
                   <NavItem to="/profile">👤 Perfil</NavItem>
                   <NavItem to="/stats">🏆 Logros</NavItem>
+                  <div className="h-6"></div> {/* Spacer to prevent cutoff */}
                 </div>
               </div>
             </>
