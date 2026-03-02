@@ -1,5 +1,18 @@
 import React from "react";
-import { AnimeCharacterState } from "../utils/userProfileStore";
+
+export interface AnimeCharacterState {
+  hairBackType: string;
+  headType: string;
+  clothesType: string;
+  eyesType: string;
+  mouthType: string;
+  hairFrontType: string;
+  backgroundColor: string;
+  hairColor: string;
+  skinColor: string;
+  clothesColor: string;
+  eyeColor: string;
+}
 
 // Import all SVG layered dictionaries
 import { HeadOptions } from "./avatar-assets/Head";
