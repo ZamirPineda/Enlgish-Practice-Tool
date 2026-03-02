@@ -401,9 +401,9 @@ export default function ProfileView() {
 
           {/* TAB 3: Configuración (SettingsView inyectado) */}
           {activeTab === "settings" && (
-            <div className="bg-surface-base -m-4 sm:-m-0 sm:bg-transparent">
+            <div className="bg-surface-base -m-4 sm:-m-0 sm:bg-transparent p-4 sm:p-0">
               {/* Le pasamos a SettingsView las props, y evitamos que tenga su propio padding extremo anidándolo sutilmente */}
-              <div className="[&>div]:p-0 [&>div]:pb-0">
+              <div className="[&>div]:p-0 [&>div]:pb-4 [&>div]:sm:pb-0 [&>div]:overflow-visible [&>div]:h-auto [&>div]:flex-none">
                 <SettingsView
                   settings={settings}
                   onSettingsChange={handleSettingsChange}
