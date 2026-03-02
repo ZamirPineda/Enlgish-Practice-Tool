@@ -198,13 +198,15 @@ const CodeSyntaxBuilderView: React.FC = () => {
     if (isComplete && totalScore > 0) {
       addGlobalXp(totalScore);
       progressQuest("play_game", 1, "any");
+      progressQuest("play_game", 1, "syntax_builder");
+      progressQuest("play_game", 1, "any");
     }
   }, [isComplete, totalScore]);
 
   if (!round) return null;
 
   return (
-    <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-24 sm:pb-8">
+    <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-4 sm:pb-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <Card elevated>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">

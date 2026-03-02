@@ -5,7 +5,7 @@ import {
   collocationSprintRounds,
   type CollocationSprintRound,
 } from "../data/collocationSprint";
-import { addGlobalXp } from "../utils/xpStore";
+import { addGlobalXp, progressQuest } from "../utils/xpStore";
 import { trackAnalyticsEvent } from "../utils/analytics";
 import { playGameSound } from "../utils/audioUtils";
 
@@ -51,6 +51,25 @@ const CollocationSprintView: React.FC = () => {
   const round = rounds[roundIndex];
   const roundTime = ROUND_TIME_SECONDS[selectedLevel];
 
+  // Map and shuffle options to avoid predictable answers
+  const displayOptions = useMemo(() => {
+    if (!round) return { verbOptions: [], nounOptions: [] };
+
+    const shuffleArray = (array: string[]) => {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    };
+
+    return {
+      verbOptions: shuffleArray(round.verbOptions),
+      nounOptions: shuffleArray(round.nounOptions),
+    };
+  }, [round]);
+
   useEffect(() => {
     setRoundIndex(0);
     setSelectedVerb("");
@@ -87,7 +106,7 @@ const CollocationSprintView: React.FC = () => {
 
   if (!round) {
     return (
-      <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-24 sm:pb-8">
+      <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-4 sm:pb-8">
         <div className="max-w-4xl mx-auto">
           <Card>
             <p className="text-sm text-text-secondary">No rounds available.</p>
@@ -156,11 +175,13 @@ const CollocationSprintView: React.FC = () => {
   useEffect(() => {
     if (isComplete && totalScore > 0) {
       addGlobalXp(totalScore);
+      progressQuest("play_game", 1, "any");
+      progressQuest("play_game", 1, "collocation");
     }
   }, [isComplete, totalScore]);
 
   return (
-    <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-24 sm:pb-8">
+    <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-4 sm:pb-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <Card elevated>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -210,7 +231,7 @@ const CollocationSprintView: React.FC = () => {
               Verb
             </p>
             <div className="flex flex-wrap gap-2">
-              {round.verbOptions.map((verb) => (
+              {displayOptions.verbOptions.map((verb) => (
                 <Button
                   key={verb}
                   size="sm"
@@ -230,7 +251,7 @@ const CollocationSprintView: React.FC = () => {
               Noun
             </p>
             <div className="flex flex-wrap gap-2">
-              {round.nounOptions.map((noun) => (
+              {displayOptions.nounOptions.map((noun) => (
                 <Button
                   key={noun}
                   size="sm"

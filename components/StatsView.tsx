@@ -396,7 +396,7 @@ const StatsView: React.FC = () => {
     analyticsSummary.speaking_used - previousAnalyticsSummary.speaking_used;
 
   return (
-    <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-24 sm:pb-8">
+    <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-4 sm:pb-8">
       <div className="max-w-6xl mx-auto space-y-8">
         <ViewToolbar
           className="bg-surface-1 border-border"

@@ -466,7 +466,7 @@ const MathView: React.FC = () => {
           </div>
         )}
 
-        <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 md:p-6 space-y-8 pb-24 md:pb-20 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+        <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 md:p-6 space-y-8 pb-4 md:pb-6 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
           {/* Search Bar */}
           {!isStudyMode && activeTab !== "examples" && activeTab !== "game" && (
             <div className="relative max-w-2xl mx-auto mb-8">

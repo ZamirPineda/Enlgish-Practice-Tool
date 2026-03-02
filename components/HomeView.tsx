@@ -213,7 +213,7 @@ const HomeView: React.FC = () => {
   const { quests } = useGlobalXp();
 
   return (
-    <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-24 sm:pb-8 animate-fade-in">
+    <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-4 sm:pb-8 animate-fade-in">
       <div className="max-w-5xl mx-auto space-y-8">
         <ViewToolbar
           left={

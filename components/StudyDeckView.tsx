@@ -439,7 +439,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
 
   return (
     <div
-      className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 lg:p-8 pb-24 sm:pb-8"
+      className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 lg:p-8 pb-4 sm:pb-8"
       onScroll={handleContainerScroll}
     >
       <div className="max-w-4xl mx-auto">

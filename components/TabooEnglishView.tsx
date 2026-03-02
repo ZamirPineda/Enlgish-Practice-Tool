@@ -5,7 +5,7 @@ import {
   tabooEnglishRounds,
   type TabooEnglishRound,
 } from "../data/tabooEnglish";
-import { addGlobalXp } from "../utils/xpStore";
+import { addGlobalXp, progressQuest } from "../utils/xpStore";
 import { trackAnalyticsEvent } from "../utils/analytics";
 import { playGameSound } from "../utils/audioUtils";
 import { Plus } from "lucide-react";
@@ -98,7 +98,7 @@ const TabooEnglishView: React.FC = () => {
 
   if (!round) {
     return (
-      <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-24 sm:pb-8">
+      <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-4 sm:pb-8">
         <div className="max-w-4xl mx-auto">
           <Card>
             <p className="text-sm text-text-secondary">No rounds available.</p>
@@ -176,11 +176,13 @@ const TabooEnglishView: React.FC = () => {
   useEffect(() => {
     if (isComplete && totalScore > 0) {
       addGlobalXp(totalScore);
+      progressQuest("play_game", 1, "any");
+      progressQuest("play_game", 1, "taboo");
     }
   }, [isComplete, totalScore]);
 
   return (
-    <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-24 sm:pb-8">
+    <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-4 sm:pb-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <Card elevated>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">

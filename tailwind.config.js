@@ -32,6 +32,20 @@ export default {
         },
         focus: "var(--color-focus)",
       },
+      animation: {
+        "bounce-slow": "bounce-slow 3s infinite ease-in-out",
+        wiggle: "wiggle 2s ease-in-out infinite",
+      },
+      keyframes: {
+        "bounce-slow": {
+          "0%, 100%": { transform: "translateY(-5%)" },
+          "50%": { transform: "translateY(5%)" },
+        },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
+      },
     },
   },
   plugins: [],

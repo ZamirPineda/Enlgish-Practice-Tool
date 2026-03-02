@@ -4,6 +4,8 @@ import { toast } from "../components/ui/Toast";
 const GLOBAL_XP_KEY = "english-pal-global-xp";
 const DAILY_QUESTS_KEY = "skillpal-daily-quests";
 const STREAK_FREEZES_KEY = "skillpal-streak-freezes";
+const LIFETIME_STATS_KEY = "skillpal-lifetime-stats";
+const CLAIMED_MILESTONES_KEY = "skillpal-claimed-milestones";
 const XP_PER_LEVEL = 1000;
 
 export interface DailyQuest {
@@ -75,11 +77,123 @@ export const getDailyQuests = (): { date: string; quests: DailyQuest[] } => {
   return newQuests;
 };
 
+export const getLifetimeStats = (): Record<string, number> => {
+  if (typeof window === "undefined" || !window.localStorage) return {};
+  try {
+    return JSON.parse(localStorage.getItem(LIFETIME_STATS_KEY) || "{}");
+  } catch {
+    return {};
+  }
+};
+
+export const getClaimedMilestones = (): Record<string, boolean> => {
+  if (typeof window === "undefined" || !window.localStorage) return {};
+  try {
+    return JSON.parse(localStorage.getItem(CLAIMED_MILESTONES_KEY) || "{}");
+  } catch {
+    return {};
+  }
+};
+
+export const MILESTONES = [1, 10, 50, 100, 500, 1000];
+
+export const getMilestoneReward = (tier: number) => {
+  if (tier === 1) return 100;
+  if (tier === 10) return 300;
+  if (tier === 50) return 800;
+  if (tier === 100) return 2000;
+  if (tier === 500) return 5000;
+  if (tier === 1000) return 10000;
+  return 100;
+};
+
+export const MILESTONE_TITLES: Record<string, string> = {
+  play_game: "Partidas Completadas",
+  correct_answers: "Respuestas Correctas",
+  study_cards: "Tarjetas Estudiadas",
+  // Game specific milestones
+  "play_game:stop": "Partidas de STOP",
+  "play_game:math": "Math Quiz",
+  "play_game:quiz": "Docs Quiz",
+  "play_game:speed": "Speed Builder",
+  "play_game:error_hunter": "Error Hunter",
+  "play_game:paraphrase": "Paraphrase Duel",
+  "play_game:collocation": "Collocation Sprint",
+  "play_game:taboo": "Taboo English",
+  "play_game:sentence_transformer": "Sentence Transformer",
+  "play_game:bug_hunter": "Code Bug Hunter",
+  "play_game:syntax_builder": "Code Syntax Builder",
+  "play_game:diplomatic": "Diplomatic Reviewer",
+  "correct_answers:stop": "Respuestas STOP",
+  "correct_answers:math": "Respuestas Math",
+  "correct_answers:quiz": "Respuestas Docs",
+};
+
+export const trackLifetimeMilestone = (
+  type: string,
+  amount: number,
+  targetName?: string,
+) => {
+  if (typeof window === "undefined" || !window.localStorage) return;
+
+  const stats = getLifetimeStats();
+  const claimed = getClaimedMilestones();
+
+  // Update base type counter (e.g., "play_game")
+  const currentTotal = (stats[type] || 0) + amount;
+  stats[type] = currentTotal;
+
+  // If targetName is provided and not "any", update specific game counter too
+  const specificType =
+    targetName && targetName !== "any" ? `${type}:${targetName}` : null;
+  let specificTotal = 0;
+
+  if (specificType) {
+    specificTotal = (stats[specificType] || 0) + amount;
+    stats[specificType] = specificTotal;
+  }
+
+  localStorage.setItem(LIFETIME_STATS_KEY, JSON.stringify(stats));
+  window.dispatchEvent(new Event("lifetimeStatsUpdated"));
+
+  // Helper to check and give milestone rewards
+  const checkMilestones = (statKey: string, total: number) => {
+    MILESTONES.forEach((tier) => {
+      const milestoneId = `${statKey}_${tier}`;
+      if (total >= tier && !claimed[milestoneId]) {
+        claimed[milestoneId] = true;
+        localStorage.setItem(CLAIMED_MILESTONES_KEY, JSON.stringify(claimed));
+
+        const reward = getMilestoneReward(tier);
+        const title = MILESTONE_TITLES[statKey] || statKey;
+
+        setTimeout(() => {
+          toast.success(
+            `🏆 LOGRO DESBLOQUEADO: ${tier} ${title}! (+${reward} XP)`,
+            5000,
+          );
+          addGlobalXp(reward);
+        }, 1500); // Delay for UI pacing
+      }
+    });
+  };
+
+  // Check generic milestones first
+  checkMilestones(type, currentTotal);
+
+  // Check specific game milestones
+  if (specificType) {
+    checkMilestones(specificType, specificTotal);
+  }
+};
+
 export const progressQuest = (
   type: DailyQuest["type"],
   amount: number = 1,
   targetName: string = "any",
 ) => {
+  trackLifetimeMilestone(type, amount, targetName);
+
   const questData = getDailyQuests();
   let updated = false;
 

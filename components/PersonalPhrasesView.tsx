@@ -204,7 +204,7 @@ const PersonalPhrasesView: React.FC<PersonalPhrasesViewProps> = ({
   }, [searchQuery, filteredData]);
 
   return (
-    <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-24 sm:pb-8 bg-background text-text-primary">
+    <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-4 sm:pb-8 bg-background text-text-primary">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-accent mb-2">

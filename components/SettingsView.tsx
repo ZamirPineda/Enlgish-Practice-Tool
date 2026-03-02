@@ -17,7 +17,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({
   const { totalXp, streakFreezes, buyFreeze } = useGlobalXp();
 
   return (
-    <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-24 sm:pb-8 bg-background">
+    <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-4 sm:pb-8 bg-background">
       <div className="max-w-3xl mx-auto space-y-4">
         <Card className="p-5 sm:p-6 bg-surface-1">
           <div className="flex items-center gap-3 mb-6">

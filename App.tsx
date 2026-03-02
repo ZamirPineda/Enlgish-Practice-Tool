@@ -44,6 +44,7 @@ const MathView = lazy(() => import("./components/MathView"));
 const StudyDocsView = lazy(() => import("./components/StudyDocsView"));
 const StatsView = lazy(() => import("./components/StatsView"));
 const SettingsView = lazy(() => import("./components/SettingsView"));
+const ProfileView = lazy(() => import("./components/ProfileView"));
 const CodeSyntaxBuilderView = lazy(
   () => import("./components/CodeSyntaxBuilderView"),
 );
@@ -286,6 +287,7 @@ const AnimatedRoutes = ({
           element={<SentenceTransformerView />}
         />
         <Route path="/stats" element={<StatsView />} />
+        <Route path="/profile" element={<ProfileView />} />
         <Route path="/calculus" element={<MathView />} />
         <Route path="/docs" element={<StudyDocsView />} />
         <Route path="/syntax-builder" element={<CodeSyntaxBuilderView />} />
@@ -575,11 +577,13 @@ const App: React.FC = () => {
               <NavItem to="/vault">🧠 Vault</NavItem>
               <NavItem to="/study">📚 Study Deck</NavItem>
               <NavItem to="/personal">👤 Scripts</NavItem>
+              <NavItem to="/calculus">∫ Math</NavItem>
+              <NavItem to="/docs">📖 Docs</NavItem>
+              <NavItem to="/stop?mode=browse">🎲 Stop Browse</NavItem>
+              <NavItem to="/stop?mode=study">📚 Stop Study</NavItem>
             </NavGroup>
             <NavGroup title="Jugar" icon="🎮">
-              <NavItem to="/stop?mode=browse">🎲 Browse</NavItem>
-              <NavItem to="/stop?mode=study">📚 Study</NavItem>
-              <NavItem to="/stop?mode=game">🎮 Game</NavItem>
+              <NavItem to="/stop?mode=game">🎮 Stop Game</NavItem>
               <NavItem to="/speed-builder">⚡ Speed Builder</NavItem>
               <NavItem to="/error-hunter">🕵️ Error Hunter</NavItem>
               <NavItem to="/paraphrase-duel">🧠 Paraphrase Duel</NavItem>
@@ -594,14 +598,8 @@ const App: React.FC = () => {
                 💬 Diplomatic Reviewer
               </NavItem>
             </NavGroup>
-            <NavGroup title="Herramientas" icon="🛠️">
-              <NavItem to="/calculus">∫ Math</NavItem>
-              <NavItem to="/docs">📖 Docs</NavItem>
-            </NavGroup>
-            <NavGroup title="Perfil" icon="👤">
-              <NavItem to="/stats">📊 Stats</NavItem>
-              <NavItem to="/settings">⚙️ Settings</NavItem>
-            </NavGroup>
+            <NavItem to="/stats">🏆 Logros</NavItem>
+            <NavItem to="/profile">👤 Perfil</NavItem>
           </nav>
 
           {/* Mobile Navigation Drawer */}
@@ -643,16 +641,28 @@ const App: React.FC = () => {
                   className="flex flex-col gap-2"
                 >
                   <NavItem to="/">🏠 Home</NavItem>
-                  <NavItem to="/vault">🧠 Vault</NavItem>
-                  {/* Use a dropdown-like structure or just links for STOP modes on mobile drawer to match desktop */}
+
+                  {/* Aprender */}
                   <div className="pl-4 border-l-2 border-surface-2 ml-2 flex flex-col gap-2">
                     <span className="text-xs font-bold text-text-secondary uppercase tracking-widest pl-2 pt-2">
-                      Games
+                      Aprender
                     </span>
+                    <NavItem to="/vault">🧠 Vault</NavItem>
+                    <NavItem to="/study">📚 Review Deck</NavItem>
+                    <NavItem to="/personal">👤 Scripts</NavItem>
+                    <NavItem to="/calculus">∫ Math</NavItem>
+                    <NavItem to="/docs">📖 Docs</NavItem>
                     <NavItem to="/stop?mode=browse">
                       🎲 Browse Dictionary
                     </NavItem>
                     <NavItem to="/stop?mode=study">📚 Flashcards</NavItem>
+                  </div>
+
+                  {/* Games */}
+                  <div className="pl-4 border-l-2 border-surface-2 ml-2 flex flex-col gap-2">
+                    <span className="text-xs font-bold text-text-secondary uppercase tracking-widest pl-2 pt-2">
+                      Games
+                    </span>
                     <NavItem to="/stop?mode=game">🎮 Stop Game</NavItem>
                     <NavItem to="/speed-builder">⚡ Speed Builder</NavItem>
                     <NavItem to="/error-hunter">🕵️ Error Hunter</NavItem>
@@ -674,12 +684,8 @@ const App: React.FC = () => {
                     </NavItem>
                   </div>
 
-                  <NavItem to="/study">📚 Review Deck</NavItem>
-                  <NavItem to="/personal">👤 Scripts</NavItem>
-                  <NavItem to="/calculus">∫ Math Tools</NavItem>
-                  <NavItem to="/docs">📖 Docs Tools</NavItem>
-                  <NavItem to="/stats">📊 Stats</NavItem>
-                  <NavItem to="/settings">⚙️ Settings</NavItem>
+                  <NavItem to="/profile">👤 Perfil</NavItem>
+                  <NavItem to="/stats">🏆 Logros</NavItem>
                 </div>
               </div>
             </>
@@ -689,7 +695,7 @@ const App: React.FC = () => {
         <main
           id="main-content"
           tabIndex={-1}
-          className="flex-1 flex flex-col min-h-0 relative bg-background pb-[calc(env(safe-area-inset-bottom)+5rem)] md:pb-0"
+          className="flex-1 flex flex-col min-h-0 relative bg-background"
         >
           <Suspense
             fallback={
@@ -720,7 +726,7 @@ const App: React.FC = () => {
           <MobileNavItem to="/" icon="🏠" label="Home" />
           <MobileNavItem to="/vault" icon="🧠" label="Vault" />
           <MobileNavItem to="/stop?mode=game" icon="🎮" label="STOP" />
-          <MobileNavItem to="/settings" icon="👤" label="Perfil" />
+          <MobileNavItem to="/profile" icon="👤" label="Perfil" />
         </nav>
 
         {needRefresh && (

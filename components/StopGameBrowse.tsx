@@ -555,7 +555,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
         <StopGamePlay onPlayWord={onPlayWord} onAddToVault={onAddToVault} />
       ) : (
         <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 bg-[var(--color-surface-2)]/50">
-          <div className="max-w-7xl mx-auto pb-20">
+          <div className="max-w-7xl mx-auto pb-4">
             {currentData ? (
               <div
                 className={`grid ${viewMode === "study" ? "grid-cols-1 max-w-3xl mx-auto" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"} gap-6 animate-fade-in`}

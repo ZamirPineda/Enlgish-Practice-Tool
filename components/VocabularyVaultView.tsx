@@ -763,7 +763,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
 
   return (
     <div
-      className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-24 sm:pb-8"
+      className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-4 sm:pb-8"
       onScroll={handleContainerScroll}
     >
       <div className="max-w-5xl mx-auto">
@@ -1168,8 +1168,8 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               <div
                 className={
                   viewMode === "grid"
-                    ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-20"
-                    : "flex flex-col gap-3 pb-20"
+                    ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4"
+                    : "flex flex-col gap-3 pb-4"
                 }
               >
                 {filteredCollection.map((item) => (
