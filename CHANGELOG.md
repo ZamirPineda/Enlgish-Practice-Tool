@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.1](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.19.0...english-practice-pal-v1.19.1) (2026-03-03)
+
+
+### Bug Fixes
+
+* **workflows:** add enablement: true to pages action ([989729e](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/989729ea038394ecd63e6d52174b559a364327d9))
+
 ## [1.19.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.18.2...english-practice-pal-v1.19.0) (2026-03-02)
 
 
