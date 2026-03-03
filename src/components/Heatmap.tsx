@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { getGlobalHeatmapData } from "@/lib/activityTracker";
 
 interface HeatmapProps {
@@ -19,7 +19,18 @@ const getIntensityClass = (count: number, maxCount: number): string => {
 };
 
 const Heatmap: React.FC<HeatmapProps> = ({ days: daysCount = DAYS }) => {
-  const days = useMemo(() => getGlobalHeatmapData(daysCount), [daysCount]);
+  const [trigger, setTrigger] = useState(0);
+
+  useEffect(() => {
+    const handleUpdate = () => setTrigger((prev) => prev + 1);
+    window.addEventListener("activityUpdated", handleUpdate);
+    return () => window.removeEventListener("activityUpdated", handleUpdate);
+  }, []);
+
+  const days = useMemo(
+    () => getGlobalHeatmapData(daysCount),
+    [daysCount, trigger],
+  );
 
   // Determine dynamic max count for coloring, but cap the min maxCount to avoid
   // turning standard 1-2 points into the darkest green initially

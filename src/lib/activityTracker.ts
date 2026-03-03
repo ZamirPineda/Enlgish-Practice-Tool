@@ -11,7 +11,10 @@ interface DailyActivity {
  */
 const toDateKey = (date: number | Date = new Date()): string => {
   const d = new Date(date);
-  return d.toISOString().split("T")[0];
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };
 
 export const getGlobalActivityData = (): Record<string, DailyActivity> => {
@@ -40,6 +43,9 @@ export const trackActivity = (intensity: number = 1) => {
 
   data[today].score += intensity;
   saveGlobalActivityData(data);
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("activityUpdated"));
+  }
 };
 
 export const getGlobalStreak = (): { current: number; best: number } => {
@@ -128,9 +134,15 @@ export const getGlobalHeatmapData = (days = 365) => {
   today.setHours(0, 0, 0, 0);
   const end = today.getTime();
   const DAY_MS = 86400000;
-  const start = end - (days - 1) * DAY_MS;
+  const rawStart = end - (days - 1) * DAY_MS;
+  const rawStartDate = new Date(rawStart);
 
-  return Array.from({ length: days }, (_, index) => {
+  // Pad back to Sunday so the first grid cell is always Sunday
+  const padDays = rawStartDate.getDay();
+  const start = rawStart - padDays * DAY_MS;
+  const totalDays = days + padDays;
+
+  return Array.from({ length: totalDays }, (_, index) => {
     const timestamp = start + index * DAY_MS;
     const dateStr = toDateKey(timestamp);
     const score = data[dateStr]?.score || 0;
