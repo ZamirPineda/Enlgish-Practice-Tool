@@ -1158,6 +1158,64 @@ const StatsView: React.FC = () => {
                 )}
               </section>
             </div>
+
+            {/* Daily Playtime Minutes Chart */}
+            <div className="grid grid-cols-1 gap-6">
+              <section className="bg-surface-1 border border-border rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-lg font-black text-text-primary">
+                      Daily Time Dedicated
+                    </h2>
+                    <p className="text-sm text-text-muted">
+                      Minutes spent per day over the last 14 days
+                    </p>
+                  </div>
+                </div>
+                <div className="h-72 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={dailyActivityData}
+                      margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                    >
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        stroke="#334155"
+                        vertical={false}
+                      />
+                      <XAxis
+                        dataKey="date"
+                        stroke="#94a3b8"
+                        fontSize={12}
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <YAxis
+                        stroke="#94a3b8"
+                        fontSize={12}
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "#1e293b",
+                          borderColor: "#334155",
+                          borderRadius: "12px",
+                          color: "#f8fafc",
+                        }}
+                        itemStyle={{ color: "#a855f7" }}
+                        formatter={(value: any) => [`${value} min`, "Playtime"]}
+                      />
+                      <Bar
+                        dataKey="playtimeMinutes"
+                        fill="#a855f7"
+                        radius={[4, 4, 0, 0]}
+                      />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </section>
+            </div>
           </div>
         )}
       </div>

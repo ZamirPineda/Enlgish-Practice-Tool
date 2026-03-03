@@ -4,6 +4,7 @@ export interface DailyActivityPoint {
   date: string; // e.g. "Feb 28"
   attempts: number; // total item_correct + item_wrong that day
   correct: number; // total item_correct that day
+  playtimeMinutes: number; // total minutes based on session_end
 }
 
 export interface GameDistributionPoint {
@@ -82,12 +83,18 @@ export const buildDailyActivityData = (
       date: displayDate,
       attempts: 0,
       correct: 0,
+      playtimeMinutes: 0,
     };
   }
 
   // Aggregate
   events.forEach((event) => {
-    if (event.name !== "item_correct" && event.name !== "item_wrong") return;
+    if (
+      event.name !== "item_correct" &&
+      event.name !== "item_wrong" &&
+      event.name !== "session_end"
+    )
+      return;
 
     // vault reviews might not log game payload as explicitly as games, so let's default
     // to checking if it's from review
@@ -95,13 +102,23 @@ export const buildDailyActivityData = (
     const dateKey = `${timestamp.getFullYear()}-${String(timestamp.getMonth() + 1).padStart(2, "0")}-${String(timestamp.getDate()).padStart(2, "0")}`;
 
     if (points[dateKey]) {
-      points[dateKey].attempts += 1;
-      if (event.name === "item_correct") {
-        points[dateKey].correct += 1;
+      if (
+        event.name === "session_end" &&
+        typeof event.payload.duration === "number"
+      ) {
+        points[dateKey].playtimeMinutes += event.payload.duration / 60;
+      } else if (event.name === "item_correct" || event.name === "item_wrong") {
+        points[dateKey].attempts += 1;
+        if (event.name === "item_correct") {
+          points[dateKey].correct += 1;
+        }
       }
     }
   });
 
+  Object.values(points).forEach(
+    (p) => (p.playtimeMinutes = Math.round(p.playtimeMinutes * 10) / 10),
+  );
   return Object.values(points);
 };
 
@@ -125,7 +142,12 @@ export const buildGameDistributionData = (
   const distribution: Record<string, number> = {};
 
   events.forEach((event) => {
-    if (event.name !== "item_correct" && event.name !== "item_wrong") return;
+    if (
+      event.name !== "item_correct" &&
+      event.name !== "item_wrong" &&
+      event.name !== "session_end"
+    )
+      return;
 
     let game = getGameFromEvent(event);
     distribution[game] = (distribution[game] || 0) + 1;
