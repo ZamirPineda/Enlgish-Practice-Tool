@@ -98,8 +98,10 @@ describe("App route lazy loading", () => {
     });
     render(<App />);
 
-    expect(await screen.findByText("Update available")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
+    expect(
+      await screen.findByText("Nueva versión disponible"),
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Actualizar" }));
     expect(mockHandleUpdate).toHaveBeenCalled();
   });
 });
