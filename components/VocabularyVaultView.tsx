@@ -8,10 +8,12 @@ import {
   getWeeklyBossReviewItems,
   calculateSrsData,
   migrateDeckToFsrsIfNeeded,
+  srsVocabularyItemSchema,
 } from "../utils/srs";
 import { trackAnalyticsEvent } from "../utils/analytics";
 import { progressQuest } from "../utils/xpStore";
 import { Rating } from "ts-fsrs";
+import { z } from "zod";
 import ReviewSession from "./ReviewSession";
 import SpeechPracticeButton from "./SpeechPracticeButton";
 import { PlayIcon, TrashIcon } from "./Icons";
@@ -58,6 +60,15 @@ const DEFAULT_VAULT_PROGRESS: VaultProgress = {
   lastBossReviewWeek: null,
   bossReviewsCompleted: 0,
 };
+
+const vaultProgressSchema = z.object({
+  currentStreak: z.number().catch(0),
+  bestStreak: z.number().catch(0),
+  totalReviews: z.number().catch(0),
+  lastReviewDate: z.string().nullable().catch(null),
+  lastBossReviewWeek: z.string().nullable().catch(null),
+  bossReviewsCompleted: z.number().catch(0),
+});
 
 const createDefaultWeeklyActivity = (weekKey: string): VaultWeeklyActivity => ({
   weekKey,
@@ -160,8 +171,11 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       const saved = localStorage.getItem("vocab-vault-deck");
       if (!saved) return {};
 
+      const rawParsed = JSON.parse(saved);
+      // Soft validation for backward compatibility and fast startup: just rely on normalizeDeck
+      // Hard schema validation happens aggressively on imports
       let parsedDeck = normalizeDeck(
-        JSON.parse(saved) as Record<string, SrsVocabularyItem>,
+        rawParsed as Record<string, SrsVocabularyItem>,
       );
 
       const migratedDeck = migrateDeckToFsrsIfNeeded(parsedDeck);
@@ -183,9 +197,9 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const [progress, setProgress] = useState<VaultProgress>(() => {
     try {
       const saved = localStorage.getItem(VAULT_PROGRESS_KEY);
-      return saved
-        ? { ...DEFAULT_VAULT_PROGRESS, ...JSON.parse(saved) }
-        : DEFAULT_VAULT_PROGRESS;
+      if (!saved) return DEFAULT_VAULT_PROGRESS;
+      const parsed = JSON.parse(saved);
+      return vaultProgressSchema.parse(parsed) as VaultProgress;
     } catch (e) {
       console.error("Failed to load progress from storage", e);
       return DEFAULT_VAULT_PROGRESS;
@@ -493,25 +507,47 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const handleImport = () => {
     try {
       const parsed = JSON.parse(importText);
+      const deckSchema = z.record(z.string(), srsVocabularyItemSchema);
+      let importedDeck: Record<string, SrsVocabularyItem> = {};
+      let importedProgress: VaultProgress = DEFAULT_VAULT_PROGRESS;
+
       if (parsed && typeof parsed === "object") {
         if ("deck" in parsed) {
-          const imported = parsed as {
-            deck: Record<string, SrsVocabularyItem>;
-            progress?: VaultProgress;
-          };
-          setDeck(imported.deck || {});
-          setProgress(
-            imported.progress
-              ? { ...DEFAULT_VAULT_PROGRESS, ...imported.progress }
-              : DEFAULT_VAULT_PROGRESS,
-          );
+          const deckResult = deckSchema.safeParse(parsed.deck);
+          if (deckResult.success) {
+            importedDeck = deckResult.data;
+          } else {
+            console.error("Invalid deck format in import", deckResult.error);
+            alert("Error in import: The deck data is invalid or corrupted.");
+            return;
+          }
+
+          if (parsed.progress) {
+            const progressResult = vaultProgressSchema.safeParse(
+              parsed.progress,
+            );
+            if (progressResult.success) {
+              importedProgress = progressResult.data as VaultProgress;
+            }
+          }
         } else {
-          setDeck(parsed as Record<string, SrsVocabularyItem>);
-          setProgress(DEFAULT_VAULT_PROGRESS);
+          const deckResult = deckSchema.safeParse(parsed);
+          if (deckResult.success) {
+            importedDeck = deckResult.data;
+          } else {
+            console.error("Invalid deck format in import", deckResult.error);
+            alert("Error in import: The deck data is invalid or corrupted.");
+            return;
+          }
         }
+
+        setDeck(importedDeck);
+        setProgress(importedProgress);
         setImportText("");
         alert("Import successful!");
         setActiveTab("collection");
+      } else {
+        alert("Invalid backup file: Not an object.");
       }
     } catch (e) {
       alert("Invalid backup code.");

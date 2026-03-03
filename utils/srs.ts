@@ -6,6 +6,24 @@ import {
   type Card as FsrsCard,
   State,
 } from "ts-fsrs";
+import { z } from "zod";
+
+export const srsVocabularyItemSchema = z.object({
+  word: z.string(),
+  definition: z.string(),
+  ipa: z.string().optional(),
+  example: z.string().optional(),
+  partOfSpeech: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  originalContext: z.string().optional(),
+  repetition: z.number(),
+  efactor: z.number(),
+  interval: z.number(),
+  lapses: z.number().optional(),
+  nextReviewDate: z.string(),
+  status: z.enum(["new", "learning", "mastered"]),
+  fsrsData: z.any().optional(),
+});
 
 const INITIAL_EFACTOR = 2.5;
 

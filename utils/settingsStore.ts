@@ -1,13 +1,4 @@
-export interface AppSettings {
-  theme: "dark" | "light";
-  reducedMotion: boolean;
-  ttsAutoPlay: boolean;
-  ttsSpeed: number;
-  confirmDialogs: boolean;
-  soundEnabled: boolean;
-  hasCompletedOnboarding: boolean;
-  weeklyGoalSessions: number;
-}
+import { z } from "zod";
 
 const SETTINGS_KEY = "app-settings";
 
@@ -21,33 +12,25 @@ const getSystemReducedMotionPreference = () => {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 };
 
-const normalizeSettings = (input: unknown): AppSettings => {
-  const parsed = (
-    input && typeof input === "object" ? input : {}
-  ) as Partial<AppSettings>;
+export const appSettingsSchema = z.object({
+  theme: z.enum(["dark", "light"]).catch("dark"),
+  reducedMotion: z.boolean().catch(() => getSystemReducedMotionPreference()),
+  ttsAutoPlay: z.boolean().catch(true),
+  ttsSpeed: z.number().catch(0.9),
+  confirmDialogs: z.boolean().catch(true),
+  soundEnabled: z.boolean().catch(true),
+  hasCompletedOnboarding: z.boolean().catch(false),
+  weeklyGoalSessions: z
+    .number()
+    .catch(5)
+    .transform((val) => Math.min(14, Math.max(1, Math.round(val)))),
+});
 
-  return {
-    theme: parsed.theme === "light" ? "light" : "dark",
-    reducedMotion:
-      typeof parsed.reducedMotion === "boolean"
-        ? parsed.reducedMotion
-        : getSystemReducedMotionPreference(),
-    ttsAutoPlay:
-      typeof parsed.ttsAutoPlay === "boolean" ? parsed.ttsAutoPlay : true,
-    ttsSpeed: typeof parsed.ttsSpeed === "number" ? parsed.ttsSpeed : 0.9,
-    confirmDialogs:
-      typeof parsed.confirmDialogs === "boolean" ? parsed.confirmDialogs : true,
-    soundEnabled:
-      typeof parsed.soundEnabled === "boolean" ? parsed.soundEnabled : true,
-    hasCompletedOnboarding:
-      typeof parsed.hasCompletedOnboarding === "boolean"
-        ? parsed.hasCompletedOnboarding
-        : false,
-    weeklyGoalSessions:
-      typeof parsed.weeklyGoalSessions === "number"
-        ? Math.min(14, Math.max(1, Math.round(parsed.weeklyGoalSessions)))
-        : 5,
-  };
+export type AppSettings = z.infer<typeof appSettingsSchema>;
+
+const normalizeSettings = (input: unknown): AppSettings => {
+  const parsed = input && typeof input === "object" ? input : {};
+  return appSettingsSchema.parse(parsed);
 };
 
 export const loadSettings = (): AppSettings => {
@@ -69,5 +52,6 @@ export const saveSettings = (settings: AppSettings) => {
   if (typeof window === "undefined" || !window.localStorage) {
     return;
   }
-  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  const validSettings = appSettingsSchema.parse(settings);
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(validSettings));
 };

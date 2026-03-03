@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "../components/ui/Toast";
+import { z } from "zod";
 
 const GLOBAL_XP_KEY = "english-pal-global-xp";
 const DAILY_QUESTS_KEY = "skillpal-daily-quests";
@@ -8,16 +9,27 @@ const LIFETIME_STATS_KEY = "skillpal-lifetime-stats";
 const CLAIMED_MILESTONES_KEY = "skillpal-claimed-milestones";
 const XP_PER_LEVEL = 1000;
 
-export interface DailyQuest {
-  id: string;
-  type: "play_game" | "correct_answers" | "study_cards";
-  targetName: string; // The game ID or generic "any"
-  description: string;
-  target: number;
-  current: number;
-  reward: number;
-  completed: boolean;
-}
+export const dailyQuestSchema = z.object({
+  id: z.string(),
+  type: z.enum(["play_game", "correct_answers", "study_cards"]),
+  targetName: z.string(), // The game ID or generic "any"
+  description: z.string(),
+  target: z.number(),
+  current: z.number(),
+  reward: z.number(),
+  completed: z.boolean(),
+});
+
+export type DailyQuest = z.infer<typeof dailyQuestSchema>;
+
+export const lifetimeStatsSchema = z.record(z.string(), z.number());
+
+export const claimedMilestonesSchema = z.record(z.string(), z.boolean());
+
+export const dailyQuestsStateSchema = z.object({
+  date: z.string(),
+  quests: z.array(dailyQuestSchema),
+});
 
 const GENERATE_DAILY_QUESTS = (): DailyQuest[] => {
   return [
@@ -54,7 +66,7 @@ const GENERATE_DAILY_QUESTS = (): DailyQuest[] => {
   ];
 };
 
-export const getDailyQuests = (): { date: string; quests: DailyQuest[] } => {
+export const getDailyQuests = (): z.infer<typeof dailyQuestsStateSchema> => {
   const today = new Date().toISOString().split("T")[0];
   if (typeof window === "undefined" || !window.localStorage)
     return { date: today, quests: GENERATE_DAILY_QUESTS() };
@@ -63,8 +75,9 @@ export const getDailyQuests = (): { date: string; quests: DailyQuest[] } => {
   if (raw) {
     try {
       const parsed = JSON.parse(raw);
-      if (parsed.date === today) {
-        return parsed;
+      const result = dailyQuestsStateSchema.safeParse(parsed);
+      if (result.success && result.data.date === today) {
+        return result.data;
       }
     } catch (e) {
       console.error("Failed to parse daily quests", e);
@@ -80,7 +93,11 @@ export const getDailyQuests = (): { date: string; quests: DailyQuest[] } => {
 export const getLifetimeStats = (): Record<string, number> => {
   if (typeof window === "undefined" || !window.localStorage) return {};
   try {
-    return JSON.parse(localStorage.getItem(LIFETIME_STATS_KEY) || "{}");
+    const raw = localStorage.getItem(LIFETIME_STATS_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    const result = lifetimeStatsSchema.safeParse(parsed);
+    return result.success ? result.data : {};
   } catch {
     return {};
   }
@@ -89,7 +106,11 @@ export const getLifetimeStats = (): Record<string, number> => {
 export const getClaimedMilestones = (): Record<string, boolean> => {
   if (typeof window === "undefined" || !window.localStorage) return {};
   try {
-    return JSON.parse(localStorage.getItem(CLAIMED_MILESTONES_KEY) || "{}");
+    const raw = localStorage.getItem(CLAIMED_MILESTONES_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    const result = claimedMilestonesSchema.safeParse(parsed);
+    return result.success ? result.data : {};
   } catch {
     return {};
   }

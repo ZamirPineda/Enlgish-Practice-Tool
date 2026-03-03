@@ -1,16 +1,23 @@
-export type AnalyticsEventName =
-  | "session_start"
-  | "session_end"
-  | "item_correct"
-  | "item_wrong"
-  | "speaking_used"
-  | "weekly_review_completed";
+import { z } from "zod";
 
-export interface AnalyticsEvent {
-  name: AnalyticsEventName;
-  timestamp: string;
-  payload: Record<string, unknown>;
-}
+export const analyticsEventNameSchema = z.enum([
+  "session_start",
+  "session_end",
+  "item_correct",
+  "item_wrong",
+  "speaking_used",
+  "weekly_review_completed",
+]);
+
+export type AnalyticsEventName = z.infer<typeof analyticsEventNameSchema>;
+
+export const analyticsEventSchema = z.object({
+  name: analyticsEventNameSchema,
+  timestamp: z.string(),
+  payload: z.record(z.string(), z.unknown()),
+});
+
+export type AnalyticsEvent = z.infer<typeof analyticsEventSchema>;
 
 export const ANALYTICS_EVENTS_KEY = "vocab-vault-analytics-events";
 const MAX_EVENTS = 500;
@@ -22,16 +29,18 @@ const safeReadEvents = (): AnalyticsEvent[] => {
   if (!raw) return [];
 
   try {
-    const parsed = JSON.parse(raw) as AnalyticsEvent[];
+    const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(
-      (event): event is AnalyticsEvent =>
-        !!event &&
-        typeof event.name === "string" &&
-        typeof event.timestamp === "string" &&
-        typeof event.payload === "object" &&
-        event.payload !== null,
-    );
+
+    // Filter out any invalid events rather than failing the whole batch
+    const validEvents: AnalyticsEvent[] = [];
+    for (const evt of parsed) {
+      const result = analyticsEventSchema.safeParse(evt);
+      if (result.success) {
+        validEvents.push(result.data);
+      }
+    }
+    return validEvents;
   } catch {
     return [];
   }
@@ -51,12 +60,18 @@ export const trackAnalyticsEvent = (
   if (typeof window === "undefined" || !window.localStorage) return;
 
   const existing = safeReadEvents();
-  const event: AnalyticsEvent = {
+  const event = {
     name,
     timestamp: new Date().toISOString(),
     payload,
   };
 
-  const next = [...existing, event].slice(-MAX_EVENTS);
+  const parsedEvent = analyticsEventSchema.safeParse(event);
+  if (!parsedEvent.success) {
+    console.warn("Invalid analytics event payload", parsedEvent.error);
+    return;
+  }
+
+  const next = [...existing, parsedEvent.data].slice(-MAX_EVENTS);
   localStorage.setItem(ANALYTICS_EVENTS_KEY, JSON.stringify(next));
 };
