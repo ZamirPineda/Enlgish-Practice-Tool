@@ -19,7 +19,7 @@ describe("isActiveSession", () => {
   });
 
   afterEach(() => {
-    window.location = originalLocation;
+    window.location = originalLocation as any;
   });
 
   it("returns false for home page", () => {
@@ -73,7 +73,7 @@ describe("usePWAUpdate", () => {
   });
 
   afterEach(() => {
-    window.location = originalLocation;
+    window.location = originalLocation as any;
     Object.defineProperty(window, "navigator", {
       value: originalNavigator,
       writable: true,
