@@ -1,5 +1,5 @@
-import { stopGameData } from "../data/stopGameData";
-import { CATEGORY_GROUPS } from "../utils/stopGameHelpers";
+import { stopGameData } from "../src/features/data/stopGameData";
+import { CATEGORY_GROUPS } from "../src/lib/stopGameHelpers";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 

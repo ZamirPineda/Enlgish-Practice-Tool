@@ -73,7 +73,7 @@ export default defineConfig(({ mode }) => {
     test: {
       globals: true,
       environment: "jsdom",
-      setupFiles: "./setupTests.ts",
+      setupFiles: "./src/setupTests.ts",
       exclude: [...configDefaults.exclude, "e2e/**"],
       coverage: {
         provider: "v8",
@@ -99,7 +99,7 @@ export default defineConfig(({ mode }) => {
     base: basePath,
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "."),
+        "@": path.resolve(__dirname, "./src"),
       },
     },
     build: {
