@@ -4,15 +4,12 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import App from "@/App";
 import { APP_VERSION } from "@/lib/appVersion";
 
-const mockUpdateServiceWorker = vi.fn();
-let mockNeedRefresh = false;
+import { usePWAUpdate } from "@/hooks/usePWAUpdate";
 
-vi.mock("virtual:pwa-register/react", () => ({
-  useRegisterSW: () => ({
-    needRefresh: [mockNeedRefresh, vi.fn()],
-    offlineReady: [false, vi.fn()],
-    updateServiceWorker: mockUpdateServiceWorker,
-  }),
+const mockHandleUpdate = vi.fn();
+
+vi.mock("@/hooks/usePWAUpdate", () => ({
+  usePWAUpdate: vi.fn(),
 }));
 
 vi.mock("@/pages/StopGameView", async () => {
@@ -49,8 +46,11 @@ vi.mock("@/pages/StudyDocsView", () => ({
 describe("App route lazy loading", () => {
   beforeEach(() => {
     window.location.hash = "#/";
-    mockNeedRefresh = false;
-    mockUpdateServiceWorker.mockReset();
+    vi.mocked(usePWAUpdate).mockReturnValue({
+      updateAvailable: false,
+      handleUpdate: mockHandleUpdate,
+    });
+    mockHandleUpdate.mockReset();
   });
 
   test("shows fallback while lazy route loads", async () => {
@@ -92,11 +92,14 @@ describe("App route lazy loading", () => {
   });
 
   test("shows update banner and refresh action when new version is available", async () => {
-    mockNeedRefresh = true;
+    vi.mocked(usePWAUpdate).mockReturnValue({
+      updateAvailable: true,
+      handleUpdate: mockHandleUpdate,
+    });
     render(<App />);
 
     expect(await screen.findByText("Update available")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
-    expect(mockUpdateServiceWorker).toHaveBeenCalledWith(true);
+    expect(mockHandleUpdate).toHaveBeenCalled();
   });
 });
