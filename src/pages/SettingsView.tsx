@@ -3,7 +3,16 @@ import Card from "@/components/ui/Card";
 import { AppSettings } from "@/lib/settingsStore";
 import { useGlobalXp } from "@/lib/xpStore";
 import { playGameSound } from "@/lib/audioUtils";
-import { Snowflake, ShieldAlert } from "lucide-react";
+import {
+  Snowflake,
+  ShieldAlert,
+  Download,
+  Upload,
+  Database,
+} from "lucide-react";
+import { useRef } from "react";
+import { exportToJSON, importFromJSON } from "@/lib/exportImport";
+import { toast } from "@/components/ui/Toast";
 
 interface SettingsViewProps {
   settings: AppSettings;
@@ -15,6 +24,41 @@ const SettingsView: React.FC<SettingsViewProps> = ({
   onSettingsChange,
 }) => {
   const { totalXp, streakFreezes, buyFreeze } = useGlobalXp();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImportClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (
+      !window.confirm(
+        "Importar datos sobreescribirá o unirá tus datos actuales. ¿Estás seguro de continuar?",
+      )
+    ) {
+      event.target.value = "";
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const content = e.target?.result as string;
+      const { success, error } = importFromJSON(content);
+      if (success) {
+        toast.success("¡Datos importados correctamente! Recargando...", 3000);
+        setTimeout(() => window.location.reload(), 1500);
+      } else {
+        toast.error(`Error al importar: ${error || "Archivo inválido"}`);
+      }
+      event.target.value = "";
+    };
+    reader.readAsText(file);
+  };
 
   return (
     <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-4 sm:pb-8 bg-background">
@@ -153,6 +197,70 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                   </option>
                 ))}
               </select>
+            </div>
+          </div>
+        </Card>
+
+        {/* DATA MANAGEMENT */}
+        <Card className="p-5 sm:p-6 bg-surface-1 mt-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-amber-500/10 rounded-xl">
+              <Database className="w-6 h-6 text-amber-500" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-black text-text-primary">
+                Gestión de Datos
+              </h2>
+              <p className="text-text-secondary text-sm">
+                Copia de seguridad local sin conexión
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-surface-2 p-4 rounded-xl border border-border flex sm:items-center sm:justify-between flex-col sm:flex-row gap-4">
+              <div className="flex-1">
+                <h3 className="font-bold text-text-primary">
+                  Exportar a archivo
+                </h3>
+                <p className="text-sm text-text-secondary">
+                  Guarda todo tu vocabulario, progreso, stats y configuración en
+                  un archivo .json seguro.
+                </p>
+              </div>
+              <button
+                onClick={exportToJSON}
+                className="w-full sm:w-auto px-4 py-2 font-black rounded-lg transition-all bg-sky-500 text-white hover:bg-sky-400 active:scale-95 flex items-center justify-center gap-2"
+              >
+                <Download className="w-4 h-4" />
+                Exportar
+              </button>
+            </div>
+
+            <div className="bg-surface-2 p-4 rounded-xl border border-border flex sm:items-center sm:justify-between flex-col sm:flex-row gap-4">
+              <div className="flex-1">
+                <h3 className="font-bold text-text-primary">
+                  Importar archivo
+                </h3>
+                <p className="text-sm text-text-secondary">
+                  Restaura o combina datos previos. Si un elemento ya existe, se
+                  priorizará el de mayor nivel.
+                </p>
+              </div>
+              <input
+                type="file"
+                accept=".json,application/json"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              <button
+                onClick={handleImportClick}
+                className="w-full sm:w-auto px-4 py-2 font-black rounded-lg transition-all bg-surface-1 border border-border text-text-primary hover:bg-surface-3 active:scale-95 flex items-center justify-center gap-2"
+              >
+                <Upload className="w-4 h-4" />
+                Importar
+              </button>
             </div>
           </div>
         </Card>
