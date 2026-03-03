@@ -43,7 +43,7 @@ describe("ErrorHunterView", () => {
     const b1Sentence = errorHunterRounds.find((round) => round.level === "B1");
     expect(b1Sentence).toBeDefined();
 
-    fireEvent.change(screen.getByLabelText("Tu corrección"), {
+    fireEvent.change(screen.getByLabelText(/Tu correcci/i), {
       target: { value: b1Sentence!.correctedSentence },
     });
 

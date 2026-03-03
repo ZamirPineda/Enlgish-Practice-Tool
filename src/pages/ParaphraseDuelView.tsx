@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
+import GameShell from "@/components/game/GameShell";
+import GameHudCard from "@/components/game/GameHudCard";
 import {
   paraphraseDuelRounds,
   type ParaphraseDuelRound,
@@ -244,100 +246,71 @@ const ParaphraseDuelView: React.FC = () => {
     }
   }, [isComplete, totalScore]);
 
-  return (
-    <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-4 sm:pb-8">
-      {!hasStarted ? (
-        <GameStartPanel
-          title="Paraphrase Duel"
-          description="Configura dificultad y tiempo antes de empezar."
-          onStart={startSession}
-          startLabel="Iniciar Duelo"
-        >
-          <div className="space-y-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
-              Dificultad
-            </p>
-            <div className="flex justify-center flex-wrap gap-2">
-              {LEVEL_ORDER.map((level) => (
-                <Button
-                  key={`setup-${level}`}
-                  size="sm"
-                  variant={selectedLevel === level ? "primary" : "secondary"}
-                  onClick={() => setSelectedLevel(level)}
-                >
-                  {level}
-                </Button>
-              ))}
-            </div>
-          </div>
-          <div className="space-y-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
-              Ritmo de tiempo
-            </p>
-            <div className="flex justify-center flex-wrap gap-2">
-              {(Object.keys(TIME_PRESET_LABEL) as TimePreset[]).map(
-                (preset) => (
-                  <Button
-                    key={`time-${preset}`}
-                    size="sm"
-                    variant={timePreset === preset ? "primary" : "secondary"}
-                    onClick={() => setTimePreset(preset)}
-                  >
-                    {TIME_PRESET_LABEL[preset]}
-                  </Button>
-                ),
-              )}
-            </div>
-            <p className="text-xs text-text-secondary">
-              Tiempo por ronda: {roundTime}s
-            </p>
-          </div>
-        </GameStartPanel>
-      ) : null}
-      {hasStarted ? (
-        <div className="max-w-4xl mx-auto space-y-6">
-          <Card elevated>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div>
-                <h1 className="text-3xl sm:text-4xl font-black text-text-primary tracking-tight">
-                  Paraphrase Duel
-                </h1>
-                <p className="text-text-secondary text-sm mt-1">
-                  Reescribe con el mismo significado usando el conector
-                  objetivo.
-                </p>
-                <div className="mt-3 flex items-center gap-2 flex-wrap">
-                  {LEVEL_ORDER.map((level) => (
-                    <Button
-                      key={level}
-                      size="sm"
-                      variant={
-                        selectedLevel === level ? "primary" : "secondary"
-                      }
-                      onClick={() => setSelectedLevel(level)}
-                      aria-label={`Set paraphrase level ${level}`}
-                    >
-                      {level}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-              <div className="w-full sm:w-auto flex-1 max-w-xs">
-                <div className="flex justify-between text-xs font-black uppercase tracking-widest text-amber-400 mb-1">
-                  <span>⏱ Tiempo</span>
-                  <span>{timeLeft}s</span>
-                </div>
-                <div className="w-full h-2 bg-surface-2 rounded-full overflow-hidden shadow-inner border border-border">
-                  <div
-                    className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= roundTime / 2 ? "bg-amber-400" : "bg-success"}`}
-                    style={{ width: `${(timeLeft / roundTime) * 100}%` }}
-                  />
-                </div>
-              </div>
-            </div>
-          </Card>
+  const startScreen = (
+    <GameStartPanel
+      title="Paraphrase Duel"
+      description="Configura dificultad y tiempo antes de empezar."
+      onStart={startSession}
+      startLabel="Iniciar Duelo"
+    >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Dificultad
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {LEVEL_ORDER.map((level) => (
+            <Button
+              key={`setup-${level}`}
+              size="sm"
+              variant={selectedLevel === level ? "primary" : "secondary"}
+              onClick={() => setSelectedLevel(level)}
+            >
+              {level}
+            </Button>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Ritmo de tiempo
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {(Object.keys(TIME_PRESET_LABEL) as TimePreset[]).map((preset) => (
+            <Button
+              key={`time-${preset}`}
+              size="sm"
+              variant={timePreset === preset ? "primary" : "secondary"}
+              onClick={() => setTimePreset(preset)}
+            >
+              {TIME_PRESET_LABEL[preset]}
+            </Button>
+          ))}
+        </div>
+        <p className="text-xs text-text-secondary">Tiempo por ronda: {roundTime}s</p>
+      </div>
+    </GameStartPanel>
+  );
 
-          <Card className="space-y-4">
+  return (
+    <GameShell hasStarted={hasStarted} startScreen={startScreen}>
+      <GameHudCard
+        title="Paraphrase Duel"
+        description="Reescribe con el mismo significado usando el conector objetivo."
+        controls={LEVEL_ORDER.map((level) => (
+          <Button
+            key={level}
+            size="sm"
+            variant={selectedLevel === level ? "primary" : "secondary"}
+            onClick={() => setSelectedLevel(level)}
+            aria-label={`Set paraphrase level ${level}`}
+          >
+            {level}
+          </Button>
+        ))}
+        timeLeft={timeLeft}
+        roundTime={roundTime}
+      />
+      <Card className="space-y-4">
             <p className="text-xs uppercase tracking-widest font-bold text-text-secondary">
               Frase original
             </p>
@@ -515,11 +488,10 @@ const ParaphraseDuelView: React.FC = () => {
                 </p>
               </div>
             )}
-          </Card>
-        </div>
-      ) : null}
-    </div>
+      </Card>
+    </GameShell>
   );
 };
 
 export default ParaphraseDuelView;
+

@@ -1,7 +1,9 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
+﻿import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
+import GameShell from "@/components/game/GameShell";
+import GameHudCard from "@/components/game/GameHudCard";
 import {
   errorHunterRounds,
   type ErrorHunterRound,
@@ -230,117 +232,89 @@ const ErrorHunterView: React.FC = () => {
     }
   }, [isComplete, totalScore]);
 
-  return (
-    <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-4 sm:pb-8">
-      {!hasStarted ? (
-        <GameStartPanel
-          title="Error Hunter"
-          description="Selecciona nivel y ritmo antes de iniciar."
-          onStart={startSession}
-          startLabel="Comenzar Cacería"
-        >
-          <div className="space-y-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
-              Dificultad
-            </p>
-            <div className="flex justify-center flex-wrap gap-2">
-              {LEVEL_ORDER.map((level) => (
-                <Button
-                  key={`setup-${level}`}
-                  size="sm"
-                  variant={selectedLevel === level ? "primary" : "secondary"}
-                  onClick={() => setSelectedLevel(level)}
-                >
-                  {level}
-                </Button>
-              ))}
-            </div>
-          </div>
-          <div className="space-y-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
-              Ritmo de tiempo
-            </p>
-            <div className="flex justify-center flex-wrap gap-2">
-              {(Object.keys(TIME_PRESET_LABEL) as TimePreset[]).map(
-                (preset) => (
-                  <Button
-                    key={`time-${preset}`}
-                    size="sm"
-                    variant={timePreset === preset ? "primary" : "secondary"}
-                    onClick={() => setTimePreset(preset)}
-                  >
-                    {TIME_PRESET_LABEL[preset]}
-                  </Button>
-                ),
-              )}
-            </div>
-            <p className="text-xs text-text-secondary">
-              Tiempo por ronda: {roundTime}s
-            </p>
-          </div>
-        </GameStartPanel>
-      ) : null}
-      {hasStarted ? (
-        <div className="max-w-4xl mx-auto space-y-6">
-          <Card elevated>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div>
-                <h1 className="text-3xl sm:text-4xl font-black text-text-primary tracking-tight">
-                  Error Hunter
-                </h1>
-                <p className="text-text-secondary text-sm mt-1">
-                  Detecta y corrige un error gramatical en cada oración.
-                </p>
-                <p className="text-text-muted text-xs mt-1">
-                  Hay exactamente 1 error por ronda.
-                </p>
-                <div className="mt-3 flex items-center gap-2 flex-wrap">
-                  {LEVEL_ORDER.map((level) => (
-                    <Button
-                      key={level}
-                      size="sm"
-                      variant={
-                        selectedLevel === level ? "primary" : "secondary"
-                      }
-                      onClick={() => setSelectedLevel(level)}
-                      aria-label={`Set error hunter level ${level}`}
-                    >
-                      {level}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-              <div className="text-xs font-bold uppercase tracking-widest text-text-secondary">
-                Ronda {roundIndex + 1} / {rounds.length}
-              </div>
-              <div className="w-full sm:w-auto flex-1 max-w-xs">
-                <div className="flex justify-between text-xs font-black uppercase tracking-widest text-amber-400 mb-1">
-                  <span>⏱ Tiempo</span>
-                  <span>{timeLeft}s</span>
-                </div>
-                <div className="w-full h-2 bg-surface-2 rounded-full overflow-hidden shadow-inner border border-border">
-                  <div
-                    className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= roundTime / 2 ? "bg-amber-400" : "bg-success"}`}
-                    style={{ width: `${(timeLeft / roundTime) * 100}%` }}
-                  />
-                </div>
-              </div>
-            </div>
-          </Card>
+  const startScreen = (
+    <GameStartPanel
+      title="Error Hunter"
+      description="Selecciona nivel y ritmo antes de iniciar."
+      onStart={startSession}
+      startLabel="Comenzar Cacería"
+    >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Dificultad
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {LEVEL_ORDER.map((level) => (
+            <Button
+              key={`setup-${level}`}
+              size="sm"
+              variant={selectedLevel === level ? "primary" : "secondary"}
+              onClick={() => setSelectedLevel(level)}
+            >
+              {level}
+            </Button>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Ritmo de tiempo
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {(Object.keys(TIME_PRESET_LABEL) as TimePreset[]).map((preset) => (
+            <Button
+              key={`time-${preset}`}
+              size="sm"
+              variant={timePreset === preset ? "primary" : "secondary"}
+              onClick={() => setTimePreset(preset)}
+            >
+              {TIME_PRESET_LABEL[preset]}
+            </Button>
+          ))}
+        </div>
+        <p className="text-xs text-text-secondary">Tiempo por ronda: {roundTime}s</p>
+      </div>
+    </GameStartPanel>
+  );
 
-          <Card className="space-y-5">
+  return (
+    <GameShell hasStarted={hasStarted} startScreen={startScreen}>
+      <GameHudCard
+        title="Error Hunter"
+        description="Detecta y corrige un error gramatical en cada oración."
+        meta={
+          <p className="text-text-muted text-xs mt-1">
+            Hay exactamente 1 error por ronda.
+          </p>
+        }
+        timeLeft={timeLeft}
+        roundTime={roundTime}
+        status={`Ronda ${roundIndex + 1} / ${rounds.length}`}
+        controls={LEVEL_ORDER.map((level) => (
+          <Button
+            key={level}
+            size="sm"
+            variant={selectedLevel === level ? "primary" : "secondary"}
+            onClick={() => setSelectedLevel(level)}
+            aria-label={`Set error hunter level ${level}`}
+          >
+            {level}
+          </Button>
+        ))}
+      />
+      <Card className="space-y-5">
             <div className="flex items-center justify-between gap-3 flex-wrap">
               <div className="text-xs uppercase tracking-widest font-bold text-text-secondary">
                 Nivel {round.level}
               </div>
               <div className="text-xs uppercase tracking-widest font-bold text-text-muted">
-                {round.tags.join(" · ")}
+                {round.tags.join(" Â· ")}
               </div>
             </div>
 
             <div className="rounded-xl border border-border bg-surface-2 p-4">
               <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
-                Oración con error
+                OraciÃ³n con error
               </p>
               <p className="text-lg font-semibold text-text-primary">
                 "{round.incorrectSentence}"
@@ -355,7 +329,7 @@ const ErrorHunterView: React.FC = () => {
                 htmlFor="error-hunter-answer"
                 className="text-xs uppercase tracking-widest font-bold text-text-secondary"
               >
-                Tu corrección
+                Tu correcciÃ³n
               </label>
               <textarea
                 id="error-hunter-answer"
@@ -373,24 +347,24 @@ const ErrorHunterView: React.FC = () => {
               >
                 {isCorrect ? (
                   <div className="space-y-1">
-                    <p>✅ Correcto. Excelente corrección.</p>
+                    <p>âœ… Correcto. Excelente correcciÃ³n.</p>
                     <p className="text-xs font-black uppercase tracking-widest">
                       +{lastRoundPoints} pts (base {basePoints} + bonus tiempo{" "}
-                      {timeBonus} · x{levelMultiplier})
+                      {timeBonus} Â· x{levelMultiplier})
                     </p>
                   </div>
                 ) : timeoutReached ? (
                   <div className="space-y-1">
-                    <p>⏰ Tiempo agotado.</p>
+                    <p>â° Tiempo agotado.</p>
                     <p className="text-xs">
-                      Corrección correcta: "{round.correctedSentence}"
+                      CorrecciÃ³n correcta: "{round.correctedSentence}"
                     </p>
                   </div>
                 ) : (
                   <div className="space-y-1">
-                    <p>❌ Aún no. Intenta en la siguiente ronda.</p>
+                    <p>âŒ AÃºn no. Intenta en la siguiente ronda.</p>
                     <p className="text-xs">
-                      Corrección correcta: "{round.correctedSentence}"
+                      CorrecciÃ³n correcta: "{round.correctedSentence}"
                     </p>
                   </div>
                 )}
@@ -492,7 +466,7 @@ const ErrorHunterView: React.FC = () => {
                     <>
                       <div>
                         <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-1">
-                          Sesión Completada
+                          SesiÃ³n Completada
                         </h2>
                         <p className="text-text-secondary">{message}</p>
                       </div>
@@ -551,9 +525,7 @@ const ErrorHunterView: React.FC = () => {
               </div>
             )}
           </Card>
-        </div>
-      ) : null}
-    </div>
+    </GameShell>
   );
 };
 
