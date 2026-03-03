@@ -8,7 +8,7 @@ import {
   Navigate,
   useLocation,
 } from "react-router-dom";
-import { useRegisterSW } from "virtual:pwa-register/react";
+import { usePWAUpdate } from "@/hooks/usePWAUpdate";
 import { playNativeTTS } from "@/lib/audioUtils";
 import { createNewSrsItem } from "@/lib/srs";
 import { SrsVocabularyItem } from "@/types";
@@ -204,10 +204,7 @@ const App: React.FC = () => {
 
   const currentRank = React.useMemo(() => getRankForLevel(level), [level]);
 
-  const {
-    needRefresh: [needRefresh],
-    updateServiceWorker,
-  } = useRegisterSW();
+  const { updateAvailable, handleUpdate } = usePWAUpdate();
 
   React.useEffect(() => {
     const handleOnline = () => setIsOffline(false);
@@ -610,16 +607,16 @@ const App: React.FC = () => {
           <MobileNavItem to="/profile" icon="👤" label="Perfil" />
         </nav>
 
-        {needRefresh && (
-          <div className="absolute right-4 bottom-[calc(env(safe-area-inset-bottom)+5.5rem)] md:bottom-4 z-50 rounded-xl border border-accent bg-surface-1 p-3 shadow-2xl">
+        {updateAvailable && (
+          <div className="absolute right-4 bottom-[calc(env(safe-area-inset-bottom)+5.5rem)] md:bottom-4 z-50 rounded-xl border border-accent bg-surface-1 p-3 shadow-2xl animate-in fade-in slide-in-from-bottom-2 duration-300">
             <p className="text-sm font-semibold text-text-primary">
-              Update available
+              Nueva versión disponible
             </p>
             <button
-              onClick={() => updateServiceWorker(true)}
-              className="mt-2 rounded-lg bg-accent hover:bg-accent-hover px-3 py-1.5 text-sm font-bold text-white transition-colors"
+              onClick={handleUpdate}
+              className="mt-2 rounded-lg bg-accent hover:bg-accent-hover px-3 py-1.5 text-sm font-bold text-white transition-colors w-full"
             >
-              Refresh
+              Actualizar
             </button>
           </div>
         )}
