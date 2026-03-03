@@ -1,6 +1,7 @@
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 
@@ -32,16 +33,14 @@ describe("Base UI components", () => {
     expect(screen.getByText("Visible")).toBeInTheDocument();
     fireEvent.click(screen.getByText("Visible"));
     expect(onClose).toHaveBeenCalledTimes(0);
-    const backdrop = screen.getByRole("dialog").parentElement;
-    expect(backdrop).not.toBeNull();
-    if (backdrop) {
-      fireEvent.click(backdrop);
-    }
+
+    fireEvent.click(screen.getByRole("button", { name: "Close modal" }));
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("supports escape close and focus trapping", () => {
+  it("supports escape close and focus trapping", async () => {
     const onClose = vi.fn();
+    const user = userEvent.setup();
     render(
       <Modal isOpen={true} onClose={onClose}>
         <button type="button">First</button>
@@ -53,11 +52,11 @@ describe("Base UI components", () => {
     const lastButton = screen.getByRole("button", { name: "Last" });
 
     closeButton.focus();
-    fireEvent.keyDown(document, { key: "Tab", shiftKey: true });
+    await user.tab({ shift: true });
     expect(document.activeElement).toBe(lastButton);
 
     lastButton.focus();
-    fireEvent.keyDown(document, { key: "Tab" });
+    await user.tab();
     expect(document.activeElement).toBe(closeButton);
 
     fireEvent.keyDown(document, { key: "Escape" });

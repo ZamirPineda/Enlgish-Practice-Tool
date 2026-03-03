@@ -132,7 +132,7 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 min-h-[40px] min-w-[40px] bg-black/20 hover:bg-black/40 rounded-full text-white/90 hover:text-white transition-colors active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="p-2 min-h-[40px] min-w-[40px] bg-black/20 hover:bg-black/40 rounded-full text-white/90 hover:text-white transition-colors active:scale-[0.98]"
             aria-label="Close modal"
           >
             <svg
@@ -157,7 +157,7 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
           <div className="flex justify-center">
             <button
               onClick={() => onPlay(item.word)}
-              className="flex items-center gap-3 min-h-[44px] px-6 py-3 bg-accent hover:bg-accent-hover text-white rounded-full font-bold shadow-lg shadow-accent/30 transition-all hover:scale-105 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="flex items-center gap-3 min-h-[44px] px-6 py-3 bg-accent hover:bg-accent-hover text-white rounded-full font-bold shadow-lg shadow-accent/30 transition-all hover:scale-105 active:scale-[0.99]"
               aria-label={`Listen pronunciation of ${item.word}`}
             >
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">

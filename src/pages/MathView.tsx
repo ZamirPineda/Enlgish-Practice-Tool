@@ -149,7 +149,7 @@ const MathView: React.FC = () => {
                   <button
                     key={idx}
                     onClick={() => setSelectedStrategy(item)}
-                    className={`px-4 py-2 min-h-[40px] rounded-full text-sm font-bold border ${colorClass.replace("text-", "border-")} hover:bg-surface-hover active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none transition-all flex items-center gap-2`}
+                    className={`px-4 py-2 min-h-[40px] rounded-full text-sm font-bold border ${colorClass.replace("text-", "border-")} hover:bg-surface-hover active:scale-[0.98] transition-all flex items-center gap-2`}
                   >
                     <span>⚡</span> {item.strategy.name}
                   </button>
@@ -227,7 +227,7 @@ const MathView: React.FC = () => {
                                   {isFormula && (
                                     <button
                                       onClick={() => handleCopy(cell)}
-                                      className="opacity-0 group-hover:opacity-100 p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-hover rounded-md active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none transition-all"
+                                      className="opacity-0 group-hover:opacity-100 p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-hover rounded-md active:scale-[0.98] transition-all"
                                       title="Copy LaTeX"
                                       aria-label="Copy LaTeX"
                                     >
@@ -345,7 +345,7 @@ const MathView: React.FC = () => {
                   setIsStudyMode(!isStudyMode);
                   setSelectedStrategy(null);
                 }}
-                className={`w-12 h-6 rounded-full transition-colors active:scale-[0.98] flex items-center px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-500 ${isStudyMode ? "bg-amber-500" : "bg-surface-hover"}`}
+                className={`w-12 h-6 rounded-full transition-colors active:scale-[0.98] flex items-center px-1 ${isStudyMode ? "bg-amber-500" : "bg-surface-hover"}`}
                 role="switch"
                 aria-checked={isStudyMode}
                 aria-label="Modo práctica"
@@ -374,7 +374,7 @@ const MathView: React.FC = () => {
             onClick={() => setActiveTab("calculus")}
             role="tab"
             aria-selected={activeTab === "calculus"}
-            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none whitespace-nowrap ${
+            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] whitespace-nowrap ${
               activeTab === "calculus"
                 ? "bg-sky-600 text-white shadow-lg shadow-sky-900/50"
                 : "bg-surface-2 text-text-muted hover:bg-surface-hover hover:text-text-primary"
@@ -386,7 +386,7 @@ const MathView: React.FC = () => {
             onClick={() => setActiveTab("geometry")}
             role="tab"
             aria-selected={activeTab === "geometry"}
-            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none whitespace-nowrap ${
+            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] whitespace-nowrap ${
               activeTab === "geometry"
                 ? "bg-emerald-600 text-white shadow-lg shadow-emerald-900/50"
                 : "bg-surface-2 text-text-muted hover:bg-surface-hover hover:text-text-primary"
@@ -398,7 +398,7 @@ const MathView: React.FC = () => {
             onClick={() => setActiveTab("algebra")}
             role="tab"
             aria-selected={activeTab === "algebra"}
-            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none whitespace-nowrap ${
+            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] whitespace-nowrap ${
               activeTab === "algebra"
                 ? "bg-violet-600 text-white shadow-lg shadow-violet-900/50"
                 : "bg-surface-2 text-text-muted hover:bg-surface-hover hover:text-text-primary"
@@ -410,7 +410,7 @@ const MathView: React.FC = () => {
             onClick={() => setActiveTab("examples")}
             role="tab"
             aria-selected={activeTab === "examples"}
-            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none whitespace-nowrap ${
+            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] whitespace-nowrap ${
               activeTab === "examples"
                 ? "bg-amber-500 text-white shadow-lg shadow-amber-900/50"
                 : "bg-surface-2 text-text-muted hover:bg-surface-hover hover:text-text-primary"
@@ -425,7 +425,7 @@ const MathView: React.FC = () => {
             }}
             role="tab"
             aria-selected={activeTab === "game"}
-            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none whitespace-nowrap ${
+            className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] whitespace-nowrap ${
               activeTab === "game"
                 ? "bg-rose-600 text-white shadow-lg shadow-rose-900/50"
                 : "bg-surface-2 text-text-muted hover:bg-surface-hover hover:text-text-primary"
@@ -457,7 +457,7 @@ const MathView: React.FC = () => {
                     const el = document.getElementById(`section-${idx}`);
                     if (el) el.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="w-full text-left px-3 py-2 min-h-[40px] text-sm text-text-secondary hover:text-text-primary hover:bg-surface-hover active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none rounded-lg transition-colors truncate"
+                  className="w-full text-left px-3 py-2 min-h-[40px] text-sm text-text-secondary hover:text-text-primary hover:bg-surface-hover active:scale-[0.98] rounded-lg transition-colors truncate"
                 >
                   {section.title}
                 </button>
@@ -511,7 +511,7 @@ const MathView: React.FC = () => {
                   </p>
                   <button
                     onClick={() => setIsStudyMode(false)}
-                    className="mt-4 text-accent underline rounded-md px-2 py-1 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
+                    className="mt-4 text-accent underline rounded-md px-2 py-1 active:scale-[0.98]"
                   >
                     Volver a modo lectura
                   </button>

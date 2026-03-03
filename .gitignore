@@ -33,3 +33,12 @@ test-results
 # Temporary utility scripts
 check_latex.cjs
 generate_vocab.py
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# pnpm
+pnpm-error.log*
+.pnpm-store/
+.pnpm-state.json

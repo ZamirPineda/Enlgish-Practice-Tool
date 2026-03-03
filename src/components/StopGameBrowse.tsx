@@ -503,7 +503,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       onClick={() => hasData && setSelectedLetter(letter)}
                       disabled={!hasData}
                       className={`
-                                          min-h-[36px] min-w-[32px] sm:h-9 sm:w-8 rounded-md font-bold text-xs sm:text-sm transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none flex items-center justify-center border-b-2 relative overflow-hidden
+                                          min-h-[36px] min-w-[32px] sm:h-9 sm:w-8 rounded-md font-bold text-xs sm:text-sm transition-all active:scale-[0.98] flex items-center justify-center border-b-2 relative overflow-hidden
                                           ${
                                             isSelected
                                               ? "bg-[var(--color-accent)] border-[var(--color-accent-hover)] text-white shadow-[0_0_15px_rgba(14,165,233,0.5)] scale-105"
@@ -533,7 +533,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       key={group}
                       onClick={() => setSelectedGroup(group)}
                       className={`
-                                          min-h-[36px] px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none whitespace-nowrap border
+                                          min-h-[36px] px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all active:scale-[0.98] whitespace-nowrap border
                                           ${
                                             isSelected
                                               ? "bg-[var(--color-success)] border-[var(--color-success-hover)] text-white shadow-lg shadow-[var(--color-success)]/20 scale-105"

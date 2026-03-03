@@ -121,7 +121,7 @@ const StudyDocsView: React.FC = () => {
           <div key={node.path} className="select-none">
             <button
               type="button"
-              className={`w-full text-left flex items-center py-1.5 px-2 min-h-[36px] hover:bg-slate-700/50 text-slate-300 transition-colors active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none rounded-md mx-1 my-0.5 group ${level === 0 ? "font-medium text-slate-200" : "text-sm"}`}
+              className={`w-full text-left flex items-center py-1.5 px-2 min-h-[36px] hover:bg-slate-700/50 text-slate-300 transition-colors active:scale-[0.99] rounded-md mx-1 my-0.5 group ${level === 0 ? "font-medium text-slate-200" : "text-sm"}`}
               style={{ paddingLeft: `${level * 12 + 8}px` }}
               onClick={() => toggleFolder(node.path)}
               aria-expanded={isExpanded}
@@ -177,7 +177,7 @@ const StudyDocsView: React.FC = () => {
           <button
             type="button"
             key={node.path}
-            className={`w-full text-left flex items-center py-1.5 px-2 min-h-[36px] transition-all rounded-md mx-1 my-0.5 text-sm group active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none
+            className={`w-full text-left flex items-center py-1.5 px-2 min-h-[36px] transition-all rounded-md mx-1 my-0.5 text-sm group active:scale-[0.99]
               ${
                 isSelected
                   ? "bg-sky-500/10 text-sky-300 font-medium border-l-2 border-sky-500"
@@ -226,7 +226,7 @@ const StudyDocsView: React.FC = () => {
           <button
             type="button"
             onClick={() => setViewMode("reader")}
-            className="min-h-[40px] px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest bg-slate-800 text-slate-200 hover:bg-slate-700 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none"
+            className="min-h-[40px] px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest bg-slate-800 text-slate-200 hover:bg-slate-700 active:scale-[0.98]"
           >
             ← Reader
           </button>
@@ -247,14 +247,14 @@ const StudyDocsView: React.FC = () => {
         <button
           type="button"
           onClick={() => setViewMode("quiz")}
-          className="min-h-[40px] px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest bg-indigo-500 text-white hover:bg-indigo-400 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:outline-none shadow-lg"
+          className="min-h-[40px] px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest bg-indigo-500 text-white hover:bg-indigo-400 active:scale-[0.98] shadow-lg"
         >
           📝 Quiz
         </button>
         <button
           type="button"
           onClick={() => setViewMode("game")}
-          className="min-h-[40px] px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest bg-rose-500 text-white hover:bg-rose-400 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-rose-300 focus-visible:outline-none shadow-lg"
+          className="min-h-[40px] px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-widest bg-rose-500 text-white hover:bg-rose-400 active:scale-[0.98] shadow-lg"
         >
           🎮 Hunt
         </button>
@@ -262,7 +262,7 @@ const StudyDocsView: React.FC = () => {
       {/* Mobile Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className="md:hidden absolute top-4 left-4 z-50 min-h-[44px] min-w-[44px] p-2 bg-slate-800 text-white rounded-lg shadow-lg active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none"
+        className="md:hidden absolute top-4 left-4 z-50 min-h-[44px] min-w-[44px] p-2 bg-slate-800 text-white rounded-lg shadow-lg active:scale-[0.98]"
         aria-label={isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
       >
         {isSidebarOpen ? "✕" : "☰"}
@@ -283,7 +283,7 @@ const StudyDocsView: React.FC = () => {
             </h2>
             <button
               onClick={() => setExpandedFolders(new Set())}
-              className="text-xs text-slate-400 hover:text-sky-400 transition-colors active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none rounded-md px-1 py-1 flex items-center gap-1"
+              className="text-xs text-slate-400 hover:text-sky-400 transition-colors active:scale-[0.98] rounded-md px-1 py-1 flex items-center gap-1"
               title="Collapse All Folders"
               aria-label="Collapse All Folders"
             >
@@ -372,7 +372,7 @@ const StudyDocsView: React.FC = () => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setZenMode(!zenMode)}
-                  className={`p-1.5 min-h-[36px] rounded-md transition-colors active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none flex items-center gap-1.5 text-xs font-medium ${zenMode ? "bg-sky-500/20 text-sky-400" : "text-slate-400 hover:text-sky-400 hover:bg-slate-700/50"}`}
+                  className={`p-1.5 min-h-[36px] rounded-md transition-colors active:scale-[0.98] flex items-center gap-1.5 text-xs font-medium ${zenMode ? "bg-sky-500/20 text-sky-400" : "text-slate-400 hover:text-sky-400 hover:bg-slate-700/50"}`}
                   title="Toggle Zen Mode"
                   aria-label="Toggle Zen Mode"
                 >
@@ -394,7 +394,7 @@ const StudyDocsView: React.FC = () => {
                 </button>
                 <button
                   onClick={handleCopyLink}
-                  className="p-1.5 min-h-[36px] text-slate-400 hover:text-sky-400 hover:bg-slate-700/50 rounded-md transition-colors active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none flex items-center gap-1.5 text-xs font-medium relative"
+                  className="p-1.5 min-h-[36px] text-slate-400 hover:text-sky-400 hover:bg-slate-700/50 rounded-md transition-colors active:scale-[0.98] flex items-center gap-1.5 text-xs font-medium relative"
                   title="Copy Link"
                   aria-label="Copy Link"
                 >
@@ -435,7 +435,7 @@ const StudyDocsView: React.FC = () => {
                   href={selectedFile}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-1.5 min-h-[36px] text-slate-400 hover:text-sky-400 hover:bg-slate-700/50 rounded-md transition-colors active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none flex items-center gap-1.5 text-xs font-medium"
+                  className="p-1.5 min-h-[36px] text-slate-400 hover:text-sky-400 hover:bg-slate-700/50 rounded-md transition-colors active:scale-[0.98] flex items-center gap-1.5 text-xs font-medium"
                   title="Open in New Tab"
                 >
                   <svg

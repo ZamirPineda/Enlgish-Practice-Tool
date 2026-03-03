@@ -909,21 +909,21 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 <nav className="flex bg-surface-2 p-1.5 rounded-xl border border-border w-full md:w-auto shadow-inner">
                   <button
                     onClick={() => setActiveTab("study")}
-                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${activeTab === "study" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] ${activeTab === "study" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
                     aria-pressed={activeTab === "study"}
                   >
                     Daily Study
                   </button>
                   <button
                     onClick={() => setActiveTab("collection")}
-                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${activeTab === "collection" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] ${activeTab === "collection" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
                     aria-pressed={activeTab === "collection"}
                   >
                     My Collection ({totalInDeck})
                   </button>
                   <button
                     onClick={() => setActiveTab("sync")}
-                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${activeTab === "sync" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] ${activeTab === "sync" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
                     aria-pressed={activeTab === "sync"}
                   >
                     Backup & Sync 🔄
@@ -1427,7 +1427,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                               word: item.word,
                             });
                           }}
-                          className="text-text-secondary hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded"
+                          className="text-text-secondary hover:text-accent rounded"
                           aria-label={`Listen to ${item.word}`}
                         >
                           <PlayIcon className="h-4 w-4" />
@@ -1449,7 +1449,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                             onClick={() =>
                               handleEditWord(item.word.trim().toLowerCase())
                             }
-                            className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-lg focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                            className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-lg"
                             aria-label={`Edit ${item.word}`}
                           >
                             <svg
@@ -1469,7 +1469,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           </button>
                           <button
                             onClick={() => handleDelete(item.word)}
-                            className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-lg focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+                            className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-lg"
                             aria-label={`Delete ${item.word}`}
                           >
                             <TrashIcon />
@@ -1529,7 +1529,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           onClick={() =>
                             handleEditWord(item.word.trim().toLowerCase())
                           }
-                          className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-lg focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                          className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-lg"
                           aria-label={`Edit ${item.word}`}
                         >
                           <svg
@@ -1549,7 +1549,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         </button>
                         <button
                           onClick={() => handleDelete(item.word)}
-                          className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-lg focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+                          className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-lg"
                           aria-label={`Delete ${item.word}`}
                         >
                           <TrashIcon />

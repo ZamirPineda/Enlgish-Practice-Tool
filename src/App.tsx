@@ -74,7 +74,7 @@ const NavItem = ({
       to={to}
       onClick={onClick}
       className={() =>
-        `flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 min-h-[44px] rounded-lg font-bold text-sm md:text-base transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${
+        `flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 min-h-[44px] rounded-lg font-bold text-sm md:text-base transition-all active:scale-[0.98] ${
           isQueryMatch
             ? "shadow-md bg-accent text-white"
             : "bg-transparent hover:bg-surface-hover text-text-secondary"
@@ -127,7 +127,7 @@ const NavGroup = ({
       <button
         onClick={handleClick}
         onKeyDown={handleKeyDown}
-        className={`flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 min-h-[44px] rounded-lg font-bold text-sm md:text-base transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${
+        className={`flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 min-h-[44px] rounded-lg font-bold text-sm md:text-base transition-all active:scale-[0.98] ${
           isOpen
             ? "bg-surface-hover text-text-primary"
             : "bg-transparent hover:bg-surface-hover text-text-secondary"
@@ -172,7 +172,7 @@ const MobileNavItem = ({
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `flex flex-col items-center justify-center w-16 h-16 rounded-xl transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none ${
+      `flex flex-col items-center justify-center w-16 h-16 rounded-xl transition-all active:scale-[0.98] ${
         isActive
           ? "text-accent bg-accent/10"
           : "text-text-secondary hover:text-text-primary hover:bg-surface-hover"
@@ -343,7 +343,7 @@ const App: React.FC = () => {
           <div className="flex items-center gap-3">
             <Link
               to="/"
-              className="hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded-lg"
+              className="hover:opacity-80 transition-opacity rounded-lg"
             >
               <h1 className="text-lg md:text-xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent truncate cursor-pointer flex items-center gap-0.5">
                 <span className="text-sky-500">S</span>ki
@@ -358,7 +358,7 @@ const App: React.FC = () => {
           <div className="flex items-center gap-3">
             <Link
               to="/stats"
-              className="hidden md:flex items-center gap-2 bg-surface-2 px-3 py-1.5 rounded-full border border-border hover:bg-surface-hover hover:scale-105 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus cursor-pointer"
+              className="hidden md:flex items-center gap-2 bg-surface-2 px-3 py-1.5 rounded-full border border-border hover:bg-surface-hover hover:scale-105 active:scale-95 transition-all cursor-pointer"
               title={`${currentRank.title} (Level ${level})`}
             >
               <div className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)] animate-pulse"></div>
