@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import { trackActivity } from "@/lib/activityTracker";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import { playGameSound } from "@/lib/audioUtils";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 
 interface FileNode {
   name: string;
@@ -234,6 +235,7 @@ interface StudyDocsGameViewProps {
 }
 
 const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
+  const { isOnline } = useNetworkStatus();
   const entries = useMemo(
     () =>
       collectEntries(fileTree).filter(
@@ -590,7 +592,17 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
           <p className="text-text-secondary">
             Pulsa iniciar para jugar con fragmentos reales de tus documentos.
           </p>
-          <Button variant="primary" size="lg" onClick={() => void startGame()}>
+          {!isOnline && (
+            <p className="text-red-400 text-sm font-bold">
+              Estás sin conexión. No es posible cargar documentos para el juego.
+            </p>
+          )}
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={() => void startGame()}
+            disabled={!isOnline}
+          >
             Iniciar juego
           </Button>
         </Card>
