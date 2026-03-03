@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { trackActivity } from "./activityTracker";
 
 export const analyticsEventNameSchema = z.enum([
   "session_start",
@@ -70,6 +71,11 @@ export const trackAnalyticsEvent = (
   if (!parsedEvent.success) {
     console.warn("Invalid analytics event payload", parsedEvent.error);
     return;
+  }
+
+  // Automatically track activity for the heatmap whenever an item is answered (reviewed)
+  if (name === "item_correct" || name === "item_wrong") {
+    trackActivity(1);
   }
 
   const next = [...existing, parsedEvent.data].slice(-MAX_EVENTS);
