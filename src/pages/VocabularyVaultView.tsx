@@ -9,7 +9,9 @@ import {
   calculateSrsData,
   migrateDeckToFsrsIfNeeded,
   srsVocabularyItemSchema,
+  shuffleItems,
 } from "@/lib/srs";
+import { loadSettings } from "@/lib/settingsStore";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import { progressQuest } from "@/lib/xpStore";
 import { Rating } from "ts-fsrs";
@@ -263,6 +265,34 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const reviewSessionStartRef = useRef<number | null>(null);
   const reviewSessionStatsRef = useRef({ attempts: 0, correct: 0 });
 
+  const hasShownTimeBoxAlertRef = useRef(false);
+  const [showTimeBoxAlert, setShowTimeBoxAlert] = useState(false);
+  const settings = useMemo(() => loadSettings(), []);
+
+  useEffect(() => {
+    if (
+      !isReviewing ||
+      !reviewSessionStartRef.current ||
+      !settings.srsTimeBoxMinutes
+    )
+      return;
+
+    const intervalId = setInterval(() => {
+      const elapsedMs = Date.now() - reviewSessionStartRef.current!;
+      const elapsedMinutes = elapsedMs / 60000;
+
+      if (
+        elapsedMinutes >= settings.srsTimeBoxMinutes &&
+        !hasShownTimeBoxAlertRef.current
+      ) {
+        setShowTimeBoxAlert(true);
+        hasShownTimeBoxAlertRef.current = true;
+      }
+    }, 30000);
+
+    return () => clearInterval(intervalId);
+  }, [isReviewing, settings.srsTimeBoxMinutes]);
+
   useEffect(() => {
     localStorage.setItem("vocab-vault-deck", JSON.stringify(deck));
   }, [deck]);
@@ -315,8 +345,11 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     () => Object.values(deck) as SrsVocabularyItem[],
     [deck],
   );
-  const dueItems = useMemo(() => getDueReviewItems(deck), [deck]);
-  const bossReviewItems = useMemo(() => getWeeklyBossReviewItems(deck), [deck]);
+  const dueItems = useMemo(() => getDueReviewItems(deck, 4), [deck]); // Check for items due within 4 hours
+  const bossReviewItems = useMemo(
+    () => getWeeklyBossReviewItems(deck, settings.srsSessionLimit),
+    [deck, settings.srsSessionLimit],
+  );
   const dueItemsForObjective = useMemo(
     () => dueItems.filter((item) => matchesObjective(item, practiceObjective)),
     [dueItems, practiceObjective],
@@ -663,14 +696,21 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     if (dueItemsForObjective.length === 0) return;
     reviewSessionStartRef.current = Date.now();
     reviewSessionStatsRef.current = { attempts: 0, correct: 0 };
+    hasShownTimeBoxAlertRef.current = false;
     setReviewMode("daily");
-    setReviewItems(dueItemsForObjective);
+
+    const sessionItems = shuffleItems(dueItemsForObjective).slice(
+      0,
+      settings.srsSessionLimit,
+    );
+
+    setReviewItems(sessionItems);
     setCurrentIndex(0);
     setIsReviewing(true);
     trackAnalyticsEvent("session_start", {
       mode: "daily",
       objective: practiceObjective,
-      items: dueItemsForObjective.length,
+      items: sessionItems.length,
     });
     setWeeklyActivity((previous) => {
       const safePrevious =
@@ -688,14 +728,18 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     if (bossReviewItemsForObjective.length === 0) return;
     reviewSessionStartRef.current = Date.now();
     reviewSessionStatsRef.current = { attempts: 0, correct: 0 };
+    hasShownTimeBoxAlertRef.current = false;
     setReviewMode("boss");
-    setReviewItems(bossReviewItemsForObjective);
+
+    const sessionItems = shuffleItems(bossReviewItemsForObjective);
+
+    setReviewItems(sessionItems);
     setCurrentIndex(0);
     setIsReviewing(true);
     trackAnalyticsEvent("session_start", {
       mode: "boss",
       objective: practiceObjective,
-      items: bossReviewItemsForObjective.length,
+      items: sessionItems.length,
     });
     setWeeklyActivity((previous) => {
       const safePrevious =
@@ -709,49 +753,84 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     });
   };
 
+  const handleFinishSessionEarly = () => {
+    const sessionDurationMs = reviewSessionStartRef.current
+      ? Date.now() - reviewSessionStartRef.current
+      : 0;
+    trackAnalyticsEvent("session_end", {
+      mode: reviewMode,
+      completed: false,
+      durationSeconds: Math.round(sessionDurationMs / 1000),
+      attempts: reviewSessionStatsRef.current.attempts,
+      correct: reviewSessionStatsRef.current.correct,
+    });
+    if (reviewSessionStartRef.current) {
+      const sessionMinutes = Math.max(1, Math.round(sessionDurationMs / 60000));
+      setWeeklyActivity((previous) => {
+        const safePrevious =
+          previous.weekKey === currentWeekKey
+            ? previous
+            : createDefaultWeeklyActivity(currentWeekKey);
+        return {
+          ...safePrevious,
+          studyMinutes: safePrevious.studyMinutes + sessionMinutes,
+        };
+      });
+      reviewSessionStartRef.current = null;
+    }
+    reviewSessionStatsRef.current = { attempts: 0, correct: 0 };
+    setIsReviewing(false);
+    setReviewMode("daily");
+  };
+
   if (isReviewing && reviewItems[currentIndex]) {
     return (
-      <ReviewSession
-        item={reviewItems[currentIndex]}
-        progress={{ current: currentIndex + 1, total: reviewItems.length }}
-        onComplete={handleReviewComplete}
-        onFinishSession={() => {
-          const sessionDurationMs = reviewSessionStartRef.current
-            ? Date.now() - reviewSessionStartRef.current
-            : 0;
-          trackAnalyticsEvent("session_end", {
-            mode: reviewMode,
-            completed: false,
-            durationSeconds: Math.round(sessionDurationMs / 1000),
-            attempts: reviewSessionStatsRef.current.attempts,
-            correct: reviewSessionStatsRef.current.correct,
-          });
-          if (reviewSessionStartRef.current) {
-            const sessionMinutes = Math.max(
-              1,
-              Math.round(sessionDurationMs / 60000),
-            );
-            setWeeklyActivity((previous) => {
-              const safePrevious =
-                previous.weekKey === currentWeekKey
-                  ? previous
-                  : createDefaultWeeklyActivity(currentWeekKey);
-              return {
-                ...safePrevious,
-                studyMinutes: safePrevious.studyMinutes + sessionMinutes,
-              };
-            });
-            reviewSessionStartRef.current = null;
+      <>
+        <ReviewSession
+          item={reviewItems[currentIndex]}
+          progress={{ current: currentIndex + 1, total: reviewItems.length }}
+          onComplete={handleReviewComplete}
+          onFinishSession={handleFinishSessionEarly}
+          onPlayAudio={onPlayWord}
+          onSpeakingUsed={() =>
+            trackAnalyticsEvent("speaking_used", { source: "review_audio" })
           }
-          reviewSessionStatsRef.current = { attempts: 0, correct: 0 };
-          setIsReviewing(false);
-          setReviewMode("daily");
-        }}
-        onPlayAudio={onPlayWord}
-        onSpeakingUsed={() =>
-          trackAnalyticsEvent("speaking_used", { source: "review_audio" })
-        }
-      />
+        />
+        <Modal
+          isOpen={showTimeBoxAlert}
+          onClose={() => setShowTimeBoxAlert(false)}
+        >
+          <div className="p-2">
+            <h2 className="text-xl font-bold mb-4 text-text-primary">
+              Time limit reached ⏳
+            </h2>
+            <p className="text-surface-600 dark:text-surface-400 mb-6 font-medium">
+              You've been studying for {settings.srsTimeBoxMinutes} minutes.
+              It's a good time to take a small break. Do you want to pause your
+              session or keep going?
+            </p>
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 w-full">
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setShowTimeBoxAlert(false);
+                  handleFinishSessionEarly();
+                }}
+              >
+                End Session
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  setShowTimeBoxAlert(false);
+                }}
+              >
+                Keep Going
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      </>
     );
   }
 

@@ -125,14 +125,31 @@ export function createNewSrsItem(
 
 /**
  * Filters a vocabulary deck to find full items that are due for review today.
+ * Optional `dueSoonHours` allows including items that are due within the next X hours.
  */
 export function getDueReviewItems(
   deck: Record<string, SrsVocabularyItem>,
+  dueSoonHours?: number,
 ): SrsVocabularyItem[] {
   if (!deck) return [];
   const today = formatDateKey(new Date());
+  const now = new Date();
+  const dueSoonTime = dueSoonHours
+    ? new Date(now.getTime() + dueSoonHours * 60 * 60 * 1000)
+    : null;
+
   return Object.values(deck)
-    .filter((item) => item && item.nextReviewDate <= today)
+    .filter((item) => {
+      if (!item) return false;
+      // Due today or before
+      if (item.nextReviewDate <= today) return true;
+      // Due soon check using fsrsData exact time
+      if (dueSoonTime && item.fsrsData?.due) {
+        const itemDueDate = new Date(item.fsrsData.due);
+        return itemDueDate <= dueSoonTime;
+      }
+      return false;
+    })
     .sort((a, b) => {
       const lapsesDiff = (b.lapses ?? 0) - (a.lapses ?? 0);
       if (lapsesDiff !== 0) return lapsesDiff;
@@ -145,8 +162,21 @@ export function getDueReviewItems(
  */
 export function getDueReviewWords(
   deck: Record<string, SrsVocabularyItem>,
+  dueSoonHours?: number,
 ): string[] {
-  return getDueReviewItems(deck).map((item) => item.word);
+  return getDueReviewItems(deck, dueSoonHours).map((item) => item.word);
+}
+
+/**
+ * Shuffles an array of items in place using the Fisher-Yates algorithm.
+ */
+export function shuffleItems<T>(items: T[]): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
 }
 
 export const getIsoWeekKey = (dateInput: Date = new Date()): string => {

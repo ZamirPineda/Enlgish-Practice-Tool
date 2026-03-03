@@ -6,6 +6,7 @@ import {
   getDueReviewWords,
   getIsoWeekKey,
   getWeeklyBossReviewItems,
+  shuffleItems,
 } from "@/lib/srs";
 import { SrsVocabularyItem } from "@/types";
 import { Rating } from "ts-fsrs";
@@ -260,6 +261,22 @@ describe("getDueReviewItems", () => {
     expect(result).toHaveLength(0);
   });
 
+  it("returns items due soon if dueSoonHours is provided", () => {
+    const deck: Record<string, SrsVocabularyItem> = {
+      soon: {
+        ...createItem("soon", "2023-01-02"), // Next review date says tomorrow
+        fsrsData: { due: new Date("2023-01-01T03:00:00.000Z") } as any, // Due in 3 hours
+      },
+      later: {
+        ...createItem("later", "2023-01-02"),
+        fsrsData: { due: new Date("2023-01-01T10:00:00.000Z") } as any, // Due in 10 hours
+      },
+    };
+    const result = getDueReviewItems(deck, 4); // due within 4 hours
+    expect(result).toHaveLength(1);
+    expect(result[0].word).toBe("soon");
+  });
+
   it("filters mixed deck correctly (returns only due/overdue items)", () => {
     const deck: Record<string, SrsVocabularyItem> = {
       due: createItem("due", "2023-01-01"),
@@ -293,6 +310,23 @@ describe("getDueReviewItems", () => {
 
     expect(result).toHaveLength(1);
     expect(result[0].word).toBe("valid");
+  });
+});
+
+describe("shuffleItems", () => {
+  it("shuffles items without losing any elements", () => {
+    const original = [1, 2, 3, 4, 5];
+    const shuffled = shuffleItems(original);
+
+    expect(shuffled).toHaveLength(original.length);
+    expect(shuffled).toEqual(expect.arrayContaining(original));
+  });
+
+  it("returns a new array and doesn't mutate original", () => {
+    const original = [1, 2];
+    const shuffled = shuffleItems(original);
+
+    expect(shuffled).not.toBe(original);
   });
 });
 

@@ -27,10 +27,12 @@ const v1AppSettingsSchema = z.object({
   dailyGoalType: z.enum(["cards", "time", "xp"]).catch("cards"),
   dailyGoalTarget: z.number().catch(50),
   dayOffsetHours: z.number().catch(3), // By default, a day ends at 3 AM the next day
+  srsSessionLimit: z.number().catch(20),
+  srsTimeBoxMinutes: z.number().catch(10),
 });
 
 export const appSettingsSchema = v1AppSettingsSchema.extend({
-  settingsVersion: z.literal(2).catch(2),
+  settingsVersion: z.literal(3).catch(3),
 });
 
 export type AppSettings = z.infer<typeof appSettingsSchema>;
@@ -64,7 +66,7 @@ export const loadSettings = (): AppSettings => {
       const v1Data = v1AppSettingsSchema.parse(parsedData);
       const migratedData: AppSettings = {
         ...v1Data,
-        settingsVersion: 2,
+        settingsVersion: 3,
       };
 
       // Save migrated data immediately
