@@ -321,7 +321,7 @@ describe("VocabularyVaultView flows", () => {
     ).toBeInTheDocument();
   });
 
-  test("speaking analytics: logs speaking_used when playing word audio", () => {
+  test("speaking analytics: logs speaking_used when playing word audio", async () => {
     localStorage.setItem(
       "vocab-vault-deck",
       JSON.stringify({
@@ -342,7 +342,10 @@ describe("VocabularyVaultView flows", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: /My Collection/i }));
-    fireEvent.click(screen.getByRole("button", { name: "Listen to hello" }));
+    const listenButton = await screen.findByRole("button", {
+      name: "Listen to hello",
+    });
+    fireEvent.click(listenButton);
 
     const events = JSON.parse(
       localStorage.getItem(ANALYTICS_EVENTS_KEY) || "[]",
