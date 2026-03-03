@@ -48,6 +48,37 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setIsFlipped(!isFlipped);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if typing in an input
+      const activeTag = document.activeElement?.tagName;
+      if (
+        activeTag === "INPUT" ||
+        activeTag === "TEXTAREA" ||
+        activeTag === "SELECT"
+      ) {
+        return;
+      }
+
+      if (e.code === "Space" || e.code === "Enter") {
+        if (activeTag === "BUTTON" || activeTag === "A") {
+          return;
+        }
+        e.preventDefault();
+        handleFlip();
+      } else if (e.code === "ArrowRight") {
+        e.preventDefault();
+        handleNext();
+      } else if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        handlePrev();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isFlipped, randomizedRows.length]);
+
   if (randomizedRows.length === 0) return <div>Loading...</div>;
 
   const currentrow = randomizedRows[currentCardIndex];
@@ -125,7 +156,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
               {renderQuestion()}
             </div>
             <p className="text-text-muted text-sm animate-pulse mt-4 shrink-0">
-              Haz click para girar (ver respuesta/pregunta)
+              Haz click o presiona <kbd className="font-mono bg-surface-2 px-1 py-0.5 rounded text-xs border border-border mx-1">Espacio/Enter</kbd> para girar
             </p>
           </div>
 
@@ -151,18 +182,18 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handlePrev();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border flex items-center justify-center gap-1 group"
               >
-                Anterior
+                Anterior <span className="opacity-50 text-[10px] font-mono group-hover:opacity-100 transition-opacity hidden sm:inline-block">[←]</span>
               </button>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   handleNext();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border flex items-center justify-center gap-1 group"
               >
-                Siguiente
+                Siguiente <span className="opacity-50 text-[10px] font-mono group-hover:opacity-100 transition-opacity hidden sm:inline-block">[→]</span>
               </button>
             </div>
           </div>
