@@ -5,6 +5,21 @@ import VocabularyVaultView from "@/pages/VocabularyVaultView";
 import { getIsoWeekKey } from "@/lib/srs";
 import { ANALYTICS_EVENTS_KEY } from "@/lib/analytics";
 
+vi.mock("@tanstack/react-virtual", () => ({
+  useVirtualizer: vi.fn().mockImplementation((options) => ({
+    getVirtualItems: () =>
+      Array.from({ length: options.count }).map((_, i) => ({
+        index: i,
+        start: i * 100,
+        end: (i + 1) * 100,
+        size: 100,
+        key: `mock-${i}`,
+      })),
+    getTotalSize: () => options.count * 100,
+    measureElement: vi.fn(),
+  })),
+}));
+
 const today = new Date().toISOString().split("T")[0];
 
 describe("VocabularyVaultView flows", () => {

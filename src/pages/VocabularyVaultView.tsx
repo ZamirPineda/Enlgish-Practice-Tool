@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { SrsVocabularyItem } from "@/types";
 import { starterKits } from "@/features/data/vocabularyVault";
 import {
@@ -286,6 +287,32 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobileActionsVisible, setIsMobileActionsVisible] = useState(true);
   const lastScrollTopRef = useRef(0);
+
+  const parentRef = useRef<HTMLDivElement>(null);
+
+  const [columnCount, setColumnCount] = useState(3);
+  useEffect(() => {
+    const updateColumns = () => {
+      if (window.innerWidth >= 1024) setColumnCount(3);
+      else if (window.innerWidth >= 768) setColumnCount(2);
+      else setColumnCount(1);
+    };
+    updateColumns();
+    window.addEventListener("resize", updateColumns);
+    return () => window.removeEventListener("resize", updateColumns);
+  }, []);
+
+  const virtualItemCount =
+    viewMode === "grid"
+      ? Math.ceil(searchResults.length / columnCount)
+      : searchResults.length;
+
+  const rowVirtualizer = useVirtualizer({
+    count: virtualItemCount,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => (viewMode === "grid" ? 280 : 140),
+    overscan: 5,
+  });
   const reviewSessionStartRef = useRef<number | null>(null);
   const reviewSessionStatsRef = useRef({ attempts: 0, correct: 0 });
 
@@ -895,6 +922,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
 
   return (
     <div
+      ref={parentRef}
       className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-4 sm:pb-8"
       onScroll={handleContainerScroll}
     >
@@ -1398,166 +1426,202 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             )}
             {totalInDeck > 0 && (
               <div
-                className={
-                  viewMode === "grid"
-                    ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4"
-                    : "flex flex-col gap-3 pb-4"
-                }
+                style={{
+                  height: `${rowVirtualizer.getTotalSize()}px`,
+                  width: "100%",
+                  position: "relative",
+                }}
               >
-                {searchResults.map(({ item, matches }) => (
-                  <div
-                    key={item.word}
-                    className={`bg-surface-1 border border-border p-5 rounded-2xl hover:shadow-2xl transition-all group relative flex ${viewMode === "grid" ? "flex-col" : "flex-row items-center gap-6"}`}
-                  >
-                    <div
-                      className={`flex justify-between items-start ${viewMode === "grid" ? "mb-2" : "flex-1"}`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-black text-text-primary">
-                          <HighlightedText
-                            text={item.word}
-                            indices={getMatchIndices(matches, "word")}
-                          />
-                        </h3>
-                        <button
-                          onClick={() => {
-                            onPlayWord(item.word);
-                            trackAnalyticsEvent("speaking_used", {
-                              source: "collection_audio",
-                              word: item.word,
-                            });
-                          }}
-                          className="text-text-secondary hover:text-accent rounded"
-                          aria-label={`Listen to ${item.word}`}
-                        >
-                          <PlayIcon className="h-4 w-4" />
-                        </button>
-                        <SpeechPracticeButton
-                          targetText={item.word}
-                          onCorrect={() => {}}
-                          onUsage={() =>
-                            trackAnalyticsEvent("speaking_used", {
-                              source: "speech_practice",
-                              word: item.word,
-                            })
-                          }
-                        />
-                      </div>
-                      {viewMode === "grid" && (
-                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
-                          <button
-                            onClick={() =>
-                              handleEditWord(item.word.trim().toLowerCase())
-                            }
-                            className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-lg"
-                            aria-label={`Edit ${item.word}`}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-4 w-4"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                              />
-                            </svg>
-                          </button>
-                          <button
-                            onClick={() => handleDelete(item.word)}
-                            className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-lg"
-                            aria-label={`Delete ${item.word}`}
-                          >
-                            <TrashIcon />
-                          </button>
-                        </div>
-                      )}
-                    </div>
+                {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                  const fromIndex =
+                    viewMode === "grid"
+                      ? virtualRow.index * columnCount
+                      : virtualRow.index;
+                  const toIndex =
+                    viewMode === "grid"
+                      ? Math.min(fromIndex + columnCount, searchResults.length)
+                      : fromIndex + 1;
+                  const rowItems = searchResults.slice(fromIndex, toIndex);
 
+                  return (
                     <div
-                      className={`${viewMode === "grid" ? "flex flex-wrap gap-1 mb-3" : "hidden"}`}
+                      key={virtualRow.key}
+                      data-index={virtualRow.index}
+                      ref={rowVirtualizer.measureElement}
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        transform: `translateY(${virtualRow.start}px)`,
+                      }}
+                      className={
+                        viewMode === "grid"
+                          ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4"
+                          : "flex flex-col gap-3 pb-4"
+                      }
                     >
-                      {item.partOfSpeech && (
-                        <Badge className="uppercase">{item.partOfSpeech}</Badge>
-                      )}
-                      {item.tags?.map((tag) => (
-                        <Badge key={tag} variant="accent">
-                          <HighlightedText
-                            text={tag}
-                            indices={getMatchIndices(matches, "tags")}
-                          />
-                        </Badge>
+                      {rowItems.map(({ item, matches }) => (
+                        <div
+                          key={item.word}
+                          className={`bg-surface-1 border border-border p-5 rounded-2xl hover:shadow-2xl transition-all group relative flex ${viewMode === "grid" ? "flex-col" : "flex-row items-center gap-6"}`}
+                        >
+                          <div
+                            className={`flex justify-between items-start ${viewMode === "grid" ? "mb-2" : "flex-1"}`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <h3 className="text-xl font-black text-text-primary">
+                                <HighlightedText
+                                  text={item.word}
+                                  indices={getMatchIndices(matches, "word")}
+                                />
+                              </h3>
+                              <button
+                                onClick={() => {
+                                  onPlayWord(item.word);
+                                  trackAnalyticsEvent("speaking_used", {
+                                    source: "collection_audio",
+                                    word: item.word,
+                                  });
+                                }}
+                                className="text-text-secondary hover:text-accent rounded"
+                                aria-label={`Listen to ${item.word}`}
+                              >
+                                <PlayIcon className="h-4 w-4" />
+                              </button>
+                              <SpeechPracticeButton
+                                targetText={item.word}
+                                onCorrect={() => {}}
+                                onUsage={() =>
+                                  trackAnalyticsEvent("speaking_used", {
+                                    source: "speech_practice",
+                                    word: item.word,
+                                  })
+                                }
+                              />
+                            </div>
+                            {viewMode === "grid" && (
+                              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
+                                <button
+                                  onClick={() =>
+                                    handleEditWord(
+                                      item.word.trim().toLowerCase(),
+                                    )
+                                  }
+                                  className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-lg"
+                                  aria-label={`Edit ${item.word}`}
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-4 w-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                    />
+                                  </svg>
+                                </button>
+                                <button
+                                  onClick={() => handleDelete(item.word)}
+                                  className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-lg"
+                                  aria-label={`Delete ${item.word}`}
+                                >
+                                  <TrashIcon />
+                                </button>
+                              </div>
+                            )}
+                          </div>
+
+                          <div
+                            className={`${viewMode === "grid" ? "flex flex-wrap gap-1 mb-3" : "hidden"}`}
+                          >
+                            {item.partOfSpeech && (
+                              <Badge className="uppercase">
+                                {item.partOfSpeech}
+                              </Badge>
+                            )}
+                            {item.tags?.map((tag) => (
+                              <Badge key={tag} variant="accent">
+                                <HighlightedText
+                                  text={tag}
+                                  indices={getMatchIndices(matches, "tags")}
+                                />
+                              </Badge>
+                            ))}
+                          </div>
+
+                          <p
+                            className={`text-text-secondary text-sm italic ${viewMode === "grid" ? "mb-4 line-clamp-2 flex-1" : "flex-1 line-clamp-1"}`}
+                          >
+                            "
+                            <HighlightedText
+                              text={item.definition}
+                              indices={getMatchIndices(matches, "definition")}
+                            />
+                            "
+                          </p>
+
+                          <div
+                            className={`${viewMode === "grid" ? "w-full" : "w-48 flex flex-col justify-center"}`}
+                          >
+                            <div className="flex justify-between items-center text-[10px] font-black uppercase text-text-secondary">
+                              <span>Strength</span>
+                              <span
+                                className={
+                                  item.status === "mastered"
+                                    ? "text-success"
+                                    : "text-accent"
+                                }
+                              >
+                                {item.status}
+                              </span>
+                            </div>
+                            <MemoryBar interval={item.interval} />
+                          </div>
+
+                          {viewMode === "list" && (
+                            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all ml-4">
+                              <button
+                                onClick={() =>
+                                  handleEditWord(item.word.trim().toLowerCase())
+                                }
+                                className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-lg"
+                                aria-label={`Edit ${item.word}`}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="h-4 w-4"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                  />
+                                </svg>
+                              </button>
+                              <button
+                                onClick={() => handleDelete(item.word)}
+                                className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-lg"
+                                aria-label={`Delete ${item.word}`}
+                              >
+                                <TrashIcon />
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       ))}
                     </div>
-
-                    <p
-                      className={`text-text-secondary text-sm italic ${viewMode === "grid" ? "mb-4 line-clamp-2 flex-1" : "flex-1 line-clamp-1"}`}
-                    >
-                      "
-                      <HighlightedText
-                        text={item.definition}
-                        indices={getMatchIndices(matches, "definition")}
-                      />
-                      "
-                    </p>
-
-                    <div
-                      className={`${viewMode === "grid" ? "w-full" : "w-48 flex flex-col justify-center"}`}
-                    >
-                      <div className="flex justify-between items-center text-[10px] font-black uppercase text-text-secondary">
-                        <span>Strength</span>
-                        <span
-                          className={
-                            item.status === "mastered"
-                              ? "text-success"
-                              : "text-accent"
-                          }
-                        >
-                          {item.status}
-                        </span>
-                      </div>
-                      <MemoryBar interval={item.interval} />
-                    </div>
-
-                    {viewMode === "list" && (
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all ml-4">
-                        <button
-                          onClick={() =>
-                            handleEditWord(item.word.trim().toLowerCase())
-                          }
-                          className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-lg"
-                          aria-label={`Edit ${item.word}`}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                            />
-                          </svg>
-                        </button>
-                        <button
-                          onClick={() => handleDelete(item.word)}
-                          className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-lg"
-                          aria-label={`Delete ${item.word}`}
-                        >
-                          <TrashIcon />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

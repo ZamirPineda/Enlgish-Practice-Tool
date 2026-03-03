@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { EnglishLevel, DrillExample, WordPart } from "@/types";
 import { drillTopicsByLevel } from "@/features/data/drills";
 import { getCategoryStyle } from "@/lib/categoryStyles";
@@ -172,6 +173,14 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
   const [autoPlayIndex, setAutoPlayIndex] = useState(-1);
   const [isMobileActionsVisible, setIsMobileActionsVisible] = useState(true);
   const lastScrollTopRef = useRef(0);
+  const parentRef = useRef<HTMLDivElement>(null);
+
+  const rowVirtualizer = useVirtualizer({
+    count: displayExamples.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 180,
+    overscan: 5,
+  });
 
   // Reset state when topic or level changes
   useEffect(() => {
@@ -439,6 +448,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
 
   return (
     <div
+      ref={parentRef}
       className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 lg:p-8 pb-4 sm:pb-8"
       onScroll={handleContainerScroll}
     >
@@ -597,341 +607,382 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
               )}
             </div>
 
-            <div className="space-y-4">
-              {displayExamples.map((example, index) => {
-                // Unique ID for this item pre-calculated to handle shuffle rendering and performance
-                const uniqueKey = example.uniqueKey;
-                const isRevealed = revealedIndices.has(index);
+            <div
+              style={{
+                height: `${rowVirtualizer.getTotalSize()}px`,
+                width: "100%",
+                position: "relative",
+              }}
+            >
+              {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                const index = virtualRow.index;
+                const example = displayExamples[index];
 
-                // Section Header (Skip if shuffled to avoid confusion)
-                if (example.parts && example.parts[0].word.startsWith("---")) {
-                  if (isShuffled) return null;
-                  const title = example.parts[0].word
-                    .replace(/---/g, "")
-                    .trim();
-                  return (
-                    <div key={uniqueKey} className="pt-6 pb-2">
-                      <h2 className="text-xl font-semibold text-accent border-b-2 border-accent/20 pb-2">
-                        {title}
-                      </h2>
-                    </div>
-                  );
-                }
+                return (
+                  <div
+                    key={virtualRow.key}
+                    data-index={index}
+                    ref={rowVirtualizer.measureElement}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      transform: `translateY(${virtualRow.start}px)`,
+                    }}
+                    className="pb-4"
+                  >
+                    {(() => {
+                      // Unique ID for this item pre-calculated to handle shuffle rendering and performance
+                      const uniqueKey = example.uniqueKey;
+                      const isRevealed = revealedIndices.has(index);
 
-                // Minimal Pair Card
-                if (example.comparison) {
-                  const [itemA, itemB] = example.comparison;
-                  const textA = example.textA || "";
-                  const textB = example.textB || "";
-
-                  const renderMinimalPairContent = (isFront: boolean) => (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 h-full">
-                      {/* Item A */}
-                      <div className="flex flex-col justify-between gap-2 border-b md:border-b-0 md:border-r border-border pb-3 md:pb-0 md:pr-4 h-full">
-                        <div className="flex-1">
-                          {isFront ? (
-                            <div className="mb-3">
-                              {itemA.translation_es && (
-                                <p className="text-success font-medium text-lg mb-2">
-                                  {itemA.translation_es}
-                                </p>
-                              )}
-                              <Sentence
-                                parts={itemA.parts}
-                                isHidden={true}
-                                onReveal={() => handleReveal(index)}
-                              />
-                            </div>
-                          ) : (
-                            <>
-                              <Sentence parts={itemA.parts} isHidden={false} />
-                              <p className="text-cyan-600 dark:text-cyan-300 font-mono text-sm tracking-wider mt-1">
-                                {itemA.ipa}
-                              </p>
-                              {itemA.translation_es && (
-                                <p className="text-text-secondary text-sm mt-1 italic">
-                                  {itemA.translation_es}
-                                </p>
-                              )}
-                            </>
-                          )}
-                        </div>
-                        <div className="flex justify-end mt-2">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onPlayWord(textA);
-                            }}
-                            disabled={!!isWordAudioLoading}
-                            className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-accent text-white hover:bg-accent-hover" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"}`}
-                            aria-label={`Listen to "${textA}"`}
-                          >
-                            {isWordAudioLoading === textA ? (
-                              <LoadingSpinner />
-                            ) : (
-                              <PlayIcon />
-                            )}
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Item B */}
-                      <div className="flex flex-col justify-between gap-2 h-full">
-                        <div className="flex-1">
-                          {isFront ? (
-                            <div className="mb-3">
-                              {itemB.translation_es && (
-                                <p className="text-success font-medium text-lg mb-2">
-                                  {itemB.translation_es}
-                                </p>
-                              )}
-                              <Sentence
-                                parts={itemB.parts}
-                                isHidden={true}
-                                onReveal={() => handleReveal(index)}
-                              />
-                            </div>
-                          ) : (
-                            <>
-                              <Sentence parts={itemB.parts} isHidden={false} />
-                              <p className="text-cyan-600 dark:text-cyan-300 font-mono text-sm tracking-wider mt-1">
-                                {itemB.ipa}
-                              </p>
-                              {itemB.translation_es && (
-                                <p className="text-text-secondary text-sm mt-1 italic">
-                                  {itemB.translation_es}
-                                </p>
-                              )}
-                            </>
-                          )}
-                        </div>
-                        <div className="flex justify-end mt-2">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onPlayWord(textB);
-                            }}
-                            disabled={!!isWordAudioLoading}
-                            className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-accent text-white hover:bg-accent-hover" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"}`}
-                            aria-label={`Listen to "${textB}"`}
-                          >
-                            {isWordAudioLoading === textB ? (
-                              <LoadingSpinner />
-                            ) : (
-                              <PlayIcon />
-                            )}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-
-                  const isFlipped = !isPracticeMode || isRevealed;
-
-                  return (
-                    <div
-                      key={uniqueKey}
-                      className="study-item-card group perspective-[1000px] w-full focus:outline-none"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          if (isPracticeMode && !isRevealed) {
-                            handleReveal(index);
-                          } else {
-                            onPlayWord(textA);
-                          }
-                        }
-                      }}
-                    >
-                      <div
-                        className={`relative w-full grid transition-transform duration-500 [transform-style:preserve-3d] ${isFlipped ? "[transform:rotateX(180deg)]" : ""}`}
-                      >
-                        {/* Front (Hidden State) */}
-                        <div
-                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] p-4 rounded-lg border transition-all duration-300 cursor-pointer ${autoPlayIndex === index ? "ring-2 ring-focus bg-surface-2" : "bg-surface-1 border-accent/30 ring-1 ring-accent/20 hover:bg-surface-hover"}`}
-                          onClick={() => {
-                            if (isPracticeMode && !isRevealed) {
-                              handleReveal(index);
-                            }
-                          }}
-                        >
-                          {renderMinimalPairContent(true)}
-                        </div>
-
-                        {/* Back (Revealed State) */}
-                        <div
-                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] [transform:rotateX(180deg)] p-4 rounded-lg border transition-all duration-300 ${autoPlayIndex === index ? "ring-2 ring-focus bg-surface-2" : "bg-surface-1 border-border"}`}
-                        >
-                          {renderMinimalPairContent(false)}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-
-                // Standard Card
-                if (example.parts) {
-                  const fullText = example.fullText || "";
-                  const isSaved = savedItems.has(fullText);
-
-                  const renderCardContent = (isFront: boolean) => (
-                    <div className="flex flex-col sm:flex-row sm:items-start gap-4 h-full">
-                      <div className="flex-1 order-2 sm:order-1">
-                        {isFront ? (
-                          <div>
-                            {example.translation_es && (
-                              <p className="text-success font-semibold text-xl mb-3">
-                                {example.translation_es}
-                              </p>
-                            )}
-                            {example.definition && !example.translation_es && (
-                              <p className="text-amber-500 dark:text-yellow-300 text-lg mb-3 italic">
-                                "{example.definition}"
-                              </p>
-                            )}
-                            <Sentence
-                              parts={example.parts}
-                              isHidden={true}
-                              onReveal={() => handleReveal(index)}
-                            />
+                      // Section Header (Skip if shuffled to avoid confusion)
+                      if (
+                        example.parts &&
+                        example.parts[0].word.startsWith("---")
+                      ) {
+                        if (isShuffled) return null;
+                        const title = example.parts[0].word
+                          .replace(/---/g, "")
+                          .trim();
+                        return (
+                          <div key={uniqueKey} className="pt-6 pb-2">
+                            <h2 className="text-xl font-semibold text-accent border-b-2 border-accent/20 pb-2">
+                              {title}
+                            </h2>
                           </div>
-                        ) : (
-                          <div>
-                            <Sentence parts={example.parts} isHidden={false} />
-                            <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 items-baseline">
-                              <p className="text-cyan-600 dark:text-cyan-300 font-mono text-sm tracking-wider">
-                                {example.ipa}
-                              </p>
-                              {example.translation_es && (
-                                <p className="text-text-secondary text-sm italic">
-                                  {example.translation_es}
-                                </p>
+                        );
+                      }
+
+                      // Minimal Pair Card
+                      if (example.comparison) {
+                        const [itemA, itemB] = example.comparison;
+                        const textA = example.textA || "";
+                        const textB = example.textB || "";
+
+                        const renderMinimalPairContent = (isFront: boolean) => (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 h-full">
+                            {/* Item A */}
+                            <div className="flex flex-col justify-between gap-2 border-b md:border-b-0 md:border-r border-border pb-3 md:pb-0 md:pr-4 h-full">
+                              <div className="flex-1">
+                                {isFront ? (
+                                  <div className="mb-3">
+                                    {itemA.translation_es && (
+                                      <p className="text-success font-medium text-lg mb-2">
+                                        {itemA.translation_es}
+                                      </p>
+                                    )}
+                                    <Sentence
+                                      parts={itemA.parts}
+                                      isHidden={true}
+                                      onReveal={() => handleReveal(index)}
+                                    />
+                                  </div>
+                                ) : (
+                                  <>
+                                    <Sentence
+                                      parts={itemA.parts}
+                                      isHidden={false}
+                                    />
+                                    <p className="text-cyan-600 dark:text-cyan-300 font-mono text-sm tracking-wider mt-1">
+                                      {itemA.ipa}
+                                    </p>
+                                    {itemA.translation_es && (
+                                      <p className="text-text-secondary text-sm mt-1 italic">
+                                        {itemA.translation_es}
+                                      </p>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                              <div className="flex justify-end mt-2">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    onPlayWord(textA);
+                                  }}
+                                  disabled={!!isWordAudioLoading}
+                                  className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-accent text-white hover:bg-accent-hover" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"}`}
+                                  aria-label={`Listen to "${textA}"`}
+                                >
+                                  {isWordAudioLoading === textA ? (
+                                    <LoadingSpinner />
+                                  ) : (
+                                    <PlayIcon />
+                                  )}
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Item B */}
+                            <div className="flex flex-col justify-between gap-2 h-full">
+                              <div className="flex-1">
+                                {isFront ? (
+                                  <div className="mb-3">
+                                    {itemB.translation_es && (
+                                      <p className="text-success font-medium text-lg mb-2">
+                                        {itemB.translation_es}
+                                      </p>
+                                    )}
+                                    <Sentence
+                                      parts={itemB.parts}
+                                      isHidden={true}
+                                      onReveal={() => handleReveal(index)}
+                                    />
+                                  </div>
+                                ) : (
+                                  <>
+                                    <Sentence
+                                      parts={itemB.parts}
+                                      isHidden={false}
+                                    />
+                                    <p className="text-cyan-600 dark:text-cyan-300 font-mono text-sm tracking-wider mt-1">
+                                      {itemB.ipa}
+                                    </p>
+                                    {itemB.translation_es && (
+                                      <p className="text-text-secondary text-sm mt-1 italic">
+                                        {itemB.translation_es}
+                                      </p>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                              <div className="flex justify-end mt-2">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    onPlayWord(textB);
+                                  }}
+                                  disabled={!!isWordAudioLoading}
+                                  className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-accent text-white hover:bg-accent-hover" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"}`}
+                                  aria-label={`Listen to "${textB}"`}
+                                >
+                                  {isWordAudioLoading === textB ? (
+                                    <LoadingSpinner />
+                                  ) : (
+                                    <PlayIcon />
+                                  )}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        );
+
+                        const isFlipped = !isPracticeMode || isRevealed;
+
+                        return (
+                          <div
+                            key={uniqueKey}
+                            className="study-item-card group perspective-[1000px] w-full focus:outline-none"
+                            tabIndex={0}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                if (isPracticeMode && !isRevealed) {
+                                  handleReveal(index);
+                                } else {
+                                  onPlayWord(textA);
+                                }
+                              }
+                            }}
+                          >
+                            <div
+                              className={`relative w-full grid transition-transform duration-500 [transform-style:preserve-3d] ${isFlipped ? "[transform:rotateX(180deg)]" : ""}`}
+                            >
+                              {/* Front (Hidden State) */}
+                              <div
+                                className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] p-4 rounded-lg border transition-all duration-300 cursor-pointer ${autoPlayIndex === index ? "ring-2 ring-focus bg-surface-2" : "bg-surface-1 border-accent/30 ring-1 ring-accent/20 hover:bg-surface-hover"}`}
+                                onClick={() => {
+                                  if (isPracticeMode && !isRevealed) {
+                                    handleReveal(index);
+                                  }
+                                }}
+                              >
+                                {renderMinimalPairContent(true)}
+                              </div>
+
+                              {/* Back (Revealed State) */}
+                              <div
+                                className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] [transform:rotateX(180deg)] p-4 rounded-lg border transition-all duration-300 ${autoPlayIndex === index ? "ring-2 ring-focus bg-surface-2" : "bg-surface-1 border-border"}`}
+                              >
+                                {renderMinimalPairContent(false)}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+
+                      // Standard Card
+                      if (example.parts) {
+                        const fullText = example.fullText || "";
+                        const isSaved = savedItems.has(fullText);
+
+                        const renderCardContent = (isFront: boolean) => (
+                          <div className="flex flex-col sm:flex-row sm:items-start gap-4 h-full">
+                            <div className="flex-1 order-2 sm:order-1">
+                              {isFront ? (
+                                <div>
+                                  {example.translation_es && (
+                                    <p className="text-success font-semibold text-xl mb-3">
+                                      {example.translation_es}
+                                    </p>
+                                  )}
+                                  {example.definition &&
+                                    !example.translation_es && (
+                                      <p className="text-amber-500 dark:text-yellow-300 text-lg mb-3 italic">
+                                        "{example.definition}"
+                                      </p>
+                                    )}
+                                  <Sentence
+                                    parts={example.parts}
+                                    isHidden={true}
+                                    onReveal={() => handleReveal(index)}
+                                  />
+                                </div>
+                              ) : (
+                                <div>
+                                  <Sentence
+                                    parts={example.parts}
+                                    isHidden={false}
+                                  />
+                                  <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 items-baseline">
+                                    <p className="text-cyan-600 dark:text-cyan-300 font-mono text-sm tracking-wider">
+                                      {example.ipa}
+                                    </p>
+                                    {example.translation_es && (
+                                      <p className="text-text-secondary text-sm italic">
+                                        {example.translation_es}
+                                      </p>
+                                    )}
+                                  </div>
+                                  {example.definition && (
+                                    <div className="mt-2 pt-2 border-t border-border">
+                                      <p className="text-sm text-amber-600 dark:text-yellow-300/90">
+                                        <span className="font-semibold text-amber-700 dark:text-yellow-200">
+                                          Meaning:
+                                        </span>{" "}
+                                        {example.definition}
+                                      </p>
+                                    </div>
+                                  )}
+                                </div>
                               )}
                             </div>
-                            {example.definition && (
-                              <div className="mt-2 pt-2 border-t border-border">
-                                <p className="text-sm text-amber-600 dark:text-yellow-300/90">
-                                  <span className="font-semibold text-amber-700 dark:text-yellow-200">
-                                    Meaning:
-                                  </span>{" "}
-                                  {example.definition}
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
 
-                      <div className="flex items-center gap-2 order-1 sm:order-2 self-end sm:self-start">
-                        {!isFront && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleSave(
-                                fullText,
-                                example.translation_es || example.definition,
-                              );
-                            }}
-                            className={`h-10 w-10 flex items-center justify-center rounded-full transition-colors ${isSaved ? "text-success bg-success/20" : "text-text-secondary hover:text-white hover:bg-surface-hover"}`}
-                            title={
-                              isSaved
-                                ? "Saved to Vault"
-                                : "Save to Vocabulary Vault"
-                            }
-                            aria-label={
-                              isSaved
-                                ? "Saved to Vault"
-                                : "Save to Vocabulary Vault"
-                            }
-                            disabled={isSaved}
-                          >
-                            {isSaved ? <CheckIcon /> : <BookmarkIcon />}
-                          </button>
-                        )}
+                            <div className="flex items-center gap-2 order-1 sm:order-2 self-end sm:self-start">
+                              {!isFront && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleSave(
+                                      fullText,
+                                      example.translation_es ||
+                                        example.definition,
+                                    );
+                                  }}
+                                  className={`h-10 w-10 flex items-center justify-center rounded-full transition-colors ${isSaved ? "text-success bg-success/20" : "text-text-secondary hover:text-white hover:bg-surface-hover"}`}
+                                  title={
+                                    isSaved
+                                      ? "Saved to Vault"
+                                      : "Save to Vocabulary Vault"
+                                  }
+                                  aria-label={
+                                    isSaved
+                                      ? "Saved to Vault"
+                                      : "Save to Vocabulary Vault"
+                                  }
+                                  disabled={isSaved}
+                                >
+                                  {isSaved ? <CheckIcon /> : <BookmarkIcon />}
+                                </button>
+                              )}
 
-                        {!isPracticeMode &&
-                          !isFront &&
-                          example.translation_es && (
-                            <div className="relative group hidden sm:block">
-                              <div className="h-10 w-10 flex items-center justify-center rounded-full bg-surface-2 text-text-secondary cursor-help">
-                                <TranslateIcon />
-                              </div>
-                              <div className="absolute bottom-full right-0 mb-2 w-max max-w-xs px-3 py-1.5 bg-surface-1 text-text-primary text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border border-border shadow-lg">
-                                {example.translation_es}
-                              </div>
-                            </div>
-                          )}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onPlayWord(fullText);
-                          }}
-                          disabled={!!isWordAudioLoading}
-                          className={`h-10 w-10 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed
+                              {!isPracticeMode &&
+                                !isFront &&
+                                example.translation_es && (
+                                  <div className="relative group hidden sm:block">
+                                    <div className="h-10 w-10 flex items-center justify-center rounded-full bg-surface-2 text-text-secondary cursor-help">
+                                      <TranslateIcon />
+                                    </div>
+                                    <div className="absolute bottom-full right-0 mb-2 w-max max-w-xs px-3 py-1.5 bg-surface-1 text-text-primary text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 border border-border shadow-lg">
+                                      {example.translation_es}
+                                    </div>
+                                  </div>
+                                )}
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  onPlayWord(fullText);
+                                }}
+                                disabled={!!isWordAudioLoading}
+                                className={`h-10 w-10 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed
                                                       ${
                                                         isFront
                                                           ? "bg-accent text-white hover:bg-accent-hover shadow-lg shadow-accent/20"
                                                           : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"
                                                       }
                                                   `}
-                          aria-label={`Listen to "${fullText}"`}
-                          title={isFront ? "Listen for a hint" : "Listen"}
-                        >
-                          {isWordAudioLoading === fullText ? (
-                            <LoadingSpinner />
-                          ) : (
-                            <PlayIcon />
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  );
+                                aria-label={`Listen to "${fullText}"`}
+                                title={isFront ? "Listen for a hint" : "Listen"}
+                              >
+                                {isWordAudioLoading === fullText ? (
+                                  <LoadingSpinner />
+                                ) : (
+                                  <PlayIcon />
+                                )}
+                              </button>
+                            </div>
+                          </div>
+                        );
 
-                  const isFlipped = !isPracticeMode || isRevealed;
+                        const isFlipped = !isPracticeMode || isRevealed;
 
-                  return (
-                    <div
-                      key={uniqueKey}
-                      className="study-item-card group perspective-[1000px] w-full focus:outline-none"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          if (isPracticeMode && !isRevealed) {
-                            handleReveal(index);
-                          } else {
-                            onPlayWord(fullText);
-                          }
-                        }
-                      }}
-                    >
-                      <div
-                        className={`relative w-full grid transition-transform duration-500 [transform-style:preserve-3d] ${isFlipped ? "[transform:rotateX(180deg)]" : ""}`}
-                      >
-                        {/* Front (Hidden State) */}
-                        <div
-                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] p-4 rounded-lg border transition-all duration-300 cursor-pointer ${autoPlayIndex === index ? "ring-2 ring-[var(--color-focus)] bg-[var(--color-surface-2)]" : "bg-[var(--color-surface-1)] border-[var(--color-accent)]/30 ring-1 ring-[var(--color-accent)]/20 hover:bg-[var(--color-surface-hover)]"}`}
-                          onClick={() => {
-                            if (isPracticeMode && !isRevealed) {
-                              handleReveal(index);
-                            }
-                          }}
-                        >
-                          {renderCardContent(true)}
-                        </div>
+                        return (
+                          <div
+                            key={uniqueKey}
+                            className="study-item-card group perspective-[1000px] w-full focus:outline-none"
+                            tabIndex={0}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                if (isPracticeMode && !isRevealed) {
+                                  handleReveal(index);
+                                } else {
+                                  onPlayWord(fullText);
+                                }
+                              }
+                            }}
+                          >
+                            <div
+                              className={`relative w-full grid transition-transform duration-500 [transform-style:preserve-3d] ${isFlipped ? "[transform:rotateX(180deg)]" : ""}`}
+                            >
+                              {/* Front (Hidden State) */}
+                              <div
+                                className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] p-4 rounded-lg border transition-all duration-300 cursor-pointer ${autoPlayIndex === index ? "ring-2 ring-[var(--color-focus)] bg-[var(--color-surface-2)]" : "bg-[var(--color-surface-1)] border-[var(--color-accent)]/30 ring-1 ring-[var(--color-accent)]/20 hover:bg-[var(--color-surface-hover)]"}`}
+                                onClick={() => {
+                                  if (isPracticeMode && !isRevealed) {
+                                    handleReveal(index);
+                                  }
+                                }}
+                              >
+                                {renderCardContent(true)}
+                              </div>
 
-                        {/* Back (Revealed State) */}
-                        <div
-                          className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] [transform:rotateX(180deg)] p-4 rounded-lg border transition-all duration-300 ${autoPlayIndex === index ? "ring-2 ring-[var(--color-focus)] bg-[var(--color-surface-2)]" : "bg-[var(--color-surface-1)] border-[var(--color-border)]"}`}
-                        >
-                          {renderCardContent(false)}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-                return null;
+                              {/* Back (Revealed State) */}
+                              <div
+                                className={`col-start-1 row-start-1 w-full h-full [backface-visibility:hidden] [transform:rotateX(180deg)] p-4 rounded-lg border transition-all duration-300 ${autoPlayIndex === index ? "ring-2 ring-[var(--color-focus)] bg-[var(--color-surface-2)]" : "bg-[var(--color-surface-1)] border-[var(--color-border)]"}`}
+                              >
+                                {renderCardContent(false)}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })()}
+                  </div>
+                );
               })}
             </div>
           </div>
