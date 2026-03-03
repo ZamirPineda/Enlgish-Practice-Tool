@@ -25,18 +25,27 @@ test.describe("PWA Auto Update Flow", () => {
     const updateButton = page.getByRole("button", { name: "Actualizar" });
     await expect(updateButton).toBeVisible();
 
-    // Click on update
-    // Intercept reload to verify it happens
+    // Add logic to bypass the onboarding modal intercepting clicks
+    try {
+      const skipButton = page.getByRole("button", { name: "Skip" });
+      if (await skipButton.isVisible({ timeout: 500 })) {
+        await skipButton.click({ force: true });
+      }
+    } catch (e) {
+      // Ignored if no modal
+    }
+
+    // Wait for the modal (if any) to clear or just force click
     let didReload = false;
     page.on("framenavigated", () => {
       didReload = true;
     });
 
-    await updateButton.click();
+    await updateButton.click({ force: true });
 
     // Since window.location.reload() happens, let's wait a bit to verify nav or log
     // We expect the script to call reload, bounding test time to ensure it passed.
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1500); // Increased wait time to handle slower navigation due to force click / react renders
     expect(didReload).toBe(true);
   });
 

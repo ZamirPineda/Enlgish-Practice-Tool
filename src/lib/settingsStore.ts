@@ -12,7 +12,7 @@ const getSystemReducedMotionPreference = () => {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 };
 
-export const appSettingsSchema = z.object({
+const v1AppSettingsSchema = z.object({
   theme: z.enum(["dark", "light"]).catch("dark"),
   reducedMotion: z.boolean().catch(() => getSystemReducedMotionPreference()),
   ttsAutoPlay: z.boolean().catch(true),
@@ -24,9 +24,18 @@ export const appSettingsSchema = z.object({
     .number()
     .catch(5)
     .transform((val) => Math.min(14, Math.max(1, Math.round(val)))),
+  dailyGoalType: z.enum(["cards", "time", "xp"]).catch("cards"),
+  dailyGoalTarget: z.number().catch(50),
+  dayOffsetHours: z.number().catch(3), // By default, a day ends at 3 AM the next day
+});
+
+export const appSettingsSchema = v1AppSettingsSchema.extend({
+  settingsVersion: z.literal(2).catch(2),
 });
 
 export type AppSettings = z.infer<typeof appSettingsSchema>;
+
+export const defaultSettings = appSettingsSchema.parse({});
 
 const normalizeSettings = (input: unknown): AppSettings => {
   const parsed = input && typeof input === "object" ? input : {};
@@ -35,16 +44,38 @@ const normalizeSettings = (input: unknown): AppSettings => {
 
 export const loadSettings = (): AppSettings => {
   if (typeof window === "undefined" || !window.localStorage) {
-    return normalizeSettings(null);
+    return defaultSettings;
   }
   const raw = localStorage.getItem(SETTINGS_KEY);
   if (!raw) {
-    return normalizeSettings(null);
+    return defaultSettings;
   }
   try {
-    return normalizeSettings(JSON.parse(raw));
+    const parsedData = JSON.parse(raw);
+
+    // Check if it's v1 (missing settingsVersion or version < 2)
+    if (
+      !parsedData ||
+      typeof parsedData !== "object" ||
+      !("settingsVersion" in parsedData) ||
+      parsedData.settingsVersion < 2
+    ) {
+      // Migrate from v1
+      const v1Data = v1AppSettingsSchema.parse(parsedData);
+      const migratedData: AppSettings = {
+        ...v1Data,
+        settingsVersion: 2,
+      };
+
+      // Save migrated data immediately
+      saveSettings(migratedData);
+      return migratedData;
+    }
+
+    return normalizeSettings(parsedData);
   } catch {
-    return normalizeSettings(null);
+    // Fallback on corrupt JSON without crashing
+    return defaultSettings;
   }
 };
 
@@ -52,6 +83,10 @@ export const saveSettings = (settings: AppSettings) => {
   if (typeof window === "undefined" || !window.localStorage) {
     return;
   }
-  const validSettings = appSettingsSchema.parse(settings);
-  localStorage.setItem(SETTINGS_KEY, JSON.stringify(validSettings));
+  try {
+    const validSettings = appSettingsSchema.parse(settings);
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(validSettings));
+  } catch (error) {
+    console.error("Failed to save valid settings", error);
+  }
 };

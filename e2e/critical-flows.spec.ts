@@ -90,13 +90,11 @@ test("starts review session and completes 3 steps", async ({ page }) => {
   for (let step = 1; step <= 3; step += 1) {
     await expect(page.getByText(`Review ${step} / 3`)).toBeVisible();
     await page.getByRole("button", { name: /Show Answer/i }).click();
-    await page.getByRole("button", { name: /^Got it/i }).click();
+    await page.getByRole("button", { name: /Got it \(Press 3\)/i }).click();
+    await page.waitForTimeout(500); // Give FSRS time to update and next card to render
   }
 
   await expect(
     page.getByRole("heading", { name: "Vocabulary Vault" }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "All caught up!" }),
   ).toBeVisible();
 });

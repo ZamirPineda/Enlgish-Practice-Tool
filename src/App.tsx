@@ -18,6 +18,7 @@ import { useGlobalXp } from "@/lib/xpStore";
 import { ToastContainer, toast } from "@/components/ui/Toast";
 import { getRankForLevel } from "@/lib/levelRanks";
 import { AnimatedRoutes } from "@/routes";
+import { OfflineBadge } from "@/components/OfflineBadge";
 
 const ONBOARDING_STEPS = [
   {
@@ -196,7 +197,6 @@ const App: React.FC = () => {
     loadSettings(),
   );
   const [onboardingStep, setOnboardingStep] = React.useState(0);
-  const [isOffline, setIsOffline] = React.useState(!navigator.onLine);
   const [deferredPrompt, setDeferredPrompt] = React.useState<any>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const { level, currentLevelXp, nextLevelXp, progressPercentage } =
@@ -207,12 +207,6 @@ const App: React.FC = () => {
   const { updateAvailable, handleUpdate } = usePWAUpdate();
 
   React.useEffect(() => {
-    const handleOnline = () => setIsOffline(false);
-    const handleOffline = () => setIsOffline(true);
-
-    window.addEventListener("online", handleOnline);
-    window.addEventListener("offline", handleOffline);
-
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -220,8 +214,6 @@ const App: React.FC = () => {
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
     return () => {
-      window.removeEventListener("online", handleOnline);
-      window.removeEventListener("offline", handleOffline);
       window.removeEventListener(
         "beforeinstallprompt",
         handleBeforeInstallPrompt,
@@ -361,12 +353,6 @@ const App: React.FC = () => {
                 Pal
               </h1>
             </Link>
-            {isOffline && (
-              <span className="px-2 py-0.5 bg-red-500/20 text-red-400 text-xs font-bold rounded-full flex items-center gap-1">
-                <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse"></span>
-                Offline
-              </span>
-            )}
           </div>
 
           <div className="flex items-center gap-3">
@@ -658,6 +644,7 @@ const App: React.FC = () => {
             </div>
           </div>
         )}
+        <OfflineBadge />
         <ToastContainer />
       </div>
     </HashRouter>

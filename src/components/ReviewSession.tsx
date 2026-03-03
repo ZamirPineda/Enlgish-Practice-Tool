@@ -243,10 +243,10 @@ const ReviewSession: React.FC<ReviewSessionProps> = ({
               <button
                 onClick={() => handleResult(true, Rating.Good)}
                 className="bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 text-sky-400 py-3 rounded-xl transition-all group relative flex flex-col items-center justify-center shadow-[0_0_15px_rgba(14,165,233,0.15)] ring-1 ring-sky-500/50"
-                aria-label="Good (Press 3)"
+                aria-label="Got it (Press 3)"
               >
                 <span className="font-bold mb-1 group-hover:scale-105 transition-transform">
-                  Good
+                  Got it
                 </span>
                 <span className="text-xs opacity-80">
                   {predictions ? predictions[Rating.Good] : "..."}

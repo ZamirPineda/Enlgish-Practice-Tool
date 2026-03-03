@@ -33,6 +33,7 @@ import {
   Bug,
   MessageCircleHeart,
 } from "lucide-react";
+import DailyProgressWidget from "@/components/DailyProgressWidget";
 
 const VAULT_DECK_KEY = "vocab-vault-deck";
 const VAULT_PROGRESS_KEY = "vocab-vault-progress";
@@ -159,7 +160,7 @@ const HomeView: React.FC = () => {
     [currentWeekKey],
   );
   const settings = useMemo<AppSettings>(() => loadSettings(), []);
-  const globalStreak = useMemo(() => getGlobalStreak().current, []);
+  // Legacy single global streak call removed in favor of DailyProgressWidget
   const metrics = useMemo(
     () =>
       calculateStatsMetrics(
@@ -230,18 +231,6 @@ const HomeView: React.FC = () => {
             <div className="flex items-center gap-3 bg-surface-2 p-3 rounded-xl border border-border shadow-sm w-full md:w-auto justify-between md:justify-start">
               <div className="text-center min-w-[5rem]">
                 <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
-                  Streak
-                </div>
-                <div className="text-xl sm:text-2xl font-black text-orange-500 flex items-center justify-center gap-1">
-                  <Flame
-                    className={`w-5 h-5 sm:w-6 sm:h-6 ${globalStreak > 0 ? "text-orange-500 fill-orange-500 animate-pulse" : "text-text-muted"}`}
-                  />
-                  {globalStreak}
-                </div>
-              </div>
-              <div className="w-px h-10 bg-border"></div>
-              <div className="text-center min-w-[5rem]">
-                <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
                   Pending
                 </div>
                 <div className="text-xl sm:text-2xl font-black text-accent flex items-center justify-center gap-1">
@@ -252,6 +241,8 @@ const HomeView: React.FC = () => {
             </div>
           }
         />
+
+        <DailyProgressWidget />
 
         {/* Dynamic CTA */}
         {metrics.pendingCards > 0 && (

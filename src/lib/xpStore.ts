@@ -338,6 +338,11 @@ export const addGlobalXp = (points: number) => {
 
   saveGlobalXp(currentXp + points);
 
+  // Track this XP globally for the daily goal widget
+  import("./activityTracker").then(({ trackActivity }) => {
+    trackActivity({ xp: points });
+  });
+
   if (newLevel > currentLevel) {
     toast.success(`🎉 Level Up! You reached Lvl ${newLevel}! ✨`, 4000);
   } else {

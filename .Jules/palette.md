@@ -29,7 +29,3 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
-
-## 2026-03-08 - [Keyboard Shortcuts in Flashcards]
-**Learning:** Flashcard components without keyboard shortcuts force users to rely on a mouse, breaking study flow.
-**Action:** Always provide keyboard navigation (Space/Enter to flip, Arrow keys to navigate) and display clear visual hints for them.
