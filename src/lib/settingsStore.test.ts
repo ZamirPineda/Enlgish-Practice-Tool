@@ -34,6 +34,9 @@ describe("settingsStore", () => {
       soundEnabled: false,
       hasCompletedOnboarding: true,
       weeklyGoalSessions: 8,
+      dailyGoalTarget: 50,
+      dailyGoalType: "cards",
+      dayOffsetHours: 3,
     });
   });
 
@@ -71,6 +74,9 @@ describe("settingsStore", () => {
       soundEnabled: true, // Fallback
       hasCompletedOnboarding: false, // Fallback
       weeklyGoalSessions: 1, // Clamped from -5
+      dailyGoalTarget: 50,
+      dailyGoalType: "cards",
+      dayOffsetHours: 3,
     });
   });
 
@@ -112,6 +118,9 @@ describe("settingsStore", () => {
       soundEnabled: true,
       hasCompletedOnboarding: false,
       weeklyGoalSessions: 5,
+      dailyGoalTarget: 50,
+      dailyGoalType: "cards",
+      dayOffsetHours: 3,
     });
   });
 
@@ -145,6 +154,9 @@ describe("settingsStore", () => {
       soundEnabled: true, // Default injected
       hasCompletedOnboarding: false, // Default injected
       weeklyGoalSessions: 5, // Default injected
+      dailyGoalTarget: 50, // Default injected
+      dailyGoalType: "cards", // Default injected
+      dayOffsetHours: 3, // Default injected
     });
   });
 
