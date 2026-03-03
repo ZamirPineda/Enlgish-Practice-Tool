@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.18.2...english-practice-pal-v1.19.0) (2026-03-02)
+
+
+### Features
+
+* **profile:** rediseño completo del perfil y expansión de logros globales ([b141dfb](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/b141dfbfd768d4eb9c2d4391c5210c774f543fa9))
+
 ## [1.18.2](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.18.1...english-practice-pal-v1.18.2) (2026-03-01)
 
 
