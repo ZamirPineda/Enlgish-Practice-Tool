@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
 import GameShell from "@/components/game/GameShell";
 import GameHudCard from "@/components/game/GameHudCard";
+import DailySessionInsights from "@/components/game/DailySessionInsights";
 import {
   tabooEnglishRounds,
   type TabooEnglishRound,
@@ -473,6 +474,7 @@ const TabooEnglishView: React.FC = () => {
                     </div>
                   </div>
                 </div>
+                <DailySessionInsights className="mt-4 text-left" />
               </div>
             ) : (
               <div className="space-y-2">

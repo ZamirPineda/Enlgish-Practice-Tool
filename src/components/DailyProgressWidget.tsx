@@ -36,7 +36,9 @@ const DailyProgressWidget: React.FC = () => {
     const intervalId = window.setInterval(forceRefresh, 60000);
 
     window.addEventListener("activityUpdated", forceRefresh);
+    window.addEventListener("analyticsUpdated", forceRefresh);
     window.addEventListener("globalXpUpdated", forceRefresh);
+    window.addEventListener("dailySessionRewardUpdated", forceRefresh);
     window.addEventListener("storage", forceRefresh);
     window.addEventListener("focus", forceRefresh);
     document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -44,7 +46,9 @@ const DailyProgressWidget: React.FC = () => {
     return () => {
       window.clearInterval(intervalId);
       window.removeEventListener("activityUpdated", forceRefresh);
+      window.removeEventListener("analyticsUpdated", forceRefresh);
       window.removeEventListener("globalXpUpdated", forceRefresh);
+      window.removeEventListener("dailySessionRewardUpdated", forceRefresh);
       window.removeEventListener("storage", forceRefresh);
       window.removeEventListener("focus", forceRefresh);
       document.removeEventListener("visibilitychange", handleVisibilityChange);

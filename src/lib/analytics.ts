@@ -168,4 +168,5 @@ export const trackAnalyticsEvent = (
   const next = [...eventsToPersist, parsedEvent.data].slice(-MAX_EVENTS);
   localStorage.setItem(ANALYTICS_EVENTS_KEY, JSON.stringify(next));
   saveActiveSessions(activeSessions);
+  window.dispatchEvent(new Event("analyticsUpdated"));
 };

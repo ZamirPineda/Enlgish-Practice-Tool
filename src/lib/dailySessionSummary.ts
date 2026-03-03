@@ -105,6 +105,9 @@ export const claimDailySessionReward = (dateKey = toDateKey()): boolean => {
   const claims = readRewardClaims();
   claims[dateKey] = true;
   writeRewardClaims(claims);
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("dailySessionRewardUpdated"));
+  }
   return true;
 };
 
