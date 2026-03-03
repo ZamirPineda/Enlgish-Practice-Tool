@@ -8,11 +8,11 @@ describe("settingsStore", () => {
   });
 
   // 1. válido
-  it("parses valid v2 settings correctly", () => {
+  it("parses valid v3 settings correctly", () => {
     localStorage.setItem(
       "app-settings",
       JSON.stringify({
-        settingsVersion: 2,
+        settingsVersion: 3,
         theme: "light",
         reducedMotion: false,
         ttsAutoPlay: false,
@@ -25,7 +25,7 @@ describe("settingsStore", () => {
     );
 
     expect(loadSettings()).toEqual({
-      settingsVersion: 2,
+      settingsVersion: 3,
       theme: "light",
       reducedMotion: false,
       ttsAutoPlay: false,
@@ -37,6 +37,8 @@ describe("settingsStore", () => {
       dailyGoalTarget: 50,
       dailyGoalType: "cards",
       dayOffsetHours: 3,
+      srsSessionLimit: 20,
+      srsTimeBoxMinutes: 10,
     });
   });
 
@@ -65,7 +67,7 @@ describe("settingsStore", () => {
 
     const settings = loadSettings();
     expect(settings).toEqual({
-      settingsVersion: 2,
+      settingsVersion: 3,
       theme: "dark", // Fallback
       reducedMotion: true, // Fallback to system
       ttsAutoPlay: false, // Kept valid value
@@ -77,6 +79,8 @@ describe("settingsStore", () => {
       dailyGoalTarget: 50,
       dailyGoalType: "cards",
       dayOffsetHours: 3,
+      srsSessionLimit: 20,
+      srsTimeBoxMinutes: 10,
     });
   });
 
@@ -93,7 +97,7 @@ describe("settingsStore", () => {
     });
 
     expect(loadSettings().theme).toBe("dark");
-    expect(loadSettings().settingsVersion).toBe(2);
+    expect(loadSettings().settingsVersion).toBe(3);
     expect(loadSettings().reducedMotion).toBe(false);
   });
 
@@ -109,7 +113,7 @@ describe("settingsStore", () => {
     const settings = loadSettings();
 
     expect(settings).toEqual({
-      settingsVersion: 2,
+      settingsVersion: 3,
       theme: "dark",
       reducedMotion: false,
       ttsAutoPlay: true,
@@ -121,6 +125,8 @@ describe("settingsStore", () => {
       dailyGoalTarget: 50,
       dailyGoalType: "cards",
       dayOffsetHours: 3,
+      srsSessionLimit: 20,
+      srsTimeBoxMinutes: 10,
     });
   });
 
@@ -145,7 +151,7 @@ describe("settingsStore", () => {
     const settings = loadSettings();
 
     expect(settings).toEqual({
-      settingsVersion: 2, // Upgraded version
+      settingsVersion: 3, // Upgraded version
       theme: "light", // Retained from v1
       reducedMotion: false, // Default injected
       ttsAutoPlay: false, // Retained from v1
@@ -157,11 +163,13 @@ describe("settingsStore", () => {
       dailyGoalTarget: 50, // Default injected
       dailyGoalType: "cards", // Default injected
       dayOffsetHours: 3, // Default injected
+      srsSessionLimit: 20, // Default injected
+      srsTimeBoxMinutes: 10, // Default injected
     });
   });
 
   // 6. migración
-  it("migrates v1 to v2 and immediately saves it to storage", () => {
+  it("migrates old settings to v3 and immediately saves it to storage", () => {
     const setItemSpy = vi.spyOn(localStorage, "setItem");
 
     localStorage.setItem(
@@ -183,7 +191,7 @@ describe("settingsStore", () => {
 
     expect(setItemSpy).toHaveBeenCalledWith(
       "app-settings",
-      expect.stringContaining('"settingsVersion":2'),
+      expect.stringContaining('"settingsVersion":3'),
     );
     expect(setItemSpy).toHaveBeenCalledWith(
       "app-settings",
