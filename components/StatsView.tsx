@@ -254,6 +254,23 @@ const ClockIcon = () => (
   </svg>
 );
 
+const GamepadIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-6 w-6 text-fuchsia-500"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M15 11h.01M19 11h.01M17 9h.01M17 13h.01M6 13H4m4 0H6m0 0v2m0-2V9m10-7h-8a6 6 0 00-6 6v8a6 6 0 006 6h8a6 6 0 006-6V8a6 6 0 00-6-6z"
+    />
+  </svg>
+);
+
 const StatsView: React.FC = () => {
   const currentWeekKey = getIsoWeekKey(new Date());
   const [activeTab, setActiveTab] = useState<"overview" | "charts">("overview");
@@ -462,6 +479,30 @@ const StatsView: React.FC = () => {
     [filteredAnalytics],
   );
 
+  const allTimePlaytimeMinutes = useMemo(() => {
+    let result = analyticsEvents;
+
+    if (categoryFilter !== "all") {
+      result = result.filter((event) => {
+        const game = getGameFromEvent(event);
+        const category = GAME_CATEGORY[game] || "english";
+        return category === categoryFilter;
+      });
+    }
+
+    let studySeconds = 0;
+    result.forEach((event: any) => {
+      if (
+        event.name === "session_end" &&
+        typeof event.payload?.duration === "number"
+      ) {
+        studySeconds += event.payload.duration;
+      }
+    });
+
+    return Math.round(studySeconds / 60);
+  }, [analyticsEvents, categoryFilter]);
+
   const sessionStartsDelta =
     analyticsSummary.session_start - previousAnalyticsSummary.session_start;
   const sessionEndsDelta =
@@ -557,7 +598,7 @@ const StatsView: React.FC = () => {
         ) : activeTab === "overview" ? (
           <>
             {/* Top KPI Cards */}
-            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               <article className="bg-surface-1 border border-border rounded-2xl p-5 flex items-start gap-4">
                 <div className="p-3 bg-orange-500/10 rounded-xl">
                   <FireIcon />
@@ -627,7 +668,7 @@ const StatsView: React.FC = () => {
                 </div>
                 <div>
                   <h2 className="text-xs uppercase text-text-muted font-bold mb-1">
-                    Est. Study Time
+                    Vault Study Time
                   </h2>
                   <p className="text-text-primary text-3xl font-black">
                     {metrics.estimatedStudyMinutes === null
@@ -638,7 +679,29 @@ const StatsView: React.FC = () => {
                     </span>
                   </p>
                   <p className="text-text-muted text-xs mt-1">
-                    Total time spent
+                    Total vault time
+                  </p>
+                </div>
+              </article>
+
+              <article className="bg-surface-1 border border-border rounded-2xl p-5 flex items-start gap-4">
+                <div className="p-3 bg-fuchsia-500/10 rounded-xl">
+                  <GamepadIcon />
+                </div>
+                <div>
+                  <h2 className="text-xs uppercase text-text-muted font-bold mb-1">
+                    All-Time Playtime
+                  </h2>
+                  <p className="text-text-primary text-3xl font-black">
+                    {allTimePlaytimeMinutes}{" "}
+                    <span className="text-sm font-normal text-text-muted">
+                      min
+                    </span>
+                  </p>
+                  <p className="text-text-muted text-xs mt-1 transition-colors">
+                    {categoryFilter === "all"
+                      ? "Across all games"
+                      : `In ${categoryFilter} games`}
                   </p>
                 </div>
               </article>
