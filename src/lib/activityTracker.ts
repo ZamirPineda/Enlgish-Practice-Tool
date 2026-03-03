@@ -2,15 +2,27 @@ import { getStreakFreezes } from "@/lib/xpStore";
 
 const GLOBAL_ACTIVITY_KEY = "global-daily-activity";
 
+import { loadSettings } from "./settingsStore";
+
 interface DailyActivity {
-  score: number;
+  score?: number; // legacy backwards compatibility
+  xp: number;
+  cards: number;
+  time: number; // in minutes
 }
 
 /**
  * Key format: YYYY-MM-DD
+ * Applies the dayOffsetHours from settings to calculate which local day a timestamp belongs to.
  */
-const toDateKey = (date: number | Date = new Date()): string => {
+export const toDateKey = (date: number | Date = new Date()): string => {
+  const settings = loadSettings();
+  const offsetHours = settings.dayOffsetHours ?? 3;
+
   const d = new Date(date);
+  // Subtract the offset hours so that, e.g., 2 AM Tuesday becomes Monday
+  d.setHours(d.getHours() - offsetHours);
+
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
@@ -33,15 +45,32 @@ export const saveGlobalActivityData = (data: Record<string, DailyActivity>) => {
   localStorage.setItem(GLOBAL_ACTIVITY_KEY, JSON.stringify(data));
 };
 
-export const trackActivity = (intensity: number = 1) => {
+export const trackActivity = (activity: {
+  intensity?: number;
+  xp?: number;
+  cards?: number;
+  time?: number;
+}) => {
   const data = getGlobalActivityData();
   const today = toDateKey();
 
   if (!data[today]) {
-    data[today] = { score: 0 };
+    data[today] = { score: 0, xp: 0, cards: 0, time: 0 };
+  } else {
+    // Migrate old format to new format on the fly if needed
+    if (data[today].xp === undefined) data[today].xp = 0;
+    if (data[today].cards === undefined) data[today].cards = 0;
+    if (data[today].time === undefined) data[today].time = 0;
   }
 
-  data[today].score += intensity;
+  // legacy backwards compatibility for external callers using intensity
+  if (activity.intensity) {
+    data[today].score = (data[today].score || 0) + activity.intensity;
+  }
+  if (activity.xp) data[today].xp += activity.xp;
+  if (activity.cards) data[today].cards += activity.cards;
+  if (activity.time) data[today].time += activity.time;
+
   saveGlobalActivityData(data);
   if (typeof window !== "undefined") {
     window.dispatchEvent(new Event("activityUpdated"));
@@ -145,7 +174,7 @@ export const getGlobalHeatmapData = (days = 365) => {
   return Array.from({ length: totalDays }, (_, index) => {
     const timestamp = start + index * DAY_MS;
     const dateStr = toDateKey(timestamp);
-    const score = data[dateStr]?.score || 0;
+    const score = (data[dateStr]?.score || 0) + (data[dateStr]?.cards || 0); // fallback or cards for heatmap visual
     return { date: dateStr, count: score };
   });
 };

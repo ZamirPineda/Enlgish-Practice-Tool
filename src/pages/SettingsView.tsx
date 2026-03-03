@@ -198,6 +198,89 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                 ))}
               </select>
             </div>
+
+            <div className="pt-4 border-t border-border mt-4">
+              <h3 className="font-bold text-lg text-text-primary mb-4">
+                Daily Goal & Streak Options
+              </h3>
+
+              <div className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="daily-goal-type"
+                    className="block text-sm font-bold mb-2 text-text-secondary"
+                  >
+                    Establecer meta basaba en
+                  </label>
+                  <select
+                    id="daily-goal-type"
+                    className="w-full min-h-[44px] rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-focus"
+                    value={settings.dailyGoalType}
+                    onChange={(event) =>
+                      onSettingsChange({
+                        dailyGoalType: event.target
+                          .value as AppSettings["dailyGoalType"],
+                      })
+                    }
+                  >
+                    <option value="cards">Cartas Estudiadas</option>
+                    <option value="time">Minutos Jugados</option>
+                    <option value="xp">Experiencia (XP)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="daily-goal-target"
+                    className="block text-sm font-bold mb-2 text-text-secondary"
+                  >
+                    Objetivo Diario
+                  </label>
+                  <input
+                    id="daily-goal-target"
+                    type="number"
+                    min="1"
+                    className="w-full min-h-[44px] rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-focus"
+                    value={settings.dailyGoalTarget}
+                    onChange={(event) =>
+                      onSettingsChange({
+                        dailyGoalTarget: Number(event.target.value),
+                      })
+                    }
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="day-offset"
+                    className="block text-sm font-bold mb-2 text-text-secondary"
+                  >
+                    Hora de Cierre del Día
+                  </label>
+                  <select
+                    id="day-offset"
+                    className="w-full min-h-[44px] rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-focus"
+                    value={settings.dayOffsetHours}
+                    onChange={(event) =>
+                      onSettingsChange({
+                        dayOffsetHours: Number(event.target.value),
+                      })
+                    }
+                  >
+                    <option value="0">Medianoche (12:00 AM)</option>
+                    <option value="1">1:00 AM</option>
+                    <option value="2">2:00 AM</option>
+                    <option value="3">3:00 AM (Recomendado)</option>
+                    <option value="4">4:00 AM</option>
+                    <option value="5">5:00 AM</option>
+                  </select>
+                  <p className="text-xs text-text-muted mt-1">
+                    Cualquier actividad antes de esta hora se considerará como
+                    parte del día anterior.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </Card>
 

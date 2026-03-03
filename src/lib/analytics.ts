@@ -75,7 +75,7 @@ export const trackAnalyticsEvent = (
 
   // Automatically track activity for the heatmap whenever an item is answered (reviewed)
   if (name === "item_correct" || name === "item_wrong") {
-    trackActivity(1);
+    trackActivity({ cards: 1 });
   }
 
   const next = [...existing, parsedEvent.data].slice(-MAX_EVENTS);

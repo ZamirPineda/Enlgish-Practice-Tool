@@ -24,6 +24,9 @@ const v1AppSettingsSchema = z.object({
     .number()
     .catch(5)
     .transform((val) => Math.min(14, Math.max(1, Math.round(val)))),
+  dailyGoalType: z.enum(["cards", "time", "xp"]).catch("cards"),
+  dailyGoalTarget: z.number().catch(50),
+  dayOffsetHours: z.number().catch(3), // By default, a day ends at 3 AM the next day
 });
 
 export const appSettingsSchema = v1AppSettingsSchema.extend({
