@@ -4,6 +4,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import TabooEnglishView from "@/pages/TabooEnglishView";
 
 describe("TabooEnglishView", () => {
+  const startGame = () => {
+    fireEvent.click(screen.getByRole("button", { name: /Comenzar/i }));
+  };
+
   beforeEach(() => {
     vi.spyOn(Math, "random").mockReturnValue(0.9999999);
   });
@@ -14,6 +18,7 @@ describe("TabooEnglishView", () => {
 
   test("renders title and forbidden words section", () => {
     render(<TabooEnglishView />);
+    startGame();
 
     expect(screen.getByText("Taboo English")).toBeInTheDocument();
     expect(screen.getByText("Forbidden words")).toBeInTheDocument();
@@ -21,6 +26,7 @@ describe("TabooEnglishView", () => {
 
   test("flags forbidden word usage", () => {
     render(<TabooEnglishView />);
+    startGame();
 
     fireEvent.change(screen.getByLabelText("Taboo explanation"), {
       target: { value: "You need to finish this task before the time limit" },

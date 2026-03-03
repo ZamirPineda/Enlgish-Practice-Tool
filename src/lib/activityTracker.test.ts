@@ -4,6 +4,7 @@ import {
   getGlobalActivityData,
   toDateKey,
   getGlobalStreak,
+  getGlobalHeatmapData,
 } from "./activityTracker";
 import { loadSettings } from "./settingsStore";
 
@@ -94,5 +95,18 @@ describe("activityTracker API & logic", () => {
 
     expect(current).toBe(2);
     expect(best).toBe(2);
+  });
+
+  it("keeps the last heatmap cell aligned with the current local day key", () => {
+    vi.setSystemTime(new Date("2026-03-03T12:00:00"));
+
+    trackActivity({ cards: 2 });
+
+    const heatmap = getGlobalHeatmapData(7);
+    const lastCell = heatmap[heatmap.length - 1];
+    const todayKey = toDateKey();
+
+    expect(lastCell.date).toBe(todayKey);
+    expect(lastCell.count).toBe(2);
   });
 });

@@ -467,7 +467,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
   const finishGame = () => {
     setGameState("finished");
     trackAnalyticsEvent("session_end", {
-      game: "study_docs_game",
+      game: "docs_game",
       duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
     });
     setSelectedOption(null);
@@ -522,7 +522,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     if (isCorrect) {
       playGameSound("correct");
       trackAnalyticsEvent("item_correct", {
-        game: "study_docs_game",
+        game: "docs_game",
         question: currentRound.prompt,
       });
       setStreak((previous) => {
@@ -533,7 +533,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     } else {
       playGameSound("wrong");
       trackAnalyticsEvent("item_wrong", {
-        game: "study_docs_game",
+        game: "docs_game",
         question: currentRound.prompt,
         errorType: "docs_error",
       });

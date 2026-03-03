@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Flame,
@@ -16,17 +16,45 @@ import {
 } from "@/lib/activityTracker";
 
 const DailyProgressWidget: React.FC = () => {
-  const settings = useMemo(() => loadSettings(), []);
+  const [refreshToken, setRefreshToken] = useState(0);
+
+  useEffect(() => {
+    const forceRefresh = () => setRefreshToken((prev) => prev + 1);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        forceRefresh();
+      }
+    };
+
+    const intervalId = window.setInterval(forceRefresh, 60000);
+
+    window.addEventListener("activityUpdated", forceRefresh);
+    window.addEventListener("globalXpUpdated", forceRefresh);
+    window.addEventListener("storage", forceRefresh);
+    window.addEventListener("focus", forceRefresh);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.clearInterval(intervalId);
+      window.removeEventListener("activityUpdated", forceRefresh);
+      window.removeEventListener("globalXpUpdated", forceRefresh);
+      window.removeEventListener("storage", forceRefresh);
+      window.removeEventListener("focus", forceRefresh);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  const settings = useMemo(() => loadSettings(), [refreshToken]);
   const { current: currentStreak, best: bestStreak } = useMemo(
     () => getGlobalStreak(),
-    [],
+    [refreshToken],
   );
 
-  const todayStr = useMemo(() => toDateKey(new Date()), []);
+  const todayStr = useMemo(() => toDateKey(new Date()), [refreshToken]);
   const todayData = useMemo(() => {
     const data = getGlobalActivityData();
     return data[todayStr] || { cards: 0, time: 0, xp: 0, score: 0 };
-  }, [todayStr]);
+  }, [todayStr, refreshToken]);
 
   const { goalType, target, currentVal, unit } = useMemo(() => {
     const type = settings.dailyGoalType;

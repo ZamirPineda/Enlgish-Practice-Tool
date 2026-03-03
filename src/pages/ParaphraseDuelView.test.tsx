@@ -9,6 +9,10 @@ import {
 } from "@/lib/analytics";
 
 describe("ParaphraseDuelView", () => {
+  const startGame = () => {
+    fireEvent.click(screen.getByRole("button", { name: "Iniciar Duelo" }));
+  };
+
   beforeEach(() => {
     localStorage.clear();
     clearAnalyticsEventsForTesting();
@@ -21,6 +25,7 @@ describe("ParaphraseDuelView", () => {
 
   test("renders title and default timer", () => {
     render(<ParaphraseDuelView />);
+    startGame();
 
     expect(screen.getByText("Paraphrase Duel")).toBeInTheDocument();
     expect(screen.getByText("38s")).toBeInTheDocument();
@@ -28,6 +33,7 @@ describe("ParaphraseDuelView", () => {
 
   test("accepts a correct paraphrase", () => {
     render(<ParaphraseDuelView />);
+    startGame();
 
     const b1Round = paraphraseDuelRounds.find((round) => round.level === "B1");
     expect(b1Round).toBeDefined();
@@ -42,6 +48,7 @@ describe("ParaphraseDuelView", () => {
 
   test("accepts a close variant with connector", () => {
     render(<ParaphraseDuelView />);
+    startGame();
 
     fireEvent.change(screen.getByLabelText("Paraphrase answer"), {
       target: {
@@ -55,6 +62,7 @@ describe("ParaphraseDuelView", () => {
 
   test("tracks connector_missing analytics reason", () => {
     render(<ParaphraseDuelView />);
+    startGame();
 
     fireEvent.change(screen.getByLabelText("Paraphrase answer"), {
       target: { value: "He gave a clear presentation despite feeling nervous" },

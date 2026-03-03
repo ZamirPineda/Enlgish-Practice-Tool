@@ -48,7 +48,7 @@ const StudyDocsQuizView: React.FC = () => {
   const finishGame = () => {
     setGameState("finished");
     trackAnalyticsEvent("session_end", {
-      game: "study_docs_quiz",
+      game: "docs_quiz",
       duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
     });
     setSelectedOption(null);
@@ -118,7 +118,7 @@ const StudyDocsQuizView: React.FC = () => {
     if (isCorrect) {
       playGameSound("correct");
       trackAnalyticsEvent("item_correct", {
-        game: "study_docs_quiz",
+        game: "docs_quiz",
         question: currentRound.question,
       });
 
@@ -135,7 +135,7 @@ const StudyDocsQuizView: React.FC = () => {
         playGameSound("wrong");
       }
       trackAnalyticsEvent("item_wrong", {
-        game: "study_docs_quiz",
+        game: "docs_quiz",
         question: currentRound.question,
         errorType: "quiz_error",
       });

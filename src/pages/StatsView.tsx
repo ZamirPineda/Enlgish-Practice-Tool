@@ -8,7 +8,11 @@ import {
 } from "@/lib/statsMetrics";
 import { getIsoWeekKey } from "@/lib/srs";
 import { AppSettings, loadSettings } from "@/lib/settingsStore";
-import { AnalyticsEventName, getAnalyticsEvents } from "@/lib/analytics";
+import {
+  AnalyticsEvent,
+  AnalyticsEventName,
+  getAnalyticsEvents,
+} from "@/lib/analytics";
 import { useGlobalXp } from "@/lib/xpStore";
 import { getRankForLevel } from "@/lib/levelRanks";
 import Heatmap from "@/components/Heatmap";
@@ -103,7 +107,7 @@ const prettifyAnalyticsLabel = (value: string) =>
     .join(" ");
 
 const buildGameErrorCountMap = (
-  events: Array<{ name: AnalyticsEventName; payload: Record<string, unknown> }>,
+  events: AnalyticsEvent[],
 ): GameErrorCountMap => {
   const grouped: GameErrorCountMap = {};
 
@@ -112,10 +116,7 @@ const buildGameErrorCountMap = (
       return;
     }
 
-    const game =
-      typeof event.payload.game === "string"
-        ? event.payload.game
-        : "unknown_game";
+    const game = getGameFromEvent(event);
     const errorType =
       typeof event.payload.errorType === "string"
         ? event.payload.errorType
@@ -131,7 +132,7 @@ const buildGameErrorCountMap = (
 };
 
 const buildGameErrorBreakdown = (
-  events: Array<{ name: AnalyticsEventName; payload: Record<string, unknown> }>,
+  events: AnalyticsEvent[],
 ): GameErrorBreakdownItem[] => {
   const grouped = buildGameErrorCountMap(events);
 
@@ -154,7 +155,7 @@ const buildGameErrorBreakdown = (
 };
 
 const buildTopErrorTypes = (
-  events: Array<{ name: AnalyticsEventName; payload: Record<string, unknown> }>,
+  events: AnalyticsEvent[],
   limit = 3,
 ): ErrorTypeAggregateItem[] => {
   const grouped = buildGameErrorCountMap(events);

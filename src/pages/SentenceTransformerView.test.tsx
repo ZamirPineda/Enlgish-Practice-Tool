@@ -8,6 +8,10 @@ import {
 } from "@/lib/analytics";
 
 describe("SentenceTransformerView", () => {
+  const startGame = () => {
+    fireEvent.click(screen.getByRole("button", { name: /Iniciar/i }));
+  };
+
   beforeEach(() => {
     localStorage.clear();
     clearAnalyticsEventsForTesting();
@@ -20,6 +24,7 @@ describe("SentenceTransformerView", () => {
 
   test("renders title and transformation label", () => {
     render(<SentenceTransformerView />);
+    startGame();
 
     expect(screen.getByText("Sentence Transformer")).toBeInTheDocument();
     expect(screen.getByText(/Transformation:/)).toBeInTheDocument();
@@ -27,6 +32,7 @@ describe("SentenceTransformerView", () => {
 
   test("accepts correct transformed sentence", () => {
     render(<SentenceTransformerView />);
+    startGame();
 
     fireEvent.change(screen.getByLabelText("Transformer answer"), {
       target: {
@@ -40,6 +46,7 @@ describe("SentenceTransformerView", () => {
 
   test("accepts close conditional variant with contraction", () => {
     render(<SentenceTransformerView />);
+    startGame();
 
     fireEvent.change(screen.getByLabelText("Transformer answer"), {
       target: {
@@ -53,6 +60,7 @@ describe("SentenceTransformerView", () => {
 
   test("tracks mode_mismatch analytics reason", () => {
     render(<SentenceTransformerView />);
+    startGame();
 
     fireEvent.change(screen.getByLabelText("Transformer answer"), {
       target: { value: "I will send it tomorrow" },

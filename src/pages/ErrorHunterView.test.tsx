@@ -5,6 +5,10 @@ import ErrorHunterView from "@/pages/ErrorHunterView";
 import { errorHunterRounds } from "@/features/data/errorHunter";
 
 describe("ErrorHunterView", () => {
+  const startGame = () => {
+    fireEvent.click(screen.getByRole("button", { name: /Comenzar/i }));
+  };
+
   beforeEach(() => {
     vi.spyOn(Math, "random").mockReturnValue(0.9999999);
   });
@@ -15,6 +19,7 @@ describe("ErrorHunterView", () => {
 
   test("renders title and default level timer", () => {
     render(<ErrorHunterView />);
+    startGame();
 
     expect(screen.getByText("Error Hunter")).toBeInTheDocument();
     expect(screen.getByText("38s")).toBeInTheDocument();
@@ -22,6 +27,7 @@ describe("ErrorHunterView", () => {
 
   test("switches to C1 level and updates timer", () => {
     render(<ErrorHunterView />);
+    startGame();
 
     fireEvent.click(
       screen.getByRole("button", { name: "Set error hunter level C1" }),
@@ -32,6 +38,7 @@ describe("ErrorHunterView", () => {
 
   test("adds score after entering a correct correction", () => {
     render(<ErrorHunterView />);
+    startGame();
 
     const b1Sentence = errorHunterRounds.find((round) => round.level === "B1");
     expect(b1Sentence).toBeDefined();

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { techDecks, TechCard } from "@/features/data/techDecks";
-import { addGlobalXp, progressQuest } from "@/lib/xpStore";
+import React, { useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import GameStartPanel from "@/components/GameStartPanel";
+import Button from "@/components/ui/Button";
+import { techDecks } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
-
-const SHUFFLE = (arr: any[]) => [...arr].sort(() => 0.5 - Math.random());
+import { addGlobalXp, progressQuest } from "@/lib/xpStore";
 
 interface BossCard {
   prompt: string;
@@ -13,87 +13,180 @@ interface BossCard {
   actualAnswer: string;
 }
 
+type BossDifficulty = "easy" | "normal" | "hard";
+
+const DIFFICULTY_LABEL: Record<BossDifficulty, string> = {
+  easy: "Facil",
+  normal: "Normal",
+  hard: "Dificil",
+};
+
+const DIFFICULTY_QUESTIONS: Record<BossDifficulty, number> = {
+  easy: 8,
+  normal: 10,
+  hard: 12,
+};
+
+const shuffle = <T,>(items: T[]) => [...items].sort(() => 0.5 - Math.random());
+
 export const TechBossView: React.FC = () => {
   const { deckId } = useParams<{ deckId: string }>();
   const navigate = useNavigate();
-
   const [cards, setCards] = useState<BossCard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [difficulty, setDifficulty] = useState<BossDifficulty>("normal");
+  const [hasStarted, setHasStarted] = useState(false);
+  const sessionStartTime = useRef<number>(Date.now());
 
-  useEffect(() => {
-    const deck = techDecks.find((d) => d.id === deckId);
-    if (deck) {
-      const selected = SHUFFLE(deck.cards).slice(0, 10);
+  const deck = techDecks.find((item) => item.id === deckId);
 
-      const bossCards = selected.map((card) => {
-        // 50% chance of being true
-        const isTrue = Math.random() > 0.5;
-        let displayedAnswer = card.answer;
+  const buildBossCards = () => {
+    if (!deck) return [];
+    const selected = shuffle(deck.cards).slice(
+      0,
+      DIFFICULTY_QUESTIONS[difficulty],
+    );
 
-        if (!isTrue) {
-          // Grab a random other answer from the deck
-          const otherCards = deck.cards.filter((c) => c.answer !== card.answer);
-          if (otherCards.length > 0) {
-            displayedAnswer = SHUFFLE(otherCards)[0].answer;
-          }
+    return selected.map((card) => {
+      const isTrue = Math.random() > 0.5;
+      let displayedAnswer = card.answer;
+
+      if (!isTrue) {
+        const otherCards = deck.cards.filter(
+          (item) => item.answer !== card.answer,
+        );
+        if (otherCards.length > 0) {
+          displayedAnswer = shuffle(otherCards)[0].answer;
         }
+      }
 
-        return {
-          prompt: card.prompt,
-          displayedAnswer,
-          isTrue,
-          actualAnswer: card.answer,
-        };
-      });
+      return {
+        prompt: card.prompt,
+        displayedAnswer,
+        isTrue,
+        actualAnswer: card.answer,
+      };
+    });
+  };
 
-      setCards(bossCards);
-    }
-  }, [deckId]);
+  const startSession = () => {
+    const bossCards = buildBossCards();
+    if (bossCards.length === 0) return;
+
+    setCards(bossCards);
+    setCurrentIndex(0);
+    setScore(0);
+    setFeedback(null);
+    setIsFinished(false);
+    setHasStarted(true);
+    sessionStartTime.current = Date.now();
+
+    trackAnalyticsEvent("session_start", {
+      game: "tech_boss",
+      deck: deckId,
+      difficulty,
+      questions: bossCards.length,
+    });
+  };
 
   const handleGuess = (guessTrue: boolean) => {
-    if (feedback !== null) return; // Prevent double click
+    if (feedback !== null) return;
 
     const currentCard = cards[currentIndex];
     const isCorrect = currentCard.isTrue === guessTrue;
+    const nextScore = isCorrect ? score + 1 : score;
 
     setFeedback(isCorrect ? "correct" : "wrong");
     if (isCorrect) {
-      setScore((s) => s + 1);
-      trackAnalyticsEvent("item_correct", { game: "tech_boss", deck: deckId });
+      setScore(nextScore);
+      trackAnalyticsEvent("item_correct", {
+        game: "tech_boss",
+        deck: deckId,
+        difficulty,
+      });
     } else {
-      trackAnalyticsEvent("item_wrong", { game: "tech_boss", deck: deckId });
+      trackAnalyticsEvent("item_wrong", {
+        game: "tech_boss",
+        deck: deckId,
+        difficulty,
+        errorType: "truth_mismatch",
+      });
     }
 
     setTimeout(() => {
       setFeedback(null);
       if (currentIndex < cards.length - 1) {
-        setCurrentIndex((i) => i + 1);
-      } else {
-        setIsFinished(true);
-        addGlobalXp(score * 20);
-        progressQuest("play_game", 1, "test_tech");
-        trackAnalyticsEvent("session_end", {
-          game: "tech_boss",
-          durationSeconds: 60,
-        });
+        setCurrentIndex((previous) => previous + 1);
+        return;
       }
+
+      setIsFinished(true);
+      addGlobalXp(nextScore * 20);
+      progressQuest("play_game", 1, "test_tech");
+      trackAnalyticsEvent("session_end", {
+        game: "tech_boss",
+        duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
+        score: nextScore,
+      });
     }, 2000);
   };
 
-  if (cards.length === 0)
+  if (!deck) {
     return (
       <div className="p-8 text-center bg-slate-900 text-white min-h-screen">
         Loading...
       </div>
     );
+  }
+
+  if (!hasStarted) {
+    return (
+      <div className="flex-1 overflow-y-auto bg-background p-4 sm:p-8 pb-4 sm:pb-8">
+        <GameStartPanel
+          title="Tech Boss"
+          description="Configura dificultad antes de iniciar el reto final."
+          onStart={startSession}
+          startLabel="Iniciar Boss"
+        >
+          <div className="space-y-3">
+            <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+              Dificultad
+            </p>
+            <div className="flex justify-center flex-wrap gap-2">
+              {(Object.keys(DIFFICULTY_LABEL) as BossDifficulty[]).map(
+                (level) => (
+                  <Button
+                    key={`difficulty-${level}`}
+                    size="sm"
+                    variant={difficulty === level ? "primary" : "secondary"}
+                    onClick={() => setDifficulty(level)}
+                  >
+                    {DIFFICULTY_LABEL[level]} ({DIFFICULTY_QUESTIONS[level]})
+                  </Button>
+                ),
+              )}
+            </div>
+          </div>
+        </GameStartPanel>
+      </div>
+    );
+  }
+
+  if (cards.length === 0) {
+    return (
+      <div className="p-8 text-center bg-slate-900 text-white min-h-screen">
+        Loading...
+      </div>
+    );
+  }
 
   if (isFinished) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center space-y-6 bg-slate-900 text-white">
-        <div className="text-6xl mb-2">🧑‍💻</div>
+        <div className="text-6xl mb-2">Boss</div>
         <h2 className="text-4xl font-bold text-red-500">
           Code Review Complete
         </h2>
@@ -119,7 +212,7 @@ export const TechBossView: React.FC = () => {
           onClick={() => navigate("/tech-hub")}
           className="text-slate-400 hover:text-white"
         >
-          ← Flee
+          Flee
         </button>
         <div className="text-red-400 font-mono font-bold uppercase tracking-widest">
           Bug Hunter
@@ -131,8 +224,7 @@ export const TechBossView: React.FC = () => {
 
       <div className="flex-1 flex flex-col justify-center items-center max-w-2xl mx-auto w-full pb-20">
         <div className="bg-slate-800/80 border border-red-900/50 p-6 md:p-8 rounded-2xl shadow-2xl w-full relative overflow-hidden">
-          {/* Scanline effect */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/5 to-transparent h-full w-full pointer-events-none animate-scanline opacity-50"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/5 to-transparent h-full w-full pointer-events-none animate-scanline opacity-50" />
 
           <div className="relative z-10 space-y-6">
             <h3 className="text-xl md:text-2xl font-semibold text-slate-100">
@@ -143,7 +235,6 @@ export const TechBossView: React.FC = () => {
               {">"} {currentCard.displayedAnswer}
             </div>
 
-            {/* In-game feedback overlay */}
             {feedback && (
               <div
                 className={`p-4 rounded-xl border-2 text-center text-lg font-bold animate-fade-in ${
@@ -152,21 +243,10 @@ export const TechBossView: React.FC = () => {
                     : "bg-red-900/30 border-red-500 text-red-400"
                 }`}
               >
-                {feedback === "correct"
-                  ? "✅ ¡Buen ojo!"
-                  : "❌ ¡Te han engañado!"}
-                {!currentCard.isTrue && feedback === "wrong" && (
+                {feedback === "correct" ? "Correcto" : "Te enganaron"}
+                {!currentCard.isTrue && (
                   <div className="text-sm font-normal text-slate-300 mt-2">
-                    Era falso. La respuesta real es:
-                    <br />
-                    <span className="text-indigo-300 mt-1 block">
-                      {currentCard.actualAnswer}
-                    </span>
-                  </div>
-                )}
-                {!currentCard.isTrue && feedback === "correct" && (
-                  <div className="text-sm font-normal text-slate-300 mt-2">
-                    Exacto, era falso. La respuesta real es:
+                    Respuesta real:
                     <br />
                     <span className="text-indigo-300 mt-1 block">
                       {currentCard.actualAnswer}
@@ -178,7 +258,6 @@ export const TechBossView: React.FC = () => {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex w-full gap-4 mt-8">
           <button
             onClick={() => handleGuess(true)}

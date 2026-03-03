@@ -14,6 +14,7 @@ describe("CollocationSprintView", () => {
 
   test("renders title and default timer", () => {
     render(<CollocationSprintView />);
+    fireEvent.click(screen.getByRole("button", { name: "Empezar Sprint" }));
 
     expect(screen.getByText("Collocation Sprint")).toBeInTheDocument();
     expect(screen.getByText("34s")).toBeInTheDocument();
@@ -21,6 +22,7 @@ describe("CollocationSprintView", () => {
 
   test("validates correct pair", () => {
     render(<CollocationSprintView />);
+    fireEvent.click(screen.getByRole("button", { name: "Empezar Sprint" }));
 
     fireEvent.click(screen.getByRole("button", { name: "take" }));
     fireEvent.click(screen.getByRole("button", { name: "responsibility" }));

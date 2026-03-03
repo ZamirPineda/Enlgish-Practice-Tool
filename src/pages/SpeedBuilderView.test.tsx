@@ -5,6 +5,12 @@ import SpeedBuilderView from "@/pages/SpeedBuilderView";
 import { speedBuilderRounds } from "@/features/data/speedBuilder";
 
 describe("SpeedBuilderView", () => {
+  const startGame = () => {
+    fireEvent.click(
+      screen.getByRole("button", { name: "Iniciar Speed Builder" }),
+    );
+  };
+
   beforeEach(() => {
     vi.spyOn(Math, "random").mockReturnValue(0.9999999);
   });
@@ -15,6 +21,7 @@ describe("SpeedBuilderView", () => {
 
   test("renders title and first round counter", () => {
     render(<SpeedBuilderView />);
+    startGame();
 
     expect(screen.getByText("Speed Builder")).toBeInTheDocument();
     expect(screen.getByText(/Ronda 1/)).toBeInTheDocument();
@@ -23,6 +30,7 @@ describe("SpeedBuilderView", () => {
 
   test("switches to B2 level with lower timer and no beginner hint", () => {
     render(<SpeedBuilderView />);
+    startGame();
 
     fireEvent.click(screen.getByRole("button", { name: "Set level B2" }));
 
@@ -34,6 +42,7 @@ describe("SpeedBuilderView", () => {
 
   test("allows selecting and clearing words", () => {
     render(<SpeedBuilderView />);
+    startGame();
 
     const sentence = speedBuilderRounds.find(
       (round) => round.level === "A2",
@@ -57,6 +66,7 @@ describe("SpeedBuilderView", () => {
 
   test("adds score after a correct answer", () => {
     render(<SpeedBuilderView />);
+    startGame();
 
     const a2Sentence = speedBuilderRounds.find(
       (round) => round.level === "A2",
@@ -76,6 +86,7 @@ describe("SpeedBuilderView", () => {
 
   test("shows optional hint in easy mode", () => {
     render(<SpeedBuilderView />);
+    startGame();
 
     fireEvent.click(screen.getByRole("button", { name: "Show hint" }));
 

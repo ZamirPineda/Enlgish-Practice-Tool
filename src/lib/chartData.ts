@@ -1,4 +1,5 @@
 import { AnalyticsEvent } from "@/lib/analytics";
+import { normalizeGameId } from "@/lib/gameAnalytics";
 
 export interface DailyActivityPoint {
   date: string; // e.g. "Feb 28"
@@ -124,7 +125,7 @@ export const buildDailyActivityData = (
 
 export const getGameFromEvent = (event: AnalyticsEvent): string => {
   if (typeof event.payload.game === "string") {
-    return event.payload.game;
+    return normalizeGameId(event.payload.game);
   }
   if (
     event.payload.mode === "daily" ||

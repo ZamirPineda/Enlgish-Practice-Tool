@@ -34,4 +34,48 @@ describe("analytics tracker", () => {
     expect(events[0].payload).toEqual({ index: 10 });
     expect(events[499].payload).toEqual({ index: 509 });
   });
+
+  test("normalizes legacy game ids and duration fields", () => {
+    trackAnalyticsEvent("session_end", {
+      game: "study_docs_quiz",
+      durationSeconds: 75,
+    });
+
+    const events = getAnalyticsEvents();
+    expect(events).toHaveLength(1);
+    expect(events[0].payload.game).toBe("docs_quiz");
+    expect(events[0].payload.duration).toBe(75);
+  });
+
+  test("synthesizes a session_start when answer events arrive first", () => {
+    trackAnalyticsEvent("item_correct", { game: "syntax_builder" });
+
+    const events = getAnalyticsEvents();
+    expect(events).toHaveLength(2);
+    expect(events[0].name).toBe("session_start");
+    expect(events[0].payload.game).toBe("code_syntax_builder");
+    expect(events[1].name).toBe("item_correct");
+    expect(events[1].payload.game).toBe("code_syntax_builder");
+  });
+
+  test("normalizes legacy events already persisted in localStorage", () => {
+    localStorage.setItem(
+      ANALYTICS_EVENTS_KEY,
+      JSON.stringify([
+        {
+          name: "session_end",
+          timestamp: new Date().toISOString(),
+          payload: {
+            game: "study_docs_game",
+            durationSeconds: 120,
+          },
+        },
+      ]),
+    );
+
+    const events = getAnalyticsEvents();
+    expect(events).toHaveLength(1);
+    expect(events[0].payload.game).toBe("docs_game");
+    expect(events[0].payload.duration).toBe(120);
+  });
 });

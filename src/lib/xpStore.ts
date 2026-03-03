@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "@/components/ui/Toast";
 import { z } from "zod";
+import { loadSettings } from "./settingsStore";
 
 const GLOBAL_XP_KEY = "english-pal-global-xp";
 const DAILY_QUESTS_KEY = "skillpal-daily-quests";
@@ -8,6 +9,18 @@ const STREAK_FREEZES_KEY = "skillpal-streak-freezes";
 const LIFETIME_STATS_KEY = "skillpal-lifetime-stats";
 const CLAIMED_MILESTONES_KEY = "skillpal-claimed-milestones";
 const XP_PER_LEVEL = 1000;
+
+const getDailyCycleKey = (date: Date = new Date()): string => {
+  const settings = loadSettings();
+  const offsetHours = settings.dayOffsetHours ?? 3;
+  const adjustedDate = new Date(date);
+  adjustedDate.setHours(adjustedDate.getHours() - offsetHours);
+
+  const year = adjustedDate.getFullYear();
+  const month = String(adjustedDate.getMonth() + 1).padStart(2, "0");
+  const day = String(adjustedDate.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 export const dailyQuestSchema = z.object({
   id: z.string(),
@@ -67,7 +80,7 @@ const GENERATE_DAILY_QUESTS = (): DailyQuest[] => {
 };
 
 export const getDailyQuests = (): z.infer<typeof dailyQuestsStateSchema> => {
-  const today = new Date().toISOString().split("T")[0];
+  const today = getDailyCycleKey();
   if (typeof window === "undefined" || !window.localStorage)
     return { date: today, quests: GENERATE_DAILY_QUESTS() };
 
@@ -357,22 +370,40 @@ export const useGlobalXp = () => {
   const [quests, setQuests] = useState(getDailyQuests().quests);
 
   useEffect(() => {
+    const syncQuests = () => setQuests(getDailyQuests().quests);
+
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === GLOBAL_XP_KEY) setXp(parseInt(e.newValue || "0", 10) || 0);
-      if (e.key === DAILY_QUESTS_KEY) setQuests(getDailyQuests().quests);
+      if (e.key === DAILY_QUESTS_KEY) syncQuests();
     };
 
     const handleXpEvent = () => setXp(getGlobalXp());
-    const handleQuestsEvent = () => setQuests(getDailyQuests().quests);
+    const handleQuestsEvent = () => syncQuests();
+    const handleFocus = () => syncQuests();
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        syncQuests();
+      }
+    };
+
+    const intervalId = window.setInterval(syncQuests, 60000);
 
     window.addEventListener("storage", handleStorageChange);
     window.addEventListener("globalXpUpdated", handleXpEvent);
     window.addEventListener("dailyQuestsUpdated", handleQuestsEvent);
+    window.addEventListener("focus", handleFocus);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Ensure stale quest state is corrected right after mounting.
+    syncQuests();
 
     return () => {
+      window.clearInterval(intervalId);
       window.removeEventListener("storage", handleStorageChange);
       window.removeEventListener("globalXpUpdated", handleXpEvent);
       window.removeEventListener("dailyQuestsUpdated", handleQuestsEvent);
+      window.removeEventListener("focus", handleFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
