@@ -26,6 +26,20 @@ import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import SlideOver from "@/components/ui/SlideOver";
 import ViewToolbar from "@/components/ui/ViewToolbar";
+import {
+  initVaultSearchWorker,
+  updateWorkerDeck,
+  searchVault,
+  terminateVaultSearchWorker,
+} from "@/workers/vaultSearch";
+import {
+  VaultSearchFilters,
+  VaultSearchResult,
+} from "@/workers/vaultSearch.worker";
+import {
+  HighlightedText,
+  getMatchIndices,
+} from "@/components/ui/HighlightedText";
 
 interface VocabularyVaultViewProps {
   onPlayWord: (text: string) => void;
@@ -245,6 +259,16 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   );
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
+  const [searchFilters, setSearchFilters] = useState<VaultSearchFilters>({
+    tags: [],
+    states: [],
+    dateRange: null,
+    difficulty: "all",
+  });
+  const [searchResults, setSearchResults] = useState<VaultSearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+
   // Removed generatedData logic as AI is gone
 
   const [reviewItems, setReviewItems] = useState<SrsVocabularyItem[]>([]);
@@ -295,7 +319,14 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
 
   useEffect(() => {
     localStorage.setItem("vocab-vault-deck", JSON.stringify(deck));
+    updateWorkerDeck(Object.values(deck));
   }, [deck]);
+
+  useEffect(() => {
+    return () => {
+      terminateVaultSearchWorker();
+    };
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(VAULT_PROGRESS_KEY, JSON.stringify(progress));
@@ -364,33 +395,19 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const bossReviewCompletedThisWeek =
     progress.lastBossReviewWeek === currentWeekKey;
 
-  const filteredCollection = useMemo(() => {
-    let filtered = deckList.filter(
-      (item) =>
-        item.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.definition.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (item.tags &&
-          item.tags.some((tag) =>
-            tag.toLowerCase().includes(searchTerm.toLowerCase()),
-          )),
-    );
-
-    if (sortBy === "alphabetical") {
-      filtered = filtered.sort((a, b) => a.word.localeCompare(b.word));
-    } else if (sortBy === "strength") {
-      filtered = filtered.sort((a, b) => b.interval - a.interval);
-    } else if (sortBy === "newest") {
-      // We don't have a creation date, but we can sort by nextReviewDate or just reverse alphabetical as a fallback
-      // Let's sort by nextReviewDate descending (newest added usually have nextReviewDate = today)
-      filtered = filtered.sort(
-        (a, b) =>
-          new Date(b.nextReviewDate).getTime() -
-          new Date(a.nextReviewDate).getTime(),
-      );
-    }
-
-    return filtered;
-  }, [deckList, searchTerm, sortBy]);
+  useEffect(() => {
+    let active = true;
+    setIsSearching(true);
+    searchVault(searchTerm, searchFilters, sortBy).then((results) => {
+      if (active) {
+        setSearchResults(results);
+        setIsSearching(false);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, [deckList, searchTerm, sortBy, searchFilters]);
 
   const handleAddToDeck = (item: {
     word: string;
@@ -1181,39 +1198,139 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   className="pl-6 pr-12 py-3"
                   aria-label="Search vault words"
                 />
-                {searchTerm ? (
+
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
                   <button
-                    onClick={() => {
-                      setSearchTerm("");
-                      document.getElementById("vault-search-input")?.focus();
-                    }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary hover:text-text-primary p-1 rounded-full hover:bg-surface-2 transition-colors"
-                    aria-label="Clear search"
+                    onClick={() => setShowFilters(!showFilters)}
+                    className={`p-1.5 rounded-md focus:outline-none transition-colors ${showFilters ? "bg-accent/20 text-accent" : "text-text-secondary hover:text-text-primary"}`}
+                    title="Advanced Filters"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
                       <path
-                        fillRule="evenodd"
-                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                        clipRule="evenodd"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
                       />
                     </svg>
                   </button>
-                ) : (
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none">
-                    🔍
-                  </div>
-                )}
+                  {searchTerm && (
+                    <button
+                      onClick={() => {
+                        setSearchTerm("");
+                        document.getElementById("vault-search-input")?.focus();
+                      }}
+                      className="text-text-secondary hover:text-text-primary p-1 rounded-full hover:bg-surface-2 transition-colors"
+                      aria-label="Clear search"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {showFilters && totalInDeck > 0 && (
+              <div className="bg-surface-2 border border-border rounded-xl p-4 mt-2 mb-6 animate-fade-in flex flex-wrap gap-4 items-end">
+                <div className="flex-1 min-w-[120px]">
+                  <label className="block text-xs font-bold text-text-secondary uppercase mb-1">
+                    State
+                  </label>
+                  <select
+                    value={searchFilters.states[0] || ""}
+                    onChange={(e) =>
+                      setSearchFilters((f) => ({
+                        ...f,
+                        states: e.target.value ? [e.target.value as any] : [],
+                      }))
+                    }
+                    className="w-full bg-surface-1 border border-border text-text-primary text-sm rounded-lg p-2 outline-none focus:ring-1 focus:ring-focus"
+                  >
+                    <option value="">All States</option>
+                    <option value="new">New</option>
+                    <option value="learning">Learning</option>
+                    <option value="mastered">Mastered</option>
+                  </select>
+                </div>
+                <div className="flex-1 min-w-[120px]">
+                  <label className="block text-xs font-bold text-text-secondary uppercase mb-1">
+                    Difficulty
+                  </label>
+                  <select
+                    value={searchFilters.difficulty}
+                    onChange={(e) =>
+                      setSearchFilters((f) => ({
+                        ...f,
+                        difficulty: e.target.value as any,
+                      }))
+                    }
+                    className="w-full bg-surface-1 border border-border text-text-primary text-sm rounded-lg p-2 outline-none focus:ring-1 focus:ring-focus"
+                  >
+                    <option value="all">All Difficulties</option>
+                    <option value="hard">Hard (Low EF)</option>
+                    <option value="medium">Medium</option>
+                    <option value="easy">Easy (High Interval)</option>
+                  </select>
+                </div>
+                <div className="flex-1 min-w-[200px]">
+                  <label className="block text-xs font-bold text-text-secondary uppercase mb-1">
+                    Tags (Comma sep)
+                  </label>
+                  <Input
+                    type="text"
+                    placeholder="e.g. Travel, Verb"
+                    value={searchFilters.tags.join(", ")}
+                    onChange={(e) =>
+                      setSearchFilters((f) => ({
+                        ...f,
+                        tags: e.target.value
+                          .split(",")
+                          .map((t) => t.trim())
+                          .filter(Boolean),
+                      }))
+                    }
+                    className="w-full p-2 text-sm"
+                  />
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() =>
+                    setSearchFilters({
+                      tags: [],
+                      states: [],
+                      dateRange: null,
+                      difficulty: "all",
+                    })
+                  }
+                  className="mb-0.5 whitespace-nowrap"
+                >
+                  Clear Filters
+                </Button>
               </div>
             )}
             {totalInDeck > 0 && (
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-                <div className="text-sm text-text-secondary">
-                  Showing {filteredCollection.length} of {totalInDeck} words
+                <div className="text-sm text-text-secondary flex items-center gap-2">
+                  Showing {searchResults.length} of {totalInDeck} words
+                  {isSearching && <span className="animate-pulse">...</span>}
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2 bg-surface-2 p-1 rounded-lg border border-border">
@@ -1287,7 +1404,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     : "flex flex-col gap-3 pb-4"
                 }
               >
-                {filteredCollection.map((item) => (
+                {searchResults.map(({ item, matches }) => (
                   <div
                     key={item.word}
                     className={`bg-surface-1 border border-border p-5 rounded-2xl hover:shadow-2xl transition-all group relative flex ${viewMode === "grid" ? "flex-col" : "flex-row items-center gap-6"}`}
@@ -1297,7 +1414,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     >
                       <div className="flex items-center gap-2">
                         <h3 className="text-xl font-black text-text-primary">
-                          {item.word}
+                          <HighlightedText
+                            text={item.word}
+                            indices={getMatchIndices(matches, "word")}
+                          />
                         </h3>
                         <button
                           onClick={() => {
@@ -1366,7 +1486,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       )}
                       {item.tags?.map((tag) => (
                         <Badge key={tag} variant="accent">
-                          {tag}
+                          <HighlightedText
+                            text={tag}
+                            indices={getMatchIndices(matches, "tags")}
+                          />
                         </Badge>
                       ))}
                     </div>
@@ -1374,7 +1497,12 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     <p
                       className={`text-text-secondary text-sm italic ${viewMode === "grid" ? "mb-4 line-clamp-2 flex-1" : "flex-1 line-clamp-1"}`}
                     >
-                      "{item.definition}"
+                      "
+                      <HighlightedText
+                        text={item.definition}
+                        indices={getMatchIndices(matches, "definition")}
+                      />
+                      "
                     </p>
 
                     <div
