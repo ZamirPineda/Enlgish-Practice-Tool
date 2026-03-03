@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Flame,
   Zap,
-  Clock,
+  Award,
   CheckCircle2,
   ChevronRight,
   TrendingUp,
@@ -14,6 +14,13 @@ import {
   getGlobalActivityData,
   toDateKey,
 } from "@/lib/activityTracker";
+import { addGlobalXp } from "@/lib/xpStore";
+import { toast } from "@/components/ui/Toast";
+import {
+  FOCUS_ROUTE_LABEL,
+  claimDailySessionReward,
+  getTodaySessionSummary,
+} from "@/lib/dailySessionSummary";
 
 const DailyProgressWidget: React.FC = () => {
   const [refreshToken, setRefreshToken] = useState(0);
@@ -82,6 +89,34 @@ const DailyProgressWidget: React.FC = () => {
 
   const progressPct = Math.min(100, Math.max(0, (currentVal / target) * 100));
   const isGoalMet = currentVal >= target;
+  const sessionSummary = useMemo(
+    () => getTodaySessionSummary(todayStr),
+    [todayStr, refreshToken],
+  );
+
+  const strongestRouteLabel = sessionSummary.strongestRoute
+    ? FOCUS_ROUTE_LABEL[sessionSummary.strongestRoute]
+    : "No data yet";
+  const weakestRouteLabel = sessionSummary.weakestRoute
+    ? FOCUS_ROUTE_LABEL[sessionSummary.weakestRoute]
+    : "No data yet";
+
+  const handleClaimSessionReward = () => {
+    if (!sessionSummary.rewardEligible) {
+      toast.error("Complete 2 sessions and keep 70%+ accuracy to claim reward.");
+      return;
+    }
+
+    if (!claimDailySessionReward(sessionSummary.date)) {
+      toast.info("Today's session reward was already claimed.");
+      setRefreshToken((prev) => prev + 1);
+      return;
+    }
+
+    addGlobalXp(sessionSummary.rewardXp);
+    toast.success(`Session reward claimed: +${sessionSummary.rewardXp} XP`);
+    setRefreshToken((prev) => prev + 1);
+  };
 
   return (
     <div className="bg-surface-1 border border-border shadow-sm rounded-3xl p-5 sm:p-6 mb-8 hover:shadow-md transition-shadow">
@@ -174,6 +209,62 @@ const DailyProgressWidget: React.FC = () => {
             </Link>
           </div>
         </div>
+      </div>
+
+      <div className="mt-5 grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div className="rounded-xl border border-border bg-surface-2 p-3">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-text-muted">
+            Sessions
+          </p>
+          <p className="text-xl font-black text-text-primary">
+            {sessionSummary.sessionsCompleted}
+          </p>
+        </div>
+        <div className="rounded-xl border border-border bg-surface-2 p-3">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-text-muted">
+            Accuracy
+          </p>
+          <p className="text-xl font-black text-text-primary">
+            {sessionSummary.accuracy}%
+          </p>
+        </div>
+        <div className="rounded-xl border border-border bg-surface-2 p-3">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-text-muted">
+            Strongest
+          </p>
+          <p className="text-sm font-bold text-emerald-500 mt-1">
+            {strongestRouteLabel}
+          </p>
+        </div>
+        <div className="rounded-xl border border-border bg-surface-2 p-3">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-text-muted">
+            Needs Focus
+          </p>
+          <p className="text-sm font-bold text-amber-500 mt-1">
+            {weakestRouteLabel}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-border bg-surface-2 px-4 py-3">
+        <p className="text-sm text-text-secondary">
+          {sessionSummary.rewardEligible
+            ? "Daily session reward ready."
+            : "Play 2 sessions with 70%+ accuracy to unlock daily reward."}
+        </p>
+        <button
+          type="button"
+          onClick={handleClaimSessionReward}
+          disabled={
+            !sessionSummary.rewardEligible || sessionSummary.rewardClaimed
+          }
+          className={`inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-black transition-colors ${sessionSummary.rewardEligible && !sessionSummary.rewardClaimed ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-surface-1 text-text-muted border border-border"}`}
+        >
+          <Award className="w-4 h-4" />
+          {sessionSummary.rewardClaimed
+            ? "Reward Claimed"
+            : `Claim +${sessionSummary.rewardXp} XP`}
+        </button>
       </div>
     </div>
   );

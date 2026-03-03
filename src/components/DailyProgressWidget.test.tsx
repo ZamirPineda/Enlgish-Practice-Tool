@@ -1,10 +1,11 @@
 import React from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import DailyProgressWidget from "./DailyProgressWidget";
 import { trackActivity } from "@/lib/activityTracker";
 import { loadSettings, saveSettings } from "@/lib/settingsStore";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 describe("DailyProgressWidget", () => {
   beforeEach(() => {
@@ -52,5 +53,49 @@ describe("DailyProgressWidget", () => {
     expect(
       screen.getByText("50 more cards needed to reach your goal."),
     ).toBeInTheDocument();
+  });
+
+  it("shows session summary and allows claiming the daily session reward once", () => {
+    render(
+      <MemoryRouter>
+        <DailyProgressWidget />
+      </MemoryRouter>,
+    );
+
+    const rewardButtonBefore = screen.getByRole("button", {
+      name: "Claim +40 XP",
+    });
+    expect(rewardButtonBefore).toBeDisabled();
+
+    act(() => {
+      trackAnalyticsEvent("session_start", { game: "speed_builder" });
+      for (let i = 0; i < 6; i++) {
+        trackAnalyticsEvent("item_correct", { game: "speed_builder" });
+      }
+      for (let i = 0; i < 2; i++) {
+        trackAnalyticsEvent("item_wrong", { game: "speed_builder" });
+      }
+      trackAnalyticsEvent("session_end", { game: "speed_builder" });
+
+      trackAnalyticsEvent("session_start", { game: "math_game" });
+      for (let i = 0; i < 2; i++) {
+        trackAnalyticsEvent("item_correct", { game: "math_game" });
+      }
+      trackAnalyticsEvent("session_end", { game: "math_game" });
+    });
+
+    expect(screen.getByText("Daily session reward ready.")).toBeInTheDocument();
+
+    const rewardButton = screen.getByRole("button", {
+      name: "Claim +40 XP",
+    });
+    expect(rewardButton).toBeEnabled();
+
+    act(() => {
+      fireEvent.click(rewardButton);
+    });
+
+    expect(screen.getByRole("button", { name: "Reward Claimed" })).toBeDisabled();
+    expect(localStorage.getItem("english-pal-global-xp")).toBe("40");
   });
 });
