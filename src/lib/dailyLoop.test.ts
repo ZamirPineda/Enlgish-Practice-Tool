@@ -50,6 +50,24 @@ describe("dailyLoop", () => {
     });
   });
 
+  test("adapts selected games by focus route while keeping the same category mix", () => {
+    const englishLoop = startDailyLoop("english_interview", "2026-03-03");
+    const devLoop = startDailyLoop("dev_reasoning", "2026-03-03");
+
+    const englishGameIds = englishLoop.steps
+      .filter((step) => step.category === "english")
+      .map((step) => step.gameId);
+    const devGameIds = devLoop.steps
+      .filter((step) => step.category === "english")
+      .map((step) => step.gameId);
+
+    expect(englishLoop.focusRoute).toBe("english_interview");
+    expect(devLoop.focusRoute).toBe("dev_reasoning");
+    expect(englishLoop.steps).toHaveLength(4);
+    expect(devLoop.steps).toHaveLength(4);
+    expect(englishGameIds).not.toEqual(devGameIds);
+  });
+
   test("marks steps as completed from analytics session_end events", () => {
     const loop = startDailyLoop("dev_reasoning", "2026-03-03");
 

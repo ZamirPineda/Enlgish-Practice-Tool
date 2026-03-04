@@ -102,6 +102,56 @@ describe("StatsView", () => {
             errorType: "connector_missing",
           },
         },
+        {
+          name: "daily_loop_started",
+          timestamp: nowIso,
+          payload: {
+            game: "daily_loop",
+            focusRoute: "english_interview",
+            totalSteps: 4,
+          },
+        },
+        {
+          name: "daily_loop_step_completed",
+          timestamp: nowIso,
+          payload: {
+            game: "daily_loop",
+            focusRoute: "english_interview",
+            stepId: "step-1",
+            completedSteps: 1,
+            totalSteps: 4,
+          },
+        },
+        {
+          name: "daily_loop_step_completed",
+          timestamp: nowIso,
+          payload: {
+            game: "daily_loop",
+            focusRoute: "english_interview",
+            stepId: "step-2",
+            completedSteps: 2,
+            totalSteps: 4,
+          },
+        },
+        {
+          name: "daily_loop_completed",
+          timestamp: nowIso,
+          payload: {
+            game: "daily_loop",
+            focusRoute: "english_interview",
+            duration: 900,
+            stepsCompleted: 4,
+          },
+        },
+        {
+          name: "daily_loop_reward_claimed",
+          timestamp: nowIso,
+          payload: {
+            game: "daily_loop",
+            focusRoute: "english_interview",
+            rewardXp: 60,
+          },
+        },
       ]),
     );
 
@@ -121,6 +171,9 @@ describe("StatsView", () => {
     expect(screen.getByText("2. Mode Mismatch — 1")).toBeInTheDocument();
     expect(screen.getByText("Suggested Focus")).toBeInTheDocument();
     expect(screen.getByText("Session Starts")).toBeInTheDocument();
+    expect(screen.getByText("Daily Loop")).toBeInTheDocument();
+    expect(screen.getByText("Started: 1 | Steps: 2")).toBeInTheDocument();
+    expect(screen.getByText("Rewards: 1")).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Paraphrase Duel" }),
     ).toBeInTheDocument();

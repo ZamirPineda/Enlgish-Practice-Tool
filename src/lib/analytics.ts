@@ -10,6 +10,10 @@ export const analyticsEventNameSchema = z.enum([
   "item_wrong",
   "speaking_used",
   "weekly_review_completed",
+  "daily_loop_started",
+  "daily_loop_step_completed",
+  "daily_loop_completed",
+  "daily_loop_reward_claimed",
 ]);
 
 export type AnalyticsEventName = z.infer<typeof analyticsEventNameSchema>;

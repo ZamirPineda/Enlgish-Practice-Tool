@@ -245,7 +245,7 @@ const HomeView: React.FC = () => {
         <DailyProgressWidget />
 
         <section>
-          <Link to="/daily-loop" className="block group">
+          <Link to="/daily-loop?autostart=1" className="block group">
             <Card className="p-6 border-l-4 border-violet-500 bg-surface-1 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>

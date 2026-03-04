@@ -39,6 +39,7 @@ const GAME_COLORS: Record<string, string> = {
   tech_flashcards: "#3b82f6", // blue-500
   tech_matchup: "#a855f7", // purple-500
   tech_boss: "#ef4444", // red-500
+  daily_loop: "#14b8a6", // teal-500
 };
 
 export const GAME_CATEGORY: Record<string, "english" | "math" | "dev"> = {

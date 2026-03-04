@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle2, Circle, Trophy } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
@@ -32,12 +32,42 @@ const PROGRESS_STYLE = {
   dev: "border-violet-500/40 bg-violet-500/10 text-violet-500 shadow-violet-500/20",
 };
 
+const formatDurationLabel = (startedAt: string, completedAt: string): string => {
+  const totalSeconds = Math.max(
+    0,
+    Math.round(
+      (new Date(completedAt).getTime() - new Date(startedAt).getTime()) / 1000,
+    ),
+  );
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  if (minutes <= 0) return `${seconds}s`;
+  return `${minutes}m ${seconds}s`;
+};
+
+const parseFocusRouteParam = (
+  value: string | null,
+): DailyLoopFocusRoute | null => {
+  if (
+    value === "english_interview" ||
+    value === "math_speed" ||
+    value === "dev_reasoning"
+  ) {
+    return value;
+  }
+  return null;
+};
+
 const DailyLoopView: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [selectedFocusRoute, setSelectedFocusRoute] =
     useState<DailyLoopFocusRoute>("english_interview");
   const [loop, setLoop] = useState<DailyLoopState | null>(() =>
     getTodayDailyLoop(),
   );
+  const didAutoStartRef = useRef(false);
+  const requestedFocusRoute = parseFocusRouteParam(searchParams.get("focus"));
+  const shouldAutoStart = searchParams.get("autostart") === "1";
 
   const syncLoopState = useCallback(() => {
     const storedLoop = getTodayDailyLoop();
@@ -64,6 +94,12 @@ const DailyLoopView: React.FC = () => {
           ),
         );
         trackAnalyticsEvent("session_end", {
+          game: "daily_loop",
+          focusRoute: syncedLoop.focusRoute,
+          duration: durationSeconds,
+          stepsCompleted: syncedLoop.steps.length,
+        });
+        trackAnalyticsEvent("daily_loop_completed", {
           game: "daily_loop",
           focusRoute: syncedLoop.focusRoute,
           duration: durationSeconds,
@@ -113,15 +149,65 @@ const DailyLoopView: React.FC = () => {
     return { completed, total, percent };
   }, [loop]);
 
-  const handleStartLoop = () => {
-    const nextLoop = startDailyLoop(selectedFocusRoute);
-    setLoop(nextLoop);
-    trackAnalyticsEvent("session_start", {
-      game: "daily_loop",
-      focusRoute: nextLoop.focusRoute,
-      totalSteps: nextLoop.steps.length,
-    });
-    toast.success("Loop iniciado.");
+  const loopSummary = useMemo(() => {
+    if (!loop || !loop.completedAt) return null;
+
+    const completedSessions = loop.steps.filter((step) =>
+      Boolean(step.completedAt),
+    ).length;
+    const englishCompleted = loop.steps.filter(
+      (step) => step.category === "english" && Boolean(step.completedAt),
+    ).length;
+    const mathCompleted = loop.steps.filter(
+      (step) => step.category === "math" && Boolean(step.completedAt),
+    ).length;
+    const devCompleted = loop.steps.filter(
+      (step) => step.category === "dev" && Boolean(step.completedAt),
+    ).length;
+
+    return {
+      durationLabel: formatDurationLabel(loop.startedAt, loop.completedAt),
+      completedSessions,
+      totalSessions: loop.steps.length,
+      englishCompleted,
+      mathCompleted,
+      devCompleted,
+    };
+  }, [loop]);
+
+  const handleStartLoop = useCallback(
+    (focusRoute: DailyLoopFocusRoute = selectedFocusRoute) => {
+      const nextLoop = startDailyLoop(focusRoute);
+      setLoop(nextLoop);
+      trackAnalyticsEvent("session_start", {
+        game: "daily_loop",
+        focusRoute: nextLoop.focusRoute,
+        totalSteps: nextLoop.steps.length,
+      });
+      trackAnalyticsEvent("daily_loop_started", {
+        game: "daily_loop",
+        focusRoute: nextLoop.focusRoute,
+        totalSteps: nextLoop.steps.length,
+      });
+      toast.success("Loop iniciado.");
+    },
+    [selectedFocusRoute],
+  );
+
+  useEffect(() => {
+    if (!shouldAutoStart || loop || didAutoStartRef.current) return;
+    didAutoStartRef.current = true;
+    handleStartLoop(requestedFocusRoute ?? selectedFocusRoute);
+  }, [shouldAutoStart, loop, handleStartLoop, requestedFocusRoute, selectedFocusRoute]);
+
+  const handleStartLoopClick = () => {
+    if (requestedFocusRoute) {
+      setSelectedFocusRoute(requestedFocusRoute);
+      handleStartLoop(requestedFocusRoute);
+      return;
+    }
+
+    handleStartLoop(selectedFocusRoute);
   };
 
   const handleManualComplete = (stepId: string) => {
@@ -133,6 +219,14 @@ const DailyLoopView: React.FC = () => {
 
     saveDailyLoopState(updatedLoop);
     setLoop(updatedLoop);
+    trackAnalyticsEvent("daily_loop_step_completed", {
+      game: "daily_loop",
+      focusRoute: updatedLoop.focusRoute,
+      stepId,
+      completedSteps: updatedLoop.steps.filter((step) => Boolean(step.completedAt))
+        .length,
+      totalSteps: updatedLoop.steps.length,
+    });
 
     if (!loop.completedAt && updatedLoop.completedAt) {
       const durationSeconds = Math.max(
@@ -144,6 +238,12 @@ const DailyLoopView: React.FC = () => {
         ),
       );
       trackAnalyticsEvent("session_end", {
+        game: "daily_loop",
+        focusRoute: updatedLoop.focusRoute,
+        duration: durationSeconds,
+        stepsCompleted: updatedLoop.steps.length,
+      });
+      trackAnalyticsEvent("daily_loop_completed", {
         game: "daily_loop",
         focusRoute: updatedLoop.focusRoute,
         duration: durationSeconds,
@@ -164,6 +264,11 @@ const DailyLoopView: React.FC = () => {
     }
 
     addGlobalXp(DAILY_LOOP_REWARD_XP);
+    trackAnalyticsEvent("daily_loop_reward_claimed", {
+      game: "daily_loop",
+      focusRoute: loop.focusRoute,
+      rewardXp: DAILY_LOOP_REWARD_XP,
+    });
     toast.success(`+${DAILY_LOOP_REWARD_XP} XP del loop`);
     syncLoopState();
   };
@@ -218,7 +323,7 @@ const DailyLoopView: React.FC = () => {
               ))}
             </div>
 
-            <Button variant="primary" size="lg" onClick={handleStartLoop}>
+            <Button variant="primary" size="lg" onClick={handleStartLoopClick}>
               Iniciar Daily Loop
             </Button>
           </Card>
@@ -310,6 +415,43 @@ const DailyLoopView: React.FC = () => {
                   Cerraste tu bloque diario. Reclama tu recompensa y sigue con
                   tu siguiente sesion.
                 </p>
+                {loopSummary && (
+                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                    <div className="rounded-lg border border-border bg-surface-1 px-3 py-2">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-text-muted">
+                        Sesiones
+                      </p>
+                      <p className="text-sm font-black text-text-primary">
+                        {loopSummary.completedSessions}/{loopSummary.totalSessions}
+                      </p>
+                    </div>
+                    <div className="rounded-lg border border-border bg-surface-1 px-3 py-2">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-text-muted">
+                        Duracion
+                      </p>
+                      <p className="text-sm font-black text-text-primary">
+                        {loopSummary.durationLabel}
+                      </p>
+                    </div>
+                    <div className="rounded-lg border border-border bg-surface-1 px-3 py-2">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-text-muted">
+                        Mix
+                      </p>
+                      <p className="text-sm font-black text-text-primary">
+                        E{loopSummary.englishCompleted} M{loopSummary.mathCompleted} D
+                        {loopSummary.devCompleted}
+                      </p>
+                    </div>
+                    <div className="rounded-lg border border-border bg-surface-1 px-3 py-2">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-text-muted">
+                        Focus
+                      </p>
+                      <p className="text-sm font-black text-text-primary">
+                        {DAILY_LOOP_FOCUS_LABEL[loop.focusRoute]}
+                      </p>
+                    </div>
+                  </div>
+                )}
                 <Button
                   variant="success"
                   onClick={handleClaimReward}

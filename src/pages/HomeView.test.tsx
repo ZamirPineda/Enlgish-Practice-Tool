@@ -56,4 +56,17 @@ describe("HomeView", () => {
     expect(item.tags).toContain("Daily Phrase");
     expect(item.originalContext).toBeTruthy();
   });
+
+  test("daily loop CTA links to one-click autostart", () => {
+    render(
+      <MemoryRouter>
+        <HomeView />
+      </MemoryRouter>,
+    );
+
+    const dailyLoopLink = screen.getByRole("link", {
+      name: /Daily Loop 15-25 min/i,
+    });
+    expect(dailyLoopLink).toHaveAttribute("href", "/daily-loop?autostart=1");
+  });
 });

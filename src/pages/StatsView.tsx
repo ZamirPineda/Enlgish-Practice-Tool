@@ -68,6 +68,10 @@ const buildAnalyticsSummary = (events: Array<{ name: AnalyticsEventName }>) => {
     item_wrong: 0,
     speaking_used: 0,
     weekly_review_completed: 0,
+    daily_loop_started: 0,
+    daily_loop_step_completed: 0,
+    daily_loop_completed: 0,
+    daily_loop_reward_claimed: 0,
   };
 
   events.forEach((event) => {
@@ -515,6 +519,9 @@ const StatsView: React.FC = () => {
     ) / 10;
   const speakingUsedDelta =
     analyticsSummary.speaking_used - previousAnalyticsSummary.speaking_used;
+  const dailyLoopCompletedDelta =
+    analyticsSummary.daily_loop_completed -
+    previousAnalyticsSummary.daily_loop_completed;
 
   return (
     <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-4 sm:pb-8">
@@ -712,7 +719,7 @@ const StatsView: React.FC = () => {
               <h2 className="text-lg font-black text-text-primary mb-6">
                 Weekly Summary
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 <article className="bg-surface-2 border border-border rounded-xl p-4">
                   <p className="text-xs uppercase font-bold text-text-muted mb-1">
                     Sessions
@@ -847,6 +854,26 @@ const StatsView: React.FC = () => {
                     className={`text-xs mt-1 ${getDeltaClass(speakingUsedDelta)}`}
                   >
                     vs prev: {formatDelta(speakingUsedDelta)}
+                  </p>
+                </article>
+                <article className="bg-surface-2 border border-border rounded-xl p-4">
+                  <p className="text-xs uppercase font-bold text-text-muted mb-1">
+                    Daily Loop
+                  </p>
+                  <p className="text-2xl font-black text-teal-400">
+                    {analyticsSummary.daily_loop_completed}
+                  </p>
+                  <p className="text-xs text-text-muted mt-1">
+                    Started: {analyticsSummary.daily_loop_started} | Steps:{" "}
+                    {analyticsSummary.daily_loop_step_completed}
+                  </p>
+                  <p className="text-xs text-success mt-1 uppercase font-bold tracking-widest">
+                    Rewards: {analyticsSummary.daily_loop_reward_claimed}
+                  </p>
+                  <p
+                    className={`text-xs mt-1 ${getDeltaClass(dailyLoopCompletedDelta)}`}
+                  >
+                    vs prev: {formatDelta(dailyLoopCompletedDelta)}
                   </p>
                 </article>
               </div>
