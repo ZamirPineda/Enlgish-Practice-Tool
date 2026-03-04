@@ -1,10 +1,19 @@
 import React, { useRef, useEffect, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import GameStartPanel from "@/components/GameStartPanel";
+import GameShell from "@/components/game/GameShell";
+import GameHudCard from "@/components/game/GameHudCard";
+import DailySessionInsights from "@/components/game/DailySessionInsights";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import { playGameSound } from "@/lib/audioUtils";
 import { addGlobalXp, progressQuest } from "@/lib/xpStore";
 import { docsQuizQuestions, QuizQuestion } from "@/features/data/docs_quiz";
+import {
+  getTimeByPreset,
+  TIME_PRESET_LABEL,
+  TimePreset,
+} from "@/lib/gameSessionConfig";
 
 type GameState = "idle" | "playing" | "finished";
 
@@ -24,7 +33,9 @@ const shuffle = <T,>(items: T[]): T[] => {
 const StudyDocsQuizView: React.FC = () => {
   const sessionStartTime = useRef<number>(Date.now());
   const [gameState, setGameState] = useState<GameState>("idle");
-  const [timeLeft, setTimeLeft] = useState(TIME_PER_QUESTION);
+  const [timePreset, setTimePreset] = useState<TimePreset>("normal");
+  const questionTime = getTimeByPreset(TIME_PER_QUESTION, timePreset);
+  const [timeLeft, setTimeLeft] = useState(questionTime);
   const [lives, setLives] = useState(INITIAL_LIVES);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -96,9 +107,17 @@ const StudyDocsQuizView: React.FC = () => {
     const firstRound = getNextRound(shuffledPool);
     if (!firstRound) return;
 
+    sessionStartTime.current = Date.now();
+    trackAnalyticsEvent("session_start", {
+      game: "docs_quiz",
+      timePreset,
+      questionTime,
+      questions: shuffledPool.length,
+    });
+
     setQuestionsPool(shuffledPool.slice(1));
     setGameState("playing");
-    setTimeLeft(TIME_PER_QUESTION);
+    setTimeLeft(questionTime);
     setLives(INITIAL_LIVES);
     setScore(0);
     setStreak(0);
@@ -159,7 +178,7 @@ const StudyDocsQuizView: React.FC = () => {
     setLastResult(null);
     setCurrentRound(nextRound);
     setShuffledOptions(shuffle([...nextRound.options]));
-    setTimeLeft(TIME_PER_QUESTION);
+    setTimeLeft(questionTime);
   };
 
   if (docsQuizQuestions.length === 0) {
@@ -173,8 +192,53 @@ const StudyDocsQuizView: React.FC = () => {
     );
   }
 
+  const startScreen = (
+    <GameStartPanel
+      title="Tech Interview Quiz"
+      description="Configura el ritmo antes de iniciar."
+      onStart={startGame}
+      startLabel="Iniciar Quiz"
+    >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Ritmo de tiempo
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {(Object.keys(TIME_PRESET_LABEL) as TimePreset[]).map((preset) => (
+            <Button
+              key={`time-${preset}`}
+              size="sm"
+              variant={timePreset === preset ? "primary" : "secondary"}
+              onClick={() => setTimePreset(preset)}
+            >
+              {TIME_PRESET_LABEL[preset]}
+            </Button>
+          ))}
+        </div>
+        <p className="text-xs text-text-secondary">
+          Tiempo por pregunta: {questionTime}s
+        </p>
+      </div>
+    </GameStartPanel>
+  );
+
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-6 space-y-6">
+    <GameShell
+      hasStarted={gameState !== "idle"}
+      startScreen={startScreen}
+      pageClassName="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 md:p-6"
+      contentClassName="max-w-4xl mx-auto space-y-6"
+    >
+      <GameHudCard
+        title="Tech Interview Quiz"
+        description="Practica con preguntas de arquitectura e ingenieria."
+        meta={
+          <p className="text-xs text-text-muted mt-1">Record: {bestScore}</p>
+        }
+        status={`Vidas ${lives} · Score ${score}`}
+        timeLeft={gameState === "playing" ? timeLeft : 0}
+        roundTime={questionTime}
+      />
       <Card elevated>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-2xl font-black text-text-primary">
@@ -206,8 +270,8 @@ const StudyDocsQuizView: React.FC = () => {
         <>
           <div className="w-full h-3 bg-surface-2 rounded-full overflow-hidden shadow-inner mb-4 border border-border">
             <div
-              className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= TIME_PER_QUESTION / 2 ? "bg-amber-400" : "bg-success"}`}
-              style={{ width: `${(timeLeft / TIME_PER_QUESTION) * 100}%` }}
+              className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= questionTime / 2 ? "bg-amber-400" : "bg-success"}`}
+              style={{ width: `${(timeLeft / questionTime) * 100}%` }}
             />
           </div>
           <Card>
@@ -404,6 +468,7 @@ const StudyDocsQuizView: React.FC = () => {
                     </div>
                   </div>
                 </div>
+                <DailySessionInsights className="mt-4 text-left" />
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
                   <Button
@@ -426,7 +491,7 @@ const StudyDocsQuizView: React.FC = () => {
           })()}
         </Card>
       )}
-    </div>
+    </GameShell>
   );
 };
 

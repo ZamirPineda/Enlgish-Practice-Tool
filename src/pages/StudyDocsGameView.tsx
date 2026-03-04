@@ -1,9 +1,19 @@
 import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import GameStartPanel from "@/components/GameStartPanel";
+import GameShell from "@/components/game/GameShell";
+import GameHudCard from "@/components/game/GameHudCard";
+import DailySessionInsights from "@/components/game/DailySessionInsights";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import { playGameSound } from "@/lib/audioUtils";
 import { useNetworkStatus } from "@/hooks/useNetworkStatus";
+import {
+  getTimeByPreset,
+  TIME_PRESET_LABEL,
+  TimePreset,
+} from "@/lib/gameSessionConfig";
+import { addGlobalXp, progressQuest } from "@/lib/xpStore";
 
 interface FileNode {
   name: string;
@@ -249,7 +259,9 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
 
   const sessionStartTime = useRef<number>(Date.now());
   const [gameState, setGameState] = useState<GameState>("idle");
-  const [timeLeft, setTimeLeft] = useState(GAME_DURATION_SECONDS);
+  const [timePreset, setTimePreset] = useState<TimePreset>("normal");
+  const gameDuration = getTimeByPreset(GAME_DURATION_SECONDS, timePreset);
+  const [timeLeft, setTimeLeft] = useState(gameDuration);
   const [lives, setLives] = useState(INITIAL_LIVES);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -472,6 +484,11 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     });
     setSelectedOption(null);
     setLastResult(null);
+    if (score > 0) {
+      addGlobalXp(score);
+    }
+    progressQuest("play_game", 1, "docs_hunt");
+    progressQuest("play_game", 1, "any");
     setBestScore((currentBest) => {
       const nextBest = Math.max(currentBest, score);
       localStorage.setItem(BEST_SCORE_KEY, String(nextBest));
@@ -502,8 +519,14 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     setIsRoundLoading(false);
     if (!firstRound) return;
 
+    sessionStartTime.current = Date.now();
+    trackAnalyticsEvent("session_start", {
+      game: "docs_game",
+      timePreset,
+      gameDuration,
+    });
     setGameState("playing");
-    setTimeLeft(GAME_DURATION_SECONDS);
+    setTimeLeft(gameDuration);
     setLives(INITIAL_LIVES);
     setScore(0);
     setStreak(0);
@@ -568,8 +591,56 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     );
   }
 
+  const startScreen = (
+    <GameStartPanel
+      title="Doc Hunt"
+      description="Configura el ritmo antes de iniciar."
+      onStart={() => void startGame()}
+      startLabel="Iniciar juego"
+    >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Ritmo de tiempo
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {(Object.keys(TIME_PRESET_LABEL) as TimePreset[]).map((preset) => (
+            <Button
+              key={`time-${preset}`}
+              size="sm"
+              variant={timePreset === preset ? "primary" : "secondary"}
+              onClick={() => setTimePreset(preset)}
+            >
+              {TIME_PRESET_LABEL[preset]}
+            </Button>
+          ))}
+        </div>
+        <p className="text-xs text-text-secondary">Duracion: {gameDuration}s</p>
+      </div>
+      {!isOnline ? (
+        <p className="text-red-400 text-sm font-bold">
+          Estas sin conexion. No es posible cargar documentos para el juego.
+        </p>
+      ) : null}
+    </GameStartPanel>
+  );
+
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-6 space-y-6">
+    <GameShell
+      hasStarted={gameState !== "idle"}
+      startScreen={startScreen}
+      pageClassName="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 md:p-6"
+      contentClassName="max-w-4xl mx-auto space-y-6"
+    >
+      <GameHudCard
+        title="Doc Hunt"
+        description="Adivina categoria y concepto con fragmentos reales."
+        meta={
+          <p className="text-xs text-text-muted mt-1">Record: {bestScore}</p>
+        }
+        status={`Vidas ${lives} · Score ${score}`}
+        timeLeft={gameState === "playing" ? timeLeft : 0}
+        roundTime={gameDuration}
+      />
       <Card elevated>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-2xl font-black text-text-primary">🕹️ Doc Hunt</h2>
@@ -614,8 +685,8 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
         <>
           <div className="w-full h-3 bg-surface-2 rounded-full overflow-hidden shadow-inner mb-4 border border-border">
             <div
-              className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= GAME_DURATION_SECONDS / 2 ? "bg-amber-400" : "bg-success"}`}
-              style={{ width: `${(timeLeft / GAME_DURATION_SECONDS) * 100}%` }}
+              className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= gameDuration / 2 ? "bg-amber-400" : "bg-success"}`}
+              style={{ width: `${(timeLeft / gameDuration) * 100}%` }}
             />
           </div>
           <Card>
@@ -788,6 +859,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
                     </div>
                   </div>
                 </div>
+                <DailySessionInsights className="mt-4 text-left" />
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                   <Button
@@ -810,7 +882,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
           })()}
         </Card>
       )}
-    </div>
+    </GameShell>
   );
 };
 

@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import GameStartPanel from "@/components/GameStartPanel";
+import DailySessionInsights from "@/components/game/DailySessionInsights";
+import GameHudCard from "@/components/game/GameHudCard";
 import Button from "@/components/ui/Button";
 import { techDecks } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
@@ -242,6 +244,9 @@ export const TechMatchUpView: React.FC = () => {
           Architecture Completa
         </h2>
         <div className="text-2xl my-4">Puntuacion: {score}</div>
+        <div className="w-full max-w-2xl">
+          <DailySessionInsights className="text-left" />
+        </div>
         <button
           onClick={() => navigate("/tech-hub")}
           className="px-8 py-3 bg-fuchsia-600 rounded-full hover:bg-fuchsia-500 font-bold shadow-lg transition-all"
@@ -262,6 +267,19 @@ export const TechMatchUpView: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-900 text-slate-100 p-4">
+      <GameHudCard
+        title="Tech Match Up"
+        description="Conecta conceptos con sus definiciones."
+        status={`Ronda ${Math.min(completedSets + 1, totalSets)} / ${totalSets}`}
+        meta={
+          <p className="text-xs text-text-muted mt-1">
+            Dificultad: {DIFFICULTY_LABEL[difficulty]} · Score: {score}
+          </p>
+        }
+        timeLeft={totalSets - completedSets}
+        roundTime={totalSets}
+        timerLabel="Rondas"
+      />
       <div className="flex justify-between items-center mb-6 max-w-5xl mx-auto w-full">
         <button
           onClick={() => navigate("/tech-hub")}

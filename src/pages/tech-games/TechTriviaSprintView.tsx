@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import GameStartPanel from "@/components/GameStartPanel";
+import DailySessionInsights from "@/components/game/DailySessionInsights";
+import GameHudCard from "@/components/game/GameHudCard";
 import Button from "@/components/ui/Button";
 import { techDecks, TechCard } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
@@ -265,6 +267,9 @@ export const TechTriviaSprintView: React.FC = () => {
         <p className="text-slate-300">
           Preguntas respondidas: {Math.min(currentIndex + 1, cards.length)}
         </p>
+        <div className="w-full max-w-2xl">
+          <DailySessionInsights className="text-left" />
+        </div>
         <button
           onClick={() => navigate("/tech-hub")}
           className="px-8 py-3 bg-indigo-600 rounded-full hover:bg-indigo-500 font-bold shadow-lg shadow-indigo-500/20 transition-all"
@@ -285,6 +290,18 @@ export const TechTriviaSprintView: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-900 text-slate-100 p-4">
+      <GameHudCard
+        title="Tech Trivia Sprint"
+        description="Responde rapido y protege tus vidas."
+        status={`Pregunta ${currentIndex + 1} / ${cards.length}`}
+        meta={
+          <p className="text-xs text-text-muted mt-1">
+            Dificultad: {DIFFICULTY_LABEL[difficulty]} · Vidas: {lives}
+          </p>
+        }
+        timeLeft={timeLeft}
+        roundTime={questionTime}
+      />
       <div className="flex justify-between items-center mb-6">
         <div className="flex gap-2">
           {Array.from({ length: DIFFICULTY_LIVES[difficulty] }).map(

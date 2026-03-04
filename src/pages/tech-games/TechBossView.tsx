@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import GameStartPanel from "@/components/GameStartPanel";
+import DailySessionInsights from "@/components/game/DailySessionInsights";
+import GameHudCard from "@/components/game/GameHudCard";
 import Button from "@/components/ui/Button";
 import { techDecks } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
@@ -193,6 +195,9 @@ export const TechBossView: React.FC = () => {
         <div className="text-2xl mt-4">
           Precision: {score}/{cards.length}
         </div>
+        <div className="w-full max-w-2xl">
+          <DailySessionInsights className="text-left" />
+        </div>
         <button
           onClick={() => navigate("/tech-hub")}
           className="mt-8 px-8 py-3 bg-red-600 rounded-full hover:bg-red-500 font-bold shadow-lg shadow-red-500/20 transition-all"
@@ -207,6 +212,19 @@ export const TechBossView: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-900 text-slate-100 p-4">
+      <GameHudCard
+        title="Tech Boss"
+        description="Decide si la respuesta mostrada es verdadera o falsa."
+        status={`Pregunta ${currentIndex + 1} / ${cards.length}`}
+        meta={
+          <p className="text-xs text-text-muted mt-1">
+            Dificultad: {DIFFICULTY_LABEL[difficulty]} · Score: {score}
+          </p>
+        }
+        timeLeft={cards.length - currentIndex}
+        roundTime={cards.length}
+        timerLabel="Restantes"
+      />
       <div className="flex justify-between items-center mb-6 max-w-2xl mx-auto w-full">
         <button
           onClick={() => navigate("/tech-hub")}

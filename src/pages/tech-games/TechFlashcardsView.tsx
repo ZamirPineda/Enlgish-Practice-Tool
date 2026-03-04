@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import GameStartPanel from "@/components/GameStartPanel";
+import DailySessionInsights from "@/components/game/DailySessionInsights";
+import GameHudCard from "@/components/game/GameHudCard";
 import Button from "@/components/ui/Button";
 import { techDecks, TechCard } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
@@ -170,6 +172,9 @@ export const TechFlashcardsView: React.FC = () => {
         <p className="text-slate-300">
           Has repasado {cards.length} conceptos clave.
         </p>
+        <div className="w-full max-w-2xl">
+          <DailySessionInsights className="text-left" />
+        </div>
         <div className="flex gap-4">
           <button
             onClick={() => navigate("/tech-hub")}
@@ -190,6 +195,19 @@ export const TechFlashcardsView: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full bg-slate-900 text-slate-100 p-4 pb-20">
+      <GameHudCard
+        title="Tech Flashcards"
+        description="Repasa conceptos y valida tu dominio."
+        meta={
+          <p className="text-xs text-text-muted mt-1">
+            Ritmo sugerido: {pacePerCard}s por carta
+          </p>
+        }
+        status={`Carta ${currentIndex + 1} / ${cards.length}`}
+        timeLeft={cards.length - currentIndex}
+        roundTime={cards.length}
+        timerLabel="Restantes"
+      />
       <div className="flex justify-between items-center mb-6">
         <button
           onClick={() => navigate("/tech-hub")}

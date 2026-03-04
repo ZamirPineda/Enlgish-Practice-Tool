@@ -7,10 +7,19 @@ import React, {
 } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import GameStartPanel from "@/components/GameStartPanel";
+import GameShell from "@/components/game/GameShell";
+import GameHudCard from "@/components/game/GameHudCard";
+import DailySessionInsights from "@/components/game/DailySessionInsights";
 import LatexRenderer from "@/components/LatexRenderer";
 import { addGlobalXp, progressQuest } from "@/lib/xpStore";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import { playGameSound } from "@/lib/audioUtils";
+import {
+  getTimeByPreset,
+  TIME_PRESET_LABEL,
+  TimePreset,
+} from "@/lib/gameSessionConfig";
 import {
   algebraTopic,
   calculusTopic,
@@ -127,7 +136,9 @@ const MathGameView: React.FC = () => {
 
   const sessionStartTime = useRef<number>(Date.now());
   const [gameState, setGameState] = useState<GameState>("idle");
-  const [timeLeft, setTimeLeft] = useState(GAME_DURATION_SECONDS);
+  const [timePreset, setTimePreset] = useState<TimePreset>("normal");
+  const gameDuration = getTimeByPreset(GAME_DURATION_SECONDS, timePreset);
+  const [timeLeft, setTimeLeft] = useState(gameDuration);
   const [lives, setLives] = useState(INITIAL_LIVES);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -200,10 +211,14 @@ const MathGameView: React.FC = () => {
 
   const startGame = () => {
     sessionStartTime.current = Date.now();
-    trackAnalyticsEvent("session_start", { game: "math_game" });
+    trackAnalyticsEvent("session_start", {
+      game: "math_game",
+      timePreset,
+      gameDuration,
+    });
     if (questionBank.length === 0) return;
     setGameState("playing");
-    setTimeLeft(GAME_DURATION_SECONDS);
+    setTimeLeft(gameDuration);
     setLives(INITIAL_LIVES);
     setScore(0);
     setStreak(0);
@@ -261,8 +276,50 @@ const MathGameView: React.FC = () => {
     );
   }
 
+  const startScreen = (
+    <GameStartPanel
+      title="Math Speed Duel"
+      description="Configura el ritmo antes de iniciar."
+      onStart={startGame}
+      startLabel="Iniciar juego"
+    >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Ritmo de tiempo
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {(Object.keys(TIME_PRESET_LABEL) as TimePreset[]).map((preset) => (
+            <Button
+              key={`time-${preset}`}
+              size="sm"
+              variant={timePreset === preset ? "primary" : "secondary"}
+              onClick={() => setTimePreset(preset)}
+            >
+              {TIME_PRESET_LABEL[preset]}
+            </Button>
+          ))}
+        </div>
+        <p className="text-xs text-text-secondary">Duracion: {gameDuration}s</p>
+      </div>
+    </GameStartPanel>
+  );
+
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <GameShell
+      hasStarted={gameState !== "idle"}
+      startScreen={startScreen}
+      contentClassName="max-w-4xl mx-auto space-y-6"
+    >
+      <GameHudCard
+        title="Math Speed Duel"
+        description="Tiempo, vidas y combo por respuestas correctas seguidas."
+        meta={
+          <p className="text-xs text-text-muted mt-1">Record: {bestScore}</p>
+        }
+        status={`Vidas ${lives} / ${INITIAL_LIVES}`}
+        timeLeft={gameState === "playing" ? timeLeft : 0}
+        roundTime={gameDuration}
+      />
       <Card elevated>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h3 className="text-2xl font-black text-text-primary">
@@ -292,8 +349,8 @@ const MathGameView: React.FC = () => {
         <>
           <div className="w-full h-3 bg-surface-2 rounded-full overflow-hidden shadow-inner mb-4 border border-border">
             <div
-              className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= GAME_DURATION_SECONDS / 2 ? "bg-amber-400" : "bg-success"}`}
-              style={{ width: `${(timeLeft / GAME_DURATION_SECONDS) * 100}%` }}
+              className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 10 ? "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= gameDuration / 2 ? "bg-amber-400" : "bg-success"}`}
+              style={{ width: `${(timeLeft / gameDuration) * 100}%` }}
             />
           </div>
           <Card>
@@ -490,6 +547,7 @@ const MathGameView: React.FC = () => {
                     </div>
                   </div>
                 </div>
+                <DailySessionInsights className="mt-4 text-left" />
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                   <Button
@@ -512,7 +570,7 @@ const MathGameView: React.FC = () => {
           })()}
         </Card>
       )}
-    </div>
+    </GameShell>
   );
 };
 
