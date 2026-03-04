@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.21.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.20.0...english-practice-pal-v1.21.0) (2026-03-04)
+
+
+### Features
+
+* **app-104:** add daily loop flow with persistence and rewards ([e3c1fbf](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/e3c1fbfc69f6fe5c146bfe565524488724234193))
+* **app-104:** integrate sonner global toasts and align roadmap ([fccbff0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/fccbff044838032a7cf9bdf507296b5660f3cb15))
+* **app-105:** add motion transitions for game start and summary ([9a4df42](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/9a4df42b089d6fbbed5881fd6cef9f400c558e73))
+* **app-201:** enforce daily loop sequence 2 english + 1 math + 1 dev ([3705bec](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/3705beca8b4503c2572a08ddf52783554d395c05))
+* complete daily loop flow and QA (APP-202 to APP-207) ([2cf84ea](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/2cf84ea378223f971efa9066f4ff9e726ee9998d))
+
+
+### Bug Fixes
+
+* **app-106:** add dialog title and description for modal accessibility ([1bc37bf](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/1bc37bfd39b0b5e8251a6f763ef474034ddaf69f))
+
 ## [1.20.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.19.1...english-practice-pal-v1.20.0) (2026-03-04)
 
 
