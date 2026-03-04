@@ -244,6 +244,29 @@ const HomeView: React.FC = () => {
 
         <DailyProgressWidget />
 
+        <section>
+          <Link to="/daily-loop" className="block group">
+            <Card className="p-6 border-l-4 border-violet-500 bg-surface-1 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-violet-500 mb-2">
+                    APP-104
+                  </p>
+                  <h2 className="text-2xl font-black text-text-primary">
+                    Daily Loop 15-25 min
+                  </h2>
+                  <p className="text-sm text-text-secondary mt-1">
+                    Sigue una secuencia guiada: 2 English + 1 Math + 1 Dev.
+                  </p>
+                </div>
+                <div className="inline-flex items-center gap-2 rounded-xl border border-violet-500/40 bg-violet-500/10 px-4 py-2 text-sm font-black text-violet-500 group-hover:translate-x-1 transition-transform">
+                  Empezar loop <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+            </Card>
+          </Link>
+        </section>
+
         {/* Dynamic CTA */}
         {metrics.pendingCards > 0 && (
           <section>
