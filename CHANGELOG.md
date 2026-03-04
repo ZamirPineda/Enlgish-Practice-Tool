@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.20.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.19.1...english-practice-pal-v1.20.0) (2026-03-04)
+
+
+### Features
+
+* **app-103:** unify shell/hud and session insights across remaining games ([454465a](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/454465a16ab82cd979462b7adad0cf2e4c1b9959))
+* **games:** show daily session insights on game completion ([4114376](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/41143762d0cc21a3e57f009de9a85a0c4046038b))
+* **games:** unify start shell and hud across core practice views ([1b399ec](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/1b399ecd00e96c4b2612be780f06d3dccc9f67ed))
+* **home:** add daily session summary and claimable reward ([87373c9](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/87373c9de5be2fb063115df9b292cf4314f9c64f))
+* **rewards:** add weekly consistency milestones and route visuals ([eba661c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/eba661ced4fa64613167de830a5c4a7e785d7bf3))
+
 ## [1.19.1](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.19.0...english-practice-pal-v1.19.1) (2026-03-03)
 
 
