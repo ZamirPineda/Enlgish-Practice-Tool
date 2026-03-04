@@ -4,6 +4,7 @@ import "@/styles/index.css";
 import App from "@/App";
 import GlobalErrorBoundary from "@/components/GlobalErrorBoundary";
 import { installGlobalErrorLogging } from "@/lib/logger";
+import { initializeSentry } from "@/lib/sentry";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
@@ -11,6 +12,7 @@ if (!rootElement) {
 }
 
 const root = ReactDOM.createRoot(rootElement);
+initializeSentry();
 installGlobalErrorLogging();
 root.render(
   <React.StrictMode>

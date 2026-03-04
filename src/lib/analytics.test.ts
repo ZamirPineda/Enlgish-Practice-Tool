@@ -5,6 +5,7 @@ import {
   getAnalyticsEvents,
   trackAnalyticsEvent,
 } from "@/lib/analytics";
+import { SENTRY_RUNTIME_CONTEXT_KEY } from "@/lib/sentry";
 
 describe("analytics tracker", () => {
   beforeEach(() => {
@@ -77,5 +78,14 @@ describe("analytics tracker", () => {
     expect(events).toHaveLength(1);
     expect(events[0].payload.game).toBe("docs_game");
     expect(events[0].payload.duration).toBe(120);
+  });
+
+  test("stores latest game context for error reporting", () => {
+    trackAnalyticsEvent("session_start", { game: "syntax_builder" });
+
+    const runtimeContext = JSON.parse(
+      localStorage.getItem(SENTRY_RUNTIME_CONTEXT_KEY) || "{}",
+    ) as { game?: string };
+    expect(runtimeContext.game).toBe("code_syntax_builder");
   });
 });

@@ -1,4 +1,5 @@
 import { APP_VERSION } from "@/lib/appVersion";
+import { captureSentryException } from "@/lib/sentry";
 
 const LOG_PREFIX = `[EnglishPal v${APP_VERSION}]`;
 const originalConsoleError = console.error.bind(console);
@@ -42,6 +43,7 @@ export const logError = (
   metadata?: Record<string, unknown>,
 ) => {
   addRecentLog("error", [source, error, metadata ?? {}]);
+  captureSentryException(source, error, metadata);
   originalConsoleError(`${LOG_PREFIX} ${source}`, {
     build: APP_VERSION,
     error: errorToString(error),

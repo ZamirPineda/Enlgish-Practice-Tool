@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { trackActivity } from "./activityTracker";
 import { normalizeAnalyticsPayload, normalizeGameId } from "./gameAnalytics";
+import { setSentryGameContext } from "./sentry";
 import { toast } from "@/components/ui/Toast";
 
 export const analyticsEventNameSchema = z.enum([
@@ -164,6 +165,12 @@ export const trackAnalyticsEvent = (
     typeof parsedEvent.data.payload.game === "string"
       ? parsedEvent.data.payload.game
       : null;
+
+  if (gameId && name !== "session_end") {
+    setSentryGameContext(gameId);
+  } else if (name === "session_end") {
+    setSentryGameContext(null);
+  }
 
   const eventsToPersist: AnalyticsEvent[] = [...existing];
 

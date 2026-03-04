@@ -1,7 +1,8 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { playNativeTTS } from "@/lib/audioUtils";
 import { AppSettings } from "@/lib/settingsStore";
+import { setSentryRouteContext } from "@/lib/sentry";
 
 // Views
 const HomeView = lazy(() => import("@/pages/HomeView"));
@@ -70,6 +71,11 @@ export const AnimatedRoutes = ({
   handleSettingsChange: (updates: Partial<AppSettings>) => void;
 }) => {
   const location = useLocation();
+
+  useEffect(() => {
+    const route = `${location.pathname}${location.search}${location.hash}`;
+    setSentryRouteContext(route);
+  }, [location.pathname, location.search, location.hash]);
 
   return (
     <div
