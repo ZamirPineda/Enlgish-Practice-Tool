@@ -7,13 +7,21 @@ import Button from "@/components/ui/Button";
 import { techDecks, TechCard } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import {
   getTimeByPreset,
   TimePreset,
   TIME_PRESET_LABEL,
 } from "@/lib/gameSessionConfig";
 import { addGlobalXp, progressQuest } from "@/lib/xpStore";
+import { toast } from "@/components/ui/Toast";
 
 type SessionSize = "short" | "normal" | "extended";
+type FlashcardsDifficulty = "easy" | "normal" | "hard";
 
 const SESSION_SIZE_LABEL: Record<SessionSize, string> = {
   short: "Corta",
@@ -26,6 +34,24 @@ const SESSION_SIZE_CARDS: Record<SessionSize, number> = {
   normal: 20,
   extended: 30,
 };
+const DIFFICULTY_LABEL: Record<FlashcardsDifficulty, string> = {
+  easy: "Facil",
+  normal: "Normal",
+  hard: "Dificil",
+};
+const DIFFICULTY_PACE_BASE_SECONDS: Record<FlashcardsDifficulty, number> = {
+  easy: 8,
+  normal: 6,
+  hard: 4,
+};
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const FLASHCARDS_DIFFICULTY_ENGINE =
+  createAdaptiveDifficultyEngine<FlashcardsDifficulty>({
+    gameId: "tech_flashcards",
+    levels: ["easy", "normal", "hard"],
+    defaultLevel: "normal",
+  });
 
 const shuffle = <T,>(items: T[]) => [...items].sort(() => 0.5 - Math.random());
 
@@ -40,8 +66,11 @@ export const TechFlashcardsView: React.FC = () => {
   const [isFinished, setIsFinished] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [sessionSize, setSessionSize] = useState<SessionSize>("normal");
+  const [difficulty, setDifficulty] = useState<FlashcardsDifficulty>("normal");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const sessionStartTime = useRef<number>(Date.now());
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   useEffect(() => {
     const deck = techDecks.find((item) => item.id === deckId);
@@ -50,7 +79,29 @@ export const TechFlashcardsView: React.FC = () => {
     }
   }, [deckId]);
 
-  const pacePerCard = getTimeByPreset(6, timePreset);
+  const pacePerCard = getTimeByPreset(
+    DIFFICULTY_PACE_BASE_SECONDS[difficulty],
+    timePreset,
+  );
+
+  const handleDifficultySelect = (nextDifficulty: FlashcardsDifficulty) => {
+    setDifficulty((currentDifficulty) => {
+      const transition = FLASHCARDS_DIFFICULTY_ENGINE.setLevel(
+        currentDifficulty,
+        nextDifficulty,
+      );
+      if (transition.changed) {
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "manual",
+          details: {
+            source: "user_select",
+          },
+        });
+      }
+      return transition.nextLevel;
+    });
+  };
 
   const startSession = () => {
     const selected = shuffle(deckCards).slice(
@@ -63,10 +114,13 @@ export const TechFlashcardsView: React.FC = () => {
     setIsFinished(false);
     setHasStarted(true);
     sessionStartTime.current = Date.now();
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
 
     trackAnalyticsEvent("session_start", {
       game: "tech_flashcards",
       deck: deckId,
+      difficulty,
       sessionSize,
       timePreset,
       pacePerCard,
@@ -75,16 +129,78 @@ export const TechFlashcardsView: React.FC = () => {
   };
 
   const handleNext = (correct: boolean) => {
+    const isLastCard = currentIndex >= cards.length - 1;
+
     if (correct) {
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "tech_flashcards",
         deck: deckId,
+        difficulty,
       });
+
+      if (
+        !isLastCard &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = FLASHCARDS_DIFFICULTY_ENGINE.increaseLevel(
+          difficulty,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setDifficulty(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${DIFFICULTY_LABEL[transition.nextLevel]} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
     } else {
+      correctStreakRef.current = 0;
+      wrongStreakRef.current += 1;
       trackAnalyticsEvent("item_wrong", {
         game: "tech_flashcards",
         deck: deckId,
+        difficulty,
       });
+
+      if (
+        !isLastCard &&
+        shouldDownshiftByWrongStreak(
+          wrongStreakRef.current,
+          DOWNSHIFT_AFTER_WRONG_STREAK,
+        )
+      ) {
+        const transition = FLASHCARDS_DIFFICULTY_ENGINE.decreaseLevel(
+          difficulty,
+          "rule_downshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_wrong",
+          details: {
+            consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+          },
+        });
+        wrongStreakRef.current = 0;
+        if (transition.changed) {
+          setDifficulty(transition.nextLevel);
+          toast.info(
+            `Dificultad ajustada a ${DIFFICULTY_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+          );
+        }
+      }
     }
 
     if (currentIndex < cards.length - 1) {
@@ -94,6 +210,8 @@ export const TechFlashcardsView: React.FC = () => {
     }
 
     setIsFinished(true);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
     addGlobalXp(50);
     progressQuest("play_game", 1, "test_tech");
     trackAnalyticsEvent("session_end", {
@@ -101,6 +219,7 @@ export const TechFlashcardsView: React.FC = () => {
       duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
       expectedDuration: cards.length * pacePerCard,
       cards: cards.length,
+      difficulty,
     });
   };
 
@@ -117,6 +236,25 @@ export const TechFlashcardsView: React.FC = () => {
           startLabel="Iniciar Flashcards"
           onStart={startSession}
         >
+          <div className="space-y-3">
+            <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+              Dificultad
+            </p>
+            <div className="flex justify-center flex-wrap gap-2">
+              {(Object.keys(DIFFICULTY_LABEL) as FlashcardsDifficulty[]).map(
+                (level) => (
+                  <Button
+                    key={`difficulty-${level}`}
+                    size="sm"
+                    variant={difficulty === level ? "primary" : "secondary"}
+                    onClick={() => handleDifficultySelect(level)}
+                  >
+                    {DIFFICULTY_LABEL[level]}
+                  </Button>
+                ),
+              )}
+            </div>
+          </div>
           <div className="space-y-3">
             <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
               Tamano de sesion
@@ -200,13 +338,26 @@ export const TechFlashcardsView: React.FC = () => {
         description="Repasa conceptos y valida tu dominio."
         meta={
           <p className="text-xs text-text-muted mt-1">
-            Ritmo sugerido: {pacePerCard}s por carta
+            Dificultad: {DIFFICULTY_LABEL[difficulty]} | Ritmo sugerido: {pacePerCard}s por carta
           </p>
         }
         status={`Carta ${currentIndex + 1} / ${cards.length}`}
         timeLeft={cards.length - currentIndex}
         roundTime={cards.length}
         timerLabel="Restantes"
+        controls={(Object.keys(DIFFICULTY_LABEL) as FlashcardsDifficulty[]).map(
+          (level) => (
+            <Button
+              key={`hud-${level}`}
+              size="sm"
+              variant={difficulty === level ? "primary" : "secondary"}
+              onClick={() => handleDifficultySelect(level)}
+              aria-label={`Set tech flashcards level ${DIFFICULTY_LABEL[level]}`}
+            >
+              {DIFFICULTY_LABEL[level]}
+            </Button>
+          ),
+        )}
       />
       <div className="flex justify-between items-center mb-6">
         <button

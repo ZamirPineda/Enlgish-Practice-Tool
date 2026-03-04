@@ -6,7 +6,14 @@ import GameHudCard from "@/components/game/GameHudCard";
 import Button from "@/components/ui/Button";
 import { techDecks } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
 import { addGlobalXp, progressQuest } from "@/lib/xpStore";
+import { toast } from "@/components/ui/Toast";
 
 interface BossCard {
   prompt: string;
@@ -28,6 +35,13 @@ const DIFFICULTY_QUESTIONS: Record<BossDifficulty, number> = {
   normal: 10,
   hard: 12,
 };
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const BOSS_DIFFICULTY_ENGINE = createAdaptiveDifficultyEngine<BossDifficulty>({
+  gameId: "tech_boss",
+  levels: ["easy", "normal", "hard"],
+  defaultLevel: "normal",
+});
 
 const shuffle = <T,>(items: T[]) => [...items].sort(() => 0.5 - Math.random());
 
@@ -42,6 +56,8 @@ export const TechBossView: React.FC = () => {
   const [difficulty, setDifficulty] = useState<BossDifficulty>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const sessionStartTime = useRef<number>(Date.now());
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   const deck = techDecks.find((item) => item.id === deckId);
 
@@ -85,6 +101,8 @@ export const TechBossView: React.FC = () => {
     setIsFinished(false);
     setHasStarted(true);
     sessionStartTime.current = Date.now();
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
 
     trackAnalyticsEvent("session_start", {
       game: "tech_boss",
@@ -94,28 +112,104 @@ export const TechBossView: React.FC = () => {
     });
   };
 
+  const handleDifficultySelect = (nextDifficulty: BossDifficulty) => {
+    setDifficulty((currentDifficulty) => {
+      const transition = BOSS_DIFFICULTY_ENGINE.setLevel(
+        currentDifficulty,
+        nextDifficulty,
+      );
+      if (transition.changed) {
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "manual",
+          details: {
+            source: "user_select",
+          },
+        });
+      }
+      return transition.nextLevel;
+    });
+  };
+
   const handleGuess = (guessTrue: boolean) => {
     if (feedback !== null) return;
 
     const currentCard = cards[currentIndex];
+    const isLastCard = currentIndex >= cards.length - 1;
     const isCorrect = currentCard.isTrue === guessTrue;
     const nextScore = isCorrect ? score + 1 : score;
 
     setFeedback(isCorrect ? "correct" : "wrong");
     if (isCorrect) {
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       setScore(nextScore);
       trackAnalyticsEvent("item_correct", {
         game: "tech_boss",
         deck: deckId,
         difficulty,
       });
+      if (
+        !isLastCard &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = BOSS_DIFFICULTY_ENGINE.increaseLevel(
+          difficulty,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setDifficulty(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${DIFFICULTY_LABEL[transition.nextLevel]} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
     } else {
+      correctStreakRef.current = 0;
+      wrongStreakRef.current += 1;
       trackAnalyticsEvent("item_wrong", {
         game: "tech_boss",
         deck: deckId,
         difficulty,
         errorType: "truth_mismatch",
       });
+      if (
+        !isLastCard &&
+        shouldDownshiftByWrongStreak(
+          wrongStreakRef.current,
+          DOWNSHIFT_AFTER_WRONG_STREAK,
+        )
+      ) {
+        const transition = BOSS_DIFFICULTY_ENGINE.decreaseLevel(
+          difficulty,
+          "rule_downshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_wrong",
+          details: {
+            consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+          },
+        });
+        wrongStreakRef.current = 0;
+        if (transition.changed) {
+          setDifficulty(transition.nextLevel);
+          toast.info(
+            `Dificultad ajustada a ${DIFFICULTY_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+          );
+        }
+      }
     }
 
     setTimeout(() => {
@@ -126,6 +220,8 @@ export const TechBossView: React.FC = () => {
       }
 
       setIsFinished(true);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current = 0;
       addGlobalXp(nextScore * 20);
       progressQuest("play_game", 1, "test_tech");
       trackAnalyticsEvent("session_end", {
@@ -164,7 +260,7 @@ export const TechBossView: React.FC = () => {
                     key={`difficulty-${level}`}
                     size="sm"
                     variant={difficulty === level ? "primary" : "secondary"}
-                    onClick={() => setDifficulty(level)}
+                    onClick={() => handleDifficultySelect(level)}
                   >
                     {DIFFICULTY_LABEL[level]} ({DIFFICULTY_QUESTIONS[level]})
                   </Button>
@@ -218,12 +314,25 @@ export const TechBossView: React.FC = () => {
         status={`Pregunta ${currentIndex + 1} / ${cards.length}`}
         meta={
           <p className="text-xs text-text-muted mt-1">
-            Dificultad: {DIFFICULTY_LABEL[difficulty]} · Score: {score}
+            Dificultad: {DIFFICULTY_LABEL[difficulty]} | Score: {score}
           </p>
         }
         timeLeft={cards.length - currentIndex}
         roundTime={cards.length}
         timerLabel="Restantes"
+        controls={(Object.keys(DIFFICULTY_LABEL) as BossDifficulty[]).map(
+          (level) => (
+            <Button
+              key={`hud-${level}`}
+              size="sm"
+              variant={difficulty === level ? "primary" : "secondary"}
+              onClick={() => handleDifficultySelect(level)}
+              aria-label={`Set tech boss level ${DIFFICULTY_LABEL[level]}`}
+            >
+              {DIFFICULTY_LABEL[level]}
+            </Button>
+          ),
+        )}
       />
       <div className="flex justify-between items-center mb-6 max-w-2xl mx-auto w-full">
         <button

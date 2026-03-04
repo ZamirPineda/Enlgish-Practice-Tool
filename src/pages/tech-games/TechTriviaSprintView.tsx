@@ -18,6 +18,13 @@ import {
   TIME_PRESET_LABEL,
 } from "@/lib/gameSessionConfig";
 import { addGlobalXp, progressQuest } from "@/lib/xpStore";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 type TriviaDifficulty = "easy" | "normal" | "hard";
 
@@ -44,6 +51,20 @@ const DIFFICULTY_SCORE_MULTIPLIER: Record<TriviaDifficulty, number> = {
   normal: 1.2,
   hard: 1.5,
 };
+const DIFFICULTY_BASE_TIME: Record<TriviaDifficulty, number> = {
+  easy: 28,
+  normal: 25,
+  hard: 20,
+};
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const TRIVIA_DIFFICULTY_ENGINE = createAdaptiveDifficultyEngine<TriviaDifficulty>(
+  {
+    gameId: "tech_trivia",
+    levels: ["easy", "normal", "hard"],
+    defaultLevel: "normal",
+  },
+);
 
 const shuffle = <T,>(items: T[]) => [...items].sort(() => 0.5 - Math.random());
 
@@ -64,6 +85,8 @@ export const TechTriviaSprintView: React.FC = () => {
   const [isFinished, setIsFinished] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const sessionStartTime = useRef<number>(Date.now());
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   useEffect(() => {
     const deck = techDecks.find((item) => item.id === deckId);
@@ -72,7 +95,7 @@ export const TechTriviaSprintView: React.FC = () => {
     }
   }, [deckId]);
 
-  const questionTime = getTimeByPreset(25, timePreset);
+  const questionTime = getTimeByPreset(DIFFICULTY_BASE_TIME[difficulty], timePreset);
 
   const currentCard = cards[currentIndex];
 
@@ -86,6 +109,35 @@ export const TechTriviaSprintView: React.FC = () => {
       ...wrongCards.map((card) => card.answer),
     ]);
   }, [currentCard, deckCards]);
+
+  const handleDifficultySelect = (nextDifficulty: TriviaDifficulty) => {
+    setDifficulty((currentDifficulty) => {
+      const transition = TRIVIA_DIFFICULTY_ENGINE.setLevel(
+        currentDifficulty,
+        nextDifficulty,
+      );
+
+      if (transition.changed) {
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "manual",
+          details: {
+            source: "user_select",
+          },
+        });
+        if (hasStarted && !isFinished) {
+          setLives((previous) =>
+            Math.min(previous, DIFFICULTY_LIVES[transition.nextLevel]),
+          );
+          setTimeLeft(
+            getTimeByPreset(DIFFICULTY_BASE_TIME[transition.nextLevel], timePreset),
+          );
+        }
+      }
+
+      return transition.nextLevel;
+    });
+  };
 
   const handleFinish = useCallback(
     (finalScore: number) => {
@@ -143,6 +195,8 @@ export const TechTriviaSprintView: React.FC = () => {
     setSelectedOption(null);
     setHasStarted(true);
     sessionStartTime.current = Date.now();
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
 
     trackAnalyticsEvent("session_start", {
       game: "tech_trivia",
@@ -160,21 +214,58 @@ export const TechTriviaSprintView: React.FC = () => {
 
     setSelectedOption(answer);
     const isCorrect = answer === currentCard.answer;
+    const isLastCard = currentIndex >= cards.length - 1;
     const roundPoints = isCorrect
       ? Math.round(10 * DIFFICULTY_SCORE_MULTIPLIER[difficulty])
       : 0;
     const nextScore = score + roundPoints;
     const nextLives = isCorrect ? lives : lives - 1;
+    let nextDifficulty = difficulty;
 
     if (isCorrect) {
       setScore(nextScore);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "tech_trivia",
         deck: deckId,
         difficulty,
         score: roundPoints,
       });
+
+      if (
+        !isLastCard &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = TRIVIA_DIFFICULTY_ENGINE.increaseLevel(
+          difficulty,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+        correctStreakRef.current = 0;
+        nextDifficulty = transition.nextLevel;
+        if (transition.changed) {
+          setDifficulty(transition.nextLevel);
+          setLives((previous) =>
+            Math.min(previous, DIFFICULTY_LIVES[transition.nextLevel]),
+          );
+          toast.success(
+            `Dificultad ajustada a ${DIFFICULTY_LABEL[transition.nextLevel]} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
     } else {
+      correctStreakRef.current = 0;
+      wrongStreakRef.current += 1;
       setLives(Math.max(0, nextLives));
       trackAnalyticsEvent("item_wrong", {
         game: "tech_trivia",
@@ -182,6 +273,37 @@ export const TechTriviaSprintView: React.FC = () => {
         difficulty,
         errorType: answer === null ? "timeout" : "wrong_answer",
       });
+
+      if (
+        !isLastCard &&
+        shouldDownshiftByWrongStreak(
+          wrongStreakRef.current,
+          DOWNSHIFT_AFTER_WRONG_STREAK,
+        )
+      ) {
+        const transition = TRIVIA_DIFFICULTY_ENGINE.decreaseLevel(
+          difficulty,
+          "rule_downshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_wrong",
+          details: {
+            consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+          },
+        });
+        wrongStreakRef.current = 0;
+        nextDifficulty = transition.nextLevel;
+        if (transition.changed) {
+          setDifficulty(transition.nextLevel);
+          setLives((previous) =>
+            Math.min(previous, DIFFICULTY_LIVES[transition.nextLevel]),
+          );
+          toast.info(
+            `Dificultad ajustada a ${DIFFICULTY_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+          );
+        }
+      }
     }
 
     setTimeout(() => {
@@ -189,7 +311,9 @@ export const TechTriviaSprintView: React.FC = () => {
       if (hasMoreCards && nextLives > 0) {
         setCurrentIndex((previous) => previous + 1);
         setSelectedOption(null);
-        setTimeLeft(questionTime);
+        setTimeLeft(
+          getTimeByPreset(DIFFICULTY_BASE_TIME[nextDifficulty], timePreset),
+        );
         return;
       }
       handleFinish(nextScore);
@@ -224,7 +348,7 @@ export const TechTriviaSprintView: React.FC = () => {
                     key={`difficulty-${level}`}
                     size="sm"
                     variant={difficulty === level ? "primary" : "secondary"}
-                    onClick={() => setDifficulty(level)}
+                    onClick={() => handleDifficultySelect(level)}
                   >
                     {DIFFICULTY_LABEL[level]} ({DIFFICULTY_LIVES[level]} vidas)
                   </Button>
@@ -301,6 +425,19 @@ export const TechTriviaSprintView: React.FC = () => {
         }
         timeLeft={timeLeft}
         roundTime={questionTime}
+        controls={(Object.keys(DIFFICULTY_LABEL) as TriviaDifficulty[]).map(
+          (level) => (
+            <Button
+              key={`hud-${level}`}
+              size="sm"
+              variant={difficulty === level ? "primary" : "secondary"}
+              onClick={() => handleDifficultySelect(level)}
+              aria-label={`Set tech trivia level ${DIFFICULTY_LABEL[level]}`}
+            >
+              {DIFFICULTY_LABEL[level]}
+            </Button>
+          ),
+        )}
       />
       <div className="flex justify-between items-center mb-6">
         <div className="flex gap-2">

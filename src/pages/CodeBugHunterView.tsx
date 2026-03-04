@@ -15,10 +15,75 @@ import {
   TIME_PRESET_LABEL,
   TimePreset,
 } from "@/lib/gameSessionConfig";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
-const ROUND_TIME_SECONDS = 30;
+type CodeBugHunterLevel = "easy" | "normal" | "hard";
+type CodeBugRound = CodeBugPrompt & { adaptiveLevel: CodeBugHunterLevel };
+
+const LEVEL_ORDER: CodeBugHunterLevel[] = ["easy", "normal", "hard"];
+const LEVEL_LABEL: Record<CodeBugHunterLevel, string> = {
+  easy: "Easy",
+  normal: "Normal",
+  hard: "Hard",
+};
+const ROUND_TIME_SECONDS: Record<CodeBugHunterLevel, number> = {
+  easy: 40,
+  normal: 30,
+  hard: 24,
+};
 const BASE_POINTS_PER_CORRECT = 100;
 const TIME_BONUS_MULTIPLIER = 2;
+const LEVEL_SCORE_MULTIPLIER: Record<CodeBugHunterLevel, number> = {
+  easy: 1,
+  normal: 1.2,
+  hard: 1.5,
+};
+const SESSION_ROUND_LIMIT = 5;
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const CODE_BUG_HUNTER_DIFFICULTY =
+  createAdaptiveDifficultyEngine<CodeBugHunterLevel>({
+    gameId: "code_bug_hunter",
+    levels: LEVEL_ORDER,
+    defaultLevel: "normal",
+  });
+
+const buildAdaptiveCodeBugRounds = (rounds: CodeBugPrompt[]): CodeBugRound[] => {
+  const ranked = rounds
+    .map((round, index) => ({
+      round,
+      index,
+      score:
+        round.codeLines.length * 10 +
+        Math.round(round.explanation.length / 40) +
+        (["tsx", "typescript", "sql", "golang"].includes(round.language)
+          ? 2
+          : 0),
+    }))
+    .sort((left, right) => left.score - right.score || left.index - right.index);
+
+  const total = ranked.length;
+  const levelById = new Map<string, CodeBugHunterLevel>();
+  ranked.forEach(({ round }, rank) => {
+    const percentile = (rank + 1) / total;
+    const adaptiveLevel =
+      percentile <= 1 / 3 ? "easy" : percentile <= 2 / 3 ? "normal" : "hard";
+    levelById.set(round.id, adaptiveLevel);
+  });
+
+  return rounds.map((round) => ({
+    ...round,
+    adaptiveLevel: levelById.get(round.id) || "normal",
+  }));
+};
+
+const ADAPTIVE_CODE_BUG_ROUNDS = buildAdaptiveCodeBugRounds(codeBugsData);
 
 const getLanguageColor = (language: string) => {
   switch (language) {
@@ -39,30 +104,45 @@ const getLanguageColor = (language: string) => {
 };
 
 const CodeBugHunterView: React.FC = () => {
+  const [selectedLevel, setSelectedLevel] = useState<CodeBugHunterLevel>(
+    CODE_BUG_HUNTER_DIFFICULTY.defaultLevel,
+  );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const rounds = useMemo(() => {
-    const shuffled = [...codeBugsData];
+    const levelRounds = ADAPTIVE_CODE_BUG_ROUNDS.filter(
+      (item) => item.adaptiveLevel === selectedLevel,
+    );
+    const shuffled = [...levelRounds];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     // Limit to 5 per session
-    return shuffled.slice(0, 5);
-  }, []);
+    return shuffled.slice(0, SESSION_ROUND_LIMIT);
+  }, [selectedLevel]);
 
   const [roundIndex, setRoundIndex] = useState(0);
   const sessionStartTime = useRef<number>(Date.now());
   const [selectedLine, setSelectedLine] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS);
+  const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS.normal);
   const [totalScore, setTotalScore] = useState(0);
   const [lastRoundPoints, setLastRoundPoints] = useState(0);
   const [timeoutReached, setTimeoutReached] = useState(false);
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   const round = rounds[roundIndex];
-  const roundTime = getTimeByPreset(ROUND_TIME_SECONDS, timePreset);
+  const roundTime = getTimeByPreset(ROUND_TIME_SECONDS[selectedLevel], timePreset);
+  const levelMultiplier = LEVEL_SCORE_MULTIPLIER[selectedLevel];
+
+  const handleLevelSelect = (nextLevel: CodeBugHunterLevel) => {
+    setSelectedLevel((currentLevel) =>
+      CODE_BUG_HUNTER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    );
+  };
 
   useEffect(() => {
     setRoundIndex(0);
@@ -73,7 +153,9 @@ const CodeBugHunterView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
-  }, [rounds, roundTime]);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
+  }, [selectedLevel, roundTime]);
 
   useEffect(() => {
     if (!hasStarted || submitted || !round) return;
@@ -97,21 +179,61 @@ const CodeBugHunterView: React.FC = () => {
   useEffect(() => {
     if (!hasStarted || submitted || timeLeft !== 0 || !round) return;
 
+    const isLastRound = roundIndex >= rounds.length - 1;
     setSubmitted(true);
     setTimeoutReached(true);
     setLastRoundPoints(0);
-  }, [hasStarted, submitted, timeLeft, round]);
+    correctStreakRef.current = 0;
+    wrongStreakRef.current += 1;
+
+    trackAnalyticsEvent("item_wrong", {
+      game: "code_bug_hunter",
+      language: round.language,
+      bug_id: round.id,
+      errorType: "timeout",
+    });
+
+    if (
+      !isLastRound &&
+      shouldDownshiftByWrongStreak(
+        wrongStreakRef.current,
+        DOWNSHIFT_AFTER_WRONG_STREAK,
+      )
+    ) {
+      const transition = CODE_BUG_HUNTER_DIFFICULTY.decreaseLevel(
+        selectedLevel,
+        "rule_downshift",
+      );
+      appendAdaptiveDifficultyLog({
+        ...transition,
+        trigger: "consecutive_wrong",
+        details: {
+          consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+        },
+      });
+
+      wrongStreakRef.current = 0;
+      if (transition.changed) {
+        setSelectedLevel(transition.nextLevel);
+        toast.info(
+          `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+        );
+      }
+    }
+  }, [hasStarted, submitted, timeLeft, round, roundIndex, rounds.length, selectedLevel]);
 
   if (!round) return null;
 
   const isCorrect = submitted && selectedLine === round.bugLineIndex;
-  const timeBonus = Math.round(timeLeft * TIME_BONUS_MULTIPLIER);
+  const basePoints = Math.round(BASE_POINTS_PER_CORRECT * levelMultiplier);
+  const timeBonus = Math.round(timeLeft * TIME_BONUS_MULTIPLIER * levelMultiplier);
 
   const startSession = () => {
     sessionStartTime.current = Date.now();
     setHasStarted(true);
     trackAnalyticsEvent("session_start", {
       game: "code_bug_hunter",
+      level: selectedLevel,
       timePreset,
       roundTime,
     });
@@ -123,6 +245,8 @@ const CodeBugHunterView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const handleSelectLine = (lineIndex: number) => {
@@ -132,13 +256,16 @@ const CodeBugHunterView: React.FC = () => {
     setSelectedLine(lineIndex);
     setSubmitted(true);
     setTimeoutReached(false);
+    const isLastRound = roundIndex >= rounds.length - 1;
 
     if (lineIndex === round.bugLineIndex) {
       playGameSound("correct");
-      const roundPoints = BASE_POINTS_PER_CORRECT + timeBonus;
+      const roundPoints = basePoints + timeBonus;
       setCorrectCount((previous) => previous + 1);
       setLastRoundPoints(roundPoints);
       setTotalScore((previous) => previous + roundPoints);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
 
       progressQuest("correct_answers", 1, "any");
 
@@ -146,18 +273,78 @@ const CodeBugHunterView: React.FC = () => {
         game: "code_bug_hunter",
         language: round.language,
         bug_id: round.id,
+        level: selectedLevel,
       });
+
+      if (
+        !isLastRound &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = CODE_BUG_HUNTER_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
       return;
     }
 
     playGameSound("wrong");
     setLastRoundPoints(0);
+    correctStreakRef.current = 0;
+    wrongStreakRef.current += 1;
     trackAnalyticsEvent("item_wrong", {
       game: "code_bug_hunter",
       language: round.language,
       bug_id: round.id,
       errorType: "wrong_line",
+      level: selectedLevel,
     });
+
+    if (
+      !isLastRound &&
+      shouldDownshiftByWrongStreak(
+        wrongStreakRef.current,
+        DOWNSHIFT_AFTER_WRONG_STREAK,
+      )
+    ) {
+      const transition = CODE_BUG_HUNTER_DIFFICULTY.decreaseLevel(
+        selectedLevel,
+        "rule_downshift",
+      );
+      appendAdaptiveDifficultyLog({
+        ...transition,
+        trigger: "consecutive_wrong",
+        details: {
+          consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+        },
+      });
+
+      wrongStreakRef.current = 0;
+      if (transition.changed) {
+        setSelectedLevel(transition.nextLevel);
+        toast.info(
+          `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+        );
+      }
+    }
   };
 
   const handleNextRound = () => {
@@ -186,6 +373,8 @@ const CodeBugHunterView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
@@ -211,10 +400,27 @@ const CodeBugHunterView: React.FC = () => {
   const startScreen = (
     <GameStartPanel
       title="Code Bug Hunter"
-      description="Ajusta el ritmo de tiempo y empieza cuando quieras."
+      description="Configura dificultad y ritmo antes de empezar."
       onStart={startSession}
       startLabel="Comenzar Caza"
     >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Dificultad
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {LEVEL_ORDER.map((level) => (
+            <Button
+              key={`setup-${level}`}
+              size="sm"
+              variant={selectedLevel === level ? "primary" : "secondary"}
+              onClick={() => handleLevelSelect(level)}
+            >
+              {LEVEL_LABEL[level]}
+            </Button>
+          ))}
+        </div>
+      </div>
       <div className="space-y-3">
         <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
           Ritmo de tiempo
@@ -249,12 +455,23 @@ const CodeBugHunterView: React.FC = () => {
         description="Encuentra y selecciona la línea de código que contiene el bug."
         meta={
           <p className="text-text-muted text-xs mt-1">
-            Hay exactamente 1 bug por ronda. ¡Rápido!
+            Nivel: {LEVEL_LABEL[selectedLevel]} | Hay exactamente 1 bug por ronda.
           </p>
         }
         timeLeft={timeLeft}
         roundTime={roundTime}
         status={`Ronda ${roundIndex + 1} / ${rounds.length}`}
+        controls={LEVEL_ORDER.map((level) => (
+          <Button
+            key={level}
+            size="sm"
+            variant={selectedLevel === level ? "primary" : "secondary"}
+            onClick={() => handleLevelSelect(level)}
+            aria-label={`Set code bug hunter level ${LEVEL_LABEL[level]}`}
+          >
+            {LEVEL_LABEL[level]}
+          </Button>
+        ))}
       />
 
       <Card className="space-y-5">
@@ -472,3 +689,4 @@ const CodeBugHunterView: React.FC = () => {
 };
 
 export default CodeBugHunterView;
+

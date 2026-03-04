@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
+﻿import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
@@ -17,23 +17,46 @@ import {
   TIME_PRESET_LABEL,
   TimePreset,
 } from "@/lib/gameSessionConfig";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 const ROUND_TIME_SECONDS = 45;
 const BASE_POINTS_PER_CORRECT = 120;
 const TIME_BONUS_MULTIPLIER = 2;
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+type DiplomaticLevel = DiplomaticRound["level"];
+const LEVEL_ORDER: DiplomaticLevel[] = ["B2", "C1"];
+const DIPLOMATIC_REVIEWER_DIFFICULTY =
+  createAdaptiveDifficultyEngine<DiplomaticLevel>({
+    gameId: "diplomatic_reviewer",
+    levels: LEVEL_ORDER,
+    defaultLevel: "B2",
+  });
 
 const DiplomaticReviewerView: React.FC = () => {
+  const [selectedLevel, setSelectedLevel] = useState<DiplomaticLevel>(
+    DIPLOMATIC_REVIEWER_DIFFICULTY.defaultLevel,
+  );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const rounds = useMemo(() => {
-    const shuffled = [...diplomaticRounds];
+    const levelRounds = diplomaticRounds.filter(
+      (round) => round.level === selectedLevel,
+    );
+    const shuffled = [...levelRounds];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     // Limit to 5 per session to keep it snappy
     return shuffled.slice(0, 5);
-  }, []);
+  }, [selectedLevel]);
 
   const [roundIndex, setRoundIndex] = useState(0);
   const sessionStartTime = useRef<number>(Date.now());
@@ -46,9 +69,17 @@ const DiplomaticReviewerView: React.FC = () => {
   const [totalScore, setTotalScore] = useState(0);
   const [lastRoundPoints, setLastRoundPoints] = useState(0);
   const [timeoutReached, setTimeoutReached] = useState(false);
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   const round = rounds[roundIndex];
   const roundTime = getTimeByPreset(ROUND_TIME_SECONDS, timePreset);
+  const handleLevelSelect = (nextLevel: DiplomaticLevel) => {
+    setSelectedLevel((currentLevel) =>
+      DIPLOMATIC_REVIEWER_DIFFICULTY.setLevel(currentLevel, nextLevel)
+        .nextLevel,
+    );
+  };
 
   // We want to shuffle the options for each round so the correct answer isn't always in the same spot
   const currentOptions = useMemo(() => {
@@ -80,6 +111,8 @@ const DiplomaticReviewerView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   }, [rounds, roundTime]);
 
   useEffect(() => {
@@ -104,6 +137,7 @@ const DiplomaticReviewerView: React.FC = () => {
   useEffect(() => {
     if (!hasStarted || submitted || timeLeft !== 0 || !round) return;
 
+    const isLastRound = roundIndex >= rounds.length - 1;
     setSubmitted(true);
     setTimeoutReached(true);
     setLastRoundPoints(0);
@@ -112,7 +146,36 @@ const DiplomaticReviewerView: React.FC = () => {
       round_id: round.id,
       errorType: "timeout",
     });
-  }, [hasStarted, submitted, timeLeft, round]);
+
+    correctStreakRef.current = 0;
+    wrongStreakRef.current += 1;
+    if (
+      !isLastRound &&
+      shouldDownshiftByWrongStreak(
+        wrongStreakRef.current,
+        DOWNSHIFT_AFTER_WRONG_STREAK,
+      )
+    ) {
+      const transition = DIPLOMATIC_REVIEWER_DIFFICULTY.decreaseLevel(
+        selectedLevel,
+        "rule_downshift",
+      );
+      appendAdaptiveDifficultyLog({
+        ...transition,
+        trigger: "consecutive_wrong",
+        details: {
+          consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+        },
+      });
+      wrongStreakRef.current = 0;
+      if (transition.changed) {
+        setSelectedLevel(transition.nextLevel);
+        toast.info(
+          `Dificultad ajustada a ${transition.nextLevel} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+        );
+      }
+    }
+  }, [hasStarted, submitted, timeLeft, round, roundIndex, rounds.length, selectedLevel]);
 
   if (!round) return null;
 
@@ -127,6 +190,7 @@ const DiplomaticReviewerView: React.FC = () => {
     setHasStarted(true);
     trackAnalyticsEvent("session_start", {
       game: "diplomatic_reviewer",
+      level: selectedLevel,
       timePreset,
       roundTime,
     });
@@ -138,11 +202,14 @@ const DiplomaticReviewerView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const handleSelectOption = (index: number) => {
     if (submitted) return;
 
+    const isLastRound = roundIndex >= rounds.length - 1;
     setSelectedOptionIndex(index);
     setSubmitted(true);
     setTimeoutReached(false);
@@ -155,6 +222,8 @@ const DiplomaticReviewerView: React.FC = () => {
       setCorrectCount((previous) => previous + 1);
       setLastRoundPoints(roundPoints);
       setTotalScore((previous) => previous + roundPoints);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
 
       progressQuest("correct_answers", 1, "any");
 
@@ -162,14 +231,70 @@ const DiplomaticReviewerView: React.FC = () => {
         game: "diplomatic_reviewer",
         round_id: round.id,
       });
+
+      if (
+        !isLastRound &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = DIPLOMATIC_REVIEWER_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${transition.nextLevel} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
     } else {
       playGameSound("wrong");
       setLastRoundPoints(0);
+      correctStreakRef.current = 0;
+      wrongStreakRef.current += 1;
       trackAnalyticsEvent("item_wrong", {
         game: "diplomatic_reviewer",
         round_id: round.id,
         errorType: "wrong_option",
       });
+
+      if (
+        !isLastRound &&
+        shouldDownshiftByWrongStreak(
+          wrongStreakRef.current,
+          DOWNSHIFT_AFTER_WRONG_STREAK,
+        )
+      ) {
+        const transition = DIPLOMATIC_REVIEWER_DIFFICULTY.decreaseLevel(
+          selectedLevel,
+          "rule_downshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_wrong",
+          details: {
+            consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+          },
+        });
+        wrongStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.info(
+            `Dificultad ajustada a ${transition.nextLevel} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+          );
+        }
+      }
     }
   };
 
@@ -199,6 +324,8 @@ const DiplomaticReviewerView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
@@ -225,10 +352,27 @@ const DiplomaticReviewerView: React.FC = () => {
   const startScreen = (
     <GameStartPanel
       title="Diplomatic Reviewer"
-      description="Configura el ritmo de tiempo para tu sesión."
+      description="Configura el ritmo de tiempo para tu sesiÃ³n."
       onStart={startSession}
-      startLabel="Iniciar Revisión"
+      startLabel="Iniciar RevisiÃ³n"
     >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Dificultad
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {LEVEL_ORDER.map((level) => (
+            <Button
+              key={`setup-${level}`}
+              size="sm"
+              variant={selectedLevel === level ? "primary" : "secondary"}
+              onClick={() => handleLevelSelect(level)}
+            >
+              {level}
+            </Button>
+          ))}
+        </div>
+      </div>
       <div className="space-y-3">
         <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
           Ritmo de tiempo
@@ -260,10 +404,21 @@ const DiplomaticReviewerView: React.FC = () => {
     >
       <GameHudCard
         title="Diplomatic Reviewer"
-        description="Refactoriza el lenguaje tóxico hacia feedback profesional y constructivo."
+        description="Refactoriza el lenguaje tÃ³xico hacia feedback profesional y constructivo."
+        controls={LEVEL_ORDER.map((level) => (
+          <Button
+            key={level}
+            size="sm"
+            variant={selectedLevel === level ? "primary" : "secondary"}
+            onClick={() => handleLevelSelect(level)}
+            aria-label={`Set diplomatic level ${level}`}
+          >
+            {level}
+          </Button>
+        ))}
         timeLeft={timeLeft}
         roundTime={roundTime}
-        status={`Situación ${roundIndex + 1} / ${rounds.length}`}
+        status={`SituaciÃ³n ${roundIndex + 1} / ${rounds.length}`}
       />
 
       <Card className="space-y-6">
@@ -279,7 +434,7 @@ const DiplomaticReviewerView: React.FC = () => {
             <div className="absolute -left-3 top-3 bottom-3 w-1 bg-red-500/50 rounded-full"></div>
             <div className="pl-4">
               <p className="text-xs uppercase tracking-widest font-bold text-red-400 mb-1">
-                Comentario Tóxico
+                Comentario TÃ³xico
               </p>
               <div className="bg-[#2d1b1e] border border-red-500/20 rounded-xl p-4 text-red-100 font-medium italic">
                 "{round.toxicFeedback}"
@@ -289,7 +444,7 @@ const DiplomaticReviewerView: React.FC = () => {
         </div>
 
         <p className="text-sm font-semibold text-text-primary text-center">
-          Elige la reformulación más profesional y diplomática:
+          Elige la reformulaciÃ³n mÃ¡s profesional y diplomÃ¡tica:
         </p>
 
         <div className="space-y-3">
@@ -333,10 +488,10 @@ const DiplomaticReviewerView: React.FC = () => {
                     }`}
                   >
                     {btnVariant === "success" && (
-                      <span className="text-sm leading-none font-black">✓</span>
+                      <span className="text-sm leading-none font-black">âœ“</span>
                     )}
                     {btnVariant === "danger" && (
-                      <span className="text-sm leading-none font-black">×</span>
+                      <span className="text-sm leading-none font-black">Ã—</span>
                     )}
                   </div>
                   <span className="font-medium">{opt.text}</span>
@@ -354,7 +509,7 @@ const DiplomaticReviewerView: React.FC = () => {
               {isCorrect ? (
                 <>
                   <div className="flex justify-between items-center">
-                    <p>✅ ¡Excelente diplomacia!</p>
+                    <p>âœ… Â¡Excelente diplomacia!</p>
                     <p className="text-xs font-black uppercase tracking-widest bg-success/20 px-2 py-1 rounded">
                       +{lastRoundPoints} pts
                     </p>
@@ -365,7 +520,7 @@ const DiplomaticReviewerView: React.FC = () => {
                 </>
               ) : timeoutReached ? (
                 <>
-                  <p>⏰ Tiempo agotado. Siempre hay que mantener la calma.</p>
+                  <p>â° Tiempo agotado. Siempre hay que mantener la calma.</p>
                   <p className="text-xs font-normal text-text-primary mt-2 opacity-90 border-t border-amber-500/20 pt-2 leading-relaxed">
                     {currentOptions.find((o) => o.isCorrect)?.explanation}
                   </p>
@@ -373,12 +528,12 @@ const DiplomaticReviewerView: React.FC = () => {
               ) : (
                 <>
                   <p>
-                    ❌ Cuidado, esa opción podría causar fricciones en el
+                    âŒ Cuidado, esa opciÃ³n podrÃ­a causar fricciones en el
                     equipo.
                   </p>
                   <p className="text-xs font-normal text-text-primary mt-2 opacity-90 border-t border-amber-500/20 pt-2 leading-relaxed">
                     <span className="text-amber-300 font-bold">
-                      Por qué falló:
+                      Por quÃ© fallÃ³:
                     </span>{" "}
                     {currentOptions[selectedOptionIndex!].explanation}
                   </p>
@@ -396,7 +551,7 @@ const DiplomaticReviewerView: React.FC = () => {
               size="lg"
               className="w-full sm:w-auto"
             >
-              Siguiente Situación
+              Siguiente SituaciÃ³n
             </Button>
           ) : null}
 
@@ -420,11 +575,11 @@ const DiplomaticReviewerView: React.FC = () => {
               const percentage = correctCount / rounds.length;
               let grade = "D";
               let gradeColor = "text-slate-400";
-              let message = "Necesita más tacto.";
+              let message = "Necesita mÃ¡s tacto.";
               if (percentage >= 0.9) {
                 grade = "S";
                 gradeColor = "text-fuchsia-400";
-                message = "Diplomático Maestro!";
+                message = "DiplomÃ¡tico Maestro!";
               } else if (percentage >= 0.75) {
                 grade = "A";
                 gradeColor = "text-emerald-400";
@@ -443,7 +598,7 @@ const DiplomaticReviewerView: React.FC = () => {
                 <>
                   <div>
                     <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-1">
-                      Revisión Finalizada
+                      RevisiÃ³n Finalizada
                     </h2>
                     <p className="text-text-secondary">{message}</p>
                   </div>
@@ -451,7 +606,7 @@ const DiplomaticReviewerView: React.FC = () => {
                   <div className="flex justify-center items-center py-2">
                     <div className="text-center">
                       <div className="text-xs font-bold text-text-muted uppercase tracking-widest mb-1">
-                        Evaluación
+                        EvaluaciÃ³n
                       </div>
                       <div
                         className={`text-6xl font-black ${gradeColor} drop-shadow-lg animate-bounce`}
@@ -475,7 +630,7 @@ const DiplomaticReviewerView: React.FC = () => {
               </div>
               <div className="bg-surface-2 p-3 rounded-xl border border-border">
                 <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
-                  Respuestas Diplomáticas
+                  Respuestas DiplomÃ¡ticas
                 </div>
                 <div className="text-2xl font-black text-accent-hover">
                   {correctCount}/{rounds.length}
@@ -506,3 +661,4 @@ const DiplomaticReviewerView: React.FC = () => {
 };
 
 export default DiplomaticReviewerView;
+

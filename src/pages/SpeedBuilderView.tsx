@@ -18,6 +18,13 @@ import {
   TIME_PRESET_LABEL,
   TimePreset,
 } from "@/lib/gameSessionConfig";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 type SpeedBuilderLevel = SpeedBuilderRound["level"];
 const LEVEL_ORDER: SpeedBuilderLevel[] = ["A1", "A2", "B1", "B2", "C1"];
@@ -38,6 +45,14 @@ const LEVEL_SCORE_MULTIPLIER: Record<SpeedBuilderLevel, number> = {
 };
 const BASE_POINTS_PER_CORRECT = 100;
 const TIME_BONUS_MULTIPLIER = 2;
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const SPEED_BUILDER_DIFFICULTY =
+  createAdaptiveDifficultyEngine<SpeedBuilderLevel>({
+    gameId: "speed_builder",
+    levels: LEVEL_ORDER,
+    defaultLevel: "A2",
+  });
 
 const shuffleWords = (sentence: string): string[] => {
   const words = sentence.trim().split(/\s+/);
@@ -59,7 +74,9 @@ const shuffleWords = (sentence: string): string[] => {
 };
 
 const SpeedBuilderView: React.FC = () => {
-  const [selectedLevel, setSelectedLevel] = useState<SpeedBuilderLevel>("A2");
+  const [selectedLevel, setSelectedLevel] = useState<SpeedBuilderLevel>(
+    SPEED_BUILDER_DIFFICULTY.defaultLevel,
+  );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const rounds = useMemo(() => {
@@ -85,6 +102,8 @@ const SpeedBuilderView: React.FC = () => {
   const [lastRoundPoints, setLastRoundPoints] = useState(0);
   const [timeoutReached, setTimeoutReached] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
   const beginnerLevel = selectedLevel === "A1" || selectedLevel === "A2";
 
   const round = rounds[roundIndex];
@@ -93,6 +112,12 @@ const SpeedBuilderView: React.FC = () => {
     ROUND_TIME_SECONDS[selectedLevel],
     timePreset,
   );
+
+  const handleLevelSelect = (nextLevel: SpeedBuilderLevel) => {
+    setSelectedLevel((currentLevel) =>
+      SPEED_BUILDER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    );
+  };
 
   useEffect(() => {
     setRoundIndex(0);
@@ -104,6 +129,8 @@ const SpeedBuilderView: React.FC = () => {
     setLastRoundPoints(0);
     setTimeoutReached(false);
     setShowHint(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   }, [selectedLevel, roundTime]);
 
   useEffect(() => {
@@ -177,6 +204,8 @@ const SpeedBuilderView: React.FC = () => {
     setLastRoundPoints(0);
     setTimeoutReached(false);
     setShowHint(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const handleSelectWord = (word: string) => {
@@ -196,28 +225,89 @@ const SpeedBuilderView: React.FC = () => {
     const nextIsCorrect = userSentence === expectedSentence;
     setSubmitted(true);
     setTimeoutReached(false);
+    const isLastRound = roundIndex >= rounds.length - 1;
     if (nextIsCorrect) {
       playGameSound("correct");
       setCorrectCount((previous) => previous + 1);
       const roundPoints = basePoints + timeBonus;
       setLastRoundPoints(roundPoints);
       setTotalScore((previous) => previous + roundPoints);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "speed_builder",
         level: round.level,
         sentence: expectedSentence,
       });
+
+      if (
+        !isLastRound &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = SPEED_BUILDER_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${transition.nextLevel} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
       return;
     }
 
     playGameSound("wrong");
     setLastRoundPoints(0);
+    correctStreakRef.current = 0;
     trackAnalyticsEvent("item_wrong", {
       game: "speed_builder",
       level: round.level,
       sentence: expectedSentence,
       errorType: "order",
     });
+
+    wrongStreakRef.current += 1;
+    if (
+      !isLastRound &&
+      shouldDownshiftByWrongStreak(
+        wrongStreakRef.current,
+        DOWNSHIFT_AFTER_WRONG_STREAK,
+      )
+    ) {
+      const transition = SPEED_BUILDER_DIFFICULTY.decreaseLevel(
+        selectedLevel,
+        "rule_downshift",
+      );
+      appendAdaptiveDifficultyLog({
+        ...transition,
+        trigger: "consecutive_wrong",
+        details: {
+          consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+        },
+      });
+
+      wrongStreakRef.current = 0;
+      if (transition.changed) {
+        setSelectedLevel(transition.nextLevel);
+        toast.info(
+          `Dificultad ajustada a ${transition.nextLevel} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+        );
+      }
+    }
   };
 
   const handleNextRound = () => {
@@ -247,6 +337,8 @@ const SpeedBuilderView: React.FC = () => {
     setLastRoundPoints(0);
     setTimeoutReached(false);
     setShowHint(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
@@ -293,7 +385,7 @@ const SpeedBuilderView: React.FC = () => {
               key={`setup-${level}`}
               size="sm"
               variant={selectedLevel === level ? "primary" : "secondary"}
-              onClick={() => setSelectedLevel(level)}
+              onClick={() => handleLevelSelect(level)}
             >
               {level}
             </Button>
@@ -340,7 +432,7 @@ const SpeedBuilderView: React.FC = () => {
             key={level}
             size="sm"
             variant={selectedLevel === level ? "primary" : "secondary"}
-            onClick={() => setSelectedLevel(level)}
+            onClick={() => handleLevelSelect(level)}
             aria-label={`Set level ${level}`}
           >
             {level}

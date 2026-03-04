@@ -14,6 +14,13 @@ import {
   TimePreset,
 } from "@/lib/gameSessionConfig";
 import { addGlobalXp, progressQuest } from "@/lib/xpStore";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 interface FileNode {
   name: string;
@@ -29,6 +36,7 @@ interface StudyDocEntry {
 }
 
 type GameState = "idle" | "playing" | "finished";
+type DocsGameLevel = "easy" | "normal" | "hard";
 
 interface QuizRound {
   prompt: string;
@@ -46,9 +54,26 @@ interface ParsedDocContent {
   strongTerms: { term: string; description: string }[];
 }
 
-const GAME_DURATION_SECONDS = 60;
+const LEVEL_ORDER: DocsGameLevel[] = ["easy", "normal", "hard"];
+const LEVEL_LABEL: Record<DocsGameLevel, string> = {
+  easy: "Easy",
+  normal: "Normal",
+  hard: "Hard",
+};
+const GAME_DURATION_SECONDS: Record<DocsGameLevel, number> = {
+  easy: 75,
+  normal: 60,
+  hard: 50,
+};
 const INITIAL_LIVES = 3;
 const BEST_SCORE_KEY = "study-docs-game-best-score";
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const DOCS_GAME_DIFFICULTY = createAdaptiveDifficultyEngine<DocsGameLevel>({
+  gameId: "docs_game",
+  levels: LEVEL_ORDER,
+  defaultLevel: "normal",
+});
 
 const cleanText = (value: string): string =>
   value
@@ -258,9 +283,17 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
   );
 
   const sessionStartTime = useRef<number>(Date.now());
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
+  const [selectedLevel, setSelectedLevel] = useState<DocsGameLevel>(
+    DOCS_GAME_DIFFICULTY.defaultLevel,
+  );
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
-  const gameDuration = getTimeByPreset(GAME_DURATION_SECONDS, timePreset);
+  const gameDuration = getTimeByPreset(
+    GAME_DURATION_SECONDS[selectedLevel],
+    timePreset,
+  );
   const [timeLeft, setTimeLeft] = useState(gameDuration);
   const [lives, setLives] = useState(INITIAL_LIVES);
   const [score, setScore] = useState(0);
@@ -275,6 +308,28 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
   const [docCache, setDocCache] = useState<Record<string, ParsedDocContent>>(
     {},
   );
+
+  const handleLevelSelect = (nextLevel: DocsGameLevel) => {
+    setSelectedLevel((currentLevel) => {
+      const transition = DOCS_GAME_DIFFICULTY.setLevel(currentLevel, nextLevel);
+      if (transition.changed) {
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "manual",
+          details: {
+            source: "user_select",
+          },
+        });
+      }
+      return transition.nextLevel;
+    });
+  };
+
+  useEffect(() => {
+    if (gameState !== "playing") {
+      setTimeLeft(gameDuration);
+    }
+  }, [gameDuration, gameState]);
 
   useEffect(() => {
     const saved = Number(localStorage.getItem(BEST_SCORE_KEY) || "0");
@@ -323,10 +378,14 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     return shuffle([correctDoc.title, ...distractors]);
   };
 
-  const getNextRound = async (): Promise<QuizRound | null> => {
+  const getNextRound = async (
+    level: DocsGameLevel = selectedLevel,
+  ): Promise<QuizRound | null> => {
     if (entries.length < 4) return null;
 
-    const candidates = shuffle(entries).slice(0, 15);
+    const candidatePoolSize =
+      level === "hard" ? 20 : level === "easy" ? 10 : 15;
+    const candidates = shuffle(entries).slice(0, candidatePoolSize);
     for (const docEntry of candidates) {
       const parsed = await getDocContent(docEntry);
       if (!parsed) continue;
@@ -338,10 +397,22 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
         | "heading"
         | "cloze"
       )[] = [];
-      if (parsed.paragraphs.length > 0) questionTypes.push("document");
-      if (parsed.headings.length > 0) questionTypes.push("heading");
-      if (parsed.tooltips.length > 0) questionTypes.push("tooltip");
-      if (parsed.strongTerms.length > 0) questionTypes.push("strong");
+      if (parsed.paragraphs.length > 0) {
+        questionTypes.push("document");
+        if (level === "easy") questionTypes.push("document");
+      }
+      if (parsed.headings.length > 0) {
+        questionTypes.push("heading");
+        if (level !== "hard") questionTypes.push("heading");
+      }
+      if (parsed.tooltips.length > 0 && level !== "easy") {
+        questionTypes.push("tooltip");
+        if (level === "hard") questionTypes.push("tooltip");
+      }
+      if (parsed.strongTerms.length > 0 && level !== "easy") {
+        questionTypes.push("strong");
+        if (level === "hard") questionTypes.push("strong");
+      }
 
       const allTerms = Array.from(
         new Set([
@@ -353,9 +424,12 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
         allTerms.some((t) => p.includes(t) && t.length > 4),
       );
 
-      if (parsWithTerms.length > 0 && allTerms.length >= 4) {
+      if (level !== "easy" && parsWithTerms.length > 0 && allTerms.length >= 4) {
         questionTypes.push("cloze");
-        questionTypes.push("cloze"); // double weight because it's a good question type
+        if (level === "hard") {
+          questionTypes.push("cloze");
+          questionTypes.push("cloze");
+        }
       }
 
       if (questionTypes.length === 0) continue;
@@ -484,6 +558,8 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     });
     setSelectedOption(null);
     setLastResult(null);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
     if (score > 0) {
       addGlobalXp(score);
     }
@@ -515,13 +591,14 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
 
   const startGame = async () => {
     setIsRoundLoading(true);
-    const firstRound = await getNextRound();
+    const firstRound = await getNextRound(selectedLevel);
     setIsRoundLoading(false);
     if (!firstRound) return;
 
     sessionStartTime.current = Date.now();
     trackAnalyticsEvent("session_start", {
       game: "docs_game",
+      level: selectedLevel,
       timePreset,
       gameDuration,
     });
@@ -532,6 +609,8 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     setStreak(0);
     setLastResult(null);
     setSelectedOption(null);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
     setCurrentRound(firstRound);
   };
 
@@ -539,36 +618,97 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     if (!currentRound || selectedOption) return;
 
     const isCorrect = option === currentRound.correctAnswer;
+    let nextLevelForRound = selectedLevel;
     setSelectedOption(option);
     setLastResult(isCorrect ? "correct" : "wrong");
 
     if (isCorrect) {
       playGameSound("correct");
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "docs_game",
         question: currentRound.prompt,
+        level: selectedLevel,
       });
       setStreak((previous) => {
         const nextStreak = previous + 1;
         setScore((currentScore) => currentScore + 10 + previous * 2);
         return nextStreak;
       });
+
+      if (
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = DOCS_GAME_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+        correctStreakRef.current = 0;
+        nextLevelForRound = transition.nextLevel;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
     } else {
       playGameSound("wrong");
+      correctStreakRef.current = 0;
+      wrongStreakRef.current += 1;
       trackAnalyticsEvent("item_wrong", {
         game: "docs_game",
         question: currentRound.prompt,
         errorType: "docs_error",
+        level: selectedLevel,
       });
       setLives((previous) => previous - 1);
       setStreak(0);
+
+      if (
+        shouldDownshiftByWrongStreak(
+          wrongStreakRef.current,
+          DOWNSHIFT_AFTER_WRONG_STREAK,
+        )
+      ) {
+        const transition = DOCS_GAME_DIFFICULTY.decreaseLevel(
+          selectedLevel,
+          "rule_downshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_wrong",
+          details: {
+            consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+          },
+        });
+        wrongStreakRef.current = 0;
+        nextLevelForRound = transition.nextLevel;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.info(
+            `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+          );
+        }
+      }
     }
 
     window.setTimeout(async () => {
       setSelectedOption(null);
       setLastResult(null);
       setIsRoundLoading(true);
-      const nextRound = await getNextRound();
+      const nextRound = await getNextRound(nextLevelForRound);
       setIsRoundLoading(false);
       if (!nextRound) {
         finishGame();
@@ -594,10 +734,27 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
   const startScreen = (
     <GameStartPanel
       title="Doc Hunt"
-      description="Configura el ritmo antes de iniciar."
+      description="Configura dificultad y ritmo antes de iniciar."
       onStart={() => void startGame()}
       startLabel="Iniciar juego"
     >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Dificultad
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {LEVEL_ORDER.map((level) => (
+            <Button
+              key={`setup-${level}`}
+              size="sm"
+              variant={selectedLevel === level ? "primary" : "secondary"}
+              onClick={() => handleLevelSelect(level)}
+            >
+              {LEVEL_LABEL[level]}
+            </Button>
+          ))}
+        </div>
+      </div>
       <div className="space-y-3">
         <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
           Ritmo de tiempo
@@ -636,11 +793,24 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
         title="Doc Hunt"
         description="Adivina categoria y concepto con fragmentos reales."
         meta={
-          <p className="text-xs text-text-muted mt-1">Record: {bestScore}</p>
+          <p className="text-xs text-text-muted mt-1">
+            Record: {bestScore} | Nivel: {LEVEL_LABEL[selectedLevel]}
+          </p>
         }
         status={`Vidas ${lives} · Score ${score}`}
         timeLeft={gameState === "playing" ? timeLeft : 0}
         roundTime={gameDuration}
+        controls={LEVEL_ORDER.map((level) => (
+          <Button
+            key={level}
+            size="sm"
+            variant={selectedLevel === level ? "primary" : "secondary"}
+            onClick={() => handleLevelSelect(level)}
+            aria-label={`Set docs game level ${LEVEL_LABEL[level]}`}
+          >
+            {LEVEL_LABEL[level]}
+          </Button>
+        ))}
       />
       <Card elevated>
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -650,8 +820,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
           </span>
         </div>
         <p className="text-sm text-text-secondary mt-3">
-          Adivina la categoría correcta del documento. 60 segundos, 3 vidas,
-          combo y score.
+          Adivina la categoría correcta del documento. {gameDuration} segundos, 3 vidas, combo y score.
         </p>
       </Card>
 
@@ -888,3 +1057,4 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
 };
 
 export default StudyDocsGameView;
+

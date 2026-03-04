@@ -17,6 +17,13 @@ import {
   TIME_PRESET_LABEL,
   TimePreset,
 } from "@/lib/gameSessionConfig";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 type TransformerLevel = SentenceTransformerRound["level"];
 
@@ -33,6 +40,14 @@ const LEVEL_SCORE_MULTIPLIER: Record<TransformerLevel, number> = {
   B2: 1.5,
   C1: 1.75,
 };
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const SENTENCE_TRANSFORMER_DIFFICULTY =
+  createAdaptiveDifficultyEngine<TransformerLevel>({
+    gameId: "sentence_transformer",
+    levels: LEVEL_ORDER,
+    defaultLevel: "B1",
+  });
 
 const MODE_LABELS: Record<SentenceTransformerRound["mode"], string> = {
   question: "Question",
@@ -76,7 +91,9 @@ const getTokenSimilarity = (left: string, right: string): number => {
 };
 
 const SentenceTransformerView: React.FC = () => {
-  const [selectedLevel, setSelectedLevel] = useState<TransformerLevel>("B1");
+  const [selectedLevel, setSelectedLevel] = useState<TransformerLevel>(
+    SENTENCE_TRANSFORMER_DIFFICULTY.defaultLevel,
+  );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const [roundIndex, setRoundIndex] = useState(0);
@@ -86,6 +103,8 @@ const SentenceTransformerView: React.FC = () => {
   const [correctCount, setCorrectCount] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS.B1);
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   const rounds = useMemo(() => {
     const levelRounds = sentenceTransformerRounds.filter(
@@ -106,6 +125,13 @@ const SentenceTransformerView: React.FC = () => {
     timePreset,
   );
 
+  const handleLevelSelect = (nextLevel: TransformerLevel) => {
+    setSelectedLevel((currentLevel) =>
+      SENTENCE_TRANSFORMER_DIFFICULTY.setLevel(currentLevel, nextLevel)
+        .nextLevel,
+    );
+  };
+
   useEffect(() => {
     setRoundIndex(0);
     setAnswer("");
@@ -113,6 +139,8 @@ const SentenceTransformerView: React.FC = () => {
     setCorrectCount(0);
     setTotalScore(0);
     setTimeLeft(roundTime);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   }, [selectedLevel, roundTime]);
 
   useEffect(() => {
@@ -193,18 +221,23 @@ const SentenceTransformerView: React.FC = () => {
     setCorrectCount(0);
     setTotalScore(0);
     setTimeLeft(roundTime);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const handleCheck = () => {
     if (!answer.trim() || submitted) return;
 
     setSubmitted(true);
+    const isLastRound = roundIndex >= rounds.length - 1;
     if (passesFlexibleValidation) {
       playGameSound("correct");
       const multiplier = LEVEL_SCORE_MULTIPLIER[round.level];
       const points = Math.round((105 + timeLeft * 2) * multiplier);
       setCorrectCount((previous) => previous + 1);
       setTotalScore((previous) => previous + points);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "sentence_transformer",
         level: round.level,
@@ -212,10 +245,39 @@ const SentenceTransformerView: React.FC = () => {
         score: points,
         usedFlexibleMatch: !baseMatch,
       });
+
+      if (
+        !isLastRound &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = SENTENCE_TRANSFORMER_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${transition.nextLevel} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
       return;
     }
 
     playGameSound("wrong");
+    correctStreakRef.current = 0;
     const errorType = !modeConstraint ? "mode_mismatch" : "similarity_low";
     trackAnalyticsEvent("item_wrong", {
       game: "sentence_transformer",
@@ -223,6 +285,35 @@ const SentenceTransformerView: React.FC = () => {
       roundId: round.id,
       errorType,
     });
+
+    wrongStreakRef.current += 1;
+    if (
+      !isLastRound &&
+      shouldDownshiftByWrongStreak(
+        wrongStreakRef.current,
+        DOWNSHIFT_AFTER_WRONG_STREAK,
+      )
+    ) {
+      const transition = SENTENCE_TRANSFORMER_DIFFICULTY.decreaseLevel(
+        selectedLevel,
+        "rule_downshift",
+      );
+      appendAdaptiveDifficultyLog({
+        ...transition,
+        trigger: "consecutive_wrong",
+        details: {
+          consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+        },
+      });
+
+      wrongStreakRef.current = 0;
+      if (transition.changed) {
+        setSelectedLevel(transition.nextLevel);
+        toast.info(
+          `Dificultad ajustada a ${transition.nextLevel} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+        );
+      }
+    }
   };
 
   const handleNext = () => {
@@ -278,7 +369,7 @@ const SentenceTransformerView: React.FC = () => {
               key={`setup-${level}`}
               size="sm"
               variant={selectedLevel === level ? "primary" : "secondary"}
-              onClick={() => setSelectedLevel(level)}
+              onClick={() => handleLevelSelect(level)}
             >
               {level}
             </Button>
@@ -324,7 +415,7 @@ const SentenceTransformerView: React.FC = () => {
               key={level}
               size="sm"
               variant={selectedLevel === level ? "primary" : "secondary"}
-              onClick={() => setSelectedLevel(level)}
+              onClick={() => handleLevelSelect(level)}
               aria-label={`Set transformer level ${level}`}
             >
               {level}

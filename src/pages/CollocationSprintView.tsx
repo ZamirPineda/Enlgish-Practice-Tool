@@ -17,6 +17,13 @@ import {
   TIME_PRESET_LABEL,
   TimePreset,
 } from "@/lib/gameSessionConfig";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 type SprintLevel = CollocationSprintRound["level"];
 
@@ -33,9 +40,18 @@ const LEVEL_SCORE_MULTIPLIER: Record<SprintLevel, number> = {
   B2: 1.5,
   C1: 1.75,
 };
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const COLLOCATION_DIFFICULTY = createAdaptiveDifficultyEngine<SprintLevel>({
+  gameId: "collocation_sprint",
+  levels: LEVEL_ORDER,
+  defaultLevel: "B1",
+});
 
 const CollocationSprintView: React.FC = () => {
-  const [selectedLevel, setSelectedLevel] = useState<SprintLevel>("B1");
+  const [selectedLevel, setSelectedLevel] = useState<SprintLevel>(
+    COLLOCATION_DIFFICULTY.defaultLevel,
+  );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const [roundIndex, setRoundIndex] = useState(0);
@@ -46,6 +62,8 @@ const CollocationSprintView: React.FC = () => {
   const [correctCount, setCorrectCount] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS.B1);
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   const rounds = useMemo(() => {
     const levelRounds = collocationSprintRounds.filter(
@@ -65,6 +83,12 @@ const CollocationSprintView: React.FC = () => {
     ROUND_TIME_SECONDS[selectedLevel],
     timePreset,
   );
+
+  const handleLevelSelect = (nextLevel: SprintLevel) => {
+    setSelectedLevel((currentLevel) =>
+      COLLOCATION_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    );
+  };
 
   // Map and shuffle options to avoid predictable answers
   const displayOptions = useMemo(() => {
@@ -93,6 +117,8 @@ const CollocationSprintView: React.FC = () => {
     setCorrectCount(0);
     setTotalScore(0);
     setTimeLeft(roundTime);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   }, [selectedLevel, roundTime]);
 
   useEffect(() => {
@@ -152,11 +178,14 @@ const CollocationSprintView: React.FC = () => {
     setCorrectCount(0);
     setTotalScore(0);
     setTimeLeft(roundTime);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const handleCheck = () => {
     if (!selectedVerb || !selectedNoun || submitted) return;
     setSubmitted(true);
+    const isLastRound = roundIndex >= rounds.length - 1;
 
     if (
       selectedVerb === round.correctVerb &&
@@ -167,19 +196,79 @@ const CollocationSprintView: React.FC = () => {
       const points = Math.round((90 + timeLeft * 2) * multiplier);
       setCorrectCount((previous) => previous + 1);
       setTotalScore((previous) => previous + points);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "collocation_sprint",
         level: round.level,
         item: `${selectedVerb} ${selectedNoun}`,
       });
+
+      if (
+        !isLastRound &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = COLLOCATION_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${transition.nextLevel} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
     } else {
       playGameSound("wrong");
+      correctStreakRef.current = 0;
       trackAnalyticsEvent("item_wrong", {
         game: "collocation_sprint",
         level: round.level,
         item: `${selectedVerb} ${selectedNoun}`,
         errorType: "collocation",
       });
+
+      wrongStreakRef.current += 1;
+      if (
+        !isLastRound &&
+        shouldDownshiftByWrongStreak(
+          wrongStreakRef.current,
+          DOWNSHIFT_AFTER_WRONG_STREAK,
+        )
+      ) {
+        const transition = COLLOCATION_DIFFICULTY.decreaseLevel(
+          selectedLevel,
+          "rule_downshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_wrong",
+          details: {
+            consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+          },
+        });
+
+        wrongStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.info(
+            `Dificultad ajustada a ${transition.nextLevel} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+          );
+        }
+      }
     }
   };
 
@@ -207,6 +296,8 @@ const CollocationSprintView: React.FC = () => {
     setCorrectCount(0);
     setTotalScore(0);
     setTimeLeft(roundTime);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
@@ -245,7 +336,7 @@ const CollocationSprintView: React.FC = () => {
               key={`setup-${level}`}
               size="sm"
               variant={selectedLevel === level ? "primary" : "secondary"}
-              onClick={() => setSelectedLevel(level)}
+              onClick={() => handleLevelSelect(level)}
             >
               {level}
             </Button>
@@ -291,7 +382,7 @@ const CollocationSprintView: React.FC = () => {
               key={level}
               size="sm"
               variant={selectedLevel === level ? "primary" : "secondary"}
-              onClick={() => setSelectedLevel(level)}
+              onClick={() => handleLevelSelect(level)}
               aria-label={`Set collocation level ${level}`}
             >
               {level}

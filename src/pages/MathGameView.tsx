@@ -21,6 +21,13 @@ import {
   TimePreset,
 } from "@/lib/gameSessionConfig";
 import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
+import {
   algebraTopic,
   calculusTopic,
   geometryTopic,
@@ -42,7 +49,26 @@ interface MathQuizQuestion {
   topicLabel: string;
 }
 
-const GAME_DURATION_SECONDS = 60;
+type MathAdaptiveLevel = "easy" | "normal" | "hard";
+const LEVEL_ORDER: MathAdaptiveLevel[] = ["easy", "normal", "hard"];
+const LEVEL_LABEL: Record<MathAdaptiveLevel, string> = {
+  easy: "Easy",
+  normal: "Normal",
+  hard: "Hard",
+};
+const LEVEL_DURATION_SECONDS: Record<MathAdaptiveLevel, number> = {
+  easy: 70,
+  normal: 60,
+  hard: 50,
+};
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const MATH_GAME_DIFFICULTY = createAdaptiveDifficultyEngine<MathAdaptiveLevel>({
+  gameId: "math_game",
+  levels: LEVEL_ORDER,
+  defaultLevel: "normal",
+});
+
 const INITIAL_LIVES = 3;
 const BEST_SCORE_KEY = "math-game-best-score";
 
@@ -129,15 +155,30 @@ const buildQuestionBank = (topics: MathTopic[]): MathQuizQuestion[] => {
 };
 
 const MathGameView: React.FC = () => {
+  const [selectedLevel, setSelectedLevel] = useState<MathAdaptiveLevel>(
+    MATH_GAME_DIFFICULTY.defaultLevel,
+  );
   const questionBank = useMemo(
-    () => buildQuestionBank([calculusTopic, geometryTopic, algebraTopic]),
-    [],
+    () => {
+      const topicsByLevel: Record<MathAdaptiveLevel, MathTopic[]> = {
+        easy: [algebraTopic],
+        normal: [algebraTopic, geometryTopic],
+        hard: [calculusTopic, geometryTopic, algebraTopic],
+      };
+      return buildQuestionBank(topicsByLevel[selectedLevel]);
+    },
+    [selectedLevel],
   );
 
   const sessionStartTime = useRef<number>(Date.now());
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
-  const gameDuration = getTimeByPreset(GAME_DURATION_SECONDS, timePreset);
+  const gameDuration = getTimeByPreset(
+    LEVEL_DURATION_SECONDS[selectedLevel],
+    timePreset,
+  );
   const [timeLeft, setTimeLeft] = useState(gameDuration);
   const [lives, setLives] = useState(INITIAL_LIVES);
   const [score, setScore] = useState(0);
@@ -158,15 +199,32 @@ const MathGameView: React.FC = () => {
   }, []);
 
   const currentQuestion = questionBank[questionIndex] || null;
+  const handleLevelSelect = (nextLevel: MathAdaptiveLevel) => {
+    setSelectedLevel((currentLevel) =>
+      MATH_GAME_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    );
+  };
 
-  const getNextQuestionIndex = useCallback(() => {
+  const getNextQuestionIndex = useCallback((currentIndex: number) => {
     if (questionBank.length <= 1) return 0;
     let nextIndex = Math.floor(Math.random() * questionBank.length);
-    while (nextIndex === questionIndex) {
+    let attempts = 0;
+    while (nextIndex === currentIndex && attempts < 5) {
       nextIndex = Math.floor(Math.random() * questionBank.length);
+      attempts += 1;
+    }
+    if (nextIndex === currentIndex) {
+      return (currentIndex + 1) % questionBank.length;
     }
     return nextIndex;
-  }, [questionBank.length, questionIndex]);
+  }, [questionBank.length]);
+
+  useEffect(() => {
+    if (questionBank.length === 0) return;
+    setQuestionIndex((currentIndex) =>
+      Math.min(currentIndex, questionBank.length - 1),
+    );
+  }, [questionBank.length]);
 
   const finishGame = useCallback(() => {
     setGameState("finished");
@@ -174,6 +232,8 @@ const MathGameView: React.FC = () => {
       game: "math_game",
       duration: Math.round((Date.now() - sessionStartTime.current) / 1000),
     });
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
     setSelectedOption(null);
     setLastResult(null);
     if (score > 0) {
@@ -213,6 +273,7 @@ const MathGameView: React.FC = () => {
     sessionStartTime.current = Date.now();
     trackAnalyticsEvent("session_start", {
       game: "math_game",
+      level: selectedLevel,
       timePreset,
       gameDuration,
     });
@@ -224,6 +285,8 @@ const MathGameView: React.FC = () => {
     setStreak(0);
     setLastResult(null);
     setSelectedOption(null);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
     setQuestionIndex(Math.floor(Math.random() * questionBank.length));
   };
 
@@ -236,9 +299,12 @@ const MathGameView: React.FC = () => {
 
     if (isCorrect) {
       playGameSound("correct");
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "math_game",
         question: currentQuestion.prompt,
+        level: selectedLevel,
       });
 
       progressQuest("correct_answers", 1, "math");
@@ -249,21 +315,76 @@ const MathGameView: React.FC = () => {
         setScore((currentScore) => currentScore + 10 + previous * 2);
         return next;
       });
+
+      if (
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = MATH_GAME_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
     } else {
       playGameSound("wrong");
+      correctStreakRef.current = 0;
+      wrongStreakRef.current += 1;
       trackAnalyticsEvent("item_wrong", {
         game: "math_game",
         question: currentQuestion.prompt,
         errorType: "calculation_error",
+        level: selectedLevel,
       });
       setLives((previous) => previous - 1);
       setStreak(0);
+
+      if (
+        shouldDownshiftByWrongStreak(
+          wrongStreakRef.current,
+          DOWNSHIFT_AFTER_WRONG_STREAK,
+        )
+      ) {
+        const transition = MATH_GAME_DIFFICULTY.decreaseLevel(
+          selectedLevel,
+          "rule_downshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_wrong",
+          details: {
+            consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+          },
+        });
+        wrongStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.info(
+            `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+          );
+        }
+      }
     }
 
     window.setTimeout(() => {
       setSelectedOption(null);
       setLastResult(null);
-      setQuestionIndex(getNextQuestionIndex());
+      setQuestionIndex((currentIndex) => getNextQuestionIndex(currentIndex));
     }, 650);
   };
 
@@ -279,10 +400,27 @@ const MathGameView: React.FC = () => {
   const startScreen = (
     <GameStartPanel
       title="Math Speed Duel"
-      description="Configura el ritmo antes de iniciar."
+      description="Configura dificultad y ritmo antes de iniciar."
       onStart={startGame}
       startLabel="Iniciar juego"
     >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Dificultad
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {LEVEL_ORDER.map((level) => (
+            <Button
+              key={`setup-${level}`}
+              size="sm"
+              variant={selectedLevel === level ? "primary" : "secondary"}
+              onClick={() => handleLevelSelect(level)}
+            >
+              {LEVEL_LABEL[level]}
+            </Button>
+          ))}
+        </div>
+      </div>
       <div className="space-y-3">
         <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
           Ritmo de tiempo
@@ -314,8 +452,21 @@ const MathGameView: React.FC = () => {
       <GameHudCard
         title="Math Speed Duel"
         description="Tiempo, vidas y combo por respuestas correctas seguidas."
+        controls={LEVEL_ORDER.map((level) => (
+          <Button
+            key={level}
+            size="sm"
+            variant={selectedLevel === level ? "primary" : "secondary"}
+            onClick={() => handleLevelSelect(level)}
+            aria-label={`Set math level ${LEVEL_LABEL[level]}`}
+          >
+            {LEVEL_LABEL[level]}
+          </Button>
+        ))}
         meta={
-          <p className="text-xs text-text-muted mt-1">Record: {bestScore}</p>
+          <p className="text-xs text-text-muted mt-1">
+            Record: {bestScore} | Nivel: {LEVEL_LABEL[selectedLevel]}
+          </p>
         }
         status={`Vidas ${lives} / ${INITIAL_LIVES}`}
         timeLeft={gameState === "playing" ? timeLeft : 0}
@@ -331,7 +482,7 @@ const MathGameView: React.FC = () => {
           </div>
         </div>
         <p className="text-text-secondary text-sm mt-3">
-          60 segundos, 3 vidas y combo por respuestas correctas seguidas.
+          {gameDuration} segundos, 3 vidas y combo por respuestas correctas seguidas.
         </p>
       </Card>
 

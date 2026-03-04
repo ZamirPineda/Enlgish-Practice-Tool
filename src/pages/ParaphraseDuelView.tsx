@@ -18,6 +18,13 @@ import {
   TIME_PRESET_LABEL,
   TimePreset,
 } from "@/lib/gameSessionConfig";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 type DuelLevel = ParaphraseDuelRound["level"];
 
@@ -34,6 +41,13 @@ const LEVEL_SCORE_MULTIPLIER: Record<DuelLevel, number> = {
   B2: 1.5,
   C1: 1.75,
 };
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const PARAPHRASE_DUEL_DIFFICULTY = createAdaptiveDifficultyEngine<DuelLevel>({
+  gameId: "paraphrase_duel",
+  levels: LEVEL_ORDER,
+  defaultLevel: "B1",
+});
 
 const normalizeText = (text: string) =>
   text
@@ -61,7 +75,9 @@ const getTokenSimilarity = (left: string, right: string): number => {
 };
 
 const ParaphraseDuelView: React.FC = () => {
-  const [selectedLevel, setSelectedLevel] = useState<DuelLevel>("B1");
+  const [selectedLevel, setSelectedLevel] = useState<DuelLevel>(
+    PARAPHRASE_DUEL_DIFFICULTY.defaultLevel,
+  );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const [roundIndex, setRoundIndex] = useState(0);
@@ -71,6 +87,8 @@ const ParaphraseDuelView: React.FC = () => {
   const [correctCount, setCorrectCount] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS.B1);
   const [totalScore, setTotalScore] = useState(0);
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   const rounds = useMemo(() => {
     const levelRounds = paraphraseDuelRounds.filter(
@@ -91,6 +109,12 @@ const ParaphraseDuelView: React.FC = () => {
     timePreset,
   );
 
+  const handleLevelSelect = (nextLevel: DuelLevel) => {
+    setSelectedLevel((currentLevel) =>
+      PARAPHRASE_DUEL_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    );
+  };
+
   useEffect(() => {
     setRoundIndex(0);
     setAnswer("");
@@ -98,6 +122,8 @@ const ParaphraseDuelView: React.FC = () => {
     setCorrectCount(0);
     setTotalScore(0);
     setTimeLeft(roundTime);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   }, [selectedLevel, roundTime]);
 
   useEffect(() => {
@@ -171,18 +197,23 @@ const ParaphraseDuelView: React.FC = () => {
     setCorrectCount(0);
     setTimeLeft(roundTime);
     setTotalScore(0);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const handleCheck = () => {
     if (!answer.trim() || submitted) return;
 
     setSubmitted(true);
+    const isLastRound = roundIndex >= rounds.length - 1;
     if (passesFlexibleValidation) {
       playGameSound("correct");
       const multiplier = LEVEL_SCORE_MULTIPLIER[round.level];
       const points = Math.round((100 + timeLeft * 2) * multiplier);
       setCorrectCount((previous) => previous + 1);
       setTotalScore((previous) => previous + points);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "paraphrase_duel",
         level: round.level,
@@ -190,10 +221,39 @@ const ParaphraseDuelView: React.FC = () => {
         score: points,
         usedFlexibleMatch: !normalizedAccepted.includes(normalizedAnswer),
       });
+
+      if (
+        !isLastRound &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = PARAPHRASE_DUEL_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${transition.nextLevel} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
       return;
     }
 
     playGameSound("wrong");
+    correctStreakRef.current = 0;
     const errorType = !includesConnector
       ? "connector_missing"
       : "similarity_low";
@@ -203,6 +263,35 @@ const ParaphraseDuelView: React.FC = () => {
       roundId: round.id,
       errorType,
     });
+
+    wrongStreakRef.current += 1;
+    if (
+      !isLastRound &&
+      shouldDownshiftByWrongStreak(
+        wrongStreakRef.current,
+        DOWNSHIFT_AFTER_WRONG_STREAK,
+      )
+    ) {
+      const transition = PARAPHRASE_DUEL_DIFFICULTY.decreaseLevel(
+        selectedLevel,
+        "rule_downshift",
+      );
+      appendAdaptiveDifficultyLog({
+        ...transition,
+        trigger: "consecutive_wrong",
+        details: {
+          consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+        },
+      });
+
+      wrongStreakRef.current = 0;
+      if (transition.changed) {
+        setSelectedLevel(transition.nextLevel);
+        toast.info(
+          `Dificultad ajustada a ${transition.nextLevel} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+        );
+      }
+    }
   };
 
   const handleNext = () => {
@@ -226,6 +315,8 @@ const ParaphraseDuelView: React.FC = () => {
     setCorrectCount(0);
     setTotalScore(0);
     setTimeLeft(roundTime);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
@@ -264,7 +355,7 @@ const ParaphraseDuelView: React.FC = () => {
               key={`setup-${level}`}
               size="sm"
               variant={selectedLevel === level ? "primary" : "secondary"}
-              onClick={() => setSelectedLevel(level)}
+              onClick={() => handleLevelSelect(level)}
             >
               {level}
             </Button>
@@ -308,7 +399,7 @@ const ParaphraseDuelView: React.FC = () => {
             key={level}
             size="sm"
             variant={selectedLevel === level ? "primary" : "secondary"}
-            onClick={() => setSelectedLevel(level)}
+            onClick={() => handleLevelSelect(level)}
             aria-label={`Set paraphrase level ${level}`}
           >
             {level}

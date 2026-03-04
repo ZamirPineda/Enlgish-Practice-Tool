@@ -17,10 +17,74 @@ import {
   TIME_PRESET_LABEL,
   TimePreset,
 } from "@/lib/gameSessionConfig";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
-const ROUND_TIME_SECONDS = 45;
+type CodeSyntaxLevel = "easy" | "normal" | "hard";
+type CodeSyntaxRound = CodeSyntaxPrompt & { adaptiveLevel: CodeSyntaxLevel };
+
+const LEVEL_ORDER: CodeSyntaxLevel[] = ["easy", "normal", "hard"];
+const LEVEL_LABEL: Record<CodeSyntaxLevel, string> = {
+  easy: "Easy",
+  normal: "Normal",
+  hard: "Hard",
+};
+const ROUND_TIME_SECONDS: Record<CodeSyntaxLevel, number> = {
+  easy: 60,
+  normal: 45,
+  hard: 35,
+};
 const BASE_POINTS_PER_CORRECT = 150;
 const TIME_BONUS_MULTIPLIER = 3;
+const LEVEL_SCORE_MULTIPLIER: Record<CodeSyntaxLevel, number> = {
+  easy: 1,
+  normal: 1.2,
+  hard: 1.45,
+};
+const SESSION_ROUND_LIMIT = 5;
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const CODE_SYNTAX_DIFFICULTY = createAdaptiveDifficultyEngine<CodeSyntaxLevel>({
+  gameId: "code_syntax_builder",
+  levels: LEVEL_ORDER,
+  defaultLevel: "normal",
+});
+
+const buildAdaptiveCodeSyntaxRounds = (
+  rounds: CodeSyntaxPrompt[],
+): CodeSyntaxRound[] => {
+  const ranked = rounds
+    .map((round, index) => ({
+      round,
+      index,
+      score:
+        round.tokens.length * 10 +
+        Math.round(round.prompt.length / 20) +
+        (["typescript", "sql"].includes(round.language) ? 2 : 0),
+    }))
+    .sort((left, right) => left.score - right.score || left.index - right.index);
+
+  const total = ranked.length;
+  const levelById = new Map<string, CodeSyntaxLevel>();
+  ranked.forEach(({ round }, rank) => {
+    const percentile = (rank + 1) / total;
+    const adaptiveLevel =
+      percentile <= 1 / 3 ? "easy" : percentile <= 2 / 3 ? "normal" : "hard";
+    levelById.set(round.id, adaptiveLevel);
+  });
+
+  return rounds.map((round) => ({
+    ...round,
+    adaptiveLevel: levelById.get(round.id) || "normal",
+  }));
+};
+
+const ADAPTIVE_CODE_SYNTAX_ROUNDS = buildAdaptiveCodeSyntaxRounds(codeSyntaxData);
 
 const shuffleTokens = (tokens: string[]): string[] => {
   const shuffled = [...tokens];
@@ -58,30 +122,45 @@ const getLanguageColor = (language: string) => {
 };
 
 const CodeSyntaxBuilderView: React.FC = () => {
+  const [selectedLevel, setSelectedLevel] = useState<CodeSyntaxLevel>(
+    CODE_SYNTAX_DIFFICULTY.defaultLevel,
+  );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const rounds = useMemo(() => {
-    const shuffled = [...codeSyntaxData];
+    const levelRounds = ADAPTIVE_CODE_SYNTAX_ROUNDS.filter(
+      (item) => item.adaptiveLevel === selectedLevel,
+    );
+    const shuffled = [...levelRounds];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     // Pick 5 random rounds per session
-    return shuffled.slice(0, 5);
-  }, []);
+    return shuffled.slice(0, SESSION_ROUND_LIMIT);
+  }, [selectedLevel]);
 
   const [roundIndex, setRoundIndex] = useState(0);
   const sessionStartTime = useRef<number>(Date.now());
   const [selectedTokens, setSelectedTokens] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS);
+  const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS.normal);
   const [totalScore, setTotalScore] = useState(0);
   const [lastRoundPoints, setLastRoundPoints] = useState(0);
   const [timeoutReached, setTimeoutReached] = useState(false);
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   const round = rounds[roundIndex];
-  const roundTime = getTimeByPreset(ROUND_TIME_SECONDS, timePreset);
+  const roundTime = getTimeByPreset(ROUND_TIME_SECONDS[selectedLevel], timePreset);
+  const levelMultiplier = LEVEL_SCORE_MULTIPLIER[selectedLevel];
+
+  const handleLevelSelect = (nextLevel: CodeSyntaxLevel) => {
+    setSelectedLevel((currentLevel) =>
+      CODE_SYNTAX_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    );
+  };
 
   useEffect(() => {
     setRoundIndex(0);
@@ -92,7 +171,9 @@ const CodeSyntaxBuilderView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
-  }, [rounds, roundTime]);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
+  }, [selectedLevel, roundTime]);
 
   useEffect(() => {
     if (!hasStarted || submitted) return;
@@ -114,12 +195,51 @@ const CodeSyntaxBuilderView: React.FC = () => {
   }, [hasStarted, submitted, roundIndex]);
 
   useEffect(() => {
-    if (!hasStarted || submitted || timeLeft !== 0) return;
+    if (!hasStarted || submitted || timeLeft !== 0 || !round) return;
 
+    const isLastRound = roundIndex >= rounds.length - 1;
     setSubmitted(true);
     setTimeoutReached(true);
     setLastRoundPoints(0);
-  }, [hasStarted, submitted, timeLeft]);
+    correctStreakRef.current = 0;
+    wrongStreakRef.current += 1;
+
+    trackAnalyticsEvent("item_wrong", {
+      game: "code_syntax_builder",
+      language: round.language,
+      prompt: round.prompt,
+      errorType: "timeout",
+      level: selectedLevel,
+    });
+
+    if (
+      !isLastRound &&
+      shouldDownshiftByWrongStreak(
+        wrongStreakRef.current,
+        DOWNSHIFT_AFTER_WRONG_STREAK,
+      )
+    ) {
+      const transition = CODE_SYNTAX_DIFFICULTY.decreaseLevel(
+        selectedLevel,
+        "rule_downshift",
+      );
+      appendAdaptiveDifficultyLog({
+        ...transition,
+        trigger: "consecutive_wrong",
+        details: {
+          consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+        },
+      });
+
+      wrongStreakRef.current = 0;
+      if (transition.changed) {
+        setSelectedLevel(transition.nextLevel);
+        toast.info(
+          `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+        );
+      }
+    }
+  }, [hasStarted, submitted, timeLeft, round, roundIndex, rounds.length, selectedLevel]);
 
   const shuffledTokens = useMemo(
     () => shuffleTokens(round?.tokens || []),
@@ -141,13 +261,15 @@ const CodeSyntaxBuilderView: React.FC = () => {
   const expectedSyntax = (round?.tokens || []).join(" ");
   const userSyntax = selectedTokens.join(" ");
   const isCorrect = submitted && userSyntax === expectedSyntax;
-  const timeBonus = Math.round(timeLeft * TIME_BONUS_MULTIPLIER);
+  const basePoints = Math.round(BASE_POINTS_PER_CORRECT * levelMultiplier);
+  const timeBonus = Math.round(timeLeft * TIME_BONUS_MULTIPLIER * levelMultiplier);
 
   const startSession = () => {
     sessionStartTime.current = Date.now();
     setHasStarted(true);
     trackAnalyticsEvent("session_start", {
       game: "code_syntax_builder",
+      level: selectedLevel,
       timePreset,
       roundTime,
     });
@@ -159,6 +281,8 @@ const CodeSyntaxBuilderView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const handleSelectToken = (token: string) => {
@@ -178,12 +302,15 @@ const CodeSyntaxBuilderView: React.FC = () => {
     const nextIsCorrect = userSyntax === expectedSyntax;
     setSubmitted(true);
     setTimeoutReached(false);
+    const isLastRound = roundIndex >= rounds.length - 1;
     if (nextIsCorrect) {
       playGameSound("correct");
       setCorrectCount((previous) => previous + 1);
-      const roundPoints = BASE_POINTS_PER_CORRECT + timeBonus;
+      const roundPoints = basePoints + timeBonus;
       setLastRoundPoints(roundPoints);
       setTotalScore((previous) => previous + roundPoints);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
 
       progressQuest("correct_answers", 1, "any");
 
@@ -191,18 +318,78 @@ const CodeSyntaxBuilderView: React.FC = () => {
         game: "code_syntax_builder",
         language: round.language,
         prompt: round.prompt,
+        level: selectedLevel,
       });
+
+      if (
+        !isLastRound &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = CODE_SYNTAX_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
       return;
     }
 
     playGameSound("wrong");
     setLastRoundPoints(0);
+    correctStreakRef.current = 0;
+    wrongStreakRef.current += 1;
     trackAnalyticsEvent("item_wrong", {
       game: "code_syntax_builder",
       language: round.language,
       prompt: round.prompt,
       errorType: "order",
+      level: selectedLevel,
     });
+
+    if (
+      !isLastRound &&
+      shouldDownshiftByWrongStreak(
+        wrongStreakRef.current,
+        DOWNSHIFT_AFTER_WRONG_STREAK,
+      )
+    ) {
+      const transition = CODE_SYNTAX_DIFFICULTY.decreaseLevel(
+        selectedLevel,
+        "rule_downshift",
+      );
+      appendAdaptiveDifficultyLog({
+        ...transition,
+        trigger: "consecutive_wrong",
+        details: {
+          consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+        },
+      });
+
+      wrongStreakRef.current = 0;
+      if (transition.changed) {
+        setSelectedLevel(transition.nextLevel);
+        toast.info(
+          `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+        );
+      }
+    }
   };
 
   const handleNextRound = () => {
@@ -230,6 +417,8 @@ const CodeSyntaxBuilderView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
@@ -257,10 +446,27 @@ const CodeSyntaxBuilderView: React.FC = () => {
   const startScreen = (
     <GameStartPanel
       title="Code Syntax Builder"
-      description="Configura el ritmo de tu sesión antes de empezar."
+      description="Configura dificultad y ritmo de tu sesión antes de empezar."
       onStart={startSession}
       startLabel="Empezar Build"
     >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Dificultad
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {LEVEL_ORDER.map((level) => (
+            <Button
+              key={`setup-${level}`}
+              size="sm"
+              variant={selectedLevel === level ? "primary" : "secondary"}
+              onClick={() => handleLevelSelect(level)}
+            >
+              {LEVEL_LABEL[level]}
+            </Button>
+          ))}
+        </div>
+      </div>
       <div className="space-y-3">
         <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
           Ritmo de tiempo
@@ -296,6 +502,17 @@ const CodeSyntaxBuilderView: React.FC = () => {
         timeLeft={timeLeft}
         roundTime={roundTime}
         status={`Ronda ${roundIndex + 1} / ${rounds.length}`}
+        controls={LEVEL_ORDER.map((level) => (
+          <Button
+            key={level}
+            size="sm"
+            variant={selectedLevel === level ? "primary" : "secondary"}
+            onClick={() => handleLevelSelect(level)}
+            aria-label={`Set code syntax level ${LEVEL_LABEL[level]}`}
+          >
+            {LEVEL_LABEL[level]}
+          </Button>
+        ))}
       />
 
       <Card className="space-y-5">
@@ -362,7 +579,7 @@ const CodeSyntaxBuilderView: React.FC = () => {
               <div className="space-y-1">
                 <p>✅ Sintaxis impecable.</p>
                 <p className="text-xs font-black uppercase tracking-widest">
-                  +{lastRoundPoints} pts
+                  +{lastRoundPoints} pts (base {basePoints} + bonus {timeBonus} x{levelMultiplier})
                 </p>
               </div>
             ) : timeoutReached ? (
@@ -511,3 +728,4 @@ const CodeSyntaxBuilderView: React.FC = () => {
 };
 
 export default CodeSyntaxBuilderView;
+

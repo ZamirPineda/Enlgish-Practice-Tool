@@ -18,6 +18,13 @@ import {
   TIME_PRESET_LABEL,
   TimePreset,
 } from "@/lib/gameSessionConfig";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 type ErrorHunterLevel = ErrorHunterRound["level"];
 
@@ -36,6 +43,15 @@ const LEVEL_SCORE_MULTIPLIER: Record<ErrorHunterLevel, number> = {
 };
 const BASE_POINTS_PER_CORRECT = 120;
 const TIME_BONUS_MULTIPLIER = 3;
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const ERROR_HUNTER_DIFFICULTY = createAdaptiveDifficultyEngine<ErrorHunterLevel>(
+  {
+    gameId: "error_hunter",
+    levels: LEVEL_ORDER,
+    defaultLevel: "B1",
+  },
+);
 
 const normalizeSentence = (text: string) =>
   text
@@ -45,7 +61,9 @@ const normalizeSentence = (text: string) =>
     .trim();
 
 const ErrorHunterView: React.FC = () => {
-  const [selectedLevel, setSelectedLevel] = useState<ErrorHunterLevel>("B1");
+  const [selectedLevel, setSelectedLevel] = useState<ErrorHunterLevel>(
+    ERROR_HUNTER_DIFFICULTY.defaultLevel,
+  );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const [roundIndex, setRoundIndex] = useState(0);
@@ -57,6 +75,8 @@ const ErrorHunterView: React.FC = () => {
   const [totalScore, setTotalScore] = useState(0);
   const [lastRoundPoints, setLastRoundPoints] = useState(0);
   const [timeoutReached, setTimeoutReached] = useState(false);
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   const rounds = useMemo(() => {
     const levelRounds = errorHunterRounds.filter(
@@ -77,6 +97,12 @@ const ErrorHunterView: React.FC = () => {
     timePreset,
   );
 
+  const handleLevelSelect = (nextLevel: ErrorHunterLevel) => {
+    setSelectedLevel((currentLevel) =>
+      ERROR_HUNTER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    );
+  };
+
   useEffect(() => {
     setRoundIndex(0);
     setAnswer("");
@@ -86,6 +112,8 @@ const ErrorHunterView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   }, [selectedLevel, roundTime]);
 
   useEffect(() => {
@@ -155,6 +183,8 @@ const ErrorHunterView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const handleCheck = () => {
@@ -162,28 +192,88 @@ const ErrorHunterView: React.FC = () => {
 
     setSubmitted(true);
     setTimeoutReached(false);
+    const isLastRound = roundIndex >= rounds.length - 1;
     if (userSentence === expectedSentence) {
       playGameSound("correct");
       const roundPoints = basePoints + timeBonus;
       setCorrectCount((previous) => previous + 1);
       setLastRoundPoints(roundPoints);
       setTotalScore((previous) => previous + roundPoints);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "error_hunter",
         level: round.level,
         sentence: round.incorrectSentence,
       });
+
+      if (
+        !isLastRound &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = ERROR_HUNTER_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${transition.nextLevel} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
       return;
     }
 
     playGameSound("wrong");
     setLastRoundPoints(0);
+    correctStreakRef.current = 0;
     trackAnalyticsEvent("item_wrong", {
       game: "error_hunter",
       level: round.level,
       sentence: round.incorrectSentence,
       errorType: "grammar",
     });
+
+    wrongStreakRef.current += 1;
+    if (
+      !isLastRound &&
+      shouldDownshiftByWrongStreak(
+        wrongStreakRef.current,
+        DOWNSHIFT_AFTER_WRONG_STREAK,
+      )
+    ) {
+      const transition = ERROR_HUNTER_DIFFICULTY.decreaseLevel(
+        selectedLevel,
+        "rule_downshift",
+      );
+      appendAdaptiveDifficultyLog({
+        ...transition,
+        trigger: "consecutive_wrong",
+        details: {
+          consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+        },
+      });
+
+      wrongStreakRef.current = 0;
+      if (transition.changed) {
+        setSelectedLevel(transition.nextLevel);
+        toast.info(
+          `Dificultad ajustada a ${transition.nextLevel} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+        );
+      }
+    }
   };
 
   const handleNextRound = () => {
@@ -212,6 +302,8 @@ const ErrorHunterView: React.FC = () => {
     setTotalScore(0);
     setLastRoundPoints(0);
     setTimeoutReached(false);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
@@ -250,7 +342,7 @@ const ErrorHunterView: React.FC = () => {
               key={`setup-${level}`}
               size="sm"
               variant={selectedLevel === level ? "primary" : "secondary"}
-              onClick={() => setSelectedLevel(level)}
+              onClick={() => handleLevelSelect(level)}
             >
               {level}
             </Button>
@@ -302,7 +394,7 @@ const ErrorHunterView: React.FC = () => {
             key={level}
             size="sm"
             variant={selectedLevel === level ? "primary" : "secondary"}
-            onClick={() => setSelectedLevel(level)}
+            onClick={() => handleLevelSelect(level)}
             aria-label={`Set error hunter level ${level}`}
           >
             {level}

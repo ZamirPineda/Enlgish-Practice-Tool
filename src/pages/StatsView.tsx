@@ -16,6 +16,7 @@ import {
 import { useGlobalXp } from "@/lib/xpStore";
 import { getRankForLevel } from "@/lib/levelRanks";
 import Heatmap from "@/components/Heatmap";
+import AdaptiveRolloutPanel from "@/components/adaptive/AdaptiveRolloutPanel";
 import ViewToolbar from "@/components/ui/ViewToolbar";
 import {
   AreaChart,
@@ -581,6 +582,8 @@ const StatsView: React.FC = () => {
             ))}
           </div>
         </div>
+
+        <AdaptiveRolloutPanel />
 
         {metrics.totalCards === 0 ? (
           <section className="bg-surface-1 border border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center animate-fade-in shadow-xl shadow-black/5">

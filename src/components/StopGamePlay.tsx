@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { stopGameData } from "@/features/data/stopGameData";
 import { StopCategory } from "@/types";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
@@ -15,9 +15,16 @@ import { playGameSound } from "@/lib/audioUtils";
 import { levenshteinDistance, getToleranceForWordStr } from "@/lib/stringUtils";
 import { useGlobalXp, progressQuest } from "@/lib/xpStore";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
 import Card from "@/components/ui/Card";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import { toast } from "@/components/ui/Toast";
 
 interface StopGamePlayProps {
   onPlayWord: (word: string) => void;
@@ -29,6 +36,16 @@ interface StopGamePlayProps {
 }
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+type StopGameAdaptiveLevel = "Relaxed" | "Normal" | "Hard";
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const STOP_GAME_DIFFICULTY = createAdaptiveDifficultyEngine<StopGameAdaptiveLevel>(
+  {
+    gameId: "stop_game",
+    levels: ["Relaxed", "Normal", "Hard"],
+    defaultLevel: "Normal",
+  },
+);
 
 export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   onPlayWord,
@@ -58,9 +75,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   const [showSummary, setShowSummary] = useState(false);
   const [hint, setHint] = useState<string | null>(null);
   const [difficulty, setDifficulty] = useState<15 | 30 | 60>(30);
-  const [categoryDifficulty, setCategoryDifficulty] = useState<
-    "Relaxed" | "Normal" | "Hard"
-  >("Normal");
+  const [categoryDifficulty, setCategoryDifficulty] =
+    useState<StopGameAdaptiveLevel>(STOP_GAME_DIFFICULTY.defaultLevel);
   const [hintedWord, setHintedWord] = useState<{
     word: string;
     definition?: string;
@@ -76,6 +92,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   const [timeLeft, setTimeLeft] = useState(30);
   const [sessionStartTime, setSessionStartTime] = useState<number>(Date.now());
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   // Timer Countdown Effect
   useEffect(() => {
@@ -155,6 +173,12 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     return baseCategories;
   }, [selectedGroup, categoryDifficulty]);
 
+  const handleCategoryDifficultySelect = (nextLevel: StopGameAdaptiveLevel) => {
+    setCategoryDifficulty((currentLevel) =>
+      STOP_GAME_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    );
+  };
+
   const pickNextChallenge = () => {
     // Find a valid combination of letter and category that has words
     let validCombinations: { letter: string; category: StopCategory }[] = [];
@@ -204,6 +228,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setBestStreak(0);
     setGameStats({ correct: 0, skipped: 0, incorrect: 0, history: [] });
     setSessionStartTime(Date.now());
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
     // Stop listening before starting a fresh game to ensure clean state
     stopListening();
     resetTranscript();
@@ -217,6 +243,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setHint(null);
     setHintedWord(null);
     setFeedback(null);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
     stopListening();
     resetTranscript();
   };
@@ -261,6 +289,38 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
   const handleFailOrSkip = (isSkip: boolean, isTimeout: boolean = false) => {
     setCurrentStreak(0);
+    correctStreakRef.current = 0;
+    if (isSkip) {
+      wrongStreakRef.current = 0;
+    } else {
+      wrongStreakRef.current += 1;
+      if (
+        shouldDownshiftByWrongStreak(
+          wrongStreakRef.current,
+          DOWNSHIFT_AFTER_WRONG_STREAK,
+        )
+      ) {
+        const transition = STOP_GAME_DIFFICULTY.decreaseLevel(
+          categoryDifficulty,
+          "rule_downshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_wrong",
+          details: {
+            consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+          },
+        });
+        wrongStreakRef.current = 0;
+        if (transition.changed) {
+          setCategoryDifficulty(transition.nextLevel);
+          toast.info(
+            `Dificultad ajustada a ${transition.nextLevel} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+          );
+        }
+      }
+    }
+
     const validWords =
       stopGameData[currentLetter]?.[currentCategory as StopCategory] || [];
     if (validWords.length > 0) {
@@ -336,6 +396,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
     // Reverse the "Incorrect" penalty visually and update state
     playGameSound("correct");
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
 
     // Recalculate streak and points as if they got it right initially
     // We assume currentStreak was reset to 0 by handleFailOrSkip, so we just treat it as 1 for now (or reset to +1)
@@ -416,6 +478,33 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
     if (isCorrect) {
       playGameSound("correct");
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
+      if (
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = STOP_GAME_DIFFICULTY.increaseLevel(
+          categoryDifficulty,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setCategoryDifficulty(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${transition.nextLevel} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
 
       // Calculate combo multiplier based on current streak
       // 0-2 streak: 1x, 3-4 streak: 2x, 5+ streak: 3x
@@ -520,19 +609,19 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             </label>
             <div className="flex gap-2">
               <button
-                onClick={() => setCategoryDifficulty("Relaxed")}
+                onClick={() => handleCategoryDifficultySelect("Relaxed")}
                 className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Relaxed" ? "bg-success border-success text-white shadow-lg shadow-success/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
               >
                 Relaxed
               </button>
               <button
-                onClick={() => setCategoryDifficulty("Normal")}
+                onClick={() => handleCategoryDifficultySelect("Normal")}
                 className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Normal" ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
               >
                 Normal
               </button>
               <button
-                onClick={() => setCategoryDifficulty("Hard")}
+                onClick={() => handleCategoryDifficultySelect("Hard")}
                 className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Hard" ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
               >
                 Hard

@@ -3,10 +3,23 @@ import { beforeEach, afterEach, describe, test, expect, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import ParaphraseDuelView from "@/pages/ParaphraseDuelView";
 import { paraphraseDuelRounds } from "@/features/data/paraphraseDuel";
+import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
 import {
   clearAnalyticsEventsForTesting,
   getAnalyticsEvents,
 } from "@/lib/analytics";
+
+const { toastMock } = vi.hoisted(() => ({
+  toastMock: {
+    success: vi.fn(),
+    info: vi.fn(),
+    error: vi.fn(),
+  },
+}));
+
+vi.mock("@/components/ui/Toast", () => ({
+  toast: toastMock,
+}));
 
 describe("ParaphraseDuelView", () => {
   const startGame = () => {
@@ -16,6 +29,9 @@ describe("ParaphraseDuelView", () => {
   beforeEach(() => {
     localStorage.clear();
     clearAnalyticsEventsForTesting();
+    toastMock.success.mockReset();
+    toastMock.info.mockReset();
+    toastMock.error.mockReset();
     vi.spyOn(Math, "random").mockReturnValue(0.9999999);
   });
 
@@ -74,6 +90,40 @@ describe("ParaphraseDuelView", () => {
     expect(events.at(-1)?.payload).toMatchObject({
       game: "paraphrase_duel",
       errorType: "connector_missing",
+    });
+  });
+
+  test("auto-downshifts difficulty after 3 consecutive errors and logs cause", () => {
+    render(<ParaphraseDuelView />);
+    startGame();
+
+    fireEvent.click(screen.getByRole("button", { name: "Set paraphrase level C1" }));
+    expect(screen.getByText("28s")).toBeInTheDocument();
+
+    for (let index = 0; index < 3; index += 1) {
+      fireEvent.change(screen.getByLabelText("Paraphrase answer"), {
+        target: { value: "wrong paraphrase attempt" },
+      });
+      fireEvent.click(screen.getByRole("button", { name: "Check paraphrase" }));
+      if (index < 2) {
+        fireEvent.click(screen.getByRole("button", { name: "Next round" }));
+      }
+    }
+
+    expect(screen.getByText("32s")).toBeInTheDocument();
+    expect(toastMock.info).toHaveBeenCalled();
+
+    const rawLog = localStorage.getItem(ADAPTIVE_DIFFICULTY_LOG_KEY);
+    expect(rawLog).toBeTruthy();
+    const log = JSON.parse(rawLog || "[]");
+    expect(log.length).toBeGreaterThan(0);
+    expect(log[log.length - 1]).toMatchObject({
+      gameId: "paraphrase_duel",
+      previousLevel: "C1",
+      nextLevel: "B2",
+      reason: "rule_downshift",
+      trigger: "consecutive_wrong",
+      changed: true,
     });
   });
 });

@@ -7,6 +7,13 @@ import Button from "@/components/ui/Button";
 import { techDecks } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import { addGlobalXp, progressQuest } from "@/lib/xpStore";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 type MatchDifficulty = "easy" | "normal" | "hard";
 
@@ -27,6 +34,15 @@ const DIFFICULTY_PAIRS_PER_SET: Record<MatchDifficulty, number> = {
   normal: 4,
   hard: 5,
 };
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const MATCH_UP_DIFFICULTY_ENGINE = createAdaptiveDifficultyEngine<MatchDifficulty>(
+  {
+    gameId: "tech_matchup",
+    levels: ["easy", "normal", "hard"],
+    defaultLevel: "normal",
+  },
+);
 
 const shuffle = <T,>(items: T[]) => [...items].sort(() => 0.5 - Math.random());
 
@@ -52,6 +68,8 @@ export const TechMatchUpView: React.FC = () => {
   const [hasStarted, setHasStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const sessionStartTime = useRef<number>(Date.now());
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   const totalSets = DIFFICULTY_SETS[difficulty];
   const cardsPerSet = DIFFICULTY_PAIRS_PER_SET[difficulty];
@@ -97,6 +115,8 @@ export const TechMatchUpView: React.FC = () => {
     setIsFinished(false);
     setHasStarted(true);
     sessionStartTime.current = Date.now();
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
     prepareSet();
 
     trackAnalyticsEvent("session_start", {
@@ -108,11 +128,36 @@ export const TechMatchUpView: React.FC = () => {
     });
   };
 
+  const handleDifficultySelect = (nextDifficulty: MatchDifficulty) => {
+    setDifficulty((currentDifficulty) => {
+      const transition = MATCH_UP_DIFFICULTY_ENGINE.setLevel(
+        currentDifficulty,
+        nextDifficulty,
+      );
+      if (transition.changed) {
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "manual",
+          details: {
+            source: "user_select",
+          },
+        });
+      }
+      return transition.nextLevel;
+    });
+  };
+
   useEffect(() => {
     if (!hasStarted || isFinished) return;
     if (!selectedPromptId || !selectedAnswerId) return;
 
     if (selectedPromptId === selectedAnswerId) {
+      const unmatchedBeforeSelection = prompts.filter(
+        (prompt) => !prompt.matched,
+      ).length;
+      const isLastPairInSet = unmatchedBeforeSelection <= 1;
+      const isLastSet = completedSets >= totalSets - 1;
+
       setPrompts((previous) =>
         previous.map((prompt) =>
           prompt.id === selectedPromptId
@@ -130,21 +175,79 @@ export const TechMatchUpView: React.FC = () => {
       setScore((previous) => previous + 10);
       setSelectedPromptId(null);
       setSelectedAnswerId(null);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "tech_matchup",
         deck: deckId,
         difficulty,
       });
+
+      if (
+        !(isLastPairInSet && isLastSet) &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = MATCH_UP_DIFFICULTY_ENGINE.increaseLevel(
+          difficulty,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setDifficulty(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${DIFFICULTY_LABEL[transition.nextLevel]} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
       return;
     }
 
     setErrorMatch(true);
+    correctStreakRef.current = 0;
+    wrongStreakRef.current += 1;
     trackAnalyticsEvent("item_wrong", {
       game: "tech_matchup",
       deck: deckId,
       difficulty,
       errorType: "mismatch",
     });
+
+    if (
+      shouldDownshiftByWrongStreak(
+        wrongStreakRef.current,
+        DOWNSHIFT_AFTER_WRONG_STREAK,
+      )
+    ) {
+      const transition = MATCH_UP_DIFFICULTY_ENGINE.decreaseLevel(
+        difficulty,
+        "rule_downshift",
+      );
+      appendAdaptiveDifficultyLog({
+        ...transition,
+        trigger: "consecutive_wrong",
+        details: {
+          consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+        },
+      });
+      wrongStreakRef.current = 0;
+      if (transition.changed) {
+        setDifficulty(transition.nextLevel);
+        toast.info(
+          `Dificultad ajustada a ${DIFFICULTY_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+        );
+      }
+    }
+
     const timer = setTimeout(() => {
       setSelectedPromptId(null);
       setSelectedAnswerId(null);
@@ -152,12 +255,15 @@ export const TechMatchUpView: React.FC = () => {
     }, 800);
     return () => clearTimeout(timer);
   }, [
+    completedSets,
     deckId,
     difficulty,
     hasStarted,
     isFinished,
+    prompts,
     selectedAnswerId,
     selectedPromptId,
+    totalSets,
   ]);
 
   useEffect(() => {
@@ -168,10 +274,12 @@ export const TechMatchUpView: React.FC = () => {
       const nextCompleted = completedSets + 1;
       setCompletedSets(nextCompleted);
       if (nextCompleted >= totalSets) {
-        setIsFinished(true);
-        return;
-      }
-      prepareSet();
+      setIsFinished(true);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current = 0;
+      return;
+    }
+    prepareSet();
     }, 1000);
 
     return () => clearTimeout(timer);
@@ -221,7 +329,7 @@ export const TechMatchUpView: React.FC = () => {
                     key={`difficulty-${level}`}
                     size="sm"
                     variant={difficulty === level ? "primary" : "secondary"}
-                    onClick={() => setDifficulty(level)}
+                    onClick={() => handleDifficultySelect(level)}
                   >
                     {DIFFICULTY_LABEL[level]} ({DIFFICULTY_SETS[level]} rondas)
                   </Button>
@@ -279,6 +387,19 @@ export const TechMatchUpView: React.FC = () => {
         timeLeft={totalSets - completedSets}
         roundTime={totalSets}
         timerLabel="Rondas"
+        controls={(Object.keys(DIFFICULTY_LABEL) as MatchDifficulty[]).map(
+          (level) => (
+            <Button
+              key={`hud-${level}`}
+              size="sm"
+              variant={difficulty === level ? "primary" : "secondary"}
+              onClick={() => handleDifficultySelect(level)}
+              aria-label={`Set tech matchup level ${DIFFICULTY_LABEL[level]}`}
+            >
+              {DIFFICULTY_LABEL[level]}
+            </Button>
+          ),
+        )}
       />
       <div className="flex justify-between items-center mb-6 max-w-5xl mx-auto w-full">
         <button

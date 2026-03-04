@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
@@ -14,12 +14,74 @@ import {
   TIME_PRESET_LABEL,
   TimePreset,
 } from "@/lib/gameSessionConfig";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 type GameState = "idle" | "playing" | "finished";
+type DocsQuizLevel = "easy" | "normal" | "hard";
+type QuizQuestionWithLevel = QuizQuestion & { adaptiveLevel: DocsQuizLevel };
 
-const TIME_PER_QUESTION = 60;
+const LEVEL_ORDER: DocsQuizLevel[] = ["easy", "normal", "hard"];
+const LEVEL_LABEL: Record<DocsQuizLevel, string> = {
+  easy: "Easy",
+  normal: "Normal",
+  hard: "Hard",
+};
+const TIME_PER_QUESTION: Record<DocsQuizLevel, number> = {
+  easy: 70,
+  normal: 60,
+  hard: 48,
+};
 const INITIAL_LIVES = 3;
 const BEST_SCORE_KEY = "study-docs-quiz-best-score";
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const DOCS_QUIZ_DIFFICULTY = createAdaptiveDifficultyEngine<DocsQuizLevel>({
+  gameId: "docs_quiz",
+  levels: LEVEL_ORDER,
+  defaultLevel: "normal",
+});
+
+const buildAdaptiveDocsQuizQuestions = (
+  questions: QuizQuestion[],
+): QuizQuestionWithLevel[] => {
+  const ranked = questions
+    .map((question, index) => ({
+      question,
+      index,
+      score:
+        question.question.length +
+        question.explanation.length +
+        Math.round(
+          question.options.reduce((total, option) => total + option.length, 0) /
+            Math.max(1, question.options.length),
+        ) +
+        (question.subCategory ? 8 : 0),
+    }))
+    .sort((left, right) => left.score - right.score || left.index - right.index);
+
+  const total = ranked.length;
+  const levelById = new Map<string, DocsQuizLevel>();
+  ranked.forEach(({ question }, rank) => {
+    const percentile = (rank + 1) / total;
+    const adaptiveLevel =
+      percentile <= 1 / 3 ? "easy" : percentile <= 2 / 3 ? "normal" : "hard";
+    levelById.set(question.id, adaptiveLevel);
+  });
+
+  return questions.map((question) => ({
+    ...question,
+    adaptiveLevel: levelById.get(question.id) || "normal",
+  }));
+};
+
+const ADAPTIVE_DOCS_QUIZ_QUESTIONS =
+  buildAdaptiveDocsQuizQuestions(docsQuizQuestions);
 
 const shuffle = <T,>(items: T[]): T[] => {
   const copy = [...items];
@@ -32,9 +94,14 @@ const shuffle = <T,>(items: T[]): T[] => {
 
 const StudyDocsQuizView: React.FC = () => {
   const sessionStartTime = useRef<number>(Date.now());
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
+  const [selectedLevel, setSelectedLevel] = useState<DocsQuizLevel>(
+    DOCS_QUIZ_DIFFICULTY.defaultLevel,
+  );
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
-  const questionTime = getTimeByPreset(TIME_PER_QUESTION, timePreset);
+  const questionTime = getTimeByPreset(TIME_PER_QUESTION[selectedLevel], timePreset);
   const [timeLeft, setTimeLeft] = useState(questionTime);
   const [lives, setLives] = useState(INITIAL_LIVES);
   const [score, setScore] = useState(0);
@@ -48,6 +115,50 @@ const StudyDocsQuizView: React.FC = () => {
     null,
   );
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
+  const questionsByLevel = useMemo(() => {
+    return ADAPTIVE_DOCS_QUIZ_QUESTIONS.reduce(
+      (accumulator, question) => {
+        accumulator[question.adaptiveLevel].push(question);
+        return accumulator;
+      },
+      {
+        easy: [] as QuizQuestionWithLevel[],
+        normal: [] as QuizQuestionWithLevel[],
+        hard: [] as QuizQuestionWithLevel[],
+      },
+    );
+  }, []);
+
+  const buildPoolForLevel = (level: DocsQuizLevel): QuizQuestionWithLevel[] => {
+    const levelQuestions = questionsByLevel[level];
+    if (levelQuestions.length === 0) {
+      return shuffle([...ADAPTIVE_DOCS_QUIZ_QUESTIONS]);
+    }
+    return shuffle([...levelQuestions]);
+  };
+
+  const handleLevelSelect = (nextLevel: DocsQuizLevel) => {
+    setSelectedLevel((currentLevel) => {
+      const transition = DOCS_QUIZ_DIFFICULTY.setLevel(currentLevel, nextLevel);
+      if (transition.changed) {
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "manual",
+          details: {
+            source: "user_select",
+          },
+        });
+        if (gameState === "playing") {
+          setQuestionsPool(buildPoolForLevel(transition.nextLevel));
+        }
+      }
+      return transition.nextLevel;
+    });
+  };
+
+  useEffect(() => {
+    setTimeLeft(questionTime);
+  }, [questionTime]);
 
   useEffect(() => {
     const saved = Number(localStorage.getItem(BEST_SCORE_KEY) || "0");
@@ -64,6 +175,8 @@ const StudyDocsQuizView: React.FC = () => {
     });
     setSelectedOption(null);
     setLastResult(null);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
     if (score > 0) {
       addGlobalXp(score);
     }
@@ -103,13 +216,14 @@ const StudyDocsQuizView: React.FC = () => {
   };
 
   const startGame = () => {
-    const shuffledPool = shuffle([...docsQuizQuestions]);
+    const shuffledPool = buildPoolForLevel(selectedLevel);
     const firstRound = getNextRound(shuffledPool);
     if (!firstRound) return;
 
     sessionStartTime.current = Date.now();
     trackAnalyticsEvent("session_start", {
       game: "docs_quiz",
+      level: selectedLevel,
       timePreset,
       questionTime,
       questions: shuffledPool.length,
@@ -123,6 +237,8 @@ const StudyDocsQuizView: React.FC = () => {
     setStreak(0);
     setLastResult(null);
     setSelectedOption(null);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
     setCurrentRound(firstRound);
     setShuffledOptions(shuffle([...firstRound.options]));
   };
@@ -136,9 +252,12 @@ const StudyDocsQuizView: React.FC = () => {
 
     if (isCorrect) {
       playGameSound("correct");
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "docs_quiz",
         question: currentRound.question,
+        level: selectedLevel,
       });
 
       progressQuest("correct_answers", 1, "quiz");
@@ -149,17 +268,74 @@ const StudyDocsQuizView: React.FC = () => {
         setScore((currentScore) => currentScore + 15 + previous * 5);
         return nextStreak;
       });
+
+      if (
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = DOCS_QUIZ_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          setQuestionsPool(buildPoolForLevel(transition.nextLevel));
+          toast.success(
+            `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
     } else {
       if (option !== "") {
         playGameSound("wrong");
       }
+      correctStreakRef.current = 0;
+      wrongStreakRef.current += 1;
       trackAnalyticsEvent("item_wrong", {
         game: "docs_quiz",
         question: currentRound.question,
         errorType: "quiz_error",
+        level: selectedLevel,
       });
       setLives((previous) => Math.max(0, previous - 1));
       setStreak(0);
+
+      if (
+        shouldDownshiftByWrongStreak(
+          wrongStreakRef.current,
+          DOWNSHIFT_AFTER_WRONG_STREAK,
+        )
+      ) {
+        const transition = DOCS_QUIZ_DIFFICULTY.decreaseLevel(
+          selectedLevel,
+          "rule_downshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_wrong",
+          details: {
+            consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+          },
+        });
+        wrongStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          setQuestionsPool(buildPoolForLevel(transition.nextLevel));
+          toast.info(
+            `Dificultad ajustada a ${LEVEL_LABEL[transition.nextLevel]} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+          );
+        }
+      }
     }
   };
 
@@ -195,10 +371,27 @@ const StudyDocsQuizView: React.FC = () => {
   const startScreen = (
     <GameStartPanel
       title="Tech Interview Quiz"
-      description="Configura el ritmo antes de iniciar."
+      description="Configura dificultad y ritmo antes de iniciar."
       onStart={startGame}
       startLabel="Iniciar Quiz"
     >
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Dificultad
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {LEVEL_ORDER.map((level) => (
+            <Button
+              key={`setup-${level}`}
+              size="sm"
+              variant={selectedLevel === level ? "primary" : "secondary"}
+              onClick={() => handleLevelSelect(level)}
+            >
+              {LEVEL_LABEL[level]}
+            </Button>
+          ))}
+        </div>
+      </div>
       <div className="space-y-3">
         <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
           Ritmo de tiempo
@@ -234,11 +427,24 @@ const StudyDocsQuizView: React.FC = () => {
         title="Tech Interview Quiz"
         description="Practica con preguntas de arquitectura e ingenieria."
         meta={
-          <p className="text-xs text-text-muted mt-1">Record: {bestScore}</p>
+          <p className="text-xs text-text-muted mt-1">
+            Record: {bestScore} | Nivel: {LEVEL_LABEL[selectedLevel]}
+          </p>
         }
         status={`Vidas ${lives} · Score ${score}`}
         timeLeft={gameState === "playing" ? timeLeft : 0}
         roundTime={questionTime}
+        controls={LEVEL_ORDER.map((level) => (
+          <Button
+            key={level}
+            size="sm"
+            variant={selectedLevel === level ? "primary" : "secondary"}
+            onClick={() => handleLevelSelect(level)}
+            aria-label={`Set docs quiz level ${LEVEL_LABEL[level]}`}
+          >
+            {LEVEL_LABEL[level]}
+          </Button>
+        ))}
       />
       <Card elevated>
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -250,8 +456,7 @@ const StudyDocsQuizView: React.FC = () => {
           </span>
         </div>
         <p className="text-sm text-text-secondary mt-3">
-          Prepárate para entrevistas de FAANG o certificaciones. 60 segundos por
-          pregunta, 3 vidas. Lee cuidadosamente.
+          Prepárate para entrevistas de FAANG o certificaciones. {questionTime} segundos por pregunta, 3 vidas. Lee cuidadosamente.
         </p>
       </Card>
 
@@ -497,3 +702,4 @@ const StudyDocsQuizView: React.FC = () => {
 };
 
 export default StudyDocsQuizView;
+

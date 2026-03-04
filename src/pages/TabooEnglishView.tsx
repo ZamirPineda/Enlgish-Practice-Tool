@@ -18,6 +18,13 @@ import {
   TIME_PRESET_LABEL,
   TimePreset,
 } from "@/lib/gameSessionConfig";
+import {
+  appendAdaptiveDifficultyLog,
+  createAdaptiveDifficultyEngine,
+  shouldDownshiftByWrongStreak,
+  shouldUpshiftByCorrectStreak,
+} from "@/lib/adaptiveDifficulty";
+import { toast } from "@/components/ui/Toast";
 
 type TabooLevel = TabooEnglishRound["level"];
 
@@ -34,6 +41,13 @@ const LEVEL_SCORE_MULTIPLIER: Record<TabooLevel, number> = {
   B2: 1.5,
   C1: 1.75,
 };
+const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
+const UPSHIFT_AFTER_CORRECT_STREAK = 3;
+const TABOO_DIFFICULTY = createAdaptiveDifficultyEngine<TabooLevel>({
+  gameId: "taboo_english",
+  levels: LEVEL_ORDER,
+  defaultLevel: "B1",
+});
 
 const normalizeText = (text: string) =>
   text
@@ -48,7 +62,9 @@ const containsWord = (text: string, word: string) => {
 };
 
 const TabooEnglishView: React.FC = () => {
-  const [selectedLevel, setSelectedLevel] = useState<TabooLevel>("B1");
+  const [selectedLevel, setSelectedLevel] = useState<TabooLevel>(
+    TABOO_DIFFICULTY.defaultLevel,
+  );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const [roundIndex, setRoundIndex] = useState(0);
@@ -58,6 +74,8 @@ const TabooEnglishView: React.FC = () => {
   const [correctCount, setCorrectCount] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_TIME_SECONDS.B1);
+  const wrongStreakRef = useRef(0);
+  const correctStreakRef = useRef(0);
 
   const rounds = useMemo(() => {
     const levelRounds = tabooEnglishRounds.filter(
@@ -78,6 +96,12 @@ const TabooEnglishView: React.FC = () => {
     timePreset,
   );
 
+  const handleLevelSelect = (nextLevel: TabooLevel) => {
+    setSelectedLevel((currentLevel) =>
+      TABOO_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    );
+  };
+
   useEffect(() => {
     setRoundIndex(0);
     setAnswer("");
@@ -85,6 +109,8 @@ const TabooEnglishView: React.FC = () => {
     setCorrectCount(0);
     setTotalScore(0);
     setTimeLeft(roundTime);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   }, [selectedLevel, roundTime]);
 
   useEffect(() => {
@@ -149,12 +175,15 @@ const TabooEnglishView: React.FC = () => {
     setCorrectCount(0);
     setTotalScore(0);
     setTimeLeft(roundTime);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const handleCheck = () => {
     if (!answer.trim() || submitted) return;
 
     setSubmitted(true);
+    const isLastRound = roundIndex >= rounds.length - 1;
     if (
       answer.trim().length >= 12 &&
       !usedTargetWord &&
@@ -165,13 +194,44 @@ const TabooEnglishView: React.FC = () => {
       const points = Math.round((110 + timeLeft * 2) * multiplier);
       setCorrectCount((previous) => previous + 1);
       setTotalScore((previous) => previous + points);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current += 1;
       trackAnalyticsEvent("item_correct", {
         game: "taboo_english",
         level: round.level,
         targetWord: round.targetWord,
       });
+
+      if (
+        !isLastRound &&
+        shouldUpshiftByCorrectStreak(
+          correctStreakRef.current,
+          UPSHIFT_AFTER_CORRECT_STREAK,
+        )
+      ) {
+        const transition = TABOO_DIFFICULTY.increaseLevel(
+          selectedLevel,
+          "rule_upshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_correct",
+          details: {
+            consecutiveCorrect: UPSHIFT_AFTER_CORRECT_STREAK,
+          },
+        });
+
+        correctStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.success(
+            `Dificultad ajustada a ${transition.nextLevel} por ${UPSHIFT_AFTER_CORRECT_STREAK} aciertos seguidos.`,
+          );
+        }
+      }
     } else {
       playGameSound("wrong");
+      correctStreakRef.current = 0;
       trackAnalyticsEvent("item_wrong", {
         game: "taboo_english",
         level: round.level,
@@ -182,6 +242,35 @@ const TabooEnglishView: React.FC = () => {
             ? "used_forbidden"
             : "too_short",
       });
+
+      wrongStreakRef.current += 1;
+      if (
+        !isLastRound &&
+        shouldDownshiftByWrongStreak(
+          wrongStreakRef.current,
+          DOWNSHIFT_AFTER_WRONG_STREAK,
+        )
+      ) {
+        const transition = TABOO_DIFFICULTY.decreaseLevel(
+          selectedLevel,
+          "rule_downshift",
+        );
+        appendAdaptiveDifficultyLog({
+          ...transition,
+          trigger: "consecutive_wrong",
+          details: {
+            consecutiveErrors: DOWNSHIFT_AFTER_WRONG_STREAK,
+          },
+        });
+
+        wrongStreakRef.current = 0;
+        if (transition.changed) {
+          setSelectedLevel(transition.nextLevel);
+          toast.info(
+            `Dificultad ajustada a ${transition.nextLevel} por ${DOWNSHIFT_AFTER_WRONG_STREAK} errores seguidos.`,
+          );
+        }
+      }
     }
   };
 
@@ -207,6 +296,8 @@ const TabooEnglishView: React.FC = () => {
     setCorrectCount(0);
     setTotalScore(0);
     setTimeLeft(roundTime);
+    wrongStreakRef.current = 0;
+    correctStreakRef.current = 0;
   };
 
   const isComplete = roundIndex === rounds.length - 1 && submitted;
@@ -245,7 +336,7 @@ const TabooEnglishView: React.FC = () => {
               key={`setup-${level}`}
               size="sm"
               variant={selectedLevel === level ? "primary" : "secondary"}
-              onClick={() => setSelectedLevel(level)}
+              onClick={() => handleLevelSelect(level)}
             >
               {level}
             </Button>
@@ -291,7 +382,7 @@ const TabooEnglishView: React.FC = () => {
               key={level}
               size="sm"
               variant={selectedLevel === level ? "primary" : "secondary"}
-              onClick={() => setSelectedLevel(level)}
+              onClick={() => handleLevelSelect(level)}
               aria-label={`Set taboo level ${level}`}
             >
               {level}

@@ -1,5 +1,6 @@
 import { AnalyticsEvent } from "@/lib/analytics";
 import { toDateKey } from "@/lib/activityTracker";
+import { getAdaptiveDifficultyLog } from "@/lib/adaptiveDifficulty";
 import { normalizeGameId } from "@/lib/gameAnalytics";
 
 export type DailyLoopFocusRoute =
@@ -16,6 +17,7 @@ export interface DailyLoopStep {
   path: string;
   category: DailyLoopCategory;
   gameId: string;
+  adaptiveLevel: string | null;
   completedAt: string | null;
 }
 
@@ -182,6 +184,15 @@ const buildLoopSteps = (
   dateKey: string,
   focusRoute: DailyLoopFocusRoute,
 ): DailyLoopStep[] => {
+  const latestAdaptiveLevelByGame = getAdaptiveDifficultyLog().reduce<Record<string, string>>(
+    (accumulator, entry) => {
+      if (!entry.changed) return accumulator;
+      accumulator[normalizeGameId(entry.gameId)] = entry.nextLevel;
+      return accumulator;
+    },
+    {},
+  );
+
   const categoryGames: Record<DailyLoopCategory, LoopGameConfig[]> = {
     english: pickGamesForCategory(
       "english",
@@ -218,6 +229,7 @@ const buildLoopSteps = (
       path: game.path,
       category,
       gameId: game.gameId,
+      adaptiveLevel: latestAdaptiveLevelByGame[game.gameId] || null,
       completedAt: null,
     };
   });
@@ -278,6 +290,10 @@ const parseDailyLoopState = (value: unknown): DailyLoopState | null => {
         completedAt:
           typeof parsedStep.completedAt === "string"
             ? parsedStep.completedAt
+            : null,
+        adaptiveLevel:
+          typeof parsedStep.adaptiveLevel === "string"
+            ? parsedStep.adaptiveLevel
             : null,
       } satisfies DailyLoopStep;
     })

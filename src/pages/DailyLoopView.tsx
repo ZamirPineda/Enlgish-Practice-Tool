@@ -351,6 +351,9 @@ const DailyLoopView: React.FC = () => {
             <div className="space-y-3">
               {loop.steps.map((step, index) => {
                 const isCompleted = Boolean(step.completedAt);
+                const stepPath = step.adaptiveLevel
+                  ? `${step.path}${step.path.includes("?") ? "&" : "?"}adaptiveLevel=${encodeURIComponent(step.adaptiveLevel)}`
+                  : step.path;
                 return (
                   <Card
                     key={step.id}
@@ -379,11 +382,16 @@ const DailyLoopView: React.FC = () => {
                         <p className="text-sm text-text-secondary">
                           {step.description}
                         </p>
+                        {step.adaptiveLevel ? (
+                          <p className="text-xs font-bold uppercase tracking-widest text-accent">
+                            Nivel sugerido: {step.adaptiveLevel}
+                          </p>
+                        ) : null}
                       </div>
 
                       <div className="flex flex-col sm:items-end gap-2">
                         <Link
-                          to={step.path}
+                          to={stepPath}
                           className="inline-flex min-h-[40px] items-center justify-center rounded-lg border border-border bg-surface-2 px-4 text-sm font-bold text-text-primary transition-colors hover:bg-surface-hover"
                         >
                           Abrir juego

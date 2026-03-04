@@ -4,6 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import DailyLoopView from "@/pages/DailyLoopView";
 import {
+  DAILY_LOOP_STORAGE_KEY,
   getTodayDailyLoop,
   markDailyLoopStepComplete,
   saveDailyLoopState,
@@ -197,5 +198,24 @@ describe("DailyLoopView", () => {
     expect(
       screen.getByRole("button", { name: "Reward ya reclamada" }),
     ).toBeDisabled();
+  });
+
+  test("shows suggested adaptive level from stored loop state", () => {
+    const startedLoop = startDailyLoop("english_interview");
+    const withAdaptiveHint = {
+      ...startedLoop,
+      steps: startedLoop.steps.map((step, index) =>
+        index === 0 ? { ...step, adaptiveLevel: "B2" } : step,
+      ),
+    };
+    localStorage.setItem(DAILY_LOOP_STORAGE_KEY, JSON.stringify(withAdaptiveHint));
+
+    render(
+      <MemoryRouter>
+        <DailyLoopView />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText("Nivel sugerido: B2")).toBeInTheDocument();
   });
 });

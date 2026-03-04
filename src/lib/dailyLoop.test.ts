@@ -1,5 +1,6 @@
 import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
 import { AnalyticsEvent } from "@/lib/analytics";
+import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
 import {
   claimDailyLoopReward,
   getTodayDailyLoop,
@@ -98,5 +99,28 @@ describe("dailyLoop", () => {
     expect(claimDailyLoopReward("2026-03-03")).toBe(true);
     expect(claimDailyLoopReward("2026-03-03")).toBe(false);
     expect(getTodayDailyLoop("2026-03-03")?.rewardClaimed).toBe(true);
+  });
+
+  test("injects suggested adaptive level per game from latest adaptive logs", () => {
+    localStorage.setItem(
+      ADAPTIVE_DIFFICULTY_LOG_KEY,
+      JSON.stringify([
+        {
+          gameId: "math_game",
+          previousLevel: "normal",
+          nextLevel: "hard",
+          direction: "up",
+          reason: "rule_upshift",
+          changed: true,
+          timestamp: "2026-03-03T11:50:00.000Z",
+          trigger: "consecutive_correct",
+        },
+      ]),
+    );
+
+    const loop = startDailyLoop("english_interview", "2026-03-03");
+    const mathStep = loop.steps.find((step) => step.gameId === "math_game");
+    expect(mathStep).toBeDefined();
+    expect(mathStep?.adaptiveLevel).toBe("hard");
   });
 });
