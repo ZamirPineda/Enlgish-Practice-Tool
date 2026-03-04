@@ -139,3 +139,6 @@ Impacto esperado:
 Rollback plan:
 ```
 
+## Referencias de Ejecucion
+1. Desglose operativo APP-103 para rollout en todos los juegos:
+   `APP_103_SUBTASKS.md`
