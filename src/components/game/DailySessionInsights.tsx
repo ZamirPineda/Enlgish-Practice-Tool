@@ -3,6 +3,7 @@ import { Award } from "lucide-react";
 import { addGlobalXp } from "@/lib/xpStore";
 import { toast } from "@/components/ui/Toast";
 import {
+  type FocusRoute,
   FOCUS_ROUTE_LABEL,
   claimDailySessionReward,
   getTodaySessionSummary,
@@ -48,6 +49,7 @@ const DailySessionInsights: React.FC<DailySessionInsightsProps> = ({
   const weakestRouteLabel = summary.weakestRoute
     ? FOCUS_ROUTE_LABEL[summary.weakestRoute]
     : "No data yet";
+  const routeOrder: FocusRoute[] = ["english", "math", "dev"];
 
   const handleClaimReward = () => {
     if (!summary.rewardEligible) {
@@ -101,6 +103,35 @@ const DailySessionInsights: React.FC<DailySessionInsightsProps> = ({
             {weakestRouteLabel}
           </p>
         </div>
+      </div>
+
+      <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-2">
+        {routeOrder.map((route) => {
+          const routeSummary = summary.routes[route];
+          return (
+            <div key={route} className="rounded-lg border border-border bg-surface-1 p-2">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-[11px] font-black text-text-primary">
+                  {FOCUS_ROUTE_LABEL[route]}
+                </p>
+                <p className="text-[10px] font-bold text-text-muted">
+                  {routeSummary.correct}/{routeSummary.attempts}
+                </p>
+              </div>
+              <div className="mt-1 h-1.5 rounded-full bg-surface-2 overflow-hidden">
+                <div
+                  className="h-full bg-sky-500 transition-all duration-300"
+                  style={{
+                    width: `${routeSummary.attempts > 0 ? Math.max(4, routeSummary.accuracy) : 0}%`,
+                  }}
+                />
+              </div>
+              <p className="mt-1 text-[10px] text-text-muted">
+                {routeSummary.accuracy}% accuracy
+              </p>
+            </div>
+          );
+        })}
       </div>
 
       <div className="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">

@@ -21,6 +21,10 @@ import {
   claimDailySessionReward,
   getTodaySessionSummary,
 } from "@/lib/dailySessionSummary";
+import {
+  claimWeeklyConsistencyReward,
+  getWeeklyConsistencyStatus,
+} from "@/lib/weeklyConsistencyRewards";
 
 const DailyProgressWidget: React.FC = () => {
   const [refreshToken, setRefreshToken] = useState(0);
@@ -39,6 +43,7 @@ const DailyProgressWidget: React.FC = () => {
     window.addEventListener("analyticsUpdated", forceRefresh);
     window.addEventListener("globalXpUpdated", forceRefresh);
     window.addEventListener("dailySessionRewardUpdated", forceRefresh);
+    window.addEventListener("weeklyConsistencyUpdated", forceRefresh);
     window.addEventListener("storage", forceRefresh);
     window.addEventListener("focus", forceRefresh);
     document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -49,6 +54,7 @@ const DailyProgressWidget: React.FC = () => {
       window.removeEventListener("analyticsUpdated", forceRefresh);
       window.removeEventListener("globalXpUpdated", forceRefresh);
       window.removeEventListener("dailySessionRewardUpdated", forceRefresh);
+      window.removeEventListener("weeklyConsistencyUpdated", forceRefresh);
       window.removeEventListener("storage", forceRefresh);
       window.removeEventListener("focus", forceRefresh);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
@@ -97,6 +103,10 @@ const DailyProgressWidget: React.FC = () => {
     () => getTodaySessionSummary(todayStr),
     [todayStr, refreshToken],
   );
+  const weeklyConsistency = useMemo(
+    () => getWeeklyConsistencyStatus(),
+    [refreshToken],
+  );
 
   const strongestRouteLabel = sessionSummary.strongestRoute
     ? FOCUS_ROUTE_LABEL[sessionSummary.strongestRoute]
@@ -119,6 +129,23 @@ const DailyProgressWidget: React.FC = () => {
 
     addGlobalXp(sessionSummary.rewardXp);
     toast.success(`Session reward claimed: +${sessionSummary.rewardXp} XP`);
+    setRefreshToken((prev) => prev + 1);
+  };
+
+  const handleClaimWeeklyTier = (tierId: string) => {
+    const result = claimWeeklyConsistencyReward(tierId);
+    if (!result.ok) {
+      if ("reason" in result && result.reason === "already_claimed") {
+        toast.info("Weekly reward already claimed.");
+      } else {
+        toast.error("Keep your weekly streak to unlock this reward.");
+      }
+      setRefreshToken((prev) => prev + 1);
+      return;
+    }
+
+    addGlobalXp(result.rewardXp);
+    toast.success(`Weekly consistency reward: +${result.rewardXp} XP`);
     setRefreshToken((prev) => prev + 1);
   };
 
@@ -269,6 +296,47 @@ const DailyProgressWidget: React.FC = () => {
             ? "Reward Claimed"
             : `Claim +${sessionSummary.rewardXp} XP`}
         </button>
+      </div>
+
+      <div className="mt-4 rounded-xl border border-border bg-surface-2 px-4 py-3">
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+            Weekly Consistency
+          </p>
+          <p className="text-xs font-black text-text-secondary">
+            {weeklyConsistency.activeDays} / 7 active days
+          </p>
+        </div>
+        <div className="mt-2 h-2 rounded-full bg-surface-1 overflow-hidden">
+          <div
+            className="h-full bg-sky-500 transition-all duration-500"
+            style={{
+              width: `${Math.min(100, (weeklyConsistency.activeDays / 7) * 100)}%`,
+            }}
+          />
+        </div>
+
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
+          {weeklyConsistency.tiers.map((tier) => (
+            <div
+              key={tier.id}
+              className="rounded-lg border border-border bg-surface-1 p-2"
+            >
+              <p className="text-xs font-black text-text-primary">{tier.title}</p>
+              <p className="text-[10px] text-text-muted mb-2">
+                {tier.requiredDays} days • +{tier.rewardXp} XP
+              </p>
+              <button
+                type="button"
+                onClick={() => handleClaimWeeklyTier(tier.id)}
+                disabled={!tier.eligible || tier.claimed}
+                className={`w-full rounded-md px-2 py-1 text-[11px] font-black transition-colors ${tier.eligible && !tier.claimed ? "bg-sky-500 hover:bg-sky-600 text-white" : "bg-surface-2 text-text-muted border border-border"}`}
+              >
+                {tier.claimed ? "Claimed" : tier.eligible ? "Claim Reward" : "Locked"}
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

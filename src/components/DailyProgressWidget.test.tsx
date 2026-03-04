@@ -98,4 +98,34 @@ describe("DailyProgressWidget", () => {
     expect(screen.getByRole("button", { name: "Reward Claimed" })).toBeDisabled();
     expect(localStorage.getItem("english-pal-global-xp")).toBe("40");
   });
+
+  it("claims weekly consistency reward when enough active days are reached", () => {
+    localStorage.setItem(
+      "global-daily-activity",
+      JSON.stringify({
+        "2026-03-02": { xp: 10, cards: 0, time: 0, score: 0 },
+        "2026-03-03": { xp: 0, cards: 2, time: 0, score: 0 },
+        "2026-03-04": { xp: 5, cards: 0, time: 0, score: 0 },
+      }),
+    );
+
+    render(
+      <MemoryRouter>
+        <DailyProgressWidget />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText(/3 \/ 7 active days/i)).toBeInTheDocument();
+
+    const weeklyClaimButton = screen.getAllByRole("button", {
+      name: "Claim Reward",
+    })[0];
+
+    act(() => {
+      fireEvent.click(weeklyClaimButton);
+    });
+
+    expect(localStorage.getItem("english-pal-global-xp")).toBe("30");
+    expect(screen.getByRole("button", { name: "Claimed" })).toBeDisabled();
+  });
 });
