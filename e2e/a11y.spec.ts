@@ -19,7 +19,9 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/vault");
-    await page.waitForLoadState("networkidle");
+    // Change networkidle to wait for an element instead
+    await expect(page.getByRole("heading", { name: "Vocabulary Vault" })).toBeVisible();
+    await page.waitForTimeout(1000); // small grace period for dynamic rendering
 
     const results = await new AxeBuilder({ page }).analyze();
 

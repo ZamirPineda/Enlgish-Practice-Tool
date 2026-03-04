@@ -628,7 +628,7 @@ const App: React.FC = () => {
                 {onboardingStep < ONBOARDING_STEPS.length - 1 ? (
                   <button
                     onClick={() => setOnboardingStep((step) => step + 1)}
-                    className="ml-auto px-4 py-2 rounded-lg bg-accent hover:bg-accent-hover text-white text-sm font-black transition-colors"
+                    className="ml-auto px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-black transition-colors"
                   >
                     Next
                   </button>

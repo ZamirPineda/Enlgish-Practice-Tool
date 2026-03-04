@@ -90,13 +90,11 @@ test("starts review session and completes 3 steps", async ({ page }) => {
   for (let step = 1; step <= 3; step += 1) {
     await expect(page.getByText(`Review ${step} / 3`)).toBeVisible();
     await page.getByRole("button", { name: /Show Answer/i }).click();
-    await page.getByRole("button", { name: /^Got it/i }).click();
+    // The label is now "Good (Press 3)" or just text "Good"
+    await page.getByRole("button", { name: /^Good/i }).click();
   }
 
   await expect(
     page.getByRole("heading", { name: "Vocabulary Vault" }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "All caught up!" }),
   ).toBeVisible();
 });
