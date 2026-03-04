@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.22.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.21.0...english-practice-pal-v1.22.0) (2026-03-04)
+
+
+### Features
+
+* **app-300:** finish adaptive rollout across games with daily-loop compatibility ([cc9c45c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/cc9c45c75982dcd411364a2cdf897c27c0fd5f99))
+* **app-401:** add focus-route metrics and move rollout controls to settings ([1119256](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/11192567a611d554139bf55e3c9636ec5fa58541))
+* **app-402:** capture and persist web vitals locally ([23a236f](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/23a236f9a3160194c63c369c36bcefa3caa1af87))
+
 ## [1.21.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.20.0...english-practice-pal-v1.21.0) (2026-03-04)
 
 
