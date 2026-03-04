@@ -51,11 +51,12 @@ const REQUIRED_COUNTS: Record<DailyLoopCategory, number> = {
   dev: 1,
 };
 
-const STEP_ORDER_BY_FOCUS: Record<DailyLoopFocusRoute, DailyLoopCategory[]> = {
-  english_interview: ["english", "english", "dev", "math"],
-  math_speed: ["math", "english", "english", "dev"],
-  dev_reasoning: ["dev", "english", "math", "english"],
-};
+const DAILY_LOOP_SEQUENCE: DailyLoopCategory[] = [
+  "english",
+  "english",
+  "math",
+  "dev",
+];
 
 const ENGLISH_GAMES: LoopGameConfig[] = [
   {
@@ -205,7 +206,7 @@ const buildLoopSteps = (
     dev: 0,
   };
 
-  return STEP_ORDER_BY_FOCUS[focusRoute].map((category, index) => {
+  return DAILY_LOOP_SEQUENCE.map((category, index) => {
     const cursor = categoryCursor[category];
     categoryCursor[category] += 1;
     const game = categoryGames[category][cursor];

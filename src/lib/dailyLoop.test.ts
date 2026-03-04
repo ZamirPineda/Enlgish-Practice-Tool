@@ -36,6 +36,20 @@ describe("dailyLoop", () => {
     expect(getTodayDailyLoop("2026-03-03")?.steps).toHaveLength(4);
   });
 
+  test("keeps ordered sequence english, english, math, dev for any focus route", () => {
+    const expectedOrder = ["english", "english", "math", "dev"];
+    const focusRoutes = [
+      "english_interview",
+      "math_speed",
+      "dev_reasoning",
+    ] as const;
+
+    focusRoutes.forEach((focusRoute) => {
+      const loop = startDailyLoop(focusRoute, "2026-03-03");
+      expect(loop.steps.map((step) => step.category)).toEqual(expectedOrder);
+    });
+  });
+
   test("marks steps as completed from analytics session_end events", () => {
     const loop = startDailyLoop("dev_reasoning", "2026-03-03");
 
