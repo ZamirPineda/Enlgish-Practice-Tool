@@ -5,6 +5,7 @@ interface SlideOverProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
+  description?: string;
   children: React.ReactNode;
 }
 
@@ -12,23 +13,16 @@ const SlideOver: React.FC<SlideOverProps> = ({
   isOpen,
   onClose,
   title,
+  description = "Panel content",
   children,
 }) => {
-  const titleId = `slideover-title-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm transition-opacity animate-fade-in" />
-        <Dialog.Content
-          aria-labelledby={titleId}
-          className="fixed inset-y-0 right-0 z-[81] flex w-screen max-w-md flex-col bg-surface-1 border-l border-border shadow-2xl focus:outline-none"
-        >
+        <Dialog.Content className="fixed inset-y-0 right-0 z-[81] flex w-screen max-w-md flex-col bg-surface-1 border-l border-border shadow-2xl focus:outline-none">
           <div className="flex items-center justify-between p-6 border-b border-border">
-            <Dialog.Title
-              id={titleId}
-              className="text-xl font-black text-text-primary"
-            >
+            <Dialog.Title className="text-xl font-black text-text-primary">
               {title}
             </Dialog.Title>
             <Dialog.Close asChild>
@@ -52,6 +46,9 @@ const SlideOver: React.FC<SlideOverProps> = ({
               </button>
             </Dialog.Close>
           </div>
+          <Dialog.Description className="sr-only">
+            {description}
+          </Dialog.Description>
           <div className="flex-1 overflow-y-auto p-6">{children}</div>
         </Dialog.Content>
       </Dialog.Portal>

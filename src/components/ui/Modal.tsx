@@ -8,6 +8,8 @@ interface ModalProps {
   children: React.ReactNode;
   className?: string;
   ariaLabel?: string;
+  title?: string;
+  description?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -16,15 +18,20 @@ const Modal: React.FC<ModalProps> = ({
   children,
   className = "",
   ariaLabel = "Modal dialog",
+  title,
+  description = "Dialog content",
 }) => {
+  const resolvedTitle = title ?? ariaLabel;
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[70] animate-fade-in" />
-        <Dialog.Content
-          aria-label={ariaLabel}
-          className="fixed left-[50%] top-[50%] z-[71] w-full max-w-md translate-x-[-50%] translate-y-[-50%] p-4 focus:outline-none animate-fade-in"
-        >
+        <Dialog.Content className="fixed left-[50%] top-[50%] z-[71] w-full max-w-md translate-x-[-50%] translate-y-[-50%] p-4 focus:outline-none animate-fade-in">
+          <Dialog.Title className="sr-only">{resolvedTitle}</Dialog.Title>
+          <Dialog.Description className="sr-only">
+            {description}
+          </Dialog.Description>
           <Card
             className={`relative w-full max-w-md bg-surface-1 ${className}`.trim()}
             elevated
