@@ -308,6 +308,7 @@ const MathGameView: React.FC = () => {
     <GameShell
       hasStarted={gameState !== "idle"}
       startScreen={startScreen}
+      contentKey={gameState === "finished" ? "summary" : "active"}
       contentClassName="max-w-4xl mx-auto space-y-6"
     >
       <GameHudCard

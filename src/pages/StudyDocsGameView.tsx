@@ -628,6 +628,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     <GameShell
       hasStarted={gameState !== "idle"}
       startScreen={startScreen}
+      contentKey={gameState === "finished" ? "summary" : "active"}
       pageClassName="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 md:p-6"
       contentClassName="max-w-4xl mx-auto space-y-6"
     >

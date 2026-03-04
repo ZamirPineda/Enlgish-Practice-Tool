@@ -316,13 +316,19 @@ const SpeedBuilderView: React.FC = () => {
             </Button>
           ))}
         </div>
-        <p className="text-xs text-text-secondary">Tiempo por ronda: {roundTime}s</p>
+        <p className="text-xs text-text-secondary">
+          Tiempo por ronda: {roundTime}s
+        </p>
       </div>
     </GameStartPanel>
   );
 
   return (
-    <GameShell hasStarted={hasStarted} startScreen={startScreen}>
+    <GameShell
+      hasStarted={hasStarted}
+      startScreen={startScreen}
+      contentKey={isComplete ? "summary" : "active"}
+    >
       <GameHudCard
         title="Speed Builder"
         description="Ordena las palabras para formar la oración correcta."
@@ -343,258 +349,254 @@ const SpeedBuilderView: React.FC = () => {
       />
 
       <Card className="space-y-5">
-            <div className="flex items-center justify-between gap-3 flex-wrap">
-              <div className="text-xs uppercase tracking-widest font-bold text-text-secondary">
-                Nivel {round.level}
-              </div>
-              <div className="text-xs uppercase tracking-widest font-bold text-text-muted">
-                {round.tags.join(" · ")}
-              </div>
-            </div>
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <div className="text-xs uppercase tracking-widest font-bold text-text-secondary">
+            Nivel {round.level}
+          </div>
+          <div className="text-xs uppercase tracking-widest font-bold text-text-muted">
+            {round.tags.join(" · ")}
+          </div>
+        </div>
 
-            {beginnerLevel && !submitted ? (
-              <div className="rounded-xl border border-border bg-surface-2 px-3 py-2">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => setShowHint((previous) => !previous)}
-                  >
-                    {showHint ? "Hide hint" : "Show hint"}
-                  </Button>
-                  {showHint ? (
-                    <p className="text-xs font-bold uppercase tracking-widest text-text-secondary">
-                      Hint: {hintText}
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-            ) : null}
-
-            <div>
-              <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
-                Tu respuesta
-              </p>
-              <div className="min-h-[76px] rounded-xl border border-border bg-surface-2 p-3 flex flex-wrap gap-2">
-                {selectedWords.length === 0 ? (
-                  <span className="text-sm text-text-muted">
-                    Selecciona palabras para construir la frase.
-                  </span>
-                ) : (
-                  selectedWords.map((word, index) => (
-                    <button
-                      key={`${word}-${index}`}
-                      onClick={() => handleUndoWord(index)}
-                      className="px-3 py-1.5 rounded-lg bg-surface-1 border border-border text-sm font-semibold text-text-primary hover:bg-surface-hover transition-colors"
-                      aria-label={`Quitar ${word}`}
-                    >
-                      {word}
-                    </button>
-                  ))
-                )}
-              </div>
-            </div>
-
-            <div>
-              <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
-                Palabras disponibles
-              </p>
-              <div className="rounded-xl border border-border bg-surface-1 p-3 flex flex-wrap gap-2">
-                {availableWords.map((word, index) => (
-                  <button
-                    key={`${word}-${index}`}
-                    onClick={() => handleSelectWord(word)}
-                    className="px-3 py-1.5 rounded-lg bg-surface-2 border border-border text-sm font-semibold text-text-primary hover:bg-surface-hover transition-colors"
-                    disabled={submitted}
-                  >
-                    {word}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {submitted ? (
-              <div
-                className={`rounded-xl border px-4 py-3 text-sm font-semibold ${isCorrect ? "border-success/40 bg-success/10 text-success" : "border-amber-500/40 bg-amber-500/10 text-amber-400"}`}
-              >
-                {isCorrect ? (
-                  <div className="space-y-1">
-                    <p>✅ Correcto. ¡Buen orden!</p>
-                    <p className="text-xs font-black uppercase tracking-widest">
-                      +{lastRoundPoints} pts (base {basePoints} + bonus tiempo{" "}
-                      {timeBonus} · x{levelMultiplier})
-                    </p>
-                  </div>
-                ) : timeoutReached ? (
-                  <div className="space-y-1">
-                    <p>⏰ Tiempo agotado.</p>
-                    <p className="text-xs">
-                      Respuesta correcta: "{round.sentence}"
-                    </p>
-                  </div>
-                ) : (
-                  `❌ Casi. Respuesta correcta: "${round.sentence}"`
-                )}
-              </div>
-            ) : null}
-
-            <div className="flex flex-wrap gap-3">
+        {beginnerLevel && !submitted ? (
+          <div className="rounded-xl border border-border bg-surface-2 px-3 py-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Button
-                onClick={handleCheck}
-                variant="primary"
-                size="lg"
-                disabled={
-                  selectedWords.length === 0 || submitted || timeLeft === 0
-                }
+                size="sm"
+                variant="ghost"
+                onClick={() => setShowHint((previous) => !previous)}
               >
-                Check answer
+                {showHint ? "Hide hint" : "Show hint"}
               </Button>
-
-              <Button
-                onClick={() => setSelectedWords([])}
-                variant="secondary"
-                size="lg"
-                disabled={selectedWords.length === 0 || submitted}
-              >
-                Clear
-              </Button>
-
-              {submitted && !isComplete ? (
-                <Button onClick={handleNextRound} variant="success" size="lg">
-                  Next round
-                </Button>
+              {showHint ? (
+                <p className="text-xs font-bold uppercase tracking-widest text-text-secondary">
+                  Hint: {hintText}
+                </p>
               ) : null}
+            </div>
+          </div>
+        ) : null}
 
-              {submitted && !isCorrect && round ? (
-                <Button
-                  onClick={() => {
-                    import("@/lib/srs").then(({ createNewSrsItem }) => {
-                      const deck = JSON.parse(
-                        localStorage.getItem("vocab-vault-deck") || "{}",
-                      );
-                      const newId = `speed-${Date.now()}`;
-                      deck[newId] = createNewSrsItem(
-                        `Phrase: ${round.sentence}`,
-                        `Speed Builder Level ${round.level}`,
-                      );
-                      localStorage.setItem(
-                        "vocab-vault-deck",
-                        JSON.stringify(deck),
-                      );
-
-                      import("@/components/ui/Toast").then(({ toast }) => {
-                        toast.success("Frase agregada a tu Vocabulary Vault");
-                      });
-                    });
-                  }}
-                  variant="secondary"
-                  size="md"
-                  className="ml-auto"
-                  title="Save this phrase to review later"
+        <div>
+          <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
+            Tu respuesta
+          </p>
+          <div className="min-h-[76px] rounded-xl border border-border bg-surface-2 p-3 flex flex-wrap gap-2">
+            {selectedWords.length === 0 ? (
+              <span className="text-sm text-text-muted">
+                Selecciona palabras para construir la frase.
+              </span>
+            ) : (
+              selectedWords.map((word, index) => (
+                <button
+                  key={`${word}-${index}`}
+                  onClick={() => handleUndoWord(index)}
+                  className="px-3 py-1.5 rounded-lg bg-surface-1 border border-border text-sm font-semibold text-text-primary hover:bg-surface-hover transition-colors"
+                  aria-label={`Quitar ${word}`}
                 >
-                  <Plus size={16} className="mr-1" />
-                  Add to Vault
-                </Button>
-              ) : null}
+                  {word}
+                </button>
+              ))
+            )}
+          </div>
+        </div>
 
-              {isComplete ? (
-                <Button onClick={handleRestart} variant="success" size="lg">
-                  Play again
-                </Button>
-              ) : null}
-            </div>
-          </Card>
+        <div>
+          <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
+            Palabras disponibles
+          </p>
+          <div className="rounded-xl border border-border bg-surface-1 p-3 flex flex-wrap gap-2">
+            {availableWords.map((word, index) => (
+              <button
+                key={`${word}-${index}`}
+                onClick={() => handleSelectWord(word)}
+                className="px-3 py-1.5 rounded-lg bg-surface-2 border border-border text-sm font-semibold text-text-primary hover:bg-surface-hover transition-colors"
+                disabled={submitted}
+              >
+                {word}
+              </button>
+            ))}
+          </div>
+        </div>
 
-          <Card>
-            {isComplete ? (
-              <div className="text-center space-y-6 animate-fade-in py-4">
-                {(() => {
-                  const percentage = correctCount / rounds.length;
-                  let grade = "D";
-                  let gradeColor = "text-slate-400";
-                  let message = "Keep practicing!";
-                  if (percentage >= 0.9) {
-                    grade = "S";
-                    gradeColor = "text-fuchsia-400";
-                    message = "Speed Builder Master!";
-                  } else if (percentage >= 0.75) {
-                    grade = "A";
-                    gradeColor = "text-emerald-400";
-                    message = "Excellent Speed!";
-                  } else if (percentage >= 0.5) {
-                    grade = "B";
-                    gradeColor = "text-sky-400";
-                    message = "Great Work!";
-                  } else if (percentage >= 0.25) {
-                    grade = "C";
-                    gradeColor = "text-amber-400";
-                    message = "Good Effort!";
-                  }
-
-                  return (
-                    <>
-                      <div>
-                        <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-1">
-                          Sesión Completada
-                        </h2>
-                        <p className="text-text-secondary">{message}</p>
-                      </div>
-
-                      <div className="flex justify-center items-center py-2">
-                        <div className="text-center">
-                          <div className="text-xs font-bold text-text-muted uppercase tracking-widest mb-1">
-                            Rango
-                          </div>
-                          <div
-                            className={`text-6xl font-black ${gradeColor} drop-shadow-lg animate-bounce`}
-                          >
-                            {grade}
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  );
-                })()}
-
-                <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
-                  <div className="bg-surface-2 p-3 rounded-xl border border-border">
-                    <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
-                      Score Final
-                    </div>
-                    <div className="text-2xl font-black text-success-hover">
-                      {totalScore}
-                    </div>
-                  </div>
-                  <div className="bg-surface-2 p-3 rounded-xl border border-border">
-                    <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
-                      Aciertos
-                    </div>
-                    <div className="text-2xl font-black text-accent-hover">
-                      {correctCount}/{rounds.length}
-                    </div>
-                  </div>
-                </div>
-                <DailySessionInsights className="mt-4 text-left" />
+        {submitted ? (
+          <div
+            className={`rounded-xl border px-4 py-3 text-sm font-semibold ${isCorrect ? "border-success/40 bg-success/10 text-success" : "border-amber-500/40 bg-amber-500/10 text-amber-400"}`}
+          >
+            {isCorrect ? (
+              <div className="space-y-1">
+                <p>✅ Correcto. ¡Buen orden!</p>
+                <p className="text-xs font-black uppercase tracking-widest">
+                  +{lastRoundPoints} pts (base {basePoints} + bonus tiempo{" "}
+                  {timeBonus} · x{levelMultiplier})
+                </p>
+              </div>
+            ) : timeoutReached ? (
+              <div className="space-y-1">
+                <p>⏰ Tiempo agotado.</p>
+                <p className="text-xs">
+                  Respuesta correcta: "{round.sentence}"
+                </p>
               </div>
             ) : (
-              <div className="space-y-2">
-                <p className="text-sm text-text-secondary">
-                  Score total:{" "}
-                  <span className="font-black text-text-primary">
-                    {totalScore}
-                  </span>{" "}
-                  pts
-                </p>
-                <p className="text-sm text-text-secondary">
-                  Aciertos:{" "}
-                  <span className="font-black text-text-primary">
-                    {correctCount}
-                  </span>{" "}
-                  / {roundIndex + (submitted ? 1 : 0)}
-                </p>
-              </div>
+              `❌ Casi. Respuesta correcta: "${round.sentence}"`
             )}
-          </Card>
+          </div>
+        ) : null}
+
+        <div className="flex flex-wrap gap-3">
+          <Button
+            onClick={handleCheck}
+            variant="primary"
+            size="lg"
+            disabled={selectedWords.length === 0 || submitted || timeLeft === 0}
+          >
+            Check answer
+          </Button>
+
+          <Button
+            onClick={() => setSelectedWords([])}
+            variant="secondary"
+            size="lg"
+            disabled={selectedWords.length === 0 || submitted}
+          >
+            Clear
+          </Button>
+
+          {submitted && !isComplete ? (
+            <Button onClick={handleNextRound} variant="success" size="lg">
+              Next round
+            </Button>
+          ) : null}
+
+          {submitted && !isCorrect && round ? (
+            <Button
+              onClick={() => {
+                import("@/lib/srs").then(({ createNewSrsItem }) => {
+                  const deck = JSON.parse(
+                    localStorage.getItem("vocab-vault-deck") || "{}",
+                  );
+                  const newId = `speed-${Date.now()}`;
+                  deck[newId] = createNewSrsItem(
+                    `Phrase: ${round.sentence}`,
+                    `Speed Builder Level ${round.level}`,
+                  );
+                  localStorage.setItem(
+                    "vocab-vault-deck",
+                    JSON.stringify(deck),
+                  );
+
+                  import("@/components/ui/Toast").then(({ toast }) => {
+                    toast.success("Frase agregada a tu Vocabulary Vault");
+                  });
+                });
+              }}
+              variant="secondary"
+              size="md"
+              className="ml-auto"
+              title="Save this phrase to review later"
+            >
+              <Plus size={16} className="mr-1" />
+              Add to Vault
+            </Button>
+          ) : null}
+
+          {isComplete ? (
+            <Button onClick={handleRestart} variant="success" size="lg">
+              Play again
+            </Button>
+          ) : null}
+        </div>
+      </Card>
+
+      <Card>
+        {isComplete ? (
+          <div className="text-center space-y-6 animate-fade-in py-4">
+            {(() => {
+              const percentage = correctCount / rounds.length;
+              let grade = "D";
+              let gradeColor = "text-slate-400";
+              let message = "Keep practicing!";
+              if (percentage >= 0.9) {
+                grade = "S";
+                gradeColor = "text-fuchsia-400";
+                message = "Speed Builder Master!";
+              } else if (percentage >= 0.75) {
+                grade = "A";
+                gradeColor = "text-emerald-400";
+                message = "Excellent Speed!";
+              } else if (percentage >= 0.5) {
+                grade = "B";
+                gradeColor = "text-sky-400";
+                message = "Great Work!";
+              } else if (percentage >= 0.25) {
+                grade = "C";
+                gradeColor = "text-amber-400";
+                message = "Good Effort!";
+              }
+
+              return (
+                <>
+                  <div>
+                    <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-1">
+                      Sesión Completada
+                    </h2>
+                    <p className="text-text-secondary">{message}</p>
+                  </div>
+
+                  <div className="flex justify-center items-center py-2">
+                    <div className="text-center">
+                      <div className="text-xs font-bold text-text-muted uppercase tracking-widest mb-1">
+                        Rango
+                      </div>
+                      <div
+                        className={`text-6xl font-black ${gradeColor} drop-shadow-lg animate-bounce`}
+                      >
+                        {grade}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            })()}
+
+            <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+              <div className="bg-surface-2 p-3 rounded-xl border border-border">
+                <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
+                  Score Final
+                </div>
+                <div className="text-2xl font-black text-success-hover">
+                  {totalScore}
+                </div>
+              </div>
+              <div className="bg-surface-2 p-3 rounded-xl border border-border">
+                <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
+                  Aciertos
+                </div>
+                <div className="text-2xl font-black text-accent-hover">
+                  {correctCount}/{rounds.length}
+                </div>
+              </div>
+            </div>
+            <DailySessionInsights className="mt-4 text-left" />
+          </div>
+        ) : (
+          <div className="space-y-2">
+            <p className="text-sm text-text-secondary">
+              Score total:{" "}
+              <span className="font-black text-text-primary">{totalScore}</span>{" "}
+              pts
+            </p>
+            <p className="text-sm text-text-secondary">
+              Aciertos:{" "}
+              <span className="font-black text-text-primary">
+                {correctCount}
+              </span>{" "}
+              / {roundIndex + (submitted ? 1 : 0)}
+            </p>
+          </div>
+        )}
+      </Card>
     </GameShell>
   );
 };

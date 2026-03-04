@@ -268,7 +268,9 @@ const CollocationSprintView: React.FC = () => {
             </Button>
           ))}
         </div>
-        <p className="text-xs text-text-secondary">Tiempo por ronda: {roundTime}s</p>
+        <p className="text-xs text-text-secondary">
+          Tiempo por ronda: {roundTime}s
+        </p>
       </div>
     </GameStartPanel>
   );
@@ -277,211 +279,210 @@ const CollocationSprintView: React.FC = () => {
     <GameShell
       hasStarted={hasStarted}
       startScreen={startScreen}
+      contentKey={isComplete ? "summary" : "active"}
       contentClassName=""
     >
       <div className="max-w-4xl mx-auto space-y-6">
+        <GameHudCard
+          title="Collocation Sprint"
+          description="Une verbo + sustantivo correcto bajo presión."
+          controls={LEVEL_ORDER.map((level) => (
+            <Button
+              key={level}
+              size="sm"
+              variant={selectedLevel === level ? "primary" : "secondary"}
+              onClick={() => setSelectedLevel(level)}
+              aria-label={`Set collocation level ${level}`}
+            >
+              {level}
+            </Button>
+          ))}
+          timeLeft={timeLeft}
+          roundTime={roundTime}
+        />
+        <Card className="space-y-5">
+          <p className="text-sm font-semibold text-text-primary">
+            {round.prompt}
+          </p>
 
-          <GameHudCard
-            title="Collocation Sprint"
-            description="Une verbo + sustantivo correcto bajo presión."
-            controls={LEVEL_ORDER.map((level) => (
-              <Button
-                key={level}
-                size="sm"
-                variant={selectedLevel === level ? "primary" : "secondary"}
-                onClick={() => setSelectedLevel(level)}
-                aria-label={`Set collocation level ${level}`}
-              >
-                {level}
-              </Button>
-            ))}
-            timeLeft={timeLeft}
-            roundTime={roundTime}
-          />
-          <Card className="space-y-5">
-            <p className="text-sm font-semibold text-text-primary">
-              {round.prompt}
+          <div>
+            <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
+              Verb
             </p>
-
-            <div>
-              <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
-                Verb
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {displayOptions.verbOptions.map((verb) => (
-                  <Button
-                    key={verb}
-                    size="sm"
-                    variant={selectedVerb === verb ? "primary" : "secondary"}
-                    onClick={() => setSelectedVerb(verb)}
-                    disabled={submitted}
-                    className="transition-transform transform hover:scale-[1.05] active:scale-95"
-                  >
-                    {verb}
-                  </Button>
-                ))}
-              </div>
+            <div className="flex flex-wrap gap-2">
+              {displayOptions.verbOptions.map((verb) => (
+                <Button
+                  key={verb}
+                  size="sm"
+                  variant={selectedVerb === verb ? "primary" : "secondary"}
+                  onClick={() => setSelectedVerb(verb)}
+                  disabled={submitted}
+                  className="transition-transform transform hover:scale-[1.05] active:scale-95"
+                >
+                  {verb}
+                </Button>
+              ))}
             </div>
+          </div>
 
-            <div>
-              <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
-                Noun
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {displayOptions.nounOptions.map((noun) => (
-                  <Button
-                    key={noun}
-                    size="sm"
-                    variant={selectedNoun === noun ? "primary" : "secondary"}
-                    onClick={() => setSelectedNoun(noun)}
-                    disabled={submitted}
-                    className="transition-transform transform hover:scale-[1.05] active:scale-95"
-                  >
-                    {noun}
-                  </Button>
-                ))}
-              </div>
+          <div>
+            <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
+              Noun
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {displayOptions.nounOptions.map((noun) => (
+                <Button
+                  key={noun}
+                  size="sm"
+                  variant={selectedNoun === noun ? "primary" : "secondary"}
+                  onClick={() => setSelectedNoun(noun)}
+                  disabled={submitted}
+                  className="transition-transform transform hover:scale-[1.05] active:scale-95"
+                >
+                  {noun}
+                </Button>
+              ))}
             </div>
+          </div>
 
-            {submitted ? (
-              <div
-                className={`rounded-xl border px-4 py-3 text-sm font-semibold ${isCorrect ? "border-success/40 bg-success/10 text-success" : "border-amber-500/40 bg-amber-500/10 text-amber-400"}`}
-              >
-                {isCorrect
-                  ? "✅ Correct collocation."
-                  : `❌ Correct answer: ${round.correctVerb} ${round.correctNoun}`}
-              </div>
+          {submitted ? (
+            <div
+              className={`rounded-xl border px-4 py-3 text-sm font-semibold ${isCorrect ? "border-success/40 bg-success/10 text-success" : "border-amber-500/40 bg-amber-500/10 text-amber-400"}`}
+            >
+              {isCorrect
+                ? "✅ Correct collocation."
+                : `❌ Correct answer: ${round.correctVerb} ${round.correctNoun}`}
+            </div>
+          ) : null}
+
+          <div className="flex flex-wrap gap-3">
+            <Button
+              onClick={handleCheck}
+              variant="primary"
+              size="lg"
+              disabled={
+                !selectedVerb || !selectedNoun || submitted || timeLeft === 0
+              }
+            >
+              Check pair
+            </Button>
+            <Button
+              onClick={() => {
+                setSelectedVerb("");
+                setSelectedNoun("");
+              }}
+              variant="secondary"
+              size="lg"
+              disabled={submitted || (!selectedVerb && !selectedNoun)}
+            >
+              Clear
+            </Button>
+            {submitted && !isComplete ? (
+              <Button onClick={handleNext} variant="success" size="lg">
+                Next round
+              </Button>
             ) : null}
-
-            <div className="flex flex-wrap gap-3">
-              <Button
-                onClick={handleCheck}
-                variant="primary"
-                size="lg"
-                disabled={
-                  !selectedVerb || !selectedNoun || submitted || timeLeft === 0
-                }
-              >
-                Check pair
-              </Button>
-              <Button
-                onClick={() => {
-                  setSelectedVerb("");
-                  setSelectedNoun("");
-                }}
-                variant="secondary"
-                size="lg"
-                disabled={submitted || (!selectedVerb && !selectedNoun)}
-              >
-                Clear
-              </Button>
-              {submitted && !isComplete ? (
-                <Button onClick={handleNext} variant="success" size="lg">
-                  Next round
-                </Button>
-              ) : null}
-              {isComplete ? (
-                <Button onClick={handleRestart} variant="success" size="lg">
-                  Play again
-                </Button>
-              ) : null}
-            </div>
-          </Card>
-
-          <Card>
             {isComplete ? (
-              <div className="text-center space-y-6 animate-fade-in py-4">
-                {(() => {
-                  const percentage = correctCount / rounds.length;
-                  let grade = "D";
-                  let gradeColor = "text-slate-400";
-                  let message = "Keep practicing!";
-                  if (percentage >= 0.9) {
-                    grade = "S";
-                    gradeColor = "text-fuchsia-400";
-                    message = "Collocation Master!";
-                  } else if (percentage >= 0.75) {
-                    grade = "A";
-                    gradeColor = "text-emerald-400";
-                    message = "Excellent Speed!";
-                  } else if (percentage >= 0.5) {
-                    grade = "B";
-                    gradeColor = "text-sky-400";
-                    message = "Solid Pairings!";
-                  } else if (percentage >= 0.25) {
-                    grade = "C";
-                    gradeColor = "text-amber-400";
-                    message = "Good Effort!";
-                  }
+              <Button onClick={handleRestart} variant="success" size="lg">
+                Play again
+              </Button>
+            ) : null}
+          </div>
+        </Card>
 
-                  return (
-                    <>
-                      <div>
-                        <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-1">
-                          Sesión Completada
-                        </h2>
-                        <p className="text-text-secondary">{message}</p>
-                      </div>
+        <Card>
+          {isComplete ? (
+            <div className="text-center space-y-6 animate-fade-in py-4">
+              {(() => {
+                const percentage = correctCount / rounds.length;
+                let grade = "D";
+                let gradeColor = "text-slate-400";
+                let message = "Keep practicing!";
+                if (percentage >= 0.9) {
+                  grade = "S";
+                  gradeColor = "text-fuchsia-400";
+                  message = "Collocation Master!";
+                } else if (percentage >= 0.75) {
+                  grade = "A";
+                  gradeColor = "text-emerald-400";
+                  message = "Excellent Speed!";
+                } else if (percentage >= 0.5) {
+                  grade = "B";
+                  gradeColor = "text-sky-400";
+                  message = "Solid Pairings!";
+                } else if (percentage >= 0.25) {
+                  grade = "C";
+                  gradeColor = "text-amber-400";
+                  message = "Good Effort!";
+                }
 
-                      <div className="flex justify-center items-center py-2">
-                        <div className="text-center">
-                          <div className="text-xs font-bold text-text-muted uppercase tracking-widest mb-1">
-                            Rango
-                          </div>
-                          <div
-                            className={`text-6xl font-black ${gradeColor} drop-shadow-lg animate-bounce`}
-                          >
-                            {grade}
-                          </div>
+                return (
+                  <>
+                    <div>
+                      <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-1">
+                        Sesión Completada
+                      </h2>
+                      <p className="text-text-secondary">{message}</p>
+                    </div>
+
+                    <div className="flex justify-center items-center py-2">
+                      <div className="text-center">
+                        <div className="text-xs font-bold text-text-muted uppercase tracking-widest mb-1">
+                          Rango
+                        </div>
+                        <div
+                          className={`text-6xl font-black ${gradeColor} drop-shadow-lg animate-bounce`}
+                        >
+                          {grade}
                         </div>
                       </div>
-                    </>
-                  );
-                })()}
+                    </div>
+                  </>
+                );
+              })()}
 
-                <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
-                  <div className="bg-surface-2 p-3 rounded-xl border border-border">
-                    <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
-                      Score Final
-                    </div>
-                    <div className="text-2xl font-black text-success-hover">
-                      {totalScore}
-                    </div>
+              <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                <div className="bg-surface-2 p-3 rounded-xl border border-border">
+                  <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
+                    Score Final
                   </div>
-                  <div className="bg-surface-2 p-3 rounded-xl border border-border">
-                    <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
-                      Aciertos
-                    </div>
-                    <div className="text-2xl font-black text-accent-hover">
-                      {correctCount}/{rounds.length}
-                    </div>
+                  <div className="text-2xl font-black text-success-hover">
+                    {totalScore}
                   </div>
                 </div>
-                <DailySessionInsights className="mt-4 text-left" />
+                <div className="bg-surface-2 p-3 rounded-xl border border-border">
+                  <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-1">
+                    Aciertos
+                  </div>
+                  <div className="text-2xl font-black text-accent-hover">
+                    {correctCount}/{rounds.length}
+                  </div>
+                </div>
               </div>
-            ) : (
-              <div className="space-y-2">
-                <p className="text-sm text-text-secondary">
-                  Score total:{" "}
-                  <span className="font-black text-text-primary">
-                    {totalScore}
-                  </span>{" "}
-                  pts
-                </p>
-                <p className="text-sm text-text-secondary mt-1">
-                  Aciertos:{" "}
-                  <span className="font-black text-text-primary">
-                    {correctCount}
-                  </span>{" "}
-                  / {roundIndex + (submitted ? 1 : 0)}
-                </p>
-              </div>
-            )}
-          </Card>
+              <DailySessionInsights className="mt-4 text-left" />
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <p className="text-sm text-text-secondary">
+                Score total:{" "}
+                <span className="font-black text-text-primary">
+                  {totalScore}
+                </span>{" "}
+                pts
+              </p>
+              <p className="text-sm text-text-secondary mt-1">
+                Aciertos:{" "}
+                <span className="font-black text-text-primary">
+                  {correctCount}
+                </span>{" "}
+                / {roundIndex + (submitted ? 1 : 0)}
+              </p>
+            </div>
+          )}
+        </Card>
       </div>
     </GameShell>
   );
 };
 
 export default CollocationSprintView;
-

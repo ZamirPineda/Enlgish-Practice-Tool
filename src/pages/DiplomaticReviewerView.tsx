@@ -253,7 +253,11 @@ const DiplomaticReviewerView: React.FC = () => {
   );
 
   return (
-    <GameShell hasStarted={hasStarted} startScreen={startScreen}>
+    <GameShell
+      hasStarted={hasStarted}
+      startScreen={startScreen}
+      contentKey={isComplete ? "summary" : "active"}
+    >
       <GameHudCard
         title="Diplomatic Reviewer"
         description="Refactoriza el lenguaje tóxico hacia feedback profesional y constructivo."

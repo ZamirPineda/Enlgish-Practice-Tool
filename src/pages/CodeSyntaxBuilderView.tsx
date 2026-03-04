@@ -285,7 +285,11 @@ const CodeSyntaxBuilderView: React.FC = () => {
   );
 
   return (
-    <GameShell hasStarted={hasStarted} startScreen={startScreen}>
+    <GameShell
+      hasStarted={hasStarted}
+      startScreen={startScreen}
+      contentKey={isComplete ? "summary" : "active"}
+    >
       <GameHudCard
         title="Code Syntax Builder"
         description="Ordena los bloques para formar la sintaxis correcta."

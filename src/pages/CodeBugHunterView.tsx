@@ -239,7 +239,11 @@ const CodeBugHunterView: React.FC = () => {
   );
 
   return (
-    <GameShell hasStarted={hasStarted} startScreen={startScreen}>
+    <GameShell
+      hasStarted={hasStarted}
+      startScreen={startScreen}
+      contentKey={isComplete ? "summary" : "active"}
+    >
       <GameHudCard
         title="Code Bug Hunter"
         description="Encuentra y selecciona la línea de código que contiene el bug."
