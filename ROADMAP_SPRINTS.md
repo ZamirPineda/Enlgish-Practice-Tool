@@ -27,6 +27,7 @@ Construir una app funcional, gratificante y consistente para preparar objetivo G
 - APP-402 aplicado: web-vitals (`LCP`, `INP`, `CLS`) se capturan al iniciar app y se almacenan localmente.
 - APP-403 aplicado: Sentry reporta errores frontend con contexto de ruta y juego activo.
 - APP-501 aplicado: contrato `Content Inventory` versionado con schema canónico (`id`, `source`, `tags`, `skill`, `difficulty`, `format`, `metadata`) y tests.
+- APP-502 aplicado: adaptadores desde `StudyDeck`, `vocab-vault-deck` y `techDecks` generan `Content Inventory` sin afectar vistas existentes.
 
 ## Sprint 1 | Base UX/UI + accesibilidad
 
