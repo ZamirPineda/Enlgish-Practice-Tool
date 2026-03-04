@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { trackActivity } from "./activityTracker";
 import { normalizeAnalyticsPayload, normalizeGameId } from "./gameAnalytics";
+import { toast } from "@/components/ui/Toast";
 
 export const analyticsEventNameSchema = z.enum([
   "session_start",
@@ -24,6 +25,24 @@ export type AnalyticsEvent = z.infer<typeof analyticsEventSchema>;
 export const ANALYTICS_EVENTS_KEY = "vocab-vault-analytics-events";
 const ACTIVE_ANALYTICS_SESSIONS_KEY = "vocab-vault-active-analytics-sessions";
 const MAX_EVENTS = 500;
+const FEEDBACK_TOAST_THROTTLE_MS = 700;
+let lastFeedbackToastAt = 0;
+
+const maybeShowGameplayFeedback = (name: AnalyticsEventName) => {
+  if (typeof window === "undefined") return;
+  if (name !== "item_correct" && name !== "item_wrong") return;
+
+  const now = Date.now();
+  if (now - lastFeedbackToastAt < FEEDBACK_TOAST_THROTTLE_MS) return;
+  lastFeedbackToastAt = now;
+
+  if (name === "item_correct") {
+    toast.success("Correcto", 1000);
+    return;
+  }
+
+  toast.error("Incorrecto", 1000);
+};
 
 const safeReadEvents = (): AnalyticsEvent[] => {
   if (typeof window === "undefined" || !window.localStorage) return [];
@@ -126,6 +145,8 @@ export const trackAnalyticsEvent = (
     console.warn("Invalid analytics event payload", parsedEvent.error);
     return;
   }
+
+  maybeShowGameplayFeedback(name);
 
   const gameId =
     typeof parsedEvent.data.payload.game === "string"

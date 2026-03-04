@@ -3,132 +3,93 @@
 Ultima actualizacion: 3 de marzo de 2026
 
 ## Vision
+
 Construir una app funcional, gratificante y consistente para preparar objetivo Google combinando:
+
 - English interview skills
 - Math speed/problem solving
 - Dev reasoning/practice
 
-## Norte de Producto
-1. Daily loop de 15-25 minutos:
-   Start -> 2 juegos English + 1 Math + 1 Dev -> resumen final -> recompensa.
-2. UX unificada en todos los juegos:
-   start screen + progreso + timer + feedback + cierre.
-3. Gratificacion inmediata:
-   resumen de sesion + streak + mini-logros.
-4. Dificultad adaptativa:
-   baja con errores en racha, sube con aciertos en racha.
-5. Observabilidad fuerte:
-   metricas por ruta objetivo Google.
-
 ## Definition of Done (Global)
+
 1. `pnpm test` en verde.
 2. `pnpm tsc --noEmit` en verde.
 3. Sin warnings criticos de accesibilidad en modales.
 4. Eventos analytics documentados y visibles en Stats.
 5. Flujo usable en mobile y desktop.
 
-## Plan de 4 Sprints
+## Estado de referencia
 
-### Sprint 1 (3-16 marzo 2026): Base UX/UI + Accesibilidad
-Objetivo:
-- Unificar experiencia visual y de flujo en todos los juegos.
+- APP-101, APP-102 y APP-103: implementados.
+- Daily Loop ya existe en codigo, pero pertenece al bloque APP-20x (Sprint 2), no a APP-104.
+- APP-104 correcto para Sprint 1: integrar `sonner` para feedback global.
 
-Tickets:
-1. Crear `GameShell` base reutilizable.
-2. Migrar juegos faltantes al mismo patron de start/progreso/timer/feedback/cierre.
-3. Estandarizar variantes UI con `cva + clsx + tailwind-merge`.
-4. Integrar `sonner` para feedback inmediato.
-5. Integrar `motion` para transiciones/microinteracciones base.
-6. Resolver `DialogTitle` y `DialogDescription` en modales.
-7. Actualizar tests afectados por el nuevo flujo.
+## Sprint 1 | Base UX/UI + accesibilidad
 
-Librerias de esta fase:
-- `class-variance-authority`
-- `clsx`
-- `tailwind-merge`
-- `sonner`
-- `motion`
+Objetivo: consistencia total de juegos.
 
----
+| Key     | Tipo      | Historia                                                  |  SP | Criterios de aceptacion                                                        |
+| ------- | --------- | --------------------------------------------------------- | --: | ------------------------------------------------------------------------------ |
+| APP-101 | Epic Task | Crear GameShell base para juegos                          |   8 | Todos los juegos pueden usar layout comun (start/progreso/timer/feedback/end). |
+| APP-102 | Story     | Migrar juegos faltantes al GameShell                      |   8 | 100% juegos con pantalla start configurable.                                   |
+| APP-103 | Story     | Estandarizar variantes UI con cva + clsx + tailwind-merge |   5 | Botones/chips/timer usan variantes consistentes.                               |
+| APP-104 | Story     | Integrar sonner para feedback global                      |   3 | Toasts para acierto/error/recompensa funcionando.                              |
+| APP-105 | Story     | Integrar motion para transiciones base                    |   3 | Entradas/salidas suaves en start y summary.                                    |
+| APP-106 | Bug       | Corregir warnings de DialogTitle/DialogDescription        |   5 | Sin warnings de accesibilidad en modales.                                      |
+| APP-107 | QA        | Actualizar/estabilizar tests de juegos                    |   3 | Tests de juegos pasan en CI.                                                   |
 
-### Sprint 2 (17-30 marzo 2026): Daily Loop 15-25 min
-Objetivo:
-- Implementar rutina diaria guiada end-to-end.
+Total estimado: 35 SP
 
-Tickets:
-1. Crear `DailyLoopView` con secuencia 2 English + 1 Math + 1 Dev.
-2. Agregar entrada al loop desde Home.
-3. Persistir estado de loop para reanudar.
-4. Construir resumen final del loop con recompensa.
-5. Agregar selector de ruta objetivo:
-   `english_interview`, `math_speed`, `dev_reasoning`.
-6. Registrar eventos analytics del loop.
-7. Tests de flujo completo (inicio, progreso, resume, cierre).
+## Sprint 2 | Daily Loop 15-25 min
 
----
+Objetivo: rutina guiada diaria.
 
-### Sprint 3 (31 marzo-13 abril 2026): Gratificacion + Dificultad Adaptativa
-Objetivo:
-- Mejorar retencion y aprendizaje progresivo.
+| Key     | Tipo      | Historia                                                                   |  SP | Criterios de aceptacion                               |
+| ------- | --------- | -------------------------------------------------------------------------- | --: | ----------------------------------------------------- |
+| APP-201 | Epic Task | Crear flujo Daily Loop end-to-end                                          |   8 | Ruta nueva con secuencia: 2 English + 1 Math + 1 Dev. |
+| APP-202 | Story     | DailyLoopView + navegacion desde Home                                      |   5 | Inicio del loop en 1 clic desde Home.                 |
+| APP-203 | Story     | Persistencia local de progreso de loop                                     |   5 | Usuario puede reanudar loop interrumpido.             |
+| APP-204 | Story     | Resumen final del loop con XP/recompensa                                   |   5 | Pantalla final con resultados agregados.              |
+| APP-205 | Story     | Selector de objetivo Google (english_interview, math_speed, dev_reasoning) |   5 | Loop adapta seleccion inicial y la registra.          |
+| APP-206 | Story     | Nuevos eventos analytics de loop                                           |   5 | Eventos visibles en Stats y storage.                  |
+| APP-207 | QA        | Tests del flujo completo de loop                                           |   3 | Cobertura minima de happy path + resume path.         |
 
-Tickets:
-1. Crear motor `adaptiveDifficulty` reusable.
-2. Auto downshift si hay 2-3 errores seguidos.
-3. Auto upshift por racha de aciertos.
-4. `SessionSummary` unificado:
-   XP, precision, fortalezas, debilidades.
-5. Mini-logros y recompensas por consistencia semanal.
-6. Mejorar feedback visual con `motion` + `sonner`.
-7. Tests de reglas adaptativas y casos limite.
+Total estimado: 36 SP
 
----
+## Sprint 3 | Gratificacion + dificultad adaptativa
 
-### Sprint 4 (14-27 abril 2026): Observabilidad + Performance + Backend-ready
-Objetivo:
-- Dejar la app lista para escalar y publicar.
+Objetivo: engagement y progreso real.
 
-Tickets:
-1. Stats con metricas por ruta objetivo Google.
-2. Integrar `web-vitals` (LCP/INP/CLS).
-3. Integrar `@sentry/react` (errores + tracing).
-4. Crear capa `repository` (local-first, backend-ready).
-5. Dejar base para `@tanstack/react-query` con feature flag.
-6. Spike de `Capacitor` para camino Android/Play Store.
-7. Regresion completa + checklist release readiness.
+| Key     | Tipo      | Historia                                                          |  SP | Criterios de aceptacion                                |
+| ------- | --------- | ----------------------------------------------------------------- | --: | ------------------------------------------------------ |
+| APP-301 | Epic Task | Motor adaptativo reusable                                         |   8 | API unica para subir/bajar dificultad por juego.       |
+| APP-302 | Story     | Regla downshift por 2-3 errores seguidos                          |   5 | Dificultad baja automaticamente con log de causa.      |
+| APP-303 | Story     | Regla upshift por racha de aciertos                               |   5 | Dificultad sube automaticamente con log de causa.      |
+| APP-304 | Story     | SessionSummary unificado (XP, precision, fortalezas, debilidades) |   8 | Todos los juegos muestran resumen comun.               |
+| APP-305 | Story     | Mini-logros y racha semanal                                       |   5 | Usuario recibe badges/recompensas por consistencia.    |
+| APP-306 | Story     | Microinteracciones de recompensa con motion + toasts              |   3 | Feedback visual claro al completar hitos.              |
+| APP-307 | QA        | Test de reglas adaptativas                                        |   3 | Casos limite cubiertos (oscilacion, top/bottom level). |
 
-Librerias de esta fase:
-- `web-vitals`
-- `@sentry/react`
-- `@tanstack/react-query` (cuando inicie backend)
-- `@capacitor/core` + `@capacitor/cli` (fase mobile)
+Total estimado: 37 SP
 
-## Orden de adopcion de librerias
-1. Ahora:
-   `cva`, `clsx`, `tailwind-merge`, `sonner`, `motion`.
-2. UX avanzada:
-   `@floating-ui/react`, `react-aria-components` (solo donde aporte).
-3. Con backend:
-   `@tanstack/react-query`.
-4. Produccion:
-   `web-vitals`, `@sentry/react`.
-5. Movil:
-   `Capacitor`.
+## Sprint 4 | Observabilidad, performance, backend-ready
 
-## KPIs a seguir
-1. Daily loop completion rate.
-2. Tiempo promedio por sesion (objetivo 15-25 min).
-3. Retencion semanal (streak activo).
-4. Precision por ruta objetivo.
-5. Errores frontend y Web Vitals.
+Objetivo: escalar sin reescribir.
 
-## Checklist Diario (Standup rapido)
-1. Que ticket cierro hoy.
-2. Que riesgo o bloqueo tengo.
-3. Que prueba automatica voy a correr.
-4. Que evento analytics nuevo toca validar.
-5. Si impacta mobile/performance/accesibilidad.
+| Key     | Tipo      | Historia                                      |  SP | Criterios de aceptacion                                 |
+| ------- | --------- | --------------------------------------------- | --: | ------------------------------------------------------- |
+| APP-401 | Epic Task | Metricas de ruta objetivo Google en Stats     |   5 | Dashboard filtra y compara 3 rutas objetivo.            |
+| APP-402 | Story     | Integrar web-vitals (LCP/INP/CLS)             |   5 | Metricas se capturan y almacenan localmente.            |
+| APP-403 | Story     | Integrar @sentry/react (errores + tracing)    |   5 | Errores frontend reportados con contexto de ruta/juego. |
+| APP-404 | Story     | Crear capa repository local-first             |   8 | Lectura/escritura desacoplada de UI.                    |
+| APP-405 | Story     | Preparar react-query con feature flag         |   5 | Infra lista sin forzar backend aun.                     |
+| APP-406 | Spike     | POC de Capacitor Android                      |   5 | Build de prueba documentado + checklist Play Store.     |
+| APP-407 | QA        | Pruebas de regresion completas + smoke mobile |   3 | Suite verde y reporte final de release readiness.       |
+
+Total estimado: 36 SP
 
 ## Log de Decisiones (rellenar cada dia)
+
 ```
 Fecha:
 Sprint:
@@ -138,7 +99,3 @@ Por que:
 Impacto esperado:
 Rollback plan:
 ```
-
-## Referencias de Ejecucion
-1. Desglose operativo APP-103 para rollout en todos los juegos:
-   `APP_103_SUBTASKS.md`

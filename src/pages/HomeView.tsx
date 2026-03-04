@@ -249,9 +249,6 @@ const HomeView: React.FC = () => {
             <Card className="p-6 border-l-4 border-violet-500 bg-surface-1 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-violet-500 mb-2">
-                    APP-104
-                  </p>
                   <h2 className="text-2xl font-black text-text-primary">
                     Daily Loop 15-25 min
                   </h2>
