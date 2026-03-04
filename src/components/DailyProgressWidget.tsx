@@ -117,18 +117,18 @@ const DailyProgressWidget: React.FC = () => {
 
   const handleClaimSessionReward = () => {
     if (!sessionSummary.rewardEligible) {
-      toast.error("Complete 2 sessions and keep 70%+ accuracy to claim reward.");
+      toast.error("Haz 2 sesiones con 70%+ para reclamar.");
       return;
     }
 
     if (!claimDailySessionReward(sessionSummary.date)) {
-      toast.info("Today's session reward was already claimed.");
+      toast.info("Reward diaria ya reclamada.");
       setRefreshToken((prev) => prev + 1);
       return;
     }
 
     addGlobalXp(sessionSummary.rewardXp);
-    toast.success(`Session reward claimed: +${sessionSummary.rewardXp} XP`);
+    toast.success(`+${sessionSummary.rewardXp} XP`);
     setRefreshToken((prev) => prev + 1);
   };
 
@@ -136,16 +136,16 @@ const DailyProgressWidget: React.FC = () => {
     const result = claimWeeklyConsistencyReward(tierId);
     if (!result.ok) {
       if ("reason" in result && result.reason === "already_claimed") {
-        toast.info("Weekly reward already claimed.");
+        toast.info("Reward semanal ya reclamada.");
       } else {
-        toast.error("Keep your weekly streak to unlock this reward.");
+        toast.error("Mantén la racha semanal para desbloquear.");
       }
       setRefreshToken((prev) => prev + 1);
       return;
     }
 
     addGlobalXp(result.rewardXp);
-    toast.success(`Weekly consistency reward: +${result.rewardXp} XP`);
+    toast.success(`+${result.rewardXp} XP semanal`);
     setRefreshToken((prev) => prev + 1);
   };
 
@@ -322,7 +322,9 @@ const DailyProgressWidget: React.FC = () => {
               key={tier.id}
               className="rounded-lg border border-border bg-surface-1 p-2"
             >
-              <p className="text-xs font-black text-text-primary">{tier.title}</p>
+              <p className="text-xs font-black text-text-primary">
+                {tier.title}
+              </p>
               <p className="text-[10px] text-text-muted mb-2">
                 {tier.requiredDays} days • +{tier.rewardXp} XP
               </p>
@@ -332,7 +334,11 @@ const DailyProgressWidget: React.FC = () => {
                 disabled={!tier.eligible || tier.claimed}
                 className={`w-full rounded-md px-2 py-1 text-[11px] font-black transition-colors ${tier.eligible && !tier.claimed ? "bg-sky-500 hover:bg-sky-600 text-white" : "bg-surface-2 text-text-muted border border-border"}`}
               >
-                {tier.claimed ? "Claimed" : tier.eligible ? "Claim Reward" : "Locked"}
+                {tier.claimed
+                  ? "Claimed"
+                  : tier.eligible
+                    ? "Claim Reward"
+                    : "Locked"}
               </button>
             </div>
           ))}

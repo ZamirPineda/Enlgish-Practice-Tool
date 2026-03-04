@@ -53,23 +53,25 @@ const DailySessionInsights: React.FC<DailySessionInsightsProps> = ({
 
   const handleClaimReward = () => {
     if (!summary.rewardEligible) {
-      toast.error("Complete 2 sessions and keep 70%+ accuracy to claim reward.");
+      toast.error("Haz 2 sesiones con 70%+ para reclamar.");
       return;
     }
 
     if (!claimDailySessionReward(summary.date)) {
-      toast.info("Today's session reward was already claimed.");
+      toast.info("Reward diaria ya reclamada.");
       setRefreshToken((previous) => previous + 1);
       return;
     }
 
     addGlobalXp(summary.rewardXp);
-    toast.success(`Session reward claimed: +${summary.rewardXp} XP`);
+    toast.success(`+${summary.rewardXp} XP`);
     setRefreshToken((previous) => previous + 1);
   };
 
   return (
-    <div className={`rounded-xl border border-border bg-surface-2 p-4 ${className}`}>
+    <div
+      className={`rounded-xl border border-border bg-surface-2 p-4 ${className}`}
+    >
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <div>
           <p className="text-[10px] font-bold uppercase tracking-widest text-text-muted">
@@ -109,7 +111,10 @@ const DailySessionInsights: React.FC<DailySessionInsightsProps> = ({
         {routeOrder.map((route) => {
           const routeSummary = summary.routes[route];
           return (
-            <div key={route} className="rounded-lg border border-border bg-surface-1 p-2">
+            <div
+              key={route}
+              className="rounded-lg border border-border bg-surface-1 p-2"
+            >
               <div className="flex items-center justify-between gap-2">
                 <p className="text-[11px] font-black text-text-primary">
                   {FOCUS_ROUTE_LABEL[route]}

@@ -25,8 +25,11 @@ export type AnalyticsEvent = z.infer<typeof analyticsEventSchema>;
 export const ANALYTICS_EVENTS_KEY = "vocab-vault-analytics-events";
 const ACTIVE_ANALYTICS_SESSIONS_KEY = "vocab-vault-active-analytics-sessions";
 const MAX_EVENTS = 500;
-const FEEDBACK_TOAST_THROTTLE_MS = 700;
+const FEEDBACK_TOAST_THROTTLE_MS = 1200;
 let lastFeedbackToastAt = 0;
+let feedbackToastIndex = 0;
+const POSITIVE_FEEDBACK = ["Acierto", "Bien", "Perfecto"];
+const NEGATIVE_FEEDBACK = ["Error", "Casi", "Reintenta"];
 
 const maybeShowGameplayFeedback = (name: AnalyticsEventName) => {
   if (typeof window === "undefined") return;
@@ -36,12 +39,17 @@ const maybeShowGameplayFeedback = (name: AnalyticsEventName) => {
   if (now - lastFeedbackToastAt < FEEDBACK_TOAST_THROTTLE_MS) return;
   lastFeedbackToastAt = now;
 
+  const messages =
+    name === "item_correct" ? POSITIVE_FEEDBACK : NEGATIVE_FEEDBACK;
+  const message = messages[feedbackToastIndex % messages.length];
+  feedbackToastIndex += 1;
+
   if (name === "item_correct") {
-    toast.success("Correcto", 1000);
+    toast.success(message, 900);
     return;
   }
 
-  toast.error("Incorrecto", 1000);
+  toast.error(message, 1100);
 };
 
 const safeReadEvents = (): AnalyticsEvent[] => {

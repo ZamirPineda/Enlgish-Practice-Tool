@@ -247,10 +247,7 @@ export const progressQuest = (
 
         if (newlyCompleted) {
           setTimeout(() => {
-            toast.success(
-              `🎖️ Quest Completed: ${q.description}! (+${q.reward} XP)`,
-              5000,
-            );
+            toast.success(`Quest lista: +${q.reward} XP`, 3500);
             addGlobalXp(q.reward);
           }, 500); // Small delay to not overlap with immediate game finish sounds
         }
@@ -295,7 +292,7 @@ export const useStreakFreezes = () => {
   const buyFreeze = (cost: number = 500) => {
     const currentXp = getGlobalXp();
     if (currentXp < cost) {
-      toast.error("Not enough XP to buy a Streak Freeze.");
+      toast.error("XP insuficiente para comprar freeze.");
       return false;
     }
 
@@ -305,9 +302,7 @@ export const useStreakFreezes = () => {
     const currentFreezes = getStreakFreezes();
     localStorage.setItem(STREAK_FREEZES_KEY, (currentFreezes + 1).toString());
     window.dispatchEvent(new Event("streakFreezesUpdated"));
-    toast.success(
-      "🧊 Streak Freeze purchased! Your next missed day is protected.",
-    );
+    toast.success("Freeze comprada. Próximo día protegido.");
     return true;
   };
 
@@ -357,9 +352,9 @@ export const addGlobalXp = (points: number) => {
   });
 
   if (newLevel > currentLevel) {
-    toast.success(`🎉 Level Up! You reached Lvl ${newLevel}! ✨`, 4000);
+    toast.success(`Subiste a nivel ${newLevel}`, 2600);
   } else {
-    toast.success(`+${points} XP ✨`, 2000);
+    toast.success(`+${points} XP`, 1400);
   }
 };
 

@@ -69,7 +69,7 @@ const DailyLoopView: React.FC = () => {
           duration: durationSeconds,
           stepsCompleted: syncedLoop.steps.length,
         });
-        toast.success("Daily loop completado. Ya puedes reclamar tu reward.");
+        toast.success("Loop listo. Reclama tu XP.");
       }
     }
 
@@ -121,7 +121,7 @@ const DailyLoopView: React.FC = () => {
       focusRoute: nextLoop.focusRoute,
       totalSteps: nextLoop.steps.length,
     });
-    toast.success("Daily loop iniciado. Completa 4 sesiones.");
+    toast.success("Loop iniciado.");
   };
 
   const handleManualComplete = (stepId: string) => {
@@ -149,7 +149,7 @@ const DailyLoopView: React.FC = () => {
         duration: durationSeconds,
         stepsCompleted: updatedLoop.steps.length,
       });
-      toast.success("Daily loop completado. Ya puedes reclamar tu reward.");
+      toast.success("Loop completo.");
     }
   };
 
@@ -158,13 +158,13 @@ const DailyLoopView: React.FC = () => {
 
     const claimed = claimDailyLoopReward(loop.dateKey);
     if (!claimed) {
-      toast.info("El reward del daily loop ya fue reclamado.");
+      toast.info("Reward ya reclamada.");
       syncLoopState();
       return;
     }
 
     addGlobalXp(DAILY_LOOP_REWARD_XP);
-    toast.success(`Reward reclamado: +${DAILY_LOOP_REWARD_XP} XP`);
+    toast.success(`+${DAILY_LOOP_REWARD_XP} XP del loop`);
     syncLoopState();
   };
 
