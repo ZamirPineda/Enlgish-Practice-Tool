@@ -152,6 +152,26 @@ describe("StatsView", () => {
             rewardXp: 60,
           },
         },
+        {
+          name: "daily_loop_started",
+          timestamp: nowIso,
+          payload: {
+            game: "daily_loop",
+            focusRoute: "math_speed",
+            totalSteps: 4,
+          },
+        },
+        {
+          name: "daily_loop_step_completed",
+          timestamp: nowIso,
+          payload: {
+            game: "daily_loop",
+            focusRoute: "math_speed",
+            stepId: "step-1",
+            completedSteps: 1,
+            totalSteps: 4,
+          },
+        },
       ]),
     );
 
@@ -172,8 +192,22 @@ describe("StatsView", () => {
     expect(screen.getByText("Suggested Focus")).toBeInTheDocument();
     expect(screen.getByText("Session Starts")).toBeInTheDocument();
     expect(screen.getByText("Daily Loop")).toBeInTheDocument();
-    expect(screen.getByText("Started: 1 | Steps: 2")).toBeInTheDocument();
-    expect(screen.getByText("Rewards: 1")).toBeInTheDocument();
+    expect(screen.getByText("Google Objective Route")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "All routes" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "English Interview" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Math Speed" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Dev Reasoning" }),
+    ).toBeInTheDocument();
+    const dailyLoopCard = screen.getByText("Daily Loop").closest("article");
+    expect(dailyLoopCard).toHaveTextContent("Started: 2 | Steps: 3");
+    expect(dailyLoopCard).toHaveTextContent("Rewards: 1");
     expect(
       screen.getByRole("button", { name: "Paraphrase Duel" }),
     ).toBeInTheDocument();
@@ -206,6 +240,17 @@ describe("StatsView", () => {
     expect(
       screen.getByText("Mode Mismatch: 1 (vs prev: +1)"),
     ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Math Speed" }));
+    expect(dailyLoopCard).toHaveTextContent("Started: 1 | Steps: 1");
+    expect(dailyLoopCard).toHaveTextContent("Rewards: 0");
+
+    fireEvent.click(screen.getByRole("button", { name: "English Interview" }));
+    expect(dailyLoopCard).toHaveTextContent("Started: 1 | Steps: 2");
+    expect(dailyLoopCard).toHaveTextContent("Rewards: 1");
+
+    fireEvent.click(screen.getByRole("button", { name: "All routes" }));
+    expect(dailyLoopCard).toHaveTextContent("Started: 2 | Steps: 3");
+    expect(dailyLoopCard).toHaveTextContent("Rewards: 1");
 
     const sessionStartsCard = screen
       .getByText("Session Starts")

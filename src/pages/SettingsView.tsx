@@ -1,5 +1,6 @@
 import ToggleSwitch from "@/components/ToggleSwitch";
 import Card from "@/components/ui/Card";
+import AdaptiveRolloutPanel from "@/components/adaptive/AdaptiveRolloutPanel";
 import { AppSettings } from "@/lib/settingsStore";
 import { useGlobalXp } from "@/lib/xpStore";
 import { playGameSound } from "@/lib/audioUtils";
@@ -283,6 +284,8 @@ const SettingsView: React.FC<SettingsViewProps> = ({
             </div>
           </div>
         </Card>
+
+        <AdaptiveRolloutPanel />
 
         {/* DATA MANAGEMENT */}
         <Card className="p-5 sm:p-6 bg-surface-1 mt-6">

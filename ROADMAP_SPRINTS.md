@@ -23,6 +23,7 @@ Construir una app funcional, gratificante y consistente para preparar objetivo G
 - APP-101, APP-102 y APP-103: implementados.
 - Daily Loop ya existe en codigo, pero pertenece al bloque APP-20x (Sprint 2), no a APP-104.
 - APP-104 correcto para Sprint 1: integrar `sonner` para feedback global.
+- APP-401 aplicado: Stats incorpora comparativa y filtro por rutas objetivo Google (`english_interview`, `math_speed`, `dev_reasoning`).
 
 ## Sprint 1 | Base UX/UI + accesibilidad
 
@@ -60,16 +61,16 @@ Total estimado: 36 SP
 
 Objetivo: engagement y progreso real.
 
-| Key     | Tipo      | Historia                                                          |  SP | Criterios de aceptacion                                |
-| ------- | --------- | ----------------------------------------------------------------- | --: | ------------------------------------------------------ |
+| Key     | Tipo       | Historia                                                          |  SP | Criterios de aceptacion                                  |
+| ------- | ---------- | ----------------------------------------------------------------- | --: | -------------------------------------------------------- |
 | APP-300 | Initiative | Rollout adaptativo a todos los juegos                             |   0 | Todos los juegos activos usan APP-301/302/303 con tests. |
-| APP-301 | Epic Task | Motor adaptativo reusable                                         |   8 | API unica para subir/bajar dificultad por juego.       |
-| APP-302 | Story     | Regla downshift por 2-3 errores seguidos                          |   5 | Dificultad baja automaticamente con log de causa.      |
-| APP-303 | Story     | Regla upshift por racha de aciertos                               |   5 | Dificultad sube automaticamente con log de causa.      |
-| APP-304 | Story     | SessionSummary unificado (XP, precision, fortalezas, debilidades) |   8 | Todos los juegos muestran resumen comun.               |
-| APP-305 | Story     | Mini-logros y racha semanal                                       |   5 | Usuario recibe badges/recompensas por consistencia.    |
-| APP-306 | Story     | Microinteracciones de recompensa con motion + toasts              |   3 | Feedback visual claro al completar hitos.              |
-| APP-307 | QA        | Test de reglas adaptativas                                        |   3 | Casos limite cubiertos (oscilacion, top/bottom level). |
+| APP-301 | Epic Task  | Motor adaptativo reusable                                         |   8 | API unica para subir/bajar dificultad por juego.         |
+| APP-302 | Story      | Regla downshift por 2-3 errores seguidos                          |   5 | Dificultad baja automaticamente con log de causa.        |
+| APP-303 | Story      | Regla upshift por racha de aciertos                               |   5 | Dificultad sube automaticamente con log de causa.        |
+| APP-304 | Story      | SessionSummary unificado (XP, precision, fortalezas, debilidades) |   8 | Todos los juegos muestran resumen comun.                 |
+| APP-305 | Story      | Mini-logros y racha semanal                                       |   5 | Usuario recibe badges/recompensas por consistencia.      |
+| APP-306 | Story      | Microinteracciones de recompensa con motion + toasts              |   3 | Feedback visual claro al completar hitos.                |
+| APP-307 | QA         | Test de reglas adaptativas                                        |   3 | Casos limite cubiertos (oscilacion, top/bottom level).   |
 
 Total estimado: 37 SP
 
@@ -77,20 +78,20 @@ Total estimado: 37 SP
 
 Nota: `APP-300` no suma SP propio; organiza la ejecucion de `APP-301..APP-307`.
 
-| Subtask    | Bloque | Alcance                                                                 | Estado      | Criterio de cierre                                                                 |
-| ---------- | ------ | ----------------------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------- |
-| APP-300-01 | Base   | Inventario de juegos + matriz `gameId`, niveles, default y timer       | Pending     | Documento con todos los juegos jugables y su configuracion adaptativa objetivo.   |
-| APP-300-02 | Base   | Contrato comun para logs de causa (up/down/manual)                     | Done        | `adaptiveDifficulty.ts` centraliza tipos, helpers y storage key unificada.        |
-| APP-300-03 | Batch A | `ErrorHunter`, `CollocationSprint`, `TabooEnglish`                    | Done        | Reglas `downshift/upshift` activas + toast + log en localStorage + tests verdes.  |
-| APP-300-04 | Batch B | `ParaphraseDuel`, `SentenceTransformer`, `SpeedBuilder`               | Done        | Misma integracion adaptativa sin regresiones funcionales ni de UX.                |
-| APP-300-05 | Batch C | `DiplomaticReviewer`, `StopGame`                                      | Done        | Dificultad ajusta por rachas y se resetea correctamente en restart/start.         |
-| APP-300-06 | Batch D | `MathGame`, `MathView`                                                 | Done        | Escala de dificultad matematica conectada al motor reusable y reglas 302/303.     |
-| APP-300-07 | Batch E | `CodeBugHunter`, `CodeSyntaxBuilder`, `StudyDocsGame`, `StudyDocsQuiz` | Done        | Juegos Dev integrados con mismas reglas adaptativas y logging de causa.           |
-| APP-300-08 | Batch F | `TechTriviaSprint`, `TechMatchUp`, `TechFlashcards`, `TechBoss`        | Done        | Juegos Tech migrados con control de limites (top/bottom) y toasts coherentes.     |
-| APP-300-09 | QA      | Pruebas por juego de rachas (3 correctas/3 errores), bordes y ultima ronda | In Progress | Cobertura en CI para evitar oscilacion y cambios de nivel al cerrar sesion (Batch A, B, C, D, E y F completados). |
-| APP-300-10 | QA      | Regresion global (`pnpm typecheck`, `pnpm test:ci`) por cada batch     | Done        | Cada batch mergea solo con suite completa en verde.                               |
-| APP-300-11 | Producto | Compatibilidad con Daily Loop y SessionSummary unificado (`APP-304`)   | Done        | Flujo diario no rompe progresion y consume nivel ajustado por juego.              |
-| APP-300-12 | Release | Checklist de rollout + rollback por feature flag/local toggle          | Done        | Existe plan de apagado rapido por juego si aparece regresion en produccion.       |
+| Subtask    | Bloque   | Alcance                                                                    | Estado      | Criterio de cierre                                                                                                |
+| ---------- | -------- | -------------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------- |
+| APP-300-01 | Base     | Inventario de juegos + matriz `gameId`, niveles, default y timer           | Pending     | Documento con todos los juegos jugables y su configuracion adaptativa objetivo.                                   |
+| APP-300-02 | Base     | Contrato comun para logs de causa (up/down/manual)                         | Done        | `adaptiveDifficulty.ts` centraliza tipos, helpers y storage key unificada.                                        |
+| APP-300-03 | Batch A  | `ErrorHunter`, `CollocationSprint`, `TabooEnglish`                         | Done        | Reglas `downshift/upshift` activas + toast + log en localStorage + tests verdes.                                  |
+| APP-300-04 | Batch B  | `ParaphraseDuel`, `SentenceTransformer`, `SpeedBuilder`                    | Done        | Misma integracion adaptativa sin regresiones funcionales ni de UX.                                                |
+| APP-300-05 | Batch C  | `DiplomaticReviewer`, `StopGame`                                           | Done        | Dificultad ajusta por rachas y se resetea correctamente en restart/start.                                         |
+| APP-300-06 | Batch D  | `MathGame`, `MathView`                                                     | Done        | Escala de dificultad matematica conectada al motor reusable y reglas 302/303.                                     |
+| APP-300-07 | Batch E  | `CodeBugHunter`, `CodeSyntaxBuilder`, `StudyDocsGame`, `StudyDocsQuiz`     | Done        | Juegos Dev integrados con mismas reglas adaptativas y logging de causa.                                           |
+| APP-300-08 | Batch F  | `TechTriviaSprint`, `TechMatchUp`, `TechFlashcards`, `TechBoss`            | Done        | Juegos Tech migrados con control de limites (top/bottom) y toasts coherentes.                                     |
+| APP-300-09 | QA       | Pruebas por juego de rachas (3 correctas/3 errores), bordes y ultima ronda | In Progress | Cobertura en CI para evitar oscilacion y cambios de nivel al cerrar sesion (Batch A, B, C, D, E y F completados). |
+| APP-300-10 | QA       | Regresion global (`pnpm typecheck`, `pnpm test:ci`) por cada batch         | Done        | Cada batch mergea solo con suite completa en verde.                                                               |
+| APP-300-11 | Producto | Compatibilidad con Daily Loop y SessionSummary unificado (`APP-304`)       | Done        | Flujo diario no rompe progresion y consume nivel ajustado por juego.                                              |
+| APP-300-12 | Release  | Checklist de rollout + rollback por feature flag/local toggle              | Done        | Existe plan de apagado rapido por juego si aparece regresion en produccion.                                       |
 
 ## Sprint 4 | Observabilidad, performance, backend-ready
 

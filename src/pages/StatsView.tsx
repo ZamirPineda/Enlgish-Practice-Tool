@@ -16,7 +16,6 @@ import {
 import { useGlobalXp } from "@/lib/xpStore";
 import { getRankForLevel } from "@/lib/levelRanks";
 import Heatmap from "@/components/Heatmap";
-import AdaptiveRolloutPanel from "@/components/adaptive/AdaptiveRolloutPanel";
 import ViewToolbar from "@/components/ui/ViewToolbar";
 import {
   AreaChart,
@@ -39,6 +38,7 @@ import {
   GAME_CATEGORY,
   getGameFromEvent,
 } from "@/lib/chartData";
+import { DAILY_LOOP_FOCUS_LABEL, DailyLoopFocusRoute } from "@/lib/dailyLoop";
 
 const VAULT_DECK_KEY = "vocab-vault-deck";
 const VAULT_PROGRESS_KEY = "vocab-vault-progress";
@@ -104,6 +104,105 @@ interface ErrorTypeAggregateItem {
 }
 
 type GameErrorCountMap = Record<string, Record<string, number>>;
+type FocusRouteFilter = "all" | DailyLoopFocusRoute;
+
+interface FocusRouteAnalyticsSummaryItem {
+  started: number;
+  completed: number;
+  steps: number;
+  rewards: number;
+  totalDurationSeconds: number;
+  completedWithDuration: number;
+}
+
+type FocusRouteAnalyticsSummary = Record<
+  DailyLoopFocusRoute,
+  FocusRouteAnalyticsSummaryItem
+>;
+
+const GOAL_ROUTES: DailyLoopFocusRoute[] = [
+  "english_interview",
+  "math_speed",
+  "dev_reasoning",
+];
+
+const createEmptyFocusRouteSummaryItem =
+  (): FocusRouteAnalyticsSummaryItem => ({
+    started: 0,
+    completed: 0,
+    steps: 0,
+    rewards: 0,
+    totalDurationSeconds: 0,
+    completedWithDuration: 0,
+  });
+
+const isDailyLoopFocusRoute = (value: unknown): value is DailyLoopFocusRoute =>
+  value === "english_interview" ||
+  value === "math_speed" ||
+  value === "dev_reasoning";
+
+const getEventFocusRoute = (
+  event: AnalyticsEvent,
+): DailyLoopFocusRoute | null => {
+  const value = event.payload.focusRoute;
+  if (isDailyLoopFocusRoute(value)) {
+    return value;
+  }
+  return null;
+};
+
+const buildFocusRouteAnalyticsSummary = (
+  events: AnalyticsEvent[],
+): FocusRouteAnalyticsSummary => {
+  const summary: FocusRouteAnalyticsSummary = {
+    english_interview: createEmptyFocusRouteSummaryItem(),
+    math_speed: createEmptyFocusRouteSummaryItem(),
+    dev_reasoning: createEmptyFocusRouteSummaryItem(),
+  };
+
+  events.forEach((event) => {
+    const route = getEventFocusRoute(event);
+    if (!route) return;
+
+    const routeSummary = summary[route];
+
+    if (event.name === "daily_loop_started") {
+      routeSummary.started += 1;
+      return;
+    }
+    if (event.name === "daily_loop_step_completed") {
+      routeSummary.steps += 1;
+      return;
+    }
+    if (event.name === "daily_loop_completed") {
+      routeSummary.completed += 1;
+      if (typeof event.payload.duration === "number") {
+        routeSummary.totalDurationSeconds += event.payload.duration;
+        routeSummary.completedWithDuration += 1;
+      }
+      return;
+    }
+    if (event.name === "daily_loop_reward_claimed") {
+      routeSummary.rewards += 1;
+    }
+  });
+
+  return summary;
+};
+
+const sumFocusRouteSummary = (
+  summary: FocusRouteAnalyticsSummary,
+): FocusRouteAnalyticsSummaryItem =>
+  GOAL_ROUTES.reduce((accumulator, route) => {
+    const current = summary[route];
+    accumulator.started += current.started;
+    accumulator.completed += current.completed;
+    accumulator.steps += current.steps;
+    accumulator.rewards += current.rewards;
+    accumulator.totalDurationSeconds += current.totalDurationSeconds;
+    accumulator.completedWithDuration += current.completedWithDuration;
+    return accumulator;
+  }, createEmptyFocusRouteSummaryItem());
 
 const prettifyAnalyticsLabel = (value: string) =>
   value
@@ -285,6 +384,8 @@ const StatsView: React.FC = () => {
   >("all");
   const [analyticsRange, setAnalyticsRange] = useState<"week" | "30d">("week");
   const [selectedErrorGame, setSelectedErrorGame] = useState<string>("all");
+  const [focusRouteFilter, setFocusRouteFilter] =
+    useState<FocusRouteFilter>("all");
 
   const [deck] = useState<Record<string, SrsVocabularyItem>>(() =>
     readJson<Record<string, SrsVocabularyItem>>(VAULT_DECK_KEY, {}),
@@ -432,6 +533,30 @@ const StatsView: React.FC = () => {
     return buildAnalyticsSummary(previousAnalytics);
   }, [previousAnalytics]);
 
+  const focusRouteSummary = useMemo(
+    () => buildFocusRouteAnalyticsSummary(filteredAnalytics),
+    [filteredAnalytics],
+  );
+
+  const previousFocusRouteSummary = useMemo(
+    () => buildFocusRouteAnalyticsSummary(previousAnalytics),
+    [previousAnalytics],
+  );
+
+  const selectedFocusRouteSummary = useMemo(() => {
+    if (focusRouteFilter === "all") {
+      return sumFocusRouteSummary(focusRouteSummary);
+    }
+    return focusRouteSummary[focusRouteFilter];
+  }, [focusRouteFilter, focusRouteSummary]);
+
+  const selectedPreviousFocusRouteSummary = useMemo(() => {
+    if (focusRouteFilter === "all") {
+      return sumFocusRouteSummary(previousFocusRouteSummary);
+    }
+    return previousFocusRouteSummary[focusRouteFilter];
+  }, [focusRouteFilter, previousFocusRouteSummary]);
+
   const analyticsErrorBreakdown = useMemo(() => {
     return buildGameErrorBreakdown(filteredAnalytics);
   }, [filteredAnalytics]);
@@ -521,8 +646,24 @@ const StatsView: React.FC = () => {
   const speakingUsedDelta =
     analyticsSummary.speaking_used - previousAnalyticsSummary.speaking_used;
   const dailyLoopCompletedDelta =
-    analyticsSummary.daily_loop_completed -
-    previousAnalyticsSummary.daily_loop_completed;
+    selectedFocusRouteSummary.completed -
+    selectedPreviousFocusRouteSummary.completed;
+  const selectedFocusCompletionRate =
+    selectedFocusRouteSummary.started > 0
+      ? Math.round(
+          (selectedFocusRouteSummary.completed /
+            selectedFocusRouteSummary.started) *
+            100,
+        )
+      : 0;
+  const selectedFocusAvgDurationMinutes =
+    selectedFocusRouteSummary.completedWithDuration > 0
+      ? Math.round(
+          selectedFocusRouteSummary.totalDurationSeconds /
+            selectedFocusRouteSummary.completedWithDuration /
+            60,
+        )
+      : null;
 
   return (
     <div className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-4 sm:pb-8">
@@ -582,8 +723,6 @@ const StatsView: React.FC = () => {
             ))}
           </div>
         </div>
-
-        <AdaptiveRolloutPanel />
 
         {metrics.totalCards === 0 ? (
           <section className="bg-surface-1 border border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center animate-fade-in shadow-xl shadow-black/5">
@@ -785,7 +924,7 @@ const StatsView: React.FC = () => {
               <h2 className="text-lg font-black text-text-primary mb-6">
                 Analytics (MVP)
               </h2>
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex flex-wrap items-center gap-2 mb-4">
                 <button
                   onClick={() => setAnalyticsRange("week")}
                   className={`min-h-[36px] px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${analyticsRange === "week" ? "bg-accent text-white border-accent" : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"}`}
@@ -798,6 +937,86 @@ const StatsView: React.FC = () => {
                 >
                   Last 30 days
                 </button>
+              </div>
+              <div className="mb-4">
+                <p className="text-xs font-black uppercase tracking-widest text-text-secondary mb-2">
+                  Google Objective Route
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => setFocusRouteFilter("all")}
+                    className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
+                      focusRouteFilter === "all"
+                        ? "bg-accent text-white border-accent"
+                        : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"
+                    }`}
+                  >
+                    All routes
+                  </button>
+                  {GOAL_ROUTES.map((route) => (
+                    <button
+                      key={`focus-${route}`}
+                      onClick={() => setFocusRouteFilter(route)}
+                      className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
+                        focusRouteFilter === route
+                          ? "bg-accent text-white border-accent"
+                          : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"
+                      }`}
+                    >
+                      {DAILY_LOOP_FOCUS_LABEL[route]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="mb-6 grid grid-cols-1 lg:grid-cols-3 gap-3">
+                {GOAL_ROUTES.map((route) => {
+                  const routeSummary = focusRouteSummary[route];
+                  const completionRate =
+                    routeSummary.started > 0
+                      ? Math.round(
+                          (routeSummary.completed / routeSummary.started) * 100,
+                        )
+                      : 0;
+                  const avgDurationMinutes =
+                    routeSummary.completedWithDuration > 0
+                      ? Math.round(
+                          routeSummary.totalDurationSeconds /
+                            routeSummary.completedWithDuration /
+                            60,
+                        )
+                      : null;
+                  const isHighlighted =
+                    focusRouteFilter === "all" || focusRouteFilter === route;
+
+                  return (
+                    <article
+                      key={`route-card-${route}`}
+                      className={`bg-surface-2 border rounded-xl p-4 ${
+                        isHighlighted ? "border-accent/50" : "border-border"
+                      }`}
+                    >
+                      <p className="text-xs uppercase font-bold text-text-muted mb-1">
+                        {DAILY_LOOP_FOCUS_LABEL[route]}
+                      </p>
+                      <p className="text-xl font-black text-teal-400">
+                        {routeSummary.completed}
+                      </p>
+                      <p className="text-xs text-text-muted mt-1">
+                        Started: {routeSummary.started} | Steps:{" "}
+                        {routeSummary.steps}
+                      </p>
+                      <p className="text-xs text-success mt-1 uppercase font-bold tracking-widest">
+                        Rewards: {routeSummary.rewards}
+                      </p>
+                      <p className="text-xs text-text-secondary mt-1">
+                        Completion: {completionRate}% | Avg:{" "}
+                        {avgDurationMinutes === null
+                          ? "--"
+                          : `${avgDurationMinutes}m`}
+                      </p>
+                    </article>
+                  );
+                })}
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <article className="bg-surface-2 border border-border rounded-xl p-4">
@@ -864,14 +1083,20 @@ const StatsView: React.FC = () => {
                     Daily Loop
                   </p>
                   <p className="text-2xl font-black text-teal-400">
-                    {analyticsSummary.daily_loop_completed}
+                    {selectedFocusRouteSummary.completed}
                   </p>
                   <p className="text-xs text-text-muted mt-1">
-                    Started: {analyticsSummary.daily_loop_started} | Steps:{" "}
-                    {analyticsSummary.daily_loop_step_completed}
+                    Started: {selectedFocusRouteSummary.started} | Steps:{" "}
+                    {selectedFocusRouteSummary.steps}
                   </p>
                   <p className="text-xs text-success mt-1 uppercase font-bold tracking-widest">
-                    Rewards: {analyticsSummary.daily_loop_reward_claimed}
+                    Rewards: {selectedFocusRouteSummary.rewards}
+                  </p>
+                  <p className="text-xs text-text-secondary mt-1">
+                    Completion: {selectedFocusCompletionRate}% | Avg:{" "}
+                    {selectedFocusAvgDurationMinutes === null
+                      ? "--"
+                      : `${selectedFocusAvgDurationMinutes}m`}
                   </p>
                   <p
                     className={`text-xs mt-1 ${getDeltaClass(dailyLoopCompletedDelta)}`}
