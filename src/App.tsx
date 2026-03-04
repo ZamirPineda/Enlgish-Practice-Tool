@@ -17,6 +17,7 @@ import { AppSettings, loadSettings, saveSettings } from "@/lib/settingsStore";
 import { useGlobalXp } from "@/lib/xpStore";
 import { ToastContainer, toast } from "@/components/ui/Toast";
 import { getRankForLevel } from "@/lib/levelRanks";
+import { startWebVitalsTracking } from "@/lib/webVitals";
 import { AnimatedRoutes } from "@/routes";
 import { OfflineBadge } from "@/components/OfflineBadge";
 
@@ -205,6 +206,11 @@ const App: React.FC = () => {
   const currentRank = React.useMemo(() => getRankForLevel(level), [level]);
 
   const { updateAvailable, handleUpdate } = usePWAUpdate();
+
+  React.useEffect(() => {
+    const stopTracking = startWebVitalsTracking();
+    return () => stopTracking();
+  }, []);
 
   React.useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {

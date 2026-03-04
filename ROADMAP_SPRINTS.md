@@ -24,6 +24,7 @@ Construir una app funcional, gratificante y consistente para preparar objetivo G
 - Daily Loop ya existe en codigo, pero pertenece al bloque APP-20x (Sprint 2), no a APP-104.
 - APP-104 correcto para Sprint 1: integrar `sonner` para feedback global.
 - APP-401 aplicado: Stats incorpora comparativa y filtro por rutas objetivo Google (`english_interview`, `math_speed`, `dev_reasoning`).
+- APP-402 aplicado: web-vitals (`LCP`, `INP`, `CLS`) se capturan al iniciar app y se almacenan localmente.
 
 ## Sprint 1 | Base UX/UI + accesibilidad
 
