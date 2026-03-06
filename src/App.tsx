@@ -606,7 +606,7 @@ const App: React.FC = () => {
             </p>
             <button
               onClick={handleUpdate}
-              className="mt-2 rounded-lg bg-accent hover:bg-accent-hover px-3 py-1.5 text-sm font-bold text-white transition-colors w-full"
+              className="mt-2 rounded-lg bg-accent hover:bg-accent-hover px-3 py-1.5 text-sm font-bold text-slate-900 transition-colors w-full"
             >
               Actualizar
             </button>
@@ -641,7 +641,7 @@ const App: React.FC = () => {
                 ) : (
                   <button
                     onClick={closeOnboarding}
-                    className="ml-auto px-4 py-2 rounded-lg bg-success hover:bg-success-hover text-white text-sm font-black transition-colors"
+                    className="ml-auto px-4 py-2 rounded-lg bg-success hover:bg-success-hover text-slate-900 text-sm font-black transition-colors"
                   >
                     Let’s go
                   </button>
