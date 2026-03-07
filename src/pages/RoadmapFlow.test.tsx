@@ -36,16 +36,22 @@ describe("Roadmap sequential flow", () => {
     );
 
   const closeCompletionModalIfOpen = async () => {
-    const continueButton = screen.queryByRole("button", { name: "Continuar" });
-    if (!continueButton) {
+    const completionDialog = screen.queryByRole("dialog", {
+      name: /Unidad completada:|Modulo completado:/i,
+    });
+    if (!completionDialog) {
       return;
     }
 
-    fireEvent.click(continueButton);
+    fireEvent.click(
+      within(completionDialog).getByRole("button", { name: "Continuar" }),
+    );
 
     await waitFor(() => {
       expect(
-        screen.queryByRole("button", { name: "Continuar" }),
+        screen.queryByRole("dialog", {
+          name: /Unidad completada:|Modulo completado:/i,
+        }),
       ).not.toBeInTheDocument();
     });
   };

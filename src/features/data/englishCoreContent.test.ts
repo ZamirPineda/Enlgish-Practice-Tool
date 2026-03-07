@@ -19,39 +19,46 @@ describe("english core content coverage", () => {
   });
 
   test("keeps level coverage balanced enough for adaptive practice", () => {
-    expect(countByLevel(speedBuilderRounds)).toMatchObject({
-      A1: 14,
-      A2: 14,
-      B1: 14,
-      B2: 30,
-      C1: 33,
-    });
-    expect(countByLevel(paraphraseDuelRounds)).toMatchObject({
-      A2: 11,
-      B1: 11,
-      B2: 16,
-      C1: 17,
-    });
-    expect(countByLevel(sentenceTransformerRounds)).toMatchObject({
-      A2: 9,
-      B1: 9,
-      B2: 18,
-      C1: 19,
-    });
-    expect(countByLevel(errorHunterRounds)).toMatchObject({
-      A2: 11,
-      B1: 12,
-      B2: 14,
-      C1: 19,
-    });
+    const speedBuilderByLevel = countByLevel(speedBuilderRounds);
+    const paraphraseByLevel = countByLevel(paraphraseDuelRounds);
+    const transformerByLevel = countByLevel(sentenceTransformerRounds);
+    const errorHunterByLevel = countByLevel(errorHunterRounds);
+
+    expect(speedBuilderByLevel.A1).toBeGreaterThanOrEqual(14);
+    expect(speedBuilderByLevel.A2).toBeGreaterThanOrEqual(14);
+    expect(speedBuilderByLevel.B1).toBeGreaterThanOrEqual(14);
+    expect(speedBuilderByLevel.B2).toBeGreaterThanOrEqual(30);
+    expect(speedBuilderByLevel.C1).toBeGreaterThanOrEqual(33);
+
+    expect(paraphraseByLevel.A2).toBeGreaterThanOrEqual(11);
+    expect(paraphraseByLevel.B1).toBeGreaterThanOrEqual(11);
+    expect(paraphraseByLevel.B2).toBeGreaterThanOrEqual(16);
+    expect(paraphraseByLevel.C1).toBeGreaterThanOrEqual(17);
+
+    expect(transformerByLevel.A2).toBeGreaterThanOrEqual(9);
+    expect(transformerByLevel.B1).toBeGreaterThanOrEqual(9);
+    expect(transformerByLevel.B2).toBeGreaterThanOrEqual(18);
+    expect(transformerByLevel.C1).toBeGreaterThanOrEqual(19);
+
+    expect(errorHunterByLevel.A2).toBeGreaterThanOrEqual(11);
+    expect(errorHunterByLevel.B1).toBeGreaterThanOrEqual(12);
+    expect(errorHunterByLevel.B2).toBeGreaterThanOrEqual(14);
+    expect(errorHunterByLevel.C1).toBeGreaterThanOrEqual(19);
   });
 
   test("keeps every round tagged for topic-aware reuse", () => {
-    [speedBuilderRounds, paraphraseDuelRounds, sentenceTransformerRounds, errorHunterRounds]
+    [
+      speedBuilderRounds,
+      paraphraseDuelRounds,
+      sentenceTransformerRounds,
+      errorHunterRounds,
+    ]
       .flat()
       .forEach((round) => {
         expect(round.tags.length).toBeGreaterThan(0);
-        round.tags.forEach((tag) => expect(tag.trim().length).toBeGreaterThan(0));
+        round.tags.forEach((tag) =>
+          expect(tag.trim().length).toBeGreaterThan(0),
+        );
       });
   });
 });

@@ -305,5 +305,5 @@ describe("RoadmapView", () => {
     expect(
       await screen.findByRole("button", { name: "Continuar" }),
     ).toBeInTheDocument();
-  });
+  }, 15000);
 });

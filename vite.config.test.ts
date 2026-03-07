@@ -92,12 +92,14 @@ describe("vite base path", () => {
 
 describe("vite manual chunks", () => {
   it("keeps React ecosystem packages in the same vendor chunk", () => {
-    expect(resolveManualChunk("/node_modules/react/index.js")).toBe("vendor");
+    expect(resolveManualChunk("/node_modules/react/index.js")).toBe(
+      "react-vendor",
+    );
     expect(resolveManualChunk("/node_modules/react-dom/index.js")).toBe(
-      "vendor",
+      "react-vendor",
     );
     expect(resolveManualChunk("/node_modules/react-router-dom/index.js")).toBe(
-      "vendor",
+      "react-vendor",
     );
   });
 });
