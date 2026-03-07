@@ -82,7 +82,7 @@ export interface PreparedAuthoredContentRowsResult {
   sourceLabel?: string;
 }
 
-interface ParsedAuthoredContentRow extends LintableAuthoredContentRow {}
+type ParsedAuthoredContentRow = LintableAuthoredContentRow;
 
 interface ParsedAuthoredContentRowsResult {
   rows: ParsedAuthoredContentRow[];
