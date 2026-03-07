@@ -5,6 +5,177 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 import { configDefaults } from "vitest/config";
 
+const normalizeChunkId = (id: string) => id.replace(/\\/g, "/");
+
+const getVendorChunk = (id: string) => {
+  if (
+    id.includes("/node_modules/react/") ||
+    id.includes("/node_modules/react-dom/") ||
+    id.includes("/node_modules/react-router") ||
+    id.includes("/node_modules/scheduler/")
+  ) {
+    return "react-vendor";
+  }
+
+  if (
+    id.includes("/node_modules/react-aria-components/") ||
+    id.includes("/node_modules/framer-motion/") ||
+    id.includes("/node_modules/@floating-ui/") ||
+    id.includes("/node_modules/@radix-ui/") ||
+    id.includes("/node_modules/cmdk/") ||
+    id.includes("/node_modules/lucide-react/")
+  ) {
+    return "ui-vendor";
+  }
+
+  if (id.includes("/node_modules/recharts/")) {
+    return "charts-vendor";
+  }
+
+  if (
+    id.includes("/node_modules/@tanstack/") ||
+    id.includes("/node_modules/@dnd-kit/")
+  ) {
+    return "feature-vendor";
+  }
+
+  return "vendor";
+};
+
+const getStopGameChunk = (id: string) => {
+  if (
+    id.includes("/src/features/data/stopGameData.ts") ||
+    id.includes("/src/features/data/stop_categories/countries.ts") ||
+    id.includes("/src/features/data/stop_categories/cities.ts") ||
+    id.includes("/src/features/data/stop_categories/capitals.ts") ||
+    id.includes("/src/features/data/stop_categories/landmarks.ts") ||
+    id.includes("/src/features/data/stop_categories/history.ts")
+  ) {
+    return "stop-game-world";
+  }
+
+  if (
+    id.includes("/src/features/data/stop_categories/grammar_verbs.ts") ||
+    id.includes("/src/features/data/stop_categories/grammar.ts") ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/adjectives.ts",
+    ) ||
+    id.includes("/src/features/data/stop_categories/definitions/adverbs.ts") ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/connectors.ts",
+    ) ||
+    id.includes("/src/features/data/stop_categories/definitions/emphasis.ts") ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/interjections.ts",
+    ) ||
+    id.includes("/src/features/data/stop_categories/definitions/modal_verbs.ts")
+  ) {
+    return "stop-game-grammar-core";
+  }
+
+  if (
+    id.includes("/src/features/data/stop_categories/definitions/emotions.ts") ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/phrasal_verbs.ts",
+    ) ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/phrasal_nouns.ts",
+    ) ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/compound_adjectives.ts",
+    )
+  ) {
+    return "stop-game-grammar-extended";
+  }
+
+  if (
+    id.includes("/src/features/data/stop_categories/language_extras.ts") ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/collocations.ts",
+    ) ||
+    id.includes("/src/features/data/stop_categories/definitions/idioms.ts") ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/opposites.ts",
+    ) ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/false_friends.ts",
+    ) ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/compound_words.ts",
+    )
+  ) {
+    return "stop-game-language-patterns";
+  }
+
+  if (
+    id.includes(
+      "/src/features/data/stop_categories/definitions/homophones.ts",
+    ) ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/minimal_pairs.ts",
+    ) ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/sounds_and_noise.ts",
+    ) ||
+    id.includes("/src/features/data/stop_categories/definitions/slang.ts") ||
+    id.includes(
+      "/src/features/data/stop_categories/definitions/rare_literary.ts",
+    ) ||
+    id.includes("/src/features/data/stop_categories/definitions/proverbs.ts")
+  ) {
+    return "stop-game-language-sound";
+  }
+
+  if (
+    id.includes("/src/features/data/stop_categories/daily.ts") ||
+    id.includes("/src/features/data/stop_categories/daily_") ||
+    id.includes("/src/features/data/stop_categories/education.ts") ||
+    id.includes("/src/features/data/stop_categories/lifestyle.ts") ||
+    id.includes("/src/features/data/stop_categories/lifestyle_")
+  ) {
+    return "stop-game-daily";
+  }
+
+  if (
+    id.includes("/src/features/data/stop_categories/nature.ts") ||
+    id.includes("/src/features/data/stop_categories/science.ts") ||
+    id.includes("/src/features/data/stop_categories/animals.ts") ||
+    id.includes("/src/features/data/stop_categories/colors.ts") ||
+    id.includes("/src/features/data/stop_categories/fruits.ts") ||
+    id.includes("/src/features/data/stop_categories/vegetables.ts") ||
+    id.includes("/src/features/data/stop_categories/flora_and_geology.ts") ||
+    id.includes("/src/features/data/stop_categories/philosophy.ts")
+  ) {
+    return "stop-game-nature";
+  }
+
+  if (
+    id.includes("/src/features/data/stop_categories/media.ts") ||
+    id.includes("/src/features/data/stop_categories/media_") ||
+    id.includes("/src/features/data/stop_categories/academic.ts") ||
+    id.includes("/src/features/data/stop_categories/academic_") ||
+    id.includes("/src/features/data/stop_categories/specialized.ts") ||
+    id.includes("/src/features/data/stop_categories/specialized_") ||
+    id.includes("/src/features/data/stop_categories/technology.ts") ||
+    id.includes("/src/features/data/stop_categories/vocabulary_challenge.ts")
+  ) {
+    return "stop-game-advanced";
+  }
+
+  return null;
+};
+
+const getTechDeckChunk = (id: string) => {
+  const match = id.match(
+    /\/src\/features\/data\/techDecks_chunks\/part(\d+)\.ts$/,
+  );
+  if (!match) {
+    return null;
+  }
+
+  return `tech-decks-part${match[1]}`;
+};
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, ".", "");
   const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1];
@@ -106,14 +277,20 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            if (id.includes("node_modules")) {
-              return "vendor";
+            const normalizedId = normalizeChunkId(id);
+
+            if (normalizedId.includes("/node_modules/")) {
+              return getVendorChunk(normalizedId);
             }
-            if (
-              id.includes("/data/stop_categories/") ||
-              id.includes("/data/stopGameData")
-            ) {
-              return "game-data";
+
+            const stopGameChunk = getStopGameChunk(normalizedId);
+            if (stopGameChunk) {
+              return stopGameChunk;
+            }
+
+            const techDeckChunk = getTechDeckChunk(normalizedId);
+            if (techDeckChunk) {
+              return techDeckChunk;
             }
           },
         },
