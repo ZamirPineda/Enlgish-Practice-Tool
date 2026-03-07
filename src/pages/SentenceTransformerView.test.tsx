@@ -1,6 +1,7 @@
 import React from "react";
 import { beforeEach, afterEach, describe, test, expect, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import SentenceTransformerView from "@/pages/SentenceTransformerView";
 import { sentenceTransformerRounds } from "@/features/data/sentenceTransformer";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
@@ -22,6 +23,13 @@ vi.mock("@/components/ui/Toast", () => ({
 }));
 
 describe("SentenceTransformerView", () => {
+  const renderView = (entries = ["/english"]) =>
+    render(
+      <MemoryRouter initialEntries={entries}>
+        <SentenceTransformerView />
+      </MemoryRouter>,
+    );
+
   const startGame = () => {
     fireEvent.click(screen.getByRole("button", { name: /Iniciar/i }));
   };
@@ -40,7 +48,7 @@ describe("SentenceTransformerView", () => {
   });
 
   test("renders title and transformation label", () => {
-    render(<SentenceTransformerView />);
+    renderView();
     startGame();
 
     expect(screen.getByText("Sentence Transformer")).toBeInTheDocument();
@@ -48,7 +56,7 @@ describe("SentenceTransformerView", () => {
   });
 
   test("accepts correct transformed sentence", () => {
-    render(<SentenceTransformerView />);
+    renderView();
     startGame();
 
     fireEvent.change(screen.getByLabelText("Transformer answer"), {
@@ -62,7 +70,7 @@ describe("SentenceTransformerView", () => {
   });
 
   test("accepts close conditional variant with contraction", () => {
-    render(<SentenceTransformerView />);
+    renderView();
     startGame();
 
     fireEvent.change(screen.getByLabelText("Transformer answer"), {
@@ -76,7 +84,7 @@ describe("SentenceTransformerView", () => {
   });
 
   test("tracks mode_mismatch analytics reason", () => {
-    render(<SentenceTransformerView />);
+    renderView();
     startGame();
 
     fireEvent.change(screen.getByLabelText("Transformer answer"), {
@@ -93,7 +101,7 @@ describe("SentenceTransformerView", () => {
   });
 
   test("auto-upshifts difficulty after 3 consecutive correct answers and logs cause", () => {
-    render(<SentenceTransformerView />);
+    renderView();
     startGame();
 
     fireEvent.click(

@@ -1,6 +1,7 @@
 import React from "react";
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import StudyDocsQuizView from "@/pages/StudyDocsQuizView";
 import { docsQuizQuestions } from "@/features/data/docs_quiz";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
@@ -18,6 +19,13 @@ vi.mock("@/components/ui/Toast", () => ({
 }));
 
 describe("StudyDocsQuizView", () => {
+  const renderView = (entries = ["/docs?mode=quiz"]) =>
+    render(
+      <MemoryRouter initialEntries={entries}>
+        <StudyDocsQuizView />
+      </MemoryRouter>,
+    );
+
   const startGame = () => {
     fireEvent.click(screen.getByRole("button", { name: "Iniciar Quiz" }));
   };
@@ -43,7 +51,7 @@ describe("StudyDocsQuizView", () => {
   });
 
   test("renders start panel and enters playing state", () => {
-    render(<StudyDocsQuizView />);
+    renderView();
 
     expect(screen.getByText("Tech Interview Quiz")).toBeInTheDocument();
     startGame();
@@ -55,7 +63,7 @@ describe("StudyDocsQuizView", () => {
   });
 
   test("auto-downshifts difficulty after 3 wrong answers and logs cause", () => {
-    render(<StudyDocsQuizView />);
+    renderView();
 
     fireEvent.click(screen.getAllByRole("button", { name: "Hard" })[0]);
     startGame();
@@ -86,7 +94,7 @@ describe("StudyDocsQuizView", () => {
   });
 
   test("auto-upshifts difficulty after 3 correct answers and logs cause", () => {
-    render(<StudyDocsQuizView />);
+    renderView();
 
     fireEvent.click(screen.getAllByRole("button", { name: "Easy" })[0]);
     startGame();

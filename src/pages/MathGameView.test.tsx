@@ -2,6 +2,7 @@ import React from "react";
 import { act } from "react";
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import MathGameView from "@/pages/MathGameView";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
 import {
@@ -23,6 +24,13 @@ vi.mock("@/components/ui/Toast", () => ({
 }));
 
 describe("MathGameView", () => {
+  const renderView = (entries = ["/math"]) =>
+    render(
+      <MemoryRouter initialEntries={entries}>
+        <MathGameView />
+      </MemoryRouter>,
+    );
+
   const normalizeText = (value: string | null | undefined) =>
     (value || "").replace(/\s+/g, " ").trim();
 
@@ -124,7 +132,7 @@ describe("MathGameView", () => {
   });
 
   test("renders start panel and starts a session", () => {
-    render(<MathGameView />);
+    renderView();
 
     expect(screen.getByText("Math Speed Duel")).toBeInTheDocument();
     startGame();
@@ -134,7 +142,7 @@ describe("MathGameView", () => {
   });
 
   test("auto-downshifts difficulty after 3 consecutive errors and logs cause", () => {
-    render(<MathGameView />);
+    renderView();
     startGame();
 
     fireEvent.click(screen.getByRole("button", { name: "Set math level Hard" }));
@@ -160,7 +168,7 @@ describe("MathGameView", () => {
   });
 
   test("auto-upshifts difficulty after 3 consecutive correct answers and logs cause", () => {
-    render(<MathGameView />);
+    renderView();
     startGame();
 
     fireEvent.click(screen.getByRole("button", { name: "Set math level Easy" }));
@@ -183,5 +191,13 @@ describe("MathGameView", () => {
       trigger: "consecutive_correct",
       changed: true,
     });
+  });
+  test("autostarts roadmap sessions with mapped difficulty", () => {
+    renderView([
+      "/math?roadmap=1&autostart=1&roadmapNode=node_math&gameId=math_game&difficulty=hard&routeObjective=math_speed&tags=calculus",
+    ]);
+
+    expect(screen.getByText(/Tema:/)).toBeInTheDocument();
+    expect(screen.getByText(/Respuesta esperada:/)).toBeInTheDocument();
   });
 });

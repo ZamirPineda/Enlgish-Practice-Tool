@@ -1,4 +1,5 @@
-﻿import React, { useRef, useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
@@ -25,7 +26,10 @@ import {
   shouldUpshiftByCorrectStreak,
 } from "@/lib/adaptiveDifficulty";
 import { toast } from "@/components/ui/Toast";
-
+import {
+  matchesRoadmapTags,
+  parseRoadmapSessionConfig,
+} from "@/lib/roadmapLaunch";
 type ErrorHunterLevel = ErrorHunterRound["level"];
 
 const LEVEL_ORDER: ErrorHunterLevel[] = ["A2", "B1", "B2", "C1"];
@@ -61,8 +65,21 @@ const normalizeSentence = (text: string) =>
     .trim();
 
 const ErrorHunterView: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const roadmapConfig = useMemo(
+    () => parseRoadmapSessionConfig(searchParams, "error_hunter"),
+    [searchParams],
+  );
+  const didAutoStartRef = useRef(false);
+  const resolveRoadmapLevel = (value?: string | null): ErrorHunterLevel => {
+    if (value && LEVEL_ORDER.includes(value as ErrorHunterLevel)) {
+      return value as ErrorHunterLevel;
+    }
+
+    return ERROR_HUNTER_DIFFICULTY.defaultLevel;
+  };
   const [selectedLevel, setSelectedLevel] = useState<ErrorHunterLevel>(
-    ERROR_HUNTER_DIFFICULTY.defaultLevel,
+    resolveRoadmapLevel(roadmapConfig?.difficulty),
   );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
@@ -82,14 +99,19 @@ const ErrorHunterView: React.FC = () => {
     const levelRounds = errorHunterRounds.filter(
       (item) => item.level === selectedLevel,
     );
+    const filteredLevelRounds = levelRounds.filter((item) =>
+      matchesRoadmapTags(item.tags, roadmapConfig?.tags || []),
+    );
+    const candidateRounds =
+      filteredLevelRounds.length > 0 ? filteredLevelRounds : levelRounds;
     // Simple Fisher-Yates shuffle for replayability
-    const shuffled = [...levelRounds];
+    const shuffled = [...candidateRounds];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
-  }, [selectedLevel]);
+  }, [roadmapConfig?.tags, selectedLevel]);
 
   const round = rounds[roundIndex];
   const roundTime = getTimeByPreset(
@@ -102,6 +124,11 @@ const ErrorHunterView: React.FC = () => {
       ERROR_HUNTER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
+
+  useEffect(() => {
+    if (!roadmapConfig?.difficulty) return;
+    setSelectedLevel(resolveRoadmapLevel(roadmapConfig.difficulty));
+  }, [roadmapConfig?.difficulty]);
 
   useEffect(() => {
     setRoundIndex(0);
@@ -166,7 +193,7 @@ const ErrorHunterView: React.FC = () => {
     timeLeft * TIME_BONUS_MULTIPLIER * levelMultiplier,
   );
 
-  const startSession = () => {
+  const startSession = useCallback(() => {
     sessionStartTime.current = Date.now();
     setHasStarted(true);
     trackAnalyticsEvent("session_start", {
@@ -174,6 +201,9 @@ const ErrorHunterView: React.FC = () => {
       level: selectedLevel,
       timePreset,
       roundTime,
+      roadmapNodeId: roadmapConfig?.nodeId,
+      roadmapRouteObjective: roadmapConfig?.routeObjective,
+      roadmapTags: roadmapConfig?.tags,
     });
     setRoundIndex(0);
     setAnswer("");
@@ -185,7 +215,28 @@ const ErrorHunterView: React.FC = () => {
     setTimeoutReached(false);
     wrongStreakRef.current = 0;
     correctStreakRef.current = 0;
-  };
+  }, [
+    roadmapConfig?.nodeId,
+    roadmapConfig?.routeObjective,
+    roadmapConfig?.tags,
+    roundTime,
+    selectedLevel,
+    timePreset,
+  ]);
+
+  useEffect(() => {
+    if (
+      !roadmapConfig?.autostart ||
+      hasStarted ||
+      didAutoStartRef.current ||
+      rounds.length === 0
+    ) {
+      return;
+    }
+
+    didAutoStartRef.current = true;
+    startSession();
+  }, [hasStarted, roadmapConfig?.autostart, rounds.length, startSession]);
 
   const handleCheck = () => {
     if (!answer.trim() || submitted) return;
@@ -628,3 +679,7 @@ const ErrorHunterView: React.FC = () => {
 };
 
 export default ErrorHunterView;
+
+
+
+

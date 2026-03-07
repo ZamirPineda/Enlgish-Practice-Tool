@@ -5,6 +5,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
@@ -32,6 +33,10 @@ import {
   MathAdaptiveLevel,
   MathPracticeQuestion,
 } from "@/lib/mathPracticeBank";
+import {
+  matchesRoadmapTags,
+  parseRoadmapSessionConfig,
+} from "@/lib/roadmapLaunch";
 
 type GameState = "idle" | "playing" | "finished";
 
@@ -68,13 +73,30 @@ const isFormulaLike = (value: string): boolean => {
 };
 
 const MathGameView: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const roadmapConfig = useMemo(
+    () => parseRoadmapSessionConfig(searchParams, "math_game"),
+    [searchParams],
+  );
+  const didAutoStartRef = useRef(false);
+  const resolveRoadmapLevel = (value?: string | null): MathAdaptiveLevel => {
+    if (value && LEVEL_ORDER.includes(value as MathAdaptiveLevel)) {
+      return value as MathAdaptiveLevel;
+    }
+
+    return MATH_GAME_DIFFICULTY.defaultLevel;
+  };
   const [selectedLevel, setSelectedLevel] = useState<MathAdaptiveLevel>(
-    MATH_GAME_DIFFICULTY.defaultLevel,
+    resolveRoadmapLevel(roadmapConfig?.difficulty),
   );
-  const questionBank = useMemo(
-    () => getMathPracticeQuestionBank(selectedLevel),
-    [selectedLevel],
-  );
+  const questionBank = useMemo(() => {
+    const levelQuestions = getMathPracticeQuestionBank(selectedLevel);
+    const filteredQuestions = levelQuestions.filter((question) =>
+      matchesRoadmapTags(question.tags, roadmapConfig?.tags || []),
+    );
+
+    return filteredQuestions.length > 0 ? filteredQuestions : levelQuestions;
+  }, [roadmapConfig?.tags, selectedLevel]);
 
   const sessionStartTime = useRef<number>(Date.now());
   const wrongStreakRef = useRef(0);
@@ -111,6 +133,11 @@ const MathGameView: React.FC = () => {
       MATH_GAME_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
+
+  useEffect(() => {
+    if (!roadmapConfig?.difficulty) return;
+    setSelectedLevel(resolveRoadmapLevel(roadmapConfig.difficulty));
+  }, [roadmapConfig?.difficulty]);
 
   const getNextQuestionIndex = useCallback((currentIndex: number) => {
     if (questionBank.length <= 1) return 0;
@@ -176,13 +203,16 @@ const MathGameView: React.FC = () => {
     return () => window.clearTimeout(timerId);
   }, [finishGame, gameState, lives, timeLeft]);
 
-  const startGame = () => {
+  const startGame = useCallback(() => {
     sessionStartTime.current = Date.now();
     trackAnalyticsEvent("session_start", {
       game: "math_game",
       level: selectedLevel,
       timePreset,
       gameDuration,
+      roadmapNodeId: roadmapConfig?.nodeId,
+      roadmapRouteObjective: roadmapConfig?.routeObjective,
+      roadmapTags: roadmapConfig?.tags,
     });
     if (questionBank.length === 0) return;
     setGameState("playing");
@@ -195,7 +225,34 @@ const MathGameView: React.FC = () => {
     wrongStreakRef.current = 0;
     correctStreakRef.current = 0;
     setQuestionIndex(Math.floor(Math.random() * questionBank.length));
-  };
+  }, [
+    gameDuration,
+    questionBank.length,
+    roadmapConfig?.nodeId,
+    roadmapConfig?.routeObjective,
+    roadmapConfig?.tags,
+    selectedLevel,
+    timePreset,
+  ]);
+
+  useEffect(() => {
+    if (
+      !roadmapConfig?.autostart ||
+      gameState !== "idle" ||
+      didAutoStartRef.current ||
+      questionBank.length === 0
+    ) {
+      return;
+    }
+
+    didAutoStartRef.current = true;
+    startGame();
+  }, [
+    gameState,
+    questionBank.length,
+    roadmapConfig?.autostart,
+    startGame,
+  ]);
 
   const handleOptionSelect = (option: string) => {
     if (!currentQuestion || selectedOption) return;

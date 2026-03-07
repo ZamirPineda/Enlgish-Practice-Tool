@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
@@ -21,6 +22,10 @@ import {
   shouldUpshiftByCorrectStreak,
 } from "@/lib/adaptiveDifficulty";
 import { toast } from "@/components/ui/Toast";
+import {
+  matchesRoadmapTags,
+  parseRoadmapSessionConfig,
+} from "@/lib/roadmapLaunch";
 
 interface FileNode {
   name: string;
@@ -269,6 +274,19 @@ interface StudyDocsGameViewProps {
 }
 
 const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
+  const [searchParams] = useSearchParams();
+  const roadmapConfig = useMemo(
+    () => parseRoadmapSessionConfig(searchParams, "study_docs_game"),
+    [searchParams],
+  );
+  const didAutoStartRef = useRef(false);
+  const resolveRoadmapLevel = (value?: string | null): DocsGameLevel => {
+    if (value && LEVEL_ORDER.includes(value as DocsGameLevel)) {
+      return value as DocsGameLevel;
+    }
+
+    return DOCS_GAME_DIFFICULTY.defaultLevel;
+  };
   const { isOnline } = useNetworkStatus();
   const entries = useMemo(
     () =>
@@ -277,16 +295,26 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
       ),
     [fileTree],
   );
+  const filteredEntries = useMemo(() => {
+    const nextEntries = entries.filter((entry) =>
+      matchesRoadmapTags(
+        [entry.category, entry.title, entry.path],
+        roadmapConfig?.tags || [],
+      ),
+    );
+
+    return nextEntries.length > 0 ? nextEntries : entries;
+  }, [entries, roadmapConfig?.tags]);
   const categories = useMemo(
-    () => Array.from(new Set(entries.map((entry) => entry.category))),
-    [entries],
+    () => Array.from(new Set(filteredEntries.map((entry) => entry.category))),
+    [filteredEntries],
   );
 
   const sessionStartTime = useRef<number>(Date.now());
   const wrongStreakRef = useRef(0);
   const correctStreakRef = useRef(0);
   const [selectedLevel, setSelectedLevel] = useState<DocsGameLevel>(
-    DOCS_GAME_DIFFICULTY.defaultLevel,
+    resolveRoadmapLevel(roadmapConfig?.difficulty),
   );
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
@@ -326,6 +354,11 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
   };
 
   useEffect(() => {
+    if (!roadmapConfig?.difficulty) return;
+    setSelectedLevel(resolveRoadmapLevel(roadmapConfig.difficulty));
+  }, [roadmapConfig?.difficulty]);
+
+  useEffect(() => {
     if (gameState !== "playing") {
       setTimeLeft(gameDuration);
     }
@@ -338,7 +371,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     }
   }, []);
 
-  const getDocContent = async (
+  const getDocContent = useCallback(async (
     docEntry: StudyDocEntry,
   ): Promise<ParsedDocContent | null> => {
     if (docCache[docEntry.path]) {
@@ -356,10 +389,10 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     } catch {
       return null;
     }
-  };
+  }, [docCache]);
 
-  const buildTitleOptions = (correctDoc: StudyDocEntry): string[] => {
-    const sameCategory = entries
+  const buildTitleOptions = useCallback((correctDoc: StudyDocEntry): string[] => {
+    const sameCategory = filteredEntries
       .filter(
         (entry) =>
           entry.path !== correctDoc.path &&
@@ -367,7 +400,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
       )
       .map((entry) => entry.title);
 
-    const fallbackPool = entries
+    const fallbackPool = filteredEntries
       .filter((entry) => entry.path !== correctDoc.path)
       .map((entry) => entry.title);
 
@@ -376,16 +409,16 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     ).slice(0, 3);
 
     return shuffle([correctDoc.title, ...distractors]);
-  };
+  }, [filteredEntries]);
 
-  const getNextRound = async (
+  const getNextRound = useCallback(async (
     level: DocsGameLevel = selectedLevel,
   ): Promise<QuizRound | null> => {
-    if (entries.length < 4) return null;
+    if (filteredEntries.length < 4) return null;
 
     const candidatePoolSize =
       level === "hard" ? 20 : level === "easy" ? 10 : 15;
-    const candidates = shuffle(entries).slice(0, candidatePoolSize);
+    const candidates = shuffle(filteredEntries).slice(0, candidatePoolSize);
     for (const docEntry of candidates) {
       const parsed = await getDocContent(docEntry);
       if (!parsed) continue;
@@ -548,7 +581,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     }
 
     return null;
-  };
+  }, [buildTitleOptions, filteredEntries, getDocContent, selectedLevel]);
 
   const finishGame = () => {
     setGameState("finished");
@@ -589,7 +622,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     return () => window.clearTimeout(timer);
   }, [gameState, lives, timeLeft]);
 
-  const startGame = async () => {
+  const startGame = useCallback(async () => {
     setIsRoundLoading(true);
     const firstRound = await getNextRound(selectedLevel);
     setIsRoundLoading(false);
@@ -601,6 +634,9 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
       level: selectedLevel,
       timePreset,
       gameDuration,
+      roadmapNodeId: roadmapConfig?.nodeId,
+      roadmapRouteObjective: roadmapConfig?.routeObjective,
+      roadmapTags: roadmapConfig?.tags,
     });
     setGameState("playing");
     setTimeLeft(gameDuration);
@@ -612,7 +648,34 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     wrongStreakRef.current = 0;
     correctStreakRef.current = 0;
     setCurrentRound(firstRound);
-  };
+  }, [
+    gameDuration,
+    getNextRound,
+    roadmapConfig?.nodeId,
+    roadmapConfig?.routeObjective,
+    roadmapConfig?.tags,
+    selectedLevel,
+    timePreset,
+  ]);
+
+  useEffect(() => {
+    if (
+      !roadmapConfig?.autostart ||
+      gameState !== "idle" ||
+      didAutoStartRef.current ||
+      filteredEntries.length < 4
+    ) {
+      return;
+    }
+
+    didAutoStartRef.current = true;
+    void startGame();
+  }, [
+    filteredEntries.length,
+    gameState,
+    roadmapConfig?.autostart,
+    startGame,
+  ]);
 
   const handleAnswer = (option: string) => {
     if (!currentRound || selectedOption) return;
@@ -718,7 +781,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     }, 700);
   };
 
-  if (entries.length === 0) {
+  if (filteredEntries.length === 0) {
     return (
       <Card className="max-w-4xl mx-auto text-center">
         <h3 className="text-xl font-black text-text-primary mb-2">

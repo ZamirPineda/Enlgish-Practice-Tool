@@ -29,6 +29,7 @@ const ProfileView = lazy(() => import("@/pages/ProfileView"));
 const ContentCurationView = lazy(
   () => import("@/pages/ContentCurationView"),
 );
+const RoadmapView = lazy(() => import("@/pages/RoadmapView"));
 const CodeSyntaxBuilderView = lazy(
   () => import("@/pages/CodeSyntaxBuilderView"),
 );
@@ -132,6 +133,7 @@ export const AnimatedRoutes = ({
         />
         <Route path="/stats" element={<StatsView />} />
         <Route path="/content-curation" element={<ContentCurationView />} />
+        <Route path="/roadmap" element={<RoadmapView />} />
         <Route
           path="/profile"
           element={

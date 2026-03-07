@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
@@ -24,6 +25,10 @@ import {
   shouldUpshiftByCorrectStreak,
 } from "@/lib/adaptiveDifficulty";
 import { toast } from "@/components/ui/Toast";
+import {
+  matchesRoadmapTags,
+  parseRoadmapSessionConfig,
+} from "@/lib/roadmapLaunch";
 
 type TransformerLevel = SentenceTransformerRound["level"];
 
@@ -91,8 +96,23 @@ const getTokenSimilarity = (left: string, right: string): number => {
 };
 
 const SentenceTransformerView: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const roadmapConfig = useMemo(
+    () => parseRoadmapSessionConfig(searchParams, "sentence_transformer"),
+    [searchParams],
+  );
+  const didAutoStartRef = useRef(false);
+  const resolveRoadmapLevel = (
+    value?: string | null,
+  ): TransformerLevel => {
+    if (value && LEVEL_ORDER.includes(value as TransformerLevel)) {
+      return value as TransformerLevel;
+    }
+
+    return SENTENCE_TRANSFORMER_DIFFICULTY.defaultLevel;
+  };
   const [selectedLevel, setSelectedLevel] = useState<TransformerLevel>(
-    SENTENCE_TRANSFORMER_DIFFICULTY.defaultLevel,
+    resolveRoadmapLevel(roadmapConfig?.difficulty),
   );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
@@ -110,14 +130,19 @@ const SentenceTransformerView: React.FC = () => {
     const levelRounds = sentenceTransformerRounds.filter(
       (item) => item.level === selectedLevel,
     );
+    const filteredLevelRounds = levelRounds.filter((item) =>
+      matchesRoadmapTags(item.tags, roadmapConfig?.tags || []),
+    );
+    const candidateRounds =
+      filteredLevelRounds.length > 0 ? filteredLevelRounds : levelRounds;
     // Simple Fisher-Yates shuffle for replayability
-    const shuffled = [...levelRounds];
+    const shuffled = [...candidateRounds];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
-  }, [selectedLevel]);
+  }, [roadmapConfig?.tags, selectedLevel]);
 
   const round = rounds[roundIndex];
   const roundTime = getTimeByPreset(
@@ -131,6 +156,11 @@ const SentenceTransformerView: React.FC = () => {
         .nextLevel,
     );
   };
+
+  useEffect(() => {
+    if (!roadmapConfig?.difficulty) return;
+    setSelectedLevel(resolveRoadmapLevel(roadmapConfig.difficulty));
+  }, [roadmapConfig?.difficulty]);
 
   useEffect(() => {
     setRoundIndex(0);
@@ -206,7 +236,7 @@ const SentenceTransformerView: React.FC = () => {
 
   const isCorrect = submitted && passesFlexibleValidation;
 
-  const startSession = () => {
+  const startSession = useCallback(() => {
     sessionStartTime.current = Date.now();
     setHasStarted(true);
     trackAnalyticsEvent("session_start", {
@@ -214,6 +244,9 @@ const SentenceTransformerView: React.FC = () => {
       level: selectedLevel,
       timePreset,
       roundTime,
+      roadmapNodeId: roadmapConfig?.nodeId,
+      roadmapRouteObjective: roadmapConfig?.routeObjective,
+      roadmapTags: roadmapConfig?.tags,
     });
     setRoundIndex(0);
     setAnswer("");
@@ -223,7 +256,28 @@ const SentenceTransformerView: React.FC = () => {
     setTimeLeft(roundTime);
     wrongStreakRef.current = 0;
     correctStreakRef.current = 0;
-  };
+  }, [
+    roadmapConfig?.nodeId,
+    roadmapConfig?.routeObjective,
+    roadmapConfig?.tags,
+    roundTime,
+    selectedLevel,
+    timePreset,
+  ]);
+
+  useEffect(() => {
+    if (
+      !roadmapConfig?.autostart ||
+      hasStarted ||
+      didAutoStartRef.current ||
+      rounds.length === 0
+    ) {
+      return;
+    }
+
+    didAutoStartRef.current = true;
+    startSession();
+  }, [hasStarted, roadmapConfig?.autostart, rounds.length, startSession]);
 
   const handleCheck = () => {
     if (!answer.trim() || submitted) return;

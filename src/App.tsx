@@ -484,6 +484,7 @@ const App: React.FC = () => {
                 💬 Diplomatic Reviewer
               </NavItem>
             </NavGroup>
+            <NavItem to="/roadmap">Roadmap</NavItem>
             <NavItem to="/content-curation">Curacion</NavItem>
             <NavItem to="/stats">🏆 Logros</NavItem>
             <NavItem to="/profile">👤 Perfil</NavItem>
@@ -569,6 +570,7 @@ const App: React.FC = () => {
                       💬 Diplomatic Reviewer
                     </NavItem>
                   </div>
+                  <NavItem to="/roadmap">Roadmap</NavItem>
                   <NavItem to="/content-curation">Curacion</NavItem>
                   <NavItem to="/profile">👤 Perfil</NavItem>
                   <NavItem to="/stats">🏆 Logros</NavItem>

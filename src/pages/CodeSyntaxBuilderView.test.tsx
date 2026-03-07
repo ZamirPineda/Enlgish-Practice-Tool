@@ -2,6 +2,7 @@ import React from "react";
 import { act } from "react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import CodeSyntaxBuilderView from "@/pages/CodeSyntaxBuilderView";
 import { codeSyntaxData } from "@/features/data/codeSyntaxData";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
@@ -19,6 +20,13 @@ vi.mock("@/components/ui/Toast", () => ({
 }));
 
 describe("CodeSyntaxBuilderView", () => {
+  const renderView = (entries = ["/dev"]) =>
+    render(
+      <MemoryRouter initialEntries={entries}>
+        <CodeSyntaxBuilderView />
+      </MemoryRouter>,
+    );
+
   const startGame = () => {
     fireEvent.click(screen.getByRole("button", { name: /Empezar Build/i }));
   };
@@ -57,7 +65,7 @@ describe("CodeSyntaxBuilderView", () => {
   });
 
   test("renders title and default timer", () => {
-    render(<CodeSyntaxBuilderView />);
+    renderView();
     startGame();
 
     expect(screen.getByText("Code Syntax Builder")).toBeInTheDocument();
@@ -65,7 +73,7 @@ describe("CodeSyntaxBuilderView", () => {
   });
 
   test("auto-downshifts difficulty after 3 timeouts and logs cause", () => {
-    render(<CodeSyntaxBuilderView />);
+    renderView();
     startGame();
 
     fireEvent.click(
@@ -101,7 +109,7 @@ describe("CodeSyntaxBuilderView", () => {
   });
 
   test("auto-upshifts difficulty after 3 correct rounds and logs cause", () => {
-    render(<CodeSyntaxBuilderView />);
+    renderView();
     startGame();
 
     fireEvent.click(

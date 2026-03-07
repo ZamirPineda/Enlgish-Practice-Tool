@@ -1,6 +1,7 @@
 import React from "react";
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import ErrorHunterView from "@/pages/ErrorHunterView";
 import { errorHunterRounds } from "@/features/data/errorHunter";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
@@ -18,6 +19,13 @@ vi.mock("@/components/ui/Toast", () => ({
 }));
 
 describe("ErrorHunterView", () => {
+  const renderView = (entries = ["/english"]) =>
+    render(
+      <MemoryRouter initialEntries={entries}>
+        <ErrorHunterView />
+      </MemoryRouter>,
+    );
+
   const startGame = () => {
     fireEvent.click(screen.getByRole("button", { name: /Comenzar/i }));
   };
@@ -32,7 +40,7 @@ describe("ErrorHunterView", () => {
   });
 
   test("renders title and default level timer", () => {
-    render(<ErrorHunterView />);
+    renderView();
     startGame();
 
     expect(screen.getByText("Error Hunter")).toBeInTheDocument();
@@ -40,7 +48,7 @@ describe("ErrorHunterView", () => {
   });
 
   test("switches to C1 level and updates timer", () => {
-    render(<ErrorHunterView />);
+    renderView();
     startGame();
 
     fireEvent.click(
@@ -51,7 +59,7 @@ describe("ErrorHunterView", () => {
   });
 
   test("adds score after entering a correct correction", () => {
-    render(<ErrorHunterView />);
+    renderView();
     startGame();
 
     const b1Sentence = errorHunterRounds.find((round) => round.level === "B1");
@@ -68,7 +76,7 @@ describe("ErrorHunterView", () => {
   });
 
   test("auto-downshifts difficulty after 3 consecutive errors and logs cause", () => {
-    render(<ErrorHunterView />);
+    renderView();
     startGame();
 
     fireEvent.click(
@@ -103,7 +111,7 @@ describe("ErrorHunterView", () => {
   });
 
   test("auto-upshifts difficulty after 3 consecutive correct answers and logs cause", () => {
-    render(<ErrorHunterView />);
+    renderView();
     startGame();
 
     fireEvent.click(
@@ -138,5 +146,13 @@ describe("ErrorHunterView", () => {
       trigger: "consecutive_correct",
       changed: true,
     });
+  });
+  test("autostarts roadmap sessions with mapped difficulty", () => {
+    renderView([
+      "/english?roadmap=1&autostart=1&roadmapNode=node_fix&gameId=error_hunter&difficulty=A2&routeObjective=english_interview&tags=english",
+    ]);
+
+    expect(screen.getByText("Error Hunter")).toBeInTheDocument();
+    expect(screen.getByText("45s")).toBeInTheDocument();
   });
 });

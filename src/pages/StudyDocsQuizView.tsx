@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
@@ -21,6 +22,10 @@ import {
   shouldUpshiftByCorrectStreak,
 } from "@/lib/adaptiveDifficulty";
 import { toast } from "@/components/ui/Toast";
+import {
+  matchesRoadmapTags,
+  parseRoadmapSessionConfig,
+} from "@/lib/roadmapLaunch";
 
 type GameState = "idle" | "playing" | "finished";
 type DocsQuizLevel = "easy" | "normal" | "hard";
@@ -93,11 +98,24 @@ const shuffle = <T,>(items: T[]): T[] => {
 };
 
 const StudyDocsQuizView: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const roadmapConfig = useMemo(
+    () => parseRoadmapSessionConfig(searchParams, "study_docs_quiz"),
+    [searchParams],
+  );
+  const didAutoStartRef = useRef(false);
+  const resolveRoadmapLevel = (value?: string | null): DocsQuizLevel => {
+    if (value && LEVEL_ORDER.includes(value as DocsQuizLevel)) {
+      return value as DocsQuizLevel;
+    }
+
+    return DOCS_QUIZ_DIFFICULTY.defaultLevel;
+  };
   const sessionStartTime = useRef<number>(Date.now());
   const wrongStreakRef = useRef(0);
   const correctStreakRef = useRef(0);
   const [selectedLevel, setSelectedLevel] = useState<DocsQuizLevel>(
-    DOCS_QUIZ_DIFFICULTY.defaultLevel,
+    resolveRoadmapLevel(roadmapConfig?.difficulty),
   );
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
@@ -129,13 +147,34 @@ const StudyDocsQuizView: React.FC = () => {
     );
   }, []);
 
-  const buildPoolForLevel = (level: DocsQuizLevel): QuizQuestionWithLevel[] => {
-    const levelQuestions = questionsByLevel[level];
-    if (levelQuestions.length === 0) {
-      return shuffle([...ADAPTIVE_DOCS_QUIZ_QUESTIONS]);
-    }
-    return shuffle([...levelQuestions]);
-  };
+  useEffect(() => {
+    if (!roadmapConfig?.difficulty) return;
+    setSelectedLevel(resolveRoadmapLevel(roadmapConfig.difficulty));
+  }, [roadmapConfig?.difficulty]);
+
+  const buildPoolForLevel = useCallback(
+    (level: DocsQuizLevel): QuizQuestionWithLevel[] => {
+      const levelQuestions = questionsByLevel[level];
+      const filteredLevelQuestions = levelQuestions.filter((question) =>
+        matchesRoadmapTags(
+          [
+            question.category,
+            question.subCategory || "",
+            question.question,
+            question.explanation,
+          ],
+          roadmapConfig?.tags || [],
+        ),
+      );
+      const candidateQuestions =
+        filteredLevelQuestions.length > 0 ? filteredLevelQuestions : levelQuestions;
+      if (candidateQuestions.length === 0) {
+        return shuffle([...ADAPTIVE_DOCS_QUIZ_QUESTIONS]);
+      }
+      return shuffle([...candidateQuestions]);
+    },
+    [questionsByLevel, roadmapConfig?.tags],
+  );
 
   const handleLevelSelect = (nextLevel: DocsQuizLevel) => {
     setSelectedLevel((currentLevel) => {
@@ -215,7 +254,7 @@ const StudyDocsQuizView: React.FC = () => {
     return pool[0];
   };
 
-  const startGame = () => {
+  const startGame = useCallback(() => {
     const shuffledPool = buildPoolForLevel(selectedLevel);
     const firstRound = getNextRound(shuffledPool);
     if (!firstRound) return;
@@ -227,6 +266,9 @@ const StudyDocsQuizView: React.FC = () => {
       timePreset,
       questionTime,
       questions: shuffledPool.length,
+      roadmapNodeId: roadmapConfig?.nodeId,
+      roadmapRouteObjective: roadmapConfig?.routeObjective,
+      roadmapTags: roadmapConfig?.tags,
     });
 
     setQuestionsPool(shuffledPool.slice(1));
@@ -241,7 +283,28 @@ const StudyDocsQuizView: React.FC = () => {
     correctStreakRef.current = 0;
     setCurrentRound(firstRound);
     setShuffledOptions(shuffle([...firstRound.options]));
-  };
+  }, [
+    buildPoolForLevel,
+    questionTime,
+    roadmapConfig?.nodeId,
+    roadmapConfig?.routeObjective,
+    roadmapConfig?.tags,
+    selectedLevel,
+    timePreset,
+  ]);
+
+  useEffect(() => {
+    if (
+      !roadmapConfig?.autostart ||
+      gameState !== "idle" ||
+      didAutoStartRef.current
+    ) {
+      return;
+    }
+
+    didAutoStartRef.current = true;
+    startGame();
+  }, [gameState, roadmapConfig?.autostart, startGame]);
 
   const handleAnswer = (option: string) => {
     if (!currentRound || selectedOption !== null) return;

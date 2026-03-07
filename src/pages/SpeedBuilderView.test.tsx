@@ -1,6 +1,7 @@
 import React from "react";
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import SpeedBuilderView from "@/pages/SpeedBuilderView";
 import { speedBuilderRounds } from "@/features/data/speedBuilder";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
@@ -18,6 +19,13 @@ vi.mock("@/components/ui/Toast", () => ({
 }));
 
 describe("SpeedBuilderView", () => {
+  const renderView = (entries = ["/english"]) =>
+    render(
+      <MemoryRouter initialEntries={entries}>
+        <SpeedBuilderView />
+      </MemoryRouter>,
+    );
+
   const startGame = () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Iniciar Speed Builder" }),
@@ -37,7 +45,7 @@ describe("SpeedBuilderView", () => {
   });
 
   test("renders title and first round counter", () => {
-    render(<SpeedBuilderView />);
+    renderView();
     startGame();
 
     expect(screen.getByText("Speed Builder")).toBeInTheDocument();
@@ -46,7 +54,7 @@ describe("SpeedBuilderView", () => {
   });
 
   test("shows and dismisses the beginner coachmark", async () => {
-    render(<SpeedBuilderView />);
+    renderView();
     startGame();
 
     expect(
@@ -63,7 +71,7 @@ describe("SpeedBuilderView", () => {
   });
 
   test("switches to B2 level with lower timer and no beginner hint", () => {
-    render(<SpeedBuilderView />);
+    renderView();
     startGame();
 
     fireEvent.click(screen.getByRole("button", { name: "Set level B2" }));
@@ -75,7 +83,7 @@ describe("SpeedBuilderView", () => {
   });
 
   test("allows selecting and clearing words", () => {
-    render(<SpeedBuilderView />);
+    renderView();
     startGame();
 
     const sentence = speedBuilderRounds.find(
@@ -99,7 +107,7 @@ describe("SpeedBuilderView", () => {
   });
 
   test("adds score after a correct answer", () => {
-    render(<SpeedBuilderView />);
+    renderView();
     startGame();
 
     const a2Sentence = speedBuilderRounds.find(
@@ -119,7 +127,7 @@ describe("SpeedBuilderView", () => {
   });
 
   test("shows optional hint in easy mode", () => {
-    render(<SpeedBuilderView />);
+    renderView();
     startGame();
 
     fireEvent.click(screen.getByRole("button", { name: "Show hint" }));
@@ -128,7 +136,7 @@ describe("SpeedBuilderView", () => {
   });
 
   test("auto-downshifts difficulty after 3 consecutive errors and logs cause", () => {
-    render(<SpeedBuilderView />);
+    renderView();
     startGame();
 
     fireEvent.click(screen.getByRole("button", { name: "Set level C1" }));
@@ -161,5 +169,14 @@ describe("SpeedBuilderView", () => {
       trigger: "consecutive_wrong",
       changed: true,
     });
+  });
+  test("autostarts roadmap sessions with mapped difficulty", () => {
+    renderView([
+      "/english?roadmap=1&autostart=1&roadmapNode=node_intro&gameId=speed_builder&difficulty=A2&routeObjective=english_interview&tags=english",
+    ]);
+
+    expect(screen.getByText("Speed Builder")).toBeInTheDocument();
+    expect(screen.getByText(/Ronda 1/)).toBeInTheDocument();
+    expect(screen.getByText("55s")).toBeInTheDocument();
   });
 });

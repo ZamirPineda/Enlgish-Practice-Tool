@@ -2,6 +2,7 @@ import React from "react";
 import { act } from "react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import CodeBugHunterView from "@/pages/CodeBugHunterView";
 import { codeBugsData } from "@/features/data/codeBugsData";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
@@ -19,6 +20,13 @@ vi.mock("@/components/ui/Toast", () => ({
 }));
 
 describe("CodeBugHunterView", () => {
+  const renderView = (entries = ["/dev"]) =>
+    render(
+      <MemoryRouter initialEntries={entries}>
+        <CodeBugHunterView />
+      </MemoryRouter>,
+    );
+
   const startGame = () => {
     fireEvent.click(screen.getByRole("button", { name: /Comenzar Caza/i }));
   };
@@ -51,7 +59,7 @@ describe("CodeBugHunterView", () => {
   });
 
   test("renders title and default timer", () => {
-    render(<CodeBugHunterView />);
+    renderView();
     startGame();
 
     expect(screen.getByText("Code Bug Hunter")).toBeInTheDocument();
@@ -59,7 +67,7 @@ describe("CodeBugHunterView", () => {
   });
 
   test("shows and dismisses the line selection coachmark", () => {
-    const firstRender = render(<CodeBugHunterView />);
+    const firstRender = renderView();
     startGame();
 
     expect(
@@ -70,7 +78,7 @@ describe("CodeBugHunterView", () => {
 
     firstRender.unmount();
 
-    render(<CodeBugHunterView />);
+    renderView();
     startGame();
 
     expect(
@@ -79,7 +87,7 @@ describe("CodeBugHunterView", () => {
   });
 
   test("auto-downshifts difficulty after 3 timeouts and logs cause", () => {
-    render(<CodeBugHunterView />);
+    renderView();
     startGame();
 
     fireEvent.click(
@@ -115,7 +123,7 @@ describe("CodeBugHunterView", () => {
   });
 
   test("auto-upshifts difficulty after 3 consecutive correct answers and logs cause", () => {
-    render(<CodeBugHunterView />);
+    renderView();
     startGame();
 
     fireEvent.click(

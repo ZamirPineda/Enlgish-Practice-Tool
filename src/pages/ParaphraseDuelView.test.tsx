@@ -1,6 +1,7 @@
 import React from "react";
 import { beforeEach, afterEach, describe, test, expect, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import ParaphraseDuelView from "@/pages/ParaphraseDuelView";
 import { paraphraseDuelRounds } from "@/features/data/paraphraseDuel";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
@@ -22,6 +23,13 @@ vi.mock("@/components/ui/Toast", () => ({
 }));
 
 describe("ParaphraseDuelView", () => {
+  const renderView = (entries = ["/english"]) =>
+    render(
+      <MemoryRouter initialEntries={entries}>
+        <ParaphraseDuelView />
+      </MemoryRouter>,
+    );
+
   const startGame = () => {
     fireEvent.click(screen.getByRole("button", { name: "Iniciar Duelo" }));
   };
@@ -40,7 +48,7 @@ describe("ParaphraseDuelView", () => {
   });
 
   test("renders title and default timer", () => {
-    render(<ParaphraseDuelView />);
+    renderView();
     startGame();
 
     expect(screen.getByText("Paraphrase Duel")).toBeInTheDocument();
@@ -48,7 +56,7 @@ describe("ParaphraseDuelView", () => {
   });
 
   test("accepts a correct paraphrase", () => {
-    render(<ParaphraseDuelView />);
+    renderView();
     startGame();
 
     const b1Round = paraphraseDuelRounds.find((round) => round.level === "B1");
@@ -63,7 +71,7 @@ describe("ParaphraseDuelView", () => {
   });
 
   test("accepts a close variant with connector", () => {
-    render(<ParaphraseDuelView />);
+    renderView();
     startGame();
 
     fireEvent.change(screen.getByLabelText("Paraphrase answer"), {
@@ -77,7 +85,7 @@ describe("ParaphraseDuelView", () => {
   });
 
   test("tracks connector_missing analytics reason", () => {
-    render(<ParaphraseDuelView />);
+    renderView();
     startGame();
 
     fireEvent.change(screen.getByLabelText("Paraphrase answer"), {
@@ -94,7 +102,7 @@ describe("ParaphraseDuelView", () => {
   });
 
   test("auto-downshifts difficulty after 3 consecutive errors and logs cause", () => {
-    render(<ParaphraseDuelView />);
+    renderView();
     startGame();
 
     fireEvent.click(screen.getByRole("button", { name: "Set paraphrase level C1" }));

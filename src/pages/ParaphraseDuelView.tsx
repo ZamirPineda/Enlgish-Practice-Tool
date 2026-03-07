@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import GameStartPanel from "@/components/GameStartPanel";
@@ -25,6 +26,10 @@ import {
   shouldUpshiftByCorrectStreak,
 } from "@/lib/adaptiveDifficulty";
 import { toast } from "@/components/ui/Toast";
+import {
+  matchesRoadmapTags,
+  parseRoadmapSessionConfig,
+} from "@/lib/roadmapLaunch";
 
 type DuelLevel = ParaphraseDuelRound["level"];
 
@@ -75,8 +80,21 @@ const getTokenSimilarity = (left: string, right: string): number => {
 };
 
 const ParaphraseDuelView: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const roadmapConfig = useMemo(
+    () => parseRoadmapSessionConfig(searchParams, "paraphrase_duel"),
+    [searchParams],
+  );
+  const didAutoStartRef = useRef(false);
+  const resolveRoadmapLevel = (value?: string | null): DuelLevel => {
+    if (value && LEVEL_ORDER.includes(value as DuelLevel)) {
+      return value as DuelLevel;
+    }
+
+    return PARAPHRASE_DUEL_DIFFICULTY.defaultLevel;
+  };
   const [selectedLevel, setSelectedLevel] = useState<DuelLevel>(
-    PARAPHRASE_DUEL_DIFFICULTY.defaultLevel,
+    resolveRoadmapLevel(roadmapConfig?.difficulty),
   );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
@@ -94,14 +112,19 @@ const ParaphraseDuelView: React.FC = () => {
     const levelRounds = paraphraseDuelRounds.filter(
       (item) => item.level === selectedLevel,
     );
+    const filteredLevelRounds = levelRounds.filter((item) =>
+      matchesRoadmapTags(item.tags, roadmapConfig?.tags || []),
+    );
+    const candidateRounds =
+      filteredLevelRounds.length > 0 ? filteredLevelRounds : levelRounds;
     // Simple Fisher-Yates shuffle for replayability
-    const shuffled = [...levelRounds];
+    const shuffled = [...candidateRounds];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
-  }, [selectedLevel]);
+  }, [roadmapConfig?.tags, selectedLevel]);
 
   const round = rounds[roundIndex];
   const roundTime = getTimeByPreset(
@@ -114,6 +137,11 @@ const ParaphraseDuelView: React.FC = () => {
       PARAPHRASE_DUEL_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
+
+  useEffect(() => {
+    if (!roadmapConfig?.difficulty) return;
+    setSelectedLevel(resolveRoadmapLevel(roadmapConfig.difficulty));
+  }, [roadmapConfig?.difficulty]);
 
   useEffect(() => {
     setRoundIndex(0);
@@ -182,7 +210,7 @@ const ParaphraseDuelView: React.FC = () => {
     (normalizedAccepted.includes(normalizedAnswer) || hasCloseMeaning);
   const isCorrect = submitted && passesFlexibleValidation;
 
-  const startSession = () => {
+  const startSession = useCallback(() => {
     sessionStartTime.current = Date.now();
     setHasStarted(true);
     trackAnalyticsEvent("session_start", {
@@ -190,6 +218,9 @@ const ParaphraseDuelView: React.FC = () => {
       level: selectedLevel,
       timePreset,
       roundTime,
+      roadmapNodeId: roadmapConfig?.nodeId,
+      roadmapRouteObjective: roadmapConfig?.routeObjective,
+      roadmapTags: roadmapConfig?.tags,
     });
     setRoundIndex(0);
     setAnswer("");
@@ -199,7 +230,28 @@ const ParaphraseDuelView: React.FC = () => {
     setTotalScore(0);
     wrongStreakRef.current = 0;
     correctStreakRef.current = 0;
-  };
+  }, [
+    roadmapConfig?.nodeId,
+    roadmapConfig?.routeObjective,
+    roadmapConfig?.tags,
+    roundTime,
+    selectedLevel,
+    timePreset,
+  ]);
+
+  useEffect(() => {
+    if (
+      !roadmapConfig?.autostart ||
+      hasStarted ||
+      didAutoStartRef.current ||
+      rounds.length === 0
+    ) {
+      return;
+    }
+
+    didAutoStartRef.current = true;
+    startSession();
+  }, [hasStarted, roadmapConfig?.autostart, rounds.length, startSession]);
 
   const handleCheck = () => {
     if (!answer.trim() || submitted) return;

@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
+import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Coachmark from "@/components/ui/Coachmark";
@@ -24,6 +25,10 @@ import {
 } from "@/lib/adaptiveDifficulty";
 import { mapDifficultyTierToAdaptiveLevel } from "@/lib/practiceContent";
 import { toast } from "@/components/ui/Toast";
+import {
+  matchesRoadmapTags,
+  parseRoadmapSessionConfig,
+} from "@/lib/roadmapLaunch";
 
 type CodeBugHunterLevel = "easy" | "normal" | "hard";
 type CodeBugRound = CodeBugPrompt & { adaptiveLevel: CodeBugHunterLevel };
@@ -84,8 +89,21 @@ const getLanguageColor = (language: string) => {
 };
 
 const CodeBugHunterView: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const roadmapConfig = useMemo(
+    () => parseRoadmapSessionConfig(searchParams, "code_bug_hunter"),
+    [searchParams],
+  );
+  const didAutoStartRef = useRef(false);
+  const resolveRoadmapLevel = (value?: string | null): CodeBugHunterLevel => {
+    if (value && LEVEL_ORDER.includes(value as CodeBugHunterLevel)) {
+      return value as CodeBugHunterLevel;
+    }
+
+    return CODE_BUG_HUNTER_DIFFICULTY.defaultLevel;
+  };
   const [selectedLevel, setSelectedLevel] = useState<CodeBugHunterLevel>(
-    CODE_BUG_HUNTER_DIFFICULTY.defaultLevel,
+    resolveRoadmapLevel(roadmapConfig?.difficulty),
   );
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
@@ -93,14 +111,19 @@ const CodeBugHunterView: React.FC = () => {
     const levelRounds = ADAPTIVE_CODE_BUG_ROUNDS.filter(
       (item) => item.adaptiveLevel === selectedLevel,
     );
-    const shuffled = [...levelRounds];
+    const filteredLevelRounds = levelRounds.filter((item) =>
+      matchesRoadmapTags(item.tags, roadmapConfig?.tags || []),
+    );
+    const candidateRounds =
+      filteredLevelRounds.length > 0 ? filteredLevelRounds : levelRounds;
+    const shuffled = [...candidateRounds];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     // Limit to 5 per session
     return shuffled.slice(0, SESSION_ROUND_LIMIT);
-  }, [selectedLevel]);
+  }, [roadmapConfig?.tags, selectedLevel]);
 
   const [roundIndex, setRoundIndex] = useState(0);
   const sessionStartTime = useRef<number>(Date.now());
@@ -123,6 +146,11 @@ const CodeBugHunterView: React.FC = () => {
       CODE_BUG_HUNTER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
+
+  useEffect(() => {
+    if (!roadmapConfig?.difficulty) return;
+    setSelectedLevel(resolveRoadmapLevel(roadmapConfig.difficulty));
+  }, [roadmapConfig?.difficulty]);
 
   useEffect(() => {
     setRoundIndex(0);
@@ -208,7 +236,7 @@ const CodeBugHunterView: React.FC = () => {
   const basePoints = Math.round(BASE_POINTS_PER_CORRECT * levelMultiplier);
   const timeBonus = Math.round(timeLeft * TIME_BONUS_MULTIPLIER * levelMultiplier);
 
-  const startSession = () => {
+  const startSession = useCallback(() => {
     sessionStartTime.current = Date.now();
     setHasStarted(true);
     trackAnalyticsEvent("session_start", {
@@ -216,6 +244,9 @@ const CodeBugHunterView: React.FC = () => {
       level: selectedLevel,
       timePreset,
       roundTime,
+      roadmapNodeId: roadmapConfig?.nodeId,
+      roadmapRouteObjective: roadmapConfig?.routeObjective,
+      roadmapTags: roadmapConfig?.tags,
     });
     setRoundIndex(0);
     setSelectedLine(null);
@@ -227,7 +258,28 @@ const CodeBugHunterView: React.FC = () => {
     setTimeoutReached(false);
     wrongStreakRef.current = 0;
     correctStreakRef.current = 0;
-  };
+  }, [
+    roadmapConfig?.nodeId,
+    roadmapConfig?.routeObjective,
+    roadmapConfig?.tags,
+    roundTime,
+    selectedLevel,
+    timePreset,
+  ]);
+
+  useEffect(() => {
+    if (
+      !roadmapConfig?.autostart ||
+      hasStarted ||
+      didAutoStartRef.current ||
+      rounds.length === 0
+    ) {
+      return;
+    }
+
+    didAutoStartRef.current = true;
+    startSession();
+  }, [hasStarted, roadmapConfig?.autostart, rounds.length, startSession]);
 
   const handleSelectLine = (lineIndex: number) => {
     if (submitted) return;

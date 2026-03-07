@@ -51,6 +51,15 @@ const COMMAND_ITEMS: CommandItem[] = [
     tags: ["analytics", "progress", "streak"],
   },
   {
+    id: "roadmap",
+    title: "Roadmap",
+    subtitle: "Sequential modules and unit map",
+    to: "/roadmap",
+    group: "General",
+    skill: "general",
+    tags: ["path", "modules", "units", "progress"],
+  },
+  {
     id: "content-curation",
     title: "Content Curation",
     subtitle: "Review, filter and reorder local batches",

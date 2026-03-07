@@ -50,6 +50,7 @@ Construir una app funcional, gratificante y consistente para preparar objetivo G
 - APP-706 aplicado: snapshots compactos fijan el inventario canonico y el bundle de authoring/versionado para que cambios de contenido o contrato rompan CI sin migracion declarada.
 - APP-707 aplicado: mesa de curacion operativa con `@tanstack/react-table`, filtros por metadata, acciones masivas y reorder manual con `@dnd-kit` sobre el subconjunto visible.
 - APP-708 aplicado: la mesa de curacion incorpora alta/edicion tipada con `react-hook-form` + `zod`, errores de validacion por campo y resincronizacion del draft/bundle al editar o crear filas.
+- APP-802 aplicado: modelo versionado de roadmap (`module`, `unit`, `lesson`, `node`) con validacion `zod`, compatibilidad por `routeObjective` e indice flatten para vistas y desbloqueos.
 
 ## Sprint 1 | Base UX/UI + accesibilidad
 
@@ -188,6 +189,13 @@ Objetivo: poder agregar/curar contenido sin tocar N archivos por juego.
 | APP-708 | Story     | Integrar formularios tipados de curacion (`react-hook-form` + `zod`)             |   3 | Alta/edicion/revision en mesa de curacion con validacion consistente y errores claros. |
 
 Total estimado: 39 SP
+
+APP-801 aplicado: `RoadmapView` con mapa secuencial de modulos/unidades, filtros por ruta y estado visible `bloqueado/en progreso/completado` persistido en `localStorage`.
+APP-803 aplicado: reglas de desbloqueo secuencial y mastery minima por leccion; el usuario no avanza a la siguiente unidad o leccion sin cumplir prerequisitos ni `score_target`.
+APP-804 aplicado: cada nodo del roadmap abre una sesion guiada real sobre el juego correspondiente con `autostart`, dificultad mapeada por tipo de juego, `routeObjective` y filtros de contenido cuando la metadata disponible lo permite.
+APP-805 aplicado: el roadmap ahora otorga XP y badges persistidos por completar unidades/modulos y por mantener continuidad diaria especifica del roadmap.
+APP-806 aplicado: tests de flujo secuencial cubren happy path, bloqueo por mastery/prerequisitos y reanudacion de unidad tras recarga.
+APP-807 aplicado: `RoadmapView` usa `react-aria-components` para tabs de ruta y disclosures de modulos/unidades con soporte robusto de teclado, foco visible y lectura por semantica accesible.
 
 ## Sprint 8 | Roadmap secuencial v1 (estilo modulos)
 

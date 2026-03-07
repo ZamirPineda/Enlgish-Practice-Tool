@@ -2,6 +2,7 @@ import React from "react";
 import { act } from "react";
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import StudyDocsGameView from "@/pages/StudyDocsGameView";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
 
@@ -62,6 +63,13 @@ const docsByPath: Record<string, string> = {
 };
 
 describe("StudyDocsGameView", () => {
+  const renderView = (entries = ["/docs?mode=game"]) =>
+    render(
+      <MemoryRouter initialEntries={entries}>
+        <StudyDocsGameView fileTree={fileTree} />
+      </MemoryRouter>,
+    );
+
   const getAnswerButtons = () =>
     screen
       .getAllByRole("button")
@@ -118,7 +126,7 @@ describe("StudyDocsGameView", () => {
   });
 
   test("renders start panel when file tree is available", () => {
-    render(<StudyDocsGameView fileTree={fileTree} />);
+    renderView();
 
     expect(screen.getByText("Doc Hunt")).toBeInTheDocument();
     expect(
@@ -129,7 +137,7 @@ describe("StudyDocsGameView", () => {
   test(
     "auto-downshifts difficulty after 3 wrong answers and logs cause",
     async () => {
-    render(<StudyDocsGameView fileTree={fileTree} />);
+    renderView();
 
     fireEvent.click(screen.getAllByRole("button", { name: "Hard" })[0]);
     await startGame();
@@ -159,7 +167,7 @@ describe("StudyDocsGameView", () => {
   test(
     "auto-upshifts difficulty after 3 correct answers and logs cause",
     async () => {
-    render(<StudyDocsGameView fileTree={fileTree} />);
+    renderView();
 
     fireEvent.click(screen.getAllByRole("button", { name: "Easy" })[0]);
     await startGame();
