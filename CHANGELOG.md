@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.24.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.23.0...english-practice-pal-v1.24.0) (2026-03-07)
+
+
+### Features
+
+* **content:** add roadmap inventory coverage guards ([e8f0aa4](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/e8f0aa450fd99343309a70f47fba37547c105da0))
+* **roadmap:** expand roadmap flow and rewards UI ([0236249](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/0236249c3681ee6c439225e12013c579fee14540))
+
 ## [1.23.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.22.0...english-practice-pal-v1.23.0) (2026-03-07)
 
 
