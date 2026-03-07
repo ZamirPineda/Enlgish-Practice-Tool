@@ -57,7 +57,7 @@ describe("roadmapRewards", () => {
 
     expect(unchangedRewardResult.grants).toHaveLength(0);
 
-    const previousProgress = progress;
+    let previousProgress = progress;
     progress = recordRoadmapNodeMastery(
       defaultRoadmapDefinition,
       progress,
@@ -79,8 +79,74 @@ describe("roadmapRewards", () => {
       new Date("2026-03-07T12:00:00.000Z"),
     );
 
-    expect(moduleRewardResult.grants.map((grant) => grant.badge.title)).toEqual([
-      "Unidad completada: Follow-up Control",
+    expect(moduleRewardResult.grants.map((grant) => grant.badge.title)).toEqual(
+      ["Unidad completada: Follow-up Control"],
+    );
+
+    rewards = moduleRewardResult.nextRewards;
+    previousProgress = progress;
+    progress = recordRoadmapNodeMastery(
+      defaultRoadmapDefinition,
+      progress,
+      "node_story_frame_builder",
+      80,
+    );
+    progress = recordRoadmapNodeMastery(
+      defaultRoadmapDefinition,
+      progress,
+      "node_story_error_cleanup",
+      80,
+    );
+    progress = recordRoadmapNodeMastery(
+      defaultRoadmapDefinition,
+      progress,
+      "node_story_rephrase_variants",
+      80,
+    );
+    progress = recordRoadmapNodeMastery(
+      defaultRoadmapDefinition,
+      progress,
+      "node_story_followup_transform",
+      80,
+    );
+    progress = recordRoadmapNodeMastery(
+      defaultRoadmapDefinition,
+      progress,
+      "node_panel_meeting_builder",
+      90,
+    );
+    progress = recordRoadmapNodeMastery(
+      defaultRoadmapDefinition,
+      progress,
+      "node_panel_precision_cleanup",
+      90,
+    );
+    progress = recordRoadmapNodeMastery(
+      defaultRoadmapDefinition,
+      progress,
+      "node_panel_rephrase_tradeoffs",
+      90,
+    );
+    progress = recordRoadmapNodeMastery(
+      defaultRoadmapDefinition,
+      progress,
+      "node_panel_constraint_transform",
+      90,
+    );
+
+    const finalModuleRewardResult = applyRoadmapRewards(
+      defaultRoadmapDefinition,
+      previousProgress,
+      progress,
+      rewards,
+      new Date("2026-03-09T12:00:00.000Z"),
+    );
+
+    expect(
+      finalModuleRewardResult.grants.map((grant) => grant.badge.title),
+    ).toEqual([
+      "Unidad completada: Behavioral Stories",
+      "Unidad completada: Panel Pressure",
       "Modulo completado: English Interview Path",
     ]);
   });

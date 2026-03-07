@@ -8,6 +8,9 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Popover,
+  Dialog,
+  DialogTrigger,
 } from "react-aria-components";
 import { Link, useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
@@ -32,12 +35,16 @@ import {
 import type { RoadmapRouteObjective } from "@/lib/roadmapModel";
 import { addGlobalXp } from "@/lib/xpStore";
 import { toast } from "@/components/ui/Toast";
+import { RoadmapPath } from "@/components/roadmap/RoadmapPath";
+import { RoadmapNodeItem } from "@/components/roadmap/RoadmapNodeItem";
+import { UnitCompletionModal } from "@/components/roadmap/UnitCompletionModal";
 
 const ROUTE_OPTIONS: Array<{
   id: RoadmapRouteObjective;
   label: string;
   accent: string;
   badgeClassName: string;
+  icon: React.ReactNode;
 }> = [
   {
     id: "english_interview",
@@ -45,6 +52,20 @@ const ROUTE_OPTIONS: Array<{
     accent: "from-sky-500/20 to-cyan-500/10",
     badgeClassName:
       "border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="w-4 h-4 mr-1.5 opacity-80"
+      >
+        <path
+          fillRule="evenodd"
+          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM2.625 12c0-1.026.175-2.008.497-2.932h3.337a.75.75 0 00.75-.75V7.5a.75.75 0 00-.75-.75H5.05A9.761 9.761 0 0112 2.75v5.303a.75.75 0 001.06.685l3.52-1.76a.75.75 0 01.996.34 9.75 9.75 0 011.674 5.433v.3a.75.75 0 01-.75.75h-3.32a.75.75 0 00-.53.22L12 16.657a.75.75 0 00-.22.53v3.832a.75.75 0 00.16.467c-.636.17-1.305.264-2 .264-5.385 0-9.75-4.365-9.75-9.75z"
+          clipRule="evenodd"
+        />
+      </svg>
+    ),
   },
   {
     id: "math_speed",
@@ -52,6 +73,20 @@ const ROUTE_OPTIONS: Array<{
     accent: "from-emerald-500/20 to-lime-500/10",
     badgeClassName:
       "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="w-4 h-4 mr-1.5 opacity-80"
+      >
+        <path
+          fillRule="evenodd"
+          d="M3.75 4.5a3 3 0 013-3h10.5a3 3 0 013 3v15a3 3 0 01-3 3H6.75a3 3 0 01-3-3v-15zM6.75 6a1.5 1.5 0 00-1.5 1.5v1.5c0 .828.672 1.5 1.5 1.5h10.5a1.5 1.5 0 001.5-1.5v-1.5A1.5 1.5 0 0017.25 6H6.75zm1.5 6a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v1.5a.75.75 0 01-.75.75h-1.5a.75.75 0 01-.75-.75v-1.5zm0 3.75a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v1.5a.75.75 0 01-.75.75h-1.5a.75.75 0 01-.75-.75v-1.5zm3.75-3.75a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v1.5a.75.75 0 01-.75.75h-1.5a.75.75 0 01-.75-.75v-1.5zm0 3.75a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v1.5a.75.75 0 01-.75.75h-1.5a.75.75 0 01-.75-.75v-1.5z"
+          clipRule="evenodd"
+        />
+      </svg>
+    ),
   },
   {
     id: "dev_reasoning",
@@ -59,14 +94,46 @@ const ROUTE_OPTIONS: Array<{
     accent: "from-amber-500/20 to-orange-500/10",
     badgeClassName:
       "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="w-4 h-4 mr-1.5 opacity-80"
+      >
+        <path
+          fillRule="evenodd"
+          d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm14.25 6a.75.75 0 0 1-.22.53l-2.25 2.25a.75.75 0 1 1-1.06-1.06L15.44 12l-1.72-1.72a.75.75 0 1 1 1.06-1.06l2.25 2.25c.141.14.22.331.22.53Zm-10.28-.53a.75.75 0 0 0 0 1.06l2.25 2.25a.75.75 0 1 0 1.06-1.06L8.56 12l1.72-1.72a.75.75 0 1 0-1.06-1.06l-2.25 2.25Z"
+          clipRule="evenodd"
+        />
+      </svg>
+    ),
   },
 ];
 
 const ROUTE_FILTER_OPTIONS = [
-  { id: "all", label: "Todas las rutas" },
+  {
+    id: "all",
+    label: "Todas las rutas",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="w-4 h-4 mr-1.5 opacity-80"
+      >
+        <path
+          fillRule="evenodd"
+          d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+          clipRule="evenodd"
+        />
+      </svg>
+    ),
+  },
   ...ROUTE_OPTIONS.map((route) => ({
     id: route.id,
     label: route.label,
+    icon: route.icon,
   })),
 ] as const;
 
@@ -83,8 +150,7 @@ const STATUS_COPY: Record<
   },
   in_progress: {
     label: "En progreso",
-    className:
-      "border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300",
+    className: "border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300",
   },
   locked: {
     label: "Bloqueado",
@@ -98,7 +164,7 @@ const formatDifficulty = (value: string) =>
 const getRouteLabel = (route: RoadmapRouteObjective | "all") =>
   route === "all"
     ? "todas las rutas"
-    : ROUTE_OPTIONS.find((option) => option.id === route)?.label ?? route;
+    : (ROUTE_OPTIONS.find((option) => option.id === route)?.label ?? route);
 
 const StatusBadge = ({ status }: { status: RoadmapNodeProgressStatus }) => (
   <span
@@ -115,9 +181,16 @@ const RoadmapView: React.FC = () => {
   const [draftMasteryByNodeId, setDraftMasteryByNodeId] = React.useState<
     Record<string, number>
   >({});
+  const [activeCompletionReward, setActiveCompletionReward] = React.useState<{
+    title: string;
+    description: string;
+    earnedXp: number;
+    badgeId: string;
+  } | null>(null);
 
-  const selectedRoute = (searchParams.get("route") ||
-    "all") as RoadmapRouteObjective | "all";
+  const selectedRoute = (searchParams.get("route") || "all") as
+    | RoadmapRouteObjective
+    | "all";
 
   const snapshot = React.useMemo(
     () => buildRoadmapProgressSnapshot(defaultRoadmapDefinition, progress),
@@ -159,8 +232,27 @@ const RoadmapView: React.FC = () => {
         0,
       );
       addGlobalXp(rewardXp);
+
+      const completionGrant = rewardResult.grants.find(
+        (grant) =>
+          grant.badge.category === "unit_completion" ||
+          grant.badge.category === "module_completion",
+      );
+
+      if (completionGrant) {
+        setActiveCompletionReward({
+          title: completionGrant.badge.title,
+          description: completionGrant.badge.description,
+          earnedXp: completionGrant.badge.rewardXp,
+          badgeId: completionGrant.rewardId,
+        });
+      }
+
       rewardResult.grants.forEach((grant) => {
-        toast.success(`${grant.badge.title} (+${grant.badge.rewardXp} XP)`);
+        // Only toast non-completion grants or if we don't have a modal
+        if (!completionGrant || grant.rewardId !== completionGrant.rewardId) {
+          toast.success(`${grant.badge.title} (+${grant.badge.rewardXp} XP)`);
+        }
       });
     }
   };
@@ -213,6 +305,10 @@ const RoadmapView: React.FC = () => {
   const handleResetAll = () => {
     persistProgress(createEmptyRoadmapProgress());
     setDraftMasteryByNodeId({});
+  };
+
+  const closeCompletionModal = () => {
+    setActiveCompletionReward(null);
   };
 
   return (
@@ -287,8 +383,9 @@ const RoadmapView: React.FC = () => {
                   <Tab
                     key={route.id}
                     id={route.id}
-                    className="rounded-full border border-border bg-surface-2 px-4 py-2 text-sm font-black text-text-secondary outline-none transition-colors data-[hovered]:bg-surface-hover data-[hovered]:text-text-primary data-[selected]:border-accent data-[selected]:bg-accent data-[selected]:text-white data-[focus-visible]:ring-2 data-[focus-visible]:ring-accent/40"
+                    className="flex items-center rounded-full border border-border bg-surface-2 px-4 py-2 text-sm font-black text-text-secondary outline-none transition-colors data-[hovered]:bg-surface-hover data-[hovered]:text-text-primary data-[selected]:border-accent data-[selected]:bg-accent data-[selected]:text-white data-[focus-visible]:ring-2 data-[focus-visible]:ring-accent/40"
                   >
+                    {route.icon}
                     {route.label}
                   </Tab>
                 ))}
@@ -532,7 +629,9 @@ const RoadmapView: React.FC = () => {
                                       </p>
                                     </div>
                                     <div className="flex flex-col items-end gap-2">
-                                      <StatusBadge status={unitSummary.status} />
+                                      <StatusBadge
+                                        status={unitSummary.status}
+                                      />
                                       <span className="rounded-full border border-border bg-surface-1 px-2.5 py-1 text-[11px] font-black uppercase tracking-wider text-text-secondary">
                                         {isUnitExpanded ? "Ocultar" : "Mostrar"}
                                       </span>
@@ -573,18 +672,23 @@ const RoadmapView: React.FC = () => {
                                                 {lesson.description}
                                               </p>
                                             </div>
-                                            <StatusBadge status={lessonSummary.status} />
+                                            <StatusBadge
+                                              status={lessonSummary.status}
+                                            />
                                           </div>
 
                                           <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold text-text-muted">
                                             {lessonSummary.masteryTarget ? (
                                               <span className="rounded-full border border-border bg-surface-2 px-2.5 py-1">
-                                                Objetivo {lessonSummary.masteryTarget}%
+                                                Objetivo{" "}
+                                                {lessonSummary.masteryTarget}%
                                               </span>
                                             ) : null}
-                                            {lessonSummary.masteryAverage !== null ? (
+                                            {lessonSummary.masteryAverage !==
+                                            null ? (
                                               <span className="rounded-full border border-border bg-surface-2 px-2.5 py-1">
-                                                Mastery actual {lessonSummary.masteryAverage}%
+                                                Mastery actual{" "}
+                                                {lessonSummary.masteryAverage}%
                                               </span>
                                             ) : null}
                                           </div>
@@ -595,119 +699,174 @@ const RoadmapView: React.FC = () => {
                                             </div>
                                           ) : null}
 
-                                          <div className="mt-4 space-y-3">
-                                            {lesson.nodes.map((node) => {
+                                          <div className="mt-8 relative flex flex-col items-center pb-8">
+                                            {lesson.nodes.map((node, index) => {
                                               const nodeStatus =
-                                                snapshot.statusByNodeId[node.id];
+                                                snapshot.statusByNodeId[
+                                                  node.id
+                                                ];
                                               const isLocked =
                                                 nodeStatus === "locked";
                                               const currentMastery =
-                                                snapshot.masteryByNodeId[node.id] ??
-                                                null;
+                                                snapshot.masteryByNodeId[
+                                                  node.id
+                                                ] ?? null;
+
+                                              // Calculation for the serpentine path positioning
+                                              const PATH_WIDTH = 60;
+                                              const VERTICAL_SPACING = 120; // Distance between nodes
+                                              const offset =
+                                                PATH_WIDTH *
+                                                Math.sin((index * Math.PI) / 2); // Zigzag alternate
+
+                                              // Previous node coordinates for the SVG path
+                                              const prevOffset =
+                                                index > 0
+                                                  ? PATH_WIDTH *
+                                                    Math.sin(
+                                                      ((index - 1) * Math.PI) /
+                                                        2,
+                                                    )
+                                                  : 0;
 
                                               return (
-                                                <article
+                                                <div
                                                   key={node.id}
-                                                  aria-label={`Node ${node.title}`}
-                                                  className={`rounded-2xl border p-4 transition-colors ${
-                                                    nodeStatus === "in_progress"
-                                                      ? "border-accent/40 bg-accent/5"
-                                                      : isLocked
-                                                        ? "border-border bg-surface-2/70"
-                                                        : "border-emerald-500/20 bg-emerald-500/5"
-                                                  }`}
+                                                  className="relative w-full flex justify-center"
+                                                  style={{
+                                                    height: `${VERTICAL_SPACING}px`,
+                                                  }}
                                                 >
-                                                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                                                    <div>
-                                                      <div className="flex flex-wrap items-center gap-2">
-                                                        <p className="text-base font-black text-text-primary">
-                                                          {node.title}
-                                                        </p>
-                                                        <StatusBadge status={nodeStatus} />
-                                                      </div>
-                                                      <p className="mt-2 text-sm text-text-secondary">
-                                                        {node.description}
-                                                      </p>
-                                                      <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold text-text-muted">
-                                                        <span className="rounded-full border border-border bg-surface-1 px-2.5 py-1">
-                                                          {node.kind}
-                                                        </span>
-                                                        <span className="rounded-full border border-border bg-surface-1 px-2.5 py-1">
-                                                          {formatDifficulty(node.difficulty)}
-                                                        </span>
-                                                        <span className="rounded-full border border-border bg-surface-1 px-2.5 py-1">
-                                                          {node.estimatedMinutes} min
-                                                        </span>
-                                                        {currentMastery !== null ? (
-                                                          <span className="rounded-full border border-border bg-surface-1 px-2.5 py-1">
-                                                            Mastery {currentMastery}%
-                                                          </span>
-                                                        ) : null}
-                                                      </div>
-                                                    </div>
+                                                  {/* Connecting Path from Previous Node */}
+                                                  {index > 0 && (
+                                                    <RoadmapPath
+                                                      startX={prevOffset + 32} // Node center + offset
+                                                      startY={
+                                                        -VERTICAL_SPACING / 2 +
+                                                        16
+                                                      }
+                                                      endX={offset + 32}
+                                                      endY={16}
+                                                      status={nodeStatus}
+                                                    />
+                                                  )}
 
-                                                    <div className="flex min-w-[15rem] flex-col gap-2">
-                                                      {isLocked ? (
-                                                        <span className="inline-flex items-center justify-center rounded-xl border border-border bg-surface-2 px-4 py-2 text-sm font-black text-text-muted">
-                                                          Aun bloqueado
-                                                        </span>
-                                                      ) : (
-                                                        <>
-                                                          <Link
-                                                            to={buildRoadmapNodeSessionHref(
-                                                              node,
-                                                            )}
-                                                            className="inline-flex items-center justify-center rounded-xl bg-accent px-4 py-2 text-sm font-black text-white transition-colors hover:bg-accent-hover"
-                                                          >
-                                                            Abrir sesion guiada
-                                                          </Link>
-                                                          <label className="text-xs font-black uppercase tracking-wider text-text-muted">
-                                                            Mastery
-                                                            <select
-                                                              aria-label={`Mastery para ${node.title}`}
-                                                              className="mt-1 w-full rounded-xl border border-border bg-surface-1 px-3 py-2 text-sm font-bold text-text-primary"
-                                                              value={getDraftMastery(
-                                                                node.id,
-                                                              )}
-                                                              onChange={(event) =>
-                                                                handleNodeMasteryChange(
-                                                                  node.id,
-                                                                  event.target
-                                                                    .value,
-                                                                )
-                                                              }
-                                                            >
-                                                              {MASTERY_OPTIONS.map(
-                                                                (option) => (
-                                                                  <option
-                                                                    key={option}
-                                                                    value={option}
-                                                                  >
-                                                                    {option}%
-                                                                  </option>
-                                                                ),
-                                                              )}
-                                                            </select>
-                                                          </label>
-                                                          <button
-                                                            type="button"
-                                                            onClick={() =>
-                                                              handleRecordMastery(
-                                                                node.id,
-                                                              )
-                                                            }
-                                                            className="rounded-xl border border-border bg-surface-1 px-4 py-2 text-sm font-black text-text-primary transition-colors hover:bg-surface-hover"
-                                                            aria-label={`Registrar mastery para ${node.title}`}
-                                                          >
-                                                            {currentMastery !== null
-                                                              ? "Actualizar mastery"
-                                                              : "Registrar mastery"}
-                                                          </button>
-                                                        </>
-                                                      )}
-                                                    </div>
-                                                  </div>
-                                                </article>
+                                                  <DialogTrigger>
+                                                    <RoadmapNodeItem
+                                                      node={node}
+                                                      status={nodeStatus}
+                                                      isUnlocked={!isLocked}
+                                                      offset={offset}
+                                                      onClick={() => {}}
+                                                    />
+
+                                                    <Popover
+                                                      placement="top"
+                                                      className="w-[320px] rounded-2xl bg-surface-1 border border-border shadow-soft p-4 animate-fade-in z-50"
+                                                    >
+                                                      <Dialog className="outline-none flex flex-col gap-3">
+                                                        {({ close }) => (
+                                                          <>
+                                                            <div className="flex justify-between items-start">
+                                                              <div>
+                                                                <h3 className="text-lg font-black text-text-primary">
+                                                                  {node.title}
+                                                                </h3>
+                                                                <p className="text-sm text-text-secondary mt-1">
+                                                                  {
+                                                                    node.description
+                                                                  }
+                                                                </p>
+                                                              </div>
+                                                            </div>
+
+                                                            <div className="flex flex-wrap gap-2 text-xs font-bold text-text-muted mt-2">
+                                                              <span className="rounded-full border border-border bg-surface-2 px-2.5 py-1">
+                                                                {node.kind}
+                                                              </span>
+                                                              <span className="rounded-full border border-border bg-surface-2 px-2.5 py-1">
+                                                                {formatDifficulty(
+                                                                  node.difficulty,
+                                                                )}
+                                                              </span>
+                                                              <span className="rounded-full border border-border bg-surface-2 px-2.5 py-1">
+                                                                {
+                                                                  node.estimatedMinutes
+                                                                }{" "}
+                                                                min
+                                                              </span>
+                                                            </div>
+
+                                                            <div className="mt-2 flex flex-col gap-2 pt-3 border-t border-border">
+                                                              <Link
+                                                                to={buildRoadmapNodeSessionHref(
+                                                                  node,
+                                                                )}
+                                                                className="inline-flex w-full items-center justify-center rounded-xl bg-accent px-4 py-3 text-sm font-black text-white hover:bg-accent-hover transition-colors"
+                                                              >
+                                                                Iniciar Practica
+                                                              </Link>
+
+                                                              <div className="flex items-center gap-2 mt-2">
+                                                                <select
+                                                                  aria-label={`Mastery para ${node.title}`}
+                                                                  className="mt-1 w-full rounded-xl border border-border bg-surface-1 px-3 py-2 text-sm font-bold text-text-primary"
+                                                                  value={getDraftMastery(
+                                                                    node.id,
+                                                                  )}
+                                                                  onChange={(
+                                                                    event,
+                                                                  ) =>
+                                                                    handleNodeMasteryChange(
+                                                                      node.id,
+                                                                      event
+                                                                        .target
+                                                                        .value,
+                                                                    )
+                                                                  }
+                                                                >
+                                                                  {MASTERY_OPTIONS.map(
+                                                                    (
+                                                                      option,
+                                                                    ) => (
+                                                                      <option
+                                                                        key={
+                                                                          option
+                                                                        }
+                                                                        value={
+                                                                          option
+                                                                        }
+                                                                      >
+                                                                        {option}
+                                                                        %
+                                                                      </option>
+                                                                    ),
+                                                                  )}
+                                                                </select>
+                                                                <button
+                                                                  type="button"
+                                                                  onClick={() => {
+                                                                    handleRecordMastery(
+                                                                      node.id,
+                                                                    );
+                                                                    close();
+                                                                  }}
+                                                                  className="rounded-xl border border-border bg-surface-1 px-4 py-2 text-sm font-black text-text-primary transition-colors hover:bg-surface-hover"
+                                                                  aria-label={`Registrar mastery para ${node.title}`}
+                                                                >
+                                                                  {currentMastery !==
+                                                                  null
+                                                                    ? "Actualizar"
+                                                                    : "Registrar"}
+                                                                </button>
+                                                              </div>
+                                                            </div>
+                                                          </>
+                                                        )}
+                                                      </Dialog>
+                                                    </Popover>
+                                                  </DialogTrigger>
+                                                </div>
                                               );
                                             })}
                                           </div>
@@ -729,6 +888,14 @@ const RoadmapView: React.FC = () => {
           })}
         </section>
       </div>
+
+      <UnitCompletionModal
+        isOpen={activeCompletionReward !== null}
+        onClose={closeCompletionModal}
+        title={activeCompletionReward?.title ?? ""}
+        description={activeCompletionReward?.description ?? ""}
+        earnedXp={activeCompletionReward?.earnedXp ?? 0}
+      />
     </div>
   );
 };

@@ -1,6 +1,13 @@
 import React from "react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import RoadmapView from "@/pages/RoadmapView";
 
@@ -26,28 +33,53 @@ describe("RoadmapView", () => {
     addGlobalXpMock.mockReset();
   });
 
-  test("requires enough mastery before unlocking the next lesson", () => {
+  test("requires enough mastery before unlocking the next lesson", async () => {
+    const user = userEvent.setup();
     const firstRender = render(
       <MemoryRouter>
         <RoadmapView />
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole("heading", { name: "Roadmap" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Roadmap" }),
+    ).toBeInTheDocument();
+
+    const openerNode = screen.getByRole("button", {
+      name: /Interview opener/i,
+    });
+    await user.click(openerNode);
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText("Mastery para Interview opener"),
+      ).toBeInTheDocument();
+    });
 
     fireEvent.change(screen.getByLabelText("Mastery para Interview opener"), {
       target: { value: "60" },
     });
-    fireEvent.click(
+    await user.click(
       screen.getByRole("button", {
         name: "Registrar mastery para Interview opener",
       }),
     );
 
+    const fixSlipsNode = screen.getByRole("button", {
+      name: /Fix grammar slips/i,
+    });
+    await user.click(fixSlipsNode);
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText("Mastery para Fix grammar slips"),
+      ).toBeInTheDocument();
+    });
+
     fireEvent.change(screen.getByLabelText("Mastery para Fix grammar slips"), {
       target: { value: "60" },
     });
-    fireEvent.click(
+    await user.click(
       screen.getByRole("button", {
         name: "Registrar mastery para Fix grammar slips",
       }),
@@ -57,24 +89,37 @@ describe("RoadmapView", () => {
       screen.getByText("Necesitas mastery minima de 70%. Actual: 60%."),
     ).toBeInTheDocument();
 
-    const lockedFollowupNode = screen.getByRole("article", {
-      name: "Node Rephrase concise answers",
+    const lockedFollowupNode = screen.getByRole("button", {
+      name: /Bloqueado: Rephrase concise answers/i,
     });
-    expect(within(lockedFollowupNode).getByText("Bloqueado")).toBeInTheDocument();
+    expect(lockedFollowupNode).toBeDisabled();
+
+    await user.click(fixSlipsNode);
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText("Mastery para Fix grammar slips"),
+      ).toBeInTheDocument();
+    });
 
     fireEvent.change(screen.getByLabelText("Mastery para Fix grammar slips"), {
       target: { value: "80" },
     });
-    fireEvent.click(
+    await user.click(
       screen.getByRole("button", {
         name: "Registrar mastery para Fix grammar slips",
       }),
     );
 
-    const unlockedFollowupNode = screen.getByRole("article", {
-      name: "Node Rephrase concise answers",
+    const continueButton = screen.queryByRole("button", { name: "Continuar" });
+    if (continueButton) {
+      await user.click(continueButton);
+    }
+
+    const unlockedFollowupNode = screen.getByRole("button", {
+      name: /Abrir: Rephrase concise answers/i,
+      hidden: true,
     });
-    expect(within(unlockedFollowupNode).getByText("En progreso")).toBeInTheDocument();
+    expect(unlockedFollowupNode).not.toBeDisabled();
 
     firstRender.unmount();
 
@@ -84,13 +129,19 @@ describe("RoadmapView", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getAllByText(/Mastery 80%/).length).toBeGreaterThanOrEqual(1);
-    expect(
-      screen.getByRole("button", {
-        name: "Registrar mastery para Rephrase concise answers",
-      }),
-    ).toBeInTheDocument();
-  });
+    const rephraseNode = screen.getByRole("button", {
+      name: /Abrir: Rephrase concise answers/i,
+    });
+    await user.click(rephraseNode);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", {
+          name: "Registrar mastery para Rephrase concise answers",
+        }),
+      ).toBeInTheDocument();
+    });
+  }, 15000);
 
   test("filters modules by route", () => {
     render(
@@ -102,7 +153,9 @@ describe("RoadmapView", () => {
     fireEvent.click(screen.getByRole("tab", { name: "Math Speed" }));
 
     expect(screen.getByText("Math Speed Path")).toBeInTheDocument();
-    expect(screen.queryByText("English Interview Path")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("English Interview Path"),
+    ).not.toBeInTheDocument();
     expect(screen.queryByText("Dev Reasoning Path")).not.toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "Math Speed" })).toHaveAttribute(
       "aria-selected",
@@ -153,15 +206,26 @@ describe("RoadmapView", () => {
     ).not.toBeInTheDocument();
   });
 
-  test("builds guided launch links for roadmap nodes", () => {
+  test("builds guided launch links for roadmap nodes", async () => {
     render(
       <MemoryRouter>
         <RoadmapView />
       </MemoryRouter>,
     );
 
+    const openerNode = await screen.findByRole("button", {
+      name: /Interview opener/i,
+    });
+    fireEvent.click(openerNode);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("link", { name: "Iniciar Practica" }),
+      ).toBeInTheDocument();
+    });
+
     const launchLink = screen.getAllByRole("link", {
-      name: "Abrir sesion guiada",
+      name: "Iniciar Practica",
     })[0];
 
     expect(launchLink).toHaveAttribute(
@@ -182,12 +246,23 @@ describe("RoadmapView", () => {
     );
   });
 
-  test("shows roadmap rewards after completing a full unit", () => {
+  test("shows roadmap rewards after completing a full unit", async () => {
     render(
       <MemoryRouter>
         <RoadmapView />
       </MemoryRouter>,
     );
+
+    const openerNode = await screen.findByRole("button", {
+      name: /Interview opener/i,
+    });
+    fireEvent.click(openerNode);
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText("Mastery para Interview opener"),
+      ).toBeInTheDocument();
+    });
 
     fireEvent.change(screen.getByLabelText("Mastery para Interview opener"), {
       target: { value: "70" },
@@ -197,6 +272,17 @@ describe("RoadmapView", () => {
         name: "Registrar mastery para Interview opener",
       }),
     );
+
+    let fixSlipsNode = await screen.findByRole("button", {
+      name: /Fix grammar slips/i,
+    });
+    fireEvent.click(fixSlipsNode);
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText("Mastery para Fix grammar slips"),
+      ).toBeInTheDocument();
+    });
 
     fireEvent.change(screen.getByLabelText("Mastery para Fix grammar slips"), {
       target: { value: "70" },
@@ -208,9 +294,16 @@ describe("RoadmapView", () => {
     );
 
     expect(
-      screen.getByText("Unidad completada: Foundation Answers"),
+      screen.getAllByText("Unidad completada: Foundation Answers")[0],
     ).toBeInTheDocument();
     expect(addGlobalXpMock).toHaveBeenCalledWith(40);
-    expect(screen.getByText("1 badges")).toBeInTheDocument();
+    expect(
+      await screen.findByRole("dialog", {
+        name: "Unidad completada: Foundation Answers",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByRole("button", { name: "Continuar" }),
+    ).toBeInTheDocument();
   });
 });
