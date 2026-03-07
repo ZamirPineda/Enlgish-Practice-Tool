@@ -26,6 +26,9 @@ const DailyLoopView = lazy(() => import("@/pages/DailyLoopView"));
 const StatsView = lazy(() => import("@/pages/StatsView"));
 const SettingsView = lazy(() => import("@/pages/SettingsView"));
 const ProfileView = lazy(() => import("@/pages/ProfileView"));
+const ContentCurationView = lazy(
+  () => import("@/pages/ContentCurationView"),
+);
 const CodeSyntaxBuilderView = lazy(
   () => import("@/pages/CodeSyntaxBuilderView"),
 );
@@ -128,6 +131,7 @@ export const AnimatedRoutes = ({
           element={<SentenceTransformerView />}
         />
         <Route path="/stats" element={<StatsView />} />
+        <Route path="/content-curation" element={<ContentCurationView />} />
         <Route
           path="/profile"
           element={

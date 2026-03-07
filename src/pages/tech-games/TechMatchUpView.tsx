@@ -4,7 +4,6 @@ import GameStartPanel from "@/components/GameStartPanel";
 import DailySessionInsights from "@/components/game/DailySessionInsights";
 import GameHudCard from "@/components/game/GameHudCard";
 import Button from "@/components/ui/Button";
-import { techDecks } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import { addGlobalXp, progressQuest } from "@/lib/xpStore";
 import {
@@ -13,6 +12,11 @@ import {
   shouldDownshiftByWrongStreak,
   shouldUpshiftByCorrectStreak,
 } from "@/lib/adaptiveDifficulty";
+import {
+  createContentSelectionSession,
+  pickNextTechDeckCards,
+  PickedTechDeckCard,
+} from "@/lib/contentInventoryPicker";
 import { toast } from "@/components/ui/Toast";
 
 type MatchDifficulty = "easy" | "normal" | "hard";
@@ -50,6 +54,7 @@ export const TechMatchUpView: React.FC = () => {
   const { deckId } = useParams<{ deckId: string }>();
   const navigate = useNavigate();
 
+  const [deckCards, setDeckCards] = useState<PickedTechDeckCard[]>([]);
   const [pairs, setPairs] = useState<
     { prompt: string; answer: string; id: string }[]
   >([]);
@@ -68,21 +73,42 @@ export const TechMatchUpView: React.FC = () => {
   const [hasStarted, setHasStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const sessionStartTime = useRef<number>(Date.now());
+  const sessionIdRef = useRef<string | null>(null);
   const wrongStreakRef = useRef(0);
   const correctStreakRef = useRef(0);
 
   const totalSets = DIFFICULTY_SETS[difficulty];
   const cardsPerSet = DIFFICULTY_PAIRS_PER_SET[difficulty];
 
-  const prepareSet = useCallback(() => {
-    const deck = techDecks.find((item) => item.id === deckId);
-    if (!deck || deck.cards.length < cardsPerSet) return;
+  useEffect(() => {
+    if (!deckId) {
+      setDeckCards([]);
+      return;
+    }
+    setDeckCards(
+      pickNextTechDeckCards({
+        deckId,
+        shuffle: false,
+      }),
+    );
+  }, [deckId]);
 
-    const selectedCards = shuffle(deck.cards).slice(0, cardsPerSet);
+  const prepareSet = useCallback(() => {
+    if (!deckId || deckCards.length < cardsPerSet) return;
+
+    const selectedCards = pickNextTechDeckCards({
+      deckId,
+      limit: cardsPerSet,
+      shuffle: true,
+      historyScope: {
+        gameId: "tech_matchup",
+        sessionId: sessionIdRef.current || undefined,
+      },
+    });
     const nextPairs = selectedCards.map((card) => ({
       prompt: card.prompt,
       answer: card.answer,
-      id: Math.random().toString(36).slice(2, 11),
+      id: card.id,
     }));
 
     setPairs(nextPairs);
@@ -107,13 +133,14 @@ export const TechMatchUpView: React.FC = () => {
     setSelectedPromptId(null);
     setSelectedAnswerId(null);
     setErrorMatch(false);
-  }, [cardsPerSet, deckId]);
+  }, [cardsPerSet, deckCards, deckId]);
 
   const startSession = () => {
     setScore(0);
     setCompletedSets(0);
     setIsFinished(false);
     setHasStarted(true);
+    sessionIdRef.current = createContentSelectionSession("tech_matchup");
     sessionStartTime.current = Date.now();
     wrongStreakRef.current = 0;
     correctStreakRef.current = 0;
@@ -298,8 +325,7 @@ export const TechMatchUpView: React.FC = () => {
     });
   }, [completedSets, isFinished, score]);
 
-  const deck = techDecks.find((item) => item.id === deckId);
-  const enoughCards = !!deck && deck.cards.length >= cardsPerSet;
+  const enoughCards = deckCards.length >= cardsPerSet;
 
   if (!enoughCards) {
     return (

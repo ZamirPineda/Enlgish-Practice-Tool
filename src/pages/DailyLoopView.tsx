@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle2, Circle, Trophy } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
+import Coachmark from "@/components/ui/Coachmark";
 import { getAnalyticsEvents, trackAnalyticsEvent } from "@/lib/analytics";
 import {
   claimDailyLoopReward,
@@ -305,23 +306,30 @@ const DailyLoopView: React.FC = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {(
-                Object.keys(DAILY_LOOP_FOCUS_LABEL) as DailyLoopFocusRoute[]
-              ).map((route) => (
-                <button
-                  key={route}
-                  type="button"
-                  onClick={() => setSelectedFocusRoute(route)}
-                  className={`rounded-xl border px-4 py-3 text-left transition-all ${selectedFocusRoute === route ? "border-accent bg-accent/10 text-text-primary" : "border-border bg-surface-2 text-text-secondary hover:bg-surface-hover"}`}
-                >
-                  <p className="text-sm font-black">
-                    {DAILY_LOOP_FOCUS_LABEL[route]}
-                  </p>
-                  <p className="text-xs mt-1">Ruta objetivo para hoy.</p>
-                </button>
-              ))}
-            </div>
+            <Coachmark
+              id="daily-loop-focus-route"
+              title="Elige primero la ruta objetivo"
+              description="Daily Loop usa este foco para priorizar contenido y mantener el bloque de hoy consistente entre English, Math y Dev."
+              placement="bottom-start"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {(
+                  Object.keys(DAILY_LOOP_FOCUS_LABEL) as DailyLoopFocusRoute[]
+                ).map((route) => (
+                  <button
+                    key={route}
+                    type="button"
+                    onClick={() => setSelectedFocusRoute(route)}
+                    className={`rounded-xl border px-4 py-3 text-left transition-all ${selectedFocusRoute === route ? "border-accent bg-accent/10 text-text-primary" : "border-border bg-surface-2 text-text-secondary hover:bg-surface-hover"}`}
+                  >
+                    <p className="text-sm font-black">
+                      {DAILY_LOOP_FOCUS_LABEL[route]}
+                    </p>
+                    <p className="text-xs mt-1">Ruta objetivo para hoy.</p>
+                  </button>
+                ))}
+              </div>
+            </Coachmark>
 
             <Button variant="primary" size="lg" onClick={handleStartLoopClick}>
               Iniciar Daily Loop

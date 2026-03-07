@@ -28,28 +28,13 @@ import {
 } from "@/lib/adaptiveDifficulty";
 import { toast } from "@/components/ui/Toast";
 import {
-  algebraTopic,
-  calculusTopic,
-  geometryTopic,
-} from "@/features/data/math";
-import { MathTopic } from "@/types";
+  getMathPracticeQuestionBank,
+  MathAdaptiveLevel,
+  MathPracticeQuestion,
+} from "@/lib/mathPracticeBank";
 
 type GameState = "idle" | "playing" | "finished";
 
-interface MathQuizQuestion {
-  id: string;
-  prompt: string;
-  expression?: string;
-  answerTypeLabel: string;
-  sectionLabel: string;
-  referenceLabel?: string;
-  referenceValue?: string;
-  correctAnswer: string;
-  options: string[];
-  topicLabel: string;
-}
-
-type MathAdaptiveLevel = "easy" | "normal" | "hard";
 const LEVEL_ORDER: MathAdaptiveLevel[] = ["easy", "normal", "hard"];
 const LEVEL_LABEL: Record<MathAdaptiveLevel, string> = {
   easy: "Easy",
@@ -76,82 +61,10 @@ const isFormulaLike = (value: string): boolean => {
   return (
     value.includes("\\") ||
     value.includes("^") ||
-    value.includes("∫") ||
-    value.includes("√") ||
+    value.includes("âˆ«") ||
+    value.includes("âˆš") ||
     value.includes("=")
   );
-};
-
-const shuffleList = <T,>(items: T[]): T[] => {
-  const copy = [...items];
-  for (let i = copy.length - 1; i > 0; i -= 1) {
-    const randomIndex = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[randomIndex]] = [copy[randomIndex], copy[i]];
-  }
-  return copy;
-};
-
-const buildQuestionBank = (topics: MathTopic[]): MathQuizQuestion[] => {
-  const questions: MathQuizQuestion[] = [];
-
-  topics.forEach((topic) => {
-    topic.sections.forEach((section, sectionIndex) => {
-      section.rows.forEach((row, rowIndex) => {
-        if (row.length < 2 || !row[0]?.trim() || !row[1]?.trim()) return;
-        questions.push({
-          id: `${topic.id}-${sectionIndex}-${rowIndex}-formula`,
-          prompt: "Selecciona la fórmula correcta",
-          answerTypeLabel: "Respuesta esperada: Fórmula",
-          sectionLabel: section.title,
-          referenceLabel: "Concepto",
-          referenceValue: row[0],
-          correctAnswer: row[1],
-          options: [],
-          topicLabel: topic.title,
-        });
-
-        if (row[2]?.trim()) {
-          questions.push({
-            id: `${topic.id}-${sectionIndex}-${rowIndex}-concept`,
-            prompt: "¿A qué concepto corresponde esta expresión?",
-            expression: row[1],
-            answerTypeLabel: "Respuesta esperada: Nombre del concepto",
-            sectionLabel: section.title,
-            referenceLabel: "Tipo de expresión",
-            referenceValue: section.headers[1] || "Expresión",
-            correctAnswer: row[0],
-            options: [],
-            topicLabel: topic.title,
-          });
-        }
-      });
-    });
-  });
-
-  const formulaPool = Array.from(
-    new Set(questions.map((q) => q.correctAnswer).filter(Boolean)),
-  );
-  const conceptPool = Array.from(
-    new Set(
-      topics.flatMap((topic) =>
-        topic.sections.flatMap((section) =>
-          section.rows.map((row) => row[0]).filter(Boolean),
-        ),
-      ),
-    ),
-  );
-
-  return questions.map((question) => {
-    const sourcePool = isFormulaLike(question.correctAnswer)
-      ? formulaPool
-      : conceptPool;
-    const distractors = shuffleList(
-      sourcePool.filter((item) => item !== question.correctAnswer),
-    ).slice(0, 3);
-
-    const options = shuffleList([question.correctAnswer, ...distractors]);
-    return { ...question, options };
-  });
 };
 
 const MathGameView: React.FC = () => {
@@ -159,14 +72,7 @@ const MathGameView: React.FC = () => {
     MATH_GAME_DIFFICULTY.defaultLevel,
   );
   const questionBank = useMemo(
-    () => {
-      const topicsByLevel: Record<MathAdaptiveLevel, MathTopic[]> = {
-        easy: [algebraTopic],
-        normal: [algebraTopic, geometryTopic],
-        hard: [calculusTopic, geometryTopic, algebraTopic],
-      };
-      return buildQuestionBank(topicsByLevel[selectedLevel]);
-    },
+    () => getMathPracticeQuestionBank(selectedLevel),
     [selectedLevel],
   );
 
@@ -198,7 +104,8 @@ const MathGameView: React.FC = () => {
     }
   }, []);
 
-  const currentQuestion = questionBank[questionIndex] || null;
+  const currentQuestion: MathPracticeQuestion | null =
+    questionBank[questionIndex] || null;
   const handleLevelSelect = (nextLevel: MathAdaptiveLevel) => {
     setSelectedLevel((currentLevel) =>
       MATH_GAME_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
@@ -727,3 +634,4 @@ const MathGameView: React.FC = () => {
 };
 
 export default MathGameView;
+

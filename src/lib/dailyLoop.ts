@@ -1,6 +1,16 @@
 import { AnalyticsEvent } from "@/lib/analytics";
 import { toDateKey } from "@/lib/activityTracker";
 import { getAdaptiveDifficultyLog } from "@/lib/adaptiveDifficulty";
+import {
+  ContentInventoryDifficulty,
+  ContentInventoryFormat,
+  ContentInventoryItem,
+  ContentInventorySkill,
+  createContentInventoryItem,
+} from "@/lib/contentInventory";
+import { buildContentInventoryIndex } from "@/lib/contentInventoryIndex";
+import { pickNextItems } from "@/lib/contentInventoryPicker";
+import { createContentSelectionSession } from "@/lib/contentSelectionHistory";
 import { normalizeGameId } from "@/lib/gameAnalytics";
 
 export type DailyLoopFocusRoute =
@@ -36,6 +46,10 @@ interface LoopGameConfig {
   path: string;
   category: DailyLoopCategory;
   gameId: string;
+  routeObjective: DailyLoopFocusRoute;
+  difficulty: ContentInventoryDifficulty;
+  format: ContentInventoryFormat;
+  tags?: string[];
 }
 
 export const DAILY_LOOP_STORAGE_KEY = "skillpal-daily-loop-state";
@@ -67,6 +81,10 @@ const ENGLISH_GAMES: LoopGameConfig[] = [
     path: "/speed-builder",
     category: "english",
     gameId: "speed_builder",
+    routeObjective: "english_interview",
+    difficulty: "foundation",
+    format: "sentence_transform",
+    tags: ["speaking", "fluency", "sentence_building"],
   },
   {
     title: "Error Hunter",
@@ -74,6 +92,10 @@ const ENGLISH_GAMES: LoopGameConfig[] = [
     path: "/error-hunter",
     category: "english",
     gameId: "error_hunter",
+    routeObjective: "english_interview",
+    difficulty: "core",
+    format: "open_response",
+    tags: ["grammar", "correction"],
   },
   {
     title: "Paraphrase Duel",
@@ -81,6 +103,10 @@ const ENGLISH_GAMES: LoopGameConfig[] = [
     path: "/paraphrase-duel",
     category: "english",
     gameId: "paraphrase_duel",
+    routeObjective: "english_interview",
+    difficulty: "core",
+    format: "sentence_transform",
+    tags: ["paraphrase", "interview"],
   },
   {
     title: "Collocation Sprint",
@@ -88,6 +114,10 @@ const ENGLISH_GAMES: LoopGameConfig[] = [
     path: "/collocation-sprint",
     category: "english",
     gameId: "collocation_sprint",
+    routeObjective: "english_interview",
+    difficulty: "foundation",
+    format: "pair_match",
+    tags: ["vocabulary", "collocations"],
   },
   {
     title: "Taboo English",
@@ -95,6 +125,10 @@ const ENGLISH_GAMES: LoopGameConfig[] = [
     path: "/taboo-english",
     category: "english",
     gameId: "taboo_english",
+    routeObjective: "english_interview",
+    difficulty: "stretch",
+    format: "open_response",
+    tags: ["speaking", "explanations"],
   },
   {
     title: "Sentence Transformer",
@@ -102,6 +136,10 @@ const ENGLISH_GAMES: LoopGameConfig[] = [
     path: "/sentence-transformer",
     category: "english",
     gameId: "sentence_transformer",
+    routeObjective: "english_interview",
+    difficulty: "stretch",
+    format: "sentence_transform",
+    tags: ["rewriting", "structures"],
   },
 ];
 
@@ -112,6 +150,10 @@ const MATH_GAMES: LoopGameConfig[] = [
     path: "/calculus?tab=game",
     category: "math",
     gameId: "math_game",
+    routeObjective: "math_speed",
+    difficulty: "core",
+    format: "formula_drill",
+    tags: ["calculus", "algebra", "geometry"],
   },
 ];
 
@@ -122,6 +164,10 @@ const DEV_GAMES: LoopGameConfig[] = [
     path: "/syntax-builder",
     category: "dev",
     gameId: "code_syntax_builder",
+    routeObjective: "dev_reasoning",
+    difficulty: "foundation",
+    format: "code_snippet",
+    tags: ["syntax", "commands"],
   },
   {
     title: "Code Bug Hunter",
@@ -129,6 +175,10 @@ const DEV_GAMES: LoopGameConfig[] = [
     path: "/bug-hunter",
     category: "dev",
     gameId: "code_bug_hunter",
+    routeObjective: "dev_reasoning",
+    difficulty: "core",
+    format: "code_snippet",
+    tags: ["debugging", "bugs"],
   },
   {
     title: "Diplomatic Reviewer",
@@ -136,6 +186,10 @@ const DEV_GAMES: LoopGameConfig[] = [
     path: "/diplomatic-reviewer",
     category: "dev",
     gameId: "diplomatic_reviewer",
+    routeObjective: "dev_reasoning",
+    difficulty: "stretch",
+    format: "open_response",
+    tags: ["feedback", "review", "reasoning"],
   },
 ];
 
@@ -144,6 +198,29 @@ const GAME_POOL: Record<DailyLoopCategory, LoopGameConfig[]> = {
   math: MATH_GAMES,
   dev: DEV_GAMES,
 };
+
+const CATEGORY_SKILL: Record<DailyLoopCategory, ContentInventorySkill> = {
+  english: "english",
+  math: "math",
+  dev: "dev",
+};
+
+const FOCUS_ROUTE_CATEGORY: Record<DailyLoopFocusRoute, DailyLoopCategory> = {
+  english_interview: "english",
+  math_speed: "math",
+  dev_reasoning: "dev",
+};
+
+const GAME_CONFIG_BY_ID = Object.values(GAME_POOL)
+  .flat()
+  .reduce<Record<string, LoopGameConfig>>((accumulator, config) => {
+    accumulator[config.gameId] = config;
+    return accumulator;
+  }, {});
+
+let dailyLoopInventoryIndexCache:
+  | ReturnType<typeof buildContentInventoryIndex>
+  | null = null;
 
 const hashString = (value: string): number => {
   let hash = 0;
@@ -154,36 +231,123 @@ const hashString = (value: string): number => {
   return Math.abs(hash);
 };
 
-const rotatePool = <T>(items: T[], offset: number): T[] => {
-  if (items.length <= 1) return [...items];
-  const safeOffset = offset % items.length;
-  return items.slice(safeOffset).concat(items.slice(0, safeOffset));
+const createSeededRandom = (seed: string) => {
+  let state = hashString(seed) || 1;
+  return () => {
+    state = (state * 1664525 + 1013904223) >>> 0;
+    return state / 4294967296;
+  };
 };
 
-const pickGamesForCategory = (
-  category: DailyLoopCategory,
-  count: number,
-  seed: string,
-): LoopGameConfig[] => {
-  const pool = GAME_POOL[category];
-  if (!pool.length || count <= 0) return [];
+export const buildDailyLoopInventoryItems = (): ContentInventoryItem[] =>
+  Object.values(GAME_POOL)
+    .flat()
+    .map((config, index) =>
+      createContentInventoryItem({
+        source: "daily_loop",
+        skill: CATEGORY_SKILL[config.category],
+        difficulty: config.difficulty,
+        format: config.format,
+        prompt: config.title,
+        answer: config.description,
+        tags: [
+          "daily-loop",
+          config.category,
+          config.gameId,
+          config.routeObjective,
+          ...(config.tags || []),
+        ],
+        metadata: {
+          gameId: config.gameId,
+          routeObjective: config.routeObjective,
+          topic: config.category,
+          path: config.path,
+          sequence: index,
+        },
+        active: true,
+      }),
+    );
 
-  const rotated = rotatePool(pool, hashString(seed));
-  if (count <= rotated.length) {
-    return rotated.slice(0, count);
+export const getDailyLoopInventoryIndex = () => {
+  if (dailyLoopInventoryIndexCache) {
+    return dailyLoopInventoryIndexCache;
   }
 
-  const selected: LoopGameConfig[] = [];
-  for (let index = 0; index < count; index += 1) {
-    selected.push(rotated[index % rotated.length]);
+  dailyLoopInventoryIndexCache = buildContentInventoryIndex(
+    buildDailyLoopInventoryItems(),
+  );
+  return dailyLoopInventoryIndexCache;
+};
+
+const pickGamesForCategory = ({
+  category,
+  focusRoute,
+  count,
+  dateKey,
+  sessionId,
+  excludeIds = [],
+}: {
+  category: DailyLoopCategory;
+  focusRoute: DailyLoopFocusRoute;
+  count: number;
+  dateKey: string;
+  sessionId: string;
+  excludeIds?: string[];
+}): LoopGameConfig[] => {
+  if (count <= 0) return [];
+
+  const index = getDailyLoopInventoryIndex();
+  const historyScope = {
+    gameId: `daily_loop:${category}`,
+    sessionId,
+    gameWindow: 4,
+    sessionWindow: 6,
+  };
+  const selected: ContentInventoryItem[] = [];
+
+  if (FOCUS_ROUTE_CATEGORY[focusRoute] === category) {
+    selected.push(
+      ...pickNextItems({
+        index,
+        limit: count,
+        skills: [CATEGORY_SKILL[category]],
+        sources: ["daily_loop"],
+        categories: [focusRoute],
+        excludeIds,
+        shuffle: true,
+        random: createSeededRandom(`${dateKey}-${focusRoute}-${category}-focus`),
+        historyScope,
+      }),
+    );
   }
-  return selected;
+
+  if (selected.length < count) {
+    selected.push(
+      ...pickNextItems({
+        index,
+        limit: count - selected.length,
+        skills: [CATEGORY_SKILL[category]],
+        sources: ["daily_loop"],
+        categories: [category],
+        excludeIds: [...excludeIds, ...selected.map((item) => item.id)],
+        shuffle: true,
+        random: createSeededRandom(`${dateKey}-${focusRoute}-${category}-all`),
+        historyScope,
+      }),
+    );
+  }
+
+  return selected
+    .map((item) => GAME_CONFIG_BY_ID[item.metadata.gameId || ""])
+    .filter((config): config is LoopGameConfig => Boolean(config))
+    .slice(0, count);
 };
 
 const buildLoopSteps = (
   dateKey: string,
   focusRoute: DailyLoopFocusRoute,
 ): DailyLoopStep[] => {
+  const sessionId = createContentSelectionSession(`daily_loop:${dateKey}`);
   const latestAdaptiveLevelByGame = getAdaptiveDifficultyLog().reduce<Record<string, string>>(
     (accumulator, entry) => {
       if (!entry.changed) return accumulator;
@@ -194,21 +358,27 @@ const buildLoopSteps = (
   );
 
   const categoryGames: Record<DailyLoopCategory, LoopGameConfig[]> = {
-    english: pickGamesForCategory(
-      "english",
-      REQUIRED_COUNTS.english,
-      `${dateKey}-${focusRoute}-english`,
-    ),
-    math: pickGamesForCategory(
-      "math",
-      REQUIRED_COUNTS.math,
-      `${dateKey}-${focusRoute}-math`,
-    ),
-    dev: pickGamesForCategory(
-      "dev",
-      REQUIRED_COUNTS.dev,
-      `${dateKey}-${focusRoute}-dev`,
-    ),
+    english: pickGamesForCategory({
+      category: "english",
+      focusRoute,
+      count: REQUIRED_COUNTS.english,
+      dateKey,
+      sessionId,
+    }),
+    math: pickGamesForCategory({
+      category: "math",
+      focusRoute,
+      count: REQUIRED_COUNTS.math,
+      dateKey,
+      sessionId,
+    }),
+    dev: pickGamesForCategory({
+      category: "dev",
+      focusRoute,
+      count: REQUIRED_COUNTS.dev,
+      dateKey,
+      sessionId,
+    }),
   };
 
   const categoryCursor: Record<DailyLoopCategory, number> = {

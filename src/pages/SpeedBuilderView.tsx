@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import Coachmark from "@/components/ui/Coachmark";
 import GameStartPanel from "@/components/GameStartPanel";
 import GameShell from "@/components/game/GameShell";
 import GameHudCard from "@/components/game/GameHudCard";
@@ -469,29 +470,37 @@ const SpeedBuilderView: React.FC = () => {
           </div>
         ) : null}
 
-        <div>
-          <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
-            Tu respuesta
-          </p>
-          <div className="min-h-[76px] rounded-xl border border-border bg-surface-2 p-3 flex flex-wrap gap-2">
-            {selectedWords.length === 0 ? (
-              <span className="text-sm text-text-muted">
-                Selecciona palabras para construir la frase.
-              </span>
-            ) : (
-              selectedWords.map((word, index) => (
-                <button
-                  key={`${word}-${index}`}
-                  onClick={() => handleUndoWord(index)}
-                  className="px-3 py-1.5 rounded-lg bg-surface-1 border border-border text-sm font-semibold text-text-primary hover:bg-surface-hover transition-colors"
-                  aria-label={`Quitar ${word}`}
-                >
-                  {word}
-                </button>
-              ))
-            )}
+        <Coachmark
+          id="speed-builder-response-flow"
+          enabled={beginnerLevel && !submitted}
+          title="Construye la frase en orden"
+          description="Empieza tocando palabras desde la lista inferior. Si te equivocas, toca una ficha en Tu respuesta para quitarla antes de validar."
+          placement="bottom-start"
+        >
+          <div>
+            <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">
+              Tu respuesta
+            </p>
+            <div className="min-h-[76px] rounded-xl border border-border bg-surface-2 p-3 flex flex-wrap gap-2">
+              {selectedWords.length === 0 ? (
+                <span className="text-sm text-text-muted">
+                  Selecciona palabras para construir la frase.
+                </span>
+              ) : (
+                selectedWords.map((word, index) => (
+                  <button
+                    key={`${word}-${index}`}
+                    onClick={() => handleUndoWord(index)}
+                    className="px-3 py-1.5 rounded-lg bg-surface-1 border border-border text-sm font-semibold text-text-primary hover:bg-surface-hover transition-colors"
+                    aria-label={`Quitar ${word}`}
+                  >
+                    {word}
+                  </button>
+                ))
+              )}
+            </div>
           </div>
-        </div>
+        </Coachmark>
 
         <div>
           <p className="text-xs uppercase tracking-widest font-bold text-text-secondary mb-2">

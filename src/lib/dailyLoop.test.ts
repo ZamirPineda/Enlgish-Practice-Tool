@@ -1,6 +1,7 @@
 import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
 import { AnalyticsEvent } from "@/lib/analytics";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
+import { resetContentSelectionHistory } from "@/lib/contentSelectionHistory";
 import {
   claimDailyLoopReward,
   getTodayDailyLoop,
@@ -12,6 +13,7 @@ import {
 describe("dailyLoop", () => {
   beforeEach(() => {
     localStorage.clear();
+    resetContentSelectionHistory();
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-03-03T12:00:00.000Z"));
   });
@@ -67,6 +69,25 @@ describe("dailyLoop", () => {
     expect(englishLoop.steps).toHaveLength(4);
     expect(devLoop.steps).toHaveLength(4);
     expect(englishGameIds).not.toEqual(devGameIds);
+  });
+
+  test("rotates english games across different loop days using inventory history", () => {
+    const firstLoop = startDailyLoop("english_interview", "2026-03-03");
+    const secondLoop = startDailyLoop("english_interview", "2026-03-04");
+
+    const firstEnglishGameIds = firstLoop.steps
+      .filter((step) => step.category === "english")
+      .map((step) => step.gameId);
+    const secondEnglishGameIds = secondLoop.steps
+      .filter((step) => step.category === "english")
+      .map((step) => step.gameId);
+
+    expect(firstEnglishGameIds).toHaveLength(2);
+    expect(secondEnglishGameIds).toHaveLength(2);
+    expect(secondEnglishGameIds).not.toEqual(firstEnglishGameIds);
+    expect(
+      secondEnglishGameIds.some((gameId) => firstEnglishGameIds.includes(gameId)),
+    ).toBe(false);
   });
 
   test("marks steps as completed from analytics session_end events", () => {

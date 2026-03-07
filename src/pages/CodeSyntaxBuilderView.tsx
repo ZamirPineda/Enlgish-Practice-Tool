@@ -23,6 +23,7 @@ import {
   shouldDownshiftByWrongStreak,
   shouldUpshiftByCorrectStreak,
 } from "@/lib/adaptiveDifficulty";
+import { mapDifficultyTierToAdaptiveLevel } from "@/lib/practiceContent";
 import { toast } from "@/components/ui/Toast";
 
 type CodeSyntaxLevel = "easy" | "normal" | "hard";
@@ -58,29 +59,9 @@ const CODE_SYNTAX_DIFFICULTY = createAdaptiveDifficultyEngine<CodeSyntaxLevel>({
 const buildAdaptiveCodeSyntaxRounds = (
   rounds: CodeSyntaxPrompt[],
 ): CodeSyntaxRound[] => {
-  const ranked = rounds
-    .map((round, index) => ({
-      round,
-      index,
-      score:
-        round.tokens.length * 10 +
-        Math.round(round.prompt.length / 20) +
-        (["typescript", "sql"].includes(round.language) ? 2 : 0),
-    }))
-    .sort((left, right) => left.score - right.score || left.index - right.index);
-
-  const total = ranked.length;
-  const levelById = new Map<string, CodeSyntaxLevel>();
-  ranked.forEach(({ round }, rank) => {
-    const percentile = (rank + 1) / total;
-    const adaptiveLevel =
-      percentile <= 1 / 3 ? "easy" : percentile <= 2 / 3 ? "normal" : "hard";
-    levelById.set(round.id, adaptiveLevel);
-  });
-
   return rounds.map((round) => ({
     ...round,
-    adaptiveLevel: levelById.get(round.id) || "normal",
+    adaptiveLevel: mapDifficultyTierToAdaptiveLevel(round.difficultyTier),
   }));
 };
 

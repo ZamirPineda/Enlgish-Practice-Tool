@@ -1,10 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import GameStartPanel from "@/components/GameStartPanel";
 import DailySessionInsights from "@/components/game/DailySessionInsights";
 import GameHudCard from "@/components/game/GameHudCard";
 import Button from "@/components/ui/Button";
-import { techDecks } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import {
   appendAdaptiveDifficultyLog,
@@ -12,6 +11,11 @@ import {
   shouldDownshiftByWrongStreak,
   shouldUpshiftByCorrectStreak,
 } from "@/lib/adaptiveDifficulty";
+import {
+  createContentSelectionSession,
+  pickNextTechDeckCards,
+  PickedTechDeckCard,
+} from "@/lib/contentInventoryPicker";
 import { addGlobalXp, progressQuest } from "@/lib/xpStore";
 import { toast } from "@/components/ui/Toast";
 
@@ -48,6 +52,7 @@ const shuffle = <T,>(items: T[]) => [...items].sort(() => 0.5 - Math.random());
 export const TechBossView: React.FC = () => {
   const { deckId } = useParams<{ deckId: string }>();
   const navigate = useNavigate();
+  const [deckCards, setDeckCards] = useState<PickedTechDeckCard[]>([]);
   const [cards, setCards] = useState<BossCard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -56,24 +61,41 @@ export const TechBossView: React.FC = () => {
   const [difficulty, setDifficulty] = useState<BossDifficulty>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const sessionStartTime = useRef<number>(Date.now());
+  const sessionIdRef = useRef<string | null>(null);
   const wrongStreakRef = useRef(0);
   const correctStreakRef = useRef(0);
 
-  const deck = techDecks.find((item) => item.id === deckId);
+  useEffect(() => {
+    if (!deckId) {
+      setDeckCards([]);
+      return;
+    }
+    setDeckCards(
+      pickNextTechDeckCards({
+        deckId,
+        shuffle: false,
+      }),
+    );
+  }, [deckId]);
 
   const buildBossCards = () => {
-    if (!deck) return [];
-    const selected = shuffle(deck.cards).slice(
-      0,
-      DIFFICULTY_QUESTIONS[difficulty],
-    );
+    if (!deckId || deckCards.length === 0) return [];
+    const selected = pickNextTechDeckCards({
+      deckId,
+      limit: DIFFICULTY_QUESTIONS[difficulty],
+      shuffle: true,
+      historyScope: {
+        gameId: "tech_boss",
+        sessionId: sessionIdRef.current || undefined,
+      },
+    });
 
     return selected.map((card) => {
       const isTrue = Math.random() > 0.5;
       let displayedAnswer = card.answer;
 
       if (!isTrue) {
-        const otherCards = deck.cards.filter(
+        const otherCards = deckCards.filter(
           (item) => item.answer !== card.answer,
         );
         if (otherCards.length > 0) {
@@ -91,6 +113,7 @@ export const TechBossView: React.FC = () => {
   };
 
   const startSession = () => {
+    sessionIdRef.current = createContentSelectionSession("tech_boss");
     const bossCards = buildBossCards();
     if (bossCards.length === 0) return;
 
@@ -232,7 +255,7 @@ export const TechBossView: React.FC = () => {
     }, 2000);
   };
 
-  if (!deck) {
+  if (deckCards.length === 0) {
     return (
       <div className="p-8 text-center bg-slate-900 text-white min-h-screen">
         Loading...

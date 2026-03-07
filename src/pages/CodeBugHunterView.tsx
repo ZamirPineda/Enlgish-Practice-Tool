@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useMemo, useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import Coachmark from "@/components/ui/Coachmark";
 import GameStartPanel from "@/components/GameStartPanel";
 import GameShell from "@/components/game/GameShell";
 import GameHudCard from "@/components/game/GameHudCard";
@@ -21,6 +22,7 @@ import {
   shouldDownshiftByWrongStreak,
   shouldUpshiftByCorrectStreak,
 } from "@/lib/adaptiveDifficulty";
+import { mapDifficultyTierToAdaptiveLevel } from "@/lib/practiceContent";
 import { toast } from "@/components/ui/Toast";
 
 type CodeBugHunterLevel = "easy" | "normal" | "hard";
@@ -55,31 +57,9 @@ const CODE_BUG_HUNTER_DIFFICULTY =
   });
 
 const buildAdaptiveCodeBugRounds = (rounds: CodeBugPrompt[]): CodeBugRound[] => {
-  const ranked = rounds
-    .map((round, index) => ({
-      round,
-      index,
-      score:
-        round.codeLines.length * 10 +
-        Math.round(round.explanation.length / 40) +
-        (["tsx", "typescript", "sql", "golang"].includes(round.language)
-          ? 2
-          : 0),
-    }))
-    .sort((left, right) => left.score - right.score || left.index - right.index);
-
-  const total = ranked.length;
-  const levelById = new Map<string, CodeBugHunterLevel>();
-  ranked.forEach(({ round }, rank) => {
-    const percentile = (rank + 1) / total;
-    const adaptiveLevel =
-      percentile <= 1 / 3 ? "easy" : percentile <= 2 / 3 ? "normal" : "hard";
-    levelById.set(round.id, adaptiveLevel);
-  });
-
   return rounds.map((round) => ({
     ...round,
-    adaptiveLevel: levelById.get(round.id) || "normal",
+    adaptiveLevel: mapDifficultyTierToAdaptiveLevel(round.difficultyTier),
   }));
 };
 
@@ -483,39 +463,47 @@ const CodeBugHunterView: React.FC = () => {
           </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-[#1e1e1e] p-4 font-mono text-sm sm:text-base overflow-x-auto">
-          {round.codeLines.map((line, index) => {
-            const isSelected = selectedLine === index;
-            const isTargetBug = submitted && index === round.bugLineIndex;
+        <Coachmark
+          id="code-bug-hunter-select-line"
+          enabled={!submitted}
+          title="Marca la unica linea con bug"
+          description="Cada ronda tiene exactamente un error. Haz clic en la linea que lo contiene y la explicacion aparece al enviar tu intento."
+          placement="bottom-start"
+        >
+          <div className="rounded-xl border border-border bg-[#1e1e1e] p-4 font-mono text-sm sm:text-base overflow-x-auto">
+            {round.codeLines.map((line, index) => {
+              const isSelected = selectedLine === index;
+              const isTargetBug = submitted && index === round.bugLineIndex;
 
-            let lineClass = "hover:bg-[#2d2d2d] cursor-pointer text-blue-100";
+              let lineClass = "hover:bg-[#2d2d2d] cursor-pointer text-blue-100";
 
-            if (submitted) {
-              lineClass = "cursor-default text-text-muted opacity-50"; // Dim non-involved lines
-              if (isTargetBug) {
-                lineClass =
-                  "bg-red-500/20 text-red-300 font-bold border-l-4 border-red-500 opacity-100"; // Highlight actual bug
+              if (submitted) {
+                lineClass = "cursor-default text-text-muted opacity-50"; // Dim non-involved lines
+                if (isTargetBug) {
+                  lineClass =
+                    "bg-red-500/20 text-red-300 font-bold border-l-4 border-red-500 opacity-100"; // Highlight actual bug
+                }
+                if (isSelected && !isTargetBug) {
+                  lineClass =
+                    "bg-amber-500/20 text-amber-300 border-l-4 border-amber-500 opacity-100 line-through"; // User wrong guess
+                }
               }
-              if (isSelected && !isTargetBug) {
-                lineClass =
-                  "bg-amber-500/20 text-amber-300 border-l-4 border-amber-500 opacity-100 line-through"; // User wrong guess
-              }
-            }
 
-            return (
-              <div
-                key={index}
-                onClick={() => handleSelectLine(index)}
-                className={`flex px-2 py-1 transition-colors ${lineClass}`}
-              >
-                <span className="w-8 text-right mr-4 text-[#5c6370] select-none">
-                  {index + 1}
-                </span>
-                <span className="whitespace-pre flex-1">{line || " "}</span>
-              </div>
-            );
-          })}
-        </div>
+              return (
+                <div
+                  key={index}
+                  onClick={() => handleSelectLine(index)}
+                  className={`flex px-2 py-1 transition-colors ${lineClass}`}
+                >
+                  <span className="w-8 text-right mr-4 text-[#5c6370] select-none">
+                    {index + 1}
+                  </span>
+                  <span className="whitespace-pre flex-1">{line || " "}</span>
+                </div>
+              );
+            })}
+          </div>
+        </Coachmark>
 
         {submitted ? (
           <div

@@ -58,6 +58,26 @@ describe("CodeBugHunterView", () => {
     expect(screen.getByText("30s")).toBeInTheDocument();
   });
 
+  test("shows and dismisses the line selection coachmark", () => {
+    const firstRender = render(<CodeBugHunterView />);
+    startGame();
+
+    expect(
+      screen.getByRole("dialog", { name: "Marca la unica linea con bug" }),
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Entendido" }));
+
+    firstRender.unmount();
+
+    render(<CodeBugHunterView />);
+    startGame();
+
+    expect(
+      screen.queryByRole("dialog", { name: "Marca la unica linea con bug" }),
+    ).not.toBeInTheDocument();
+  });
+
   test("auto-downshifts difficulty after 3 timeouts and logs cause", () => {
     render(<CodeBugHunterView />);
     startGame();

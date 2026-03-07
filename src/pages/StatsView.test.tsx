@@ -172,6 +172,39 @@ describe("StatsView", () => {
             totalSteps: 4,
           },
         },
+        {
+          name: "content_selected",
+          timestamp: nowIso,
+          payload: {
+            game: "speed_builder",
+            contentId: "ci_daily_loop_a",
+            skill: "english",
+            routeObjective: "english_interview",
+            repeated: false,
+          },
+        },
+        {
+          name: "content_selected",
+          timestamp: nowIso,
+          payload: {
+            game: "collocation_sprint",
+            contentId: "ci_daily_loop_b",
+            skill: "english",
+            routeObjective: "english_interview",
+            repeated: true,
+          },
+        },
+        {
+          name: "content_selected",
+          timestamp: previousWeekDate.toISOString(),
+          payload: {
+            game: "speed_builder",
+            contentId: "ci_daily_loop_prev",
+            skill: "english",
+            routeObjective: "english_interview",
+            repeated: false,
+          },
+        },
       ]),
     );
 
@@ -185,6 +218,9 @@ describe("StatsView", () => {
     expect(screen.getByText("Global Accuracy")).toBeInTheDocument();
     expect(screen.getByText("Weekly Summary")).toBeInTheDocument();
     expect(screen.getByText("Analytics (MVP)")).toBeInTheDocument();
+    expect(screen.getByText("Content Variety by Route")).toBeInTheDocument();
+    expect(screen.getByText("Repeat Rate")).toBeInTheDocument();
+    expect(screen.getByText("Content Coverage")).toBeInTheDocument();
     expect(screen.getByText("Error Breakdown by Game")).toBeInTheDocument();
     expect(screen.getByText("Top 3 errores")).toBeInTheDocument();
     expect(screen.getByText("1. Connector Missing — 2")).toBeInTheDocument();
@@ -247,6 +283,14 @@ describe("StatsView", () => {
     fireEvent.click(screen.getByRole("button", { name: "English Interview" }));
     expect(dailyLoopCard).toHaveTextContent("Started: 1 | Steps: 2");
     expect(dailyLoopCard).toHaveTextContent("Rewards: 1");
+    const repeatRateCard = screen.getByText("Repeat Rate").closest("article");
+    const coverageCard = screen.getByText("Content Coverage").closest("article");
+    expect(repeatRateCard).toHaveTextContent("50%");
+    expect(repeatRateCard).toHaveTextContent("1 repeated of 2 selections");
+    expect(coverageCard).toHaveTextContent("33.3%");
+    expect(coverageCard).toHaveTextContent("2 unique of 6 available");
+    expect(screen.getByText("Coverage: 33.3%")).toBeInTheDocument();
+    expect(screen.getByText("Repeat: 50%")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "All routes" }));
     expect(dailyLoopCard).toHaveTextContent("Started: 2 | Steps: 3");

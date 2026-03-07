@@ -4,6 +4,7 @@ import {
   adaptTechDecksToInventoryItems,
   adaptVocabularyVaultToInventoryItems,
   buildContentInventoryFromAdapters,
+  buildContentInventoryFromAdaptersWithReport,
 } from "@/lib/contentInventoryAdapters";
 import { EnglishLevel, SrsVocabularyItem, type DrillsByLevel } from "@/types";
 
@@ -101,6 +102,7 @@ describe("contentInventoryAdapters", () => {
     expect(items[0].source).toBe("tech_deck");
     expect(items[0].skill).toBe("dev");
     expect(items[0].metadata.deckId).toBe("algo");
+    expect(items[0].metadata.routeObjective).toBe("dev_reasoning");
   });
 
   test("builds a combined inventory pack from all adapters", () => {
@@ -148,5 +150,53 @@ describe("contentInventoryAdapters", () => {
       "tech_deck",
       "vocabulary_vault",
     ]);
+  });
+
+  test("dedupes semantically equal entries across sources with traceable report", () => {
+    const result = buildContentInventoryFromAdaptersWithReport({
+      studyDeckByLevel: {
+        [EnglishLevel.A1]: [
+          {
+            id: "a1-topic",
+            name: "A1 topic",
+            description: "A1 demo",
+            examples: [
+              {
+                parts: [{ word: "Resilient" }],
+                translation_es: "Que se recupera rapido.",
+              },
+            ],
+          },
+        ],
+      },
+      vocabularyVaultDeck: {
+        resilient: {
+          word: "Resilient",
+          definition: "Que se recupera rapido.",
+          repetition: 2,
+          efactor: 2.5,
+          interval: 3,
+          nextReviewDate: "2099-01-01",
+          status: "learning",
+          tags: ["english", "behavioral"],
+        },
+      },
+    });
+
+    expect(result.pack.items).toHaveLength(1);
+    expect(result.pack.items[0].source).toBe("vocabulary_vault");
+    expect(result.pack.items[0].metadata.dedupeLineage).toEqual(
+      expect.arrayContaining([
+        expect.stringMatching(/^ci_study_deck_/),
+        expect.stringMatching(/^ci_vocabulary_vault_/),
+      ]),
+    );
+    expect(result.dedupeReport).toMatchObject({
+      originalCount: 2,
+      dedupedCount: 1,
+      removedCount: 1,
+    });
+    expect(result.dedupeReport.groups).toHaveLength(1);
+    expect(result.dedupeReport.groups[0].reason).toBe("fingerprint");
   });
 });

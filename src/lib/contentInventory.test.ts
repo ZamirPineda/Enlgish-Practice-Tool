@@ -42,7 +42,6 @@ describe("contentInventory", () => {
       prompt: "What does CAP theorem state?",
       answer: "Consistency, Availability, Partition tolerance trade-off.",
       alternatives: ["A", "B", "C"],
-      tags: ["distributed", "systems"],
     });
     const fingerprintB = createContentFingerprint({
       source: "tech_deck",
@@ -52,13 +51,33 @@ describe("contentInventory", () => {
       prompt: "  What does   CAP theorem state? ",
       answer: "Consistency, Availability, Partition tolerance trade-off.",
       alternatives: ["C", "A", "B"],
-      tags: ["systems", "distributed"],
     });
 
     expect(fingerprintA).toBe(fingerprintB);
     expect(buildContentInventoryId("tech_deck", fingerprintA)).toBe(
       buildContentInventoryId("tech_deck", fingerprintB),
     );
+  });
+
+  test("builds equal fingerprint across sources when semantic content is the same", () => {
+    const fromStudyDeck = createContentFingerprint({
+      source: "study_deck",
+      skill: "english",
+      difficulty: "core",
+      format: "flashcard",
+      prompt: "Resilient",
+      answer: "Able to recover quickly from difficulties.",
+    });
+    const fromVault = createContentFingerprint({
+      source: "vocabulary_vault",
+      skill: "english",
+      difficulty: "stretch",
+      format: "flashcard",
+      prompt: " resilient ",
+      answer: "Able to recover quickly from difficulties.",
+    });
+
+    expect(fromStudyDeck).toBe(fromVault);
   });
 
   test("normalizes and deduplicates tags", () => {

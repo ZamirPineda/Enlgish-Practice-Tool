@@ -1,12 +1,72 @@
+import {
+  PracticeDifficultyTier,
+  PracticeRouteObjective,
+  rankToDifficultyTier,
+  uniqueTags,
+} from "@/lib/practiceContent";
+
 export interface CodeBugPrompt {
   id: string;
   language: string;
   codeLines: string[];
   bugLineIndex: number; // 0-based
   explanation: string;
+  difficultyTier: PracticeDifficultyTier;
+  routeObjective: PracticeRouteObjective;
+  tags: string[];
 }
 
-export const codeBugsData: CodeBugPrompt[] = [
+type RawCodeBugPrompt = Omit<
+  CodeBugPrompt,
+  "difficultyTier" | "routeObjective" | "tags"
+>;
+
+const DEV_REASONING_OBJECTIVE: PracticeRouteObjective = "dev_reasoning";
+
+const inferCodeBugTags = (prompt: RawCodeBugPrompt): string[] => {
+  const haystack = `${prompt.id} ${prompt.language} ${prompt.explanation}`.toLowerCase();
+  const tags = [prompt.language, "debugging", "dev_reasoning"];
+
+  if (haystack.includes("react")) tags.push("react");
+  if (haystack.includes("typescript") || haystack.includes("ts_")) tags.push("typescript");
+  if (haystack.includes("javascript") || haystack.includes("js_")) tags.push("javascript");
+  if (haystack.includes("sql")) tags.push("sql");
+  if (haystack.includes("python")) tags.push("python");
+  if (haystack.includes("css")) tags.push("css");
+  if (haystack.includes("bash")) tags.push("bash");
+  if (haystack.includes("security") || haystack.includes("injection")) tags.push("security");
+  if (haystack.includes("async") || haystack.includes("promise")) tags.push("async");
+  if (haystack.includes("performance") || haystack.includes("memo")) tags.push("performance");
+
+  return uniqueTags(tags);
+};
+
+const annotateCodeBugPrompts = (prompts: RawCodeBugPrompt[]): CodeBugPrompt[] => {
+  const ranked = prompts
+    .map((prompt, index) => ({
+      prompt,
+      index,
+      score:
+        prompt.codeLines.length * 10 +
+        Math.round(prompt.explanation.length / 40) +
+        (["tsx", "typescript", "sql", "golang"].includes(prompt.language) ? 2 : 0),
+    }))
+    .sort((left, right) => left.score - right.score || left.index - right.index);
+
+  const difficultyById = new Map<string, PracticeDifficultyTier>();
+  ranked.forEach(({ prompt }, rank) => {
+    difficultyById.set(prompt.id, rankToDifficultyTier(rank, ranked.length));
+  });
+
+  return prompts.map((prompt) => ({
+    ...prompt,
+    difficultyTier: difficultyById.get(prompt.id) || "core",
+    routeObjective: DEV_REASONING_OBJECTIVE,
+    tags: inferCodeBugTags(prompt),
+  }));
+};
+
+const rawCodeBugsData: RawCodeBugPrompt[] = [
   {
     id: "react_use_effect_deps",
     language: "tsx",
@@ -52,7 +112,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 0,
     explanation:
-      "Los argumentos por defecto mutables (como []) se evalúan una sola vez. Se debe usar 'my_list=None'.",
+      "Los argumentos por defecto mutables (como []) se evalÃºan una sola vez. Se debe usar 'my_list=None'.",
   },
   {
     id: "sql_drop_table",
@@ -60,7 +120,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     codeLines: ["DELETE FROM users;", "WHERE id = 5;"],
     bugLineIndex: 0,
     explanation:
-      "El ';' en la primera línea termina la consulta, causando que se borren TODOS los usuarios. El WHERE queda huérfano.",
+      "El ';' en la primera lÃ­nea termina la consulta, causando que se borren TODOS los usuarios. El WHERE queda huÃ©rfano.",
   },
   {
     id: "css_flex_margin",
@@ -87,7 +147,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 1,
     explanation:
-      "Array.prototype.reverse() muta el array original. Deberías usar [...numbers].reverse() o numbers.toReversed().",
+      "Array.prototype.reverse() muta el array original. DeberÃ­as usar [...numbers].reverse() o numbers.toReversed().",
   },
   {
     id: "ts_non_null_assertion",
@@ -101,7 +161,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 2,
     explanation:
-      "Usar '!' (non-null assertion) es peligroso porque age puede ser undefined, causando un error matemático silencioso o NaN posterior.",
+      "Usar '!' (non-null assertion) es peligroso porque age puede ser undefined, causando un error matemÃ¡tico silencioso o NaN posterior.",
   },
   {
     id: "react_mutating_state",
@@ -132,7 +192,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 2,
     explanation:
-      "En Go <1.22, la variable 'w' es reutilizada en el bucle, por lo que las goroutines probablemente imprimirán solo 'c'. Se debe pasar 'w' como argumento.",
+      "En Go <1.22, la variable 'w' es reutilizada en el bucle, por lo que las goroutines probablemente imprimirÃ¡n solo 'c'. Se debe pasar 'w' como argumento.",
   },
   {
     id: "sql_injection_vuln",
@@ -185,7 +245,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 4,
     explanation:
-      "Darle opacity < 1 a .wrapper crea un nuevo 'stacking context'. Si .modal está dentro de .wrapper, su z-index alto no superará otros elementos fuera del wrapper.",
+      "Darle opacity < 1 a .wrapper crea un nuevo 'stacking context'. Si .modal estÃ¡ dentro de .wrapper, su z-index alto no superarÃ¡ otros elementos fuera del wrapper.",
   },
   {
     id: "react_stale_closure",
@@ -198,7 +258,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 2,
     explanation:
-      "El closure guarda el valor inicial de 'count' (0) porque 'count' no está en el array de dependencias. Siempre actualizará a 1. Haz: setCount(c => c + 1).",
+      "El closure guarda el valor inicial de 'count' (0) porque 'count' no estÃ¡ en el array de dependencias. Siempre actualizarÃ¡ a 1. Haz: setCount(c => c + 1).",
   },
   {
     id: "bash_spaces_in_var",
@@ -209,7 +269,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 0,
     explanation:
-      "En bash, no puede haber espacios antes o después del '=' en las asignaciones de variables.",
+      "En bash, no puede haber espacios antes o despuÃ©s del '=' en las asignaciones de variables.",
   },
   {
     id: "ts_promise_void_return",
@@ -223,7 +283,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 1,
     explanation:
-      "La función no devuelve la Promesa (falta return antes de api.getData) ni hace await, por lo que devolverá undefined de inmediato.",
+      "La funciÃ³n no devuelve la Promesa (falta return antes de api.getData) ni hace await, por lo que devolverÃ¡ undefined de inmediato.",
   },
   {
     id: "js_parseint_radix",
@@ -235,7 +295,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 1,
     explanation:
-      "map pasa (valor, índice, array). parseInt recibe (cadena, base). El índice 1 será base 1, el 2 base 2. Resultado: [10, NaN, 2]. Usa (num) => parseInt(num).",
+      "map pasa (valor, Ã­ndice, array). parseInt recibe (cadena, base). El Ã­ndice 1 serÃ¡ base 1, el 2 base 2. Resultado: [10, NaN, 2]. Usa (num) => parseInt(num).",
   },
   {
     id: "python_local_unbound",
@@ -256,7 +316,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 3,
     explanation:
-      "En SQL, no se puede usar '=' con NULL. La consulta siempre devolverá 0. Se debe usar 'IS NULL'.",
+      "En SQL, no se puede usar '=' con NULL. La consulta siempre devolverÃ¡ 0. Se debe usar 'IS NULL'.",
   },
   {
     id: "react_key_index",
@@ -272,7 +332,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 2,
     explanation:
-      "Usar 'index' como key en un array que puede cambiar de orden o mutar (como añadir o eliminar) rompe el estado interno de React e inputs. Usa un id único.",
+      "Usar 'index' como key en un array que puede cambiar de orden o mutar (como aÃ±adir o eliminar) rompe el estado interno de React e inputs. Usa un id Ãºnico.",
   },
   {
     id: "css_specificy_war",
@@ -284,7 +344,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 1,
     explanation:
-      "El selector con ID (#content p) tiene mucha más especificidad (1-0-1) que la clase (0-1-1). Deberás aumentar la especificidad de .text-red.",
+      "El selector con ID (#content p) tiene mucha mÃ¡s especificidad (1-0-1) que la clase (0-1-1). DeberÃ¡s aumentar la especificidad de .text-red.",
   },
   {
     id: "js_optional_chaining_func",
@@ -298,7 +358,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 2,
     explanation:
-      "Optional chaining protege if 'plugin' is nulo, pero no si 'setup' no es una función (ej: es un booleano). Debería ser: typeof plugin.setup === 'function'.",
+      "Optional chaining protege if 'plugin' is nulo, pero no si 'setup' no es una funciÃ³n (ej: es un booleano). DeberÃ­a ser: typeof plugin.setup === 'function'.",
   },
   {
     id: "ts_enum_reverse_mapping",
@@ -310,7 +370,7 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 0,
     explanation:
-      "Los enums numéricos generan mapeo inverso (valores como keys). Usa enums de tipo string ('Active' = 'ACTIVE') si vas a iterar sobre las llaves de forma segura.",
+      "Los enums numÃ©ricos generan mapeo inverso (valores como keys). Usa enums de tipo string ('Active' = 'ACTIVE') si vas a iterar sobre las llaves de forma segura.",
   },
   {
     id: "react_use_memo_miss",
@@ -323,6 +383,88 @@ export const codeBugsData: CodeBugPrompt[] = [
     ],
     bugLineIndex: 0,
     explanation:
-      "Se crea un nuevo objeto 'user' en cada renderizado de React, por lo que el `useEffect` se ejecutará infinitamente. Almacena data primitiva [props.id] en las deps.",
+      "Se crea un nuevo objeto 'user' en cada renderizado de React, por lo que el `useEffect` se ejecutarÃ¡ infinitamente. Almacena data primitiva [props.id] en las deps.",
+  },
+  {
+    id: "ts_async_foreach",
+    language: "typescript",
+    codeLines: [
+      "const saveAll = async (items: string[]) => {",
+      "  items.forEach(async (item) => {",
+      "    await saveItem(item);",
+      "  });",
+      "  return 'done';",
+      "};",
+    ],
+    bugLineIndex: 1,
+    explanation:
+      "forEach no espera callbacks async. La función devuelve 'done' antes de completar los guardados. Usa for...of o Promise.all.",
+  },
+  {
+    id: "sql_left_join_filtered",
+    language: "sql",
+    codeLines: [
+      "SELECT u.id, o.total",
+      "FROM users u",
+      "LEFT JOIN orders o ON o.user_id = u.id",
+      "WHERE o.status = 'paid';",
+    ],
+    bugLineIndex: 3,
+    explanation:
+      "El WHERE sobre la tabla derecha anula el LEFT JOIN y descarta usuarios sin pedidos. Mueve la condición al ON si quieres conservarlos.",
+  },
+  {
+    id: "python_float_equality",
+    language: "python",
+    codeLines: [
+      "total = 0.1 + 0.2",
+      "if total == 0.3:",
+      "    print('exact match')",
+    ],
+    bugLineIndex: 1,
+    explanation:
+      "Comparar floats con igualdad exacta es frágil por precisión binaria. Usa tolerancia o math.isclose(total, 0.3).",
+  },
+  {
+    id: "bash_unquoted_path",
+    language: "bash",
+    codeLines: [
+      "TARGET=/tmp/My Project",
+      "cp $TARGET/report.txt ./backup/",
+    ],
+    bugLineIndex: 1,
+    explanation:
+      "La variable sin comillas se parte por espacios y Bash interpreta rutas separadas. Debe ser cp \"$TARGET/report.txt\" ./backup/.",
+  },
+  {
+    id: "css_box_sizing_overflow",
+    language: "css",
+    codeLines: [
+      ".card {",
+      "  width: 100%;",
+      "  padding: 24px;",
+      "  border: 2px solid #ccc;",
+      "}",
+    ],
+    bugLineIndex: 1,
+    explanation:
+      "Con el box model por defecto, width:100% no incluye padding ni border y el componente puede desbordar su contenedor. Falta box-sizing:border-box.",
+  },
+  {
+    id: "react_stale_timeout",
+    language: "tsx",
+    codeLines: [
+      "const [count, setCount] = useState(0);",
+      "const handleClick = () => {",
+      "  setTimeout(() => setCount(count + 1), 1000);",
+      "};",
+    ],
+    bugLineIndex: 2,
+    explanation:
+      "El callback captura un valor viejo de count. Si hay varios clics rápidos, se pierden incrementos. Usa setCount((current) => current + 1).",
   },
 ];
+
+export const codeBugsData: CodeBugPrompt[] =
+  annotateCodeBugPrompts(rawCodeBugsData);
+

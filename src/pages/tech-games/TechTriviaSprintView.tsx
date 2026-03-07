@@ -10,7 +10,6 @@ import GameStartPanel from "@/components/GameStartPanel";
 import DailySessionInsights from "@/components/game/DailySessionInsights";
 import GameHudCard from "@/components/game/GameHudCard";
 import Button from "@/components/ui/Button";
-import { techDecks, TechCard } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import {
   getTimeByPreset,
@@ -24,6 +23,11 @@ import {
   shouldDownshiftByWrongStreak,
   shouldUpshiftByCorrectStreak,
 } from "@/lib/adaptiveDifficulty";
+import {
+  createContentSelectionSession,
+  pickNextTechDeckCards,
+  PickedTechDeckCard,
+} from "@/lib/contentInventoryPicker";
 import { toast } from "@/components/ui/Toast";
 
 type TriviaDifficulty = "easy" | "normal" | "hard";
@@ -72,8 +76,8 @@ export const TechTriviaSprintView: React.FC = () => {
   const { deckId } = useParams<{ deckId: string }>();
   const navigate = useNavigate();
 
-  const [deckCards, setDeckCards] = useState<TechCard[]>([]);
-  const [cards, setCards] = useState<TechCard[]>([]);
+  const [deckCards, setDeckCards] = useState<PickedTechDeckCard[]>([]);
+  const [cards, setCards] = useState<PickedTechDeckCard[]>([]);
   const [difficulty, setDifficulty] = useState<TriviaDifficulty>("normal");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
@@ -85,14 +89,24 @@ export const TechTriviaSprintView: React.FC = () => {
   const [isFinished, setIsFinished] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const sessionStartTime = useRef<number>(Date.now());
+  const sessionIdRef = useRef<string | null>(null);
   const wrongStreakRef = useRef(0);
   const correctStreakRef = useRef(0);
 
   useEffect(() => {
-    const deck = techDecks.find((item) => item.id === deckId);
-    if (deck && deck.cards.length > 4) {
-      setDeckCards(deck.cards);
+    if (!deckId) {
+      setDeckCards([]);
+      return;
     }
+    const available = pickNextTechDeckCards({
+      deckId,
+      shuffle: false,
+    });
+    if (available.length > 4) {
+      setDeckCards(available);
+      return;
+    }
+    setDeckCards([]);
   }, [deckId]);
 
   const questionTime = getTimeByPreset(DIFFICULTY_BASE_TIME[difficulty], timePreset);
@@ -180,10 +194,17 @@ export const TechTriviaSprintView: React.FC = () => {
   }, [hasStarted, isFinished, selectedOption, timeLeft]);
 
   const startSession = () => {
-    const selectedCards = shuffle(deckCards).slice(
-      0,
-      DIFFICULTY_QUESTIONS[difficulty],
-    );
+    if (!deckId) return;
+    sessionIdRef.current = createContentSelectionSession("tech_trivia");
+    const selectedCards = pickNextTechDeckCards({
+      deckId,
+      limit: DIFFICULTY_QUESTIONS[difficulty],
+      shuffle: true,
+      historyScope: {
+        gameId: "tech_trivia",
+        sessionId: sessionIdRef.current,
+      },
+    });
     const initialLives = DIFFICULTY_LIVES[difficulty];
 
     setCards(selectedCards);

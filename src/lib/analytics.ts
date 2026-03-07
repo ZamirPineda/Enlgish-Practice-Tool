@@ -9,6 +9,7 @@ export const analyticsEventNameSchema = z.enum([
   "session_end",
   "item_correct",
   "item_wrong",
+  "content_selected",
   "speaking_used",
   "weekly_review_completed",
   "daily_loop_started",

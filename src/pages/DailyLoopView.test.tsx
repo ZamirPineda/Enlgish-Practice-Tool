@@ -1,8 +1,9 @@
 import React from "react";
 import { describe, test, expect, beforeEach, vi } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import DailyLoopView from "@/pages/DailyLoopView";
+import { resetContentSelectionHistory } from "@/lib/contentSelectionHistory";
 import {
   DAILY_LOOP_STORAGE_KEY,
   getTodayDailyLoop,
@@ -32,6 +33,7 @@ vi.mock("@/lib/xpStore", () => ({
 describe("DailyLoopView", () => {
   beforeEach(() => {
     localStorage.clear();
+    resetContentSelectionHistory();
     vi.clearAllMocks();
   });
 
@@ -52,6 +54,38 @@ describe("DailyLoopView", () => {
     expect(
       getAnalyticsEvents().some((event) => event.name === "daily_loop_started"),
     ).toBe(true);
+  });
+
+  test("shows and dismisses the focus coachmark before starting", async () => {
+    const firstRender = render(
+      <MemoryRouter>
+        <DailyLoopView />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole("dialog", { name: "Elige primero la ruta objetivo" }),
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Entendido" }));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("dialog", { name: "Elige primero la ruta objetivo" }),
+      ).not.toBeInTheDocument();
+    });
+
+    firstRender.unmount();
+
+    render(
+      <MemoryRouter>
+        <DailyLoopView />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.queryByRole("dialog", { name: "Elige primero la ruta objetivo" }),
+    ).not.toBeInTheDocument();
   });
 
   test("registers selected focus route when starting loop", () => {

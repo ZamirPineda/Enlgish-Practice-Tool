@@ -39,6 +39,11 @@ import {
   getGameFromEvent,
 } from "@/lib/chartData";
 import { DAILY_LOOP_FOCUS_LABEL, DailyLoopFocusRoute } from "@/lib/dailyLoop";
+import {
+  buildContentTelemetryRouteSummary,
+  buildContentTelemetrySummary,
+  getContentTelemetryAvailableItems,
+} from "@/lib/contentTelemetry";
 
 const VAULT_DECK_KEY = "vocab-vault-deck";
 const VAULT_PROGRESS_KEY = "vocab-vault-progress";
@@ -67,6 +72,7 @@ const buildAnalyticsSummary = (events: Array<{ name: AnalyticsEventName }>) => {
     session_end: 0,
     item_correct: 0,
     item_wrong: 0,
+    content_selected: 0,
     speaking_used: 0,
     weekly_review_completed: 0,
     daily_loop_started: 0,
@@ -278,6 +284,7 @@ const buildTopErrorTypes = (
 };
 
 const formatDelta = (value: number) => (value > 0 ? `+${value}` : `${value}`);
+const roundToOneDecimal = (value: number) => Math.round(value * 10) / 10;
 
 const getDeltaClass = (value: number) => {
   if (value > 0) return "text-emerald-400";
@@ -416,6 +423,7 @@ const StatsView: React.FC = () => {
       ),
     [deck, progress, weeklyActivity],
   );
+  const hasDashboardData = metrics.totalCards > 0 || analyticsEvents.length > 0;
   const computedWeeklySummary = useMemo(() => {
     let rawEvents = analyticsEvents;
 
@@ -542,6 +550,39 @@ const StatsView: React.FC = () => {
     () => buildFocusRouteAnalyticsSummary(previousAnalytics),
     [previousAnalytics],
   );
+  const contentTelemetryAvailableItems = useMemo(
+    () => getContentTelemetryAvailableItems(),
+    [],
+  );
+  const contentTelemetrySummary = useMemo(
+    () =>
+      buildContentTelemetrySummary({
+        events: filteredAnalytics,
+        availableItems: contentTelemetryAvailableItems,
+        categoryFilter,
+        focusRouteFilter,
+      }),
+    [filteredAnalytics, contentTelemetryAvailableItems, categoryFilter, focusRouteFilter],
+  );
+  const previousContentTelemetrySummary = useMemo(
+    () =>
+      buildContentTelemetrySummary({
+        events: previousAnalytics,
+        availableItems: contentTelemetryAvailableItems,
+        categoryFilter,
+        focusRouteFilter,
+      }),
+    [previousAnalytics, contentTelemetryAvailableItems, categoryFilter, focusRouteFilter],
+  );
+  const contentTelemetryRouteSummary = useMemo(
+    () =>
+      buildContentTelemetryRouteSummary({
+        events: filteredAnalytics,
+        availableItems: contentTelemetryAvailableItems,
+        categoryFilter,
+      }),
+    [filteredAnalytics, contentTelemetryAvailableItems, categoryFilter],
+  );
 
   const selectedFocusRouteSummary = useMemo(() => {
     if (focusRouteFilter === "all") {
@@ -645,6 +686,12 @@ const StatsView: React.FC = () => {
     ) / 10;
   const speakingUsedDelta =
     analyticsSummary.speaking_used - previousAnalyticsSummary.speaking_used;
+  const repeatRateDelta =
+    contentTelemetrySummary.repeatRate -
+    previousContentTelemetrySummary.repeatRate;
+  const coverageRateDelta =
+    contentTelemetrySummary.coverageRate -
+    previousContentTelemetrySummary.coverageRate;
   const dailyLoopCompletedDelta =
     selectedFocusRouteSummary.completed -
     selectedPreviousFocusRouteSummary.completed;
@@ -724,7 +771,7 @@ const StatsView: React.FC = () => {
           </div>
         </div>
 
-        {metrics.totalCards === 0 ? (
+        {!hasDashboardData ? (
           <section className="bg-surface-1 border border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center animate-fade-in shadow-xl shadow-black/5">
             <div className="w-24 h-24 bg-surface-2 rounded-full flex items-center justify-center mb-6 shadow-inner ring-4 ring-surface-1">
               <span className="text-4xl drop-shadow-sm opacity-80 filter grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
@@ -1104,6 +1151,85 @@ const StatsView: React.FC = () => {
                     vs prev: {formatDelta(dailyLoopCompletedDelta)}
                   </p>
                 </article>
+                <article className="bg-surface-2 border border-border rounded-xl p-4">
+                  <p className="text-xs uppercase font-bold text-text-muted mb-1">
+                    Repeat Rate
+                  </p>
+                  <p className="text-2xl font-black text-amber-400">
+                    {contentTelemetrySummary.repeatRate}%
+                  </p>
+                  <p className="text-xs text-text-muted mt-1">
+                    {contentTelemetrySummary.repeatedSelections} repeated of{" "}
+                    {contentTelemetrySummary.selections} selections
+                  </p>
+                  <p
+                    className={`text-xs mt-1 ${getDeltaClass(repeatRateDelta)}`}
+                  >
+                    vs prev: {formatDelta(roundToOneDecimal(repeatRateDelta))}%
+                  </p>
+                </article>
+                <article className="bg-surface-2 border border-border rounded-xl p-4">
+                  <p className="text-xs uppercase font-bold text-text-muted mb-1">
+                    Content Coverage
+                  </p>
+                  <p className="text-2xl font-black text-fuchsia-400">
+                    {contentTelemetrySummary.coverageRate}%
+                  </p>
+                  <p className="text-xs text-text-muted mt-1">
+                    {contentTelemetrySummary.uniqueSelected} unique of{" "}
+                    {contentTelemetrySummary.availableItems} available
+                  </p>
+                  <p
+                    className={`text-xs mt-1 ${getDeltaClass(coverageRateDelta)}`}
+                  >
+                    vs prev: {formatDelta(roundToOneDecimal(coverageRateDelta))}%
+                  </p>
+                </article>
+              </div>
+
+              <div className="mt-6 bg-surface-2 border border-border rounded-xl p-4">
+                <h3 className="text-sm font-black uppercase tracking-widest text-text-primary mb-3">
+                  Content Variety by Route
+                </h3>
+                {contentTelemetryRouteSummary.every(
+                  (item) => item.availableItems === 0,
+                ) ? (
+                  <p className="text-sm text-text-muted">
+                    No inventory-backed content tracked for this category yet.
+                  </p>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+                    {contentTelemetryRouteSummary.map((item) => {
+                      const isHighlighted =
+                        focusRouteFilter === "all" || focusRouteFilter === item.route;
+
+                      return (
+                        <article
+                          key={`content-route-${item.route}`}
+                          className={`bg-surface-1 border rounded-xl p-4 ${
+                            isHighlighted ? "border-accent/50" : "border-border"
+                          }`}
+                        >
+                          <p className="text-xs uppercase font-bold text-text-muted mb-1">
+                            {item.label}
+                          </p>
+                          <p className="text-lg font-black text-text-primary">
+                            Coverage: {item.coverageRate}%
+                          </p>
+                          <p className="text-xs text-text-secondary mt-1">
+                            Unique: {item.uniqueSelected} / {item.availableItems}
+                          </p>
+                          <p className="text-xs text-amber-400 mt-1 uppercase font-bold tracking-widest">
+                            Repeat: {item.repeatRate}%
+                          </p>
+                          <p className="text-xs text-text-muted mt-1">
+                            Selections: {item.selections}
+                          </p>
+                        </article>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
               <div className="mt-6 bg-surface-2 border border-border rounded-xl p-4">

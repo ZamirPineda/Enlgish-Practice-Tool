@@ -7,6 +7,10 @@ import {
   createEmptyContentInventoryPack,
   parseContentInventoryPack,
 } from "@/lib/contentInventory";
+import {
+  ContentInventoryDedupeReport,
+  dedupeContentInventoryItems,
+} from "@/lib/contentInventoryDedupe";
 import { getFullTextFromParts } from "@/lib/textUtils";
 import { TechDeck } from "@/features/data/techDecks";
 import { DrillsByLevel, DrillTopic, SrsVocabularyItem } from "@/types";
@@ -183,6 +187,7 @@ export const adaptTechDecksToInventoryItems = (
           deckId: deck.id,
           topic: deck.name,
           gameId: "tech_flashcards",
+          routeObjective: "dev_reasoning",
           sequence: deckIndex * 10000 + cardIndex,
         },
         active: true,
@@ -196,9 +201,14 @@ export interface BuildInventoryAdaptersInput {
   techDecks?: TechDeck[];
 }
 
-export const buildContentInventoryFromAdapters = (
+export interface BuildInventoryAdaptersResult {
+  pack: ContentInventoryPack;
+  dedupeReport: ContentInventoryDedupeReport;
+}
+
+export const buildContentInventoryFromAdaptersWithReport = (
   input: BuildInventoryAdaptersInput,
-): ContentInventoryPack => {
+): BuildInventoryAdaptersResult => {
   const pack = createEmptyContentInventoryPack();
   const studyDeckItems = input.studyDeckByLevel
     ? adaptStudyDeckToInventoryItems(input.studyDeckByLevel)
@@ -211,15 +221,18 @@ export const buildContentInventoryFromAdapters = (
     : [];
 
   const merged = [...studyDeckItems, ...vaultItems, ...techItems];
-  const byId = new Map<string, ContentInventoryItem>();
-  merged.forEach((item) => {
-    if (!byId.has(item.id)) {
-      byId.set(item.id, item);
-    }
+  const deduped = dedupeContentInventoryItems(merged);
+  const parsedPack = parseContentInventoryPack({
+    ...pack,
+    items: deduped.items,
   });
 
-  return parseContentInventoryPack({
-    ...pack,
-    items: Array.from(byId.values()),
-  });
+  return {
+    pack: parsedPack,
+    dedupeReport: deduped.report,
+  };
 };
+
+export const buildContentInventoryFromAdapters = (
+  input: BuildInventoryAdaptersInput,
+): ContentInventoryPack => buildContentInventoryFromAdaptersWithReport(input).pack;

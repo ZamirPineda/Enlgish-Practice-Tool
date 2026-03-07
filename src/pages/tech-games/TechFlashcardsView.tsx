@@ -4,7 +4,6 @@ import GameStartPanel from "@/components/GameStartPanel";
 import DailySessionInsights from "@/components/game/DailySessionInsights";
 import GameHudCard from "@/components/game/GameHudCard";
 import Button from "@/components/ui/Button";
-import { techDecks, TechCard } from "@/features/data/techDecks";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import {
   appendAdaptiveDifficultyLog,
@@ -17,6 +16,11 @@ import {
   TimePreset,
   TIME_PRESET_LABEL,
 } from "@/lib/gameSessionConfig";
+import {
+  createContentSelectionSession,
+  pickNextTechDeckCards,
+  PickedTechDeckCard,
+} from "@/lib/contentInventoryPicker";
 import { addGlobalXp, progressQuest } from "@/lib/xpStore";
 import { toast } from "@/components/ui/Toast";
 
@@ -53,14 +57,12 @@ const FLASHCARDS_DIFFICULTY_ENGINE =
     defaultLevel: "normal",
   });
 
-const shuffle = <T,>(items: T[]) => [...items].sort(() => 0.5 - Math.random());
-
 export const TechFlashcardsView: React.FC = () => {
   const { deckId } = useParams<{ deckId: string }>();
   const navigate = useNavigate();
 
-  const [deckCards, setDeckCards] = useState<TechCard[]>([]);
-  const [cards, setCards] = useState<TechCard[]>([]);
+  const [deckCards, setDeckCards] = useState<PickedTechDeckCard[]>([]);
+  const [cards, setCards] = useState<PickedTechDeckCard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
@@ -69,14 +71,21 @@ export const TechFlashcardsView: React.FC = () => {
   const [difficulty, setDifficulty] = useState<FlashcardsDifficulty>("normal");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const sessionStartTime = useRef<number>(Date.now());
+  const sessionIdRef = useRef<string | null>(null);
   const wrongStreakRef = useRef(0);
   const correctStreakRef = useRef(0);
 
   useEffect(() => {
-    const deck = techDecks.find((item) => item.id === deckId);
-    if (deck) {
-      setDeckCards(deck.cards);
+    if (!deckId) {
+      setDeckCards([]);
+      return;
     }
+    setDeckCards(
+      pickNextTechDeckCards({
+        deckId,
+        shuffle: false,
+      }),
+    );
   }, [deckId]);
 
   const pacePerCard = getTimeByPreset(
@@ -104,10 +113,17 @@ export const TechFlashcardsView: React.FC = () => {
   };
 
   const startSession = () => {
-    const selected = shuffle(deckCards).slice(
-      0,
-      SESSION_SIZE_CARDS[sessionSize],
-    );
+    if (!deckId) return;
+    sessionIdRef.current = createContentSelectionSession("tech_flashcards");
+    const selected = pickNextTechDeckCards({
+      deckId,
+      limit: SESSION_SIZE_CARDS[sessionSize],
+      shuffle: true,
+      historyScope: {
+        gameId: "tech_flashcards",
+        sessionId: sessionIdRef.current,
+      },
+    });
     setCards(selected);
     setCurrentIndex(0);
     setIsFlipped(false);

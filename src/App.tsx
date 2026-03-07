@@ -20,6 +20,8 @@ import { getRankForLevel } from "@/lib/levelRanks";
 import { startWebVitalsTracking } from "@/lib/webVitals";
 import { AnimatedRoutes } from "@/routes";
 import { OfflineBadge } from "@/components/OfflineBadge";
+import { GlobalCommandPalette } from "@/components/GlobalCommandPalette";
+import { Search } from "lucide-react";
 
 const ONBOARDING_STEPS = [
   {
@@ -200,6 +202,7 @@ const App: React.FC = () => {
   const [onboardingStep, setOnboardingStep] = React.useState(0);
   const [deferredPrompt, setDeferredPrompt] = React.useState<any>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = React.useState(false);
   const { level, currentLevelXp, nextLevelXp, progressPercentage } =
     useGlobalXp();
 
@@ -362,6 +365,18 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsCommandPaletteOpen(true)}
+              className="hidden md:flex items-center gap-2 rounded-lg border border-border bg-surface-2 px-3 py-1.5 text-sm font-bold text-text-secondary transition-colors hover:bg-surface-hover hover:text-text-primary"
+              aria-label="Open command palette"
+              title="Open command palette (Ctrl/Cmd+K)"
+            >
+              <Search className="h-4 w-4" />
+              Buscar
+              <span className="rounded border border-border bg-surface-1 px-1.5 py-0.5 text-[10px] font-black text-text-muted">
+                Ctrl/Cmd+K
+              </span>
+            </button>
             <Link
               to="/stats"
               className="hidden md:flex items-center gap-2 bg-surface-2 px-3 py-1.5 rounded-full border border-border hover:bg-surface-hover hover:scale-105 active:scale-95 transition-all cursor-pointer"
@@ -469,6 +484,7 @@ const App: React.FC = () => {
                 💬 Diplomatic Reviewer
               </NavItem>
             </NavGroup>
+            <NavItem to="/content-curation">Curacion</NavItem>
             <NavItem to="/stats">🏆 Logros</NavItem>
             <NavItem to="/profile">👤 Perfil</NavItem>
           </nav>
@@ -553,6 +569,7 @@ const App: React.FC = () => {
                       💬 Diplomatic Reviewer
                     </NavItem>
                   </div>
+                  <NavItem to="/content-curation">Curacion</NavItem>
                   <NavItem to="/profile">👤 Perfil</NavItem>
                   <NavItem to="/stats">🏆 Logros</NavItem>
                   <div className="h-6"></div> {/* Spacer to prevent cutoff */}
@@ -652,9 +669,15 @@ const App: React.FC = () => {
         )}
         <OfflineBadge />
         <ToastContainer />
+        <GlobalCommandPalette
+          open={isCommandPaletteOpen}
+          onOpenChange={setIsCommandPaletteOpen}
+        />
       </div>
     </HashRouter>
   );
 };
 
 export default App;
+
+

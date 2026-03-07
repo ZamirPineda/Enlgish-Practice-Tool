@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SpeedBuilderView from "@/pages/SpeedBuilderView";
 import { speedBuilderRounds } from "@/features/data/speedBuilder";
 import { ADAPTIVE_DIFFICULTY_LOG_KEY } from "@/lib/adaptiveDifficulty";
@@ -43,6 +43,23 @@ describe("SpeedBuilderView", () => {
     expect(screen.getByText("Speed Builder")).toBeInTheDocument();
     expect(screen.getByText(/Ronda 1/)).toBeInTheDocument();
     expect(screen.getByText("55s")).toBeInTheDocument();
+  });
+
+  test("shows and dismisses the beginner coachmark", async () => {
+    render(<SpeedBuilderView />);
+    startGame();
+
+    expect(
+      screen.getByRole("dialog", { name: "Construye la frase en orden" }),
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Entendido" }));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("dialog", { name: "Construye la frase en orden" }),
+      ).not.toBeInTheDocument();
+    });
   });
 
   test("switches to B2 level with lower timer and no beginner hint", () => {

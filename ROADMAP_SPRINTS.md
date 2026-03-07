@@ -1,6 +1,6 @@
 # Roadmap de Producto y Ejecucion (Contexto Diario)
 
-Ultima actualizacion: 4 de marzo de 2026
+Ultima actualizacion: 6 de marzo de 2026
 
 ## Vision
 
@@ -25,9 +25,31 @@ Construir una app funcional, gratificante y consistente para preparar objetivo G
 - APP-104 correcto para Sprint 1: integrar `sonner` para feedback global.
 - APP-401 aplicado: Stats incorpora comparativa y filtro por rutas objetivo Google (`english_interview`, `math_speed`, `dev_reasoning`).
 - APP-402 aplicado: web-vitals (`LCP`, `INP`, `CLS`) se capturan al iniciar app y se almacenan localmente.
-- APP-403 aplicado: Sentry reporta errores frontend con contexto de ruta y juego activo.
+- APP-403 aplicado: Sentry reporta errores frontend con contexto de ruta y juego activo cuando `VITE_SENTRY_DSN` esta configurado.
 - APP-501 aplicado: contrato `Content Inventory` versionado con schema canónico (`id`, `source`, `tags`, `skill`, `difficulty`, `format`, `metadata`) y tests.
 - APP-502 aplicado: adaptadores desde `StudyDeck`, `vocab-vault-deck` y `techDecks` generan `Content Inventory` sin afectar vistas existentes.
+- APP-503 aplicado: normalizacion + deduplicacion por huella semantica con consolidacion trazable (`dedupeLineage`, `dedupeSources`) y reporte por grupos.
+- APP-504 aplicado: indices en memoria por `skill/category/level/game` + API de query por filtros usando buckets/interseccion sin escaneo completo por consulta.
+- APP-505 aplicado: contrato comun `pickNextItems` y adopcion en 4 juegos Tech (`Flashcards`, `Trivia Sprint`, `Match Up`, `Boss`) evitando acceso directo a data files en esas vistas.
+- APP-506 aplicado: tests de inventario, adapters y dedupe validados en CI para consistencia, cardinalidad y estabilidad de ids.
+- APP-507 aplicado: base `shadcn/ui` agregada en `src/components/ui/shadcn` con primitives `Button`, `Dialog`, `Sheet`, `Select`, `Table`, `Tooltip` y tests smoke.
+- APP-508 aplicado: paleta global `Ctrl/Cmd+K` con `cmdk` para busqueda transversal por `skill/tag/game/deck` y navegacion en un paso.
+- APP-509 aplicado: formularios de `Settings` y `Profile` migrados a `react-hook-form` + `zod` con validacion tipada y errores visibles de campo.
+- APP-601 aplicado: selector de contenido prioriza items no recientes con ventanas por juego/sesion y fallback seguro cuando el pool es pequeno.
+- APP-602 aplicado: `SpeedBuilder`, `Paraphrase Duel`, `Sentence Transformer` y `Error Hunter` amplian ejemplos curados por nivel/tema y quedan protegidos con test de cobertura minima.
+- APP-603 aplicado: Math y Dev incorporan contenido clasificado por nivel/objetivo con bancos reutilizables (`math_speed`, `dev_reasoning`) y cobertura para metadata y seleccion adaptativa.
+- APP-604 aplicado: `Daily Loop` selecciona pasos desde inventory comun con historial reciente por categoria, variacion deterministica por ruta/dia y sin perder el mix `2 English + 1 Math + 1 Dev`.
+- APP-605 aplicado: el selector comun emite telemetria `content_selected` y `Stats` muestra `repeat_rate` y `content_coverage` por categoria/ruta sobre inventory trazable.
+- APP-606 aplicado: cobertura QA agrega no-regresion para dataset pequeno, filtros estrictos y sesiones largas en selector/telemetria, validando variedad antes de fallback y metricas seguras en bordes.
+- APP-607 aplicado: coachmarks persistentes y accesibles con `@floating-ui/react` + `framer-motion` en `Daily Loop`, `Speed Builder` y `Code Bug Hunter`, respetando reduced motion y cierre local por usuario.
+- APP-701 aplicado: pipeline base de authoring/import soporta `CSV/JSON`, valida filas contra schema tipado, dedupe antes de publicar y emite bundle versionado sobre `ContentInventoryPack`.
+- APP-702 aplicado: validadores de calidad bloquean contenido con problemas de formato, longitud, tags, alternativas y dificultad antes de generar bundles o imports locales.
+- APP-703 aplicado: linter de authoring reporta colisiones exactas por fingerprint y near-duplicates por similitud textual antes del dedupe final del import.
+- APP-704 aplicado: herramienta de review humano genera muestras deterministicas por categoria y permite aprobar o rechazar lotes completos sobre filas ya validadas.
+- APP-705 aplicado: bundles de contenido incluyen changelog estructurado, notas legibles de release y `rollbackTargetVersion` para volver al pack anterior con trazabilidad clara.
+- APP-706 aplicado: snapshots compactos fijan el inventario canonico y el bundle de authoring/versionado para que cambios de contenido o contrato rompan CI sin migracion declarada.
+- APP-707 aplicado: mesa de curacion operativa con `@tanstack/react-table`, filtros por metadata, acciones masivas y reorder manual con `@dnd-kit` sobre el subconjunto visible.
+- APP-708 aplicado: la mesa de curacion incorpora alta/edicion tipada con `react-hook-form` + `zod`, errores de validacion por campo y resincronizacion del draft/bundle al editar o crear filas.
 
 ## Sprint 1 | Base UX/UI + accesibilidad
 
@@ -121,9 +143,18 @@ Objetivo: consolidar contenido para reutilizarlo entre Study Deck, Vault y juego
 | APP-504 | Story     | Indices por `skill/category/level/game` para consultas rapidas        |   5 | Juegos consumen queries por filtros sin escanear datasets completos.                  |
 | APP-505 | Story     | Contrato de seleccion comun para juegos (`pickNextItems`)             |   5 | Al menos 4 juegos usan selector unificado en lugar de acceso directo a data files.    |
 | APP-506 | QA        | Tests de inventario, adapters y dedupe                                |   3 | Suite valida consistencia, cardinalidad y estabilidad de ids.                         |
-| APP-507 | Story     | UI foundation con `shadcn/ui` + `@radix-ui/themes`                    |   3 | Base de componentes/tokens aplicada en inventario y vistas nuevas sin romper estilos. |
+| APP-507 | Story     | UI foundation con `shadcn/ui` (primitives Radix/Base UI)              |   3 | Base de componentes reutilizables (Button, Dialog, Sheet, Select, Table, Tooltip).   |
+| APP-508 | Story     | Comando rapido con `cmdk` para buscar contenido/juegos                |   3 | Paleta global (`Ctrl/Cmd+K`) filtra por skill/tag/game/deck y navega en 1 paso.      |
+| APP-509 | Story     | Formularios con `react-hook-form` + `@hookform/resolvers` + `zod`     |   3 | Validacion consistente en Settings/Profile sin re-renders costosos.                    |
 
-Total estimado: 37 SP
+Total estimado: 43 SP
+
+### Decision de librerias (revision Sprint 5)
+
+- `shadcn/ui`: SI. Uso en vistas nuevas de inventario, filtros y acciones primarias/secundarias con componentes copy-paste y estilo controlado por Tailwind.
+- `cmdk`: SI. Uso en busqueda transversal de contenido (inventario, decks, rutas de juego) para reducir navegacion y friccion.
+- `react-hook-form` + `@hookform/resolvers` + `zod`: SI. Uso en formularios de configuracion y perfil; la curacion se integra despues en APP-708 por dependencia de APP-707.
+- `@radix-ui/themes`: NO por ahora. Se descarta en Sprint 5 para evitar doble sistema de tokens/estilos sobre Tailwind + shadcn; se puede reevaluar como spike futuro si hace falta theming global opinionado.
 
 ## Sprint 6 | Antirepeticion + expansion de ejemplos
 
@@ -137,7 +168,7 @@ Objetivo: reducir fatiga por repeticion y ampliar volumen util de practica.
 | APP-604 | Story     | Reusar inventario en Daily Loop para variar pasos                              |   5 | Daily Loop rota contenido sin perder foco de ruta objetivo.                     |
 | APP-605 | Story     | Telemetria de repeticion (`repeat_rate`, `content_coverage`)                   |   5 | Stats muestra tasa de repeticion y cobertura por categoria/ruta.                |
 | APP-606 | QA        | Pruebas de no-regresion en variedad y calidad                                  |   3 | Casos de borde: dataset pequeno, filtros estrictos, sesiones largas.            |
-| APP-607 | Story     | Coachmarks/tooltips con `@floating-ui/react` + microinteracciones con `motion` |   3 | Feedback contextual accesible y transiciones claras en flujos de practica.      |
+| APP-607 | Story     | Coachmarks/tooltips con `@floating-ui/react` + microinteracciones con `framer-motion` |   3 | Feedback contextual accesible y transiciones claras en flujos de practica.      |
 
 Total estimado: 37 SP
 
@@ -153,9 +184,10 @@ Objetivo: poder agregar/curar contenido sin tocar N archivos por juego.
 | APP-704 | Story     | Herramienta de muestreo para review humano                                       |   5 | Se puede revisar muestra por categoria y aprobar/rechazar lotes.                |
 | APP-705 | Story     | Versionado de packs de contenido + changelog                                     |   5 | Cada update de contenido tiene version y notas legibles para rollback.          |
 | APP-706 | QA        | Tests de pipeline + snapshots de inventario                                      |   3 | Cambios de contenido rompen CI si alteran contratos sin migracion declarada.    |
-| APP-707 | Story     | Mesa de curacion con `@tanstack/react-table` + orden manual con `@dnd-kit/react` |   5 | Curacion/filtrado/reordenamiento de contenido disponible para operacion diaria. |
+| APP-707 | Story     | Mesa de curacion con `@tanstack/react-table` + orden manual con `@dnd-kit/core` y `@dnd-kit/sortable` |   5 | Curacion/filtrado/reordenamiento de contenido disponible para operacion diaria. |
+| APP-708 | Story     | Integrar formularios tipados de curacion (`react-hook-form` + `zod`)             |   3 | Alta/edicion/revision en mesa de curacion con validacion consistente y errores claros. |
 
-Total estimado: 36 SP
+Total estimado: 39 SP
 
 ## Sprint 8 | Roadmap secuencial v1 (estilo modulos)
 
@@ -163,8 +195,8 @@ Objetivo: experiencia tipo camino de aprendizaje por modulos y unidades.
 
 | Key     | Tipo      | Historia                                                     |  SP | Criterios de aceptacion                                                           |
 | ------- | --------- | ------------------------------------------------------------ | --: | --------------------------------------------------------------------------------- |
-| APP-801 | Epic Task | Crear `RoadmapView` con mapa de modulos/unidades             |   8 | Vista presenta nodos secuenciales con estado: bloqueado/en progreso/completado.   |
 | APP-802 | Story     | Modelo de roadmap (`module`, `unit`, `lesson`, `node`)       |   5 | Estructura versionable y compatible con rutas objetivo Google.                    |
+| APP-801 | Epic Task | Crear `RoadmapView` con mapa de modulos/unidades             |   8 | Vista presenta nodos secuenciales con estado: bloqueado/en progreso/completado.   |
 | APP-803 | Story     | Reglas de desbloqueo secuencial + prerequisitos              |   5 | Usuario no salta unidades sin cumplir criterio minimo de dominio.                 |
 | APP-804 | Story     | Integracion con juegos existentes como lecciones             |   8 | Cada nodo dispara juego/sesion concreta con parametros de contenido y dificultad. |
 | APP-805 | Story     | Recompensas de progreso de roadmap                           |   5 | XP/badges por completar unidad/modulo y mantener continuidad.                     |
@@ -197,13 +229,11 @@ Objetivo: preparar crecimiento sostenido de contenido y experiencia estable.
 | -------- | --------- | ----------------------------------------------------------- | --: | -------------------------------------------------------------------------------- |
 | APP-1001 | Epic Task | Packs tematicos y por objetivo (English/Math/Dev)           |   8 | App soporta multiples packs activables sin duplicar logica de juegos.            |
 | APP-1002 | Story     | Carga diferida de packs para reducir peso inicial           |   5 | Bundle inicial baja y los packs se cargan bajo demanda por ruta/modulo.          |
-| APP-1003 | Story     | Estrategia offline/cache para roadmap y contenido activo    |   5 | Modulos en curso funcionan sin conexion con sincronizacion al volver online.     |
+| APP-1003 | Story     | Estrategia offline/cache para roadmap y contenido activo    |   5 | Extiende PWA actual con cache versionado de nodos/packs activos e invalidacion segura al actualizar contenido. |
 | APP-1004 | Story     | Panel de salud de contenido (cobertura, repeticion, huecos) |   5 | Stats interno muestra donde falta contenido por skill/level.                     |
 | APP-1005 | Story     | Smoke tests mobile + desktop sobre roadmap y juegos         |   5 | Flujo completo validado en ambos formatos con reporte de issues.                 |
 | APP-1006 | QA        | Checklist de release de contenido y rollback por pack       |   3 | Se puede desactivar un pack problemático sin afectar progreso global.            |
-| APP-1007 | Story     | Migrar UI a `tailwindcss@4` bajo feature flag               |   5 | Migracion estable, sin regresiones criticas de estilos y con rollback inmediato. |
-
-Total estimado: 36 SP
+Total estimado: 31 SP
 
 ### Criterios de Evaluacion de Librerias (DoD UX)
 
@@ -219,12 +249,25 @@ Objetivo: retomar infraestructura de plataforma una vez establecida la capa de c
 
 | Key     | Tipo  | Historia                                      |  SP | Criterios de aceptacion                             |
 | ------- | ----- | --------------------------------------------- | --: | --------------------------------------------------- |
-| APP-404 | Story | Crear capa repository local-first             |   8 | Lectura/escritura desacoplada de UI.                |
-| APP-405 | Story | Preparar react-query con feature flag         |   5 | Infra lista sin forzar backend aun.                 |
-| APP-406 | Spike | POC de Capacitor Android                      |   5 | Build de prueba documentado + checklist Play Store. |
-| APP-407 | QA    | Pruebas de regresion completas + smoke mobile |   3 | Suite verde y reporte final de release readiness.   |
+| APP-1104 | Story | Crear capa repository local-first             |   8 | Lectura/escritura desacoplada de UI.                |
+| APP-1105 | Story | Preparar react-query con feature flag         |   5 | Infra lista sin forzar backend aun.                 |
+| APP-1106 | Spike | POC de Capacitor Android                      |   5 | Build de prueba documentado + checklist Play Store. |
+| APP-1107 | QA    | Pruebas de regresion completas + smoke mobile |   3 | Suite verde y reporte final de release readiness.   |
 
 Total estimado: 21 SP
+
+Nota de trazabilidad:
+- `APP-1101`, `APP-1102` y `APP-1103` quedan reservados para trabajo backend previo (fuera de alcance de este roadmap actual).
+
+## Sprint 12 | Migracion UI Tailwind v4 (condicionada)
+
+Objetivo: ejecutar migracion visual solo despues de estabilizar release y cerrar APP-907 con reporte verde.
+
+| Key      | Tipo  | Historia                                              |  SP | Criterios de aceptacion                                                          |
+| -------- | ----- | ----------------------------------------------------- | --: | -------------------------------------------------------------------------------- |
+| APP-1007 | Story | Migrar UI a `tailwindcss@4` bajo feature flag         |   5 | Migracion estable, sin regresiones criticas de estilos y con rollback inmediato. |
+
+Total estimado: 5 SP
 
 ## Log de Decisiones (rellenar cada dia)
 

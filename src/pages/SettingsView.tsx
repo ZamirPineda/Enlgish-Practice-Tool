@@ -10,15 +10,45 @@ import {
   Download,
   Upload,
   Database,
+  CircleHelp,
 } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { exportToJSON, importFromJSON } from "@/lib/exportImport";
 import { toast } from "@/components/ui/Toast";
+import {
+  Button,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/shadcn";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface SettingsViewProps {
   settings: AppSettings;
   onSettingsChange: (updates: Partial<AppSettings>) => void;
 }
+
+const settingsFormSchema = z.object({
+  theme: z.enum(["dark", "light"]),
+  weeklyGoalSessions: z.number().int().min(1).max(14),
+  dailyGoalType: z.enum(["cards", "time", "xp"]),
+  dailyGoalTarget: z
+    .number()
+    .int()
+    .min(1, "Daily target must be at least 1")
+    .max(500, "Daily target cannot exceed 500"),
+  dayOffsetHours: z.number().int().min(0).max(5),
+});
+
+type SettingsFormValues = z.infer<typeof settingsFormSchema>;
 
 const SettingsView: React.FC<SettingsViewProps> = ({
   settings,
@@ -26,6 +56,60 @@ const SettingsView: React.FC<SettingsViewProps> = ({
 }) => {
   const { totalXp, streakFreezes, buyFreeze } = useGlobalXp();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const {
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<SettingsFormValues>({
+    resolver: zodResolver(settingsFormSchema),
+    mode: "onChange",
+    defaultValues: {
+      theme: settings.theme,
+      weeklyGoalSessions: settings.weeklyGoalSessions,
+      dailyGoalType: settings.dailyGoalType,
+      dailyGoalTarget: settings.dailyGoalTarget,
+      dayOffsetHours: settings.dayOffsetHours,
+    },
+  });
+  const formValues = watch();
+
+  useEffect(() => {
+    reset({
+      theme: settings.theme,
+      weeklyGoalSessions: settings.weeklyGoalSessions,
+      dailyGoalType: settings.dailyGoalType,
+      dailyGoalTarget: settings.dailyGoalTarget,
+      dayOffsetHours: settings.dayOffsetHours,
+    });
+  }, [
+    reset,
+    settings.theme,
+    settings.weeklyGoalSessions,
+    settings.dailyGoalType,
+    settings.dailyGoalTarget,
+    settings.dayOffsetHours,
+  ]);
+
+  const applySettingUpdate = (
+    field: keyof SettingsFormValues,
+    value: SettingsFormValues[keyof SettingsFormValues],
+  ) => {
+    setValue(field as never, value as never, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+    const nextValues = {
+      ...formValues,
+      [field]: value,
+    } as SettingsFormValues;
+    const parsed = settingsFormSchema.safeParse(nextValues);
+    if (parsed.success) {
+      onSettingsChange({
+        [field]: parsed.data[field],
+      } as Partial<AppSettings>);
+    }
+  };
 
   const handleImportClick = () => {
     if (fileInputRef.current) {
@@ -129,19 +213,20 @@ const SettingsView: React.FC<SettingsViewProps> = ({
               >
                 Theme
               </label>
-              <select
-                id="theme-select"
-                className="w-full min-h-[44px] rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-focus"
-                value={settings.theme}
-                onChange={(event) =>
-                  onSettingsChange({
-                    theme: event.target.value as AppSettings["theme"],
-                  })
+              <Select
+                value={formValues.theme}
+                onValueChange={(value) =>
+                  applySettingUpdate("theme", value as SettingsFormValues["theme"])
                 }
               >
-                <option value="dark">Dark</option>
-                <option value="light">Light</option>
-              </select>
+                <SelectTrigger id="theme-select">
+                  <SelectValue placeholder="Select theme" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="dark">Dark</SelectItem>
+                  <SelectItem value="light">Light</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <ToggleSwitch
@@ -182,28 +267,52 @@ const SettingsView: React.FC<SettingsViewProps> = ({
               >
                 Weekly goal (sessions)
               </label>
-              <select
-                id="weekly-goal-select"
-                className="w-full min-h-[44px] rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-focus"
-                value={settings.weeklyGoalSessions}
-                onChange={(event) =>
-                  onSettingsChange({
-                    weeklyGoalSessions: Number(event.target.value),
-                  })
+              <Select
+                value={String(formValues.weeklyGoalSessions)}
+                onValueChange={(value) =>
+                  applySettingUpdate(
+                    "weeklyGoalSessions",
+                    Number(value) as SettingsFormValues["weeklyGoalSessions"],
+                  )
                 }
               >
-                {[3, 4, 5, 6, 7, 8, 10, 12].map((value) => (
-                  <option key={value} value={value}>
-                    {value} sessions
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger id="weekly-goal-select">
+                  <SelectValue placeholder="Select weekly goal" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[3, 4, 5, 6, 7, 8, 10, 12].map((value) => (
+                    <SelectItem key={value} value={String(value)}>
+                      {value} sessions
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="pt-4 border-t border-border mt-4">
-              <h3 className="font-bold text-lg text-text-primary mb-4">
-                Daily Goal & Streak Options
-              </h3>
+              <div className="mb-4 flex items-center gap-2">
+                <h3 className="font-bold text-lg text-text-primary">
+                  Daily Goal & Streak Options
+                </h3>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 rounded-full"
+                        aria-label="Daily goal help"
+                      >
+                        <CircleHelp className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      Ajusta meta diaria y hora de cierre para calcular la racha.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
 
               <div className="space-y-4">
                 <div>
@@ -213,21 +322,24 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                   >
                     Establecer meta basaba en
                   </label>
-                  <select
-                    id="daily-goal-type"
-                    className="w-full min-h-[44px] rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-focus"
-                    value={settings.dailyGoalType}
-                    onChange={(event) =>
-                      onSettingsChange({
-                        dailyGoalType: event.target
-                          .value as AppSettings["dailyGoalType"],
-                      })
+                  <Select
+                    value={formValues.dailyGoalType}
+                    onValueChange={(value) =>
+                      applySettingUpdate(
+                        "dailyGoalType",
+                        value as SettingsFormValues["dailyGoalType"],
+                      )
                     }
                   >
-                    <option value="cards">Cartas Estudiadas</option>
-                    <option value="time">Minutos Jugados</option>
-                    <option value="xp">Experiencia (XP)</option>
-                  </select>
+                    <SelectTrigger id="daily-goal-type">
+                      <SelectValue placeholder="Selecciona tipo de meta" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="cards">Cartas Estudiadas</SelectItem>
+                      <SelectItem value="time">Minutos Jugados</SelectItem>
+                      <SelectItem value="xp">Experiencia (XP)</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
@@ -242,13 +354,19 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                     type="number"
                     min="1"
                     className="w-full min-h-[44px] rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-focus"
-                    value={settings.dailyGoalTarget}
+                    value={formValues.dailyGoalTarget}
                     onChange={(event) =>
-                      onSettingsChange({
-                        dailyGoalTarget: Number(event.target.value),
-                      })
+                      applySettingUpdate(
+                        "dailyGoalTarget",
+                        Number(event.target.value) as SettingsFormValues["dailyGoalTarget"],
+                      )
                     }
                   />
+                  {errors.dailyGoalTarget?.message && (
+                    <p className="mt-1 text-xs text-red-400">
+                      {errors.dailyGoalTarget.message}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -258,23 +376,27 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                   >
                     Hora de Cierre del Día
                   </label>
-                  <select
-                    id="day-offset"
-                    className="w-full min-h-[44px] rounded-lg border px-3 py-2 bg-surface-1 border-border text-text-primary active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-focus"
-                    value={settings.dayOffsetHours}
-                    onChange={(event) =>
-                      onSettingsChange({
-                        dayOffsetHours: Number(event.target.value),
-                      })
+                  <Select
+                    value={String(formValues.dayOffsetHours)}
+                    onValueChange={(value) =>
+                      applySettingUpdate(
+                        "dayOffsetHours",
+                        Number(value) as SettingsFormValues["dayOffsetHours"],
+                      )
                     }
                   >
-                    <option value="0">Medianoche (12:00 AM)</option>
-                    <option value="1">1:00 AM</option>
-                    <option value="2">2:00 AM</option>
-                    <option value="3">3:00 AM (Recomendado)</option>
-                    <option value="4">4:00 AM</option>
-                    <option value="5">5:00 AM</option>
-                  </select>
+                    <SelectTrigger id="day-offset">
+                      <SelectValue placeholder="Selecciona hora de cierre" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="0">Medianoche (12:00 AM)</SelectItem>
+                      <SelectItem value="1">1:00 AM</SelectItem>
+                      <SelectItem value="2">2:00 AM</SelectItem>
+                      <SelectItem value="3">3:00 AM (Recomendado)</SelectItem>
+                      <SelectItem value="4">4:00 AM</SelectItem>
+                      <SelectItem value="5">5:00 AM</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <p className="text-xs text-text-muted mt-1">
                     Cualquier actividad antes de esta hora se considerará como
                     parte del día anterior.

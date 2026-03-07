@@ -8,9 +8,13 @@ import {
 } from "@/lib/userProfileStore";
 import { AvatarRenderer } from "@/components/AvatarRenderer";
 import { toast } from "@/components/ui/Toast";
+import { Button } from "@/components/ui/shadcn";
 import SettingsView from "@/pages/SettingsView";
 import { AppSettings } from "@/lib/settingsStore";
 import Heatmap from "@/components/Heatmap";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   useGlobalXp,
   getLifetimeStats,
@@ -27,12 +31,44 @@ interface ProfileViewProps {
   onSettingsChange: (updates: Partial<AppSettings>) => void;
 }
 
+const AVATAR_STYLE_IDS = [
+  "micah",
+  "adventurer",
+  "fun-emoji",
+  "bottts",
+  "croodles",
+  "pixel-art",
+  "thumbs",
+  "avataaars",
+] as const;
+
+const BACKGROUND_COLORS = [
+  "transparent",
+  "fcdbb9",
+  "ffc8d2",
+  "bbf7d0",
+  "bfdbfe",
+  "e9d5ff",
+  "fef08a",
+  "fde68a",
+  "1f2937",
+  "0f172a",
+] as const;
+
+const profileFormSchema = z.object({
+  name: z.string().trim().min(1, "Display name is required").max(40),
+  seed: z.string().trim().min(3, "Seed must have at least 3 chars").max(64),
+  avatarStyle: z.enum(AVATAR_STYLE_IDS),
+  backgroundColor: z.enum(BACKGROUND_COLORS),
+});
+
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
+
 export default function ProfileView({
   settings,
   onSettingsChange,
 }: ProfileViewProps) {
   const [profile, setProfile] = useState<UserProfile>(() => loadProfile());
-  const [seedInput, setSeedInput] = useState(profile.character.seed);
   const [activeTab, setActiveTab] = useState<ProfileTab>("account");
   const { level, totalXp } = useGlobalXp();
   const currentRank = getRankForLevel(level);
@@ -40,6 +76,31 @@ export default function ProfileView({
   const [lifetimeStats, setLifetimeStats] = useState(getLifetimeStats);
   const [claimedMilestones, setClaimedMilestones] =
     useState(getClaimedMilestones);
+
+  const defaultBackgroundColor = BACKGROUND_COLORS.includes(
+    profile.character.backgroundColor as (typeof BACKGROUND_COLORS)[number],
+  )
+    ? (profile.character.backgroundColor as (typeof BACKGROUND_COLORS)[number])
+    : "transparent";
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileFormSchema),
+    mode: "onChange",
+    defaultValues: {
+      name: profile.character.name,
+      seed: profile.character.seed,
+      avatarStyle: profile.character.avatarStyle,
+      backgroundColor: defaultBackgroundColor,
+    },
+  });
+
+  const formValues = watch();
 
   useEffect(() => {
     const handleStatsUpdate = () => {
@@ -51,27 +112,31 @@ export default function ProfileView({
       window.removeEventListener("lifetimeStatsUpdated", handleStatsUpdate);
   }, []);
 
-  useEffect(() => {
-    saveProfile(profile);
-  }, [profile]);
-
-  const handleChange = (field: keyof UserCharacter, value: string) => {
-    setProfile((prev) => ({
-      ...prev,
-      character: { ...prev.character, [field]: value },
-    }));
-  };
-
-  const handleSave = () => {
-    saveProfile(profile);
-    toast.success("Profile saved correctly!");
-  };
-
   const handleRandomize = () => {
     const randomSeed = Math.random().toString(36).substring(2, 10);
-    setSeedInput(randomSeed);
-    handleChange("seed", randomSeed);
+    setValue("seed", randomSeed, { shouldDirty: true, shouldValidate: true });
   };
+
+  const handleSave = handleSubmit(
+    (values) => {
+      const nextProfile: UserProfile = {
+        ...profile,
+        character: {
+          ...profile.character,
+          name: values.name.trim(),
+          seed: values.seed.trim(),
+          avatarStyle: values.avatarStyle,
+          backgroundColor: values.backgroundColor,
+        },
+      };
+      setProfile(nextProfile);
+      saveProfile(nextProfile);
+      toast.success("Profile saved correctly!");
+    },
+    () => {
+      toast.error("Please fix validation errors before saving.");
+    },
+  );
 
   const internalHandleSettingsChange = (
     partialUpdate: Partial<typeof settings>,
@@ -90,18 +155,15 @@ export default function ProfileView({
     { id: "avataaars", name: "Avataaars", emoji: "🧑" },
   ];
 
-  const backgroundColors = [
-    "transparent",
-    "fcdbb9",
-    "ffc8d2",
-    "bbf7d0",
-    "bfdbfe",
-    "e9d5ff",
-    "fef08a",
-    "fde68a",
-    "1f2937",
-    "0f172a",
-  ];
+  const backgroundColors = BACKGROUND_COLORS;
+  const previewCharacter: UserCharacter = {
+    ...profile.character,
+    name: formValues.name ?? profile.character.name,
+    seed: formValues.seed ?? profile.character.seed,
+    avatarStyle: (formValues.avatarStyle ??
+      profile.character.avatarStyle) as AvatarStyle,
+    backgroundColor: formValues.backgroundColor ?? defaultBackgroundColor,
+  };
 
   return (
     <div className="flex-1 overflow-y-auto bg-surface-base p-4">
@@ -113,25 +175,28 @@ export default function ProfileView({
           <div className="relative group z-10">
             <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-surface-1 shadow-xl overflow-hidden bg-surface-base flex-shrink-0 flex items-center justify-center">
               <AvatarRenderer
-                character={profile.character}
+                character={previewCharacter}
                 className="w-full h-full scale-110"
                 animate={true}
               />
             </div>
             {activeTab === "account" && (
-              <button
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
                 onClick={handleRandomize}
                 className="absolute bottom-0 right-0 bg-surface-2 p-2 rounded-full border border-border shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 active:scale-95"
                 title="Randomize Avatar"
               >
                 🎲
-              </button>
+              </Button>
             )}
           </div>
 
           <div className="z-10 flex flex-col items-center sm:items-start text-center sm:text-left flex-1 mt-2 sm:mt-8">
             <h1 className="text-3xl font-black text-text-primary tracking-tight">
-              {profile.character.name || "Learner"}
+              {previewCharacter.name || "Learner"}
             </h1>
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-3">
               <span className="px-3 py-1 rounded-full bg-surface-2 border border-border text-sm font-bold text-text-secondary flex items-center gap-1.5">
@@ -151,7 +216,9 @@ export default function ProfileView({
 
         {/* Tab Navigation */}
         <div className="flex bg-surface-2 p-1 rounded-xl w-full sm:w-fit mx-auto sm:mx-0 overflow-x-auto no-scrollbar">
-          <button
+          <Button
+            type="button"
+            variant="ghost"
             onClick={() => setActiveTab("account")}
             className={`flex-1 sm:flex-none px-6 py-2.5 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${
               activeTab === "account"
@@ -160,8 +227,10 @@ export default function ProfileView({
             }`}
           >
             🎨 Info. de Cuenta
-          </button>
-          <button
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
             onClick={() => setActiveTab("activity")}
             className={`flex-1 sm:flex-none px-6 py-2.5 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${
               activeTab === "activity"
@@ -170,8 +239,10 @@ export default function ProfileView({
             }`}
           >
             📊 Actividad
-          </button>
-          <button
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
             onClick={() => setActiveTab("settings")}
             className={`flex-1 sm:flex-none px-6 py-2.5 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${
               activeTab === "settings"
@@ -180,14 +251,17 @@ export default function ProfileView({
             }`}
           >
             ⚙️ Configuración
-          </button>
+          </Button>
         </div>
 
         {/* Tab Content Areas */}
         <div className="mt-6">
           {/* TAB 1: Información de Cuenta (Personalización de Avatar) */}
           {activeTab === "account" && (
-            <div className="bg-surface-1 rounded-xl p-6 shadow-sm border border-border space-y-6">
+            <form
+              onSubmit={handleSave}
+              className="bg-surface-1 rounded-xl p-6 shadow-sm border border-border space-y-6"
+            >
               {/* Display Name */}
               <div>
                 <label className="block text-sm font-bold text-text-primary mb-2">
@@ -195,11 +269,13 @@ export default function ProfileView({
                 </label>
                 <input
                   type="text"
-                  value={profile.character.name}
-                  onChange={(e) => handleChange("name", e.target.value)}
+                  {...register("name")}
                   className="w-full bg-surface-2 border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
                   placeholder="Enter your hero name"
                 />
+                {errors.name?.message && (
+                  <p className="mt-1 text-xs text-red-400">{errors.name.message}</p>
+                )}
               </div>
 
               {/* Avatar Style Art */}
@@ -209,11 +285,19 @@ export default function ProfileView({
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {avatarStyles.map((style) => (
-                    <button
+                    <Button
                       key={style.id}
-                      onClick={() => handleChange("avatarStyle", style.id)}
-                      className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
-                        profile.character.avatarStyle === style.id
+                      type="button"
+                      variant="ghost"
+                      onClick={() =>
+                        setValue("avatarStyle", style.id, {
+                          shouldDirty: true,
+                          shouldValidate: true,
+                        })
+                      }
+                      aria-pressed={formValues.avatarStyle === style.id}
+                      className={`h-auto flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
+                        formValues.avatarStyle === style.id
                           ? "border-accent bg-accent/10 scale-105"
                           : "border-border bg-surface-2 hover:border-accent/50"
                       }`}
@@ -222,7 +306,7 @@ export default function ProfileView({
                       <span className="text-[10px] font-bold text-center leading-tight">
                         {style.name}
                       </span>
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -231,23 +315,25 @@ export default function ProfileView({
               <div>
                 <label className="block text-sm font-bold text-text-primary mb-2 flex justify-between items-center">
                   <span>Avatar DNA (Seed)</span>
-                  <button
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
                     onClick={handleRandomize}
-                    className="text-xs text-accent hover:underline flex items-center gap-1"
+                    className="h-auto px-0 py-0 text-xs text-accent hover:underline"
                   >
                     <span>🎲 Randomize</span>
-                  </button>
+                  </Button>
                 </label>
                 <input
                   type="text"
-                  value={seedInput}
-                  onChange={(e) => {
-                    setSeedInput(e.target.value);
-                    handleChange("seed", e.target.value);
-                  }}
+                  {...register("seed")}
                   className="w-full bg-surface-2 border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all font-mono text-sm"
                   placeholder="Type anything to change the look..."
                 />
+                {errors.seed?.message && (
+                  <p className="mt-1 text-xs text-red-400">{errors.seed.message}</p>
+                )}
                 <p className="text-xs text-text-muted mt-2">
                   The DNA string completely changes how your character looks.
                   Try typing your favorite English word!
@@ -261,11 +347,19 @@ export default function ProfileView({
                 </label>
                 <div className="flex flex-wrap gap-3">
                   {backgroundColors.map((color) => (
-                    <button
+                    <Button
                       key={color}
-                      onClick={() => handleChange("backgroundColor", color)}
-                      className={`w-10 h-10 rounded-full border-2 transition-all flex items-center justify-center ${
-                        profile.character.backgroundColor === color
+                      type="button"
+                      variant="ghost"
+                      onClick={() =>
+                        setValue("backgroundColor", color, {
+                          shouldDirty: true,
+                          shouldValidate: true,
+                        })
+                      }
+                      aria-pressed={formValues.backgroundColor === color}
+                      className={`h-10 w-10 rounded-full border-2 p-0 transition-all flex items-center justify-center ${
+                        formValues.backgroundColor === color
                           ? "border-accent scale-110 shadow-[0_0_10px_rgba(56,189,248,0.5)]"
                           : "border-border hover:scale-105"
                       }`}
@@ -282,18 +376,18 @@ export default function ProfileView({
                           /
                         </span>
                       )}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
 
-              <button
-                onClick={handleSave}
-                className="w-full bg-accent hover:bg-accent-hover text-white font-black py-4 rounded-xl transition-colors active:scale-95 shadow-lg flex items-center justify-center gap-2 text-lg mt-4"
+              <Button
+                type="submit"
+                className="mt-4 h-auto w-full py-4 text-lg font-black"
               >
                 <span>💾</span> Save Character Profile
-              </button>
-            </div>
+              </Button>
+            </form>
           )}
 
           {/* TAB 2: Activity e Historial */}

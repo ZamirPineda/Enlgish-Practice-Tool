@@ -125,23 +125,19 @@ export const createContentFingerprint = (
   input: Pick<
     ContentInventoryItem,
     "source" | "skill" | "difficulty" | "format" | "prompt" | "answer"
-  > & { alternatives?: string[]; tags?: string[] },
+  > & { alternatives?: string[] },
 ) => {
   const normalizedAlternatives = (input.alternatives || [])
     .map((value) => normalizeText(value))
     .sort()
     .join("|");
-  const normalizedTags = normalizeContentTags(input.tags || []).join("|");
 
   const seed = [
-    input.source,
     input.skill,
-    input.difficulty,
     input.format,
     normalizeText(input.prompt),
     normalizeText(input.answer || ""),
     normalizedAlternatives,
-    normalizedTags,
   ].join("::");
 
   return hashString(seed);
@@ -173,7 +169,6 @@ export const createContentInventoryItem = (
     prompt: input.prompt,
     answer: input.answer,
     alternatives: input.alternatives || [],
-    tags: normalizedTags,
   });
 
   const item = {
