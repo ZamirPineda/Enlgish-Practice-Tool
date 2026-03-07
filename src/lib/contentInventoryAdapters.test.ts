@@ -1,5 +1,15 @@
 import { describe, expect, test } from "vitest";
 import {
+  DEFAULT_ROADMAP_ADAPTERS_INPUT,
+  adaptCodeBugsToInventoryItems,
+  adaptCodeSyntaxToInventoryItems,
+  adaptDocsQuizToInventoryItems,
+  adaptErrorHunterToInventoryItems,
+  adaptMathPracticeToInventoryItems,
+  adaptParaphraseDuelToInventoryItems,
+  adaptSentenceTransformerToInventoryItems,
+  adaptSpeedBuilderToInventoryItems,
+  adaptStudyDocsTreeToInventoryItems,
   adaptStudyDeckToInventoryItems,
   adaptTechDecksToInventoryItems,
   adaptVocabularyVaultToInventoryItems,
@@ -105,6 +115,143 @@ describe("contentInventoryAdapters", () => {
     expect(items[0].metadata.routeObjective).toBe("dev_reasoning");
   });
 
+  test("adapts roadmap game datasets into inventory items", () => {
+    const englishItems = [
+      ...adaptSpeedBuilderToInventoryItems([
+        {
+          id: "sb-1",
+          sentence: "I handle stakeholder updates calmly",
+          tags: ["Interview", "Leadership"],
+          level: "B2",
+        },
+      ]),
+      ...adaptErrorHunterToInventoryItems([
+        {
+          id: "eh-1",
+          incorrectSentence: "He don't review pull requests carefully",
+          correctedSentence: "He doesn't review pull requests carefully",
+          errorType: "Auxiliary do/does",
+          tags: ["Technology"],
+          level: "A2",
+        },
+      ]),
+      ...adaptParaphraseDuelToInventoryItems([
+        {
+          id: "pd-1",
+          sentence: "Although the outage was severe we recovered quickly.",
+          targetConnector: "although",
+          acceptedAnswers: [
+            "Although the outage was severe we recovered quickly.",
+          ],
+          tags: ["Work", "Strategy"],
+          level: "B2",
+        },
+      ]),
+      ...adaptSentenceTransformerToInventoryItems([
+        {
+          id: "st-1",
+          baseSentence: "The board approves the roadmap today.",
+          mode: "question",
+          expectedSentence: "Does the board approve the roadmap today?",
+          tags: ["Business"],
+          level: "C1",
+        },
+      ]),
+    ];
+
+    expect(englishItems).toHaveLength(4);
+    expect(englishItems.map((item) => item.source)).toEqual([
+      "english_game",
+      "english_game",
+      "english_game",
+      "english_game",
+    ]);
+    expect(englishItems[0].metadata.gameId).toBe("speed_builder");
+    expect(englishItems[0].difficulty).toBe("stretch");
+    expect(englishItems[3].difficulty).toBe("expert");
+
+    const mathItems = adaptMathPracticeToInventoryItems({
+      normal: [
+        {
+          id: "math-1",
+          prompt: "Selecciona la formula correcta",
+          answerTypeLabel: "Formula",
+          sectionLabel: "Derivadas",
+          correctAnswer: "f'(x)",
+          options: ["f'(x)", "f(x)", "x", "0"],
+          topicLabel: "Calculus",
+          difficultyTier: "stretch",
+          routeObjective: "math_speed",
+          tags: ["calculus", "symbols"],
+          sourceTopicId: "calculus",
+        },
+      ],
+    });
+
+    expect(mathItems).toHaveLength(1);
+    expect(mathItems[0].source).toBe("math_game");
+    expect(mathItems[0].format).toBe("formula_drill");
+    expect(mathItems[0].metadata.gameId).toBe("math_game");
+
+    const devItems = [
+      ...adaptCodeSyntaxToInventoryItems([
+        {
+          id: "syntax-1",
+          prompt: "Crea un useEffect con cleanup",
+          tokens: ["useEffect", "(", ")", "=>", "{", "}"],
+          language: "typescript",
+          difficultyTier: "core",
+          routeObjective: "dev_reasoning",
+          tags: ["typescript", "react", "syntax"],
+        },
+      ]),
+      ...adaptCodeBugsToInventoryItems([
+        {
+          id: "bug-1",
+          language: "tsx",
+          codeLines: ["const value = state.count + 1;"],
+          bugLineIndex: 0,
+          explanation: "State can be stale if updates are async.",
+          difficultyTier: "stretch",
+          routeObjective: "dev_reasoning",
+          tags: ["react", "debugging"],
+        },
+      ]),
+      ...adaptDocsQuizToInventoryItems([
+        {
+          id: "quiz-1",
+          category: "Cloud-Native & DevOps",
+          subCategory: "GCP",
+          question: "Which GCP service runs HTTP containers serverlessly?",
+          options: ["Cloud Run", "Cloud SQL", "Bigtable", "Pub/Sub"],
+          correctAnswer: "Cloud Run",
+          explanation:
+            "Cloud Run executes HTTP containers without server management.",
+        },
+      ]),
+      ...adaptStudyDocsTreeToInventoryItems([
+        {
+          name: "Cloud-Native & DevOps",
+          path: "Cloud-Native & DevOps",
+          type: "directory",
+          children: [
+            {
+              name: "Microservices_Observability.html",
+              path: "Cloud-Native & DevOps/Microservices_Observability.html",
+              type: "file",
+            },
+          ],
+        },
+      ]),
+    ];
+
+    expect(devItems).toHaveLength(4);
+    expect(devItems[0].metadata.gameId).toBe("code_syntax_builder");
+    expect(devItems[1].metadata.gameId).toBe("code_bug_hunter");
+    expect(devItems[2].metadata.gameId).toBe("study_docs_quiz");
+    expect(devItems[3].metadata.gameId).toBe("study_docs_game");
+  });
+
   test("builds a combined inventory pack from all adapters", () => {
     const pack = buildContentInventoryFromAdapters({
       studyDeckByLevel: {
@@ -150,6 +297,46 @@ describe("contentInventoryAdapters", () => {
       "tech_deck",
       "vocabulary_vault",
     ]);
+  });
+
+  test("builds the default roadmap adapter input into a multi-route inventory pack", () => {
+    const pack = buildContentInventoryFromAdapters(
+      DEFAULT_ROADMAP_ADAPTERS_INPUT,
+    );
+
+    expect(pack.items.length).toBeGreaterThan(100);
+    expect(
+      pack.items.some(
+        (item) =>
+          item.source === "english_game" &&
+          item.metadata.gameId === "speed_builder" &&
+          item.metadata.routeObjective === "english_interview",
+      ),
+    ).toBe(true);
+    expect(
+      pack.items.some(
+        (item) =>
+          item.source === "math_game" &&
+          item.metadata.gameId === "math_game" &&
+          item.metadata.routeObjective === "math_speed",
+      ),
+    ).toBe(true);
+    expect(
+      pack.items.some(
+        (item) =>
+          item.source === "dev_game" &&
+          item.metadata.gameId === "code_syntax_builder" &&
+          item.metadata.routeObjective === "dev_reasoning",
+      ),
+    ).toBe(true);
+    expect(
+      pack.items.some(
+        (item) =>
+          item.source === "dev_game" &&
+          item.metadata.gameId === "study_docs_quiz" &&
+          item.metadata.routeObjective === "dev_reasoning",
+      ),
+    ).toBe(true);
   });
 
   test("dedupes semantically equal entries across sources with traceable report", () => {

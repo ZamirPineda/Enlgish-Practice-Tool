@@ -82,6 +82,129 @@ export const docsQuizQuestions: QuizQuestion[] = [
     explanation:
       "Canary Release lanza la nueva versión a un subconjunto pequeño de usuarios antes de desplegarla a toda la infraestructura, ideal para detectar fallos tempranos.",
   },
+  {
+    id: "aws-3",
+    category: "Cloud-Native & DevOps",
+    subCategory: "AWS",
+    question:
+      "Si una plataforma critica debe sobrevivir a la caida completa de una region y ademas quieres reducir el tiempo de recuperacion sin depender solo de backups nocturnos, que enfoque arquitectonico es mas solido dentro del ecosistema AWS para los componentes de datos y trafico?",
+    options: [
+      "Mantener todo en una sola region con Auto Scaling y snapshots diarios.",
+      "Combinar despliegue multi region con replicacion de datos y un mecanismo claro de failover de trafico.",
+      "Usar exclusivamente instancias Spot distribuidas en varias subredes privadas.",
+      "Mover la aplicacion a una sola zona con un balanceador interno redundante.",
+    ],
+    correctAnswer:
+      "Combinar despliegue multi region con replicacion de datos y un mecanismo claro de failover de trafico.",
+    explanation:
+      "Para resiliencia regional real no basta con Multi-AZ. Necesitas estrategia multi region, replicas o sincronizacion de datos segun el servicio, y una forma controlada de redirigir trafico, por ejemplo con Route 53, para reducir RTO y RPO de forma seria.",
+  },
+  {
+    id: "k8s-3",
+    category: "Cloud-Native & DevOps",
+    subCategory: "Kubernetes",
+    question:
+      "En Kubernetes, si un servicio HTTP recibe picos variables de trafico y quieres ajustar automaticamente la cantidad de Pods segun metricas observadas sin cambiar manualmente cada Deployment en cada incidente, que recurso cumple exactamente ese papel operativo?",
+    options: ["DaemonSet", "Horizontal Pod Autoscaler", "ConfigMap", "Ingress"],
+    correctAnswer: "Horizontal Pod Autoscaler",
+    explanation:
+      "El Horizontal Pod Autoscaler observa metricas como CPU, memoria o metricas personalizadas y modifica el numero de replicas del workload. No sustituye al Cluster Autoscaler, que escala nodos, sino que actua sobre Pods.",
+  },
+  {
+    id: "k8s-4",
+    category: "Cloud-Native & DevOps",
+    subCategory: "Kubernetes",
+    question:
+      "Que controlador de Kubernetes es la opcion adecuada cuando una aplicacion distribuida necesita identidad de red estable, nombres predecibles por replica y despliegue ordenado porque cada instancia mantiene estado o participa en un cluster coordinado?",
+    options: ["Deployment", "Job", "StatefulSet", "ReplicaSet"],
+    correctAnswer: "StatefulSet",
+    explanation:
+      "StatefulSet existe para cargas con estado donde importa el orden de creacion o destruccion, la identidad persistente de cada replica y el uso de volumenes asociados de forma estable. Deployment esta pensado para replicas intercambiables.",
+  },
+  {
+    id: "platform-1",
+    category: "Cloud-Native & DevOps",
+    subCategory: "Platform Engineering",
+    question:
+      "Cuando un equipo habla de Platform Engineering y de una Internal Developer Platform madura, cual es el objetivo principal mas alla de simplemente centralizar scripts: acelerar la entrega creando caminos guiados, autoservicio seguro y estandares reutilizables para los equipos de producto?",
+    options: [
+      "Reemplazar por completo a todos los equipos de SRE y seguridad.",
+      "Eliminar la necesidad de documentacion tecnica porque todo queda implicito.",
+      "Ofrecer golden paths, autoservicio y abstracciones operativas consistentes para reducir friccion y variabilidad.",
+      "Forzar que cada equipo construya su propio pipeline y su propio stack base.",
+    ],
+    correctAnswer:
+      "Ofrecer golden paths, autoservicio y abstracciones operativas consistentes para reducir friccion y variabilidad.",
+    explanation:
+      "La plataforma interna no busca esconder la realidad tecnica sin control, sino empaquetar buenas practicas, permisos, observabilidad, despliegue y dependencias comunes en una experiencia repetible. Eso reduce carga cognitiva y mejora velocidad con gobernanza.",
+  },
+  {
+    id: "aws-4",
+    category: "Cloud-Native & DevOps",
+    subCategory: "AWS",
+    question:
+      "En una aplicacion desplegada sobre ECS o EKS, cual es la forma recomendada de permitir acceso a S3 sin guardar claves estaticas dentro del contenedor o del repositorio?",
+    options: [
+      "Guardar access keys en variables de entorno del contenedor y rotarlas manualmente.",
+      "Asignar un rol de IAM a la carga de trabajo para entregar credenciales temporales.",
+      "Incluir las credenciales dentro de la imagen Docker cifradas con base64.",
+      "Montar un archivo CSV de credenciales compartido en cada Pod o Task.",
+    ],
+    correctAnswer:
+      "Asignar un rol de IAM a la carga de trabajo para entregar credenciales temporales.",
+    explanation:
+      "La practica recomendada es usar roles asociados a la carga de trabajo, como task roles o mecanismos equivalentes en Kubernetes, para evitar secretos estaticos y delegar la rotacion al proveedor.",
+  },
+  {
+    id: "k8s-5",
+    category: "Cloud-Native & DevOps",
+    subCategory: "Kubernetes",
+    question:
+      "Si necesitas exponer una aplicacion HTTP fuera del cluster y quieres enrutar trafico por host o path hacia varios servicios internos, que combinacion es la mas comun dentro de Kubernetes?",
+    options: [
+      "ConfigMap y ReplicaSet",
+      "Service ClusterIP solamente",
+      "Ingress apoyado por Services",
+      "DaemonSet con PersistentVolume",
+    ],
+    correctAnswer: "Ingress apoyado por Services",
+    explanation:
+      "El Ingress define reglas HTTP de entrada, mientras que los Services exponen internamente los backends. Juntos permiten enrutar trafico externo de forma mas flexible que un Service aislado.",
+  },
+  {
+    id: "devops-4",
+    category: "Cloud-Native & DevOps",
+    subCategory: "Observability",
+    question:
+      "Cuando un equipo quiere detectar degradaciones antes de que los usuarios abran tickets, que combinacion describe mejor una estrategia moderna de observabilidad?",
+    options: [
+      "Solo logs manuales revisados una vez por semana.",
+      "Metricas, logs y trazas correlacionadas con alertas sobre indicadores utiles.",
+      "Backups frecuentes y escalado vertical.",
+      "Mas endpoints de healthcheck sin ningun dashboard.",
+    ],
+    correctAnswer:
+      "Metricas, logs y trazas correlacionadas con alertas sobre indicadores utiles.",
+    explanation:
+      "La observabilidad moderna cruza varias senales para reducir el tiempo de deteccion y diagnostico. No se limita a almacenar logs, sino a relacionar sintomas, causas probables y comportamiento del sistema.",
+  },
+  {
+    id: "platform-2",
+    category: "Cloud-Native & DevOps",
+    subCategory: "Platform Engineering",
+    question:
+      "Dentro de una plataforma interna, por que los golden paths suelen ser valiosos para los equipos de producto?",
+    options: [
+      "Porque obligan a usar una sola tecnologia para todos los casos posibles.",
+      "Porque reducen decisiones repetitivas y ofrecen una ruta segura para tareas comunes.",
+      "Porque eliminan la necesidad de observabilidad y seguridad.",
+      "Porque sustituyen por completo la revision de arquitectura.",
+    ],
+    correctAnswer:
+      "Porque reducen decisiones repetitivas y ofrecen una ruta segura para tareas comunes.",
+    explanation:
+      "Un golden path concentra practicas ya validadas por la organizacion y evita que cada equipo reconstruya desde cero pipelines, permisos, plantillas o convenciones basicas.",
+  },
   // Java 17 / Oracle Certification
   {
     id: "java-1",

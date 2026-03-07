@@ -31,7 +31,7 @@ export interface MathPracticeQuestion {
 
 const MATH_ROUTE_OBJECTIVE: PracticeRouteObjective = "math_speed";
 
-const shuffleList = <T,>(items: T[]): T[] => {
+const shuffleList = <T>(items: T[]): T[] => {
   const copy = [...items];
   for (let i = copy.length - 1; i > 0; i -= 1) {
     const randomIndex = Math.floor(Math.random() * (i + 1));
@@ -84,11 +84,7 @@ const geometryPracticeTopic = extendTopic(geometryTopic, {
       "A = (Î¸/360) Â· Ï€rÂ²\nL = (Î¸/360) Â· 2Ï€r",
       "Î¸: ángulo central, L: longitud de arco",
     ],
-    [
-      "Corona circular",
-      "A = Ï€(RÂ² - rÂ²)",
-      "R: radio mayor, r: radio menor",
-    ],
+    ["Corona circular", "A = Ï€(RÂ² - rÂ²)", "R: radio mayor, r: radio menor"],
   ],
   1: [
     [
@@ -166,7 +162,9 @@ const getMathDifficultyTier = (
   sectionIndex: number,
 ): PracticeDifficultyTier => {
   if (topicId === "algebra") {
-    return sectionIndex === 0 ? "foundation" : "core";
+    if (sectionIndex === 0) return "foundation";
+    if (sectionIndex === 1) return "core";
+    return "stretch";
   }
   if (topicId === "geometry") {
     return sectionIndex === 0 ? "core" : "stretch";
@@ -174,7 +172,9 @@ const getMathDifficultyTier = (
   return sectionIndex <= 1 ? "stretch" : "expert";
 };
 
-const buildMathPracticeQuestionBank = (topics: MathTopic[]): MathPracticeQuestion[] => {
+const buildMathPracticeQuestionBank = (
+  topics: MathTopic[],
+): MathPracticeQuestion[] => {
   const questions: MathPracticeQuestion[] = [];
 
   topics.forEach((topic) => {
@@ -230,7 +230,9 @@ const buildMathPracticeQuestionBank = (topics: MathTopic[]): MathPracticeQuestio
   });
 
   const formulaPool = Array.from(
-    new Set(questions.map((question) => question.correctAnswer).filter(Boolean)),
+    new Set(
+      questions.map((question) => question.correctAnswer).filter(Boolean),
+    ),
   );
   const conceptPool = Array.from(
     new Set(
