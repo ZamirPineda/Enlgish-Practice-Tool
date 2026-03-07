@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.23.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.22.0...english-practice-pal-v1.23.0) (2026-03-07)
+
+
+### Features
+
+* add sequential roadmap progression ([cc558fd](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/cc558fd88c58df2947001f263010c5a3bda940c2))
+* add unified content inventory and curation workflow ([8691e51](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/8691e51009db947404a85ce7d2be5969a1cac961))
+* **app-403:** integrate sentry with route and game context ([d2514a3](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/d2514a38bd9de914af80d22d61a3ccfa27d7003a))
+* **app-501:** add canonical content inventory schema and tests ([93f3ead](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/93f3ead057f542be2d9c3ed38484d90787b6def7))
+* **app-502:** add adapters from study deck, vault and tech decks ([98d5608](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/98d5608bb24020c96a88b5dd352e11ea2774787f))
+
+
+### Bug Fixes
+
+* resolve authoring pipeline lint error ([9659ecd](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/9659ecd129c1edc61a63582edf328ba2c4f8af00))
+
 ## [1.22.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.21.0...english-practice-pal-v1.22.0) (2026-03-04)
 
 
