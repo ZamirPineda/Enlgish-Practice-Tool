@@ -90,7 +90,7 @@ test("starts review session and completes 3 steps", async ({ page }) => {
   for (let step = 1; step <= 3; step += 1) {
     await expect(page.getByText(`Review ${step} / 3`)).toBeVisible();
     await page.getByRole("button", { name: /Show Answer/i }).click();
-    await page.getByRole("button", { name: /^Got it/i }).click();
+    await page.getByRole("button", { name: /Easy \(Press 4\)/i }).click();
   }
 
   await expect(

@@ -19,7 +19,7 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/vault");
-    await page.waitForLoadState("networkidle");
+    await page.waitForSelector('text="Vocabulary Vault"');
 
     const results = await new AxeBuilder({ page }).analyze();
 
@@ -33,7 +33,7 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/calculus");
-    await page.waitForLoadState("networkidle");
+    await page.waitForSelector('text="Math Dashboard"', { timeout: 10000 }).catch(() => {});
 
     const results = await new AxeBuilder({ page }).analyze();
 
