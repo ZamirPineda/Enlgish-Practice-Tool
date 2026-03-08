@@ -170,7 +170,12 @@ describe("roadmapRewards", () => {
       new Date("2026-03-06T12:00:00.000Z"),
     );
 
-    expect(getRoadmapContinuityStatus(result.nextRewards)).toMatchObject({
+    expect(
+      getRoadmapContinuityStatus(
+        result.nextRewards,
+        new Date("2026-03-06T12:00:00.000Z"),
+      ),
+    ).toMatchObject({
       currentStreak: 1,
       bestStreak: 1,
       activeDays: 1,
@@ -192,7 +197,12 @@ describe("roadmapRewards", () => {
       new Date("2026-03-07T12:00:00.000Z"),
     );
 
-    expect(getRoadmapContinuityStatus(result.nextRewards)).toMatchObject({
+    expect(
+      getRoadmapContinuityStatus(
+        result.nextRewards,
+        new Date("2026-03-07T12:00:00.000Z"),
+      ),
+    ).toMatchObject({
       currentStreak: 2,
       bestStreak: 2,
       activeDays: 2,
@@ -217,7 +227,12 @@ describe("roadmapRewards", () => {
     expect(result.grants.map((grant) => grant.badge.title)).toContain(
       "Racha roadmap: 3 dias",
     );
-    expect(getRoadmapContinuityStatus(result.nextRewards)).toMatchObject({
+    expect(
+      getRoadmapContinuityStatus(
+        result.nextRewards,
+        new Date("2026-03-08T12:00:00.000Z"),
+      ),
+    ).toMatchObject({
       currentStreak: 3,
       bestStreak: 3,
       activeDays: 3,
