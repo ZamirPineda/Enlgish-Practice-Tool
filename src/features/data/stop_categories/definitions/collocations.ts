@@ -40,7 +40,8 @@ export const collocationsData: StopData = {
         ipa: "/əˈkwaɪər ˈnɒlɪdʒ/",
         translation: "Adquirir conocimiento",
         level: "B2",
-        definition: "To learn something.",
+        definition:
+          'Adquirir conocimiento. A natural English collocation meaning "to learn something". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She wants to acquire knowledge in biology.",
       },
       {
@@ -48,7 +49,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈæktɪv roʊl/",
         translation: "Papel activo",
         level: "B2",
-        definition: "Participating fully.",
+        definition:
+          'Papel activo. A natural English collocation meaning "participating fully". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He plays an active role in the community.",
       },
       {
@@ -56,7 +58,8 @@ export const collocationsData: StopData = {
         ipa: "/əˈkjuːt peɪn/",
         translation: "Dolor agudo",
         level: "C1",
-        definition: "Sharp, severe pain.",
+        definition:
+          'Dolor agudo. A natural English collocation meaning "sharp, severe pain". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She felt acute pain in her shoulder.",
       },
       {
@@ -72,7 +75,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈædvɜːrs ɪˈfɛkt/",
         translation: "Efecto adverso",
         level: "C1",
-        definition: "A harmful result.",
+        definition:
+          'Efecto adverso. A natural English collocation meaning "a harmful result". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The drug has no adverse effects.",
       },
       {
@@ -88,7 +92,8 @@ export const collocationsData: StopData = {
         ipa: "/əˈɡɛnst ðə lɔː/",
         translation: "Contra la ley",
         level: "B1",
-        definition: "Illegal.",
+        definition:
+          "Contra la ley. Illegal and not allowed by law. A natural English word combination that is usually learned as a fixed phrase.",
         examSentence: "It is against the law to park here.",
       },
       {
@@ -120,7 +125,8 @@ export const collocationsData: StopData = {
         ipa: "/æmˈbɪɡjuəs ˈɑːnsər/",
         translation: "Respuesta ambigua",
         level: "C1",
-        definition: "Unclear response.",
+        definition:
+          'Respuesta ambigua. A natural English collocation meaning "unclear response". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He gave an ambiguous answer.",
       },
       {
@@ -136,7 +142,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈeɪnʃənt ˈhɪstəri/",
         translation: "Historia antigua",
         level: "B1",
-        definition: "History from a long time ago.",
+        definition:
+          'Historia antigua. A natural English collocation meaning "history from a long time ago". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That scandal is ancient history now.",
       },
       {
@@ -168,7 +175,8 @@ export const collocationsData: StopData = {
         ipa: "/əˈplaɪ fɔːr ə dʒɒb/",
         translation: "Solicitar un empleo",
         level: "A2",
-        definition: "Submit an application.",
+        definition:
+          'Solicitar un empleo. A natural English collocation meaning "submit an application". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I applied for a job at the bank.",
       },
       {
@@ -176,7 +184,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɑːrbɪtrəri dɪˈsɪʒən/",
         translation: "Decisión arbitraria",
         level: "C1",
-        definition: "Decision based on whim, not reason.",
+        definition:
+          'Decisión arbitraria. A natural English collocation meaning "decision based on whim, not reason". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was an arbitrary decision.",
       },
       {
@@ -184,7 +193,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɑːrdənt səˈpɔːrtər/",
         translation: "Partidario ferviente",
         level: "C2",
-        definition: "Very enthusiastic fan.",
+        definition:
+          'Partidario ferviente. A natural English collocation meaning "very enthusiastic fan". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is an ardent supporter of the team.",
       },
       {
@@ -192,7 +202,8 @@ export const collocationsData: StopData = {
         ipa: "/ɑːrmd ˈfɔːrsɪz/",
         translation: "Fuerzas armadas",
         level: "B2",
-        definition: "Military forces.",
+        definition:
+          'Fuerzas armadas. A natural English collocation meaning "military forces". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He joined the armed forces.",
       },
       {
@@ -208,7 +219,8 @@ export const collocationsData: StopData = {
         ipa: "/ɑːsk ə ˈfeɪvər/",
         translation: "Pedir un favor",
         level: "A2",
-        definition: "Request help.",
+        definition:
+          'Pedir un favor. A natural English collocation meaning "request help". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can I ask a favor?",
       },
       {
@@ -240,7 +252,8 @@ export const collocationsData: StopData = {
         ipa: "/əˈveɪləbl rɪˈzɔːrsɪz/",
         translation: "Recursos disponibles",
         level: "B2",
-        definition: "Resources ready to use.",
+        definition:
+          'Recursos disponibles. A natural English collocation meaning "resources ready to use". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Use all available resources.",
       },
       {
@@ -248,7 +261,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈævərɪdʒ kɒst/",
         translation: "Costo promedio",
         level: "B1",
-        definition: "Mean price.",
+        definition:
+          'Costo promedio. A natural English collocation meaning "mean price". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The average cost has risen.",
       },
       {
@@ -276,7 +290,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈbædli ˈniːdɪd/",
         translation: "Muy necesario",
         level: "B2",
-        definition: "Urgently required.",
+        definition:
+          'Muy necesario. A natural English collocation meaning "urgently required". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The repairs are badly needed.",
       },
       {
@@ -308,7 +323,8 @@ export const collocationsData: StopData = {
         ipa: "/bɛər ə rɪˈzɛmbləns/",
         translation: "Tener parecido",
         level: "C1",
-        definition: "To look like.",
+        definition:
+          'Tener parecido. A natural English collocation meaning "to look like". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He bears a resemblance to his father.",
       },
       {
@@ -316,7 +332,8 @@ export const collocationsData: StopData = {
         ipa: "/bɛər ɪn maɪnd/",
         translation: "Tener en cuenta",
         level: "B2",
-        definition: "To remember/consider.",
+        definition:
+          'Tener en cuenta. A natural English collocation meaning "to remember/consider". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Bear in mind that it takes time.",
       },
       {
@@ -324,7 +341,8 @@ export const collocationsData: StopData = {
         ipa: "/bɪˈheɪv jɔːrˈsɛlf/",
         translation: "Pórtate bien",
         level: "A2",
-        definition: "Act correctly.",
+        definition:
+          'Pórtate bien. A natural English collocation meaning "act correctly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Tell the kids to behave themselves.",
       },
       {
@@ -340,7 +358,8 @@ export const collocationsData: StopData = {
         ipa: "/bɪɡ diːl/",
         translation: "Gran cosa",
         level: "B1",
-        definition: "Something important.",
+        definition:
+          'Gran cosa. A natural English collocation meaning "something important". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It's not a big deal.",
       },
       {
@@ -348,7 +367,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈbaɪtɪŋ koʊld/",
         translation: "Frío penetrante",
         level: "C2",
-        definition: "Very painful cold.",
+        definition:
+          'Frío penetrante. A natural English collocation meaning "very painful cold". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We faced the biting cold.",
       },
       {
@@ -380,7 +400,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈbleɪzɪŋ sʌn/",
         translation: "Sol abrasador",
         level: "C1",
-        definition: "Very hot sun.",
+        definition:
+          'Sol abrasador. A natural English collocation meaning "very hot sun". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We walked under the blazing sun.",
       },
       {
@@ -388,7 +409,8 @@ export const collocationsData: StopData = {
         ipa: "/blaɪnd feɪθ/",
         translation: "Fe ciega",
         level: "C2",
-        definition: "Trust without question.",
+        definition:
+          'Fe ciega. A natural English collocation meaning "trust without question". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He followed with blind faith.",
       },
       {
@@ -404,7 +426,8 @@ export const collocationsData: StopData = {
         ipa: "/blɒk əv flæts/",
         translation: "Bloque de pisos",
         level: "A2",
-        definition: "Apartment building.",
+        definition:
+          'Bloque de pisos. A natural English collocation meaning "apartment building". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He lives in a block of flats.",
       },
       {
@@ -412,7 +435,8 @@ export const collocationsData: StopData = {
         ipa: "/blʌd ˈrɛlətɪv/",
         translation: "Pariente consanguíneo",
         level: "B2",
-        definition: "Related by birth.",
+        definition:
+          'Pariente consanguíneo. A natural English collocation meaning "related by birth". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She is a blood relative.",
       },
       {
@@ -428,7 +452,8 @@ export const collocationsData: StopData = {
         ipa: "/bɔːrd ˈmiːtɪŋ/",
         translation: "Reunión de la junta",
         level: "B2",
-        definition: "Meeting of directors.",
+        definition:
+          'Reunión de la junta. A natural English collocation meaning "meeting of directors". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The board meeting is at 2 PM.",
       },
       {
@@ -460,7 +485,8 @@ export const collocationsData: StopData = {
         ipa: "/breɪk ðə lɔː/",
         translation: "Infringir la ley",
         level: "B1",
-        definition: "Do something illegal.",
+        definition:
+          'Infringir la ley. A natural English collocation meaning "do something illegal". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He broke the law.",
       },
       {
@@ -476,7 +502,8 @@ export const collocationsData: StopData = {
         ipa: "/briːf tʃæt/",
         translation: "Charla breve",
         level: "B1",
-        definition: "Short conversation.",
+        definition:
+          'Charla breve. A natural English collocation meaning "short conversation". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We had a brief chat.",
       },
       {
@@ -484,7 +511,8 @@ export const collocationsData: StopData = {
         ipa: "/braɪt ˈkʌlər/",
         translation: "Color vivo",
         level: "A1",
-        definition: "Strong color.",
+        definition:
+          'Color vivo. A natural English collocation meaning "strong color". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She loves bright colors.",
       },
       {
@@ -492,7 +520,8 @@ export const collocationsData: StopData = {
         ipa: "/braɪt ˈfjuːtʃər/",
         translation: "Futuro prometedor",
         level: "B2",
-        definition: "Successful future.",
+        definition:
+          'Futuro prometedor. A natural English collocation meaning "successful future". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You have a bright future.",
       },
       {
@@ -500,7 +529,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈbrɔːdn həˈraɪzənz/",
         translation: "Ampliar horizontes",
         level: "C1",
-        definition: "Expand experience.",
+        definition:
+          'Ampliar horizontes. A natural English collocation meaning "expand experience". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Travel broadens your horizons.",
       },
       {
@@ -516,7 +546,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈbɜːrnɪŋ æmˈbɪʃən/",
         translation: "Ambición ardiente",
         level: "C2",
-        definition: "Strong desire.",
+        definition:
+          'Ambición ardiente. A natural English collocation meaning "strong desire". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He has a burning ambition to win.",
       },
       {
@@ -524,7 +555,8 @@ export const collocationsData: StopData = {
         ipa: "/bɜːrst ˈɪntu tɪərz/",
         translation: "Romper a llorar",
         level: "B2",
-        definition: "Start crying suddenly.",
+        definition:
+          'Romper a llorar. A natural English collocation meaning "start crying suddenly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She burst into tears.",
       },
       {
@@ -532,7 +564,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈbɪznɪs trɪp/",
         translation: "Viaje de negocios",
         level: "A2",
-        definition: "Travel for work.",
+        definition:
+          'Viaje de negocios. A natural English collocation meaning "travel for work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is on a business trip.",
       },
     ],
@@ -544,7 +577,8 @@ export const collocationsData: StopData = {
         ipa: "/kɔːl ə ˈmiːtɪŋ/",
         translation: "Convocar una reunión",
         level: "B2",
-        definition: "Arrange a gathering.",
+        definition:
+          'Convocar una reunión. A natural English collocation meaning "arrange a gathering". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The boss called a meeting.",
       },
       {
@@ -552,7 +586,8 @@ export const collocationsData: StopData = {
         ipa: "/kɔːl əˈtɛnʃən tu/",
         translation: "Llamar la atención sobre",
         level: "B2",
-        definition: "Make people notice.",
+        definition:
+          'Llamar la atención sobre. A natural English collocation meaning "make people notice". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I want to call attention to this issue.",
       },
       {
@@ -560,7 +595,8 @@ export const collocationsData: StopData = {
         ipa: "/kɑːst ə spɛl/",
         translation: "Lanzar un hechizo",
         level: "C1",
-        definition: "Use magic.",
+        definition:
+          'Lanzar un hechizo. A natural English collocation meaning "use magic". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The witch cast a spell.",
       },
       {
@@ -584,7 +620,8 @@ export const collocationsData: StopData = {
         ipa: "/kætʃ ə koʊld/",
         translation: "Resfriarse",
         level: "A2",
-        definition: "Become sick.",
+        definition:
+          'Resfriarse. A natural English collocation meaning "become sick". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Wear a coat or you'll catch a cold.",
       },
       {
@@ -592,7 +629,8 @@ export const collocationsData: StopData = {
         ipa: "/kætʃ ə ɡlɪmps/",
         translation: "Vislumbrar",
         level: "B2",
-        definition: "See briefly.",
+        definition:
+          'Vislumbrar. A natural English collocation meaning "see briefly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I caught a glimpse of the sea.",
       },
       {
@@ -600,7 +638,8 @@ export const collocationsData: StopData = {
         ipa: "/kɔːz ˈdæmɪdʒ/",
         translation: "Causar daño",
         level: "B1",
-        definition: "Harm something.",
+        definition:
+          'Causar daño. A natural English collocation meaning "harm something". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The storm caused damage.",
       },
       {
@@ -608,7 +647,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsiːsfaɪər əˈɡriːmənt/",
         translation: "Acuerdo de alto el fuego",
         level: "C2",
-        definition: "Stop fighting pact.",
+        definition:
+          'Acuerdo de alto el fuego. A natural English collocation meaning "stop fighting pact". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They signed a ceasefire agreement.",
       },
       {
@@ -616,7 +656,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsɛntər əv əˈtɛnʃən/",
         translation: "Centro de atención",
         level: "B2",
-        definition: "Focus of everyone.",
+        definition:
+          'Centro de atención. A natural English collocation meaning "focus of everyone". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She loves being the center of attention.",
       },
       {
@@ -624,7 +665,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsɜːrtn əˈmaʊnt/",
         translation: "Cierta cantidad",
         level: "B2",
-        definition: "Some quantity.",
+        definition:
+          'Cierta cantidad. A natural English collocation meaning "some quantity". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A certain amount of stress is normal.",
       },
       {
@@ -640,7 +682,8 @@ export const collocationsData: StopData = {
         ipa: "/tʃeɪndʒ jɔːr maɪnd/",
         translation: "Cambiar de opinión",
         level: "A2",
-        definition: "Decide differently.",
+        definition:
+          'Cambiar de opinión. A natural English collocation meaning "decide differently". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I won't change my mind.",
       },
       {
@@ -648,7 +691,8 @@ export const collocationsData: StopData = {
         ipa: "/kliːn ˈɛnərdʒi/",
         translation: "Energía limpia",
         level: "B2",
-        definition: "Renewable power.",
+        definition:
+          'Energía limpia. A natural English collocation meaning "renewable power". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Solar is clean energy.",
       },
       {
@@ -656,7 +700,8 @@ export const collocationsData: StopData = {
         ipa: "/klɪər ˈkɒnʃəns/",
         translation: "Conciencia tranquila",
         level: "C1",
-        definition: "No guilt.",
+        definition:
+          'Conciencia tranquila. A natural English collocation meaning "no guilt". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have a clear conscience.",
       },
       {
@@ -664,7 +709,8 @@ export const collocationsData: StopData = {
         ipa: "/kloʊs ˈkɒntækt/",
         translation: "Contacto cercano",
         level: "B2",
-        definition: "Near interaction.",
+        definition:
+          'Contacto cercano. A natural English collocation meaning "near interaction". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Avoid close contact with sick people.",
       },
       {
@@ -672,7 +718,8 @@ export const collocationsData: StopData = {
         ipa: "/kloʊs prɒkˈsɪmɪti/",
         translation: "Gran proximidad",
         level: "C1",
-        definition: "Very near.",
+        definition:
+          'Gran proximidad. A natural English collocation meaning "very near". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The houses are in close proximity.",
       },
       {
@@ -680,7 +727,8 @@ export const collocationsData: StopData = {
         ipa: "/kʌm tu ə kənˈkluːʒən/",
         translation: "Llegar a una conclusión",
         level: "B2",
-        definition: "Decide.",
+        definition:
+          'Llegar a una conclusión. A natural English collocation meaning "decide". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We came to a conclusion.",
       },
       {
@@ -688,7 +736,8 @@ export const collocationsData: StopData = {
         ipa: "/kʌm tu ə hɔːlt/",
         translation: "Detenerse",
         level: "C1",
-        definition: "Stop completely.",
+        definition:
+          'Detenerse. A natural English collocation meaning "stop completely". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The train came to a halt.",
       },
       {
@@ -712,7 +761,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkɒmən ˈnɒlɪdʒ/",
         translation: "Saber popular",
         level: "B2",
-        definition: "Known by everyone.",
+        definition:
+          'Saber popular. A natural English collocation meaning "known by everyone". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is common knowledge that smoking is bad.",
       },
       {
@@ -720,7 +770,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkɒmən sɛns/",
         translation: "Sentido común",
         level: "B1",
-        definition: "Good practical judgment.",
+        definition:
+          'Sentido común. A natural English collocation meaning "good practical judgment". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Use your common sense.",
       },
       {
@@ -736,7 +787,8 @@ export const collocationsData: StopData = {
         ipa: "/kənˈdʌkt rɪˈsɜːrtʃ/",
         translation: "Realizar una investigación",
         level: "B2",
-        definition: "Do studies.",
+        definition:
+          'Realizar una investigación. A natural English collocation meaning "do studies". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They conduct research on cancer.",
       },
       {
@@ -744,7 +796,8 @@ export const collocationsData: StopData = {
         ipa: "/kənˈfɛs ə kraɪm/",
         translation: "Confesar un crimen",
         level: "B2",
-        definition: "Admit guilt.",
+        definition:
+          'Confesar un crimen. A natural English collocation meaning "admit guilt". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He confessed the crime.",
       },
       {
@@ -752,7 +805,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkɒnflɪkt əv ˈɪntrəst/",
         translation: "Conflicto de intereses",
         level: "C2",
-        definition: "Clashing duties.",
+        definition:
+          'Conflicto de intereses. A natural English collocation meaning "clashing duties". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The judge had a conflict of interest.",
       },
       {
@@ -760,7 +814,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkɒnstənt ˈstrʌɡəl/",
         translation: "Lucha constante",
         level: "B2",
-        definition: "Always fighting.",
+        definition:
+          'Lucha constante. A natural English collocation meaning "always fighting". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Life was a constant struggle.",
       },
       {
@@ -768,7 +823,8 @@ export const collocationsData: StopData = {
         ipa: "/kənˈstrʌktɪv ˈkrɪtɪsɪzəm/",
         translation: "Crítica constructiva",
         level: "C1",
-        definition: "Helpful feedback.",
+        definition:
+          'Crítica constructiva. A natural English collocation meaning "helpful feedback". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I appreciate constructive criticism.",
       },
       {
@@ -776,7 +832,8 @@ export const collocationsData: StopData = {
         ipa: "/kɔːr ˈvæljuː/",
         translation: "Valor fundamental",
         level: "C1",
-        definition: "Main belief.",
+        definition:
+          'Valor fundamental. A natural English collocation meaning "main belief". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Honesty is a core value.",
       },
       {
@@ -784,7 +841,8 @@ export const collocationsData: StopData = {
         ipa: "/kɒst ə ˈfɔːrtʃuːn/",
         translation: "Costar una fortuna",
         level: "B2",
-        definition: "Very expensive.",
+        definition:
+          'Costar una fortuna. A natural English collocation meaning "very expensive". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The car cost a fortune.",
       },
       {
@@ -792,7 +850,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkʌvər ə ˈstɔːri/",
         translation: "Cubrir una noticia",
         level: "B2",
-        definition: "Report news.",
+        definition:
+          'Cubrir una noticia. A natural English collocation meaning "report news". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The journalist covered the story.",
       },
       {
@@ -800,7 +859,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkʌltʃərəl ˈhɛrɪtɪdʒ/",
         translation: "Patrimonio cultural",
         level: "C1",
-        definition: "Traditions from past.",
+        definition:
+          'Patrimonio cultural. A natural English collocation meaning "traditions from past". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Protect our cultural heritage.",
       },
       {
@@ -808,7 +868,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkɜːrli hɛər/",
         translation: "Pelo rizado",
         level: "A1",
-        definition: "Not straight hair.",
+        definition:
+          'Pelo rizado. A natural English collocation meaning "not straight hair". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She has curly hair.",
       },
       {
@@ -816,7 +877,8 @@ export const collocationsData: StopData = {
         ipa: "/kʌt kɒsts/",
         translation: "Reducir costos",
         level: "B2",
-        definition: "Spend less.",
+        definition:
+          'Reducir costos. A natural English collocation meaning "spend less". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We need to cut costs.",
       },
     ],
@@ -836,7 +898,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdæmɪdʒd ˌrɛpjʊˈteɪʃən/",
         translation: "Reputación dañada",
         level: "C1",
-        definition: "Bad name.",
+        definition:
+          'Reputación dañada. A natural English collocation meaning "bad name". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The scandal damaged his reputation.",
       },
       {
@@ -844,7 +907,8 @@ export const collocationsData: StopData = {
         ipa: "/dɑːrk ˈmætər/",
         translation: "Materia oscura",
         level: "C2",
-        definition: "Invisible space matter.",
+        definition:
+          'Materia oscura. A natural English collocation meaning "invisible space matter". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Scientists study dark matter.",
       },
       {
@@ -860,7 +924,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdɛdli ˈwɛpən/",
         translation: "Arma mortal",
         level: "B2",
-        definition: "Lethal instrument.",
+        definition:
+          'Arma mortal. A natural English collocation meaning "lethal instrument". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A knife is a deadly weapon.",
       },
       {
@@ -868,7 +933,8 @@ export const collocationsData: StopData = {
         ipa: "/diːp brɛθ/",
         translation: "Respiración profunda",
         level: "B1",
-        definition: "Big inhale.",
+        definition:
+          'Respiración profunda. A natural English collocation meaning "big inhale". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take a deep breath.",
       },
       {
@@ -876,7 +942,8 @@ export const collocationsData: StopData = {
         ipa: "/diːp sliːp/",
         translation: "Sueño profundo",
         level: "B1",
-        definition: "Heavy sleeping.",
+        definition:
+          'Sueño profundo. A natural English collocation meaning "heavy sleeping". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He was in a deep sleep.",
       },
       {
@@ -884,7 +951,8 @@ export const collocationsData: StopData = {
         ipa: "/diːp ˈtrʌbəl/",
         translation: "Grandes problemas",
         level: "B2",
-        definition: "Serious difficulty.",
+        definition:
+          'Grandes problemas. A natural English collocation meaning "serious difficulty". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You are in deep trouble.",
       },
       {
@@ -892,7 +960,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdiːpli kənˈsɜːrnd/",
         translation: "Profundamente preocupado",
         level: "C1",
-        definition: "Very worried.",
+        definition:
+          'Profundamente preocupado. A natural English collocation meaning "very worried". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am deeply concerned about this.",
       },
       {
@@ -900,7 +969,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdiːpli muːvd/",
         translation: "Profundamente conmovido",
         level: "C1",
-        definition: "Very emotional.",
+        definition:
+          'Profundamente conmovido. A natural English collocation meaning "very emotional". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She was deeply moved by the film.",
       },
       {
@@ -908,7 +978,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdiːpli rɪˈɡrɛt/",
         translation: "Lamentar profundamente",
         level: "B2",
-        definition: "Very sorry.",
+        definition:
+          'Lamentar profundamente. A natural English collocation meaning "very sorry". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I deeply regret my mistake.",
       },
       {
@@ -924,7 +995,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈlɪvər ə ˈmɛsɪdʒ/",
         translation: "Entregar un mensaje",
         level: "B1",
-        definition: "Pass info.",
+        definition:
+          'Entregar un mensaje. A natural English collocation meaning "pass info". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Please deliver this message.",
       },
       {
@@ -932,7 +1004,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈmɑːnd ən ˌɛkspləˈneɪʃən/",
         translation: "Exigir una explicación",
         level: "B2",
-        definition: "Ask firmly why.",
+        definition:
+          'Exigir una explicación. A natural English collocation meaning "ask firmly why". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I demand an explanation.",
       },
       {
@@ -948,7 +1021,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈpɑːrt frɒm trəˈdɪʃən/",
         translation: "Apartarse de la tradición",
         level: "C2",
-        definition: "Do something new.",
+        definition:
+          'Apartarse de la tradición. A natural English collocation meaning "do something new". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We departed from tradition this year.",
       },
       {
@@ -956,7 +1030,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdɛspərət əˈtɛmpt/",
         translation: "Intento desesperado",
         level: "B2",
-        definition: "Last risky try.",
+        definition:
+          'Intento desesperado. A natural English collocation meaning "last risky try". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A desperate attempt to escape.",
       },
       {
@@ -964,7 +1039,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdiːteɪld dɪˈskrɪpʃən/",
         translation: "Descripción detallada",
         level: "B2",
-        definition: "Full account.",
+        definition:
+          'Descripción detallada. A natural English collocation meaning "full account". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Give a detailed description.",
       },
       {
@@ -972,7 +1048,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈvɛləp ə ˈhæbɪt/",
         translation: "Desarrollar un hábito",
         level: "B2",
-        definition: "Start doing regularly.",
+        definition:
+          'Desarrollar un hábito. A natural English collocation meaning "start doing regularly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It takes time to develop a habit.",
       },
       {
@@ -980,7 +1057,8 @@ export const collocationsData: StopData = {
         ipa: "/daɪ əv ˈhʌŋɡər/",
         translation: "Morir de hambre",
         level: "B1",
-        definition: "Starve.",
+        definition:
+          'Morir de hambre. A natural English collocation meaning "starve". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "People are dying of hunger.",
       },
       {
@@ -988,7 +1066,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdɪfrənt əˈpɪnjən/",
         translation: "Opinión diferente",
         level: "A2",
-        definition: "Disagreement.",
+        definition:
+          'Opinión diferente. A natural English collocation meaning "disagreement". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We have different opinions.",
       },
       {
@@ -996,7 +1075,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdɪfɪkəlt dɪˈsɪʒən/",
         translation: "Decisión difícil",
         level: "B1",
-        definition: "Hard choice.",
+        definition:
+          'Decisión difícil. A natural English collocation meaning "hard choice". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was a difficult decision.",
       },
       {
@@ -1004,7 +1084,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈrɛkt ˈkɒntækt/",
         translation: "Contacto directo",
         level: "B2",
-        definition: "Touch/Meeting.",
+        definition:
+          'Contacto directo. A natural English collocation meaning "touch/meeting". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Avoid direct contact.",
       },
       {
@@ -1012,7 +1093,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈrɛkt ˌkɒrəˈleɪʃən/",
         translation: "Correlación directa",
         level: "C1",
-        definition: "Clear link.",
+        definition:
+          'Correlación directa. A natural English collocation meaning "clear link". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "There is a direct correlation.",
       },
       {
@@ -1020,7 +1102,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈrɛkt flaɪt/",
         translation: "Vuelo directo",
         level: "A2",
-        definition: "Non-stop plane.",
+        definition:
+          'Vuelo directo. A natural English collocation meaning "non-stop plane". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Is there a direct flight?",
       },
       {
@@ -1028,7 +1111,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdɜːrti trɪks/",
         translation: "Juego sucio",
         level: "C1",
-        definition: "Dishonest actions.",
+        definition:
+          'Juego sucio. A natural English collocation meaning "dishonest actions". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They used dirty tricks to win.",
       },
       {
@@ -1036,7 +1120,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌdɪsəˈpɔɪntɪŋ rɪˈzʌlt/",
         translation: "Resultado decepcionante",
         level: "B2",
-        definition: "Bad outcome.",
+        definition:
+          'Resultado decepcionante. A natural English collocation meaning "bad outcome". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was a disappointing result.",
       },
       {
@@ -1044,7 +1129,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈskʌvər ə kjʊər/",
         translation: "Descubrir una cura",
         level: "B2",
-        definition: "Find healing.",
+        definition:
+          'Descubrir una cura. A natural English collocation meaning "find healing". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Scientists hope to discover a cure.",
       },
       {
@@ -1052,7 +1138,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈskʌs ə ˈprɒbləm/",
         translation: "Discutir un problema",
         level: "A2",
-        definition: "Talk about issue.",
+        definition:
+          'Discutir un problema. A natural English collocation meaning "talk about issue". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Let's discuss the problem.",
       },
       {
@@ -1060,7 +1147,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdɪstənt ˈfjuːtʃər/",
         translation: "Futuro lejano",
         level: "B2",
-        definition: "Long time away.",
+        definition:
+          'Futuro lejano. A natural English collocation meaning "long time away". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In the distant future.",
       },
       {
@@ -1068,7 +1156,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdɪstənt ˈmɛməri/",
         translation: "Recuerdo lejano",
         level: "C1",
-        definition: "Vague recollection.",
+        definition:
+          'Recuerdo lejano. A natural English collocation meaning "vague recollection". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It feels like a distant memory.",
       },
       {
@@ -1076,7 +1165,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdɪstənt ˈrɛlətɪv/",
         translation: "Pariente lejano",
         level: "B2",
-        definition: "Not close family.",
+        definition:
+          'Pariente lejano. A natural English collocation meaning "not close family". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is a distant relative.",
       },
       {
@@ -1084,7 +1174,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈstɪŋkt ədˈvɑːntɪdʒ/",
         translation: "Ventaja clara",
         level: "C1",
-        definition: "Clear benefit.",
+        definition:
+          'Ventaja clara. A natural English collocation meaning "clear benefit". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We have a distinct advantage.",
       },
       {
@@ -1092,7 +1183,8 @@ export const collocationsData: StopData = {
         ipa: "/dɪˈstɜːrbd sliːp/",
         translation: "Sueño interrumpido",
         level: "C1",
-        definition: "Bad sleeping.",
+        definition:
+          'Sueño interrumpido. A natural English collocation meaning "bad sleeping". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I suffer from disturbed sleep.",
       },
       {
@@ -1108,7 +1200,8 @@ export const collocationsData: StopData = {
         ipa: "/duː ə ˈfeɪvər/",
         translation: "Hacer un favor",
         level: "A2",
-        definition: "Help someone.",
+        definition:
+          'Hacer un favor. A natural English collocation meaning "help someone". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can you do me a favor?",
       },
       {
@@ -1116,7 +1209,8 @@ export const collocationsData: StopData = {
         ipa: "/duː ˈbɪznɪs/",
         translation: "Hacer negocios",
         level: "B1",
-        definition: "Trade.",
+        definition:
+          'Hacer negocios. A natural English collocation meaning "trade". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We do business globally.",
       },
       {
@@ -1124,7 +1218,8 @@ export const collocationsData: StopData = {
         ipa: "/duː ˈdæmɪdʒ/",
         translation: "Hacer daño (material)",
         level: "B2",
-        definition: "Harm.",
+        definition:
+          'Hacer daño (material). A natural English collocation meaning "harm". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The storm did damage.",
       },
       {
@@ -1132,7 +1227,8 @@ export const collocationsData: StopData = {
         ipa: "/duː ˈɛksərsaɪz/",
         translation: "Hacer ejercicio",
         level: "A1",
-        definition: "Workout.",
+        definition:
+          'Hacer ejercicio. A natural English collocation meaning "workout". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I do exercise daily.",
       },
       {
@@ -1140,7 +1236,8 @@ export const collocationsData: StopData = {
         ipa: "/duː ɡʊd/",
         translation: "Hacer el bien",
         level: "B1",
-        definition: "Help.",
+        definition:
+          'Hacer el bien. A natural English collocation meaning "help". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Try to do good.",
       },
       {
@@ -1148,7 +1245,8 @@ export const collocationsData: StopData = {
         ipa: "/duː hɑːrm/",
         translation: "Hacer daño (moral/fisico)",
         level: "B2",
-        definition: "Hurt.",
+        definition:
+          'Hacer daño (moral/fisico). A natural English collocation meaning "hurt". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I didn't mean to do harm.",
       },
       {
@@ -1156,7 +1254,8 @@ export const collocationsData: StopData = {
         ipa: "/duː ˈhoʊmwɜːrk/",
         translation: "Hacer los deberes",
         level: "A1",
-        definition: "School work.",
+        definition:
+          'Hacer los deberes. A natural English collocation meaning "school work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Did you do your homework?",
       },
       {
@@ -1164,7 +1263,8 @@ export const collocationsData: StopData = {
         ipa: "/duː ˈhaʊswɜːrk/",
         translation: "Hacer tareas domésticas",
         level: "B1",
-        definition: "Clean home.",
+        definition:
+          'Hacer tareas domésticas. A natural English collocation meaning "clean home". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I hate doing housework.",
       },
       {
@@ -1172,7 +1272,8 @@ export const collocationsData: StopData = {
         ipa: "/duː ˈdʒʌstɪs/",
         translation: "Hacer justicia",
         level: "C2",
-        definition: "Represent fairly.",
+        definition:
+          'Hacer justicia. A natural English collocation meaning "represent fairly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The photo doesn't do you justice.",
       },
       {
@@ -1180,7 +1281,8 @@ export const collocationsData: StopData = {
         ipa: "/duː rɪˈsɜːrtʃ/",
         translation: "Investigar",
         level: "B2",
-        definition: "Study.",
+        definition:
+          'Investigar. A natural English collocation meaning "study". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We need to do research.",
       },
       {
@@ -1188,7 +1290,8 @@ export const collocationsData: StopData = {
         ipa: "/duː ðə ˈdɪʃɪz/",
         translation: "Lavar los platos",
         level: "A2",
-        definition: "Wash plates.",
+        definition:
+          'Lavar los platos. A natural English collocation meaning "wash plates". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It's your turn to do the dishes.",
       },
       {
@@ -1196,7 +1299,8 @@ export const collocationsData: StopData = {
         ipa: "/duː ðə ˈlɔːndri/",
         translation: "Lavar la ropa",
         level: "A2",
-        definition: "Wash clothes.",
+        definition:
+          'Lavar la ropa. A natural English collocation meaning "wash clothes". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I do the laundry on Sundays.",
       },
       {
@@ -1204,7 +1308,8 @@ export const collocationsData: StopData = {
         ipa: "/duː jɔːr bɛst/",
         translation: "Hacer lo mejor posible",
         level: "A2",
-        definition: "Try hard.",
+        definition:
+          'Hacer lo mejor posible. A natural English collocation meaning "try hard". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Just do your best.",
       },
       {
@@ -1212,7 +1317,8 @@ export const collocationsData: StopData = {
         ipa: "/dəˈmɛstɪk ˈvaɪələns/",
         translation: "Violencia doméstica",
         level: "B2",
-        definition: "Family abuse.",
+        definition:
+          'Violencia doméstica. A natural English collocation meaning "family abuse". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Report domestic violence.",
       },
       {
@@ -1220,7 +1326,8 @@ export const collocationsData: StopData = {
         ipa: "/doʊnt ˈwʌri/",
         translation: "No te preocupes",
         level: "A1",
-        definition: "Be calm.",
+        definition:
+          'No te preocupes. A natural English collocation meaning "be calm". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't worry about it.",
       },
       {
@@ -1228,7 +1335,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdʌbəl tʃɛk/",
         translation: "Verificar dos veces",
         level: "B1",
-        definition: "Check again.",
+        definition:
+          'Verificar dos veces. A natural English collocation meaning "check again". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I'll double check the time.",
       },
       {
@@ -1236,7 +1344,8 @@ export const collocationsData: StopData = {
         ipa: "/drɔː ə kənˈkluːʒən/",
         translation: "Sacar una conclusión",
         level: "B2",
-        definition: "Decide after thinking.",
+        definition:
+          'Sacar una conclusión. A natural English collocation meaning "decide after thinking". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "What conclusion did you draw?",
       },
       {
@@ -1244,7 +1353,8 @@ export const collocationsData: StopData = {
         ipa: "/drɔː əˈtɛnʃən/",
         translation: "Llamar la atención",
         level: "B2",
-        definition: "Make people look.",
+        definition:
+          'Llamar la atención. A natural English collocation meaning "make people look". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't draw attention to yourself.",
       },
       {
@@ -1252,7 +1362,8 @@ export const collocationsData: StopData = {
         ipa: "/drɛs koʊd/",
         translation: "Código de vestimenta",
         level: "B2",
-        definition: "Rules for clothes.",
+        definition:
+          'Código de vestimenta. A natural English collocation meaning "rules for clothes". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Is there a dress code?",
       },
       {
@@ -1268,7 +1379,8 @@ export const collocationsData: StopData = {
         ipa: "/draɪv ˈkɛərfʊli/",
         translation: "Conducir con cuidado",
         level: "A2",
-        definition: "Drive safe.",
+        definition:
+          'Conducir con cuidado. A natural English collocation meaning "drive safe". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Please drive carefully.",
       },
       {
@@ -1276,7 +1388,8 @@ export const collocationsData: StopData = {
         ipa: "/draɪv ˈkreɪzi/",
         translation: "Volver loco",
         level: "B2",
-        definition: "Annoy.",
+        definition:
+          'Volver loco. A natural English collocation meaning "annoy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That noise drives me crazy.",
       },
       {
@@ -1292,7 +1405,8 @@ export const collocationsData: StopData = {
         ipa: "/drʌɡ əˈbjuːs/",
         translation: "Abuso de drogas",
         level: "B2",
-        definition: "Using drugs badly.",
+        definition:
+          'Abuso de drogas. A natural English collocation meaning "using drugs badly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Drug abuse is a problem.",
       },
       {
@@ -1300,7 +1414,8 @@ export const collocationsData: StopData = {
         ipa: "/draɪ ˈhjuːmər/",
         translation: "Humor seco",
         level: "C2",
-        definition: "Subtle funny.",
+        definition:
+          'Humor seco. A natural English collocation meaning "subtle funny". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He has a dry humor.",
       },
       {
@@ -1308,7 +1423,8 @@ export const collocationsData: StopData = {
         ipa: "/djuː deɪt/",
         translation: "Fecha de vencimiento",
         level: "B1",
-        definition: "Deadline.",
+        definition:
+          'Fecha de vencimiento. A natural English collocation meaning "deadline". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "When is the due date?",
       },
       {
@@ -1344,7 +1460,8 @@ export const collocationsData: StopData = {
         ipa: "/ɜːrn rɪˈspɛkt/",
         translation: "Ganarse el respeto",
         level: "B2",
-        definition: "Get admiration.",
+        definition:
+          'Ganarse el respeto. A natural English collocation meaning "get admiration". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You must earn respect.",
       },
       {
@@ -1352,7 +1469,8 @@ export const collocationsData: StopData = {
         ipa: "/iːz ðə peɪn/",
         translation: "Aliviar el dolor",
         level: "C1",
-        definition: "Make less painful.",
+        definition:
+          'Aliviar el dolor. A natural English collocation meaning "make less painful". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Meds ease the pain.",
       },
       {
@@ -1360,7 +1478,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈiːziər sɛd ðæn dʌn/",
         translation: "Más fácil decirlo que hacerlo",
         level: "B2",
-        definition: "Hard to do.",
+        definition:
+          'Más fácil decirlo que hacerlo. A natural English collocation meaning "hard to do". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Quitting is easier said than done.",
       },
       {
@@ -1368,7 +1487,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈiːzi ˈæksɛs/",
         translation: "Fácil acceso",
         level: "B1",
-        definition: "Simple to reach.",
+        definition:
+          'Fácil acceso. A natural English collocation meaning "simple to reach". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The hotel has easy access to the beach.",
       },
       {
@@ -1376,7 +1496,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈiːzi ˈɑːnsər/",
         translation: "Respuesta fácil",
         level: "A2",
-        definition: "Simple solution.",
+        definition:
+          'Respuesta fácil. A natural English collocation meaning "simple solution". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "There is no easy answer.",
       },
       {
@@ -1392,7 +1513,8 @@ export const collocationsData: StopData = {
         ipa: "/iːt ˈhɛlθi/",
         translation: "Comer sano",
         level: "A2",
-        definition: "Good diet.",
+        definition:
+          'Comer sano. A natural English collocation meaning "good diet". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Try to eat healthy.",
       },
       {
@@ -1400,7 +1522,8 @@ export const collocationsData: StopData = {
         ipa: "/iːt aʊt/",
         translation: "Comer fuera",
         level: "A1",
-        definition: "Restaurant dining.",
+        definition:
+          'Comer fuera. A natural English collocation meaning "restaurant dining". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We eat out often.",
       },
       {
@@ -1408,7 +1531,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌiːkəˈnɒmɪk ˈkraɪsɪs/",
         translation: "Crisis económica",
         level: "B2",
-        definition: "Financial trouble.",
+        definition:
+          'Crisis económica. A natural English collocation meaning "financial trouble". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The country faces an economic crisis.",
       },
       {
@@ -1416,7 +1540,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌiːkəˈnɒmɪk ɡroʊθ/",
         translation: "Crecimiento económico",
         level: "B2",
-        definition: "Financial increase.",
+        definition:
+          'Crecimiento económico. A natural English collocation meaning "financial increase". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Economic growth is slow.",
       },
       {
@@ -1424,7 +1549,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌɛdjuːˈkeɪʃənl ˈbækɡraʊnd/",
         translation: "Formación académica",
         level: "C1",
-        definition: "School history.",
+        definition:
+          'Formación académica. A natural English collocation meaning "school history". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "What is your educational background?",
       },
       {
@@ -1432,7 +1558,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈfɛktɪv kəˌmjuːnɪˈkeɪʃən/",
         translation: "Comunicación efectiva",
         level: "B2",
-        definition: "Good talking.",
+        definition:
+          'Comunicación efectiva. A natural English collocation meaning "good talking". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We need effective communication.",
       },
       {
@@ -1440,7 +1567,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈfɛktɪv ˈmɛθəd/",
         translation: "Método efectivo",
         level: "B2",
-        definition: "Way that works.",
+        definition:
+          'Método efectivo. A natural English collocation meaning "way that works". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "This is an effective method.",
       },
       {
@@ -1448,7 +1576,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛmpti ˈprɒmɪs/",
         translation: "Promesa vacía",
         level: "C1",
-        definition: "Lie.",
+        definition:
+          'Promesa vacía. A natural English collocation meaning "lie". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Just another empty promise.",
       },
       {
@@ -1456,7 +1585,8 @@ export const collocationsData: StopData = {
         ipa: "/ɛnd ə rɪˈleɪʃənʃɪp/",
         translation: "Terminar una relación",
         level: "B1",
-        definition: "Break up.",
+        definition:
+          'Terminar una relación. A natural English collocation meaning "break up". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They ended their relationship.",
       },
       {
@@ -1464,7 +1594,8 @@ export const collocationsData: StopData = {
         ipa: "/ɛnd rɪˈzʌlt/",
         translation: "Resultado final",
         level: "B2",
-        definition: "Outcome.",
+        definition:
+          'Resultado final. A natural English collocation meaning "outcome". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The end result was good.",
       },
       {
@@ -1472,7 +1603,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛnərdʒi ɪˈfɪʃənsi/",
         translation: "Eficiencia energética",
         level: "C1",
-        definition: "Saving power.",
+        definition:
+          'Eficiencia energética. A natural English collocation meaning "saving power". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Improve energy efficiency.",
       },
       {
@@ -1480,7 +1612,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛndʒɪn ˈfeɪljər/",
         translation: "Fallo del motor",
         level: "B2",
-        definition: "Car broke.",
+        definition:
+          'Fallo del motor. A natural English collocation meaning "car broke". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The plane had engine failure.",
       },
       {
@@ -1488,7 +1621,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪnˈdʒɔɪ laɪf/",
         translation: "Disfrutar la vida",
         level: "A1",
-        definition: "Have fun.",
+        definition:
+          'Disfrutar la vida. A natural English collocation meaning "have fun". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Just enjoy life.",
       },
       {
@@ -1496,7 +1630,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈnʌf taɪm/",
         translation: "Tiempo suficiente",
         level: "A1",
-        definition: "Adequate hours.",
+        definition:
+          'Tiempo suficiente. A natural English collocation meaning "adequate hours". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We have enough time.",
       },
       {
@@ -1504,7 +1639,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛntər ə ˌkɒmpɪˈtɪʃən/",
         translation: "Entrar en una competición",
         level: "B1",
-        definition: "Join contest.",
+        definition:
+          'Entrar en una competición. A natural English collocation meaning "join contest". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I entered a competition.",
       },
       {
@@ -1512,7 +1648,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪnˈtaɪərli ˈdɪfrənt/",
         translation: "Totalmente diferente",
         level: "B2",
-        definition: "Not same.",
+        definition:
+          'Totalmente diferente. A natural English collocation meaning "not same". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That is entirely different.",
       },
       {
@@ -1520,7 +1657,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛntri ˈlɛvəl/",
         translation: "Nivel de entrada",
         level: "B2",
-        definition: "Junior job.",
+        definition:
+          'Nivel de entrada. A natural English collocation meaning "junior job". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It's an entry level job.",
       },
       {
@@ -1528,7 +1666,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪnˌvaɪərənˈmɛntl ˈɪmpækt/",
         translation: "Impacto ambiental",
         level: "B2",
-        definition: "Effect on nature.",
+        definition:
+          'Impacto ambiental. A natural English collocation meaning "effect on nature". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Consider the environmental impact.",
       },
       {
@@ -1536,7 +1675,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈiːkwəl ˌɒpərˈtuːnɪti/",
         translation: "Igualdad de oportunidades",
         level: "B2",
-        definition: "Fair chance.",
+        definition:
+          'Igualdad de oportunidades. A natural English collocation meaning "fair chance". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We promote equal opportunity.",
       },
       {
@@ -1544,7 +1684,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈiːkwəl raɪts/",
         translation: "Igualdad de derechos",
         level: "B2",
-        definition: "Fair laws.",
+        definition:
+          'Igualdad de derechos. A natural English collocation meaning "fair laws". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Fighting for equal rights.",
       },
       {
@@ -1552,7 +1693,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈskeɪp riˈælɪti/",
         translation: "Escapar de la realidad",
         level: "B2",
-        definition: "Daydream.",
+        definition:
+          'Escapar de la realidad. A natural English collocation meaning "daydream". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Movies help escape reality.",
       },
       {
@@ -1560,7 +1702,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈsɛnʃəl pɑːrt/",
         translation: "Parte esencial",
         level: "B2",
-        definition: "Key piece.",
+        definition:
+          'Parte esencial. A natural English collocation meaning "key piece". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Trust is an essential part.",
       },
       {
@@ -1568,7 +1711,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈstæblɪʃ ə ruːl/",
         translation: "Establecer una regla",
         level: "C1",
-        definition: "Make law.",
+        definition:
+          'Establecer una regla. A natural English collocation meaning "make law". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We must establish a rule.",
       },
       {
@@ -1576,7 +1720,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈiːvən ˈnʌmbər/",
         translation: "Número par",
         level: "A1",
-        definition: "2, 4, 6...",
+        definition:
+          'Número par. A natural English collocation meaning "2, 4, 6". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Six is an even number.",
       },
       {
@@ -1584,7 +1729,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈvɛntʃuəl ˈaʊtkʌm/",
         translation: "Resultado final",
         level: "C1",
-        definition: "End result.",
+        definition:
+          'Resultado final. A natural English collocation meaning "end result". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The eventual outcome is unclear.",
       },
       {
@@ -1592,7 +1738,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛvri ˈsɪŋɡəl deɪ/",
         translation: "Todos los días (énfasis)",
         level: "B1",
-        definition: "Daily.",
+        definition:
+          'Todos los días (énfasis). A natural English collocation meaning "daily". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I work every single day.",
       },
       {
@@ -1600,7 +1747,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪɡˈzækt mætʃ/",
         translation: "Coincidencia exacta",
         level: "B2",
-        definition: "Identical.",
+        definition:
+          'Coincidencia exacta. A natural English collocation meaning "identical". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It's an exact match.",
       },
       {
@@ -1608,7 +1756,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪɡˈzæktli ðə seɪm/",
         translation: "Exactamente lo mismo",
         level: "A2",
-        definition: "Identical.",
+        definition:
+          'Exactamente lo mismo. A natural English collocation meaning "identical". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They look exactly the same.",
       },
       {
@@ -1624,7 +1773,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛksələnt tʃɔɪs/",
         translation: "Excelente elección",
         level: "A2",
-        definition: "Good pick.",
+        definition:
+          'Excelente elección. A natural English collocation meaning "good pick". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That's an excellent choice.",
       },
       {
@@ -1632,7 +1782,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈsɛpʃən tu ðə ruːl/",
         translation: "Excepción a la regla",
         level: "B2",
-        definition: "Unusual case.",
+        definition:
+          'Excepción a la regla. A natural English collocation meaning "unusual case". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "There is always an exception to the rule.",
       },
       {
@@ -1640,7 +1791,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛksɛs ˈbæɡɪdʒ/",
         translation: "Exceso de equipaje",
         level: "B1",
-        definition: "Too much luggage.",
+        definition:
+          'Exceso de equipaje. A natural English collocation meaning "too much luggage". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I paid for excess baggage.",
       },
       {
@@ -1648,7 +1800,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪksˈtʃeɪndʒ reɪt/",
         translation: "Tipo de cambio",
         level: "B1",
-        definition: "Currency value.",
+        definition:
+          'Tipo de cambio. A natural English collocation meaning "currency value". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "What's the exchange rate?",
       },
       {
@@ -1656,7 +1809,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈsaɪt ˌkjʊəriˈɒsɪti/",
         translation: "Despertar curiosidad",
         level: "C2",
-        definition: "Make interested.",
+        definition:
+          'Despertar curiosidad. A natural English collocation meaning "make interested". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It excited my curiosity.",
       },
       {
@@ -1664,7 +1818,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈskjuːz miː/",
         translation: "Disculpe",
         level: "A1",
-        definition: "Polite phrase.",
+        definition:
+          'Disculpe. A natural English collocation meaning "polite phrase". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Excuse me, can I pass?",
       },
       {
@@ -1672,7 +1827,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛksərsaɪz ˈrɛɡjʊlərli/",
         translation: "Hacer ejercicio regularmente",
         level: "A2",
-        definition: "Workout often.",
+        definition:
+          'Hacer ejercicio regularmente. A natural English collocation meaning "workout often". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You should exercise regularly.",
       },
       {
@@ -1680,7 +1836,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪɡˈzɔːst fjuːmz/",
         translation: "Gases de escape",
         level: "B2",
-        definition: "Car smoke.",
+        definition:
+          'Gases de escape. A natural English collocation meaning "car smoke". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Choking on exhaust fumes.",
       },
       {
@@ -1688,7 +1845,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪɡˈzɪst ɪn ˈhɑːrməni/",
         translation: "Vivir en armonía",
         level: "C1",
-        definition: "Peaceful co-existence.",
+        definition:
+          'Vivir en armonía. A natural English collocation meaning "peaceful co-existence". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We exist in harmony.",
       },
       {
@@ -1696,7 +1854,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈspænd ˈnɒlɪdʒ/",
         translation: "Ampliar conocimientos",
         level: "B2",
-        definition: "Learn more.",
+        definition:
+          'Ampliar conocimientos. A natural English collocation meaning "learn more". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Read to expand knowledge.",
       },
       {
@@ -1704,7 +1863,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈspɛkt ə ˈbeɪbi/",
         translation: "Esperar un bebé",
         level: "B1",
-        definition: "Pregnant.",
+        definition:
+          'Esperar un bebé. A natural English collocation meaning "pregnant". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She is expecting a baby.",
       },
       {
@@ -1712,7 +1872,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈspɛnsɪv teɪst/",
         translation: "Gustos caros",
         level: "B2",
-        definition: "Likes costly things.",
+        definition:
+          'Gustos caros. A natural English collocation meaning "likes costly things". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He has expensive taste.",
       },
       {
@@ -1720,7 +1881,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈspɪəriəns ˈdɪfɪkəlti/",
         translation: "Experimentar dificultades",
         level: "B2",
-        definition: "Have problems.",
+        definition:
+          'Experimentar dificultades. A natural English collocation meaning "have problems". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We are experiencing difficulty.",
       },
       {
@@ -1728,7 +1890,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛkspɜːrt ədˈvaɪs/",
         translation: "Consejo experto",
         level: "B2",
-        definition: "Pro tips.",
+        definition:
+          'Consejo experto. A natural English collocation meaning "pro tips". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Get expert advice.",
       },
       {
@@ -1736,7 +1899,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈspleɪn ˈklɪərli/",
         translation: "Explicar claramente",
         level: "A2",
-        definition: "Tell plainly.",
+        definition:
+          'Explicar claramente. A natural English collocation meaning "tell plainly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Please explain clearly.",
       },
       {
@@ -1744,7 +1908,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈsprɛs ə ˈfiːlɪŋ/",
         translation: "Expresar un sentimiento",
         level: "B1",
-        definition: "Show emotion.",
+        definition:
+          'Expresar un sentimiento. A natural English collocation meaning "show emotion". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Hard to express a feeling.",
       },
       {
@@ -1752,7 +1917,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈsprɛs ən əˈpɪnjən/",
         translation: "Expresar una opinión",
         level: "B1",
-        definition: "Say thought.",
+        definition:
+          'Expresar una opinión. A natural English collocation meaning "say thought". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I want to express an opinion.",
       },
       {
@@ -1760,7 +1926,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈstɛnd ə ˈdɛdlaɪn/",
         translation: "Extender un plazo",
         level: "B2",
-        definition: "Give more time.",
+        definition:
+          'Extender un plazo. A natural English collocation meaning "give more time". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can you extend the deadline?",
       },
       {
@@ -1768,7 +1935,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛkstrə tʃɑːrdʒ/",
         translation: "Cargo extra",
         level: "A2",
-        definition: "Added cost.",
+        definition:
+          'Cargo extra. A natural English collocation meaning "added cost". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Is there an extra charge?",
       },
       {
@@ -1776,7 +1944,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛkstrə taɪm/",
         translation: "Tiempo extra",
         level: "B1",
-        definition: "More minutes.",
+        definition:
+          'Tiempo extra. A natural English collocation meaning "more minutes". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The game went to extra time.",
       },
       {
@@ -1784,7 +1953,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈstriːm spɔːrt/",
         translation: "Deporte extremo",
         level: "B1",
-        definition: "Dangerous game.",
+        definition:
+          'Deporte extremo. A natural English collocation meaning "dangerous game". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Bungee is an extreme sport.",
       },
       {
@@ -1792,7 +1962,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈstriːmli ˈdɪfɪkəlt/",
         translation: "Extremadamente difícil",
         level: "B1",
-        definition: "Very hard.",
+        definition:
+          'Extremadamente difícil. A natural English collocation meaning "very hard". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was extremely difficult.",
       },
       {
@@ -1800,7 +1971,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪkˈstriːmli ɪmˈpɔːrtənt/",
         translation: "Extremadamente importante",
         level: "B1",
-        definition: "Crucial.",
+        definition:
+          'Extremadamente importante. A natural English collocation meaning "crucial". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "This is extremely important.",
       },
       {
@@ -1808,7 +1980,8 @@ export const collocationsData: StopData = {
         ipa: "/aɪ ˈkɒntækt/",
         translation: "Contacto visual",
         level: "B1",
-        definition: "Looking at eyes.",
+        definition:
+          'Contacto visual. A natural English collocation meaning "looking at eyes". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make eye contact.",
       },
     ],
@@ -1820,7 +1993,8 @@ export const collocationsData: StopData = {
         ipa: "/feɪs ə ˈtʃælɪndʒ/",
         translation: "Afrontar un desafío",
         level: "B2",
-        definition: "Confront hard task.",
+        definition:
+          'Afrontar un desafío. A natural English collocation meaning "confront hard task". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We face a challenge.",
       },
       {
@@ -1828,7 +2002,8 @@ export const collocationsData: StopData = {
         ipa: "/feɪs ðə fækts/",
         translation: "Afrontar los hechos",
         level: "B2",
-        definition: "Accept reality.",
+        definition:
+          'Afrontar los hechos. A natural English collocation meaning "accept reality". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You must face the facts.",
       },
       {
@@ -1836,7 +2011,8 @@ export const collocationsData: StopData = {
         ipa: "/feɪl ˈmɪzərəbli/",
         translation: "Fracasar estrepitosamente",
         level: "C1",
-        definition: "Fail bad.",
+        definition:
+          'Fracasar estrepitosamente. A natural English collocation meaning "fail bad". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He failed miserably.",
       },
       {
@@ -1844,7 +2020,8 @@ export const collocationsData: StopData = {
         ipa: "/fɛər diːl/",
         translation: "Trato justo",
         level: "B1",
-        definition: "Good agreement.",
+        definition:
+          'Trato justo. A natural English collocation meaning "good agreement". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It seems like a fair deal.",
       },
       {
@@ -1852,7 +2029,8 @@ export const collocationsData: StopData = {
         ipa: "/fɔːl əˈsliːp/",
         translation: "Quedarse dormido",
         level: "A2",
-        definition: "Start sleeping.",
+        definition:
+          'Quedarse dormido. A natural English collocation meaning "start sleeping". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I fell asleep.",
       },
       {
@@ -1860,7 +2038,8 @@ export const collocationsData: StopData = {
         ipa: "/fɔːl ɪn lʌv/",
         translation: "Enamorarse",
         level: "A2",
-        definition: "Start loving.",
+        definition:
+          'Enamorarse. A natural English collocation meaning "start loving". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They fell in love.",
       },
       {
@@ -1868,7 +2047,8 @@ export const collocationsData: StopData = {
         ipa: "/fɔːls ɪmˈprɛʃən/",
         translation: "Falsa impresión",
         level: "B2",
-        definition: "Wrong idea.",
+        definition:
+          'Falsa impresión. A natural English collocation meaning "wrong idea". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It gives a false impression.",
       },
       {
@@ -1876,7 +2056,8 @@ export const collocationsData: StopData = {
         ipa: "/fɑːr ˈdɪstəns/",
         translation: "Larga distancia",
         level: "A2",
-        definition: "Long way.",
+        definition:
+          'Larga distancia. A natural English collocation meaning "long way". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It's a far distance.",
       },
       {
@@ -1884,7 +2065,8 @@ export const collocationsData: StopData = {
         ipa: "/fɑːst fuːd/",
         translation: "Comida rápida",
         level: "A1",
-        definition: "Junk food.",
+        definition:
+          'Comida rápida. A natural English collocation meaning "junk food". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I like fast food.",
       },
       {
@@ -1892,7 +2074,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈfeɪtl ˈɛrər/",
         translation: "Error fatal",
         level: "B2",
-        definition: "Bad mistake.",
+        definition:
+          'Error fatal. A natural English collocation meaning "bad mistake". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A fatal error caused the crash.",
       },
       {
@@ -1900,7 +2083,8 @@ export const collocationsData: StopData = {
         ipa: "/fiːl friː/",
         translation: "Siéntete libre",
         level: "B1",
-        definition: "Don't hesitate.",
+        definition:
+          'Siéntete libre. A natural English collocation meaning "don\'t hesitate". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Feel free to ask.",
       },
       {
@@ -1908,7 +2092,8 @@ export const collocationsData: StopData = {
         ipa: "/fiːl ˈɡɪlti/",
         translation: "Sentirse culpable",
         level: "B1",
-        definition: "Regret.",
+        definition:
+          'Sentirse culpable. A natural English collocation meaning "regret". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I feel guilty about it.",
       },
       {
@@ -1916,7 +2101,8 @@ export const collocationsData: StopData = {
         ipa: "/faɪt kraɪm/",
         translation: "Combatir el crimen",
         level: "B1",
-        definition: "Stop illegal acts.",
+        definition:
+          'Combatir el crimen. A natural English collocation meaning "stop illegal acts". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Police fight crime.",
       },
       {
@@ -1924,7 +2110,8 @@ export const collocationsData: StopData = {
         ipa: "/fɪl ə ˈveɪkənsi/",
         translation: "Cubrir una vacante",
         level: "C1",
-        definition: "Hire someone.",
+        definition:
+          'Cubrir una vacante. A natural English collocation meaning "hire someone". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We need to fill a vacancy.",
       },
       {
@@ -1932,7 +2119,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈfaɪnl dɪˈsɪʒən/",
         translation: "Decisión final",
         level: "B1",
-        definition: "Last choice.",
+        definition:
+          'Decisión final. A natural English collocation meaning "last choice". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It's my final decision.",
       },
       {
@@ -1940,7 +2128,8 @@ export const collocationsData: StopData = {
         ipa: "/faɪˈnænʃəl səˈpɔːrt/",
         translation: "Apoyo financiero",
         level: "B2",
-        definition: "Money help.",
+        definition:
+          'Apoyo financiero. A natural English collocation meaning "money help". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We need financial support.",
       },
       {
@@ -1948,7 +2137,8 @@ export const collocationsData: StopData = {
         ipa: "/faɪnd ə səlˈuːʃən/",
         translation: "Encontrar una solución",
         level: "B1",
-        definition: "Solve.",
+        definition:
+          'Encontrar una solución. A natural English collocation meaning "solve". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We must find a solution.",
       },
       {
@@ -1956,7 +2146,8 @@ export const collocationsData: StopData = {
         ipa: "/fɜːrm bɪˈliːf/",
         translation: "Firme creencia",
         level: "C1",
-        definition: "Strong conviction.",
+        definition:
+          'Firme creencia. A natural English collocation meaning "strong conviction". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is my firm belief.",
       },
       {
@@ -1964,7 +2155,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈfɜːrmli bɪˈliːv/",
         translation: "Creer firmemente",
         level: "B2",
-        definition: "Sure.",
+        definition:
+          'Creer firmemente. A natural English collocation meaning "sure". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I firmly believe it.",
       },
       {
@@ -1972,7 +2164,8 @@ export const collocationsData: StopData = {
         ipa: "/fɜːrst ɪmˈprɛʃən/",
         translation: "Primera impresión",
         level: "B1",
-        definition: "Initial thought.",
+        definition:
+          'Primera impresión. A natural English collocation meaning "initial thought". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make a good first impression.",
       },
       {
@@ -1980,7 +2173,8 @@ export const collocationsData: StopData = {
         ipa: "/flæt ˈtaɪər/",
         translation: "Llanta pinchada",
         level: "A2",
-        definition: "Punctured wheel.",
+        definition:
+          'Llanta pinchada. A natural English collocation meaning "punctured wheel". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have a flat tire.",
       },
       {
@@ -1988,7 +2182,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈfɒloʊ ədˈvaɪs/",
         translation: "Seguir consejos",
         level: "B1",
-        definition: "Do as told.",
+        definition:
+          'Seguir consejos. A natural English collocation meaning "do as told". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Follow my advice.",
       },
       {
@@ -1996,7 +2191,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈfɒloʊ ruːlz/",
         translation: "Seguir las reglas",
         level: "A2",
-        definition: "Obey.",
+        definition:
+          'Seguir las reglas. A natural English collocation meaning "obey". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You must follow rules.",
       },
       {
@@ -2004,7 +2200,8 @@ export const collocationsData: StopData = {
         ipa: "/fuːd ˈpɔɪzənɪŋ/",
         translation: "Intoxicación alimentaria",
         level: "B2",
-        definition: "Sick from food.",
+        definition:
+          'Intoxicación alimentaria. A natural English collocation meaning "sick from food". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I got food poisoning.",
       },
       {
@@ -2012,7 +2209,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈfɒrɪn ˈlæŋɡwɪdʒ/",
         translation: "Idioma extranjero",
         level: "A2",
-        definition: "Not native tongue.",
+        definition:
+          'Idioma extranjero. A natural English collocation meaning "not native tongue". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Learn a foreign language.",
       },
       {
@@ -2020,7 +2218,8 @@ export const collocationsData: StopData = {
         ipa: "/friː taɪm/",
         translation: "Tiempo libre",
         level: "A1",
-        definition: "Leisure.",
+        definition:
+          'Tiempo libre. A natural English collocation meaning "leisure". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "What do you do in free time?",
       },
       {
@@ -2028,7 +2227,8 @@ export const collocationsData: StopData = {
         ipa: "/frɛʃ stɑːrt/",
         translation: "Nuevo comienzo",
         level: "B2",
-        definition: "New beginning.",
+        definition:
+          'Nuevo comienzo. A natural English collocation meaning "new beginning". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I need a fresh start.",
       },
       {
@@ -2036,7 +2236,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈfrɛndli smaɪl/",
         translation: "Sonrisa amigable",
         level: "A2",
-        definition: "Nice look.",
+        definition:
+          'Sonrisa amigable. A natural English collocation meaning "nice look". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She has a friendly smile.",
       },
       {
@@ -2044,7 +2245,8 @@ export const collocationsData: StopData = {
         ipa: "/frʌnt dɔːr/",
         translation: "Puerta principal",
         level: "A1",
-        definition: "Main entry.",
+        definition:
+          'Puerta principal. A natural English collocation meaning "main entry". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Knock on the front door.",
       },
       {
@@ -2052,7 +2254,8 @@ export const collocationsData: StopData = {
         ipa: "/fʊl ˈriːfʌnd/",
         translation: "Reembolso completo",
         level: "B1",
-        definition: "All money back.",
+        definition:
+          'Reembolso completo. A natural English collocation meaning "all money back". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I want a full refund.",
       },
       {
@@ -2060,7 +2263,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈfʊli əˈwɛər/",
         translation: "Plenamente consciente",
         level: "B2",
-        definition: "Know well.",
+        definition:
+          'Plenamente consciente. A natural English collocation meaning "know well". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am fully aware.",
       },
       {
@@ -2068,7 +2272,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈfʊli bʊkt/",
         translation: "Completo/Reservado",
         level: "B1",
-        definition: "No space.",
+        definition:
+          'Completo/Reservado. A natural English collocation meaning "no space". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The hotel is fully booked.",
       },
     ],
@@ -2080,7 +2285,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡeɪn ˈæksɛs/",
         translation: "Obtener acceso",
         level: "B2",
-        definition: "Enter.",
+        definition:
+          'Obtener acceso. A natural English collocation meaning "enter". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Thieves gained access.",
       },
       {
@@ -2088,7 +2294,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡeɪn weɪt/",
         translation: "Subir de peso",
         level: "A2",
-        definition: "Get fatter.",
+        definition:
+          'Subir de peso. A natural English collocation meaning "get fatter". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I gained weight.",
       },
       {
@@ -2096,7 +2303,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdʒɛnərəl ˈpʌblɪk/",
         translation: "Público general",
         level: "B2",
-        definition: "Everyone.",
+        definition:
+          'Público general. A natural English collocation meaning "everyone". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Open to the general public.",
       },
       {
@@ -2104,7 +2312,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt ə dʒɒb/",
         translation: "Conseguir trabajo",
         level: "A1",
-        definition: "Find work.",
+        definition:
+          'Conseguir trabajo. A natural English collocation meaning "find work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I need to get a job.",
       },
       {
@@ -2112,7 +2321,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt ˈæŋɡri/",
         translation: "Enfadarse",
         level: "A1",
-        definition: "Become mad.",
+        definition:
+          'Enfadarse. A natural English collocation meaning "become mad". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't get angry.",
       },
       {
@@ -2120,7 +2330,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt ˈbɛtər/",
         translation: "Mejorar",
         level: "A1",
-        definition: "Improve.",
+        definition:
+          'Mejorar. A natural English collocation meaning "improve". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Get better soon.",
       },
       {
@@ -2128,7 +2339,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt dɪˈvɔːrst/",
         translation: "Divorciarse",
         level: "A2",
-        definition: "End marriage.",
+        definition:
+          'Divorciarse. A natural English collocation meaning "end marriage". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They got divorced.",
       },
       {
@@ -2136,7 +2348,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt drʌŋk/",
         translation: "Emborracharse",
         level: "B1",
-        definition: "Too much alcohol.",
+        definition:
+          'Emborracharse. A natural English collocation meaning "too much alcohol". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Let's get drunk.",
       },
       {
@@ -2144,7 +2357,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt hoʊm/",
         translation: "Llegar a casa",
         level: "A1",
-        definition: "Arrive house.",
+        definition:
+          'Llegar a casa. A natural English collocation meaning "arrive house". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "When do you get home?",
       },
       {
@@ -2152,7 +2366,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt lɒst/",
         translation: "Perderse",
         level: "A2",
-        definition: "Lose way.",
+        definition:
+          'Perderse. A natural English collocation meaning "lose way". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We got lost.",
       },
       {
@@ -2160,7 +2375,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt ˈmærid/",
         translation: "Casarse",
         level: "A2",
-        definition: "Wed.",
+        definition:
+          'Casarse. A natural English collocation meaning "wed". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They plan to get married.",
       },
       {
@@ -2168,7 +2384,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt pərˈmɪʃən/",
         translation: "Obtener permiso",
         level: "B1",
-        definition: "Be allowed.",
+        definition:
+          'Obtener permiso. A natural English collocation meaning "be allowed". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Get permission first.",
       },
       {
@@ -2176,7 +2393,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt ˈrɛdi/",
         translation: "Prepararse",
         level: "A1",
-        definition: "Prepare.",
+        definition:
+          'Prepararse. A natural English collocation meaning "prepare". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Get ready for school.",
       },
       {
@@ -2184,7 +2402,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt ˈstɑːrtɪd/",
         translation: "Empezar",
         level: "A2",
-        definition: "Begin.",
+        definition:
+          'Empezar. A natural English collocation meaning "begin". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Let's get started.",
       },
       {
@@ -2192,7 +2411,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt ðə ˈmɛsɪdʒ/",
         translation: "Captar el mensaje",
         level: "B2",
-        definition: "Understand hint.",
+        definition:
+          'Captar el mensaje. A natural English collocation meaning "understand hint". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He finally got the message.",
       },
       {
@@ -2200,7 +2420,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɛt ʌpˈsɛt/",
         translation: "Disgustarse",
         level: "A2",
-        definition: "Become sad/mad.",
+        definition:
+          'Disgustarse. A natural English collocation meaning "become sad/mad". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't get upset.",
       },
       {
@@ -2208,7 +2429,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɪv ə tʃɑːns/",
         translation: "Dar una oportunidad",
         level: "B1",
-        definition: "Allow try.",
+        definition:
+          'Dar una oportunidad. A natural English collocation meaning "allow try". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Give him a chance.",
       },
       {
@@ -2216,7 +2438,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɪv ə hænd/",
         translation: "Echar una mano",
         level: "B1",
-        definition: "Help.",
+        definition:
+          'Echar una mano. A natural English collocation meaning "help". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can you give me a hand?",
       },
       {
@@ -2224,7 +2447,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɪv ədˈvaɪs/",
         translation: "Dar consejo",
         level: "B1",
-        definition: "Advise.",
+        definition:
+          'Dar consejo. A natural English collocation meaning "advise". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can I give some advice?",
       },
       {
@@ -2232,7 +2456,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɪv bɜːrθ/",
         translation: "Dar a luz",
         level: "B2",
-        definition: "Have baby.",
+        definition:
+          'Dar a luz. A natural English collocation meaning "have baby". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She gave birth yesterday.",
       },
       {
@@ -2240,7 +2465,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɪv pərˈmɪʃən/",
         translation: "Dar permiso",
         level: "B1",
-        definition: "Allow.",
+        definition:
+          'Dar permiso. A natural English collocation meaning "allow". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I give you permission.",
       },
       {
@@ -2248,7 +2474,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡɪv ʌp hoʊp/",
         translation: "Perder la esperanza",
         level: "C1",
-        definition: "Stop believing.",
+        definition:
+          'Perder la esperanza. A natural English collocation meaning "stop believing". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Never give up hope.",
       },
       {
@@ -2256,7 +2483,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌɡloʊbəl ˈwɔːrmɪŋ/",
         translation: "Calentamiento global",
         level: "B1",
-        definition: "Climate change.",
+        definition:
+          'Calentamiento global. A natural English collocation meaning "climate change". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Stop global warming.",
       },
       {
@@ -2264,7 +2492,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡoʊ əˈbrɔːd/",
         translation: "Ir al extranjero",
         level: "B1",
-        definition: "Travel out.",
+        definition:
+          'Ir al extranjero. A natural English collocation meaning "travel out". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I want to go abroad.",
       },
       {
@@ -2272,7 +2501,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡoʊ ˈbæŋkrʌpt/",
         translation: "Ir a la quiebra",
         level: "C1",
-        definition: "Lose all money.",
+        definition:
+          'Ir a la quiebra. A natural English collocation meaning "lose all money". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The company went bankrupt.",
       },
       {
@@ -2280,7 +2510,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡoʊ ˈkreɪzi/",
         translation: "Volverse loco",
         level: "B1",
-        definition: "Mad.",
+        definition:
+          'Volverse loco. A natural English collocation meaning "mad". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't go crazy.",
       },
       {
@@ -2288,7 +2519,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡoʊ ʌnˈnoʊtɪst/",
         translation: "Pasar desapercibido",
         level: "C1",
-        definition: "Not seen.",
+        definition:
+          'Pasar desapercibido. A natural English collocation meaning "not seen". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It went unnoticed.",
       },
       {
@@ -2296,7 +2528,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɡoʊldən ˌɒpərˈtuːnɪti/",
         translation: "Oportunidad de oro",
         level: "C1",
-        definition: "Great chance.",
+        definition:
+          'Oportunidad de oro. A natural English collocation meaning "great chance". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It's a golden opportunity.",
       },
       {
@@ -2304,7 +2537,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡʊd tʃɑːns/",
         translation: "Buena probabilidad",
         level: "B1",
-        definition: "Likely.",
+        definition:
+          'Buena probabilidad. A natural English collocation meaning "likely". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "There is a good chance.",
       },
       {
@@ -2312,7 +2546,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡʊd ɪˈnʌf/",
         translation: "Suficientemente bueno",
         level: "A2",
-        definition: "Okay.",
+        definition:
+          'Suficientemente bueno. A natural English collocation meaning "okay". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is good enough.",
       },
       {
@@ -2320,7 +2555,8 @@ export const collocationsData: StopData = {
         ipa: "/ɡreɪt səkˈsɛs/",
         translation: "Gran éxito",
         level: "B1",
-        definition: "Win.",
+        definition:
+          'Gran éxito. A natural English collocation meaning "win". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The party was a great success.",
       },
       {
@@ -2328,7 +2564,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɡreɪtli əˈpriːʃieɪt/",
         translation: "Agradecer enormemente",
         level: "B2",
-        definition: "Very thankful.",
+        definition:
+          'Agradecer enormemente. A natural English collocation meaning "very thankful". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I greatly appreciate it.",
       },
       {
@@ -2336,7 +2573,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɡroʊɪŋ kənˈsɜːrn/",
         translation: "Preocupación creciente",
         level: "C1",
-        definition: "More worry.",
+        definition:
+          'Preocupación creciente. A natural English collocation meaning "more worry". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is a growing concern.",
       },
       {
@@ -2344,7 +2582,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɡɪlti ˈkɒnʃəns/",
         translation: "Conciencia culpable",
         level: "C2",
-        definition: "Feeling bad.",
+        definition:
+          'Conciencia culpable. A natural English collocation meaning "feeling bad". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He has a guilty conscience.",
       },
     ],
@@ -2356,7 +2595,8 @@ export const collocationsData: StopData = {
         ipa: "/həˈbɪtʃuəl ˈsmoʊkər/",
         translation: "Fumador habitual",
         level: "C1",
-        definition: "Smokes often.",
+        definition:
+          'Fumador habitual. A natural English collocation meaning "smokes often". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is a habitual smoker.",
       },
       {
@@ -2364,7 +2604,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhæpi ˈɛndɪŋ/",
         translation: "Final feliz",
         level: "A2",
-        definition: "Good end.",
+        definition:
+          'Final feliz. A natural English collocation meaning "good end". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I like a happy ending.",
       },
       {
@@ -2372,7 +2613,8 @@ export const collocationsData: StopData = {
         ipa: "/hɑːrd dʒɒb/",
         translation: "Trabajo duro",
         level: "A1",
-        definition: "Difficult task.",
+        definition:
+          'Trabajo duro. A natural English collocation meaning "difficult task". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is a hard job.",
       },
       {
@@ -2380,7 +2622,8 @@ export const collocationsData: StopData = {
         ipa: "/hɑːrd wɜːrk/",
         translation: "Trabajo duro",
         level: "A2",
-        definition: "Effort.",
+        definition:
+          'Trabajo duro. A natural English collocation meaning "effort". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Success comes from hard work.",
       },
       {
@@ -2388,7 +2631,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhɑːrdli ˈɛni/",
         translation: "Apenas nada",
         level: "B1",
-        definition: "Very little.",
+        definition:
+          'Apenas nada. A natural English collocation meaning "very little". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "There is hardly any food.",
       },
       {
@@ -2396,7 +2640,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhɑːrdli ˈɛvər/",
         translation: "Casi nunca",
         level: "B1",
-        definition: "Rarely.",
+        definition:
+          'Casi nunca. A natural English collocation meaning "rarely". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I hardly ever see him.",
       },
       {
@@ -2404,7 +2649,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə ˈbeɪbi/",
         translation: "Tener un bebé",
         level: "B1",
-        definition: "Birth.",
+        definition:
+          'Tener un bebé. A natural English collocation meaning "birth". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They are having a baby.",
       },
       {
@@ -2412,7 +2658,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə breɪk/",
         translation: "Tomar un descanso",
         level: "A1",
-        definition: "Rest.",
+        definition:
+          'Tomar un descanso. A natural English collocation meaning "rest". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Let's have a break.",
       },
       {
@@ -2420,7 +2667,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə tʃæt/",
         translation: "Charlar",
         level: "A2",
-        definition: "Talk.",
+        definition:
+          'Charlar. A natural English collocation meaning "talk". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can we have a chat?",
       },
       {
@@ -2428,7 +2676,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə koʊld/",
         translation: "Tener un resfriado",
         level: "A1",
-        definition: "Sick.",
+        definition:
+          'Tener un resfriado. A natural English collocation meaning "sick". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have a cold.",
       },
       {
@@ -2436,7 +2685,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə daʊt/",
         translation: "Tener una duda",
         level: "B1",
-        definition: "Unsure.",
+        definition:
+          'Tener una duda. A natural English collocation meaning "unsure". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have a doubt.",
       },
       {
@@ -2444,7 +2694,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə drɪŋk/",
         translation: "Tomar algo",
         level: "A1",
-        definition: "Drink.",
+        definition:
+          'Tomar algo. A natural English collocation meaning "drink". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Let's have a drink.",
       },
       {
@@ -2452,7 +2703,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə ˈfiːlɪŋ/",
         translation: "Tener la sensación",
         level: "B1",
-        definition: "Sense.",
+        definition:
+          'Tener la sensación. A natural English collocation meaning "sense". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have a feeling he will win.",
       },
       {
@@ -2460,7 +2712,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə ɡʊd taɪm/",
         translation: "Pasarlo bien",
         level: "A1",
-        definition: "Fun.",
+        definition:
+          'Pasarlo bien. A natural English collocation meaning "fun". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Have a good time!",
       },
       {
@@ -2468,7 +2721,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə lʊk/",
         translation: "Echar un vistazo",
         level: "A1",
-        definition: "Check.",
+        definition:
+          'Echar un vistazo. A natural English collocation meaning "check". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Have a look at this.",
       },
       {
@@ -2476,7 +2730,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə ˈprɒbləm/",
         translation: "Tener un problema",
         level: "A2",
-        definition: "Trouble.",
+        definition:
+          'Tener un problema. A natural English collocation meaning "trouble". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We have a problem.",
       },
       {
@@ -2484,7 +2739,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə rɛst/",
         translation: "Descansar",
         level: "A1",
-        definition: "Relax.",
+        definition:
+          'Descansar. A natural English collocation meaning "relax". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Have a rest now.",
       },
       {
@@ -2492,7 +2748,8 @@ export const collocationsData: StopData = {
         ipa: "/hæv ə siːt/",
         translation: "Tomar asiento",
         level: "A2",
-        definition: "Sit.",
+        definition:
+          'Tomar asiento. A natural English collocation meaning "sit". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Please have a seat.",
       },
       {
@@ -2500,7 +2757,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhiːtɪd ˈɑːrɡjʊmənt/",
         translation: "Discusión acalorada",
         level: "C1",
-        definition: "Angry fight.",
+        definition:
+          'Discusión acalorada. A natural English collocation meaning "angry fight". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They had a heated argument.",
       },
       {
@@ -2508,7 +2766,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhɛvi reɪn/",
         translation: "Lluvia intensa",
         level: "B1",
-        definition: "Lots of rain.",
+        definition:
+          'Lluvia intensa. A natural English collocation meaning "lots of rain". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Heavy rain is expected.",
       },
       {
@@ -2516,7 +2775,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhɛvi ˈsmoʊkər/",
         translation: "Fumador empedernido",
         level: "B2",
-        definition: "Smokes a lot.",
+        definition:
+          'Fumador empedernido. A natural English collocation meaning "smokes a lot". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is a heavy smoker.",
       },
       {
@@ -2524,7 +2784,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhɛvi ˈtræfɪk/",
         translation: "Tráfico pesado",
         level: "A2",
-        definition: "Many cars.",
+        definition:
+          'Tráfico pesado. A natural English collocation meaning "many cars". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Stuck in heavy traffic.",
       },
       {
@@ -2532,7 +2793,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhɪdən əˈdʒɛndə/",
         translation: "Intención oculta",
         level: "C2",
-        definition: "Secret plan.",
+        definition:
+          'Intención oculta. A natural English collocation meaning "secret plan". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He has a hidden agenda.",
       },
       {
@@ -2540,7 +2802,8 @@ export const collocationsData: StopData = {
         ipa: "/haɪ ˈkwɒlɪti/",
         translation: "Alta calidad",
         level: "B1",
-        definition: "Good.",
+        definition:
+          'Alta calidad. A natural English collocation meaning "good". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "High quality goods.",
       },
       {
@@ -2548,7 +2811,8 @@ export const collocationsData: StopData = {
         ipa: "/haɪ ˈstændərd/",
         translation: "Alto nivel",
         level: "B2",
-        definition: "Excellent.",
+        definition:
+          'Alto nivel. A natural English collocation meaning "excellent". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Maintain a high standard.",
       },
       {
@@ -2556,7 +2820,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhaɪli ˌrɛkəˈmɛndɪd/",
         translation: "Muy recomendado",
         level: "B2",
-        definition: "Very good.",
+        definition:
+          'Muy recomendado. A natural English collocation meaning "very good". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It comes highly recommended.",
       },
       {
@@ -2564,7 +2829,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhaɪli ʌnˈlaɪkli/",
         translation: "Muy improbable",
         level: "B2",
-        definition: "Probably not.",
+        definition:
+          'Muy improbable. A natural English collocation meaning "probably not". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That is highly unlikely.",
       },
       {
@@ -2572,7 +2838,8 @@ export const collocationsData: StopData = {
         ipa: "/hoʊld ə ˈmiːtɪŋ/",
         translation: "Celebrar una reunión",
         level: "B1",
-        definition: "Meet.",
+        definition:
+          'Celebrar una reunión. A natural English collocation meaning "meet". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We held a meeting.",
       },
       {
@@ -2580,7 +2847,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɒnɪst əˈpɪnjən/",
         translation: "Opinión honesta",
         level: "B1",
-        definition: "Truth.",
+        definition:
+          'Opinión honesta. A natural English collocation meaning "truth". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Give me your honest opinion.",
       },
       {
@@ -2588,7 +2856,8 @@ export const collocationsData: StopData = {
         ipa: "/hɒt ˈtɒpɪk/",
         translation: "Tema candente",
         level: "B2",
-        definition: "Popular subject.",
+        definition:
+          'Tema candente. A natural English collocation meaning "popular subject". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That is a hot topic.",
       },
       {
@@ -2596,7 +2865,8 @@ export const collocationsData: StopData = {
         ipa: "/hjuːdʒ ˈdɪfrəns/",
         translation: "Enorme diferencia",
         level: "B1",
-        definition: "Big gap.",
+        definition:
+          'Enorme diferencia. A natural English collocation meaning "big gap". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It makes a huge difference.",
       },
       {
@@ -2604,7 +2874,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈhjuːmən ˈneɪtʃər/",
         translation: "Naturaleza humana",
         level: "B2",
-        definition: "How people are.",
+        definition:
+          'Naturaleza humana. A natural English collocation meaning "how people are". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is just human nature.",
       },
     ],
@@ -2616,7 +2887,8 @@ export const collocationsData: StopData = {
         ipa: "/aɪˈdiːəl ˈkændɪdeɪt/",
         translation: "Candidato ideal",
         level: "B2",
-        definition: "Perfect person.",
+        definition:
+          'Candidato ideal. A natural English collocation meaning "perfect person". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She is the ideal candidate.",
       },
       {
@@ -2624,7 +2896,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈaɪdl θrɛt/",
         translation: "Amenaza vana",
         level: "C2",
-        definition: "Empty scare.",
+        definition:
+          'Amenaza vana. A natural English collocation meaning "empty scare". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was just an idle threat.",
       },
       {
@@ -2632,7 +2905,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪl ɪˈfɛkts/",
         translation: "Efectos nocivos",
         level: "C1",
-        definition: "Bad results.",
+        definition:
+          'Efectos nocivos. A natural English collocation meaning "bad results". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Suffer from ill effects.",
       },
       {
@@ -2640,7 +2914,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈmiːdiət ˈækʃən/",
         translation: "Acción inmediata",
         level: "B2",
-        definition: "Do now.",
+        definition:
+          'Acción inmediata. A natural English collocation meaning "do now". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We need immediate action.",
       },
       {
@@ -2648,7 +2923,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈmiːdiət ˈfæmɪli/",
         translation: "Familia cercana",
         level: "B2",
-        definition: "Parents/kids.",
+        definition:
+          'Familia cercana. A natural English collocation meaning "parents/kids". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Only immediate family allowed.",
       },
       {
@@ -2656,7 +2932,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈmɛns ˈprɛʃər/",
         translation: "Presión inmensa",
         level: "C1",
-        definition: "High stress.",
+        definition:
+          'Presión inmensa. A natural English collocation meaning "high stress". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Under immense pressure.",
       },
       {
@@ -2664,7 +2941,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɪmpækt ɒn/",
         translation: "Impacto en",
         level: "B2",
-        definition: "Effect.",
+        definition:
+          'Impacto en. A natural English collocation meaning "effect". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Big impact on sales.",
       },
       {
@@ -2672,7 +2950,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪmˈpoʊz ə bæn/",
         translation: "Imponer una prohibición",
         level: "C1",
-        definition: "Forbid.",
+        definition:
+          'Imponer una prohibición. A natural English collocation meaning "forbid". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They imposed a ban.",
       },
       {
@@ -2680,7 +2959,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪmˈpɔːrtənt ˈfæktər/",
         translation: "Factor importante",
         level: "B2",
-        definition: "Key part.",
+        definition:
+          'Factor importante. A natural English collocation meaning "key part". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Cost is an important factor.",
       },
       {
@@ -2688,7 +2968,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ədˈvɑːns/",
         translation: "Por adelantado",
         level: "B1",
-        definition: "Before.",
+        definition:
+          'Por adelantado. A natural English collocation meaning "before". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Pay in advance.",
       },
       {
@@ -2696,7 +2977,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn əˈɡriːmənt/",
         translation: "De acuerdo",
         level: "B2",
-        definition: "Agreeing.",
+        definition:
+          'De acuerdo. A natural English collocation meaning "agreeing". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We are in agreement.",
       },
       {
@@ -2704,7 +2986,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn briːf/",
         translation: "En resumen",
         level: "B2",
-        definition: "Shortly.",
+        definition:
+          'En resumen. A natural English collocation meaning "shortly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In brief, we lost.",
       },
       {
@@ -2712,7 +2995,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn keɪs/",
         translation: "Por si acaso",
         level: "A2",
-        definition: "If.",
+        definition:
+          'Por si acaso. A natural English collocation meaning "if". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take it in case of rain.",
       },
       {
@@ -2720,7 +3004,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn tʃɑːrdʒ əv/",
         translation: "A cargo de",
         level: "B2",
-        definition: "Boss of.",
+        definition:
+          'A cargo de. A natural English collocation meaning "boss of". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Who is in charge of this?",
       },
       {
@@ -2728,7 +3013,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈkɒmən/",
         translation: "En común",
         level: "B1",
-        definition: "Shared.",
+        definition:
+          'En común. A natural English collocation meaning "shared". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We have a lot in common.",
       },
       {
@@ -2736,7 +3022,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn kənˈkluːʒən/",
         translation: "En conclusión",
         level: "B1",
-        definition: "Finally.",
+        definition:
+          'En conclusión. A natural English collocation meaning "finally". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In conclusion, it works.",
       },
       {
@@ -2744,7 +3031,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈkɒntækt wɪð/",
         translation: "En contacto con",
         level: "B1",
-        definition: "Talking to.",
+        definition:
+          'En contacto con. A natural English collocation meaning "talking to". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Stay in contact with me.",
       },
       {
@@ -2752,7 +3040,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈdeɪndʒər/",
         translation: "En peligro",
         level: "B1",
-        definition: "Unsafe.",
+        definition:
+          'En peligro. A natural English collocation meaning "unsafe". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Animals in danger.",
       },
       {
@@ -2760,7 +3049,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈdiːteɪl/",
         translation: "En detalle",
         level: "B1",
-        definition: "Fully.",
+        definition:
+          'En detalle. A natural English collocation meaning "fully". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Explain in detail.",
       },
       {
@@ -2768,7 +3058,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ɪˈfɛkt/",
         translation: "En vigor/En efecto",
         level: "C1",
-        definition: "Working/True.",
+        definition:
+          'En vigor/En efecto. A natural English collocation meaning "working/true". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The law is in effect.",
       },
       {
@@ -2776,7 +3067,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn fækt/",
         translation: "De hecho",
         level: "A2",
-        definition: "Actually.",
+        definition:
+          'De hecho. A natural English collocation meaning "actually". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In fact, I hate it.",
       },
       {
@@ -2784,7 +3076,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈfeɪvər əv/",
         translation: "A favor de",
         level: "B2",
-        definition: "Supporting.",
+        definition:
+          'A favor de. A natural English collocation meaning "supporting". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am in favor of it.",
       },
       {
@@ -2792,7 +3085,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈdʒɛnərəl/",
         translation: "En general",
         level: "B1",
-        definition: "Usually.",
+        definition:
+          'En general. A natural English collocation meaning "usually". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In general, it's good.",
       },
       {
@@ -2800,7 +3094,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn lʌv/",
         translation: "Enamorado",
         level: "A1",
-        definition: "Loving.",
+        definition:
+          'Enamorado. A natural English collocation meaning "loving". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am in love.",
       },
       {
@@ -2808,7 +3103,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈɔːrdər tuː/",
         translation: "Para",
         level: "B1",
-        definition: "So that.",
+        definition:
+          'Para. A natural English collocation meaning "so that". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In order to win.",
       },
       {
@@ -2816,7 +3112,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈʌðər wɜːrdz/",
         translation: "En otras palabras",
         level: "B1",
-        definition: "Simply.",
+        definition:
+          'En otras palabras. A natural English collocation meaning "simply". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In other words, no.",
       },
       {
@@ -2824,7 +3121,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn pərˈtɪkjʊlər/",
         translation: "En particular",
         level: "B2",
-        definition: "Especially.",
+        definition:
+          'En particular. A natural English collocation meaning "especially". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I like this one in particular.",
       },
       {
@@ -2832,7 +3130,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈpræktɪs/",
         translation: "En la práctica",
         level: "C1",
-        definition: "Real life.",
+        definition:
+          'En la práctica. A natural English collocation meaning "real life". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It works in practice.",
       },
       {
@@ -2840,7 +3139,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈprəʊɡrɛs/",
         translation: "En progreso",
         level: "B1",
-        definition: "Happening.",
+        definition:
+          'En progreso. A natural English collocation meaning "happening". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Work in progress.",
       },
       {
@@ -2848,7 +3148,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈpʌblɪk/",
         translation: "En público",
         level: "B1",
-        definition: "Openly.",
+        definition:
+          'En público. A natural English collocation meaning "openly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't argue in public.",
       },
       {
@@ -2856,7 +3157,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn riˈælɪti/",
         translation: "En realidad",
         level: "B2",
-        definition: "Truly.",
+        definition:
+          'En realidad. A natural English collocation meaning "truly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In reality, it's hard.",
       },
       {
@@ -2864,7 +3166,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ʃɔːrt/",
         translation: "En resumen",
         level: "B1",
-        definition: "Briefly.",
+        definition:
+          'En resumen. A natural English collocation meaning "briefly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In short, yes.",
       },
       {
@@ -2872,7 +3175,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn tɪərz/",
         translation: "Llorando",
         level: "B1",
-        definition: "Crying.",
+        definition:
+          'Llorando. A natural English collocation meaning "crying". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She was in tears.",
       },
       {
@@ -2880,7 +3184,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ði ɛnd/",
         translation: "Al final",
         level: "B1",
-        definition: "Finally.",
+        definition:
+          'Al final. A natural English collocation meaning "finally". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In the end, we won.",
       },
       {
@@ -2888,7 +3193,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ðə ˈmiːntaɪm/",
         translation: "Mientras tanto",
         level: "B2",
-        definition: "Meanwhile.",
+        definition:
+          'Mientras tanto. A natural English collocation meaning "meanwhile". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In the meantime, wait.",
       },
       {
@@ -2896,7 +3202,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn taɪm/",
         translation: "A tiempo (antes)",
         level: "B1",
-        definition: "Early enough.",
+        definition:
+          'A tiempo (antes). A natural English collocation meaning "early enough". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Just in time.",
       },
       {
@@ -2904,7 +3211,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn tʌtʃ/",
         translation: "En contacto",
         level: "B1",
-        definition: "Contacting.",
+        definition:
+          'En contacto. A natural English collocation meaning "contacting". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Keep in touch.",
       },
       {
@@ -2912,7 +3220,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn ˈtrʌbəl/",
         translation: "En problemas",
         level: "A2",
-        definition: "Problems.",
+        definition:
+          'En problemas. A natural English collocation meaning "problems". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You are in trouble.",
       },
       {
@@ -2920,7 +3229,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪn veɪn/",
         translation: "En vano",
         level: "C1",
-        definition: "Uselessly.",
+        definition:
+          'En vano. A natural English collocation meaning "uselessly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They tried in vain.",
       },
       {
@@ -2928,7 +3238,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪnˈkriːst rɪsk/",
         translation: "Mayor riesgo",
         level: "C1",
-        definition: "More danger.",
+        definition:
+          'Mayor riesgo. A natural English collocation meaning "more danger". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Increased risk of fire.",
       },
       {
@@ -2936,7 +3247,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪnˈkɜːr ə kɒst/",
         translation: "Incurrir en un costo",
         level: "C2",
-        definition: "Have expense.",
+        definition:
+          'Incurrir en un costo. A natural English collocation meaning "have expense". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We incurred a heavy cost.",
       },
       {
@@ -2944,7 +3256,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪnˈdʌstriəl ˈækʃən/",
         translation: "Huelga/Protesta",
         level: "C2",
-        definition: "Strike.",
+        definition:
+          'Huelga/Protesta. A natural English collocation meaning "strike". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Workers took industrial action.",
       },
       {
@@ -2952,7 +3265,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌɪnfərˈmeɪʃən tɛkˈnɒlədʒi/",
         translation: "Tecnología de la información",
         level: "B2",
-        definition: "IT.",
+        definition:
+          'Tecnología de la información. A natural English collocation meaning "it". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He works in Information Technology.",
       },
       {
@@ -2960,7 +3274,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪˈnɪʃəl steɪdʒ/",
         translation: "Etapa inicial",
         level: "B2",
-        definition: "Start.",
+        definition:
+          'Etapa inicial. A natural English collocation meaning "start". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In the initial stage.",
       },
       {
@@ -2968,7 +3283,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɪnər piːs/",
         translation: "Paz interior",
         level: "C1",
-        definition: "Calm mind.",
+        definition:
+          'Paz interior. A natural English collocation meaning "calm mind". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Find inner peace.",
       },
       {
@@ -2976,7 +3292,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɪnəsənt ˈvɪktɪm/",
         translation: "Víctima inocente",
         level: "B2",
-        definition: "Not guilty hurt.",
+        definition:
+          'Víctima inocente. A natural English collocation meaning "not guilty hurt". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She was an innocent victim.",
       },
       {
@@ -2984,7 +3301,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɪnstənt ˈkɒfi/",
         translation: "Café instantáneo",
         level: "A2",
-        definition: "Fast coffee.",
+        definition:
+          'Café instantáneo. A natural English collocation meaning "fast coffee". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I drink instant coffee.",
       },
       {
@@ -2992,7 +3310,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɪntrəst reɪt/",
         translation: "Tasa de interés",
         level: "B2",
-        definition: "Bank %.",
+        definition:
+          'Tasa de interés. A natural English collocation meaning "bank %". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Interest rates went up.",
       },
       {
@@ -3000,7 +3319,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪnˈtɜːrnl əˈfɛərz/",
         translation: "Asuntos internos",
         level: "C1",
-        definition: "Inside matters.",
+        definition:
+          'Asuntos internos. A natural English collocation meaning "inside matters". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Internal affairs investigation.",
       },
       {
@@ -3008,7 +3328,8 @@ export const collocationsData: StopData = {
         ipa: "/ɪnˈvæljuəbl ədˈvaɪs/",
         translation: "Consejo invaluable",
         level: "C1",
-        definition: "Great tips.",
+        definition:
+          'Consejo invaluable. A natural English collocation meaning "great tips". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Thank you for the invaluable advice.",
       },
       {
@@ -3016,7 +3337,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈaɪərnɪŋ bɔːrd/",
         translation: "Tabla de planchar",
         level: "B1",
-        definition: "Flat thing.",
+        definition:
+          'Tabla de planchar. A natural English collocation meaning "flat thing". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Set up the ironing board.",
       },
     ],
@@ -3028,7 +3350,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒɒb dɪˈskrɪpʃən/",
         translation: "Descripción del trabajo",
         level: "B2",
-        definition: "Work duties.",
+        definition:
+          'Descripción del trabajo. A natural English collocation meaning "work duties". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Read the job description.",
       },
       {
@@ -3036,7 +3359,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒɒb ˈɪntərvjuː/",
         translation: "Entrevista de trabajo",
         level: "B1",
-        definition: "Hiring chat.",
+        definition:
+          'Entrevista de trabajo. A natural English collocation meaning "hiring chat". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Good luck on your job interview.",
       },
       {
@@ -3044,7 +3368,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒɒb ˈmɑːrkɪt/",
         translation: "Mercado laboral",
         level: "B2",
-        definition: "Available work.",
+        definition:
+          'Mercado laboral. A natural English collocation meaning "available work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The job market is tough.",
       },
       {
@@ -3052,7 +3377,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒɒb ˈɒfər/",
         translation: "Oferta de trabajo",
         level: "B1",
-        definition: "Work proposal.",
+        definition:
+          'Oferta de trabajo. A natural English collocation meaning "work proposal". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I got a job offer.",
       },
       {
@@ -3060,7 +3386,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒɒb ˌsætɪsˈfækʃən/",
         translation: "Satisfacción laboral",
         level: "C1",
-        definition: "Happy at work.",
+        definition:
+          'Satisfacción laboral. A natural English collocation meaning "happy at work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Job satisfaction is key.",
       },
       {
@@ -3068,7 +3395,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒɒb sɪˈkjʊərɪti/",
         translation: "Seguridad laboral",
         level: "C1",
-        definition: "Safe job.",
+        definition:
+          'Seguridad laboral. A natural English collocation meaning "safe job". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Job security is important.",
       },
       {
@@ -3076,7 +3404,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒɔɪnt əˈkaʊnt/",
         translation: "Cuenta conjunta",
         level: "B2",
-        definition: "Shared bank.",
+        definition:
+          'Cuenta conjunta. A natural English collocation meaning "shared bank". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We opened a joint account.",
       },
       {
@@ -3084,7 +3413,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒɔɪnt ˈɛfərt/",
         translation: "Esfuerzo conjunto",
         level: "C1",
-        definition: "Team work.",
+        definition:
+          'Esfuerzo conjunto. A natural English collocation meaning "team work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was a joint effort.",
       },
       {
@@ -3092,7 +3422,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒɔɪnt ˈvɛntʃər/",
         translation: "Empresa conjunta",
         level: "C1",
-        definition: "Partnership.",
+        definition:
+          'Empresa conjunta. A natural English collocation meaning "partnership". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A joint venture between firms.",
       },
       {
@@ -3100,7 +3431,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒʌdʒ ˈstrɪktli/",
         translation: "Juzgar estrictamente",
         level: "B2",
-        definition: "Harsh rating.",
+        definition:
+          'Juzgar estrictamente. A natural English collocation meaning "harsh rating". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Do not judge too strictly.",
       },
       {
@@ -3108,7 +3440,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒʌmp tu kənˈkluːʒənz/",
         translation: "Precipitarse a conclusiones",
         level: "B2",
-        definition: "Guess fast.",
+        definition:
+          'Precipitarse a conclusiones. A natural English collocation meaning "guess fast". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't jump to conclusions.",
       },
       {
@@ -3116,7 +3449,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒʌŋk fuːd/",
         translation: "Comida basura",
         level: "A2",
-        definition: "Bad food.",
+        definition:
+          'Comida basura. A natural English collocation meaning "bad food". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Stop eating junk food.",
       },
       {
@@ -3124,7 +3458,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒʌŋk meɪl/",
         translation: "Correo basura",
         level: "B1",
-        definition: "Spam.",
+        definition:
+          'Correo basura. A natural English collocation meaning "spam". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Too much junk mail.",
       },
       {
@@ -3132,7 +3467,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒʌst kɔːz/",
         translation: "Causa justa",
         level: "C1",
-        definition: "Fair reason.",
+        definition:
+          'Causa justa. A natural English collocation meaning "fair reason". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Fired for just cause.",
       },
       {
@@ -3140,7 +3476,8 @@ export const collocationsData: StopData = {
         ipa: "/dʒʌst ɪn taɪm/",
         translation: "Justo a tiempo",
         level: "B1",
-        definition: "Barely.",
+        definition:
+          'Justo a tiempo. A natural English collocation meaning "barely". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Arrived just in time.",
       },
       {
@@ -3148,7 +3485,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdʒuːvənaɪl kɔːrt/",
         translation: "Tribunal de menores",
         level: "C2",
-        definition: "Kids judge.",
+        definition:
+          'Tribunal de menores. A natural English collocation meaning "kids judge". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He went to juvenile court.",
       },
       {
@@ -3156,7 +3494,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈdʒuːvənaɪl dɪˈlɪŋkwənsi/",
         translation: "Delincuencia juvenil",
         level: "C2",
-        definition: "Kid crime.",
+        definition:
+          'Delincuencia juvenil. A natural English collocation meaning "kid crime". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Fighting juvenile delinquency.",
       },
     ],
@@ -3168,7 +3507,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːn ˈɪntrəst/",
         translation: "Interés vivo",
         level: "C1",
-        definition: "Strong care.",
+        definition:
+          'Interés vivo. A natural English collocation meaning "strong care". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He has a keen interest.",
       },
       {
@@ -3176,7 +3516,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp ə ˈdaɪəri/",
         translation: "Llevar un diario",
         level: "B1",
-        definition: "Write daily.",
+        definition:
+          'Llevar un diario. A natural English collocation meaning "write daily". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I keep a diary.",
       },
       {
@@ -3184,7 +3525,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp ə ˈprɒmɪs/",
         translation: "Cumplir una promesa",
         level: "B1",
-        definition: "Do it.",
+        definition:
+          'Cumplir una promesa. A natural English collocation meaning "do it". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Always keep a promise.",
       },
       {
@@ -3192,7 +3534,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp ə ˈsiːkrɪt/",
         translation: "Guardar un secreto",
         level: "A2",
-        definition: "Shhh.",
+        definition:
+          'Guardar un secreto. A natural English collocation meaning "shhh". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can you keep a secret?",
       },
       {
@@ -3200,7 +3543,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp kɑːm/",
         translation: "Mantener la calma",
         level: "B1",
-        definition: "Relax.",
+        definition:
+          'Mantener la calma. A natural English collocation meaning "relax". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Keep calm and carry on.",
       },
       {
@@ -3208,7 +3552,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp kənˈtroʊl/",
         translation: "Mantener el control",
         level: "B2",
-        definition: "Manage.",
+        definition:
+          'Mantener el control. A natural English collocation meaning "manage". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Hard to keep control.",
       },
       {
@@ -3216,7 +3561,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp fɪt/",
         translation: "Mantenerse en forma",
         level: "A2",
-        definition: "Exercise.",
+        definition:
+          'Mantenerse en forma. A natural English collocation meaning "exercise". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I run to keep fit.",
       },
       {
@@ -3224,7 +3570,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp ˈɡoʊɪŋ/",
         translation: "Seguir adelante",
         level: "A1",
-        definition: "Continue.",
+        definition:
+          'Seguir adelante. A natural English collocation meaning "continue". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Just keep going.",
       },
       {
@@ -3232,7 +3579,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp ɪn maɪnd/",
         translation: "Tener en cuenta",
         level: "B2",
-        definition: "Remember.",
+        definition:
+          'Tener en cuenta. A natural English collocation meaning "remember". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Keep this in mind.",
       },
       {
@@ -3240,7 +3588,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp ɪn tʌtʃ/",
         translation: "Mantenerse en contacto",
         level: "B1",
-        definition: "Contact.",
+        definition:
+          'Mantenerse en contacto. A natural English collocation meaning "contact". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We will keep in touch.",
       },
       {
@@ -3248,7 +3597,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp ˈkwaɪət/",
         translation: "Guardar silencio",
         level: "A2",
-        definition: "Hush.",
+        definition:
+          'Guardar silencio. A natural English collocation meaning "hush". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Please keep quiet.",
       },
       {
@@ -3256,7 +3606,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp skɔːr/",
         translation: "Llevar la cuenta",
         level: "B1",
-        definition: "Points.",
+        definition:
+          'Llevar la cuenta. A natural English collocation meaning "points". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Who is keeping score?",
       },
       {
@@ -3264,7 +3615,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp ðə tʃeɪndʒ/",
         translation: "Quédese con el cambio",
         level: "A1",
-        definition: "Tip.",
+        definition:
+          'Quédese con el cambio. A natural English collocation meaning "tip". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Keep the change.",
       },
       {
@@ -3272,7 +3624,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp træk/",
         translation: "Hacer seguimiento",
         level: "B2",
-        definition: "Monitor.",
+        definition:
+          'Hacer seguimiento. A natural English collocation meaning "monitor". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Keep track of time.",
       },
       {
@@ -3280,7 +3633,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp ʌp/",
         translation: "Mantener el ritmo",
         level: "B2",
-        definition: "Pace.",
+        definition:
+          'Mantener el ritmo. A natural English collocation meaning "pace". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can you keep up?",
       },
       {
@@ -3288,7 +3642,8 @@ export const collocationsData: StopData = {
         ipa: "/kiːp ˈweɪtɪŋ/",
         translation: "Hacer esperar",
         level: "B1",
-        definition: "Delay.",
+        definition:
+          'Hacer esperar. A natural English collocation meaning "delay". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Sorry to keep you waiting.",
       },
       {
@@ -3296,7 +3651,8 @@ export const collocationsData: StopData = {
         ipa: "/kiː ˈfæktər/",
         translation: "Factor clave",
         level: "B2",
-        definition: "Main part.",
+        definition:
+          'Factor clave. A natural English collocation meaning "main part". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Price is a key factor.",
       },
       {
@@ -3304,7 +3660,8 @@ export const collocationsData: StopData = {
         ipa: "/kiː ˈɪʃuː/",
         translation: "Cuestión clave",
         level: "B2",
-        definition: "Main problem.",
+        definition:
+          'Cuestión clave. A natural English collocation meaning "main problem". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Address the key issue.",
       },
       {
@@ -3312,7 +3669,8 @@ export const collocationsData: StopData = {
         ipa: "/kiː roʊl/",
         translation: "Papel clave",
         level: "B2",
-        definition: "Big part.",
+        definition:
+          'Papel clave. A natural English collocation meaning "big part". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He played a key role.",
       },
       {
@@ -3320,7 +3678,8 @@ export const collocationsData: StopData = {
         ipa: "/kɪl taɪm/",
         translation: "Matar el tiempo",
         level: "B1",
-        definition: "Wait busy.",
+        definition:
+          'Matar el tiempo. A natural English collocation meaning "wait busy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Reading to kill time.",
       },
       {
@@ -3328,7 +3687,8 @@ export const collocationsData: StopData = {
         ipa: "/kaɪnd rɪˈɡɑːrdz/",
         translation: "Saludos cordiales",
         level: "B1",
-        definition: "Email end.",
+        definition:
+          'Saludos cordiales. A natural English collocation meaning "email end". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Kind regards, John.",
       },
       {
@@ -3336,7 +3696,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkɪtʃɪn sɪŋk/",
         translation: "Fregadero",
         level: "A2",
-        definition: "Wash basin.",
+        definition:
+          'Fregadero. A natural English collocation meaning "wash basin". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In the kitchen sink.",
       },
       {
@@ -3344,7 +3705,8 @@ export const collocationsData: StopData = {
         ipa: "/noʊ ðə ˈbeɪsɪks/",
         translation: "Conocer lo básico",
         level: "B1",
-        definition: "Simple start.",
+        definition:
+          'Conocer lo básico. A natural English collocation meaning "simple start". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I know the basics.",
       },
       {
@@ -3352,7 +3714,8 @@ export const collocationsData: StopData = {
         ipa: "/nɒk ɒn wʊd/",
         translation: "Tocar madera",
         level: "C1",
-        definition: "Luck.",
+        definition:
+          'Tocar madera. A natural English collocation meaning "luck". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Knock on wood.",
       },
     ],
@@ -3364,7 +3727,8 @@ export const collocationsData: StopData = {
         ipa: "/læk əv/",
         translation: "Falta de",
         level: "B1",
-        definition: "No.",
+        definition:
+          'Falta de. A natural English collocation meaning "no". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Lack of money.",
       },
       {
@@ -3372,7 +3736,8 @@ export const collocationsData: StopData = {
         ipa: "/lɑːrdʒ əˈmaʊnt/",
         translation: "Gran cantidad",
         level: "B1",
-        definition: "Lots.",
+        definition:
+          'Gran cantidad. A natural English collocation meaning "lots". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A large amount of work.",
       },
       {
@@ -3380,7 +3745,8 @@ export const collocationsData: StopData = {
         ipa: "/lɑːrdʒ ˈnʌmbər/",
         translation: "Gran número",
         level: "B1",
-        definition: "Many.",
+        definition:
+          'Gran número. A natural English collocation meaning "many". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A large number of people.",
       },
       {
@@ -3388,7 +3754,8 @@ export const collocationsData: StopData = {
         ipa: "/lɑːrdʒ skeɪl/",
         translation: "Gran escala",
         level: "C1",
-        definition: "Big.",
+        definition:
+          'Gran escala. A natural English collocation meaning "big". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Large scale operation.",
       },
       {
@@ -3396,7 +3763,8 @@ export const collocationsData: StopData = {
         ipa: "/lɑːst ˈmɪnɪt/",
         translation: "Último minuto",
         level: "B1",
-        definition: "End time.",
+        definition:
+          'Último minuto. A natural English collocation meaning "end time". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Last minute change.",
       },
       {
@@ -3404,7 +3772,8 @@ export const collocationsData: StopData = {
         ipa: "/lɑːst rɪˈzɔːrt/",
         translation: "Último recurso",
         level: "C1",
-        definition: "Final try.",
+        definition:
+          'Último recurso. A natural English collocation meaning "final try". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "As a last resort.",
       },
       {
@@ -3412,7 +3781,8 @@ export const collocationsData: StopData = {
         ipa: "/leɪt naɪt/",
         translation: "Tarde en la noche",
         level: "A2",
-        definition: "Dark.",
+        definition:
+          'Tarde en la noche. A natural English collocation meaning "dark". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A late night walk.",
       },
       {
@@ -3420,7 +3790,8 @@ export const collocationsData: StopData = {
         ipa: "/lɔː ənd ˈɔːrdər/",
         translation: "Ley y orden",
         level: "B2",
-        definition: "Police.",
+        definition:
+          'Ley y orden. A natural English collocation meaning "police". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Maintain law and order.",
       },
       {
@@ -3428,7 +3799,8 @@ export const collocationsData: StopData = {
         ipa: "/leɪ ɔːf/",
         translation: "Despedir",
         level: "C1",
-        definition: "Fire.",
+        definition:
+          'Despedir. A natural English collocation meaning "fire". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Lay off workers.",
       },
       {
@@ -3436,7 +3808,8 @@ export const collocationsData: StopData = {
         ipa: "/liːd ə laɪf/",
         translation: "Llevar una vida",
         level: "B2",
-        definition: "Live.",
+        definition:
+          'Llevar una vida. A natural English collocation meaning "live". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Lead a happy life.",
       },
       {
@@ -3444,7 +3817,8 @@ export const collocationsData: StopData = {
         ipa: "/liːd ðə weɪ/",
         translation: "Liderar el camino",
         level: "B2",
-        definition: "Guide.",
+        definition:
+          'Liderar el camino. A natural English collocation meaning "guide". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She led the way.",
       },
       {
@@ -3452,7 +3826,8 @@ export const collocationsData: StopData = {
         ipa: "/lɜːrn baɪ hɑːrt/",
         translation: "Aprender de memoria",
         level: "B1",
-        definition: "Memorize.",
+        definition:
+          'Aprender de memoria. A natural English collocation meaning "memorize". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Learn it by heart.",
       },
       {
@@ -3460,7 +3835,8 @@ export const collocationsData: StopData = {
         ipa: "/liːv ə ˈmɛsɪdʒ/",
         translation: "Dejar un mensaje",
         level: "A2",
-        definition: "Voice mail.",
+        definition:
+          'Dejar un mensaje. A natural English collocation meaning "voice mail". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Please leave a message.",
       },
       {
@@ -3468,7 +3844,8 @@ export const collocationsData: StopData = {
         ipa: "/liːv skuːl/",
         translation: "Dejar la escuela",
         level: "A2",
-        definition: "Quit/Finish.",
+        definition:
+          'Dejar la escuela. A natural English collocation meaning "quit/finish". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He left school early.",
       },
       {
@@ -3476,7 +3853,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈliːɡəl ˈækʃən/",
         translation: "Acción legal",
         level: "C1",
-        definition: "Sue.",
+        definition:
+          'Acción legal. A natural English collocation meaning "sue". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take legal action.",
       },
       {
@@ -3484,7 +3862,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈliːɡəl ədˈvaɪs/",
         translation: "Asesoramiento legal",
         level: "B2",
-        definition: "Lawyer help.",
+        definition:
+          'Asesoramiento legal. A natural English collocation meaning "lawyer help". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Seek legal advice.",
       },
       {
@@ -3492,7 +3871,8 @@ export const collocationsData: StopData = {
         ipa: "/lɛt ɡoʊ/",
         translation: "Soltar",
         level: "B1",
-        definition: "Release.",
+        definition:
+          'Soltar. A natural English collocation meaning "release". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Let go of my hand.",
       },
       {
@@ -3500,7 +3880,8 @@ export const collocationsData: StopData = {
         ipa: "/laɪt miːl/",
         translation: "Comida ligera",
         level: "A2",
-        definition: "Small food.",
+        definition:
+          'Comida ligera. A natural English collocation meaning "small food". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Eat a light meal.",
       },
       {
@@ -3508,7 +3889,8 @@ export const collocationsData: StopData = {
         ipa: "/laɪk ˈkreɪzi/",
         translation: "Como loco",
         level: "B2",
-        definition: "A lot.",
+        definition:
+          'Como loco. A natural English collocation meaning "a lot". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Sweating like crazy.",
       },
       {
@@ -3516,7 +3898,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈlɪmɪtɪd rɪˈzɔːrsɪz/",
         translation: "Recursos limitados",
         level: "C1",
-        definition: "Few items.",
+        definition:
+          'Recursos limitados. A natural English collocation meaning "few items". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We have limited resources.",
       },
       {
@@ -3524,7 +3907,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈlɪtl noʊn/",
         translation: "Poco conocido",
         level: "C1",
-        definition: "Rare.",
+        definition:
+          'Poco conocido. A natural English collocation meaning "rare". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A little known fact.",
       },
       {
@@ -3532,7 +3916,8 @@ export const collocationsData: StopData = {
         ipa: "/lɪv ˈmjuːzɪk/",
         translation: "Música en vivo",
         level: "A2",
-        definition: "Concert.",
+        definition:
+          'Música en vivo. A natural English collocation meaning "concert". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I love live music.",
       },
       {
@@ -3540,7 +3925,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈlɪvɪŋ kənˈdɪʃənz/",
         translation: "Condiciones de vida",
         level: "B2",
-        definition: "Home state.",
+        definition:
+          'Condiciones de vida. A natural English collocation meaning "home state". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Poor living conditions.",
       },
       {
@@ -3548,7 +3934,8 @@ export const collocationsData: StopData = {
         ipa: "/lɒŋ əˈɡoʊ/",
         translation: "Hace mucho tiempo",
         level: "A2",
-        definition: "Past.",
+        definition:
+          'Hace mucho tiempo. A natural English collocation meaning "past". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It happened long ago.",
       },
       {
@@ -3556,7 +3943,8 @@ export const collocationsData: StopData = {
         ipa: "/lɒŋ ˈdɪstəns/",
         translation: "Larga distancia",
         level: "B1",
-        definition: "Far.",
+        definition:
+          'Larga distancia. A natural English collocation meaning "far". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Long distance call.",
       },
       {
@@ -3564,7 +3952,8 @@ export const collocationsData: StopData = {
         ipa: "/lɒŋ tɜːrm/",
         translation: "Largo plazo",
         level: "B2",
-        definition: "Future.",
+        definition:
+          'Largo plazo. A natural English collocation meaning "future". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Long term plan.",
       },
       {
@@ -3572,7 +3961,8 @@ export const collocationsData: StopData = {
         ipa: "/lɒŋ taɪm/",
         translation: "Mucho tiempo",
         level: "A1",
-        definition: "Ages.",
+        definition:
+          'Mucho tiempo. A natural English collocation meaning "ages". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Long time no see.",
       },
       {
@@ -3580,7 +3970,8 @@ export const collocationsData: StopData = {
         ipa: "/lʊk ˈæftər/",
         translation: "Cuidar",
         level: "A2",
-        definition: "Tend.",
+        definition:
+          'Cuidar. A natural English collocation meaning "tend". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Look after the dog.",
       },
       {
@@ -3588,7 +3979,8 @@ export const collocationsData: StopData = {
         ipa: "/lʊk ˈfɔːrwərd tuː/",
         translation: "Esperar con ansias",
         level: "B1",
-        definition: "Anticipate.",
+        definition:
+          'Esperar con ansias. A natural English collocation meaning "anticipate". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Looking forward to it.",
       },
       {
@@ -3596,7 +3988,8 @@ export const collocationsData: StopData = {
         ipa: "/luːz kənˈtroʊl/",
         translation: "Perder el control",
         level: "B2",
-        definition: "Crazy.",
+        definition:
+          'Perder el control. A natural English collocation meaning "crazy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't lose control.",
       },
       {
@@ -3604,7 +3997,8 @@ export const collocationsData: StopData = {
         ipa: "/luːz feɪθ/",
         translation: "Perder la fe",
         level: "C1",
-        definition: "Doubt.",
+        definition:
+          'Perder la fe. A natural English collocation meaning "doubt". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I lost faith in him.",
       },
       {
@@ -3612,7 +4006,8 @@ export const collocationsData: StopData = {
         ipa: "/luːz hoʊp/",
         translation: "Perder la esperanza",
         level: "B2",
-        definition: "Give up.",
+        definition:
+          'Perder la esperanza. A natural English collocation meaning "give up". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Never lose hope.",
       },
       {
@@ -3620,7 +4015,8 @@ export const collocationsData: StopData = {
         ipa: "/luːz ˈɪntrəst/",
         translation: "Perder interés",
         level: "B1",
-        definition: "Bored.",
+        definition:
+          'Perder interés. A natural English collocation meaning "bored". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I lost interest.",
       },
       {
@@ -3628,7 +4024,8 @@ export const collocationsData: StopData = {
         ipa: "/luːz ˈpeɪʃəns/",
         translation: "Perder la paciencia",
         level: "B2",
-        definition: "Angry.",
+        definition:
+          'Perder la paciencia. A natural English collocation meaning "angry". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am losing patience.",
       },
       {
@@ -3636,7 +4033,8 @@ export const collocationsData: StopData = {
         ipa: "/luːz tʌtʃ/",
         translation: "Perder el contacto",
         level: "B2",
-        definition: "Stop talk.",
+        definition:
+          'Perder el contacto. A natural English collocation meaning "stop talk". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We lost touch.",
       },
       {
@@ -3644,7 +4042,8 @@ export const collocationsData: StopData = {
         ipa: "/luːz weɪt/",
         translation: "Perder peso",
         level: "A2",
-        definition: "Slim.",
+        definition:
+          'Perder peso. A natural English collocation meaning "slim". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Try to lose weight.",
       },
       {
@@ -3652,7 +4051,8 @@ export const collocationsData: StopData = {
         ipa: "/laʊd nɔɪz/",
         translation: "Ruido fuerte",
         level: "A1",
-        definition: "Bang.",
+        definition:
+          'Ruido fuerte. A natural English collocation meaning "bang". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A loud noise.",
       },
       {
@@ -3660,7 +4060,8 @@ export const collocationsData: StopData = {
         ipa: "/loʊ kɒst/",
         translation: "Bajo costo",
         level: "B1",
-        definition: "Cheap.",
+        definition:
+          'Bajo costo. A natural English collocation meaning "cheap". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Low cost airline.",
       },
       {
@@ -3668,7 +4069,8 @@ export const collocationsData: StopData = {
         ipa: "/loʊ ˈprɛʃər/",
         translation: "Baja presión",
         level: "B2",
-        definition: "Relaxed/Weather.",
+        definition:
+          'Baja presión. A natural English collocation meaning "relaxed/weather". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Low pressure system.",
       },
       {
@@ -3676,7 +4078,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈlʌki breɪk/",
         translation: "Golpe de suerte",
         level: "C1",
-        definition: "Good chance.",
+        definition:
+          'Golpe de suerte. A natural English collocation meaning "good chance". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was a lucky break.",
       },
     ],
@@ -3688,7 +4091,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪn kɔːrs/",
         translation: "Plato principal",
         level: "A2",
-        definition: "Big meal.",
+        definition:
+          'Plato principal. A natural English collocation meaning "big meal". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Steak for main course.",
       },
       {
@@ -3696,7 +4100,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪn ˈriːzən/",
         translation: "Razón principal",
         level: "B1",
-        definition: "Why.",
+        definition:
+          'Razón principal. A natural English collocation meaning "why". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The main reason is money.",
       },
       {
@@ -3704,7 +4109,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪnˈteɪn ˈkɒntækt/",
         translation: "Mantener contacto",
         level: "B2",
-        definition: "Keep in touch.",
+        definition:
+          'Mantener contacto. A natural English collocation meaning "keep in touch". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Maintain contact with us.",
       },
       {
@@ -3712,7 +4118,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmeɪdʒər ˈbreɪkθruː/",
         translation: "Gran avance",
         level: "C1",
-        definition: "Discovery.",
+        definition:
+          'Gran avance. A natural English collocation meaning "discovery". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A major breakthrough in science.",
       },
       {
@@ -3720,7 +4127,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmeɪdʒər ˈɪʃuː/",
         translation: "Problema mayor",
         level: "B2",
-        definition: "Big problem.",
+        definition:
+          'Problema mayor. A natural English collocation meaning "big problem". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That is a major issue.",
       },
       {
@@ -3728,7 +4136,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmeɪdʒər ˈprɒbləm/",
         translation: "Problema principal",
         level: "B1",
-        definition: "Big trouble.",
+        definition:
+          'Problema principal. A natural English collocation meaning "big trouble". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Traffic is a major problem.",
       },
       {
@@ -3736,7 +4145,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə tʃɔɪs/",
         translation: "Hacer una elección",
         level: "A2",
-        definition: "Choose.",
+        definition:
+          'Hacer una elección. A natural English collocation meaning "choose". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You must make a choice.",
       },
       {
@@ -3744,7 +4154,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə kəmˈpleɪnt/",
         translation: "Poner una queja",
         level: "B2",
-        definition: "Complain.",
+        definition:
+          'Poner una queja. A natural English collocation meaning "complain". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I want to make a complaint.",
       },
       {
@@ -3752,7 +4163,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə diːl/",
         translation: "Hacer un trato",
         level: "B1",
-        definition: "Agree.",
+        definition:
+          'Hacer un trato. A natural English collocation meaning "agree". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Let's make a deal.",
       },
       {
@@ -3760,7 +4172,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə dɪˈsɪʒən/",
         translation: "Tomar una decisión",
         level: "B1",
-        definition: "Decide.",
+        definition:
+          'Tomar una decisión. A natural English collocation meaning "decide". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make a decision now.",
       },
       {
@@ -3768,7 +4181,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə ˈdɪfrəns/",
         translation: "Marcar la diferencia",
         level: "B1",
-        definition: "Change good.",
+        definition:
+          'Marcar la diferencia. A natural English collocation meaning "change good". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You make a difference.",
       },
       {
@@ -3776,7 +4190,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə fuːl/",
         translation: "Poner en ridículo",
         level: "B2",
-        definition: "Embarrass.",
+        definition:
+          'Poner en ridículo. A natural English collocation meaning "embarrass". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't make a fool of me.",
       },
       {
@@ -3784,7 +4199,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə ˈfɔːrtʃuːn/",
         translation: "Hacer una fortuna",
         level: "B2",
-        definition: "Get rich.",
+        definition:
+          'Hacer una fortuna. A natural English collocation meaning "get rich". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He made a fortune.",
       },
       {
@@ -3792,7 +4208,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə lɪst/",
         translation: "Hacer una lista",
         level: "A1",
-        definition: "Write items.",
+        definition:
+          'Hacer una lista. A natural English collocation meaning "write items". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make a shopping list.",
       },
       {
@@ -3800,7 +4217,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə mɛs/",
         translation: "Hacer un desastre",
         level: "A2",
-        definition: "Untidy.",
+        definition:
+          'Hacer un desastre. A natural English collocation meaning "untidy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't make a mess.",
       },
       {
@@ -3808,7 +4226,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə mɪˈsteɪk/",
         translation: "Cometer un error",
         level: "A2",
-        definition: "Error.",
+        definition:
+          'Cometer un error. A natural English collocation meaning "error". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I made a mistake.",
       },
       {
@@ -3816,7 +4235,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə muːv/",
         translation: "Hacer un movimiento",
         level: "B2",
-        definition: "Go.",
+        definition:
+          'Hacer un movimiento. A natural English collocation meaning "go". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Time to make a move.",
       },
       {
@@ -3824,7 +4244,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə nɔɪz/",
         translation: "Hacer ruido",
         level: "A1",
-        definition: "Loud.",
+        definition:
+          'Hacer ruido. A natural English collocation meaning "loud". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't make a noise.",
       },
       {
@@ -3832,7 +4253,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə pɔɪnt/",
         translation: "Hacer un punto",
         level: "B2",
-        definition: "Argue.",
+        definition:
+          'Hacer un punto. A natural English collocation meaning "argue". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He made a good point.",
       },
       {
@@ -3840,7 +4262,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə ˈprɒfɪt/",
         translation: "Obtener beneficios",
         level: "B2",
-        definition: "Earn.",
+        definition:
+          'Obtener beneficios. A natural English collocation meaning "earn". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We made a profit.",
       },
       {
@@ -3848,7 +4271,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə ˈprɒmɪs/",
         translation: "Hacer una promesa",
         level: "A2",
-        definition: "Vow.",
+        definition:
+          'Hacer una promesa. A natural English collocation meaning "vow". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make a promise to me.",
       },
       {
@@ -3856,7 +4280,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə ˌrɛzərˈveɪʃən/",
         translation: "Hacer una reserva",
         level: "A2",
-        definition: "Book.",
+        definition:
+          'Hacer una reserva. A natural English collocation meaning "book". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make a reservation for dinner.",
       },
       {
@@ -3864,7 +4289,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə siːn/",
         translation: "Montar una escena",
         level: "C1",
-        definition: "Shout public.",
+        definition:
+          'Montar una escena. A natural English collocation meaning "shout public". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't make a scene.",
       },
       {
@@ -3872,7 +4298,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə spiːtʃ/",
         translation: "Dar un discurso",
         level: "B1",
-        definition: "Talk.",
+        definition:
+          'Dar un discurso. A natural English collocation meaning "talk". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He made a speech.",
       },
       {
@@ -3880,7 +4307,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ə səˈdʒɛstʃən/",
         translation: "Hacer una sugerencia",
         level: "B1",
-        definition: "Suggest.",
+        definition:
+          'Hacer una sugerencia. A natural English collocation meaning "suggest". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can I make a suggestion?",
       },
       {
@@ -3888,7 +4316,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ən əˈpɔɪntmənt/",
         translation: "Pedir cita",
         level: "A2",
-        definition: "Book time.",
+        definition:
+          'Pedir cita. A natural English collocation meaning "book time". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make an appointment with doctor.",
       },
       {
@@ -3896,7 +4325,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ən ˈɛfərt/",
         translation: "Hacer un esfuerzo",
         level: "B1",
-        definition: "Try.",
+        definition:
+          'Hacer un esfuerzo. A natural English collocation meaning "try". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make an effort to study.",
       },
       {
@@ -3904,7 +4334,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ən ɪkˈskjuːs/",
         translation: "Poner una excusa",
         level: "B1",
-        definition: "Lie.",
+        definition:
+          'Poner una excusa. A natural English collocation meaning "lie". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He made an excuse.",
       },
       {
@@ -3912,7 +4343,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk əˈreɪndʒmənts/",
         translation: "Hacer arreglos",
         level: "B2",
-        definition: "Plan.",
+        definition:
+          'Hacer arreglos. A natural English collocation meaning "plan". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make arrangements for travel.",
       },
       {
@@ -3920,7 +4352,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk bɪˈliːv/",
         translation: "Fingir",
         level: "B2",
-        definition: "Pretend.",
+        definition:
+          'Fingir. A natural English collocation meaning "pretend". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Let's make believe.",
       },
       {
@@ -3928,7 +4361,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ɛndz miːt/",
         translation: "Llegar a fin de mes",
         level: "C1",
-        definition: "Survive money.",
+        definition:
+          'Llegar a fin de mes. A natural English collocation meaning "survive money". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Hard to make ends meet.",
       },
       {
@@ -3936,7 +4370,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk frɛndz/",
         translation: "Hacer amigos",
         level: "A1",
-        definition: "Socialize.",
+        definition:
+          'Hacer amigos. A natural English collocation meaning "socialize". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Easy to make friends.",
       },
       {
@@ -3944,7 +4379,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk fʌn əv/",
         translation: "Burlarse de",
         level: "B1",
-        definition: "Mock.",
+        definition:
+          'Burlarse de. A natural English collocation meaning "mock". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't make fun of him.",
       },
       {
@@ -3952,7 +4388,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ˈmʌni/",
         translation: "Ganar dinero",
         level: "A2",
-        definition: "Earn.",
+        definition:
+          'Ganar dinero. A natural English collocation meaning "earn". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make money fast.",
       },
       {
@@ -3960,7 +4397,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ˈprəʊɡrɛs/",
         translation: "Progresar",
         level: "B1",
-        definition: "Advance.",
+        definition:
+          'Progresar. A natural English collocation meaning "advance". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We are making progress.",
       },
       {
@@ -3968,7 +4406,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk sɛns/",
         translation: "Tener sentido",
         level: "A2",
-        definition: "Logic.",
+        definition:
+          'Tener sentido. A natural English collocation meaning "logic". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It makes sense.",
       },
       {
@@ -3976,7 +4415,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ʃʊər/",
         translation: "Asegurarse",
         level: "A2",
-        definition: "Verify.",
+        definition:
+          'Asegurarse. A natural English collocation meaning "verify". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make sure it is done.",
       },
       {
@@ -3984,7 +4424,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ˈtrʌbəl/",
         translation: "Causar problemas",
         level: "B1",
-        definition: "Annoy.",
+        definition:
+          'Causar problemas. A natural English collocation meaning "annoy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't make trouble.",
       },
       {
@@ -3992,7 +4433,8 @@ export const collocationsData: StopData = {
         ipa: "/meɪk ʌp jɔːr maɪnd/",
         translation: "Decídete",
         level: "B1",
-        definition: "Decide.",
+        definition:
+          'Decídete. A natural English collocation meaning "decide". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make up your mind!",
       },
       {
@@ -4000,7 +4442,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmænjuəl ˈleɪbər/",
         translation: "Trabajo manual",
         level: "B2",
-        definition: "Hand work.",
+        definition:
+          'Trabajo manual. A natural English collocation meaning "hand work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Hard manual labor.",
       },
       {
@@ -4008,7 +4451,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmærid ˈkʌpəl/",
         translation: "Matrimonio",
         level: "A2",
-        definition: "Wife/Husband.",
+        definition:
+          'Matrimonio. A natural English collocation meaning "wife/husband". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They are a married couple.",
       },
       {
@@ -4016,7 +4460,8 @@ export const collocationsData: StopData = {
         ipa: "/mæs ˈmiːdiə/",
         translation: "Medios de comunicación",
         level: "B2",
-        definition: "TV/News.",
+        definition:
+          'Medios de comunicación. A natural English collocation meaning "tv/news". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Influence of mass media.",
       },
       {
@@ -4024,7 +4469,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmɛdɪkəl kɛər/",
         translation: "Atención médica",
         level: "B2",
-        definition: "Health help.",
+        definition:
+          'Atención médica. A natural English collocation meaning "health help". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Need medical care.",
       },
       {
@@ -4032,7 +4478,8 @@ export const collocationsData: StopData = {
         ipa: "/miːt rɪˈkwaɪərmənts/",
         translation: "Cumplir requisitos",
         level: "B2",
-        definition: "Qualify.",
+        definition:
+          'Cumplir requisitos. A natural English collocation meaning "qualify". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Meet all requirements.",
       },
       {
@@ -4040,7 +4487,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmɛntl hɛlθ/",
         translation: "Salud mental",
         level: "B2",
-        definition: "Brain health.",
+        definition:
+          'Salud mental. A natural English collocation meaning "brain health". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Mental health matters.",
       },
       {
@@ -4048,7 +4496,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmɛθəd tu maɪ ˈmædnəs/",
         translation: "Método en la locura",
         level: "C1",
-        definition: "Reason.",
+        definition:
+          'Método en la locura. A natural English collocation meaning "reason". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "There is a method to my madness.",
       },
       {
@@ -4056,7 +4505,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmaɪnər ˈdiːteɪl/",
         translation: "Detalle menor",
         level: "B2",
-        definition: "Small point.",
+        definition:
+          'Detalle menor. A natural English collocation meaning "small point". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Just a minor detail.",
       },
       {
@@ -4064,7 +4514,8 @@ export const collocationsData: StopData = {
         ipa: "/mɪs ə bʌs/",
         translation: "Perder el autobús",
         level: "A1",
-        definition: "Late.",
+        definition:
+          'Perder el autobús. A natural English collocation meaning "late". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I missed the bus.",
       },
       {
@@ -4072,7 +4523,8 @@ export const collocationsData: StopData = {
         ipa: "/mɪs ə tʃɑːns/",
         translation: "Perder una oportunidad",
         level: "B1",
-        definition: "Fail.",
+        definition:
+          'Perder una oportunidad. A natural English collocation meaning "fail". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't miss a chance.",
       },
       {
@@ -4080,7 +4532,8 @@ export const collocationsData: StopData = {
         ipa: "/mɪs ðə boʊt/",
         translation: "Perder el tren (oportunidad)",
         level: "B2",
-        definition: "Too late.",
+        definition:
+          'Perder el tren (oportunidad). A natural English collocation meaning "too late". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You missed the boat.",
       },
       {
@@ -4088,7 +4541,8 @@ export const collocationsData: StopData = {
         ipa: "/mɪkst ˈfiːlɪŋz/",
         translation: "Sentimientos encontrados",
         level: "B2",
-        definition: "Unsure.",
+        definition:
+          'Sentimientos encontrados. A natural English collocation meaning "unsure". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have mixed feelings.",
       },
       {
@@ -4096,7 +4550,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmɒdərn laɪf/",
         translation: "Vida moderna",
         level: "A2",
-        definition: "Now.",
+        definition:
+          'Vida moderna. A natural English collocation meaning "now". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Stress of modern life.",
       },
       {
@@ -4104,7 +4559,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmɔːrəl ˈdjuːti/",
         translation: "Deber moral",
         level: "C1",
-        definition: "Right thing.",
+        definition:
+          'Deber moral. A natural English collocation meaning "right thing". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is a moral duty.",
       },
       {
@@ -4112,7 +4568,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmɔːrnɪŋ ˈpɜːrsən/",
         translation: "Madrugador",
         level: "B1",
-        definition: "Early bird.",
+        definition:
+          'Madrugador. A natural English collocation meaning "early bird". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I'm not a morning person.",
       },
       {
@@ -4120,7 +4577,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈmʌðər tʌŋ/",
         translation: "Lengua materna",
         level: "B2",
-        definition: "Native language.",
+        definition:
+          'Lengua materna. A natural English collocation meaning "native language". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Spanish is my mother tongue.",
       },
       {
@@ -4128,7 +4586,8 @@ export const collocationsData: StopData = {
         ipa: "/muːv haʊs/",
         translation: "Mudarse",
         level: "A2",
-        definition: "Relocate.",
+        definition:
+          'Mudarse. A natural English collocation meaning "relocate". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We move house tomorrow.",
       },
     ],
@@ -4140,7 +4599,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈnæroʊ ɪˈskeɪp/",
         translation: "Escape por los pelos",
         level: "C1",
-        definition: "Close call.",
+        definition:
+          'Escape por los pelos. A natural English collocation meaning "close call". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He had a narrow escape.",
       },
       {
@@ -4148,7 +4608,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈnɑːsti ˈhæbɪt/",
         translation: "Mal hábito",
         level: "B2",
-        definition: "Bad act.",
+        definition:
+          'Mal hábito. A natural English collocation meaning "bad act". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Biting nails is a nasty habit.",
       },
       {
@@ -4156,7 +4617,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈnɑːsti sərˈpraɪz/",
         translation: "Sorpresa desagradable",
         level: "B2",
-        definition: "Shock.",
+        definition:
+          'Sorpresa desagradable. A natural English collocation meaning "shock". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was a nasty surprise.",
       },
       {
@@ -4164,7 +4626,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈnætʃərəl dɪˈzɑːstər/",
         translation: "Desastre natural",
         level: "B1",
-        definition: "Storm/Quake.",
+        definition:
+          'Desastre natural. A natural English collocation meaning "storm/quake". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Flood is a natural disaster.",
       },
       {
@@ -4172,7 +4635,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈnætʃərəl rɪˈzɔːrsɪz/",
         translation: "Recursos naturales",
         level: "B2",
-        definition: "Oil/Wood.",
+        definition:
+          'Recursos naturales. A natural English collocation meaning "oil/wood". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Rich in natural resources.",
       },
       {
@@ -4180,7 +4644,8 @@ export const collocationsData: StopData = {
         ipa: "/nɪər ˈfjuːtʃər/",
         translation: "Futuro cercano",
         level: "B1",
-        definition: "Soon.",
+        definition:
+          'Futuro cercano. A natural English collocation meaning "soon". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In the near future.",
       },
       {
@@ -4188,7 +4653,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈnɛsəsɛri ˈiːvəl/",
         translation: "Mal necesario",
         level: "C1",
-        definition: "Bad but needed.",
+        definition:
+          'Mal necesario. A natural English collocation meaning "bad but needed". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Taxes are a necessary evil.",
       },
       {
@@ -4196,7 +4662,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈniːdl ɪn ə ˈheɪstæk/",
         translation: "Aguja en un pajar",
         level: "C1",
-        definition: "Hard to find.",
+        definition:
+          'Aguja en un pajar. A natural English collocation meaning "hard to find". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Like a needle in a haystack.",
       },
       {
@@ -4204,7 +4671,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈnɛɡətɪv ˈɪmpækt/",
         translation: "Impacto negativo",
         level: "B2",
-        definition: "Bad effect.",
+        definition:
+          'Impacto negativo. A natural English collocation meaning "bad effect". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It has a negative impact.",
       },
       {
@@ -4212,7 +4680,8 @@ export const collocationsData: StopData = {
         ipa: "/nɛt wɜːrθ/",
         translation: "Patrimonio neto",
         level: "C1",
-        definition: "Value.",
+        definition:
+          'Patrimonio neto. A natural English collocation meaning "value". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "High net worth.",
       },
       {
@@ -4220,7 +4689,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈnɛvər maɪnd/",
         translation: "No importa",
         level: "A1",
-        definition: "Forget it.",
+        definition:
+          'No importa. A natural English collocation meaning "forget it". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Never mind, it's okay.",
       },
       {
@@ -4228,7 +4698,8 @@ export const collocationsData: StopData = {
         ipa: "/njuː ˌdʒɛnəˈreɪʃən/",
         translation: "Nueva generación",
         level: "B1",
-        definition: "Young people.",
+        definition:
+          'Nueva generación. A natural English collocation meaning "young people". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A new generation of leaders.",
       },
       {
@@ -4236,7 +4707,8 @@ export const collocationsData: StopData = {
         ipa: "/nɛkst dɔːr/",
         translation: "De al lado",
         level: "A2",
-        definition: "Neighbor.",
+        definition:
+          'De al lado. A natural English collocation meaning "neighbor". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She lives next door.",
       },
       {
@@ -4244,7 +4716,8 @@ export const collocationsData: StopData = {
         ipa: "/nɛkst stɛp/",
         translation: "Siguiente paso",
         level: "B1",
-        definition: "Plan.",
+        definition:
+          'Siguiente paso. A natural English collocation meaning "plan". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "What is the next step?",
       },
       {
@@ -4252,7 +4725,8 @@ export const collocationsData: StopData = {
         ipa: "/nɛkst taɪm/",
         translation: "La próxima vez",
         level: "A1",
-        definition: "Future.",
+        definition:
+          'La próxima vez. A natural English collocation meaning "future". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Better luck next time.",
       },
       {
@@ -4260,7 +4734,8 @@ export const collocationsData: StopData = {
         ipa: "/nɪp ɪt ɪn ðə bʌd/",
         translation: "Cortar de raíz",
         level: "C1",
-        definition: "Stop early.",
+        definition:
+          'Cortar de raíz. A natural English collocation meaning "stop early". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Nip the problem in the bud.",
       },
       {
@@ -4268,7 +4743,8 @@ export const collocationsData: StopData = {
         ipa: "/noʊ ˈbreɪnər/",
         translation: "Pan comido",
         level: "B2",
-        definition: "Easy choice.",
+        definition:
+          'Pan comido. A natural English collocation meaning "easy choice". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It's a no brainer.",
       },
       {
@@ -4276,7 +4752,8 @@ export const collocationsData: StopData = {
         ipa: "/noʊ ˈkɒmɛnt/",
         translation: "Sin comentarios",
         level: "B1",
-        definition: "Silence.",
+        definition:
+          'Sin comentarios. A natural English collocation meaning "silence". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: 'He said "no comment".',
       },
       {
@@ -4284,7 +4761,8 @@ export const collocationsData: StopData = {
         ipa: "/noʊ daʊt/",
         translation: "Sin duda",
         level: "B1",
-        definition: "Sure.",
+        definition:
+          'Sin duda. A natural English collocation meaning "sure". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "There is no doubt.",
       },
       {
@@ -4292,7 +4770,8 @@ export const collocationsData: StopData = {
         ipa: "/noʊ ˈlɒŋɡər/",
         translation: "Ya no",
         level: "B1",
-        definition: "Not anymore.",
+        definition:
+          'Ya no. A natural English collocation meaning "not anymore". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I no longer live there.",
       },
       {
@@ -4300,7 +4779,8 @@ export const collocationsData: StopData = {
         ipa: "/noʊ peɪn noʊ ɡeɪn/",
         translation: "Sin dolor no hay ganancia",
         level: "B1",
-        definition: "Work hard.",
+        definition:
+          'Sin dolor no hay ganancia. A natural English collocation meaning "work hard". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Exercise hurts, but no pain no gain.",
       },
       {
@@ -4308,7 +4788,8 @@ export const collocationsData: StopData = {
         ipa: "/noʊ ˈprɒbləm/",
         translation: "No hay problema",
         level: "A1",
-        definition: "Okay.",
+        definition:
+          'No hay problema. A natural English collocation meaning "okay". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Thanks! No problem.",
       },
       {
@@ -4316,7 +4797,8 @@ export const collocationsData: StopData = {
         ipa: "/noʊ weɪ/",
         translation: "De ninguna manera",
         level: "A2",
-        definition: "Impossible.",
+        definition:
+          'De ninguna manera. A natural English collocation meaning "impossible". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "No way I am doing that.",
       },
       {
@@ -4324,7 +4806,8 @@ export const collocationsData: StopData = {
         ipa: "/nɔɪz pəˈluːʃən/",
         translation: "Contaminación acústica",
         level: "B2",
-        definition: "Loud sounds.",
+        definition:
+          'Contaminación acústica. A natural English collocation meaning "loud sounds". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "City noise pollution.",
       },
       {
@@ -4332,7 +4815,8 @@ export const collocationsData: StopData = {
         ipa: "/nɒn stɒp flaɪt/",
         translation: "Vuelo directo",
         level: "B1",
-        definition: "Direct.",
+        definition:
+          'Vuelo directo. A natural English collocation meaning "direct". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A non-stop flight to NY.",
       },
       {
@@ -4340,7 +4824,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈnɔːrməl laɪf/",
         translation: "Vida normal",
         level: "A2",
-        definition: "Regular.",
+        definition:
+          'Vida normal. A natural English collocation meaning "regular". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Live a normal life.",
       },
       {
@@ -4348,7 +4833,8 @@ export const collocationsData: StopData = {
         ipa: "/nɒt æt ɔːl/",
         translation: "De nada / En absoluto",
         level: "A1",
-        definition: "Polite no.",
+        definition:
+          'De nada / En absoluto. A natural English collocation meaning "polite no". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Do you mind? Not at all.",
       },
       {
@@ -4356,7 +4842,8 @@ export const collocationsData: StopData = {
         ipa: "/nɒt maɪ kʌp əv tiː/",
         translation: "No es lo mío",
         level: "B2",
-        definition: "Don't like.",
+        definition:
+          'No es lo mío. A natural English collocation meaning "don\'t like". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Golf is not my cup of tea.",
       },
       {
@@ -4364,7 +4851,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈnjuːkliər ˈfæmɪli/",
         translation: "Familia nuclear",
         level: "C1",
-        definition: "Parents+kids.",
+        definition:
+          'Familia nuclear. A natural English collocation meaning "parents+kids". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Traditional nuclear family.",
       },
       {
@@ -4372,7 +4860,8 @@ export const collocationsData: StopData = {
         ipa: "/nʌl ənd vɔɪd/",
         translation: "Nulo y sin valor",
         level: "C2",
-        definition: "Invalid law.",
+        definition:
+          'Nulo y sin valor. A natural English collocation meaning "invalid law". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The contract is null and void.",
       },
     ],
@@ -4384,7 +4873,8 @@ export const collocationsData: StopData = {
         ipa: "/əˈbeɪ ðə lɔː/",
         translation: "Obedecer la ley",
         level: "B1",
-        definition: "Follow rules.",
+        definition:
+          'Obedecer la ley. A natural English collocation meaning "follow rules". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Citizens must obey the law.",
       },
       {
@@ -4392,7 +4882,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɒbviəs tʃɔɪs/",
         translation: "Elección obvia",
         level: "B2",
-        definition: "Clear.",
+        definition:
+          'Elección obvia. A natural English collocation meaning "clear". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is the obvious choice.",
       },
       {
@@ -4400,7 +4891,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒd ˈnʌmbər/",
         translation: "Número impar",
         level: "A1",
-        definition: "1, 3, 5...",
+        definition:
+          'Número impar. A natural English collocation meaning "1, 3, 5". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Pick an odd number.",
       },
       {
@@ -4408,7 +4900,8 @@ export const collocationsData: StopData = {
         ipa: "/ɔːf ðə hʊk/",
         translation: "Librarse",
         level: "B2",
-        definition: "Free.",
+        definition:
+          'Librarse. A natural English collocation meaning "free". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You are off the hook.",
       },
       {
@@ -4416,7 +4909,8 @@ export const collocationsData: StopData = {
         ipa: "/ɔːf ðə ˈrɛkɔːrd/",
         translation: "Extraoficial",
         level: "C1",
-        definition: "Unofficial.",
+        definition:
+          'Extraoficial. A natural English collocation meaning "unofficial". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "This is off the record.",
       },
       {
@@ -4424,7 +4918,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɒfər ə dʒɒb/",
         translation: "Ofrecer un trabajo",
         level: "B1",
-        definition: "Hire.",
+        definition:
+          'Ofrecer un trabajo. A natural English collocation meaning "hire". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They offered me a job.",
       },
       {
@@ -4432,7 +4927,8 @@ export const collocationsData: StopData = {
         ipa: "/əˈfɪʃəl ˈvɪzɪt/",
         translation: "Visita oficial",
         level: "B2",
-        definition: "Formal trip.",
+        definition:
+          'Visita oficial. A natural English collocation meaning "formal trip". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The Queen's official visit.",
       },
       {
@@ -4440,7 +4936,8 @@ export const collocationsData: StopData = {
         ipa: "/oʊld eɪdʒ/",
         translation: "Vejez",
         level: "A2",
-        definition: "Elderly.",
+        definition:
+          'Vejez. A natural English collocation meaning "elderly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Died of old age.",
       },
       {
@@ -4448,7 +4945,8 @@ export const collocationsData: StopData = {
         ipa: "/oʊld frɛnd/",
         translation: "Viejo amigo",
         level: "A1",
-        definition: "Known long.",
+        definition:
+          'Viejo amigo. A natural English collocation meaning "known long". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Met an old friend.",
       },
       {
@@ -4456,7 +4954,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ə ˈdaɪət/",
         translation: "A dieta",
         level: "A2",
-        definition: "Eating less.",
+        definition:
+          'A dieta. A natural English collocation meaning "eating less". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am on a diet.",
       },
       {
@@ -4464,7 +4963,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ˈævərɪdʒ/",
         translation: "En promedio",
         level: "B1",
-        definition: "Usually.",
+        definition:
+          'En promedio. A natural English collocation meaning "usually". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "On average, it takes an hour.",
       },
       {
@@ -4472,7 +4972,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn bɪˈhɑːf əv/",
         translation: "En nombre de",
         level: "B2",
-        definition: "For someone.",
+        definition:
+          'En nombre de. A natural English collocation meaning "for someone". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I speak on behalf of him.",
       },
       {
@@ -4480,7 +4981,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn bɔːrd/",
         translation: "A bordo",
         level: "B1",
-        definition: "Joined.",
+        definition:
+          'A bordo. A natural English collocation meaning "joined". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Welcome on board.",
       },
       {
@@ -4488,7 +4990,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ˈbɪznɪs/",
         translation: "Por negocios",
         level: "A2",
-        definition: "Work trip.",
+        definition:
+          'Por negocios. A natural English collocation meaning "work trip". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am here on business.",
       },
       {
@@ -4496,7 +4999,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ˈdjuːti/",
         translation: "De guardia/servicio",
         level: "B1",
-        definition: "Working.",
+        definition:
+          'De guardia/servicio. A natural English collocation meaning "working". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Doctor on duty.",
       },
       {
@@ -4504,7 +5008,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ˈfaɪər/",
         translation: "En llamas",
         level: "A2",
-        definition: "Burning.",
+        definition:
+          'En llamas. A natural English collocation meaning "burning". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The house is on fire.",
       },
       {
@@ -4512,7 +5017,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn fʊt/",
         translation: "A pie",
         level: "A1",
-        definition: "Walking.",
+        definition:
+          'A pie. A natural English collocation meaning "walking". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We went on foot.",
       },
       {
@@ -4520,7 +5026,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ˈpɜːrpəs/",
         translation: "A propósito",
         level: "B1",
-        definition: "Intentionally.",
+        definition:
+          'A propósito. A natural English collocation meaning "intentionally". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You did it on purpose.",
       },
       {
@@ -4528,7 +5035,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn seɪl/",
         translation: "En oferta",
         level: "A1",
-        definition: "Discount.",
+        definition:
+          'En oferta. A natural English collocation meaning "discount". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Shoes on sale.",
       },
       {
@@ -4536,7 +5044,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn straɪk/",
         translation: "En huelga",
         level: "B2",
-        definition: "Protest.",
+        definition:
+          'En huelga. A natural English collocation meaning "protest". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Workers are on strike.",
       },
       {
@@ -4544,7 +5053,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ðə bɔːl/",
         translation: "Atento",
         level: "B2",
-        definition: "Sharp.",
+        definition:
+          'Atento. A natural English collocation meaning "sharp". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Stay on the ball.",
       },
       {
@@ -4552,7 +5062,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ðə ˈkɒntrəri/",
         translation: "Al contrario",
         level: "B2",
-        definition: "Opposite.",
+        definition:
+          'Al contrario. A natural English collocation meaning "opposite". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "On the contrary, I like it.",
       },
       {
@@ -4560,7 +5071,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ðə fɛns/",
         translation: "Indeciso",
         level: "C1",
-        definition: "Unsure.",
+        definition:
+          'Indeciso. A natural English collocation meaning "unsure". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am on the fence.",
       },
       {
@@ -4568,7 +5080,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ði ˈʌðər hænd/",
         translation: "Por otro lado",
         level: "B1",
-        definition: "However.",
+        definition:
+          'Por otro lado. A natural English collocation meaning "however". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "On the other hand, it's cheap.",
       },
       {
@@ -4576,7 +5089,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ðə foʊn/",
         translation: "Al teléfono",
         level: "A1",
-        definition: "Calling.",
+        definition:
+          'Al teléfono. A natural English collocation meaning "calling". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She is on the phone.",
       },
       {
@@ -4584,7 +5098,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ðə seɪm peɪdʒ/",
         translation: "En la misma sintonía",
         level: "B2",
-        definition: "Agree.",
+        definition:
+          'En la misma sintonía. A natural English collocation meaning "agree". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We are on the same page.",
       },
       {
@@ -4592,7 +5107,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ðə spɒt/",
         translation: "En el acto",
         level: "B2",
-        definition: "Immediately.",
+        definition:
+          'En el acto. A natural English collocation meaning "immediately". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Hired on the spot.",
       },
       {
@@ -4600,7 +5116,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn ðə hoʊl/",
         translation: "En general",
         level: "B2",
-        definition: "Mostly.",
+        definition:
+          'En general. A natural English collocation meaning "mostly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "On the whole, it was good.",
       },
       {
@@ -4608,7 +5125,8 @@ export const collocationsData: StopData = {
         ipa: "/ɒn taɪm/",
         translation: "A tiempo",
         level: "A2",
-        definition: "Punctual.",
+        definition:
+          'A tiempo. A natural English collocation meaning "punctual". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Be there on time.",
       },
       {
@@ -4616,7 +5134,8 @@ export const collocationsData: StopData = {
         ipa: "/wʌns ɪn ə bluː muːn/",
         translation: "De higos a brevas",
         level: "C1",
-        definition: "Rarely.",
+        definition:
+          'De higos a brevas. A natural English collocation meaning "rarely". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It happens once in a blue moon.",
       },
       {
@@ -4624,7 +5143,8 @@ export const collocationsData: StopData = {
         ipa: "/wʌn weɪ/",
         translation: "Un solo sentido",
         level: "A2",
-        definition: "Direction.",
+        definition:
+          'Un solo sentido. A natural English collocation meaning "direction". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "One way street.",
       },
       {
@@ -4632,7 +5152,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɒnlaɪn ˈʃɒpɪŋ/",
         translation: "Compras en línea",
         level: "A2",
-        definition: "Internet buy.",
+        definition:
+          'Compras en línea. A natural English collocation meaning "internet buy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I love online shopping.",
       },
       {
@@ -4640,7 +5161,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈoʊnli tʃaɪld/",
         translation: "Hijo único",
         level: "B1",
-        definition: "No siblings.",
+        definition:
+          'Hijo único. A natural English collocation meaning "no siblings". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is an only child.",
       },
       {
@@ -4648,7 +5170,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈoʊpən ɛər/",
         translation: "Aire libre",
         level: "B1",
-        definition: "Outside.",
+        definition:
+          'Aire libre. A natural English collocation meaning "outside". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Open air concert.",
       },
       {
@@ -4656,7 +5179,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈoʊpənɪŋ ˈaʊərz/",
         translation: "Horario de apertura",
         level: "A2",
-        definition: "Time open.",
+        definition:
+          'Horario de apertura. A natural English collocation meaning "time open". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Check opening hours.",
       },
       {
@@ -4664,7 +5188,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɒpəzɪt dɪˈrɛkʃən/",
         translation: "Dirección opuesta",
         level: "B1",
-        definition: "Other way.",
+        definition:
+          'Dirección opuesta. A natural English collocation meaning "other way". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He ran in the opposite direction.",
       },
       {
@@ -4672,7 +5197,8 @@ export const collocationsData: StopData = {
         ipa: "/əˈrɪdʒɪnəl aɪˈdiːə/",
         translation: "Idea original",
         level: "B2",
-        definition: "Unique.",
+        definition:
+          'Idea original. A natural English collocation meaning "unique". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That is an original idea.",
       },
       {
@@ -4680,7 +5206,8 @@ export const collocationsData: StopData = {
         ipa: "/aʊt əv brɛθ/",
         translation: "Sin aliento",
         level: "B1",
-        definition: "Panting.",
+        definition:
+          'Sin aliento. A natural English collocation meaning "panting". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am out of breath.",
       },
       {
@@ -4688,7 +5215,8 @@ export const collocationsData: StopData = {
         ipa: "/aʊt əv kənˈtroʊl/",
         translation: "Fuera de control",
         level: "B2",
-        definition: "Wild.",
+        definition:
+          'Fuera de control. A natural English collocation meaning "wild". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The fire is out of control.",
       },
       {
@@ -4696,7 +5224,8 @@ export const collocationsData: StopData = {
         ipa: "/aʊt əv deɪt/",
         translation: "Caducado/Anticuado",
         level: "B1",
-        definition: "Old.",
+        definition:
+          'Caducado/Anticuado. A natural English collocation meaning "old". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "This milk is out of date.",
       },
       {
@@ -4704,7 +5233,8 @@ export const collocationsData: StopData = {
         ipa: "/aʊt əv ˈɔːrdər/",
         translation: "Fuera de servicio",
         level: "B1",
-        definition: "Broken.",
+        definition:
+          'Fuera de servicio. A natural English collocation meaning "broken". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Lift is out of order.",
       },
       {
@@ -4712,7 +5242,8 @@ export const collocationsData: StopData = {
         ipa: "/aʊt əv stɒk/",
         translation: "Agotado",
         level: "B1",
-        definition: "Sold out.",
+        definition:
+          'Agotado. A natural English collocation meaning "sold out". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Item is out of stock.",
       },
       {
@@ -4720,7 +5251,8 @@ export const collocationsData: StopData = {
         ipa: "/aʊt əv ðə bluː/",
         translation: "De la nada",
         level: "B2",
-        definition: "Sudden.",
+        definition:
+          'De la nada. A natural English collocation meaning "sudden". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He called out of the blue.",
       },
       {
@@ -4728,7 +5260,8 @@ export const collocationsData: StopData = {
         ipa: "/aʊt əv wɜːrk/",
         translation: "Desempleado",
         level: "B1",
-        definition: "No job.",
+        definition:
+          'Desempleado. A natural English collocation meaning "no job". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is out of work.",
       },
       {
@@ -4736,7 +5269,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈoʊvərɔːl ɪˈfɛkt/",
         translation: "Efecto general",
         level: "B2",
-        definition: "Total result.",
+        definition:
+          'Efecto general. A natural English collocation meaning "total result". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The overall effect is pleasing.",
       },
       {
@@ -4744,7 +5278,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌoʊvərˈkʌm fɪər/",
         translation: "Superar el miedo",
         level: "B2",
-        definition: "Be brave.",
+        definition:
+          'Superar el miedo. A natural English collocation meaning "be brave". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Overcome your fear.",
       },
       {
@@ -4752,7 +5287,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌoʊvərˈwɛlmɪŋ ˈɛvɪdəns/",
         translation: "Evidencia abrumadora",
         level: "C2",
-        definition: "Strong proof.",
+        definition:
+          'Evidencia abrumadora. A natural English collocation meaning "strong proof". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Overwhelming evidence of guilt.",
       },
       {
@@ -4760,7 +5296,8 @@ export const collocationsData: StopData = {
         ipa: "/oʊ ˈmʌni/",
         translation: "Deber dinero",
         level: "A2",
-        definition: "Debt.",
+        definition:
+          'Deber dinero. A natural English collocation meaning "debt". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I owe you money.",
       },
       {
@@ -4768,7 +5305,8 @@ export const collocationsData: StopData = {
         ipa: "/oʊn rɪsk/",
         translation: "Propio riesgo",
         level: "B2",
-        definition: "Your fault.",
+        definition:
+          'Propio riesgo. A natural English collocation meaning "your fault". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Enter at your own risk.",
       },
     ],
@@ -4780,7 +5318,8 @@ export const collocationsData: StopData = {
         ipa: "/pæk ə ˈsuːtkeɪs/",
         translation: "Hacer la maleta",
         level: "A2",
-        definition: "Prepare bag.",
+        definition:
+          'Hacer la maleta. A natural English collocation meaning "prepare bag". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Pack a suitcase for the trip.",
       },
       {
@@ -4788,7 +5327,8 @@ export const collocationsData: StopData = {
         ipa: "/peɪn rɪˈliːf/",
         translation: "Alivio del dolor",
         level: "B2",
-        definition: "Stop hurt.",
+        definition:
+          'Alivio del dolor. A natural English collocation meaning "stop hurt". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take pills for pain relief.",
       },
       {
@@ -4796,7 +5336,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpeɪnfʊli ʃaɪ/",
         translation: "Terriblemente tímido",
         level: "C1",
-        definition: "Very shy.",
+        definition:
+          'Terriblemente tímido. A natural English collocation meaning "very shy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is painfully shy.",
       },
       {
@@ -4804,7 +5345,8 @@ export const collocationsData: StopData = {
         ipa: "/pɑːrt taɪm/",
         translation: "Medio tiempo",
         level: "A2",
-        definition: "Half work.",
+        definition:
+          'Medio tiempo. A natural English collocation meaning "half work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I work part time.",
       },
       {
@@ -4812,7 +5354,8 @@ export const collocationsData: StopData = {
         ipa: "/pɑːs ə lɔː/",
         translation: "Aprobar una ley",
         level: "B2",
-        definition: "Legalize.",
+        definition:
+          'Aprobar una ley. A natural English collocation meaning "legalize". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They passed a law.",
       },
       {
@@ -4820,7 +5363,8 @@ export const collocationsData: StopData = {
         ipa: "/pɑːs ə tɛst/",
         translation: "Aprobar un examen",
         level: "A1",
-        definition: "Succeed.",
+        definition:
+          'Aprobar un examen. A natural English collocation meaning "succeed". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I passed the test.",
       },
       {
@@ -4828,7 +5372,8 @@ export const collocationsData: StopData = {
         ipa: "/peɪ əˈtɛnʃən/",
         translation: "Prestar atención",
         level: "A2",
-        definition: "Listen.",
+        definition:
+          'Prestar atención. A natural English collocation meaning "listen". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Pay attention to me.",
       },
       {
@@ -4836,7 +5381,8 @@ export const collocationsData: StopData = {
         ipa: "/peɪ baɪ kæʃ/",
         translation: "Pagar en efectivo",
         level: "A1",
-        definition: "Cash money.",
+        definition:
+          'Pagar en efectivo. A natural English collocation meaning "cash money". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Pay by cash only.",
       },
       {
@@ -4844,7 +5390,8 @@ export const collocationsData: StopData = {
         ipa: "/peɪ baɪ ˈkrɛdɪt kɑːrd/",
         translation: "Pagar con tarjeta",
         level: "A1",
-        definition: "Card money.",
+        definition:
+          'Pagar con tarjeta. A natural English collocation meaning "card money". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can I pay by credit card?",
       },
       {
@@ -4852,7 +5399,8 @@ export const collocationsData: StopData = {
         ipa: "/peɪ faɪn/",
         translation: "Pagar multa",
         level: "B1",
-        definition: "Penalty cost.",
+        definition:
+          'Pagar multa. A natural English collocation meaning "penalty cost". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Pay the parking fine.",
       },
       {
@@ -4860,7 +5408,8 @@ export const collocationsData: StopData = {
         ipa: "/peɪ ˈɪntrəst/",
         translation: "Pagar intereses",
         level: "B2",
-        definition: "Bank fee.",
+        definition:
+          'Pagar intereses. A natural English collocation meaning "bank fee". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You must pay interest.",
       },
       {
@@ -4868,7 +5417,8 @@ export const collocationsData: StopData = {
         ipa: "/peɪ rɪˈspɛkt/",
         translation: "Presentar respetos",
         level: "B2",
-        definition: "Honor.",
+        definition:
+          'Presentar respetos. A natural English collocation meaning "honor". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Pay respect to elders.",
       },
       {
@@ -4876,7 +5426,8 @@ export const collocationsData: StopData = {
         ipa: "/piːs ənd ˈkwaɪət/",
         translation: "Paz y tranquilidad",
         level: "B1",
-        definition: "Silence.",
+        definition:
+          'Paz y tranquilidad. A natural English collocation meaning "silence". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I need peace and quiet.",
       },
       {
@@ -4884,7 +5435,8 @@ export const collocationsData: StopData = {
         ipa: "/piːs əv maɪnd/",
         translation: "Tranquilidad mental",
         level: "B2",
-        definition: "Calm.",
+        definition:
+          'Tranquilidad mental. A natural English collocation meaning "calm". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Insurance gives peace of mind.",
       },
       {
@@ -4892,7 +5444,8 @@ export const collocationsData: StopData = {
         ipa: "/piːs ˈtriːti/",
         translation: "Tratado de paz",
         level: "C1",
-        definition: "No war pact.",
+        definition:
+          'Tratado de paz. A natural English collocation meaning "no war pact". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Sign a peace treaty.",
       },
       {
@@ -4900,7 +5453,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpɛnlti kɪk/",
         translation: "Penalti",
         level: "B1",
-        definition: "Soccer foul.",
+        definition:
+          'Penalti. A natural English collocation meaning "soccer foul". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He missed the penalty kick.",
       },
       {
@@ -4908,7 +5462,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpɜːrfɪkt mætʃ/",
         translation: "Pareja perfecta",
         level: "B2",
-        definition: "Ideal pair.",
+        definition:
+          'Pareja perfecta. A natural English collocation meaning "ideal pair". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They are a perfect match.",
       },
       {
@@ -4916,7 +5471,8 @@ export const collocationsData: StopData = {
         ipa: "/pərˈfɔːrm ə tɑːsk/",
         translation: "Realizar una tarea",
         level: "B2",
-        definition: "Do work.",
+        definition:
+          'Realizar una tarea. A natural English collocation meaning "do work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Perform a task well.",
       },
       {
@@ -4924,7 +5480,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpɜːrmənənt dʒɒb/",
         translation: "Trabajo fijo",
         level: "B1",
-        definition: "Stable work.",
+        definition:
+          'Trabajo fijo. A natural English collocation meaning "stable work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I want a permanent job.",
       },
       {
@@ -4932,7 +5489,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpɜːrsənl əˈsɪstənt/",
         translation: "Asistente personal",
         level: "B1",
-        definition: "Helper.",
+        definition:
+          'Asistente personal. A natural English collocation meaning "helper". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Hire a personal assistant.",
       },
       {
@@ -4940,7 +5498,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpɜːrsənl bɪˈlɒŋɪŋz/",
         translation: "Pertenencias personales",
         level: "B2",
-        definition: "Items.",
+        definition:
+          'Pertenencias personales. A natural English collocation meaning "items". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take your personal belongings.",
       },
       {
@@ -4948,7 +5507,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈfɪzɪkəl ˈɛksərsaɪz/",
         translation: "Ejercicio físico",
         level: "A2",
-        definition: "Sport.",
+        definition:
+          'Ejercicio físico. A natural English collocation meaning "sport". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Do physical exercise.",
       },
       {
@@ -4956,7 +5516,8 @@ export const collocationsData: StopData = {
         ipa: "/pɪk ʌp ðə foʊn/",
         translation: "Contestar el teléfono",
         level: "A2",
-        definition: "Answer.",
+        definition:
+          'Contestar el teléfono. A natural English collocation meaning "answer". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Pick up the phone!",
       },
       {
@@ -4964,7 +5525,8 @@ export const collocationsData: StopData = {
         ipa: "/piːs əv keɪk/",
         translation: "Pan comido",
         level: "A2",
-        definition: "Easy.",
+        definition:
+          'Pan comido. A natural English collocation meaning "easy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The exam was a piece of cake.",
       },
       {
@@ -4972,7 +5534,8 @@ export const collocationsData: StopData = {
         ipa: "/pleɪs ən ˈɔːrdər/",
         translation: "Hacer un pedido",
         level: "B1",
-        definition: "Buy.",
+        definition:
+          'Hacer un pedido. A natural English collocation meaning "buy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Place an order online.",
       },
       {
@@ -4980,7 +5543,8 @@ export const collocationsData: StopData = {
         ipa: "/pleɪ ə dʒoʊk/",
         translation: "Gastar una broma",
         level: "B1",
-        definition: "Prank.",
+        definition:
+          'Gastar una broma. A natural English collocation meaning "prank". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He played a joke on me.",
       },
       {
@@ -4988,7 +5552,8 @@ export const collocationsData: StopData = {
         ipa: "/pleɪ ə roʊl/",
         translation: "Jugar un papel",
         level: "B2",
-        definition: "Act/Influence.",
+        definition:
+          'Jugar un papel. A natural English collocation meaning "act/influence". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Diet plays a role in health.",
       },
       {
@@ -4996,7 +5561,8 @@ export const collocationsData: StopData = {
         ipa: "/pleɪ ɪt seɪf/",
         translation: "Ir a lo seguro",
         level: "B1",
-        definition: "No risk.",
+        definition:
+          'Ir a lo seguro. A natural English collocation meaning "no risk". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Let's play it safe.",
       },
       {
@@ -5004,7 +5570,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈplɛzənt sərˈpraɪz/",
         translation: "Grata sorpresa",
         level: "B1",
-        definition: "Nice shock.",
+        definition:
+          'Grata sorpresa. A natural English collocation meaning "nice shock". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was a pleasant surprise.",
       },
       {
@@ -5012,7 +5579,8 @@ export const collocationsData: StopData = {
         ipa: "/pɔɪnt əv vjuː/",
         translation: "Punto de vista",
         level: "B1",
-        definition: "Opinion.",
+        definition:
+          'Punto de vista. A natural English collocation meaning "opinion". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "From my point of view.",
       },
       {
@@ -5020,7 +5588,8 @@ export const collocationsData: StopData = {
         ipa: "/pəˈliːs ˈɒfɪsər/",
         translation: "Oficial de policía",
         level: "A1",
-        definition: "Cop.",
+        definition:
+          'Oficial de policía. A natural English collocation meaning "cop". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Ask a police officer.",
       },
       {
@@ -5028,7 +5597,8 @@ export const collocationsData: StopData = {
         ipa: "/pəˈlɪtɪkəl ˈpɑːrti/",
         translation: "Partido político",
         level: "B1",
-        definition: "Group.",
+        definition:
+          'Partido político. A natural English collocation meaning "group". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Join a political party.",
       },
       {
@@ -5036,7 +5606,8 @@ export const collocationsData: StopData = {
         ipa: "/pʊər hɛlθ/",
         translation: "Mala salud",
         level: "B1",
-        definition: "Sickly.",
+        definition:
+          'Mala salud. A natural English collocation meaning "sickly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is in poor health.",
       },
       {
@@ -5044,7 +5615,8 @@ export const collocationsData: StopData = {
         ipa: "/pʊər ˈkwɒlɪti/",
         translation: "Mala calidad",
         level: "A2",
-        definition: "Bad.",
+        definition:
+          'Mala calidad. A natural English collocation meaning "bad". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "This is poor quality.",
       },
       {
@@ -5052,7 +5624,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpɒpjʊlər bɪˈliːf/",
         translation: "Creencia popular",
         level: "C1",
-        definition: "Myth.",
+        definition:
+          'Creencia popular. A natural English collocation meaning "myth". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Contrary to popular belief.",
       },
       {
@@ -5060,7 +5633,8 @@ export const collocationsData: StopData = {
         ipa: "/poʊz ə θrɛt/",
         translation: "Representar una amenaza",
         level: "C1",
-        definition: "Danger.",
+        definition:
+          'Representar una amenaza. A natural English collocation meaning "danger". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Pollution poses a threat.",
       },
       {
@@ -5068,7 +5642,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpɒzətɪv ˈætɪtjuːd/",
         translation: "Actitud positiva",
         level: "B1",
-        definition: "Optimism.",
+        definition:
+          'Actitud positiva. A natural English collocation meaning "optimism". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Keep a positive attitude.",
       },
       {
@@ -5076,7 +5651,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpoʊstəl ˈsɜːrvɪs/",
         translation: "Servicio postal",
         level: "B1",
-        definition: "Mail.",
+        definition:
+          'Servicio postal. A natural English collocation meaning "mail". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The postal service is slow.",
       },
       {
@@ -5084,7 +5660,8 @@ export const collocationsData: StopData = {
         ipa: "/prɛs ˈkɒnfərəns/",
         translation: "Rueda de prensa",
         level: "B2",
-        definition: "Media meet.",
+        definition:
+          'Rueda de prensa. A natural English collocation meaning "media meet". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Hold a press conference.",
       },
       {
@@ -5092,7 +5669,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈprɪti ʃʊər/",
         translation: "Bastante seguro",
         level: "A2",
-        definition: "Confident.",
+        definition:
+          'Bastante seguro. A natural English collocation meaning "confident". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am pretty sure.",
       },
       {
@@ -5100,7 +5678,8 @@ export const collocationsData: StopData = {
         ipa: "/praɪs tæɡ/",
         translation: "Etiqueta de precio",
         level: "A2",
-        definition: "Cost label.",
+        definition:
+          'Etiqueta de precio. A natural English collocation meaning "cost label". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Look at the price tag.",
       },
       {
@@ -5108,7 +5687,8 @@ export const collocationsData: StopData = {
         ipa: "/praɪm ˈmɪnɪstər/",
         translation: "Primer ministro",
         level: "B1",
-        definition: "Leader.",
+        definition:
+          'Primer ministro. A natural English collocation meaning "leader". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The Prime Minister spoke.",
       },
       {
@@ -5116,7 +5696,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpraɪvɪt laɪf/",
         translation: "Vida privada",
         level: "B1",
-        definition: "Home life.",
+        definition:
+          'Vida privada. A natural English collocation meaning "home life". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Keep my private life private.",
       },
       {
@@ -5124,7 +5705,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈprɒbləm ˈsɒlvɪŋ/",
         translation: "Resolución de problemas",
         level: "B2",
-        definition: "Fixing.",
+        definition:
+          'Resolución de problemas. A natural English collocation meaning "fixing". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Good problem solving skills.",
       },
       {
@@ -5132,7 +5714,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈpʌblɪk ˈtrænspɔːrt/",
         translation: "Transporte público",
         level: "A2",
-        definition: "Bus/Train.",
+        definition:
+          'Transporte público. A natural English collocation meaning "bus/train". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Use public transport.",
       },
       {
@@ -5140,7 +5723,8 @@ export const collocationsData: StopData = {
         ipa: "/pʊl ə lɛɡ/",
         translation: "Tomar el pelo",
         level: "B2",
-        definition: "Joke.",
+        definition:
+          'Tomar el pelo. A natural English collocation meaning "joke". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am pulling your leg.",
       },
       {
@@ -5148,7 +5732,8 @@ export const collocationsData: StopData = {
         ipa: "/pjʊər lʌk/",
         translation: "Pura suerte",
         level: "B2",
-        definition: "Chance.",
+        definition:
+          'Pura suerte. A natural English collocation meaning "chance". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was pure luck.",
       },
       {
@@ -5156,7 +5741,8 @@ export const collocationsData: StopData = {
         ipa: "/pʊt ˈprɛʃər/",
         translation: "Presionar",
         level: "B2",
-        definition: "Force.",
+        definition:
+          'Presionar. A natural English collocation meaning "force". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't put pressure on me.",
       },
     ],
@@ -5168,7 +5754,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkwɒlɪti kənˈtroʊl/",
         translation: "Control de calidad",
         level: "B2",
-        definition: "Checking.",
+        definition:
+          'Control de calidad. A natural English collocation meaning "checking". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Passed quality control.",
       },
       {
@@ -5176,7 +5763,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkwɒlɪti taɪm/",
         translation: "Tiempo de calidad",
         level: "B2",
-        definition: "Good moments.",
+        definition:
+          'Tiempo de calidad. A natural English collocation meaning "good moments". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Spend quality time together.",
       },
       {
@@ -5184,7 +5772,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkwɒntəm liːp/",
         translation: "Salto cuántico",
         level: "C2",
-        definition: "Big jump.",
+        definition:
+          'Salto cuántico. A natural English collocation meaning "big jump". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A quantum leap in tech.",
       },
       {
@@ -5192,7 +5781,8 @@ export const collocationsData: StopData = {
         ipa: "/kwɛntʃ θɜːrst/",
         translation: "Sacia la sed",
         level: "C1",
-        definition: "Drink.",
+        definition:
+          'Sacia la sed. A natural English collocation meaning "drink". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Water quenches thirst.",
       },
       {
@@ -5200,7 +5790,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkwɛstʃən mɑːrk/",
         translation: "Signo de interrogación",
         level: "A1",
-        definition: "Symbol ?.",
+        definition:
+          'Signo de interrogación. A natural English collocation meaning "symbol". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "End with a question mark.",
       },
       {
@@ -5208,7 +5799,8 @@ export const collocationsData: StopData = {
         ipa: "/kwɪk fɪks/",
         translation: "Solución rápida",
         level: "B2",
-        definition: "Fast solution.",
+        definition:
+          'Solución rápida. A natural English collocation meaning "fast solution". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "No quick fix exists.",
       },
       {
@@ -5216,7 +5808,8 @@ export const collocationsData: StopData = {
         ipa: "/kwɪk ɡlɑːns/",
         translation: "Vistazo rápido",
         level: "B2",
-        definition: "Fast look.",
+        definition:
+          'Vistazo rápido. A natural English collocation meaning "fast look". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Took a quick glance.",
       },
       {
@@ -5224,7 +5817,8 @@ export const collocationsData: StopData = {
         ipa: "/kwɪk lʊk/",
         translation: "Mirada rápida",
         level: "A2",
-        definition: "Fast check.",
+        definition:
+          'Mirada rápida. A natural English collocation meaning "fast check". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Have a quick look.",
       },
       {
@@ -5232,7 +5826,8 @@ export const collocationsData: StopData = {
         ipa: "/kwɪk miːl/",
         translation: "Comida rápida",
         level: "A2",
-        definition: "Fast food.",
+        definition:
+          'Comida rápida. A natural English collocation meaning "fast food". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Make a quick meal.",
       },
       {
@@ -5240,7 +5835,8 @@ export const collocationsData: StopData = {
         ipa: "/kwɪk rɪˈplaɪ/",
         translation: "Respuesta rápida",
         level: "B1",
-        definition: "Fast answer.",
+        definition:
+          'Respuesta rápida. A natural English collocation meaning "fast answer". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Thanks for the quick reply.",
       },
       {
@@ -5248,7 +5844,8 @@ export const collocationsData: StopData = {
         ipa: "/kwɪk ˈʃaʊər/",
         translation: "Ducha rápida",
         level: "A2",
-        definition: "Fast wash.",
+        definition:
+          'Ducha rápida. A natural English collocation meaning "fast wash". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take a quick shower.",
       },
       {
@@ -5256,7 +5853,8 @@ export const collocationsData: StopData = {
         ipa: "/kwɪk ˈtɛmpər/",
         translation: "Mal genio",
         level: "C1",
-        definition: "Angry fast.",
+        definition:
+          'Mal genio. A natural English collocation meaning "angry fast". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He has a quick temper.",
       },
       {
@@ -5264,7 +5862,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkwaɪət laɪf/",
         translation: "Vida tranquila",
         level: "B1",
-        definition: "Peaceful.",
+        definition:
+          'Vida tranquila. A natural English collocation meaning "peaceful". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I want a quiet life.",
       },
       {
@@ -5272,7 +5871,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkwaɪət naɪt/",
         translation: "Noche tranquila",
         level: "A2",
-        definition: "Calm evening.",
+        definition:
+          'Noche tranquila. A natural English collocation meaning "calm evening". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Have a quiet night in.",
       },
       {
@@ -5280,7 +5880,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈkwaɪət vɔɪs/",
         translation: "Voz baja",
         level: "A2",
-        definition: "Whisper.",
+        definition:
+          'Voz baja. A natural English collocation meaning "whisper". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Speak in a quiet voice.",
       },
       {
@@ -5288,7 +5889,8 @@ export const collocationsData: StopData = {
         ipa: "/kwɪt ə dʒɒb/",
         translation: "Dejar un trabajo",
         level: "B1",
-        definition: "Resign.",
+        definition:
+          'Dejar un trabajo. A natural English collocation meaning "resign". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Why did you quit your job?",
       },
       {
@@ -5296,7 +5898,8 @@ export const collocationsData: StopData = {
         ipa: "/kwɪt ˈsmoʊkɪŋ/",
         translation: "Dejar de fumar",
         level: "B1",
-        definition: "Stop smoke.",
+        definition:
+          'Dejar de fumar. A natural English collocation meaning "stop smoke". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Hard to quit smoking.",
       },
       {
@@ -5304,7 +5907,8 @@ export const collocationsData: StopData = {
         ipa: "/kwaɪt ə bɪt/",
         translation: "Bastante",
         level: "B1",
-        definition: "Much.",
+        definition:
+          'Bastante. A natural English collocation meaning "much". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It hurts quite a bit.",
       },
       {
@@ -5312,7 +5916,8 @@ export const collocationsData: StopData = {
         ipa: "/kwaɪt ə fjuː/",
         translation: "Bastantes",
         level: "B1",
-        definition: "Many.",
+        definition:
+          'Bastantes. A natural English collocation meaning "many". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have quite a few.",
       },
       {
@@ -5320,7 +5925,8 @@ export const collocationsData: StopData = {
         ipa: "/kwaɪt ɪˈnʌf/",
         translation: "Suficiente",
         level: "B2",
-        definition: "Plenty.",
+        definition:
+          'Suficiente. A natural English collocation meaning "plenty". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That is quite enough.",
       },
       {
@@ -5328,7 +5934,8 @@ export const collocationsData: StopData = {
         ipa: "/kwaɪt ɡʊd/",
         translation: "Bastante bueno",
         level: "A2",
-        definition: "Decent.",
+        definition:
+          'Bastante bueno. A natural English collocation meaning "decent". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is quite good.",
       },
       {
@@ -5336,7 +5943,8 @@ export const collocationsData: StopData = {
         ipa: "/kwaɪt ˈlaɪkli/",
         translation: "Bastante probable",
         level: "B2",
-        definition: "Probable.",
+        definition:
+          'Bastante probable. A natural English collocation meaning "probable". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is quite likely.",
       },
       {
@@ -5344,7 +5952,8 @@ export const collocationsData: StopData = {
         ipa: "/kwaɪt raɪt/",
         translation: "Toda la razón",
         level: "B2",
-        definition: "Correct.",
+        definition:
+          'Toda la razón. A natural English collocation meaning "correct". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You are quite right.",
       },
       {
@@ -5352,7 +5961,8 @@ export const collocationsData: StopData = {
         ipa: "/kwaɪt ʃʊər/",
         translation: "Bastante seguro",
         level: "B1",
-        definition: "Certain.",
+        definition:
+          'Bastante seguro. A natural English collocation meaning "certain". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Are you quite sure?",
       },
       {
@@ -5360,7 +5970,8 @@ export const collocationsData: StopData = {
         ipa: "/kwoʊt ə praɪs/",
         translation: "Dar un precio",
         level: "B2",
-        definition: "Estimate.",
+        definition:
+          'Dar un precio. A natural English collocation meaning "estimate". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can you quote a price?",
       },
     ],
@@ -5372,7 +5983,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈreɪdioʊ ˈsteɪʃən/",
         translation: "Estación de radio",
         level: "A2",
-        definition: "Broadcast channel.",
+        definition:
+          'Estación de radio. A natural English collocation meaning "broadcast channel". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Tune in to the radio station.",
       },
       {
@@ -5380,7 +5992,8 @@ export const collocationsData: StopData = {
         ipa: "/reɪn ˈhɛvɪli/",
         translation: "Llover fuertemente",
         level: "B1",
-        definition: "Pour.",
+        definition:
+          'Llover fuertemente. A natural English collocation meaning "pour". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It rained heavily.",
       },
       {
@@ -5388,7 +6001,8 @@ export const collocationsData: StopData = {
         ipa: "/reɪz ə ˈfæmɪli/",
         translation: "Criar una familia",
         level: "B2",
-        definition: "Parenting.",
+        definition:
+          'Criar una familia. A natural English collocation meaning "parenting". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Cost to raise a family.",
       },
       {
@@ -5396,7 +6010,8 @@ export const collocationsData: StopData = {
         ipa: "/reɪz əˈwɛərnəs/",
         translation: "Crear conciencia",
         level: "C1",
-        definition: "Inform.",
+        definition:
+          'Crear conciencia. A natural English collocation meaning "inform". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Raise awareness about cancer.",
       },
       {
@@ -5404,7 +6019,8 @@ export const collocationsData: StopData = {
         ipa: "/reɪz ˈmʌni/",
         translation: "Recaudar dinero",
         level: "B1",
-        definition: "Collect funds.",
+        definition:
+          'Recaudar dinero. A natural English collocation meaning "collect funds". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Raise money for charity.",
       },
       {
@@ -5412,7 +6028,8 @@ export const collocationsData: StopData = {
         ipa: "/reɪz ˈkwɛstʃənz/",
         translation: "Plantear preguntas",
         level: "B2",
-        definition: "Ask.",
+        definition:
+          'Plantear preguntas. A natural English collocation meaning "ask". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "This raises questions.",
       },
       {
@@ -5420,7 +6037,8 @@ export const collocationsData: StopData = {
         ipa: "/reɪz jɔːr vɔɪs/",
         translation: "Alzar la voz",
         level: "B1",
-        definition: "Shout.",
+        definition:
+          'Alzar la voz. A natural English collocation meaning "shout". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't raise your voice.",
       },
       {
@@ -5428,7 +6046,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈrændəm tʃɛk/",
         translation: "Control aleatorio",
         level: "B2",
-        definition: "Spot check.",
+        definition:
+          'Control aleatorio. A natural English collocation meaning "spot check". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Airport random check.",
       },
       {
@@ -5436,7 +6055,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈræpɪd ɡroʊθ/",
         translation: "Crecimiento rápido",
         level: "B2",
-        definition: "Fast rise.",
+        definition:
+          'Crecimiento rápido. A natural English collocation meaning "fast rise". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Rapid growth of the city.",
       },
       {
@@ -5444,7 +6064,8 @@ export const collocationsData: StopData = {
         ipa: "/rɛər ˈspiːʃiːz/",
         translation: "Especie rara",
         level: "B2",
-        definition: "Few left.",
+        definition:
+          'Especie rara. A natural English collocation meaning "few left". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Protect rare species.",
       },
       {
@@ -5452,7 +6073,8 @@ export const collocationsData: StopData = {
         ipa: "/riːtʃ ə ˈkɒmprəmaɪz/",
         translation: "Llegar a un compromiso",
         level: "C1",
-        definition: "Agree.",
+        definition:
+          'Llegar a un compromiso. A natural English collocation meaning "agree". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We reached a compromise.",
       },
       {
@@ -5460,7 +6082,8 @@ export const collocationsData: StopData = {
         ipa: "/riːtʃ ə dɪˈsɪʒən/",
         translation: "Tomar una decisión",
         level: "B2",
-        definition: "Decide.",
+        definition:
+          'Tomar una decisión. A natural English collocation meaning "decide". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Have you reached a decision?",
       },
       {
@@ -5468,7 +6091,8 @@ export const collocationsData: StopData = {
         ipa: "/riːtʃ ə ɡoʊl/",
         translation: "Alcanzar una meta",
         level: "B1",
-        definition: "Succeed.",
+        definition:
+          'Alcanzar una meta. A natural English collocation meaning "succeed". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Reach your goal.",
       },
       {
@@ -5476,7 +6100,8 @@ export const collocationsData: StopData = {
         ipa: "/riːtʃ ə ˈvɜːrdɪkt/",
         translation: "Llegar a un veredicto",
         level: "C1",
-        definition: "Judge.",
+        definition:
+          'Llegar a un veredicto. A natural English collocation meaning "judge". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Jury reached a verdict.",
       },
       {
@@ -5484,7 +6109,8 @@ export const collocationsData: StopData = {
         ipa: "/riːd əˈlaʊd/",
         translation: "Leer en voz alta",
         level: "A2",
-        definition: "Speak text.",
+        definition:
+          'Leer en voz alta. A natural English collocation meaning "speak text". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Read the story aloud.",
       },
       {
@@ -5492,7 +6118,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈrɛdi miːl/",
         translation: "Comida preparada",
         level: "B1",
-        definition: "Instant food.",
+        definition:
+          'Comida preparada. A natural English collocation meaning "instant food". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Buy a ready meal.",
       },
       {
@@ -5500,7 +6127,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈriːəl ɪˈsteɪt/",
         translation: "Bienes raíces",
         level: "B2",
-        definition: "Property.",
+        definition:
+          'Bienes raíces. A natural English collocation meaning "property". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Invest in real estate.",
       },
       {
@@ -5508,7 +6136,8 @@ export const collocationsData: StopData = {
         ipa: "/riːəl laɪf/",
         translation: "Vida real",
         level: "A2",
-        definition: "Reality.",
+        definition:
+          'Vida real. A natural English collocation meaning "reality". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In real life.",
       },
       {
@@ -5516,7 +6145,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈriːzənəbl daʊt/",
         translation: "Duda razonable",
         level: "C2",
-        definition: "Legal term.",
+        definition:
+          'Duda razonable. A natural English collocation meaning "legal term". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Beyond reasonable doubt.",
       },
       {
@@ -5524,7 +6154,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈriːzənəbl praɪs/",
         translation: "Precio razonable",
         level: "B1",
-        definition: "Fair cost.",
+        definition:
+          'Precio razonable. A natural English collocation meaning "fair cost". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Good food at a reasonable price.",
       },
       {
@@ -5532,7 +6163,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈriːsənt ˈstʌdi/",
         translation: "Estudio reciente",
         level: "B2",
-        definition: "New research.",
+        definition:
+          'Estudio reciente. A natural English collocation meaning "new research". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A recent study shows...",
       },
       {
@@ -5540,7 +6172,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈrɛkɔːrd taɪm/",
         translation: "Tiempo récord",
         level: "B2",
-        definition: "Fastest.",
+        definition:
+          'Tiempo récord. A natural English collocation meaning "fastest". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Finished in record time.",
       },
       {
@@ -5548,7 +6181,8 @@ export const collocationsData: StopData = {
         ipa: "/rɛd laɪt/",
         translation: "Luz roja",
         level: "A1",
-        definition: "Stop signal.",
+        definition:
+          'Luz roja. A natural English collocation meaning "stop signal". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Stop at the red light.",
       },
       {
@@ -5556,7 +6190,8 @@ export const collocationsData: StopData = {
         ipa: "/rɪˈdjuːs kɒsts/",
         translation: "Reducir costos",
         level: "B2",
-        definition: "Save money.",
+        definition:
+          'Reducir costos. A natural English collocation meaning "save money". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Plan to reduce costs.",
       },
       {
@@ -5564,7 +6199,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈrɛɡjʊlər ˈbeɪsɪs/",
         translation: "Base regular",
         level: "B2",
-        definition: "Often.",
+        definition:
+          'Base regular. A natural English collocation meaning "often". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Exercise on a regular basis.",
       },
       {
@@ -5572,7 +6208,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈrɛɡjʊlər ˈkʌstəmər/",
         translation: "Cliente habitual",
         level: "B1",
-        definition: "Frequent buyer.",
+        definition:
+          'Cliente habitual. A natural English collocation meaning "frequent buyer". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am a regular customer.",
       },
       {
@@ -5580,7 +6217,8 @@ export const collocationsData: StopData = {
         ipa: "/rɪˈliːv peɪn/",
         translation: "Aliviar dolor",
         level: "C1",
-        definition: "Stop hurt.",
+        definition:
+          'Aliviar dolor. A natural English collocation meaning "stop hurt". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Drugs to relieve pain.",
       },
       {
@@ -5588,7 +6226,8 @@ export const collocationsData: StopData = {
         ipa: "/rɪˈlaɪəbl sɔːrs/",
         translation: "Fuente confiable",
         level: "B2",
-        definition: "Trusty info.",
+        definition:
+          'Fuente confiable. A natural English collocation meaning "trusty info". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "From a reliable source.",
       },
       {
@@ -5596,7 +6235,8 @@ export const collocationsData: StopData = {
         ipa: "/rɪˈmoʊt kənˈtroʊl/",
         translation: "Control remoto",
         level: "A2",
-        definition: "TV clicker.",
+        definition:
+          'Control remoto. A natural English collocation meaning "tv clicker". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Pass the remote control.",
       },
       {
@@ -5604,7 +6244,8 @@ export const collocationsData: StopData = {
         ipa: "/rɪˈnjuːəbl ˈɛnərdʒi/",
         translation: "Energía renovable",
         level: "B2",
-        definition: "Green power.",
+        definition:
+          'Energía renovable. A natural English collocation meaning "green power". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Use renewable energy.",
       },
       {
@@ -5612,7 +6253,8 @@ export const collocationsData: StopData = {
         ipa: "/rɪˈspɛkt ˈpraɪvəsi/",
         translation: "Respetar la privacidad",
         level: "B2",
-        definition: "Private.",
+        definition:
+          'Respetar la privacidad. A natural English collocation meaning "private". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Please respect my privacy.",
       },
       {
@@ -5620,7 +6262,8 @@ export const collocationsData: StopData = {
         ipa: "/rɪˈtɜːrn ˈtɪkɪt/",
         translation: "Billete de ida y vuelta",
         level: "A2",
-        definition: "Two way.",
+        definition:
+          'Billete de ida y vuelta. A natural English collocation meaning "two way". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A return ticket to London.",
       },
       {
@@ -5628,7 +6271,8 @@ export const collocationsData: StopData = {
         ipa: "/raɪt əˈweɪ/",
         translation: "De inmediato",
         level: "A2",
-        definition: "Now.",
+        definition:
+          'De inmediato. A natural English collocation meaning "now". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Do it right away.",
       },
       {
@@ -5636,7 +6280,8 @@ export const collocationsData: StopData = {
         ipa: "/raɪt naʊ/",
         translation: "Ahora mismo",
         level: "A1",
-        definition: "Immediately.",
+        definition:
+          'Ahora mismo. A natural English collocation meaning "immediately". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Come here right now.",
       },
       {
@@ -5644,7 +6289,8 @@ export const collocationsData: StopData = {
         ipa: "/rɪŋ ə bɛl/",
         translation: "Sonarme algo",
         level: "B2",
-        definition: "Familiar.",
+        definition:
+          'Sonarme algo. A natural English collocation meaning "familiar". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The name rings a bell.",
       },
       {
@@ -5652,7 +6298,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈraɪzɪŋ stɑːr/",
         translation: "Estrella en ascenso",
         level: "C1",
-        definition: "Promising person.",
+        definition:
+          'Estrella en ascenso. A natural English collocation meaning "promising person". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is a rising star.",
       },
       {
@@ -5660,7 +6307,8 @@ export const collocationsData: StopData = {
         ipa: "/rɪsk ˈteɪkər/",
         translation: "Tomador de riesgos",
         level: "B2",
-        definition: "Brave.",
+        definition:
+          'Tomador de riesgos. A natural English collocation meaning "brave". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She is a risk taker.",
       },
       {
@@ -5668,7 +6316,8 @@ export const collocationsData: StopData = {
         ipa: "/roʊl ˈmɒdl/",
         translation: "Modelo a seguir",
         level: "B2",
-        definition: "Hero.",
+        definition:
+          'Modelo a seguir. A natural English collocation meaning "hero". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Be a good role model.",
       },
       {
@@ -5676,7 +6325,8 @@ export const collocationsData: StopData = {
         ipa: "/ruːm ˈsɜːrvɪs/",
         translation: "Servicio de habitaciones",
         level: "A2",
-        definition: "Hotel food.",
+        definition:
+          'Servicio de habitaciones. A natural English collocation meaning "hotel food". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Order room service.",
       },
       {
@@ -5684,7 +6334,8 @@ export const collocationsData: StopData = {
         ipa: "/ruːt kɔːz/",
         translation: "Causa raíz",
         level: "C1",
-        definition: "Main reason.",
+        definition:
+          'Causa raíz. A natural English collocation meaning "main reason". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Find the root cause.",
       },
       {
@@ -5692,7 +6343,8 @@ export const collocationsData: StopData = {
         ipa: "/rʌf ɡɛs/",
         translation: "Estimación aproximada",
         level: "C1",
-        definition: "Estimate.",
+        definition:
+          'Estimación aproximada. A natural English collocation meaning "estimate". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Just a rough guess.",
       },
       {
@@ -5700,7 +6352,8 @@ export const collocationsData: StopData = {
         ipa: "/rʌf aɪˈdiːə/",
         translation: "Idea aproximada",
         level: "B2",
-        definition: "Vague notion.",
+        definition:
+          'Idea aproximada. A natural English collocation meaning "vague notion". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have a rough idea.",
       },
       {
@@ -5708,7 +6361,8 @@ export const collocationsData: StopData = {
         ipa: "/raʊnd trɪp/",
         translation: "Viaje redondo",
         level: "B1",
-        definition: "Return.",
+        definition:
+          'Viaje redondo. A natural English collocation meaning "return". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Round trip flight.",
       },
       {
@@ -5716,7 +6370,8 @@ export const collocationsData: StopData = {
         ipa: "/rʌn ə ˈbɪznɪs/",
         translation: "Dirigir un negocio",
         level: "B1",
-        definition: "Manage company.",
+        definition:
+          'Dirigir un negocio. A natural English collocation meaning "manage company". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He runs a business.",
       },
       {
@@ -5724,7 +6379,8 @@ export const collocationsData: StopData = {
         ipa: "/rʌn aʊt əv/",
         translation: "Quedarse sin",
         level: "B1",
-        definition: "Empty.",
+        definition:
+          'Quedarse sin. A natural English collocation meaning "empty". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Run out of milk.",
       },
       {
@@ -5732,7 +6388,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈrʌnɪŋ ˈwɔːtər/",
         translation: "Agua corriente",
         level: "A2",
-        definition: "Tap water.",
+        definition:
+          'Agua corriente. A natural English collocation meaning "tap water". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "No running water.",
       },
       {
@@ -5740,7 +6397,8 @@ export const collocationsData: StopData = {
         ipa: "/rʌʃ aʊər/",
         translation: "Hora punta",
         level: "B1",
-        definition: "Busy traffic.",
+        definition:
+          'Hora punta. A natural English collocation meaning "busy traffic". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Avoid rush hour.",
       },
     ],
@@ -5752,7 +6410,8 @@ export const collocationsData: StopData = {
         ipa: "/seɪf ənd saʊnd/",
         translation: "Sano y salvo",
         level: "B2",
-        definition: "Unharmed.",
+        definition:
+          'Sano y salvo. A natural English collocation meaning "unharmed". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Arrived safe and sound.",
       },
       {
@@ -5760,7 +6419,8 @@ export const collocationsData: StopData = {
         ipa: "/seɪf ˈdʒɜːrni/",
         translation: "Buen viaje",
         level: "A2",
-        definition: "Travel well.",
+        definition:
+          'Buen viaje. A natural English collocation meaning "travel well". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Have a safe journey.",
       },
       {
@@ -5768,7 +6428,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈseɪfti bɛlt/",
         translation: "Cinturón de seguridad",
         level: "A2",
-        definition: "Seatbelt.",
+        definition:
+          'Cinturón de seguridad. A natural English collocation meaning "seatbelt". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Fasten your safety belt.",
       },
       {
@@ -5776,7 +6437,8 @@ export const collocationsData: StopData = {
         ipa: "/seɪlz ˈfɪɡjərz/",
         translation: "Cifras de ventas",
         level: "B2",
-        definition: "Numbers.",
+        definition:
+          'Cifras de ventas. A natural English collocation meaning "numbers". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Good sales figures.",
       },
       {
@@ -5784,7 +6446,8 @@ export const collocationsData: StopData = {
         ipa: "/sɔːlt ˈwɔːtər/",
         translation: "Agua salada",
         level: "A2",
-        definition: "Sea water.",
+        definition:
+          'Agua salada. A natural English collocation meaning "sea water". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Fish live in salt water.",
       },
       {
@@ -5792,7 +6455,8 @@ export const collocationsData: StopData = {
         ipa: "/seɪm taɪm/",
         translation: "Mismo tiempo",
         level: "A1",
-        definition: "Simultaneous.",
+        definition:
+          'Mismo tiempo. A natural English collocation meaning "simultaneous". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "At the same time.",
       },
       {
@@ -5800,7 +6464,8 @@ export const collocationsData: StopData = {
         ipa: "/seɪv ˈɛnərdʒi/",
         translation: "Ahorrar energía",
         level: "A2",
-        definition: "Conserve.",
+        definition:
+          'Ahorrar energía. A natural English collocation meaning "conserve". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Turn off lights to save energy.",
       },
       {
@@ -5808,7 +6473,8 @@ export const collocationsData: StopData = {
         ipa: "/seɪv ˈmʌni/",
         translation: "Ahorrar dinero",
         level: "A2",
-        definition: "Keep cash.",
+        definition:
+          'Ahorrar dinero. A natural English collocation meaning "keep cash". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I save money for travel.",
       },
       {
@@ -5816,7 +6482,8 @@ export const collocationsData: StopData = {
         ipa: "/seɪv taɪm/",
         translation: "Ahorrar tiempo",
         level: "A2",
-        definition: "Be fast.",
+        definition:
+          'Ahorrar tiempo. A natural English collocation meaning "be fast". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Computers save time.",
       },
       {
@@ -5824,7 +6491,8 @@ export const collocationsData: StopData = {
         ipa: "/seɪ ˈsɒri/",
         translation: "Pedir perdón",
         level: "A1",
-        definition: "Apologize.",
+        definition:
+          'Pedir perdón. A natural English collocation meaning "apologize". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Say sorry to him.",
       },
       {
@@ -5832,7 +6500,8 @@ export const collocationsData: StopData = {
         ipa: "/skɛərd tu dɛθ/",
         translation: "Muerto de miedo",
         level: "C1",
-        definition: "Terrified.",
+        definition:
+          'Muerto de miedo. A natural English collocation meaning "terrified". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I was scared to death.",
       },
       {
@@ -5840,7 +6509,8 @@ export const collocationsData: StopData = {
         ipa: "/skuːl ˈhɒlɪdeɪ/",
         translation: "Vacaciones escolares",
         level: "A2",
-        definition: "Break.",
+        definition:
+          'Vacaciones escolares. A natural English collocation meaning "break". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Summer school holiday.",
       },
       {
@@ -5848,7 +6518,8 @@ export const collocationsData: StopData = {
         ipa: "/sɜːrtʃ ˈɛndʒɪn/",
         translation: "Motor de búsqueda",
         level: "B1",
-        definition: "Google.",
+        definition:
+          'Motor de búsqueda. A natural English collocation meaning "google". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Use a search engine.",
       },
       {
@@ -5856,7 +6527,8 @@ export const collocationsData: StopData = {
         ipa: "/siːt bɛlt/",
         translation: "Cinturón de seguridad",
         level: "A1",
-        definition: "Strap.",
+        definition:
+          'Cinturón de seguridad. A natural English collocation meaning "strap". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Wear your seat belt.",
       },
       {
@@ -5864,7 +6536,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsɛkənd tʃɑːns/",
         translation: "Segunda oportunidad",
         level: "B1",
-        definition: "Try again.",
+        definition:
+          'Segunda oportunidad. A natural English collocation meaning "try again". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Give me a second chance.",
       },
       {
@@ -5872,7 +6545,8 @@ export const collocationsData: StopData = {
         ipa: "/siː juː ˈleɪtər/",
         translation: "Hasta luego",
         level: "A1",
-        definition: "Bye.",
+        definition:
+          'Hasta luego. A natural English collocation meaning "bye". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "See you later.",
       },
       {
@@ -5880,7 +6554,8 @@ export const collocationsData: StopData = {
         ipa: "/sɛlf kənˈtroʊl/",
         translation: "Autocontrol",
         level: "B2",
-        definition: "Discipline.",
+        definition:
+          'Autocontrol. A natural English collocation meaning "discipline". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Lose self control.",
       },
       {
@@ -5888,7 +6563,8 @@ export const collocationsData: StopData = {
         ipa: "/sɛns əv ˈhjuːmər/",
         translation: "Sentido del humor",
         level: "B1",
-        definition: "Funny.",
+        definition:
+          'Sentido del humor. A natural English collocation meaning "funny". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Great sense of humor.",
       },
       {
@@ -5896,7 +6572,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsɪəriəs ˈɪndʒəri/",
         translation: "Lesión grave",
         level: "B2",
-        definition: "Bad hurt.",
+        definition:
+          'Lesión grave. A natural English collocation meaning "bad hurt". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He had a serious injury.",
       },
       {
@@ -5904,7 +6581,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsɪəriəs ˈprɒbləm/",
         translation: "Problema serio",
         level: "B1",
-        definition: "Bad issue.",
+        definition:
+          'Problema serio. A natural English collocation meaning "bad issue". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "This is a serious problem.",
       },
       {
@@ -5912,7 +6590,8 @@ export const collocationsData: StopData = {
         ipa: "/sɛt ə ɡoʊl/",
         translation: "Fijar una meta",
         level: "B1",
-        definition: "Aim.",
+        definition:
+          'Fijar una meta. A natural English collocation meaning "aim". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Set a goal to run.",
       },
       {
@@ -5920,7 +6599,8 @@ export const collocationsData: StopData = {
         ipa: "/sɛt ə ˈrɛkɔːrd/",
         translation: "Establecer un récord",
         level: "B2",
-        definition: "Best ever.",
+        definition:
+          'Establecer un récord. A natural English collocation meaning "best ever". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He set a record.",
       },
       {
@@ -5928,7 +6608,8 @@ export const collocationsData: StopData = {
         ipa: "/sɛt ən ɪɡˈzɑːmpəl/",
         translation: "Dar ejemplo",
         level: "B2",
-        definition: "Model.",
+        definition:
+          'Dar ejemplo. A natural English collocation meaning "model". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Parents set an example.",
       },
       {
@@ -5936,7 +6617,8 @@ export const collocationsData: StopData = {
         ipa: "/sɛt ˈfaɪər/",
         translation: "Prender fuego",
         level: "B2",
-        definition: "Burn.",
+        definition:
+          'Prender fuego. A natural English collocation meaning "burn". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Set fire to it.",
       },
       {
@@ -5944,7 +6626,8 @@ export const collocationsData: StopData = {
         ipa: "/ʃeɪk hændz/",
         translation: "Estrechar manos",
         level: "A1",
-        definition: "Greet.",
+        definition:
+          'Estrechar manos. A natural English collocation meaning "greet". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They shook hands.",
       },
       {
@@ -5952,7 +6635,8 @@ export const collocationsData: StopData = {
         ipa: "/ʃɔːrt tɜːrm/",
         translation: "Corto plazo",
         level: "B2",
-        definition: "Soon.",
+        definition:
+          'Corto plazo. A natural English collocation meaning "soon". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Short term goals.",
       },
       {
@@ -5960,7 +6644,8 @@ export const collocationsData: StopData = {
         ipa: "/sɪk liːv/",
         translation: "Baja por enfermedad",
         level: "B2",
-        definition: "Off work.",
+        definition:
+          'Baja por enfermedad. A natural English collocation meaning "off work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is on sick leave.",
       },
       {
@@ -5968,7 +6653,8 @@ export const collocationsData: StopData = {
         ipa: "/saɪd ɪˈfɛkt/",
         translation: "Efecto secundario",
         level: "C1",
-        definition: "Result.",
+        definition:
+          'Efecto secundario. A natural English collocation meaning "result". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Drug side effects.",
       },
       {
@@ -5976,7 +6662,8 @@ export const collocationsData: StopData = {
         ipa: "/saɪn ə ˈkɒntrækt/",
         translation: "Firmar un contrato",
         level: "B1",
-        definition: "Agree.",
+        definition:
+          'Firmar un contrato. A natural English collocation meaning "agree". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Sign a contract today.",
       },
       {
@@ -5984,7 +6671,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsɪmpl ˈriːzən/",
         translation: "Razón simple",
         level: "B1",
-        definition: "Easy why.",
+        definition:
+          'Razón simple. A natural English collocation meaning "easy why". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "For a simple reason.",
       },
       {
@@ -5992,7 +6680,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsɪŋɡəl ˈpɛərənt/",
         translation: "Padre/Madre soltero/a",
         level: "B1",
-        definition: "Alone.",
+        definition:
+          'Padre/Madre soltero/a. A natural English collocation meaning "alone". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She is a single parent.",
       },
       {
@@ -6000,7 +6689,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsliːpɪŋ bæɡ/",
         translation: "Saco de dormir",
         level: "A2",
-        definition: "Camping bed.",
+        definition:
+          'Saco de dormir. A natural English collocation meaning "camping bed". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Sleep in a sleeping bag.",
       },
       {
@@ -6008,7 +6698,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsliːpɪŋ pɪl/",
         translation: "Pastilla para dormir",
         level: "B1",
-        definition: "Drug.",
+        definition:
+          'Pastilla para dormir. A natural English collocation meaning "drug". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take a sleeping pill.",
       },
       {
@@ -6016,7 +6707,8 @@ export const collocationsData: StopData = {
         ipa: "/sloʊ ˈmoʊʃən/",
         translation: "Cámara lenta",
         level: "B2",
-        definition: "Not fast.",
+        definition:
+          'Cámara lenta. A natural English collocation meaning "not fast". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Watch in slow motion.",
       },
       {
@@ -6024,7 +6716,8 @@ export const collocationsData: StopData = {
         ipa: "/smɔːl tʃeɪndʒ/",
         translation: "Calderilla",
         level: "B1",
-        definition: "Coins.",
+        definition:
+          'Calderilla. A natural English collocation meaning "coins". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Keep the small change.",
       },
       {
@@ -6032,7 +6725,8 @@ export const collocationsData: StopData = {
         ipa: "/smɔːl tɔːk/",
         translation: "Charla trivial",
         level: "C1",
-        definition: "Chat.",
+        definition:
+          'Charla trivial. A natural English collocation meaning "chat". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I hate small talk.",
       },
       {
@@ -6040,7 +6734,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsoʊʃəl laɪf/",
         translation: "Vida social",
         level: "A2",
-        definition: "Friends.",
+        definition:
+          'Vida social. A natural English collocation meaning "friends". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Busy social life.",
       },
       {
@@ -6048,7 +6743,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsoʊʃəl ˈmiːdiə/",
         translation: "Redes sociales",
         level: "A2",
-        definition: "FB/Insta.",
+        definition:
+          'Redes sociales. A natural English collocation meaning "fb/insta". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Post on social media.",
       },
       {
@@ -6056,7 +6752,8 @@ export const collocationsData: StopData = {
         ipa: "/sɒft drɪŋk/",
         translation: "Refresco",
         level: "A2",
-        definition: "Soda.",
+        definition:
+          'Refresco. A natural English collocation meaning "soda". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Coke is a soft drink.",
       },
       {
@@ -6064,7 +6761,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsoʊlər ˈɛnərdʒi/",
         translation: "Energía solar",
         level: "B1",
-        definition: "Sun power.",
+        definition:
+          'Energía solar. A natural English collocation meaning "sun power". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Use solar energy.",
       },
       {
@@ -6072,7 +6770,8 @@ export const collocationsData: StopData = {
         ipa: "/sɒlv ə ˈmɪstəri/",
         translation: "Resolver un misterio",
         level: "B2",
-        definition: "Find truth.",
+        definition:
+          'Resolver un misterio. A natural English collocation meaning "find truth". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Sherlock solved the mystery.",
       },
       {
@@ -6080,7 +6779,8 @@ export const collocationsData: StopData = {
         ipa: "/sɒlv ə ˈprɒbləm/",
         translation: "Resolver un problema",
         level: "A2",
-        definition: "Fix.",
+        definition:
+          'Resolver un problema. A natural English collocation meaning "fix". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Help me solve a problem.",
       },
       {
@@ -6088,7 +6788,8 @@ export const collocationsData: StopData = {
         ipa: "/spɛər taɪm/",
         translation: "Tiempo libre",
         level: "B1",
-        definition: "Free hours.",
+        definition:
+          'Tiempo libre. A natural English collocation meaning "free hours". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In my spare time.",
       },
       {
@@ -6096,7 +6797,8 @@ export const collocationsData: StopData = {
         ipa: "/spiːd ˈlɪmɪt/",
         translation: "Límite de velocidad",
         level: "A2",
-        definition: "Max fast.",
+        definition:
+          'Límite de velocidad. A natural English collocation meaning "max fast". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Obey the speed limit.",
       },
       {
@@ -6104,7 +6806,8 @@ export const collocationsData: StopData = {
         ipa: "/spɛnd taɪm/",
         translation: "Pasar tiempo",
         level: "A1",
-        definition: "Use hours.",
+        definition:
+          'Pasar tiempo. A natural English collocation meaning "use hours". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Spend time with family.",
       },
       {
@@ -6112,7 +6815,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈstændərd əv ˈlɪvɪŋ/",
         translation: "Nivel de vida",
         level: "C1",
-        definition: "Wealth.",
+        definition:
+          'Nivel de vida. A natural English collocation meaning "wealth". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "High standard of living.",
       },
       {
@@ -6120,7 +6824,8 @@ export const collocationsData: StopData = {
         ipa: "/stɑːrt ə ˈfæmɪli/",
         translation: "Formar una familia",
         level: "B1",
-        definition: "Have kids.",
+        definition:
+          'Formar una familia. A natural English collocation meaning "have kids". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "They want to start a family.",
       },
       {
@@ -6128,7 +6833,8 @@ export const collocationsData: StopData = {
         ipa: "/steɪ əˈweɪk/",
         translation: "Mantenerse despierto",
         level: "B1",
-        definition: "No sleep.",
+        definition:
+          'Mantenerse despierto. A natural English collocation meaning "no sleep". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Coffee helps stay awake.",
       },
       {
@@ -6136,7 +6842,8 @@ export const collocationsData: StopData = {
         ipa: "/steɪ kɑːm/",
         translation: "Mantener la calma",
         level: "B1",
-        definition: "Relax.",
+        definition:
+          'Mantener la calma. A natural English collocation meaning "relax". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Please stay calm.",
       },
       {
@@ -6144,7 +6851,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈstɛdi dʒɒb/",
         translation: "Trabajo estable",
         level: "B2",
-        definition: "Secure work.",
+        definition:
+          'Trabajo estable. A natural English collocation meaning "secure work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Get a steady job.",
       },
       {
@@ -6152,7 +6860,8 @@ export const collocationsData: StopData = {
         ipa: "/stɪf ˌkɒmpɪˈtɪʃən/",
         translation: "Competencia feroz",
         level: "C2",
-        definition: "Hard rivalry.",
+        definition:
+          'Competencia feroz. A natural English collocation meaning "hard rivalry". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Face stiff competition.",
       },
       {
@@ -6160,7 +6869,8 @@ export const collocationsData: StopData = {
         ipa: "/stɒp ˈsmoʊkɪŋ/",
         translation: "Dejar de fumar",
         level: "A2",
-        definition: "Quit.",
+        definition:
+          'Dejar de fumar. A natural English collocation meaning "quit". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You must stop smoking.",
       },
       {
@@ -6168,7 +6878,8 @@ export const collocationsData: StopData = {
         ipa: "/streɪt əˈweɪ/",
         translation: "De inmediato",
         level: "B1",
-        definition: "Now.",
+        definition:
+          'De inmediato. A natural English collocation meaning "now". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Do it straight away.",
       },
       {
@@ -6176,7 +6887,8 @@ export const collocationsData: StopData = {
         ipa: "/strɪkt ruːl/",
         translation: "Regla estricta",
         level: "B2",
-        definition: "Hard law.",
+        definition:
+          'Regla estricta. A natural English collocation meaning "hard law". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "School has strict rules.",
       },
       {
@@ -6184,7 +6896,8 @@ export const collocationsData: StopData = {
         ipa: "/straɪk ə ˈbæləns/",
         translation: "Encontrar un equilibrio",
         level: "C1",
-        definition: "Equalize.",
+        definition:
+          'Encontrar un equilibrio. A natural English collocation meaning "equalize". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Strike a balance between work and life.",
       },
       {
@@ -6192,7 +6905,8 @@ export const collocationsData: StopData = {
         ipa: "/strɒŋ ˈkɒfi/",
         translation: "Café fuerte",
         level: "A2",
-        definition: "Potent.",
+        definition:
+          'Café fuerte. A natural English collocation meaning "potent". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I need strong coffee.",
       },
       {
@@ -6200,7 +6914,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈstrɒŋli əˈɡriː/",
         translation: "Estar muy de acuerdo",
         level: "B2",
-        definition: "Yes.",
+        definition:
+          'Estar muy de acuerdo. A natural English collocation meaning "yes". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I strongly agree.",
       },
       {
@@ -6208,7 +6923,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈstrɒŋli əˈpoʊz/",
         translation: "Oponerse firmemente",
         level: "C1",
-        definition: "No.",
+        definition:
+          'Oponerse firmemente. A natural English collocation meaning "no". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I strongly oppose it.",
       },
       {
@@ -6216,7 +6932,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈsʌbdʒɪkt ˈmætər/",
         translation: "Tema",
         level: "C1",
-        definition: "Topic.",
+        definition:
+          'Tema. A natural English collocation meaning "topic". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The subject matter is complex.",
       },
     ],
@@ -6228,7 +6945,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ə breɪk/",
         translation: "Tomar un descanso",
         level: "A1",
-        definition: "Pause.",
+        definition:
+          'Tomar un descanso. A natural English collocation meaning "pause". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Let's take a break.",
       },
       {
@@ -6236,7 +6954,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ə tʃɑːns/",
         translation: "Arriesgarse",
         level: "B1",
-        definition: "Risk.",
+        definition:
+          'Arriesgarse. A natural English collocation meaning "risk". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take a chance on me.",
       },
       {
@@ -6244,7 +6963,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ə lʊk/",
         translation: "Mirar",
         level: "A1",
-        definition: "See.",
+        definition:
+          'Mirar. A natural English collocation meaning "see". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take a look at this.",
       },
       {
@@ -6252,7 +6972,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ə næp/",
         translation: "Tomar una siesta",
         level: "A2",
-        definition: "Sleep.",
+        definition:
+          'Tomar una siesta. A natural English collocation meaning "sleep". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I need to take a nap.",
       },
       {
@@ -6260,7 +6981,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ə ˈpɪktʃər/",
         translation: "Tomar una foto",
         level: "A1",
-        definition: "Photo.",
+        definition:
+          'Tomar una foto. A natural English collocation meaning "photo". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take a picture of us.",
       },
       {
@@ -6268,7 +6990,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ə rɪsk/",
         translation: "Correr un riesgo",
         level: "B1",
-        definition: "Dare.",
+        definition:
+          'Correr un riesgo. A natural English collocation meaning "dare". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't take a risk.",
       },
       {
@@ -6276,7 +6999,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ə siːt/",
         translation: "Tomar asiento",
         level: "A2",
-        definition: "Sit.",
+        definition:
+          'Tomar asiento. A natural English collocation meaning "sit". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Please take a seat.",
       },
       {
@@ -6284,7 +7008,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ˈækʃən/",
         translation: "Tomar medidas",
         level: "B2",
-        definition: "Act.",
+        definition:
+          'Tomar medidas. A natural English collocation meaning "act". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We must take action.",
       },
       {
@@ -6292,7 +7017,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ədˈvɑːntɪdʒ/",
         translation: "Aprovecharse",
         level: "B2",
-        definition: "Use.",
+        definition:
+          'Aprovecharse. A natural English collocation meaning "use". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take advantage of the offer.",
       },
       {
@@ -6300,7 +7026,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ədˈvaɪs/",
         translation: "Seguir consejo",
         level: "B1",
-        definition: "Listen.",
+        definition:
+          'Seguir consejo. A natural English collocation meaning "listen". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take my advice.",
       },
       {
@@ -6308,7 +7035,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk kɛər/",
         translation: "Cuidarse",
         level: "A1",
-        definition: "Bye.",
+        definition:
+          'Cuidarse. A natural English collocation meaning "bye". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take care!",
       },
       {
@@ -6316,7 +7044,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk kənˈtroʊl/",
         translation: "Tomar el control",
         level: "B2",
-        definition: "Lead.",
+        definition:
+          'Tomar el control. A natural English collocation meaning "lead". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He took control.",
       },
       {
@@ -6324,7 +7053,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ˈkʌvər/",
         translation: "Cubrirse",
         level: "B2",
-        definition: "Hide.",
+        definition:
+          'Cubrirse. A natural English collocation meaning "hide". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Run and take cover.",
       },
       {
@@ -6332,7 +7062,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk ɪˈfɛkt/",
         translation: "Surtir efecto",
         level: "B2",
-        definition: "Start working.",
+        definition:
+          'Surtir efecto. A natural English collocation meaning "start working". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The pill takes effect soon.",
       },
       {
@@ -6340,7 +7071,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk noʊts/",
         translation: "Tomar notas",
         level: "A2",
-        definition: "Write.",
+        definition:
+          'Tomar notas. A natural English collocation meaning "write". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take notes in class.",
       },
       {
@@ -6348,7 +7080,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk pɑːrt/",
         translation: "Participar",
         level: "B1",
-        definition: "Join.",
+        definition:
+          'Participar. A natural English collocation meaning "join". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take part in the game.",
       },
       {
@@ -6356,7 +7089,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk pleɪs/",
         translation: "Tener lugar",
         level: "B1",
-        definition: "Happen.",
+        definition:
+          'Tener lugar. A natural English collocation meaning "happen". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The event takes place here.",
       },
       {
@@ -6364,7 +7098,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk praɪd/",
         translation: "Enorgullecerse",
         level: "C1",
-        definition: "Proud.",
+        definition:
+          'Enorgullecerse. A natural English collocation meaning "proud". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take pride in your work.",
       },
       {
@@ -6372,7 +7107,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk rɪˌspɒnsɪˈbɪlɪti/",
         translation: "Asumir responsabilidad",
         level: "B2",
-        definition: "Own it.",
+        definition:
+          'Asumir responsabilidad. A natural English collocation meaning "own it". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Take responsibility for actions.",
       },
       {
@@ -6380,7 +7116,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk tɜːrnz/",
         translation: "Turnarse",
         level: "B1",
-        definition: "Swap.",
+        definition:
+          'Turnarse. A natural English collocation meaning "swap". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We take turns driving.",
       },
       {
@@ -6388,7 +7125,8 @@ export const collocationsData: StopData = {
         ipa: "/teɪk jɔːr taɪm/",
         translation: "Tómate tu tiempo",
         level: "A2",
-        definition: "No rush.",
+        definition:
+          'Tómate tu tiempo. A natural English collocation meaning "no rush". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't hurry, take your time.",
       },
       {
@@ -6396,7 +7134,8 @@ export const collocationsData: StopData = {
         ipa: "/tɔːk ˈfriːli/",
         translation: "Hablar libremente",
         level: "B2",
-        definition: "Openly.",
+        definition:
+          'Hablar libremente. A natural English collocation meaning "openly". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You can talk freely.",
       },
       {
@@ -6404,7 +7143,8 @@ export const collocationsData: StopData = {
         ipa: "/tɔːl ˈbɪldɪŋ/",
         translation: "Edificio alto",
         level: "A1",
-        definition: "Skyscraper.",
+        definition:
+          'Edificio alto. A natural English collocation meaning "skyscraper". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A very tall building.",
       },
       {
@@ -6412,7 +7152,8 @@ export const collocationsData: StopData = {
         ipa: "/tæks ɪˈveɪʒən/",
         translation: "Evasión de impuestos",
         level: "C1",
-        definition: "Crime.",
+        definition:
+          'Evasión de impuestos. A natural English collocation meaning "crime". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Jailed for tax evasion.",
       },
       {
@@ -6420,7 +7161,8 @@ export const collocationsData: StopData = {
         ipa: "/tiːm ˈspɪrɪt/",
         translation: "Espíritu de equipo",
         level: "B2",
-        definition: "Unity.",
+        definition:
+          'Espíritu de equipo. A natural English collocation meaning "unity". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Good team spirit.",
       },
       {
@@ -6428,7 +7170,8 @@ export const collocationsData: StopData = {
         ipa: "/tiːm wɜːrk/",
         translation: "Trabajo en equipo",
         level: "A2",
-        definition: "Cooperation.",
+        definition:
+          'Trabajo en equipo. A natural English collocation meaning "cooperation". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Team work is key.",
       },
       {
@@ -6436,7 +7179,8 @@ export const collocationsData: StopData = {
         ipa: "/tɛl ə dʒoʊk/",
         translation: "Contar un chiste",
         level: "A2",
-        definition: "Funny story.",
+        definition:
+          'Contar un chiste. A natural English collocation meaning "funny story". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Tell me a joke.",
       },
       {
@@ -6444,7 +7188,8 @@ export const collocationsData: StopData = {
         ipa: "/tɛl ə laɪ/",
         translation: "Decir una mentira",
         level: "A2",
-        definition: "Fib.",
+        definition:
+          'Decir una mentira. A natural English collocation meaning "fib". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Never tell a lie.",
       },
       {
@@ -6452,7 +7197,8 @@ export const collocationsData: StopData = {
         ipa: "/tɛl ðə ˈdɪfrəns/",
         translation: "Distinguir la diferencia",
         level: "B1",
-        definition: "Compare.",
+        definition:
+          'Distinguir la diferencia. A natural English collocation meaning "compare". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can't tell the difference.",
       },
       {
@@ -6460,7 +7206,8 @@ export const collocationsData: StopData = {
         ipa: "/tɛl ðə taɪm/",
         translation: "Decir la hora",
         level: "A1",
-        definition: "Clock.",
+        definition:
+          'Decir la hora. A natural English collocation meaning "clock". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Can you tell the time?",
       },
       {
@@ -6468,7 +7215,8 @@ export const collocationsData: StopData = {
         ipa: "/tɛl ðə truːθ/",
         translation: "Decir la verdad",
         level: "A2",
-        definition: "Honesty.",
+        definition:
+          'Decir la verdad. A natural English collocation meaning "honesty". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Always tell the truth.",
       },
       {
@@ -6476,7 +7224,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈtɛmpərɛri dʒɒb/",
         translation: "Trabajo temporal",
         level: "B1",
-        definition: "Short work.",
+        definition:
+          'Trabajo temporal. A natural English collocation meaning "short work". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It's just a temporary job.",
       },
       {
@@ -6484,7 +7233,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈtɛrɪbl mɪˈsteɪk/",
         translation: "Error terrible",
         level: "B1",
-        definition: "Bad error.",
+        definition:
+          'Error terrible. A natural English collocation meaning "bad error". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I made a terrible mistake.",
       },
       {
@@ -6492,7 +7242,8 @@ export const collocationsData: StopData = {
         ipa: "/ðə fluː/",
         translation: "La gripe",
         level: "A2",
-        definition: "Virus.",
+        definition:
+          'La gripe. A natural English collocation meaning "virus". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have the flu.",
       },
       {
@@ -6500,7 +7251,8 @@ export const collocationsData: StopData = {
         ipa: "/ði ˈɪntərnɛt/",
         translation: "El internet",
         level: "A1",
-        definition: "Web.",
+        definition:
+          'El internet. A natural English collocation meaning "web". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Surf the internet.",
       },
       {
@@ -6508,7 +7260,8 @@ export const collocationsData: StopData = {
         ipa: "/ðə rɛst/",
         translation: "El resto",
         level: "A2",
-        definition: "Remainder.",
+        definition:
+          'El resto. A natural English collocation meaning "remainder". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Keep the rest.",
       },
       {
@@ -6516,7 +7269,8 @@ export const collocationsData: StopData = {
         ipa: "/θɪŋk twaɪs/",
         translation: "Pensarlo dos veces",
         level: "B2",
-        definition: "Reconsider.",
+        definition:
+          'Pensarlo dos veces. A natural English collocation meaning "reconsider". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Think twice before acting.",
       },
       {
@@ -6524,7 +7278,8 @@ export const collocationsData: StopData = {
         ipa: "/θroʊ ə ˈpɑːrti/",
         translation: "Hacer una fiesta",
         level: "B1",
-        definition: "Host.",
+        definition:
+          'Hacer una fiesta. A natural English collocation meaning "host". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Throw a birthday party.",
       },
       {
@@ -6532,7 +7287,8 @@ export const collocationsData: StopData = {
         ipa: "/taɪt ˈʃɛdjuːl/",
         translation: "Agenda apretada",
         level: "C1",
-        definition: "Busy.",
+        definition:
+          'Agenda apretada. A natural English collocation meaning "busy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have a tight schedule.",
       },
       {
@@ -6540,7 +7296,8 @@ export const collocationsData: StopData = {
         ipa: "/taɪm flaɪz/",
         translation: "El tiempo vuela",
         level: "B1",
-        definition: "Fast time.",
+        definition:
+          'El tiempo vuela. A natural English collocation meaning "fast time". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Time flies fast.",
       },
       {
@@ -6548,7 +7305,8 @@ export const collocationsData: StopData = {
         ipa: "/taɪm ˈmænɪdʒmənt/",
         translation: "Gestión del tiempo",
         level: "B2",
-        definition: "Planning.",
+        definition:
+          'Gestión del tiempo. A natural English collocation meaning "planning". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Learn time management.",
       },
       {
@@ -6556,7 +7314,8 @@ export const collocationsData: StopData = {
         ipa: "/tɒp praɪˈɒrɪti/",
         translation: "Máxima prioridad",
         level: "B2",
-        definition: "First.",
+        definition:
+          'Máxima prioridad. A natural English collocation meaning "first". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Safety is top priority.",
       },
       {
@@ -6564,7 +7323,8 @@ export const collocationsData: StopData = {
         ipa: "/tɒp ˈsiːkrɪt/",
         translation: "Alto secreto",
         level: "B2",
-        definition: "Hidden.",
+        definition:
+          'Alto secreto. A natural English collocation meaning "hidden". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "This is top secret.",
       },
       {
@@ -6572,7 +7332,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈtoʊtəl dɪˈzɑːstər/",
         translation: "Desastre total",
         level: "B1",
-        definition: "Fail.",
+        definition:
+          'Desastre total. A natural English collocation meaning "fail". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The trip was a total disaster.",
       },
       {
@@ -6580,7 +7341,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈtoʊtəli əˈɡriː/",
         translation: "Totalmente de acuerdo",
         level: "B1",
-        definition: "Yes.",
+        definition:
+          'Totalmente de acuerdo. A natural English collocation meaning "yes". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I totally agree.",
       },
       {
@@ -6588,7 +7350,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈtoʊtəli ˈdɪfrənt/",
         translation: "Totalmente diferente",
         level: "B1",
-        definition: "Unique.",
+        definition:
+          'Totalmente diferente. A natural English collocation meaning "unique". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is totally different.",
       },
       {
@@ -6596,7 +7359,8 @@ export const collocationsData: StopData = {
         ipa: "/tʌf dɪˈsɪʒən/",
         translation: "Decisión difícil",
         level: "B2",
-        definition: "Hard choice.",
+        definition:
+          'Decisión difícil. A natural English collocation meaning "hard choice". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A tough decision to make.",
       },
       {
@@ -6604,7 +7368,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈtræfɪk dʒæm/",
         translation: "Atasco",
         level: "A2",
-        definition: "Stuck cars.",
+        definition:
+          'Atasco. A natural English collocation meaning "stuck cars". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Stuck in a traffic jam.",
       },
       {
@@ -6612,7 +7377,8 @@ export const collocationsData: StopData = {
         ipa: "/treɪn ˈsteɪʃən/",
         translation: "Estación de tren",
         level: "A1",
-        definition: "Rail stop.",
+        definition:
+          'Estación de tren. A natural English collocation meaning "rail stop". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Go to the train station.",
       },
       {
@@ -6620,7 +7386,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈtrævəl ˈeɪdʒənt/",
         translation: "Agente de viajes",
         level: "A2",
-        definition: "Booker.",
+        definition:
+          'Agente de viajes. A natural English collocation meaning "booker". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Call the travel agent.",
       },
       {
@@ -6628,7 +7395,8 @@ export const collocationsData: StopData = {
         ipa: "/truː lʌv/",
         translation: "Amor verdadero",
         level: "A2",
-        definition: "Real.",
+        definition:
+          'Amor verdadero. A natural English collocation meaning "real". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Find true love.",
       },
       {
@@ -6636,7 +7404,8 @@ export const collocationsData: StopData = {
         ipa: "/trʌst jɔːr ˈɪnstɪŋkts/",
         translation: "Confía en tus instintos",
         level: "B2",
-        definition: "Gut feeling.",
+        definition:
+          'Confía en tus instintos. A natural English collocation meaning "gut feeling". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Always trust your instincts.",
       },
     ],
@@ -6648,7 +7417,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈʌltɪmət ɡoʊl/",
         translation: "Meta final",
         level: "B2",
-        definition: "End aim.",
+        definition:
+          'Meta final. A natural English collocation meaning "end aim". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Winning is the ultimate goal.",
       },
       {
@@ -6656,7 +7426,8 @@ export const collocationsData: StopData = {
         ipa: "/juˈnænɪməs dɪˈsɪʒən/",
         translation: "Decisión unánime",
         level: "C1",
-        definition: "All agreed.",
+        definition:
+          'Decisión unánime. A natural English collocation meaning "all agreed". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was a unanimous decision.",
       },
       {
@@ -6664,7 +7435,8 @@ export const collocationsData: StopData = {
         ipa: "/ʌnˈbɛərəbl peɪn/",
         translation: "Dolor insoportable",
         level: "B2",
-        definition: "Hurts much.",
+        definition:
+          'Dolor insoportable. A natural English collocation meaning "hurts much". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He felt unbearable pain.",
       },
       {
@@ -6672,7 +7444,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈʌndər əˈrɛst/",
         translation: "Bajo arresto",
         level: "B1",
-        definition: "Police hold.",
+        definition:
+          'Bajo arresto. A natural English collocation meaning "police hold". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You are under arrest.",
       },
       {
@@ -6680,7 +7453,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈʌndər kənˈstrʌkʃən/",
         translation: "En construcción",
         level: "B1",
-        definition: "Building.",
+        definition:
+          'En construcción. A natural English collocation meaning "building". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Road under construction.",
       },
       {
@@ -6688,7 +7462,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈʌndər kənˈtroʊl/",
         translation: "Bajo control",
         level: "B1",
-        definition: "Managed.",
+        definition:
+          'Bajo control. A natural English collocation meaning "managed". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Everything is under control.",
       },
       {
@@ -6696,7 +7471,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈʌndər ˈprɛʃər/",
         translation: "Bajo presión",
         level: "B1",
-        definition: "Stressed.",
+        definition:
+          'Bajo presión. A natural English collocation meaning "stressed". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Work well under pressure.",
       },
       {
@@ -6704,7 +7480,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈʌndər ðə ˈsɜːrkəmstænsɪz/",
         translation: "Dadas las circunstancias",
         level: "C1",
-        definition: "Situation.",
+        definition:
+          'Dadas las circunstancias. A natural English collocation meaning "situation". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Good under the circumstances.",
       },
       {
@@ -6712,7 +7489,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈʌndər ðə ˈwɛðər/",
         translation: "Indispuesto",
         level: "C1",
-        definition: "Sick.",
+        definition:
+          'Indispuesto. A natural English collocation meaning "sick". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Feeling under the weather.",
       },
       {
@@ -6720,7 +7498,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌʌnɪmˈplɔɪmənt reɪt/",
         translation: "Tasa de desempleo",
         level: "B2",
-        definition: "Jobless %.",
+        definition:
+          'Tasa de desempleo. A natural English collocation meaning "jobless %". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "High unemployment rate.",
       },
       {
@@ -6728,7 +7507,8 @@ export const collocationsData: StopData = {
         ipa: "/ʌnˈfɛər ədˈvɑːntɪdʒ/",
         translation: "Ventaja injusta",
         level: "B2",
-        definition: "Cheating.",
+        definition:
+          'Ventaja injusta. A natural English collocation meaning "cheating". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He has an unfair advantage.",
       },
       {
@@ -6736,7 +7516,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌʌnfɔːrˈsiːn ˈsɜːrkəmstænsɪz/",
         translation: "Circunstancias imprevistas",
         level: "C1",
-        definition: "Surprise.",
+        definition:
+          'Circunstancias imprevistas. A natural English collocation meaning "surprise". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Due to unforeseen circumstances.",
       },
       {
@@ -6744,7 +7525,8 @@ export const collocationsData: StopData = {
         ipa: "/juˈniːk ˌɒpərˈtuːnɪti/",
         translation: "Oportunidad única",
         level: "B2",
-        definition: "Rare chance.",
+        definition:
+          'Oportunidad única. A natural English collocation meaning "rare chance". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A unique opportunity to travel.",
       },
       {
@@ -6752,7 +7534,8 @@ export const collocationsData: StopData = {
         ipa: "/juˈnaɪtɪd frʌnt/",
         translation: "Frente unido",
         level: "C2",
-        definition: "Together.",
+        definition:
+          'Frente unido. A natural English collocation meaning "together". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Present a united front.",
       },
       {
@@ -6760,7 +7543,8 @@ export const collocationsData: StopData = {
         ipa: "/ʌnˈnoʊn ˈɔːrɪdʒɪn/",
         translation: "Origen desconocido",
         level: "B2",
-        definition: "Mystery.",
+        definition:
+          'Origen desconocido. A natural English collocation meaning "mystery". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Virus of unknown origin.",
       },
       {
@@ -6768,7 +7552,8 @@ export const collocationsData: StopData = {
         ipa: "/ʌnˈlaɪkli ɪˈvɛnt/",
         translation: "Evento improbable",
         level: "B2",
-        definition: "Rare.",
+        definition:
+          'Evento improbable. A natural English collocation meaning "rare". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "In the unlikely event of fire.",
       },
       {
@@ -6776,7 +7561,8 @@ export const collocationsData: StopData = {
         ipa: "/ʌnˈplɛzənt sərˈpraɪz/",
         translation: "Sorpresa desagradable",
         level: "B2",
-        definition: "Bad shock.",
+        definition:
+          'Sorpresa desagradable. A natural English collocation meaning "bad shock". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "An unpleasant surprise.",
       },
       {
@@ -6784,7 +7570,8 @@ export const collocationsData: StopData = {
         ipa: "/ʌnˈspoʊkən ruːl/",
         translation: "Regla tácita",
         level: "C1",
-        definition: "Silent law.",
+        definition:
+          'Regla tácita. A natural English collocation meaning "silent law". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It's an unspoken rule.",
       },
       {
@@ -6792,7 +7579,8 @@ export const collocationsData: StopData = {
         ipa: "/ʌp ənd daʊn/",
         translation: "Arriba y abajo",
         level: "A1",
-        definition: "Moving.",
+        definition:
+          'Arriba y abajo. A natural English collocation meaning "moving". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Jumping up and down.",
       },
       {
@@ -6800,7 +7588,8 @@ export const collocationsData: StopData = {
         ipa: "/ʌp tu deɪt/",
         translation: "Al día",
         level: "B1",
-        definition: "Current.",
+        definition:
+          'Al día. A natural English collocation meaning "current". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Keep records up to date.",
       },
       {
@@ -6808,7 +7597,8 @@ export const collocationsData: StopData = {
         ipa: "/ʌp tu juː/",
         translation: "Depende de ti",
         level: "A2",
-        definition: "Your choice.",
+        definition:
+          'Depende de ti. A natural English collocation meaning "your choice". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is up to you.",
       },
       {
@@ -6816,7 +7606,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈʌpər klɑːs/",
         translation: "Clase alta",
         level: "B2",
-        definition: "Rich.",
+        definition:
+          'Clase alta. A natural English collocation meaning "rich". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "From the upper class.",
       },
       {
@@ -6824,7 +7615,8 @@ export const collocationsData: StopData = {
         ipa: "/ʌpˈsɛt ˈstʌmək/",
         translation: "Malestar estomacal",
         level: "B1",
-        definition: "Sick tummy.",
+        definition:
+          'Malestar estomacal. A natural English collocation meaning "sick tummy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have an upset stomach.",
       },
       {
@@ -6832,7 +7624,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɜːrbən ˈɛəriə/",
         translation: "Área urbana",
         level: "B2",
-        definition: "City.",
+        definition:
+          'Área urbana. A natural English collocation meaning "city". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Living in an urban area.",
       },
       {
@@ -6840,7 +7633,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɜːrdʒənt niːd/",
         translation: "Necesidad urgente",
         level: "B2",
-        definition: "Pressing.",
+        definition:
+          'Necesidad urgente. A natural English collocation meaning "pressing". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Urgent need for food.",
       },
       {
@@ -6848,7 +7642,8 @@ export const collocationsData: StopData = {
         ipa: "/juːz ˈwaɪzli/",
         translation: "Usar sabiamente",
         level: "B1",
-        definition: "Careful.",
+        definition:
+          'Usar sabiamente. A natural English collocation meaning "careful". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Use your time wisely.",
       },
       {
@@ -6856,7 +7651,8 @@ export const collocationsData: StopData = {
         ipa: "/juːst tu/",
         translation: "Acostumbrado a",
         level: "A2",
-        definition: "Habit.",
+        definition:
+          'Acostumbrado a. A natural English collocation meaning "habit". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I am used to it.",
       },
       {
@@ -6864,7 +7660,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈjuːsfʊl ədˈvaɪs/",
         translation: "Consejo útil",
         level: "B1",
-        definition: "Good tip.",
+        definition:
+          'Consejo útil. A natural English collocation meaning "good tip". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She gave useful advice.",
       },
       {
@@ -6872,7 +7669,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈjuːslɪs ˌɪnfərˈmeɪʃən/",
         translation: "Información inútil",
         level: "B2",
-        definition: "Junk info.",
+        definition:
+          'Información inútil. A natural English collocation meaning "junk info". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Full of useless information.",
       },
       {
@@ -6880,7 +7678,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈjuːʒuəl weɪ/",
         translation: "Forma habitual",
         level: "B1",
-        definition: "Normal.",
+        definition:
+          'Forma habitual. A natural English collocation meaning "normal". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Do it the usual way.",
       },
       {
@@ -6888,7 +7687,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈʌtər kənˈfjuːʒən/",
         translation: "Confusión total",
         level: "C1",
-        definition: "Chaos.",
+        definition:
+          'Confusión total. A natural English collocation meaning "chaos". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "State of utter confusion.",
       },
       {
@@ -6896,7 +7696,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈʌtərli rɪˈdɪkjʊləs/",
         translation: "Totalmente ridículo",
         level: "C1",
-        definition: "Absurd.",
+        definition:
+          'Totalmente ridículo. A natural English collocation meaning "absurd". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That is utterly ridiculous.",
       },
     ],
@@ -6908,7 +7709,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈveɪkənt siːt/",
         translation: "Asiento vacío",
         level: "B1",
-        definition: "Empty.",
+        definition:
+          'Asiento vacío. A natural English collocation meaning "empty". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Is there a vacant seat?",
       },
       {
@@ -6916,7 +7718,8 @@ export const collocationsData: StopData = {
         ipa: "/veɪɡ aɪˈdiːə/",
         translation: "Idea vaga",
         level: "B2",
-        definition: "Unclear.",
+        definition:
+          'Idea vaga. A natural English collocation meaning "unclear". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have a vague idea.",
       },
       {
@@ -6924,7 +7727,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvælɪd pɔɪnt/",
         translation: "Punto válido",
         level: "B2",
-        definition: "Good arg.",
+        definition:
+          'Punto válido. A natural English collocation meaning "good arg". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You raise a valid point.",
       },
       {
@@ -6932,7 +7736,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvælɪd ˈriːzən/",
         translation: "Razón válida",
         level: "B1",
-        definition: "Justified.",
+        definition:
+          'Razón válida. A natural English collocation meaning "justified". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "No valid reason.",
       },
       {
@@ -6940,7 +7745,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvæljuəbl ˈlɛsən/",
         translation: "Lección valiosa",
         level: "B2",
-        definition: "Learned.",
+        definition:
+          'Lección valiosa. A natural English collocation meaning "learned". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Learned a valuable lesson.",
       },
       {
@@ -6948,7 +7754,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvæljuː fɔːr ˈmʌni/",
         translation: "Buena relación calidad-precio",
         level: "B2",
-        definition: "Worth it.",
+        definition:
+          'Buena relación calidad-precio. A natural English collocation meaning "worth it". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Good value for money.",
       },
       {
@@ -6956,7 +7763,8 @@ export const collocationsData: StopData = {
         ipa: "/vəˈraɪəti əv/",
         translation: "Variedad de",
         level: "B1",
-        definition: "Mix.",
+        definition:
+          'Variedad de. A natural English collocation meaning "mix". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A variety of options.",
       },
       {
@@ -6964,7 +7772,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɛəriəs ˈriːzənz/",
         translation: "Varias razones",
         level: "B1",
-        definition: "Many whys.",
+        definition:
+          'Varias razones. A natural English collocation meaning "many whys". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "For various reasons.",
       },
       {
@@ -6972,7 +7781,8 @@ export const collocationsData: StopData = {
         ipa: "/vɑːst məˈdʒɒrɪti/",
         translation: "Gran mayoría",
         level: "B2",
-        definition: "Most.",
+        definition:
+          'Gran mayoría. A natural English collocation meaning "most". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The vast majority agreed.",
       },
       {
@@ -6980,7 +7790,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌvɛdʒɪˈtɛəriən daɪət/",
         translation: "Dieta vegetariana",
         level: "A2",
-        definition: "No meat.",
+        definition:
+          'Dieta vegetariana. A natural English collocation meaning "no meat". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Follow a vegetarian diet.",
       },
       {
@@ -6988,7 +7799,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɜːrbəli əˈbjuːz/",
         translation: "Abusar verbalmente",
         level: "C1",
-        definition: "Insult.",
+        definition:
+          'Abusar verbalmente. A natural English collocation meaning "insult". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't verbally abuse staff.",
       },
       {
@@ -6996,7 +7808,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɛri ɡʊd/",
         translation: "Muy bueno",
         level: "A1",
-        definition: "Great.",
+        definition:
+          'Muy bueno. A natural English collocation meaning "great". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You are very good.",
       },
       {
@@ -7004,7 +7817,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɛri ˈlaɪkli/",
         translation: "Muy probable",
         level: "B1",
-        definition: "Probable.",
+        definition:
+          'Muy probable. A natural English collocation meaning "probable". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is very likely.",
       },
       {
@@ -7012,7 +7826,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɛstɪd ˈɪntrəst/",
         translation: "Interés creado",
         level: "C2",
-        definition: "Personal gain.",
+        definition:
+          'Interés creado. A natural English collocation meaning "personal gain". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He has a vested interest.",
       },
       {
@@ -7020,7 +7835,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɪʃəs ˈsɜːrkəl/",
         translation: "Círculo vicioso",
         level: "C1",
-        definition: "Bad loop.",
+        definition:
+          'Círculo vicioso. A natural English collocation meaning "bad loop". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Trapped in a vicious circle.",
       },
       {
@@ -7028,7 +7844,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɪdioʊ ɡeɪm/",
         translation: "Videojuego",
         level: "A1",
-        definition: "Play.",
+        definition:
+          'Videojuego. A natural English collocation meaning "play". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Play a video game.",
       },
       {
@@ -7036,7 +7853,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvaɪələnt kraɪm/",
         translation: "Crimen violento",
         level: "B2",
-        definition: "Hurtful.",
+        definition:
+          'Crimen violento. A natural English collocation meaning "hurtful". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Rise in violent crime.",
       },
       {
@@ -7044,7 +7862,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvaɪələnt ˈmuːvi/",
         translation: "Película violenta",
         level: "A2",
-        definition: "Bloody.",
+        definition:
+          'Película violenta. A natural English collocation meaning "bloody". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I hate violent movies.",
       },
       {
@@ -7052,7 +7871,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɜːrtʃuəl riˈælɪti/",
         translation: "Realidad virtual",
         level: "B2",
-        definition: "VR.",
+        definition:
+          'Realidad virtual. A natural English collocation meaning "vr". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Use virtual reality.",
       },
       {
@@ -7060,7 +7880,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɜːrtʃuəli ɪmˈpɒsɪbl/",
         translation: "Virtualmente imposible",
         level: "C1",
-        definition: "Cannot do.",
+        definition:
+          'Virtualmente imposible. A natural English collocation meaning "cannot do". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is virtually impossible.",
       },
       {
@@ -7068,7 +7889,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɪzɪbl ˈdɪfrəns/",
         translation: "Diferencia visible",
         level: "B2",
-        definition: "Seen.",
+        definition:
+          'Diferencia visible. A natural English collocation meaning "seen". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "No visible difference.",
       },
       {
@@ -7076,7 +7898,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɪzɪt ə ˈwɛbsaɪt/",
         translation: "Visitar un sitio web",
         level: "A2",
-        definition: "Browse.",
+        definition:
+          'Visitar un sitio web. A natural English collocation meaning "browse". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Visit our website.",
       },
       {
@@ -7084,7 +7907,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɪʒuəl eɪd/",
         translation: "Ayuda visual",
         level: "B2",
-        definition: "Picture.",
+        definition:
+          'Ayuda visual. A natural English collocation meaning "picture". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Use visual aids.",
       },
       {
@@ -7092,7 +7916,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvaɪtl roʊl/",
         translation: "Papel vital",
         level: "C1",
-        definition: "Key part.",
+        definition:
+          'Papel vital. A natural English collocation meaning "key part". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Play a vital role.",
       },
       {
@@ -7100,7 +7925,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɪvɪd ɪˌmædʒɪˈneɪʃən/",
         translation: "Imaginación vívida",
         level: "C1",
-        definition: "Dreamy.",
+        definition:
+          'Imaginación vívida. A natural English collocation meaning "dreamy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She has a vivid imagination.",
       },
       {
@@ -7108,7 +7934,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvɪvɪd ˈmɛməri/",
         translation: "Recuerdo vívido",
         level: "B2",
-        definition: "Clear.",
+        definition:
+          'Recuerdo vívido. A natural English collocation meaning "clear". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I have a vivid memory.",
       },
       {
@@ -7116,7 +7943,8 @@ export const collocationsData: StopData = {
         ipa: "/vɔɪs ən əˈpɪnjən/",
         translation: "Expresar una opinión",
         level: "C1",
-        definition: "Speak out.",
+        definition:
+          'Expresar una opinión. A natural English collocation meaning "speak out". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Voice an opinion freely.",
       },
       {
@@ -7124,7 +7952,8 @@ export const collocationsData: StopData = {
         ipa: "/vɔɪs meɪl/",
         translation: "Buzón de voz",
         level: "A2",
-        definition: "Message.",
+        definition:
+          'Buzón de voz. A natural English collocation meaning "message". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Leave a voice mail.",
       },
       {
@@ -7132,7 +7961,8 @@ export const collocationsData: StopData = {
         ipa: "/ˌvɒlənˈtɪər wɜːrk/",
         translation: "Trabajo voluntario",
         level: "B1",
-        definition: "Free help.",
+        definition:
+          'Trabajo voluntario. A natural English collocation meaning "free help". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Do volunteer work.",
       },
       {
@@ -7140,7 +7970,8 @@ export const collocationsData: StopData = {
         ipa: "/voʊt fɔːr/",
         translation: "Votar por",
         level: "B1",
-        definition: "Elect.",
+        definition:
+          'Votar por. A natural English collocation meaning "elect". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Vote for me.",
       },
       {
@@ -7148,7 +7979,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvʌlɡər ˈlæŋɡwɪdʒ/",
         translation: "Lenguaje vulgar",
         level: "B2",
-        definition: "Rude.",
+        definition:
+          'Lenguaje vulgar. A natural English collocation meaning "rude". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Avoid vulgar language.",
       },
       {
@@ -7156,7 +7988,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈvʌlnərəbl ɡruːp/",
         translation: "Grupo vulnerable",
         level: "C1",
-        definition: "At risk.",
+        definition:
+          'Grupo vulnerable. A natural English collocation meaning "at risk". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Protect vulnerable groups.",
       },
     ],
@@ -7168,7 +8001,8 @@ export const collocationsData: StopData = {
         ipa: "/weɪt ə ˈmɪnɪt/",
         translation: "Espera un minuto",
         level: "A1",
-        definition: "Hold on.",
+        definition:
+          'Espera un minuto. A natural English collocation meaning "hold on". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Wait a minute please.",
       },
       {
@@ -7176,7 +8010,8 @@ export const collocationsData: StopData = {
         ipa: "/weɪt ɪn laɪn/",
         translation: "Esperar en fila",
         level: "A2",
-        definition: "Queue.",
+        definition:
+          'Esperar en fila. A natural English collocation meaning "queue". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We had to wait in line.",
       },
       {
@@ -7184,7 +8019,8 @@ export const collocationsData: StopData = {
         ipa: "/weɪk ʌp/",
         translation: "Despertar",
         level: "A1",
-        definition: "Rise.",
+        definition:
+          'Despertar. A natural English collocation meaning "rise". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Wake up early.",
       },
       {
@@ -7192,7 +8028,8 @@ export const collocationsData: StopData = {
         ipa: "/wɔːk əˈweɪ/",
         translation: "Alejarse",
         level: "A2",
-        definition: "Leave.",
+        definition:
+          'Alejarse. A natural English collocation meaning "leave". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Just walk away.",
       },
       {
@@ -7200,7 +8037,8 @@ export const collocationsData: StopData = {
         ipa: "/wɔːrm ˈwɛlkəm/",
         translation: "Cálida bienvenida",
         level: "B1",
-        definition: "Nice hello.",
+        definition:
+          'Cálida bienvenida. A natural English collocation meaning "nice hello". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Give a warm welcome.",
       },
       {
@@ -7208,7 +8046,8 @@ export const collocationsData: StopData = {
         ipa: "/weɪst əv taɪm/",
         translation: "Pérdida de tiempo",
         level: "B1",
-        definition: "Useless.",
+        definition:
+          'Pérdida de tiempo. A natural English collocation meaning "useless". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is a waste of time.",
       },
       {
@@ -7216,7 +8055,8 @@ export const collocationsData: StopData = {
         ipa: "/weɪst taɪm/",
         translation: "Perder tiempo",
         level: "A2",
-        definition: "Idle.",
+        definition:
+          'Perder tiempo. A natural English collocation meaning "idle". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Don't waste time.",
       },
       {
@@ -7224,7 +8064,8 @@ export const collocationsData: StopData = {
         ipa: "/wɒtʃ ˈkloʊsli/",
         translation: "Observar de cerca",
         level: "B2",
-        definition: "Look hard.",
+        definition:
+          'Observar de cerca. A natural English collocation meaning "look hard". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Watch closely now.",
       },
       {
@@ -7232,7 +8073,8 @@ export const collocationsData: StopData = {
         ipa: "/wɒtʃ ˌtiːˈviː/",
         translation: "Ver televisión",
         level: "A1",
-        definition: "View.",
+        definition:
+          'Ver televisión. A natural English collocation meaning "view". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I watch TV daily.",
       },
       {
@@ -7240,7 +8082,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈwɔːtər ˈʃɔːrtɪdʒ/",
         translation: "Escasez de agua",
         level: "B2",
-        definition: "Drought.",
+        definition:
+          'Escasez de agua. A natural English collocation meaning "drought". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Severe water shortage.",
       },
       {
@@ -7248,7 +8091,8 @@ export const collocationsData: StopData = {
         ipa: "/weɪv ɡʊdˈbaɪ/",
         translation: "Decir adiós con la mano",
         level: "A2",
-        definition: "Signal bye.",
+        definition:
+          'Decir adiós con la mano. A natural English collocation meaning "signal bye". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Wave goodbye to them.",
       },
       {
@@ -7256,7 +8100,8 @@ export const collocationsData: StopData = {
         ipa: "/wiːk pɔɪnt/",
         translation: "Punto débil",
         level: "B1",
-        definition: "Flaw.",
+        definition:
+          'Punto débil. A natural English collocation meaning "flaw". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "That is his weak point.",
       },
       {
@@ -7264,7 +8109,8 @@ export const collocationsData: StopData = {
         ipa: "/wɛər kloʊðz/",
         translation: "Usar ropa",
         level: "A1",
-        definition: "Dress.",
+        definition:
+          'Usar ropa. A natural English collocation meaning "dress". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Wear warm clothes.",
       },
       {
@@ -7272,7 +8118,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈwɛðər ˈfɔːrkɑːst/",
         translation: "Pronóstico del tiempo",
         level: "A2",
-        definition: "News.",
+        definition:
+          'Pronóstico del tiempo. A natural English collocation meaning "news". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Check the weather forecast.",
       },
       {
@@ -7280,7 +8127,8 @@ export const collocationsData: StopData = {
         ipa: "/wɛb peɪdʒ/",
         translation: "Página web",
         level: "A1",
-        definition: "Site.",
+        definition:
+          'Página web. A natural English collocation meaning "site". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Visit the web page.",
       },
       {
@@ -7288,7 +8136,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈwɛdɪŋ ˌænɪˈvɜːrsəri/",
         translation: "Aniversario de bodas",
         level: "B1",
-        definition: "Date.",
+        definition:
+          'Aniversario de bodas. A natural English collocation meaning "date". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Happy wedding anniversary.",
       },
       {
@@ -7296,7 +8145,8 @@ export const collocationsData: StopData = {
         ipa: "/weɪt lɒs/",
         translation: "Pérdida de peso",
         level: "B1",
-        definition: "Slimming.",
+        definition:
+          'Pérdida de peso. A natural English collocation meaning "slimming". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Diet for weight loss.",
       },
       {
@@ -7304,7 +8154,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈwɛlkəm tʃeɪndʒ/",
         translation: "Cambio bienvenido",
         level: "B2",
-        definition: "Good new.",
+        definition:
+          'Cambio bienvenido. A natural English collocation meaning "good new". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is a welcome change.",
       },
       {
@@ -7312,7 +8163,8 @@ export const collocationsData: StopData = {
         ipa: "/wɛl dʌn/",
         translation: "Bien hecho",
         level: "A1",
-        definition: "Good job.",
+        definition:
+          'Bien hecho. A natural English collocation meaning "good job". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Well done, son.",
       },
       {
@@ -7320,7 +8172,8 @@ export const collocationsData: StopData = {
         ipa: "/wɛl noʊn/",
         translation: "Conocido",
         level: "B1",
-        definition: "Famous.",
+        definition:
+          'Conocido. A natural English collocation meaning "famous". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is well known.",
       },
       {
@@ -7328,7 +8181,8 @@ export const collocationsData: StopData = {
         ipa: "/hoʊl laɪf/",
         translation: "Toda la vida",
         level: "B1",
-        definition: "Always.",
+        definition:
+          'Toda la vida. A natural English collocation meaning "always". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I lived here my whole life.",
       },
       {
@@ -7336,7 +8190,8 @@ export const collocationsData: StopData = {
         ipa: "/waɪd reɪndʒ/",
         translation: "Amplia gama",
         level: "B2",
-        definition: "Many types.",
+        definition:
+          'Amplia gama. A natural English collocation meaning "many types". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A wide range of products.",
       },
       {
@@ -7344,7 +8199,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈwaɪdli əˈveɪləbl/",
         translation: "Ampliamente disponible",
         level: "B2",
-        definition: "Common.",
+        definition:
+          'Ampliamente disponible. A natural English collocation meaning "common". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It is widely available.",
       },
       {
@@ -7352,7 +8208,8 @@ export const collocationsData: StopData = {
         ipa: "/waɪld ˈænɪməl/",
         translation: "Animal salvaje",
         level: "A2",
-        definition: "Beast.",
+        definition:
+          'Animal salvaje. A natural English collocation meaning "beast". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A lion is a wild animal.",
       },
       {
@@ -7360,7 +8217,8 @@ export const collocationsData: StopData = {
         ipa: "/wɪn ə praɪz/",
         translation: "Ganar un premio",
         level: "A2",
-        definition: "Get trophy.",
+        definition:
+          'Ganar un premio. A natural English collocation meaning "get trophy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Win a prize.",
       },
       {
@@ -7368,7 +8226,8 @@ export const collocationsData: StopData = {
         ipa: "/wɪn səˈpɔːrt/",
         translation: "Ganar apoyo",
         level: "C1",
-        definition: "Get fans.",
+        definition:
+          'Ganar apoyo. A natural English collocation meaning "get fans". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Try to win support.",
       },
       {
@@ -7376,7 +8235,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈwɪntər spɔːrt/",
         translation: "Deporte de invierno",
         level: "A2",
-        definition: "Ski.",
+        definition:
+          'Deporte de invierno. A natural English collocation meaning "ski". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Skiing is a winter sport.",
       },
       {
@@ -7384,7 +8244,8 @@ export const collocationsData: StopData = {
         ipa: "/waɪz dɪˈsɪʒən/",
         translation: "Decisión sabia",
         level: "B2",
-        definition: "Smart.",
+        definition:
+          'Decisión sabia. A natural English collocation meaning "smart". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A wise decision.",
       },
       {
@@ -7392,7 +8253,8 @@ export const collocationsData: StopData = {
         ipa: "/wɪʃ lʌk/",
         translation: "Desear suerte",
         level: "A2",
-        definition: "Hope good.",
+        definition:
+          'Desear suerte. A natural English collocation meaning "hope good". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Wish me luck.",
       },
       {
@@ -7400,7 +8262,8 @@ export const collocationsData: StopData = {
         ipa: "/wɜːrk hɑːrd/",
         translation: "Trabajar duro",
         level: "A1",
-        definition: "Effort.",
+        definition:
+          'Trabajar duro. A natural English collocation meaning "effort". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Work hard every day.",
       },
       {
@@ -7408,7 +8271,8 @@ export const collocationsData: StopData = {
         ipa: "/wɜːrld piːs/",
         translation: "Paz mundial",
         level: "B1",
-        definition: "No war.",
+        definition:
+          'Paz mundial. A natural English collocation meaning "no war". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "We want world peace.",
       },
       {
@@ -7416,7 +8280,8 @@ export const collocationsData: StopData = {
         ipa: "/wɜːrθ ɪt/",
         translation: "Valer la pena",
         level: "B1",
-        definition: "Good value.",
+        definition:
+          'Valer la pena. A natural English collocation meaning "good value". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "It was worth it.",
       },
       {
@@ -7424,7 +8289,8 @@ export const collocationsData: StopData = {
         ipa: "/raɪt ə tʃɛk/",
         translation: "Escribir un cheque",
         level: "B1",
-        definition: "Pay.",
+        definition:
+          'Escribir un cheque. A natural English collocation meaning "pay". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Write a check.",
       },
       {
@@ -7432,7 +8298,8 @@ export const collocationsData: StopData = {
         ipa: "/rɒŋ ˈnʌmbər/",
         translation: "Número equivocado",
         level: "A1",
-        definition: "Error call.",
+        definition:
+          'Número equivocado. A natural English collocation meaning "error call". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Sorry, wrong number.",
       },
       {
@@ -7440,7 +8307,8 @@ export const collocationsData: StopData = {
         ipa: "/rɒŋ weɪ/",
         translation: "Camino equivocado",
         level: "A1",
-        definition: "Lost.",
+        definition:
+          'Camino equivocado. A natural English collocation meaning "lost". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "You are going the wrong way.",
       },
     ],
@@ -7452,7 +8320,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈɛksreɪ ˈvɪʒən/",
         translation: "Visión de rayos X",
         level: "B1",
-        definition: "Super sight.",
+        definition:
+          'Visión de rayos X. A natural English collocation meaning "super sight". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Superman has X-ray vision.",
       },
       {
@@ -7460,7 +8329,8 @@ export const collocationsData: StopData = {
         ipa: "/ɛks ˈfæktər/",
         translation: "Factor X",
         level: "C1",
-        definition: "Special quality.",
+        definition:
+          'Factor X. A natural English collocation meaning "special quality". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "She has the X factor.",
       },
     ],
@@ -7472,7 +8342,8 @@ export const collocationsData: StopData = {
         ipa: "/jɪər ˈæftər jɪər/",
         translation: "Año tras año",
         level: "B1",
-        definition: "Every year.",
+        definition:
+          'Año tras año. A natural English collocation meaning "every year". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He wins year after year.",
       },
       {
@@ -7480,7 +8351,8 @@ export const collocationsData: StopData = {
         ipa: "/jɪər raʊnd/",
         translation: "Todo el año",
         level: "B1",
-        definition: "Always.",
+        definition:
+          'Todo el año. A natural English collocation meaning "always". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Open year round.",
       },
       {
@@ -7488,7 +8360,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈjɛloʊ ˈfiːvər/",
         translation: "Fiebre amarilla",
         level: "B2",
-        definition: "Disease.",
+        definition:
+          'Fiebre amarilla. A natural English collocation meaning "disease". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Vaccine for yellow fever.",
       },
       {
@@ -7496,7 +8369,8 @@ export const collocationsData: StopData = {
         ipa: "/jɛs pliːz/",
         translation: "Sí por favor",
         level: "A1",
-        definition: "Polite yes.",
+        definition:
+          'Sí por favor. A natural English collocation meaning "polite yes". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Tea? Yes please.",
       },
       {
@@ -7504,7 +8378,8 @@ export const collocationsData: StopData = {
         ipa: "/jiːld rɪˈzʌlts/",
         translation: "Dar resultados",
         level: "C1",
-        definition: "Work out.",
+        definition:
+          'Dar resultados. A natural English collocation meaning "work out". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "The plan yielded results.",
       },
       {
@@ -7512,7 +8387,8 @@ export const collocationsData: StopData = {
         ipa: "/jʌŋ ˈædʌlt/",
         translation: "Adulto joven",
         level: "B1",
-        definition: "Teen/20s.",
+        definition:
+          'Adulto joven. A natural English collocation meaning "teen/20s". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Books for young adults.",
       },
       {
@@ -7520,7 +8396,8 @@ export const collocationsData: StopData = {
         ipa: "/jʌŋ tʃaɪld/",
         translation: "Niño pequeño",
         level: "A2",
-        definition: "Kid.",
+        definition:
+          'Niño pequeño. A natural English collocation meaning "kid". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "He is a young child.",
       },
       {
@@ -7528,7 +8405,8 @@ export const collocationsData: StopData = {
         ipa: "/jʌŋ mæn/",
         translation: "Joven",
         level: "A1",
-        definition: "Guy.",
+        definition:
+          'Joven. A natural English collocation meaning "guy". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "A polite young man.",
       },
     ],
@@ -7540,7 +8418,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈzɪəroʊ ˈtɒlərəns/",
         translation: "Tolerancia cero",
         level: "B2",
-        definition: "Strict.",
+        definition:
+          'Tolerancia cero. A natural English collocation meaning "strict". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Zero tolerance policy.",
       },
       {
@@ -7548,7 +8427,8 @@ export const collocationsData: StopData = {
         ipa: "/ˈzɪəroʊ ˌvɪzɪˈbɪlɪti/",
         translation: "Visibilidad nula",
         level: "B2",
-        definition: "Can't see.",
+        definition:
+          'Visibilidad nula. A natural English collocation meaning "can\'t see". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Driving in zero visibility.",
       },
       {
@@ -7556,7 +8436,8 @@ export const collocationsData: StopData = {
         ipa: "/zoʊn aʊt/",
         translation: "Desconectarse",
         level: "C1",
-        definition: "Daydream.",
+        definition:
+          'Desconectarse. A natural English collocation meaning "daydream". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "I zoned out.",
       },
       {
@@ -7564,7 +8445,8 @@ export const collocationsData: StopData = {
         ipa: "/zuːm ɪn/",
         translation: "Acercar",
         level: "A2",
-        definition: "Enlarge.",
+        definition:
+          'Acercar. A natural English collocation meaning "enlarge". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Zoom in on the map.",
       },
       {
@@ -7572,7 +8454,8 @@ export const collocationsData: StopData = {
         ipa: "/zuːm aʊt/",
         translation: "Alejar",
         level: "A2",
-        definition: "Reduce.",
+        definition:
+          'Alejar. A natural English collocation meaning "reduce". A natural English word combination that is usually learned as a fixed phrase.',
         examSentence: "Zoom out to see more.",
       },
     ],

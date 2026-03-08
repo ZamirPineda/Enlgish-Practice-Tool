@@ -1,6 +1,7 @@
 import React from "react";
 import StopGameBrowse from "@/components/StopGameBrowse";
 import Card from "@/components/ui/Card";
+import { VaultAddOptions } from "@/types";
 
 interface StopGameViewProps {
   onPlayWord: (word: string) => void;
@@ -9,7 +10,7 @@ interface StopGameViewProps {
   onAddToVault: (
     word: string,
     definition: string,
-    options?: { category?: string; tags?: string[] },
+    options?: VaultAddOptions,
   ) => void;
 }
 

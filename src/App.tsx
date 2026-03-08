@@ -10,8 +10,7 @@ import {
 } from "react-router-dom";
 import { usePWAUpdate } from "@/hooks/usePWAUpdate";
 import { playNativeTTS } from "@/lib/audioUtils";
-import { createNewSrsItem } from "@/lib/srs";
-import { SrsVocabularyItem } from "@/types";
+import { SrsVocabularyItem, VaultAddOptions } from "@/types";
 import { APP_VERSION } from "@/lib/appVersion";
 import { AppSettings, loadSettings, saveSettings } from "@/lib/settingsStore";
 import { useGlobalXp } from "@/lib/xpStore";
@@ -21,6 +20,11 @@ import { startWebVitalsTracking } from "@/lib/webVitals";
 import { AnimatedRoutes } from "@/routes";
 import { OfflineBadge } from "@/components/OfflineBadge";
 import { GlobalCommandPalette } from "@/components/GlobalCommandPalette";
+import {
+  buildVaultItem,
+  hasVaultEnrichment,
+  mergeVaultItem,
+} from "@/lib/vaultEntries";
 import { Search } from "lucide-react";
 
 const ONBOARDING_STEPS = [
@@ -280,10 +284,7 @@ const App: React.FC = () => {
   const addToVault = (
     word: string,
     definition: string,
-    options?: {
-      category?: string;
-      tags?: string[];
-    },
+    options?: VaultAddOptions,
   ) => {
     try {
       const saved = localStorage.getItem("vocab-vault-deck");
@@ -295,23 +296,12 @@ const App: React.FC = () => {
       const key = word.toLowerCase().trim();
       if (deck[key]) {
         const existing = deck[key];
-        const metadataTags = [
-          ...(options?.tags || []),
-          ...(options?.category ? [options.category] : []),
-        ]
-          .map((tag) => tag.trim())
-          .filter((tag) => tag.length > 0);
+        const incoming = buildVaultItem(word, definition, options);
 
-        if (metadataTags.length > 0) {
-          const mergedTags = Array.from(
-            new Set([...(existing.tags || []), ...metadataTags]),
-          );
-          deck[key] = {
-            ...existing,
-            tags: mergedTags,
-          };
+        if (hasVaultEnrichment(incoming)) {
+          deck[key] = mergeVaultItem(existing, incoming);
           localStorage.setItem("vocab-vault-deck", JSON.stringify(deck));
-          toast.info(`Updated "${word}" with category info.`);
+          toast.info(`Updated "${word}" with richer Vault info.`);
           return;
         }
 
@@ -319,17 +309,7 @@ const App: React.FC = () => {
         return;
       }
 
-      const metadataTags = [
-        ...(options?.tags || []),
-        ...(options?.category ? [options.category] : []),
-      ]
-        .map((tag) => tag.trim())
-        .filter((tag) => tag.length > 0);
-
-      deck[key] = {
-        ...createNewSrsItem(word, definition),
-        tags: metadataTags.length > 0 ? Array.from(new Set(metadataTags)) : [],
-      };
+      deck[key] = buildVaultItem(word, definition, options);
       localStorage.setItem("vocab-vault-deck", JSON.stringify(deck));
       const categorySuffix = options?.category ? ` (${options.category})` : "";
       toast.success(`Added "${word}"${categorySuffix} to Vault!`);
@@ -681,5 +661,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-

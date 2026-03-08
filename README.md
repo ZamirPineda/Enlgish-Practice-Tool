@@ -132,16 +132,22 @@ No existe un archivo `.env` versionado en el repo actualmente.
 
 ### Variables detectadas
 
-| Variable         | Dónde se usa                   | Requerida                 | Descripción                                                                                |
-| ---------------- | ------------------------------ | ------------------------- | ------------------------------------------------------------------------------------------ |
-| `GEMINI_API_KEY` | `vite.config.ts`               | Opcional (a nivel build)  | Se inyecta en `process.env.API_KEY` y `process.env.GEMINI_API_KEY` para el código cliente. |
-| `STUDIO_PATH`    | `scripts/import-study-docs.js` | Sí (solo para ese script) | Ruta fuente para copiar documentos hacia `public/study-docs`.                              |
+| Variable                         | Dónde se usa                   | Requerida                 | Descripción                                                                                |
+| -------------------------------- | ------------------------------ | ------------------------- | ------------------------------------------------------------------------------------------ |
+| `GEMINI_API_KEY`                 | `vite.config.ts`               | Opcional (a nivel build)  | Se inyecta en `process.env.API_KEY` y `process.env.GEMINI_API_KEY` para el código cliente. |
+| `VITE_SENTRY_DSN`                | `src/lib/sentry.ts`            | Opcional                  | Habilita Sentry para errores frontend y contexto de ruta/juego (APP-403).                  |
+| `VITE_SENTRY_TRACES_SAMPLE_RATE` | `src/lib/sentry.ts`            | Opcional                  | Sample rate de tracing (valor entre `0` y `1`, por defecto `0.2`).                         |
+| `STUDIO_PATH`                    | `scripts/import-study-docs.js` | Sí (solo para ese script) | Ruta fuente para copiar documentos hacia `public/study-docs`.                              |
 
 ### Ejemplo de `.env.local` (sin secretos)
 
 ```env
 # Opcional para funcionalidades que consuman API key
 GEMINI_API_KEY=tu_api_key_aqui
+
+# Opcional: activar APP-403 (Sentry)
+VITE_SENTRY_DSN=https://<public-key>@o0.ingest.sentry.io/<project-id>
+VITE_SENTRY_TRACES_SAMPLE_RATE=0.2
 ```
 
 ### Script auxiliar de importación de docs

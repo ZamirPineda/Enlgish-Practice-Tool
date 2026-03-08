@@ -1,9 +1,8 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { SrsVocabularyItem } from "@/types";
+import { SrsVocabularyItem, VaultAddOptions } from "@/types";
 import { starterKits } from "@/features/data/vocabularyVault";
 import {
-  createNewSrsItem,
   getDueReviewItems,
   getIsoWeekKey,
   getWeeklyBossReviewItems,
@@ -27,6 +26,7 @@ import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import SlideOver from "@/components/ui/SlideOver";
 import ViewToolbar from "@/components/ui/ViewToolbar";
+import { cn } from "@/lib/cn";
 import {
   initVaultSearchWorker,
   updateWorkerDeck,
@@ -41,6 +41,7 @@ import {
   HighlightedText,
   getMatchIndices,
 } from "@/components/ui/HighlightedText";
+import { buildVaultItem, upgradeDeckEntries } from "@/lib/vaultEntries";
 
 interface VocabularyVaultViewProps {
   onPlayWord: (text: string) => void;
@@ -179,6 +180,51 @@ const MemoryBar = ({ interval }: { interval: number }) => {
   );
 };
 
+const starterSectionThemes = [
+  {
+    key: "high-frequency",
+    eyebrow: "Daily essentials",
+    description: "Core words that show up constantly in conversations.",
+    accentClass:
+      "from-sky-500/20 via-cyan-500/10 to-transparent border-sky-400/20",
+    badgeClass: "bg-sky-500/15 text-sky-200 border border-sky-400/20",
+    buttonClass: "bg-sky-500/10 text-sky-100 hover:bg-sky-500 hover:text-white",
+  },
+  {
+    key: "work-interview",
+    eyebrow: "Career mode",
+    description:
+      "Vocabulary for interviews, meetings and professional clarity.",
+    accentClass:
+      "from-emerald-500/20 via-teal-500/10 to-transparent border-emerald-400/20",
+    badgeClass:
+      "bg-emerald-500/15 text-emerald-100 border border-emerald-400/20",
+    buttonClass:
+      "bg-emerald-500/10 text-emerald-100 hover:bg-emerald-500 hover:text-white",
+  },
+  {
+    key: "travel",
+    eyebrow: "On the move",
+    description: "Fast phrases for airports, transport and urgent moments.",
+    accentClass:
+      "from-amber-500/20 via-orange-500/10 to-transparent border-amber-400/20",
+    badgeClass: "bg-amber-500/15 text-amber-100 border border-amber-400/20",
+    buttonClass:
+      "bg-amber-500/10 text-amber-100 hover:bg-amber-500 hover:text-slate-950",
+  },
+  {
+    key: "mistakes",
+    eyebrow: "Fix friction",
+    description: "High-value corrections for common Spanish-speaker mistakes.",
+    accentClass:
+      "from-fuchsia-500/20 via-rose-500/10 to-transparent border-fuchsia-400/20",
+    badgeClass:
+      "bg-fuchsia-500/15 text-fuchsia-100 border border-fuchsia-400/20",
+    buttonClass:
+      "bg-fuchsia-500/10 text-fuchsia-100 hover:bg-fuchsia-500 hover:text-white",
+  },
+] as const;
+
 const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   onPlayWord,
   confirmDialogsEnabled,
@@ -194,6 +240,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       let parsedDeck = normalizeDeck(
         rawParsed as Record<string, SrsVocabularyItem>,
       );
+      parsedDeck = upgradeDeckEntries(parsedDeck);
 
       const migratedDeck = migrateDeckToFsrsIfNeeded(parsedDeck);
       if (migratedDeck) {
@@ -436,28 +483,25 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
     };
   }, [deckList, searchTerm, sortBy, searchFilters]);
 
-  const handleAddToDeck = (item: {
-    word: string;
-    definition: string;
-    ipa?: string;
-    example?: string;
-    partOfSpeech?: string;
-    tags?: string[];
-    originalContext?: string;
-  }) => {
+  const handleAddToDeck = (
+    item: {
+      word: string;
+      definition: string;
+    } & VaultAddOptions,
+  ) => {
     const wordKey = item.word.trim().toLowerCase();
     if (deck[wordKey]) {
       alert("Word already in your vault!");
       return;
     }
-    const newItem = {
-      ...createNewSrsItem(item.word.trim(), item.definition.trim()),
+    const newItem = buildVaultItem(item.word, item.definition, {
       ipa: item.ipa,
       example: item.example,
+      originalContext: item.originalContext,
       partOfSpeech: item.partOfSpeech,
       tags: item.tags,
-      originalContext: item.originalContext,
-    };
+      sourceDefinition: item.definition,
+    });
     setDeck((prev) => ({ ...prev, [wordKey]: newItem }));
     resetAddForm();
     setIsAddOpen(false);
@@ -618,7 +662,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           }
         }
 
-        setDeck(importedDeck);
+        setDeck(upgradeDeckEntries(normalizeDeck(importedDeck)));
         setProgress(importedProgress);
         setImportText("");
         alert("Import successful!");
@@ -634,9 +678,16 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const handleImportSample = () => {
     const sampleDeck = starterKits.highFrequency.slice(0, 12).reduce(
       (acc, item) => {
-        acc[item.word.trim().toLowerCase()] = createNewSrsItem(
+        acc[item.word.trim().toLowerCase()] = buildVaultItem(
           item.word,
           item.definition,
+          {
+            ipa: item.ipa,
+            example: item.example,
+            partOfSpeech: item.partOfSpeech,
+            tags: item.tags,
+            sourceDefinition: item.definition,
+          },
         );
         return acc;
       },
@@ -884,24 +935,32 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const totalInDeck = deckList.length;
   const progressPercent =
     totalInDeck > 0 ? ((learningCount + masteredCount) / totalInDeck) * 100 : 0;
+  const weeklyAccuracy =
+    weeklyActivity.attempts > 0
+      ? Math.round((weeklyActivity.correct / weeklyActivity.attempts) * 100)
+      : 0;
   const showMobileActions = isMobileActionsVisible && !isAddOpen && !isEditOpen;
 
   const starterSections = [
     {
       title: "🚀 High-Frequency Starter Kit",
       items: starterKits.highFrequency,
+      theme: starterSectionThemes[0],
     },
     {
       title: "💼 Work & Interview Essentials",
       items: starterKits.workInterview,
+      theme: starterSectionThemes[1],
     },
     {
       title: "🧳 Travel & Emergency Essentials",
       items: starterKits.travelEmergencies,
+      theme: starterSectionThemes[2],
     },
     {
       title: "⚠️ Common Mistakes (Spanish Speakers)",
       items: starterKits.commonMistakesEs,
+      theme: starterSectionThemes[3],
     },
   ];
 
@@ -926,41 +985,76 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       className="flex-1 overflow-y-auto overscroll-y-contain bg-background p-4 sm:p-8 pb-4 sm:pb-8"
       onScroll={handleContainerScroll}
     >
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-8">
+      <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
+        <div className="space-y-4">
           <ViewToolbar
+            className="overflow-hidden rounded-[2rem] border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.22),_transparent_42%),linear-gradient(135deg,rgba(15,23,42,0.96),rgba(15,23,42,0.86))] shadow-[0_30px_90px_-45px_rgba(14,165,233,0.65)]"
             left={
-              <div>
-                <h1 className="text-3xl sm:text-5xl font-black text-text-primary tracking-tighter mb-3 sm:mb-4">
+              <div className="space-y-4">
+                <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-black uppercase tracking-[0.28em] text-sky-100">
+                  Card-first flow
+                </div>
+                <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-white mb-3 sm:mb-4">
                   Vocabulary Vault
                 </h1>
-                <nav className="flex bg-surface-2 p-1.5 rounded-xl border border-border w-full md:w-auto shadow-inner">
+                <p className="-mt-2 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
+                  Un deck m&aacute;s visual y m&aacute;s t&aacute;ctil, con
+                  prioridad en escaneo r&aacute;pido y sensaci&oacute;n de
+                  movimiento en m&oacute;vil.
+                </p>
+                <nav className="flex gap-2 overflow-x-auto pb-1 snap-x snap-mandatory md:flex-wrap md:overflow-visible">
                   <button
                     onClick={() => setActiveTab("study")}
-                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] ${activeTab === "study" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                    className={`min-h-[52px] min-w-[150px] snap-start rounded-[1.25rem] border px-4 py-3 text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 md:flex-1 ${activeTab === "study" ? "border-sky-300/30 bg-white text-slate-950 shadow-[0_16px_40px_-24px_rgba(255,255,255,0.9)]" : "border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10"}`}
                     aria-pressed={activeTab === "study"}
                   >
                     Daily Study
                   </button>
                   <button
                     onClick={() => setActiveTab("collection")}
-                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] ${activeTab === "collection" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                    className={`min-h-[52px] min-w-[170px] snap-start rounded-[1.25rem] border px-4 py-3 text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 md:flex-1 ${activeTab === "collection" ? "border-sky-300/30 bg-white text-slate-950 shadow-[0_16px_40px_-24px_rgba(255,255,255,0.9)]" : "border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10"}`}
                     aria-pressed={activeTab === "collection"}
                   >
                     My Collection ({totalInDeck})
                   </button>
                   <button
                     onClick={() => setActiveTab("sync")}
-                    className={`flex-1 md:flex-none min-h-[40px] px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] ${activeTab === "sync" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                    className={`min-h-[52px] min-w-[160px] snap-start rounded-[1.25rem] border px-4 py-3 text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 md:flex-1 ${activeTab === "sync" ? "border-sky-300/30 bg-white text-slate-950 shadow-[0_16px_40px_-24px_rgba(255,255,255,0.9)]" : "border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10"}`}
                     aria-pressed={activeTab === "sync"}
                   >
                     Backup & Sync 🔄
                   </button>
                 </nav>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                    <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400">
+                      Due today
+                    </p>
+                    <p className="mt-2 text-3xl font-black text-white">
+                      {dueItemsForObjective.length}
+                    </p>
+                  </div>
+                  <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                    <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400">
+                      Deck progress
+                    </p>
+                    <p className="mt-2 text-3xl font-black text-sky-300">
+                      {Math.round(progressPercent)}%
+                    </p>
+                  </div>
+                  <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                    <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400">
+                      Streak
+                    </p>
+                    <p className="mt-2 text-3xl font-black text-amber-300">
+                      {progress.currentStreak}
+                    </p>
+                  </div>
+                </div>
               </div>
             }
             right={
-              <div className="flex gap-3 w-full md:w-auto">
+              <div className="grid w-full gap-3 md:min-w-[320px]">
                 <Button
                   onClick={() => {
                     resetAddForm();
@@ -968,7 +1062,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   }}
                   size="lg"
                   variant="secondary"
-                  className="flex-1 md:flex-none flex items-center justify-center gap-2 min-h-[44px]"
+                  className="min-h-[56px] rounded-[1.25rem] border-white/10 bg-white/10 text-white hover:bg-white hover:text-slate-950"
                 >
                   + Add Word
                 </Button>
@@ -979,7 +1073,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   variant={
                     dueItemsForObjective.length > 0 ? "primary" : "secondary"
                   }
-                  className={`flex-1 md:flex-none font-black flex items-center justify-center gap-3 min-h-[44px] ${dueItemsForObjective.length > 0 ? "scale-105" : ""}`}
+                  className={`font-black min-h-[56px] rounded-[1.25rem] ${dueItemsForObjective.length > 0 ? "scale-[1.01] shadow-[0_20px_50px_-24px_rgba(56,189,248,0.95)]" : ""}`}
                 >
                   {dueItemsForObjective.length > 0
                     ? `Review Now (${dueItemsForObjective.length})`
@@ -1000,7 +1094,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       ? "success"
                       : "secondary"
                   }
-                  className="flex-1 md:flex-none font-black flex items-center justify-center gap-2 min-h-[44px]"
+                  className="font-black min-h-[56px] rounded-[1.25rem]"
                 >
                   {bossReviewCompletedThisWeek
                     ? "Boss Review ✓"
@@ -1010,46 +1104,72 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             }
           />
           {activeTab === "study" && (
-            <div className="mt-3 bg-surface-2 border border-border rounded-xl p-3 flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-text-secondary mr-2">
-                Practice objective
-              </span>
-              <button
-                onClick={() => setPracticeObjective("all")}
-                className={`min-h-[32px] px-3 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${practiceObjective === "all" ? "bg-accent text-white border-accent" : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"}`}
-                aria-label="Objective all"
-              >
-                All
-              </button>
-              <button
-                onClick={() => setPracticeObjective("interview")}
-                className={`min-h-[32px] px-3 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${practiceObjective === "interview" ? "bg-accent text-white border-accent" : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"}`}
-                aria-label="Objective interview"
-              >
-                Interview
-              </button>
-              <button
-                onClick={() => setPracticeObjective("travel")}
-                className={`min-h-[32px] px-3 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${practiceObjective === "travel" ? "bg-accent text-white border-accent" : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"}`}
-                aria-label="Objective travel"
-              >
-                Travel
-              </button>
+            <div className="rounded-[1.75rem] border border-border/70 bg-surface-1/85 p-3 shadow-[0_20px_50px_-35px_rgba(15,23,42,0.7)]">
+              <div className="flex gap-3 overflow-x-auto pb-1 snap-x snap-mandatory md:grid md:grid-cols-3 md:overflow-visible">
+                <button
+                  onClick={() => setPracticeObjective("all")}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "all" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  aria-label="Objective all"
+                >
+                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                    Practice objective
+                  </span>
+                  <span className="mt-2 block text-lg font-black tracking-tight normal-case">
+                    All
+                  </span>
+                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-80">
+                    Mixed review queue
+                  </span>
+                </button>
+                <button
+                  onClick={() => setPracticeObjective("interview")}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "interview" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  aria-label="Objective interview"
+                >
+                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                    Practice objective
+                  </span>
+                  <span className="mt-2 block text-lg font-black tracking-tight normal-case">
+                    Interview
+                  </span>
+                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-80">
+                    Work and business terms
+                  </span>
+                </button>
+                <button
+                  onClick={() => setPracticeObjective("travel")}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "travel" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  aria-label="Objective travel"
+                >
+                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                    Practice objective
+                  </span>
+                  <span className="mt-2 block text-lg font-black tracking-tight normal-case">
+                    Travel
+                  </span>
+                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-80">
+                    Trips and emergencies
+                  </span>
+                </button>
+              </div>
             </div>
           )}
         </div>
 
         {activeTab === "study" && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-in">
-            <div className="lg:col-span-1 space-y-6">
-              <Card elevated>
-                <h3 className="text-[10px] font-black text-text-secondary uppercase tracking-[0.2em] mb-6">
+          <div className="grid grid-cols-1 gap-6 xl:grid-cols-[320px_minmax(0,1fr)] animate-fade-in">
+            <div className="space-y-5">
+              <Card
+                elevated
+                className="overflow-hidden rounded-[2rem] border-white/10 bg-[radial-gradient(circle_at_top_right,_rgba(56,189,248,0.16),_transparent_30%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(15,23,42,0.88))] text-white"
+              >
+                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.28em] mb-6">
                   Learning Pulse
                 </h3>
                 <div className="space-y-6">
                   <div className="flex justify-between items-end">
                     <div>
-                      <p className="text-text-secondary text-xs font-bold uppercase mb-1">
+                      <p className="text-slate-400 text-xs font-bold uppercase mb-1">
                         Due for review
                       </p>
                       <span className="text-5xl font-black text-accent">
@@ -1060,18 +1180,16 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       <p className="text-success text-xs font-bold uppercase mb-1">
                         Mastered
                       </p>
-                      <span className="text-2xl font-black text-text-primary">
+                      <span className="text-2xl font-black text-white">
                         {masteredCount}
                       </span>
                     </div>
                   </div>
 
                   {/* Detailed Stats Breakdown */}
-                  <div className="pt-4 border-t border-border">
+                  <div className="pt-4 border-t border-white/10">
                     <div className="flex justify-between text-xs font-bold uppercase mb-2">
-                      <span className="text-text-secondary">
-                        New: {newCount}
-                      </span>
+                      <span className="text-slate-400">New: {newCount}</span>
                       <span className="text-accent">
                         Learning: {learningCount}
                       </span>
@@ -1079,11 +1197,11 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         Mastered: {masteredCount}
                       </span>
                     </div>
-                    <div className="h-4 w-full bg-surface-2 rounded-full p-1 border border-border flex overflow-hidden gap-0.5">
+                    <div className="h-4 w-full bg-white/5 rounded-full p-1 border border-white/10 flex overflow-hidden gap-0.5">
                       {totalInDeck > 0 ? (
                         <>
                           <div
-                            className="bg-text-muted h-full rounded-l-full transition-all duration-1000"
+                            className="bg-slate-500 h-full rounded-l-full transition-all duration-1000"
                             style={{
                               width: `${(newCount / totalInDeck) * 100}%`,
                             }}
@@ -1105,12 +1223,12 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           ></div>
                         </>
                       ) : (
-                        <div className="bg-surface-hover h-full w-full rounded-full"></div>
+                        <div className="bg-white/10 h-full w-full rounded-full"></div>
                       )}
                     </div>
                   </div>
 
-                  <p className="text-[10px] text-center text-text-secondary font-bold uppercase tracking-widest">
+                  <p className="text-[10px] text-center text-slate-400 font-bold uppercase tracking-widest">
                     {learningCount + masteredCount} of {totalInDeck} words
                     started
                   </p>
@@ -1124,51 +1242,102 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   </p>
                 </div>
               </Card>
-              <div className="bg-gradient-to-br from-amber-600/10 to-orange-600/10 border border-amber-500/20 rounded-3xl p-6">
-                <h4 className="text-amber-500 font-bold text-sm mb-2 flex items-center gap-2">
+              <div className="grid grid-cols-3 gap-3">
+                <Card className="rounded-[1.5rem] border-border/70 bg-surface-1/90 p-4">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-text-secondary">
+                    Sessions
+                  </p>
+                  <p className="mt-2 text-2xl font-black text-text-primary">
+                    {weeklyActivity.sessions}
+                  </p>
+                </Card>
+                <Card className="rounded-[1.5rem] border-border/70 bg-surface-1/90 p-4">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-text-secondary">
+                    Accuracy
+                  </p>
+                  <p className="mt-2 text-2xl font-black text-accent">
+                    {weeklyAccuracy}%
+                  </p>
+                </Card>
+                <Card className="rounded-[1.5rem] border-border/70 bg-surface-1/90 p-4">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-text-secondary">
+                    Minutes
+                  </p>
+                  <p className="mt-2 text-2xl font-black text-text-primary">
+                    {weeklyActivity.studyMinutes}
+                  </p>
+                </Card>
+              </div>
+              <div className="bg-[linear-gradient(145deg,rgba(245,158,11,0.18),rgba(15,23,42,0.9))] border border-amber-500/20 rounded-[2rem] p-6">
+                <h4 className="text-amber-200 font-bold text-sm mb-2 uppercase tracking-[0.24em]">
                   💡 Zamir's Study Tip
                 </h4>
-                <p className="text-text-secondary text-xs leading-relaxed">
+                <p className="text-amber-50/85 text-sm leading-relaxed">
                   Add whole sentences as "Context" to help you remember how to
                   use the word!
                 </p>
               </div>
             </div>
 
-            <div className="lg:col-span-2 space-y-12">
+            <div className="space-y-6">
               {starterSections.map((section) => (
-                <section key={section.title}>
-                  <h2 className="text-xl font-black text-text-primary mb-6 flex items-center gap-3">
+                <section
+                  key={section.title}
+                  className={cn(
+                    "overflow-hidden rounded-[2rem] border bg-surface-1/90 p-4 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.9)] sm:p-6",
+                    section.theme.accentClass,
+                  )}
+                >
+                  <p className="text-[10px] font-black uppercase tracking-[0.28em] text-text-secondary mb-2">
+                    {section.theme.eyebrow}
+                  </p>
+                  <h2 className="text-xl sm:text-2xl font-black text-text-primary mb-2 flex items-center gap-3">
                     {section.title}
                   </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <p className="mb-5 max-w-2xl text-sm text-text-secondary">
+                    {section.theme.description}
+                  </p>
+                  <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 snap-x snap-mandatory sm:mx-0 sm:grid sm:grid-cols-2 sm:px-0 sm:overflow-visible xl:grid-cols-3">
                     {section.items.map((item) => (
                       <div
                         key={item.word}
-                        className="bg-surface-1 border border-border p-5 rounded-2xl hover:border-accent/30 transition-all group"
+                        className="min-w-[82vw] snap-center sm:min-w-0"
                       >
-                        <div className="flex justify-between items-start gap-3">
-                          <div>
-                            <h4 className="text-lg font-black text-text-primary group-hover:text-accent transition-colors">
-                              {item.word}
-                            </h4>
-                            <p className="text-text-secondary text-xs line-clamp-2">
-                              {item.definition}
-                            </p>
-                            {item.tags?.length ? (
-                              <p className="text-[10px] text-text-muted mt-2 uppercase tracking-widest font-bold">
+                        <div className="group relative flex h-full min-h-[220px] flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-surface-1/95 p-5 shadow-[0_20px_60px_-35px_rgba(15,23,42,0.95)] transition duration-300 ease-out will-change-transform md:hover:-translate-y-1 md:hover:-rotate-1 active:translate-x-1 active:rotate-1">
+                          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-br from-white/10 via-white/5 to-transparent"></div>
+                          <div className="relative flex h-full flex-col justify-between">
+                            <div className="flex justify-between items-start gap-3">
+                              <div>
+                                <h4 className="text-xl font-black text-text-primary group-hover:text-accent transition-colors">
+                                  {item.word}
+                                </h4>
+                                <p className="mt-2 text-sm text-text-secondary line-clamp-3 leading-relaxed">
+                                  {item.definition}
+                                </p>
                                 {item.tags.join(" · ")}
+                              </div>
+                              <button
+                                onClick={() => handleAddToDeck(item)}
+                                disabled={!!deck[item.word.toLowerCase()]}
+                                className={cn(
+                                  "relative w-11 h-11 rounded-2xl flex items-center justify-center transition-all shrink-0",
+                                  deck[item.word.toLowerCase()]
+                                    ? "bg-success/20 text-success"
+                                    : section.theme.buttonClass,
+                                )}
+                                aria-label={`Add ${item.word} to deck`}
+                              >
+                                {deck[item.word.toLowerCase()] ? "✓" : "+"}
+                              </button>
+                            </div>
+                            {item.tags?.length ? (
+                              <p className="text-[10px] text-text-muted mt-5 uppercase tracking-widest font-bold"></p>
+                            ) : (
+                              <p className="text-[10px] text-text-muted mt-5 uppercase tracking-widest font-bold">
+                                Tap to save this card
                               </p>
-                            ) : null}
+                            )}
                           </div>
-                          <button
-                            onClick={() => handleAddToDeck(item)}
-                            disabled={!!deck[item.word.toLowerCase()]}
-                            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 ${deck[item.word.toLowerCase()] ? "bg-success/20 text-success" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"}`}
-                            aria-label={`Add ${item.word} to deck`}
-                          >
-                            {deck[item.word.toLowerCase()] ? "✓" : "+"}
-                          </button>
                         </div>
                       </div>
                     ))}
@@ -1182,8 +1351,8 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
         {activeTab === "collection" && (
           <div className="animate-fade-in space-y-6">
             {totalInDeck === 0 ? (
-              <Card className="p-12 text-center flex flex-col items-center justify-center border-dashed border-2 border-border/80 bg-surface-1/50 backdrop-blur-sm animate-fade-in shadow-xl">
-                <div className="w-24 h-24 bg-surface-2 rounded-full flex items-center justify-center mb-6 shadow-inner ring-4 ring-surface-1 transform hover:scale-110 transition-transform">
+              <Card className="p-12 text-center flex flex-col items-center justify-center border-dashed border-2 border-border/80 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),_transparent_38%),rgba(15,23,42,0.02)] backdrop-blur-sm animate-fade-in shadow-[0_24px_80px_-45px_rgba(15,23,42,0.85)] rounded-[2rem]">
+                <div className="w-24 h-24 bg-surface-2/90 rounded-full flex items-center justify-center mb-6 shadow-inner ring-4 ring-surface-1 transform hover:scale-110 transition-transform">
                   <span className="text-4xl drop-shadow-sm">🗃️</span>
                 </div>
                 <h2 className="text-2xl font-black text-text-primary mb-3">
@@ -1216,21 +1385,24 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 </div>
               </Card>
             ) : (
-              <div className="relative flex-1 mb-8">
+              <div className="relative flex-1 mb-8 rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.14),_transparent_35%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(15,23,42,0.86))] p-5 shadow-[0_24px_80px_-45px_rgba(15,23,42,0.95)]">
+                <p className="mb-4 text-[10px] font-black uppercase tracking-[0.28em] text-slate-400">
+                  Search and filter
+                </p>
                 <Input
                   id="vault-search-input"
                   type="text"
                   placeholder="Search by word, definition or tag... (Press / to focus)"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-6 pr-12 py-3"
+                  className="pl-6 pr-12 py-4 rounded-[1.4rem] border-white/10 bg-white/10 text-white placeholder:text-slate-400"
                   aria-label="Search vault words"
                 />
 
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
                   <button
                     onClick={() => setShowFilters(!showFilters)}
-                    className={`p-1.5 rounded-md focus:outline-none transition-colors ${showFilters ? "bg-accent/20 text-accent" : "text-text-secondary hover:text-text-primary"}`}
+                    className={`p-2 rounded-xl focus:outline-none transition-colors ${showFilters ? "bg-accent/20 text-accent" : "text-slate-300 hover:bg-white/10 hover:text-white"}`}
                     title="Advanced Filters"
                   >
                     <svg
@@ -1254,7 +1426,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         setSearchTerm("");
                         document.getElementById("vault-search-input")?.focus();
                       }}
-                      className="text-text-secondary hover:text-text-primary p-1 rounded-full hover:bg-surface-2 transition-colors"
+                      className="text-slate-300 hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors"
                       aria-label="Clear search"
                     >
                       <svg
@@ -1276,7 +1448,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             )}
 
             {showFilters && totalInDeck > 0 && (
-              <div className="bg-surface-2 border border-border rounded-xl p-4 mt-2 mb-6 animate-fade-in flex flex-wrap gap-4 items-end">
+              <div className="bg-surface-1/90 border border-border/70 rounded-[1.75rem] p-5 mt-2 mb-6 animate-fade-in flex flex-wrap gap-4 items-end shadow-[0_20px_50px_-35px_rgba(15,23,42,0.7)]">
                 <div className="flex-1 min-w-[120px]">
                   <label className="block text-xs font-bold text-text-secondary uppercase mb-1">
                     State
@@ -1289,7 +1461,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         states: e.target.value ? [e.target.value as any] : [],
                       }))
                     }
-                    className="w-full bg-surface-1 border border-border text-text-primary text-sm rounded-lg p-2 outline-none focus:ring-1 focus:ring-focus"
+                    className="w-full bg-surface-2 border border-border text-text-primary text-sm rounded-xl p-2.5 outline-none focus:ring-1 focus:ring-focus"
                   >
                     <option value="">All States</option>
                     <option value="new">New</option>
@@ -1309,7 +1481,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         difficulty: e.target.value as any,
                       }))
                     }
-                    className="w-full bg-surface-1 border border-border text-text-primary text-sm rounded-lg p-2 outline-none focus:ring-1 focus:ring-focus"
+                    className="w-full bg-surface-2 border border-border text-text-primary text-sm rounded-xl p-2.5 outline-none focus:ring-1 focus:ring-focus"
                   >
                     <option value="all">All Difficulties</option>
                     <option value="hard">Hard (Low EF)</option>
@@ -1334,7 +1506,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           .filter(Boolean),
                       }))
                     }
-                    className="w-full p-2 text-sm"
+                    className="w-full p-2.5 text-sm rounded-xl"
                   />
                 </div>
                 <Button
@@ -1355,16 +1527,16 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               </div>
             )}
             {totalInDeck > 0 && (
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 rounded-[1.75rem] border border-border/70 bg-surface-1/90 p-4 shadow-[0_20px_50px_-35px_rgba(15,23,42,0.7)]">
                 <div className="text-sm text-text-secondary flex items-center gap-2">
                   Showing {searchResults.length} of {totalInDeck} words
                   {isSearching && <span className="animate-pulse">...</span>}
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2 bg-surface-2 p-1 rounded-lg border border-border">
+                  <div className="flex items-center gap-2 bg-surface-2 p-1 rounded-xl border border-border">
                     <button
                       onClick={() => setViewMode("grid")}
-                      className={`p-1.5 rounded-md transition-colors ${viewMode === "grid" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                      className={`p-2 rounded-lg transition-colors ${viewMode === "grid" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
                       title="Grid View"
                     >
                       <svg
@@ -1384,7 +1556,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     </button>
                     <button
                       onClick={() => setViewMode("list")}
-                      className={`p-1.5 rounded-md transition-colors ${viewMode === "list" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                      className={`p-2 rounded-lg transition-colors ${viewMode === "list" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
                       title="List View"
                     >
                       <svg
@@ -1414,7 +1586,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       id="sort-select"
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value as any)}
-                      className="bg-surface-2 border border-border text-text-primary text-sm rounded-lg focus:ring-focus focus:border-focus block p-2 outline-none"
+                      className="bg-surface-2 border border-border text-text-primary text-sm rounded-xl focus:ring-focus focus:border-focus block p-2.5 outline-none"
                     >
                       <option value="alphabetical">Alphabetical (A-Z)</option>
                       <option value="strength">Memory Strength</option>
@@ -1464,7 +1636,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       {rowItems.map(({ item, matches }) => (
                         <div
                           key={item.word}
-                          className={`bg-surface-1 border border-border p-5 rounded-2xl hover:shadow-2xl transition-all group relative flex ${viewMode === "grid" ? "flex-col" : "flex-row items-center gap-6"}`}
+                          className={`overflow-hidden border border-white/10 bg-surface-1/95 p-5 rounded-[1.75rem] shadow-[0_22px_70px_-42px_rgba(15,23,42,0.95)] transition duration-300 ease-out will-change-transform group relative flex md:hover:-translate-y-1 md:hover:-rotate-1 active:translate-y-1 active:rotate-1 ${viewMode === "grid" ? "flex-col" : "flex-row items-center gap-6"}`}
                         >
                           <div
                             className={`flex justify-between items-start ${viewMode === "grid" ? "mb-2" : "flex-1"}`}
@@ -1501,14 +1673,14 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                               />
                             </div>
                             {viewMode === "grid" && (
-                              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all">
+                              <div className="flex items-center gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all">
                                 <button
                                   onClick={() =>
                                     handleEditWord(
                                       item.word.trim().toLowerCase(),
                                     )
                                   }
-                                  className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-lg"
+                                  className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-xl"
                                   aria-label={`Edit ${item.word}`}
                                 >
                                   <svg
@@ -1528,7 +1700,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                                 </button>
                                 <button
                                   onClick={() => handleDelete(item.word)}
-                                  className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-lg"
+                                  className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-xl"
                                   aria-label={`Delete ${item.word}`}
                                 >
                                   <TrashIcon />
@@ -1585,12 +1757,12 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           </div>
 
                           {viewMode === "list" && (
-                            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all ml-4">
+                            <div className="flex items-center gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all ml-4">
                               <button
                                 onClick={() =>
                                   handleEditWord(item.word.trim().toLowerCase())
                                 }
-                                className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-lg"
+                                className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-xl"
                                 aria-label={`Edit ${item.word}`}
                               >
                                 <svg
@@ -1610,7 +1782,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                               </button>
                               <button
                                 onClick={() => handleDelete(item.word)}
-                                className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-lg"
+                                className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-xl"
                                 aria-label={`Delete ${item.word}`}
                               >
                                 <TrashIcon />
@@ -1628,12 +1800,15 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
         )}
 
         {activeTab === "sync" && (
-          <div className="animate-fade-in space-y-10 max-w-2xl mx-auto py-8">
-            <Card className="p-8" elevated>
-              <h2 className="text-2xl font-black text-text-primary mb-2">
+          <div className="animate-fade-in grid gap-6 max-w-4xl mx-auto py-4 md:grid-cols-2">
+            <Card
+              className="p-8 rounded-[2rem] border-white/10 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),_transparent_40%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(15,23,42,0.86))] text-white"
+              elevated
+            >
+              <h2 className="text-2xl font-black text-white mb-2">
                 Export Vault
               </h2>
-              <p className="text-text-secondary text-sm mb-6">
+              <p className="text-slate-300 text-sm mb-6">
                 Download a JSON backup with your deck and streak progress.
               </p>
               <Button
@@ -1646,7 +1821,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 DOWNLOAD JSON BACKUP
               </Button>
             </Card>
-            <Card className="p-8" elevated>
+            <Card className="p-8 rounded-[2rem]" elevated>
               <h2 className="text-2xl font-black text-text-primary mb-2">
                 Import Vault
               </h2>
@@ -1678,9 +1853,9 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       </div>
 
       <div
-        className={`md:hidden fixed left-3 right-3 bottom-[calc(env(safe-area-inset-bottom)+5.25rem)] z-40 transition-all duration-200 ${showMobileActions ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0 pointer-events-none"}`}
+        className={`md:hidden fixed left-3 right-3 bottom-[calc(env(safe-area-inset-bottom)+5.25rem)] z-40 transition-all duration-300 ${showMobileActions ? "translate-y-0 opacity-100 scale-100" : "translate-y-4 opacity-0 scale-95 pointer-events-none"}`}
       >
-        <div className="bg-surface-1/95 backdrop-blur border border-border rounded-xl p-2 shadow-xl flex gap-2">
+        <div className="bg-surface-1/85 backdrop-blur-2xl border border-white/10 rounded-[1.6rem] p-2 shadow-[0_24px_60px_-30px_rgba(15,23,42,0.95)] flex gap-2">
           <Button
             onClick={() => {
               resetAddForm();
@@ -1688,7 +1863,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             }}
             size="md"
             variant="secondary"
-            className="flex-1"
+            className="flex-1 rounded-[1.1rem] active:translate-y-0.5 active:-rotate-1"
           >
             + Add
           </Button>
@@ -1697,7 +1872,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             disabled={dueItemsForObjective.length === 0}
             size="md"
             variant={dueItemsForObjective.length > 0 ? "primary" : "secondary"}
-            className="flex-1"
+            className="flex-1 rounded-[1.1rem] active:translate-y-0.5"
           >
             {dueItemsForObjective.length > 0
               ? `Review (${dueItemsForObjective.length})`
@@ -1716,7 +1891,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 ? "success"
                 : "secondary"
             }
-            className="flex-1"
+            className="flex-1 rounded-[1.1rem] active:translate-y-0.5 active:rotate-1"
           >
             {bossReviewCompletedThisWeek ? "Boss ✓" : "Boss"}
           </Button>
@@ -1754,7 +1929,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               htmlFor="new-context-input"
               className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
             >
-              Context / Source Sentence (Optional)
+              Clue / Scene / Source Sentence (Optional)
             </label>
             <Input
               id="new-context-input"
@@ -1763,7 +1938,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               onChange={(e) => setNewContext(e.target.value)}
               onKeyDown={handleAddFormKeyDown}
               className="p-3 text-sm"
-              placeholder="Where did you see it? e.g. 'The wifi was ubiquitous in the city.'"
+              placeholder="Add a scene you can picture. e.g. 'The land was cracked, dry and turning into desert.'"
             />
           </div>
 
@@ -1772,14 +1947,19 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               htmlFor="new-def-input"
               className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
             >
-              Definition & Notes
+              Meaning (simple + concrete)
             </label>
+            <p className="mb-2 ml-1 text-xs leading-relaxed text-text-secondary">
+              Mejor si escribes: traduccion, explicacion simple y una imagen
+              mental. Ejemplo: "Desertificacion. Cuando una tierra fertil se
+              vuelve desierto por sequia y calor."
+            </p>
             <textarea
               id="new-def-input"
               value={newDef}
               onChange={(e) => setNewDef(e.target.value)}
               className="w-full bg-surface-2 border border-border rounded-xl p-3 text-text-primary outline-none focus:ring-2 focus:ring-focus h-24"
-              placeholder="Meaning, Example, etc."
+              placeholder="Write a meaning you can imagine, not only a synonym or translation."
             />
           </div>
 
@@ -1849,7 +2029,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               htmlFor="edit-context-input"
               className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
             >
-              Context / Source Sentence
+              Clue / Scene / Source Sentence
             </label>
             <Input
               id="edit-context-input"
@@ -1857,6 +2037,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               value={editContext}
               onChange={(e) => setEditContext(e.target.value)}
               className="p-3 text-sm"
+              placeholder="Add a concrete scene that helps you picture the word"
             />
           </div>
 
@@ -1865,13 +2046,18 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               htmlFor="edit-def-input"
               className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
             >
-              Definition & Notes
+              Meaning (simple + concrete)
             </label>
+            <p className="mb-2 ml-1 text-xs leading-relaxed text-text-secondary">
+              Evita meanings demasiado cortos como sinonimos sueltos. Mejor:
+              traduccion + idea simple + escena.
+            </p>
             <textarea
               id="edit-def-input"
               value={editDef}
               onChange={(e) => setEditDef(e.target.value)}
               className="w-full bg-surface-2 border border-border rounded-xl p-3 text-text-primary outline-none focus:ring-2 focus:ring-focus h-24"
+              placeholder="Example: Threateningly. In a way that makes you feel danger is coming."
             />
           </div>
 

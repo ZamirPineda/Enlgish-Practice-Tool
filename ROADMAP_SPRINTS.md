@@ -136,17 +136,17 @@ Total estimado: 15 SP
 
 Objetivo: consolidar contenido para reutilizarlo entre Study Deck, Vault y juegos.
 
-| Key     | Tipo      | Historia                                                              |  SP | Criterios de aceptacion                                                               |
-| ------- | --------- | --------------------------------------------------------------------- | --: | ------------------------------------------------------------------------------------- |
-| APP-501 | Epic Task | Diseñar `Content Inventory` canonico                                  |   8 | Existe esquema unico (`id`, fuente, tags, skill, dificultad, formato, metadata).      |
-| APP-502 | Story     | Crear adaptadores desde `StudyDeck`, `vocab-vault-deck` y `techDecks` |   8 | Fuentes actuales se transforman al inventario sin romper vistas existentes.           |
-| APP-503 | Story     | Normalizacion + deduplicacion por huella de contenido                 |   5 | Items duplicados se detectan y consolidan con reglas trazables.                       |
-| APP-504 | Story     | Indices por `skill/category/level/game` para consultas rapidas        |   5 | Juegos consumen queries por filtros sin escanear datasets completos.                  |
-| APP-505 | Story     | Contrato de seleccion comun para juegos (`pickNextItems`)             |   5 | Al menos 4 juegos usan selector unificado en lugar de acceso directo a data files.    |
-| APP-506 | QA        | Tests de inventario, adapters y dedupe                                |   3 | Suite valida consistencia, cardinalidad y estabilidad de ids.                         |
-| APP-507 | Story     | UI foundation con `shadcn/ui` (primitives Radix/Base UI)              |   3 | Base de componentes reutilizables (Button, Dialog, Sheet, Select, Table, Tooltip).   |
-| APP-508 | Story     | Comando rapido con `cmdk` para buscar contenido/juegos                |   3 | Paleta global (`Ctrl/Cmd+K`) filtra por skill/tag/game/deck y navega en 1 paso.      |
-| APP-509 | Story     | Formularios con `react-hook-form` + `@hookform/resolvers` + `zod`     |   3 | Validacion consistente en Settings/Profile sin re-renders costosos.                    |
+| Key     | Tipo      | Historia                                                              |  SP | Criterios de aceptacion                                                            |
+| ------- | --------- | --------------------------------------------------------------------- | --: | ---------------------------------------------------------------------------------- |
+| APP-501 | Epic Task | Diseñar `Content Inventory` canonico                                  |   8 | Existe esquema unico (`id`, fuente, tags, skill, dificultad, formato, metadata).   |
+| APP-502 | Story     | Crear adaptadores desde `StudyDeck`, `vocab-vault-deck` y `techDecks` |   8 | Fuentes actuales se transforman al inventario sin romper vistas existentes.        |
+| APP-503 | Story     | Normalizacion + deduplicacion por huella de contenido                 |   5 | Items duplicados se detectan y consolidan con reglas trazables.                    |
+| APP-504 | Story     | Indices por `skill/category/level/game` para consultas rapidas        |   5 | Juegos consumen queries por filtros sin escanear datasets completos.               |
+| APP-505 | Story     | Contrato de seleccion comun para juegos (`pickNextItems`)             |   5 | Al menos 4 juegos usan selector unificado en lugar de acceso directo a data files. |
+| APP-506 | QA        | Tests de inventario, adapters y dedupe                                |   3 | Suite valida consistencia, cardinalidad y estabilidad de ids.                      |
+| APP-507 | Story     | UI foundation con `shadcn/ui` (primitives Radix/Base UI)              |   3 | Base de componentes reutilizables (Button, Dialog, Sheet, Select, Table, Tooltip). |
+| APP-508 | Story     | Comando rapido con `cmdk` para buscar contenido/juegos                |   3 | Paleta global (`Ctrl/Cmd+K`) filtra por skill/tag/game/deck y navega en 1 paso.    |
+| APP-509 | Story     | Formularios con `react-hook-form` + `@hookform/resolvers` + `zod`     |   3 | Validacion consistente en Settings/Profile sin re-renders costosos.                |
 
 Total estimado: 43 SP
 
@@ -161,14 +161,14 @@ Total estimado: 43 SP
 
 Objetivo: reducir fatiga por repeticion y ampliar volumen util de practica.
 
-| Key     | Tipo      | Historia                                                                       |  SP | Criterios de aceptacion                                                         |
-| ------- | --------- | ------------------------------------------------------------------------------ | --: | ------------------------------------------------------------------------------- |
-| APP-601 | Epic Task | Motor antirepeticion basado en historial reciente                              |   8 | Seleccion evita repetir el mismo item en ventanas cortas por juego/sesion.      |
-| APP-602 | Story     | Expandir ejemplos English core (`SpeedBuilder`, `Paraphrase`, etc.)            |   8 | +40% de ejemplos curados y etiquetados por dificultad/tema.                     |
-| APP-603 | Story     | Expandir ejemplos Math/Dev con niveles                                         |   5 | Nuevos items clasificados por nivel y objetivo (`math_speed`, `dev_reasoning`). |
-| APP-604 | Story     | Reusar inventario en Daily Loop para variar pasos                              |   5 | Daily Loop rota contenido sin perder foco de ruta objetivo.                     |
-| APP-605 | Story     | Telemetria de repeticion (`repeat_rate`, `content_coverage`)                   |   5 | Stats muestra tasa de repeticion y cobertura por categoria/ruta.                |
-| APP-606 | QA        | Pruebas de no-regresion en variedad y calidad                                  |   3 | Casos de borde: dataset pequeno, filtros estrictos, sesiones largas.            |
+| Key     | Tipo      | Historia                                                                              |  SP | Criterios de aceptacion                                                         |
+| ------- | --------- | ------------------------------------------------------------------------------------- | --: | ------------------------------------------------------------------------------- |
+| APP-601 | Epic Task | Motor antirepeticion basado en historial reciente                                     |   8 | Seleccion evita repetir el mismo item en ventanas cortas por juego/sesion.      |
+| APP-602 | Story     | Expandir ejemplos English core (`SpeedBuilder`, `Paraphrase`, etc.)                   |   8 | +40% de ejemplos curados y etiquetados por dificultad/tema.                     |
+| APP-603 | Story     | Expandir ejemplos Math/Dev con niveles                                                |   5 | Nuevos items clasificados por nivel y objetivo (`math_speed`, `dev_reasoning`). |
+| APP-604 | Story     | Reusar inventario en Daily Loop para variar pasos                                     |   5 | Daily Loop rota contenido sin perder foco de ruta objetivo.                     |
+| APP-605 | Story     | Telemetria de repeticion (`repeat_rate`, `content_coverage`)                          |   5 | Stats muestra tasa de repeticion y cobertura por categoria/ruta.                |
+| APP-606 | QA        | Pruebas de no-regresion en variedad y calidad                                         |   3 | Casos de borde: dataset pequeno, filtros estrictos, sesiones largas.            |
 | APP-607 | Story     | Coachmarks/tooltips con `@floating-ui/react` + microinteracciones con `framer-motion` |   3 | Feedback contextual accesible y transiciones claras en flujos de practica.      |
 
 Total estimado: 37 SP
@@ -177,16 +177,16 @@ Total estimado: 37 SP
 
 Objetivo: poder agregar/curar contenido sin tocar N archivos por juego.
 
-| Key     | Tipo      | Historia                                                                         |  SP | Criterios de aceptacion                                                         |
-| ------- | --------- | -------------------------------------------------------------------------------- | --: | ------------------------------------------------------------------------------- |
-| APP-701 | Epic Task | Pipeline de authoring/import para contenido unificado                            |   8 | Flujo soporta CSV/JSON -> validacion -> inventario versionado.                  |
-| APP-702 | Story     | Validadores de calidad (formato, longitud, tags, dificultad)                     |   5 | Se bloquean items invalidos antes de entrar a produccion local.                 |
-| APP-703 | Story     | Linter de duplicados/near-duplicates                                             |   5 | Reporte automatizado de colisiones exactas y aproximadas.                       |
-| APP-704 | Story     | Herramienta de muestreo para review humano                                       |   5 | Se puede revisar muestra por categoria y aprobar/rechazar lotes.                |
-| APP-705 | Story     | Versionado de packs de contenido + changelog                                     |   5 | Cada update de contenido tiene version y notas legibles para rollback.          |
-| APP-706 | QA        | Tests de pipeline + snapshots de inventario                                      |   3 | Cambios de contenido rompen CI si alteran contratos sin migracion declarada.    |
-| APP-707 | Story     | Mesa de curacion con `@tanstack/react-table` + orden manual con `@dnd-kit/core` y `@dnd-kit/sortable` |   5 | Curacion/filtrado/reordenamiento de contenido disponible para operacion diaria. |
-| APP-708 | Story     | Integrar formularios tipados de curacion (`react-hook-form` + `zod`)             |   3 | Alta/edicion/revision en mesa de curacion con validacion consistente y errores claros. |
+| Key     | Tipo      | Historia                                                                                              |  SP | Criterios de aceptacion                                                                |
+| ------- | --------- | ----------------------------------------------------------------------------------------------------- | --: | -------------------------------------------------------------------------------------- |
+| APP-701 | Epic Task | Pipeline de authoring/import para contenido unificado                                                 |   8 | Flujo soporta CSV/JSON -> validacion -> inventario versionado.                         |
+| APP-702 | Story     | Validadores de calidad (formato, longitud, tags, dificultad)                                          |   5 | Se bloquean items invalidos antes de entrar a produccion local.                        |
+| APP-703 | Story     | Linter de duplicados/near-duplicates                                                                  |   5 | Reporte automatizado de colisiones exactas y aproximadas.                              |
+| APP-704 | Story     | Herramienta de muestreo para review humano                                                            |   5 | Se puede revisar muestra por categoria y aprobar/rechazar lotes.                       |
+| APP-705 | Story     | Versionado de packs de contenido + changelog                                                          |   5 | Cada update de contenido tiene version y notas legibles para rollback.                 |
+| APP-706 | QA        | Tests de pipeline + snapshots de inventario                                                           |   3 | Cambios de contenido rompen CI si alteran contratos sin migracion declarada.           |
+| APP-707 | Story     | Mesa de curacion con `@tanstack/react-table` + orden manual con `@dnd-kit/core` y `@dnd-kit/sortable` |   5 | Curacion/filtrado/reordenamiento de contenido disponible para operacion diaria.        |
+| APP-708 | Story     | Integrar formularios tipados de curacion (`react-hook-form` + `zod`)                                  |   3 | Alta/edicion/revision en mesa de curacion con validacion consistente y errores claros. |
 
 Total estimado: 39 SP
 
@@ -213,34 +213,55 @@ Objetivo: experiencia tipo camino de aprendizaje por modulos y unidades.
 
 Total estimado: 37 SP
 
-## Sprint 9 | Personalizacion del camino v2
+## Sprint 9 | Mejoras UX/UI de Roadmap y Curacion (Estilo Duolingo)
+
+Objetivo: Mejorar la presentacion visual del roadmap y la curacion, agregando diseño de nodos secuenciales tipo Duolingo, animaciones, nuevos logos y resumenes interactivos.
+
+| Key     | Tipo      | Historia                                           |  SP | Criterios de aceptacion                                                                |
+| ------- | --------- | -------------------------------------------------- | --: | -------------------------------------------------------------------------------------- |
+| APP-901 | Epic Task | Rediseño visual del Roadmap (Nodos secuenciales)   |   8 | Roadmap usa circulitos secuenciales tipo Duolingo indicando progreso y nivel exacto.   |
+| APP-902 | Story     | Mejorar logos e iconografia de rutas y modulos     |   5 | Iconos vectoriales consistentes y atractivos para todas las rutas y recompensas.       |
+| APP-903 | Story     | Añadir animaciones de interaccion y progreso       |   5 | Uso de framer-motion para transiciones al completar nodos y desbloquear progreso.      |
+| APP-904 | Story     | Resumenes detallados de unidad/nivel               |   5 | Pantalla de finalizacion de unidad altamente visual y gratificante.                    |
+| APP-905 | Story     | Interfaz visual mejorada para mesa de curacion     |   5 | Mesa de operacion permite visualizar assets, iconos y estructura de rutas facilmente   |
+| APP-906 | Epic Task | Poblar Roadmap con Data Existente de Juegos        |   8 | Integrar data real (tabu, math, vocabulario) como contenido especifico de lecciones.   |
+| APP-907 | Story     | Escalar cantidad de Nodos y progresion             |   5 | Expandir las rutas con mayor cantidad de nodos acorde al aumento de contenido real.    |
+| APP-908 | Story     | Definir esquema de contenido teorico (Estructuras) |   5 | Estructura JSON/Markdown para almacenar explicaciones gramaticales y vocabulario base. |
+
+Total estimado: 46 SP
+
+## Sprint 10 | Personalizacion del camino v2
 
 Objetivo: adaptar el roadmap al desempeno real del usuario.
 
-| Key     | Tipo      | Historia                                                  |  SP | Criterios de aceptacion                                                             |
-| ------- | --------- | --------------------------------------------------------- | --: | ----------------------------------------------------------------------------------- |
-| APP-901 | Epic Task | Motor de recomendacion de siguiente nodo                  |   8 | Recomienda unidad segun errores recurrentes, progreso y objetivo elegido.           |
-| APP-902 | Story     | Diagnostico de brechas por skill/tag                      |   5 | Se calculan debilidades accionables por ruta y categoria.                           |
-| APP-903 | Story     | Insercion de nodos de refuerzo (remedial)                 |   5 | Roadmap agrega lecciones de refuerzo antes de avanzar cuando sea necesario.         |
-| APP-904 | Story     | Evaluacion de ubicacion (placement) para saltar unidades  |   5 | Usuario puede acelerar inicio sin romper secuencia ni precision del diagnostico.    |
-| APP-905 | Story     | Integracion con Daily Loop como modo rapido del roadmap   |   5 | Daily Loop consume nodos activos del roadmap cuando existe plan en curso.           |
-| APP-906 | QA        | Tests de decisiones adaptativas y no-oscilacion           |   3 | Reglas estables ante ruido de sesiones cortas y errores aislados.                   |
-| APP-907 | Spike     | Evaluar migracion a `tailwindcss@4` + `@tailwindcss/vite` |   3 | POC con reporte de compatibilidad, riesgos visuales y plan de migracion progresiva. |
+| Key      | Tipo      | Historia                                                  |  SP | Criterios de aceptacion                                                             |
+| -------- | --------- | --------------------------------------------------------- | --: | ----------------------------------------------------------------------------------- |
+| APP-1001 | Epic Task | Motor de recomendacion de siguiente nodo                  |   8 | Recomienda unidad segun errores recurrentes, progreso y objetivo elegido.           |
+| APP-1002 | Story     | Diagnostico de brechas por skill/tag                      |   5 | Se calculan debilidades accionables por ruta y categoria.                           |
+| APP-1003 | Story     | Insercion de nodos de refuerzo (remedial)                 |   5 | Roadmap agrega lecciones de refuerzo antes de avanzar cuando sea necesario.         |
+| APP-1004 | Story     | Evaluacion de ubicacion (placement) para saltar unidades  |   5 | Usuario puede acelerar inicio sin romper secuencia ni precision del diagnostico.    |
+| APP-1005 | Story     | Integracion con Daily Loop como modo rapido del roadmap   |   5 | Daily Loop consume nodos activos del roadmap cuando existe plan en curso.           |
+| APP-1006 | QA        | Tests de decisiones adaptativas y no-oscilacion           |   3 | Reglas estables ante ruido de sesiones cortas y errores aislados.                   |
+| APP-1007 | Spike     | Evaluar migracion a `tailwindcss@4` + `@tailwindcss/vite` |   3 | POC con reporte de compatibilidad, riesgos visuales y plan de migracion progresiva. |
+| APP-1008 | Story     | Diversificar tipos de nodos con juegos especificos        |   5 | Mapeo avanzado de metadata existente hacia nodos para crear variedad de retos.      |
+| APP-1009 | Epic Task | Desarrollar vistas de leccion teorica previa al juego     |   8 | UI de "Study" para leer y asimilar teoria y estructuras antes de jugar/practicar.   |
+| APP-1010 | Story     | Intercalar nodos de teoria y practica en el Roadmap       |   5 | Roadmap configura caminos donde la teoria es prerequisito para la practica (juego). |
 
-Total estimado: 34 SP
+Total estimado: 52 SP
 
-## Sprint 10 | Escalado de contenido + release readiness
+## Sprint 11 | Escalado de contenido + release readiness
 
 Objetivo: preparar crecimiento sostenido de contenido y experiencia estable.
 
-| Key      | Tipo      | Historia                                                    |  SP | Criterios de aceptacion                                                          |
-| -------- | --------- | ----------------------------------------------------------- | --: | -------------------------------------------------------------------------------- |
-| APP-1001 | Epic Task | Packs tematicos y por objetivo (English/Math/Dev)           |   8 | App soporta multiples packs activables sin duplicar logica de juegos.            |
-| APP-1002 | Story     | Carga diferida de packs para reducir peso inicial           |   5 | Bundle inicial baja y los packs se cargan bajo demanda por ruta/modulo.          |
-| APP-1003 | Story     | Estrategia offline/cache para roadmap y contenido activo    |   5 | Extiende PWA actual con cache versionado de nodos/packs activos e invalidacion segura al actualizar contenido. |
-| APP-1004 | Story     | Panel de salud de contenido (cobertura, repeticion, huecos) |   5 | Stats interno muestra donde falta contenido por skill/level.                     |
-| APP-1005 | Story     | Smoke tests mobile + desktop sobre roadmap y juegos         |   5 | Flujo completo validado en ambos formatos con reporte de issues.                 |
-| APP-1006 | QA        | Checklist de release de contenido y rollback por pack       |   3 | Se puede desactivar un pack problemático sin afectar progreso global.            |
+| Key      | Tipo      | Historia                                                    |  SP | Criterios de aceptacion                                                                                        |
+| -------- | --------- | ----------------------------------------------------------- | --: | -------------------------------------------------------------------------------------------------------------- |
+| APP-1101 | Epic Task | Packs tematicos y por objetivo (English/Math/Dev)           |   8 | App soporta multiples packs activables sin duplicar logica de juegos.                                          |
+| APP-1102 | Story     | Carga diferida de packs para reducir peso inicial           |   5 | Bundle inicial baja y los packs se cargan bajo demanda por ruta/modulo.                                        |
+| APP-1103 | Story     | Estrategia offline/cache para roadmap y contenido activo    |   5 | Extiende PWA actual con cache versionado de nodos/packs activos e invalidacion segura al actualizar contenido. |
+| APP-1104 | Story     | Panel de salud de contenido (cobertura, repeticion, huecos) |   5 | Stats interno muestra donde falta contenido por skill/level.                                                   |
+| APP-1105 | Story     | Smoke tests mobile + desktop sobre roadmap y juegos         |   5 | Flujo completo validado en ambos formatos con reporte de issues.                                               |
+| APP-1106 | QA        | Checklist de release de contenido y rollback por pack       |   3 | Se puede desactivar un pack problemático sin afectar progreso global.                                          |
+
 Total estimado: 31 SP
 
 ### Criterios de Evaluacion de Librerias (DoD UX)
@@ -251,29 +272,30 @@ Total estimado: 31 SP
 4. Testabilidad: componentes integrables con Vitest/RTL sin hacks.
 5. Rollback: cada adopcion debe poder deshabilitarse sin romper flujos core.
 
-## Sprint 11 | Backend-ready, mobile y cierre tecnico
+## Sprint 12 | Backend-ready, mobile y cierre tecnico
 
 Objetivo: retomar infraestructura de plataforma una vez establecida la capa de contenido/roadmap.
 
-| Key     | Tipo  | Historia                                      |  SP | Criterios de aceptacion                             |
-| ------- | ----- | --------------------------------------------- | --: | --------------------------------------------------- |
-| APP-1104 | Story | Crear capa repository local-first             |   8 | Lectura/escritura desacoplada de UI.                |
-| APP-1105 | Story | Preparar react-query con feature flag         |   5 | Infra lista sin forzar backend aun.                 |
-| APP-1106 | Spike | POC de Capacitor Android                      |   5 | Build de prueba documentado + checklist Play Store. |
-| APP-1107 | QA    | Pruebas de regresion completas + smoke mobile |   3 | Suite verde y reporte final de release readiness.   |
+| Key      | Tipo  | Historia                                      |  SP | Criterios de aceptacion                             |
+| -------- | ----- | --------------------------------------------- | --: | --------------------------------------------------- |
+| APP-1204 | Story | Crear capa repository local-first             |   8 | Lectura/escritura desacoplada de UI.                |
+| APP-1205 | Story | Preparar react-query con feature flag         |   5 | Infra lista sin forzar backend aun.                 |
+| APP-1206 | Spike | POC de Capacitor Android                      |   5 | Build de prueba documentado + checklist Play Store. |
+| APP-1207 | QA    | Pruebas de regresion completas + smoke mobile |   3 | Suite verde y reporte final de release readiness.   |
 
 Total estimado: 21 SP
 
 Nota de trazabilidad:
-- `APP-1101`, `APP-1102` y `APP-1103` quedan reservados para trabajo backend previo (fuera de alcance de este roadmap actual).
 
-## Sprint 12 | Migracion UI Tailwind v4 (condicionada)
+- `APP-1201`, `APP-1202` y `APP-1203` quedan reservados para trabajo backend previo (fuera de alcance de este roadmap actual).
 
-Objetivo: ejecutar migracion visual solo despues de estabilizar release y cerrar APP-907 con reporte verde.
+## Sprint 13 | Migracion UI Tailwind v4 (condicionada)
 
-| Key      | Tipo  | Historia                                              |  SP | Criterios de aceptacion                                                          |
-| -------- | ----- | ----------------------------------------------------- | --: | -------------------------------------------------------------------------------- |
-| APP-1007 | Story | Migrar UI a `tailwindcss@4` bajo feature flag         |   5 | Migracion estable, sin regresiones criticas de estilos y con rollback inmediato. |
+Objetivo: ejecutar migracion visual solo despues de estabilizar release y cerrar APP-1007 con reporte verde.
+
+| Key      | Tipo  | Historia                                      |  SP | Criterios de aceptacion                                                          |
+| -------- | ----- | --------------------------------------------- | --: | -------------------------------------------------------------------------------- |
+| APP-1301 | Story | Migrar UI a `tailwindcss@4` bajo feature flag |   5 | Migracion estable, sin regresiones criticas de estilos y con rollback inmediato. |
 
 Total estimado: 5 SP
 

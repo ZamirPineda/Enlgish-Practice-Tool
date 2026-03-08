@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { stopGameData } from "@/features/data/stopGameData";
-import { StopCategory, StopItem } from "@/types";
+import { StopCategory, StopItem, VaultAddOptions } from "@/types";
 import { StopGameCard } from "@/components/StopGameCard";
 import { StopItemModal } from "@/components/StopItemModal";
 import { StopGamePlay } from "@/components/StopGamePlay";
@@ -19,6 +19,7 @@ import {
   CATEGORY_GROUPS,
   PREDEFINED_ALL_ORDER,
 } from "@/lib/stopGameHelpers";
+import { buildVaultAddOptionsFromStopItem } from "@/lib/vaultEntries";
 
 interface StopGameBrowseProps {
   onPlayWord: (word: string) => void;
@@ -27,7 +28,7 @@ interface StopGameBrowseProps {
   onAddToVault: (
     word: string,
     definition: string,
-    options?: { category?: string; tags?: string[] },
+    options?: VaultAddOptions,
   ) => void;
 }
 
@@ -266,11 +267,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
 
         // Auto-add to Vault on successful practice
         if (onAddToVault && practiceWord) {
-          handleSaveWord(
-            practiceWord.word,
-            practiceWord.definition || practiceWord.translation,
-            practiceCategory || undefined,
-          );
+          handleSaveWord(practiceWord, practiceCategory || undefined);
         }
 
         setTimeout(() => {
@@ -331,16 +328,14 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
     }
   };
 
-  const handleSaveWord = (
-    word: string,
-    definition: string,
-    category?: StopCategory,
-  ) => {
+  const handleSaveWord = (item: StopItem, category?: StopCategory) => {
     if (onAddToVault) {
-      onAddToVault(word, definition, {
-        category,
-      });
-      setSavedWords((prev) => new Set(prev).add(word));
+      onAddToVault(
+        item.word,
+        item.definition || item.translation,
+        buildVaultAddOptionsFromStopItem(item, category),
+      );
+      setSavedWords((prev) => new Set(prev).add(item.word));
     }
   };
 
@@ -652,9 +647,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                             onPractice={() =>
                               handlePracticeClick(item, category)
                             }
-                            onSave={(word, definition) =>
-                              handleSaveWord(word, definition, category)
-                            }
+                            onSave={(item) => handleSaveWord(item, category)}
                             isAudioLoading={isWordAudioLoading === item.word}
                             isPracticing={
                               practiceWord?.word === item.word && isPracticing

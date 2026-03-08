@@ -8,7 +8,8 @@ export const connectorsData: StopData = {
         ipa: "/əˈbʌv ɔːl/",
         translation: "Sobre todo",
         level: "B2",
-        definition: "Most importantly.",
+        definition:
+          "Sobre todo. Used to highlight the most important point. Used to connect one idea to the next in a clear way.",
         examSentence: "Be honest, above all.",
         writingSwap: "Most importantly",
       },
@@ -17,7 +18,8 @@ export const connectorsData: StopData = {
         ipa: "/əˈkɔːrdɪŋli/",
         translation: "En consecuencia",
         level: "C1",
-        definition: "Appropriately to circumstances.",
+        definition:
+          "En consecuencia. Used to show that the next result or action matches the situation. Used to connect one idea to the next in a clear way.",
         examSentence: "Costs have risen; accordingly, prices must increase.",
         writingSwap: "Therefore",
       },
@@ -26,7 +28,8 @@ export const connectorsData: StopData = {
         ipa: "/əˈdɪʃənəli/",
         translation: "Adicionalmente",
         level: "B2",
-        definition: "Also.",
+        definition:
+          "Adicionalmente. Used to add another related point. Used to connect one idea to the next in a clear way.",
         examSentence: "Additionally, we need more time.",
         writingSwap: "Furthermore",
       },
@@ -35,7 +38,8 @@ export const connectorsData: StopData = {
         ipa: "/ədˈmɪtɪdli/",
         translation: "Ciertamente",
         level: "C1",
-        definition: "Conceding a point.",
+        definition:
+          "Ciertamente. Used when admitting that part of another point is true before continuing. Used to connect one idea to the next in a clear way.",
         examSentence: "Admittedly, the plan was risky.",
         writingSwap: "Granted",
       },
@@ -44,7 +48,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈæftər ɔːl/",
         translation: "Al fin y al cabo",
         level: "B1",
-        definition: "Remembering a fact.",
+        definition:
+          "Al fin y al cabo. Used to remind people of a fact that changes how the situation should be judged. Used to connect one idea to the next in a clear way.",
         examSentence: "Don't blame him; after all, he is young.",
         writingSwap: "Ultimately",
       },
@@ -53,7 +58,8 @@ export const connectorsData: StopData = {
         ipa: "/ɔːlˈbiːɪt/",
         translation: "Aunque",
         level: "C2",
-        definition: "Although.",
+        definition:
+          "Aunque. Used to introduce contrast or an unexpected second idea. Used to connect one idea to the next in a clear way.",
         examSentence: "He accepted, albeit reluctantly.",
         writingSwap: "Although",
       },
@@ -62,7 +68,8 @@ export const connectorsData: StopData = {
         ipa: "/ɔːl ɪn ɔːl/",
         translation: "En definitiva",
         level: "B2",
-        definition: "Considering everything.",
+        definition:
+          "En definitiva. Used when giving a final judgment after looking at the whole situation. Used to connect one idea to the next in a clear way.",
         examSentence: "All in all, it was a good day.",
         writingSwap: "On the whole",
       },
@@ -85,7 +92,8 @@ export const connectorsData: StopData = {
         ipa: "/əˈlɒŋ wɪð/",
         translation: "Junto con",
         level: "B1",
-        definition: "In addition to.",
+        definition:
+          "Junto con. Used to add one person, thing, or point to another. Used to connect one idea to the next in a clear way.",
         examSentence: "He came along with his brother.",
         writingSwap: "Together with",
       },
@@ -94,7 +102,8 @@ export const connectorsData: StopData = {
         ipa: "/ɔːlˈtɜːrnətɪvli/",
         translation: "Alternativamente",
         level: "B2",
-        definition: "Another option.",
+        definition:
+          "Alternativamente. Used to introduce a different possible choice. Used to connect one idea to the next in a clear way.",
         examSentence: "We can drive; alternatively, we can fly.",
         writingSwap: "On the other hand",
       },
@@ -117,7 +126,8 @@ export const connectorsData: StopData = {
         ipa: "/əˈnʌðər pɔɪnt ɪz/",
         translation: "Otro punto es",
         level: "B2",
-        definition: "Adding info.",
+        definition:
+          "Otro punto es. Used to add a new supporting point. Used to connect one idea to the next in a clear way.",
         examSentence: "Another point is the cost.",
         writingSwap: "Furthermore",
       },
@@ -126,7 +136,8 @@ export const connectorsData: StopData = {
         ipa: "/əˈpɑːrt frɒm/",
         translation: "Aparte de",
         level: "B2",
-        definition: "Except for.",
+        definition:
+          "Aparte de. Except for. Used to connect one idea to the next in a clear way.",
         examSentence: "Apart from the rain, it was fun.",
         writingSwap: "Aside from",
       },
@@ -135,7 +146,8 @@ export const connectorsData: StopData = {
         ipa: "/æz ə ˈkɒnsɪkwəns/",
         translation: "Como consecuencia",
         level: "B2",
-        definition: "Resulting from.",
+        definition:
+          "Como consecuencia. Resulting from. Used to connect one idea to the next in a clear way.",
         examSentence: "He failed, as a consequence of laziness.",
         writingSwap: "Consequently",
       },
@@ -144,7 +156,8 @@ export const connectorsData: StopData = {
         ipa: "/æz ə ˈmætər əv fækt/",
         translation: "De hecho",
         level: "B2",
-        definition: "Actually.",
+        definition:
+          "De hecho. Actually. Used to connect one idea to the next in a clear way.",
         examSentence: "I don't like him. As a matter of fact, I detest him.",
         writingSwap: "Actually",
       },
@@ -153,7 +166,8 @@ export const connectorsData: StopData = {
         ipa: "/æz ə rɪˈzʌlt/",
         translation: "Como resultado",
         level: "B1",
-        definition: "Because of.",
+        definition:
+          "Como resultado. Because of. Used to connect one idea to the next in a clear way.",
         examSentence: "It rained; as a result, we stayed in.",
         writingSwap: "Consequently",
       },
@@ -162,7 +176,8 @@ export const connectorsData: StopData = {
         ipa: "/æz ə ruːl/",
         translation: "Por norma general",
         level: "B2",
-        definition: "Usually.",
+        definition:
+          "Por norma general. Usually. Used to connect one idea to the next in a clear way.",
         examSentence: "As a rule, I don't drink coffee.",
         writingSwap: "Generally",
       },
@@ -171,7 +186,8 @@ export const connectorsData: StopData = {
         ipa: "/æz fɑːr æz/",
         translation: "En lo que respecta a",
         level: "B1",
-        definition: "To the extent.",
+        definition:
+          "En lo que respecta a. To the extent. Used to connect one idea to the next in a clear way.",
         examSentence: "As far as I know, he is away.",
         writingSwap: "To the extent that",
       },
@@ -180,7 +196,8 @@ export const connectorsData: StopData = {
         ipa: "/æz fɔːr/",
         translation: "En cuanto a",
         level: "B1",
-        definition: "Regarding.",
+        definition:
+          "En cuanto a. Regarding. Used to connect one idea to the next in a clear way.",
         examSentence: "As for the money, forget it.",
         writingSwap: "Regarding",
       },
@@ -189,7 +206,8 @@ export const connectorsData: StopData = {
         ipa: "/æz ɪf/",
         translation: "Como si",
         level: "B1",
-        definition: "Like.",
+        definition:
+          "Como si. Like. Used to connect one idea to the next in a clear way.",
         examSentence: "He looks as if he is sick.",
         writingSwap: "As though",
       },
@@ -198,7 +216,8 @@ export const connectorsData: StopData = {
         ipa: "/æz ɪt ˈhæpənz/",
         translation: "Da la casualidad",
         level: "C1",
-        definition: "Coincidentally.",
+        definition:
+          "Da la casualidad. Coincidentally. Used to connect one idea to the next in a clear way.",
         examSentence: "As it happens, I have one right here.",
         writingSwap: "Coincidentally",
       },
@@ -207,7 +226,8 @@ export const connectorsData: StopData = {
         ipa: "/æz əˈpoʊzd tu/",
         translation: "A diferencia de",
         level: "C1",
-        definition: "Contrasting.",
+        definition:
+          "A diferencia de. Contrasting. Used to connect one idea to the next in a clear way.",
         examSentence: "We chose quality as opposed to quantity.",
         writingSwap: "In contrast to",
       },
@@ -216,7 +236,8 @@ export const connectorsData: StopData = {
         ipa: "/æz rɪˈɡɑːrdz/",
         translation: "Con respecto a",
         level: "C1",
-        definition: "Concerning.",
+        definition:
+          "Con respecto a. Concerning. Used to connect one idea to the next in a clear way.",
         examSentence: "As regards your request, it is denied.",
         writingSwap: "Concerning",
       },
@@ -234,7 +255,8 @@ export const connectorsData: StopData = {
         ipa: "/æz wɛl æz/",
         translation: "Así como",
         level: "B1",
-        definition: "In addition to.",
+        definition:
+          "Así como. Used to add one person, thing, or point to another. Used to connect one idea to the next in a clear way.",
         examSentence: "She speaks French as well as English.",
         writingSwap: "In addition to",
       },
@@ -243,7 +265,8 @@ export const connectorsData: StopData = {
         ipa: "/əˈsjuːmɪŋ ðæt/",
         translation: "Asumiendo que",
         level: "B2",
-        definition: "If true.",
+        definition:
+          "Asumiendo que. If true. Used to connect one idea to the next in a clear way.",
         examSentence: "Assuming that he pays, we can go.",
         writingSwap: "Presuming",
       },
@@ -252,7 +275,8 @@ export const connectorsData: StopData = {
         ipa: "/æt ˈɛni reɪt/",
         translation: "De todos modos",
         level: "B2",
-        definition: "Whatever happens.",
+        definition:
+          "De todos modos. Whatever happens. Used to connect one idea to the next in a clear way.",
         examSentence: "At any rate, I will help.",
         writingSwap: "In any case",
       },
@@ -261,7 +285,8 @@ export const connectorsData: StopData = {
         ipa: "/æt fɜːrst saɪt/",
         translation: "A primera vista",
         level: "B2",
-        definition: "Initially.",
+        definition:
+          "A primera vista. Initially. Used to connect one idea to the next in a clear way.",
         examSentence: "At first sight, it looked easy.",
         writingSwap: "Initially",
       },
@@ -270,7 +295,8 @@ export const connectorsData: StopData = {
         ipa: "/æt ðə seɪm taɪm/",
         translation: "Al mismo tiempo",
         level: "B1",
-        definition: "Simultaneously/However.",
+        definition:
+          "Al mismo tiempo. Simultaneously/However. Used to connect one idea to the next in a clear way.",
         examSentence: "It's cheap, but at the same time risky.",
         writingSwap: "Nevertheless",
       },
@@ -283,7 +309,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈbeɪsɪkli/",
         translation: "Básicamente",
         level: "B2",
-        definition: "Essentially.",
+        definition:
+          "Básicamente. Essentially. Used to connect one idea to the next in a clear way.",
         examSentence: "Basically, we need more money.",
         writingSwap: "Fundamentally",
       },
@@ -306,7 +333,8 @@ export const connectorsData: StopData = {
         ipa: "/bɪˈkɒz əv/",
         translation: "Debido a",
         level: "A2",
-        definition: "Due to.",
+        definition:
+          "Debido a. Due to. Used to connect one idea to the next in a clear way.",
         examSentence: "We stayed in because of rain.",
         writingSwap: "Due to",
       },
@@ -315,7 +343,8 @@ export const connectorsData: StopData = {
         ipa: "/bɪˈfɔːr lɒŋ/",
         translation: "En poco tiempo",
         level: "B2",
-        definition: "Soon.",
+        definition:
+          "En poco tiempo. Soon. Used to connect one idea to the next in a clear way.",
         examSentence: "Before long, he arrived.",
         writingSwap: "Soon",
       },
@@ -324,7 +353,8 @@ export const connectorsData: StopData = {
         ipa: "/bɪˈsaɪdz/",
         translation: "Además",
         level: "B1",
-        definition: "In addition to.",
+        definition:
+          "Además. Used to add one person, thing, or point to another. Used to connect one idea to the next in a clear way.",
         examSentence: "It's late; besides, I'm tired.",
         writingSwap: "Furthermore",
       },
@@ -333,7 +363,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈbriːfli/",
         translation: "Brevemente",
         level: "B1",
-        definition: "Short time.",
+        definition:
+          "Brevemente. Short time. Used to connect one idea to the next in a clear way.",
         examSentence: "We spoke briefly.",
         writingSwap: "In short",
       },
@@ -342,7 +373,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈbrɔːdli ˈspiːkɪŋ/",
         translation: "En términos generales",
         level: "C1",
-        definition: "Generally.",
+        definition:
+          "En términos generales. Generally. Used to connect one idea to the next in a clear way.",
         examSentence: "Broadly speaking, I agree.",
         writingSwap: "Generally",
       },
@@ -356,7 +388,8 @@ export const connectorsData: StopData = {
         ipa: "/bʌt fɔːr/",
         translation: "A no ser por",
         level: "C1",
-        definition: "Without.",
+        definition:
+          "A no ser por. Without. Used to connect one idea to the next in a clear way.",
         examSentence: "But for your help, I would have failed.",
         writingSwap: "Were it not for",
       },
@@ -365,7 +398,8 @@ export const connectorsData: StopData = {
         ipa: "/baɪ ɔːl miːnz/",
         translation: "Por supuesto",
         level: "C1",
-        definition: "Certainly.",
+        definition:
+          "Por supuesto. Certainly. Used to connect one idea to the next in a clear way.",
         examSentence: "By all means, join us.",
         writingSwap: "Certainly",
       },
@@ -374,7 +408,8 @@ export const connectorsData: StopData = {
         ipa: "/baɪ ənd lɑːrdʒ/",
         translation: "En general",
         level: "C1",
-        definition: "Generally.",
+        definition:
+          "En general. Generally. Used to connect one idea to the next in a clear way.",
         examSentence: "By and large, it was successful.",
         writingSwap: "On the whole",
       },
@@ -383,7 +418,8 @@ export const connectorsData: StopData = {
         ipa: "/baɪ ˈkɒntrɑːst/",
         translation: "Por el contrario",
         level: "B2",
-        definition: "Showing difference.",
+        definition:
+          "Por el contrario. Showing difference. Used to connect one idea to the next in a clear way.",
         examSentence: "The north is cold. By contrast, the south is warm.",
         writingSwap: "Conversely",
       },
@@ -392,7 +428,8 @@ export const connectorsData: StopData = {
         ipa: "/baɪ miːnz əv/",
         translation: "Por medio de",
         level: "B2",
-        definition: "Using.",
+        definition:
+          "Por medio de. Using. Used to connect one idea to the next in a clear way.",
         examSentence: "They climbed by means of a rope.",
         writingSwap: "Using",
       },
@@ -401,7 +438,8 @@ export const connectorsData: StopData = {
         ipa: "/baɪ noʊ miːnz/",
         translation: "De ninguna manera",
         level: "C1",
-        definition: "Not at all.",
+        definition:
+          "De ninguna manera. Not at all. Used to connect one idea to the next in a clear way.",
         examSentence: "It is by no means easy.",
         writingSwap: "Not at all",
       },
@@ -424,7 +462,8 @@ export const connectorsData: StopData = {
         ipa: "/baɪ ˈvɜːrtʃuː əv/",
         translation: "En virtud de",
         level: "C2",
-        definition: "Because of.",
+        definition:
+          "En virtud de. Because of. Used to connect one idea to the next in a clear way.",
         examSentence: "She succeeded by virtue of hard work.",
         writingSwap: "Because of",
       },
@@ -446,7 +485,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈkɒnsɪkwəntli/",
         translation: "Por consiguiente",
         level: "B2",
-        definition: "As a result.",
+        definition:
+          "Por consiguiente. As a result. Used to connect one idea to the next in a clear way.",
         examSentence: "He failed; consequently, he retook the class.",
         writingSwap: "Therefore",
       },
@@ -455,7 +495,8 @@ export const connectorsData: StopData = {
         ipa: "/kənˈvɜːrsli/",
         translation: "Inversamente",
         level: "C2",
-        definition: "Reverse is true.",
+        definition:
+          "Inversamente. Reverse is true. Used to connect one idea to the next in a clear way.",
         examSentence: "Sales may rise; conversely, they may fall.",
         writingSwap: "On the other hand",
       },
@@ -464,7 +505,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌkɒrɪˈspɒndɪŋli/",
         translation: "Correspondientemente",
         level: "C2",
-        definition: "Similarly.",
+        definition:
+          "Correspondientemente. Similarly. Used to connect one idea to the next in a clear way.",
         examSentence: "Prices rose, and demand dropped correspondingly.",
         writingSwap: "Accordingly",
       },
@@ -473,7 +515,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈkʌpəld wɪð/",
         translation: "Sumado a",
         level: "C1",
-        definition: "Combined with.",
+        definition:
+          "Sumado a. Combined with. Used to connect one idea to the next in a clear way.",
         examSentence: "Low wages coupled with high prices caused unrest.",
         writingSwap: "Together with",
       },
@@ -482,7 +525,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈkɒntrəri tu/",
         translation: "Contrario a",
         level: "B2",
-        definition: "Against.",
+        definition:
+          "Contrario a. Against. Used to connect one idea to the next in a clear way.",
         examSentence: "Contrary to belief, it is easy.",
         writingSwap: "Unlike",
       },
@@ -491,7 +535,8 @@ export const connectorsData: StopData = {
         ipa: "/kənˈsɜːrnɪŋ/",
         translation: "Concerniente a",
         level: "B2",
-        definition: "About.",
+        definition:
+          "Concerniente a. About. Used to connect one idea to the next in a clear way.",
         examSentence: "I have questions concerning the report.",
         writingSwap: "Regarding",
       },
@@ -500,7 +545,8 @@ export const connectorsData: StopData = {
         ipa: "/kənˈsɪdərɪŋ/",
         translation: "Considerando",
         level: "B2",
-        definition: "Taking into account.",
+        definition:
+          "Considerando. Taking into account. Used to connect one idea to the next in a clear way.",
         examSentence: "Considering the weather, we did well.",
         writingSwap: "Given",
       },
@@ -509,7 +555,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈkjʊəriəsli/",
         translation: "Curiosamente",
         level: "B2",
-        definition: "Strangely.",
+        definition:
+          "Curiosamente. In a way that feels unusual or hard to explain. Used to connect one idea to the next in a clear way.",
         examSentence: "Curiously, the door was open.",
         writingSwap: "Strangely",
       },
@@ -518,7 +565,8 @@ export const connectorsData: StopData = {
         ipa: "/koʊˌɪnsɪˈdɛntəli/",
         translation: "Coincidentemente",
         level: "C1",
-        definition: "By chance.",
+        definition:
+          "Coincidentemente. By chance. Used to connect one idea to the next in a clear way.",
         examSentence: "Coincidentally, we met there.",
         writingSwap: "By coincidence",
       },
@@ -527,7 +575,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈklɪərli/",
         translation: "Claramente",
         level: "B1",
-        definition: "Obvious.",
+        definition:
+          "Claramente. Obvious. Used to connect one idea to the next in a clear way.",
         examSentence: "Clearly, he is wrong.",
         writingSwap: "It is clear that",
       },
@@ -536,7 +585,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈtʃiːfli/",
         translation: "Principalmente",
         level: "C1",
-        definition: "Mainly.",
+        definition:
+          "Principalmente. Mainly. Used to connect one idea to the next in a clear way.",
         examSentence: "He is remembered chiefly for his novels.",
         writingSwap: "Primarily",
       },
@@ -545,7 +595,8 @@ export const connectorsData: StopData = {
         ipa: "/kəmˈpærətɪvli/",
         translation: "Comparativamente",
         level: "C1",
-        definition: "Relatively.",
+        definition:
+          "Comparativamente. Relatively. Used to connect one idea to the next in a clear way.",
         examSentence: "It was a comparatively easy task.",
         writingSwap: "Relatively",
       },
@@ -563,7 +614,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌkærəktəˈrɪstɪkli/",
         translation: "Característicamente",
         level: "C1",
-        definition: "Typical of someone.",
+        definition:
+          "Característicamente. Typical of someone. Used to connect one idea to the next in a clear way.",
         examSentence: "Characteristically, he was late.",
         writingSwap: "Typically",
       },
@@ -572,7 +624,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈkruːʃəli/",
         translation: "Crucialmente",
         level: "B2",
-        definition: "Decisively.",
+        definition:
+          "Crucialmente. Decisively. Used to connect one idea to the next in a clear way.",
         examSentence: "Crucially, we need funding.",
         writingSwap: "Critically",
       },
@@ -581,7 +634,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈsɜːrtnli/",
         translation: "Ciertamente",
         level: "B1",
-        definition: "Surely.",
+        definition:
+          "Ciertamente. Surely. Used to connect one idea to the next in a clear way.",
         examSentence: "It will certainly rain.",
         writingSwap: "Undoubtedly",
       },
@@ -590,7 +644,8 @@ export const connectorsData: StopData = {
         ipa: "/keɪs ɪn pɔɪnt/",
         translation: "Caso en cuestión",
         level: "C2",
-        definition: "Example.",
+        definition:
+          "Caso en cuestión. Example. Used to connect one idea to the next in a clear way.",
         examSentence:
           "The system fails often. Case in point: yesterday's crash.",
         writingSwap: "For example",
@@ -604,7 +659,8 @@ export const connectorsData: StopData = {
         ipa: "/dɪˈspaɪt/",
         translation: "A pesar de",
         level: "B1",
-        definition: "In spite of.",
+        definition:
+          "A pesar de. In spite of. Used to connect one idea to the next in a clear way.",
         examSentence: "Despite the rain, we went out.",
         writingSwap: "In spite of",
       },
@@ -613,7 +669,8 @@ export const connectorsData: StopData = {
         ipa: "/djuː tu/",
         translation: "Debido a",
         level: "B2",
-        definition: "Because of.",
+        definition:
+          "Debido a. Because of. Used to connect one idea to the next in a clear way.",
         examSentence: "Cancelled due to snow.",
         writingSwap: "Owing to",
       },
@@ -622,7 +679,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈdaʊtləs/",
         translation: "Sin duda",
         level: "C1",
-        definition: "Certainly.",
+        definition:
+          "Sin duda. Certainly. Used to connect one idea to the next in a clear way.",
         examSentence: "He will doubtless succeed.",
         writingSwap: "Undoubtedly",
       },
@@ -631,7 +689,8 @@ export const connectorsData: StopData = {
         ipa: "/dɪˈstɪŋktli/",
         translation: "Claramente",
         level: "B2",
-        definition: "Clearly.",
+        definition:
+          "Claramente. Clearly. Used to connect one idea to the next in a clear way.",
         examSentence: "I distinctly remember it.",
         writingSwap: "Clearly",
       },
@@ -640,7 +699,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌdɪsəˈpɔɪntɪŋli/",
         translation: "Decepcionantemente",
         level: "B2",
-        definition: "Sadly.",
+        definition:
+          "Decepcionantemente. Sadly. Used to connect one idea to the next in a clear way.",
         examSentence: "Disappointingly, he lost.",
         writingSwap: "Regrettably",
       },
@@ -649,7 +709,8 @@ export const connectorsData: StopData = {
         ipa: "/dɪˈsaɪdɪdli/",
         translation: "Decididamente",
         level: "C1",
-        definition: "Definitely.",
+        definition:
+          "Decididamente. Definitely. Used to connect one idea to the next in a clear way.",
         examSentence: "It was decidedly colder.",
         writingSwap: "Definitely",
       },
@@ -658,7 +719,8 @@ export const connectorsData: StopData = {
         ipa: "/daʊn tu/",
         translation: "Debido a",
         level: "B2",
-        definition: "Caused by.",
+        definition:
+          "Debido a. Caused by. Used to connect one idea to the next in a clear way.",
         examSentence: "It was down to bad luck.",
         writingSwap: "Due to",
       },
@@ -667,7 +729,8 @@ export const connectorsData: StopData = {
         ipa: "/dɪˈspaɪt ðə fækt ðæt/",
         translation: "A pesar del hecho de que",
         level: "B2",
-        definition: "Although.",
+        definition:
+          "A pesar del hecho de que. Used to introduce contrast or an unexpected second idea. Used to connect one idea to the next in a clear way.",
         examSentence: "I went despite the fact that I was ill.",
         writingSwap: "Although",
       },
@@ -689,7 +752,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪˈvɛntʃuəli/",
         translation: "Finalmente",
         level: "B2",
-        definition: "In the end.",
+        definition:
+          "Finalmente. In the end. Used to connect one idea to the next in a clear way.",
         examSentence: "Eventually, he arrived.",
         writingSwap: "Ultimately",
       },
@@ -698,7 +762,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈiːvən soʊ/",
         translation: "Aun así",
         level: "C1",
-        definition: "Despite that.",
+        definition:
+          "Aun así. Despite that. Used to connect one idea to the next in a clear way.",
         examSentence: "It rained. Even so, we played.",
         writingSwap: "Nevertheless",
       },
@@ -707,7 +772,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪkˈsplɪsɪtli/",
         translation: "Explícitamente",
         level: "C1",
-        definition: "Clearly.",
+        definition:
+          "Explícitamente. Clearly. Used to connect one idea to the next in a clear way.",
         examSentence: "He explicitly said no.",
         writingSwap: "Clearly",
       },
@@ -716,7 +782,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈɛvɪdəntli/",
         translation: "Evidentemente",
         level: "B2",
-        definition: "Obviously.",
+        definition:
+          "Evidentemente. Obviously. Used to connect one idea to the next in a clear way.",
         examSentence: "Evidently, he was wrong.",
         writingSwap: "Obviously",
       },
@@ -725,7 +792,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪˈsɛnʃəli/",
         translation: "Esencialmente",
         level: "B2",
-        definition: "Basically.",
+        definition:
+          "Esencialmente. Basically. Used to connect one idea to the next in a clear way.",
         examSentence: "Essentially, it's the same.",
         writingSwap: "Fundamentally",
       },
@@ -734,7 +802,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪˈspɛʃəli/",
         translation: "Especialmente",
         level: "A2",
-        definition: "Particularly.",
+        definition:
+          "Especialmente. Particularly. Used to connect one idea to the next in a clear way.",
         examSentence: "I love fruit, especially apples.",
         writingSwap: "Particularly",
       },
@@ -743,7 +812,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈiːvən ɪf/",
         translation: "Incluso si",
         level: "B1",
-        definition: "Whether or not.",
+        definition:
+          "Incluso si. Whether or not. Used to connect one idea to the next in a clear way.",
         examSentence: "I'll go even if it rains.",
         writingSwap: "Whether",
       },
@@ -752,7 +822,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈiːvən ðoʊ/",
         translation: "Aunque",
         level: "B2",
-        definition: "Despite the fact.",
+        definition:
+          "Aunque. Despite the fact. Used to connect one idea to the next in a clear way.",
         examSentence: "Even though I'm tired, I'll work.",
         writingSwap: "Although",
       },
@@ -761,7 +832,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈɛlsˌwɛər/",
         translation: "En otro lugar",
         level: "B1",
-        definition: "In another place.",
+        definition:
+          "En otro lugar. In another place. Used to connect one idea to the next in a clear way.",
         examSentence: "Go elsewhere.",
         writingSwap: "In another location",
       },
@@ -770,7 +842,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪˈfɛktɪvli/",
         translation: "Efectivamente",
         level: "B2",
-        definition: "In effect.",
+        definition:
+          "Efectivamente. In effect. Used to connect one idea to the next in a clear way.",
         examSentence: "He is effectively the boss.",
         writingSwap: "In effect",
       },
@@ -779,7 +852,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈiːðər weɪ/",
         translation: "De cualquier manera",
         level: "B2",
-        definition: "Regardless.",
+        definition:
+          "De cualquier manera. Regardless. Used to connect one idea to the next in a clear way.",
         examSentence: "Either way, I win.",
         writingSwap: "Regardless",
       },
@@ -788,7 +862,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪkˈsɛpt fɔːr/",
         translation: "Excepto por",
         level: "B1",
-        definition: "Apart from.",
+        definition:
+          "Excepto por. Apart from. Used to connect one idea to the next in a clear way.",
         examSentence: "Everyone went except for John.",
         writingSwap: "Apart from",
       },
@@ -797,7 +872,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪkˈskluːdɪŋ/",
         translation: "Excluyendo",
         level: "B2",
-        definition: "Not including.",
+        definition:
+          "Excluyendo. Not including. Used to connect one idea to the next in a clear way.",
         examSentence: "Costs excluding tax.",
         writingSwap: "Not including",
       },
@@ -810,7 +886,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈfɜːrðərmɔːr/",
         translation: "Además",
         level: "C1",
-        definition: "In addition.",
+        definition:
+          "Además. In addition. Used to connect one idea to the next in a clear way.",
         examSentence: "He is smart. Furthermore, he is kind.",
         writingSwap: "Moreover",
       },
@@ -819,7 +896,8 @@ export const connectorsData: StopData = {
         ipa: "/fɔːr ˈɪnstəns/",
         translation: "Por ejemplo",
         level: "B2",
-        definition: "For example.",
+        definition:
+          "Por ejemplo. For example. Used to connect one idea to the next in a clear way.",
         examSentence: "Big cats, for instance lions.",
         writingSwap: "For example",
       },
@@ -828,7 +906,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈfɔːrmər/",
         translation: "El primero",
         level: "B2",
-        definition: "First of two.",
+        definition:
+          "El primero. First of two. Used to connect one idea to the next in a clear way.",
         examSentence: "Between tea and coffee, I prefer the former.",
         writingSwap: "The first",
       },
@@ -837,7 +916,8 @@ export const connectorsData: StopData = {
         ipa: "/fɔːr æz mʌtʃ æz/",
         translation: "Visto que",
         level: "C2",
-        definition: "Since (archaic).",
+        definition:
+          "Visto que. Since (archaic). Used to connect one idea to the next in a clear way.",
         examSentence: "Forasmuch as you are here.",
         writingSwap: "Since",
       },
@@ -846,7 +926,8 @@ export const connectorsData: StopData = {
         ipa: "/fɔːr ɪɡˈzɑːmpəl/",
         translation: "Por ejemplo",
         level: "A1",
-        definition: "Example.",
+        definition:
+          "Por ejemplo. Example. Used to connect one idea to the next in a clear way.",
         examSentence: "Fruit, for example apples.",
         writingSwap: "For instance",
       },
@@ -855,7 +936,8 @@ export const connectorsData: StopData = {
         ipa: "/fɔːr ðɪs ˈriːzən/",
         translation: "Por esta razón",
         level: "B1",
-        definition: "Therefore.",
+        definition:
+          "Por esta razón. Therefore. Used to connect one idea to the next in a clear way.",
         examSentence: "It rained, for this reason we stayed.",
         writingSwap: "Therefore",
       },
@@ -864,7 +946,8 @@ export const connectorsData: StopData = {
         ipa: "/fɔːr fɪər ðæt/",
         translation: "Por miedo a que",
         level: "C1",
-        definition: "Lest.",
+        definition:
+          "Por miedo a que. Lest. Used to connect one idea to the next in a clear way.",
         examSentence: "He hid for fear that he be seen.",
         writingSwap: "Lest",
       },
@@ -873,7 +956,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈfaɪnəli/",
         translation: "Finalmente",
         level: "A2",
-        definition: "At last.",
+        definition:
+          "Finalmente. At last. Used to connect one idea to the next in a clear way.",
         examSentence: "Finally, we arrived.",
         writingSwap: "Lastly",
       },
@@ -882,7 +966,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈfɜːrstli/",
         translation: "En primer lugar",
         level: "A2",
-        definition: "First.",
+        definition:
+          "En primer lugar. First. Used to connect one idea to the next in a clear way.",
         examSentence: "Firstly, wash your hands.",
         writingSwap: "First",
       },
@@ -891,7 +976,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈfriːkwəntli/",
         translation: "Frecuentemente",
         level: "B1",
-        definition: "Often.",
+        definition:
+          "Frecuentemente. Often. Used to connect one idea to the next in a clear way.",
         examSentence: "It rains frequently.",
         writingSwap: "Often",
       },
@@ -900,7 +986,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌfʌndəˈmɛntli/",
         translation: "Fundamentalmente",
         level: "C1",
-        definition: "Basically.",
+        definition:
+          "Fundamentalmente. Basically. Used to connect one idea to the next in a clear way.",
         examSentence: "They are fundamentally different.",
         writingSwap: "Basically",
       },
@@ -909,7 +996,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈfɒloʊɪŋ ðɪs/",
         translation: "A continuación",
         level: "B2",
-        definition: "Next.",
+        definition:
+          "A continuación. Next. Used to connect one idea to the next in a clear way.",
         examSentence: "Following this, we ate.",
         writingSwap: "Subsequently",
       },
@@ -918,7 +1006,8 @@ export const connectorsData: StopData = {
         ipa: "/fɔːr ðæt ˈmætər/",
         translation: "En cuanto a eso",
         level: "C1",
-        definition: "Also.",
+        definition:
+          "En cuanto a eso. Used to add another related point. Used to connect one idea to the next in a clear way.",
         examSentence: "I don't like him, or her for that matter.",
         writingSwap: "Also",
       },
@@ -927,7 +1016,8 @@ export const connectorsData: StopData = {
         ipa: "/fɔːr ðə moʊst pɑːrt/",
         translation: "En su mayor parte",
         level: "C1",
-        definition: "Mostly.",
+        definition:
+          "En su mayor parte. Mostly. Used to connect one idea to the next in a clear way.",
         examSentence: "It was, for the most part, fun.",
         writingSwap: "Mostly",
       },
@@ -936,7 +1026,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈfræŋkli/",
         translation: "Francamente",
         level: "B2",
-        definition: "Honestly.",
+        definition:
+          "Francamente. Honestly. Used to connect one idea to the next in a clear way.",
         examSentence: "Frankly, I don't know.",
         writingSwap: "Honestly",
       },
@@ -945,7 +1036,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈfɔːrtʃənətli/",
         translation: "Afortunadamente",
         level: "B1",
-        definition: "Luckily.",
+        definition:
+          "Afortunadamente. Luckily. Used to connect one idea to the next in a clear way.",
         examSentence: "Fortunately, no one was hurt.",
         writingSwap: "Luckily",
       },
@@ -958,7 +1050,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈɡɪvən ðæt/",
         translation: "Dado que",
         level: "C1",
-        definition: "Considering.",
+        definition:
+          "Dado que. Considering. Used to connect one idea to the next in a clear way.",
         examSentence: "Given that he is young, he is smart.",
         writingSwap: "Considering",
       },
@@ -967,7 +1060,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈɡrɑːntɪd/",
         translation: "Concedido",
         level: "C1",
-        definition: "Admittedly.",
+        definition:
+          "Concedido. Admittedly. Used to connect one idea to the next in a clear way.",
         examSentence: "Granted, it is expensive.",
         writingSwap: "Admittedly",
       },
@@ -976,7 +1070,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈdʒɛnərəli/",
         translation: "Generalmente",
         level: "B1",
-        definition: "Usually.",
+        definition:
+          "Generalmente. Usually. Used to connect one idea to the next in a clear way.",
         examSentence: "Generally, I walk.",
         writingSwap: "Typically",
       },
@@ -985,7 +1080,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈdʒɛnərəli ˈspiːkɪŋ/",
         translation: "En términos generales",
         level: "B2",
-        definition: "In general.",
+        definition:
+          "En términos generales. In general. Used to connect one idea to the next in a clear way.",
         examSentence: "Generally speaking, men are taller.",
         writingSwap: "On the whole",
       },
@@ -994,7 +1090,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈɡlædli/",
         translation: "Gustosamente",
         level: "B1",
-        definition: "Happily.",
+        definition:
+          "Gustosamente. Happily. Used to connect one idea to the next in a clear way.",
         examSentence: "I would gladly help.",
         writingSwap: "Willingly",
       },
@@ -1003,7 +1100,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈɡɪvən/",
         translation: "Dado",
         level: "B2",
-        definition: "Assuming.",
+        definition:
+          "Dado. Assuming. Used to connect one idea to the next in a clear way.",
         examSentence: "Given the choice, I'd stay.",
         writingSwap: "Assuming",
       },
@@ -1016,7 +1114,8 @@ export const connectorsData: StopData = {
         ipa: "/hɛns/",
         translation: "Por lo tanto",
         level: "C1",
-        definition: "Therefore.",
+        definition:
+          "Por lo tanto. Therefore. Used to connect one idea to the next in a clear way.",
         examSentence: "He is old, hence his wisdom.",
         writingSwap: "Therefore",
       },
@@ -1025,7 +1124,8 @@ export const connectorsData: StopData = {
         ipa: "/haʊˈɛvər/",
         translation: "Sin embargo",
         level: "B1",
-        definition: "But.",
+        definition:
+          "Sin embargo. But. Used to connect one idea to the next in a clear way.",
         examSentence: "I like it, however, it's dear.",
         writingSwap: "Nevertheless",
       },
@@ -1034,7 +1134,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌhɪðərˈtuː/",
         translation: "Hasta ahora",
         level: "C2",
-        definition: "Until now.",
+        definition:
+          "Hasta ahora. Until now. Used to connect one idea to the next in a clear way.",
         examSentence: "A fact hitherto unknown.",
         writingSwap: "Previously",
       },
@@ -1043,7 +1144,8 @@ export const connectorsData: StopData = {
         ipa: "/hɪərˈæftər/",
         translation: "De aquí en adelante",
         level: "C2",
-        definition: "From now on.",
+        definition:
+          "De aquí en adelante. From now on. Used to connect one idea to the next in a clear way.",
         examSentence: "Hereafter known as X.",
         writingSwap: "From now on",
       },
@@ -1061,7 +1163,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈhæpɪli/",
         translation: "Felizmente",
         level: "B1",
-        definition: "Luckily.",
+        definition:
+          "Felizmente. Luckily. Used to connect one idea to the next in a clear way.",
         examSentence: "Happily, we won.",
         writingSwap: "Fortunately",
       },
@@ -1070,7 +1173,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈɒnɪstli/",
         translation: "Honestamente",
         level: "B1",
-        definition: "Truthfully.",
+        definition:
+          "Honestamente. Truthfully. Used to connect one idea to the next in a clear way.",
         examSentence: "Honestly, I forgot.",
         writingSwap: "Truthfully",
       },
@@ -1079,7 +1183,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈhævɪŋ sɛd ðæt/",
         translation: "Dicho esto",
         level: "C1",
-        definition: "However.",
+        definition:
+          "Dicho esto. However. Used to connect one idea to the next in a clear way.",
         examSentence: "It's hard. Having said that, we must do it.",
         writingSwap: "Nevertheless",
       },
@@ -1092,7 +1197,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn əˈdɪʃən/",
         translation: "Además",
         level: "B1",
-        definition: "Also.",
+        definition:
+          "Además. Used to add another related point. Used to connect one idea to the next in a clear way.",
         examSentence: "In addition, it is cheap.",
         writingSwap: "Furthermore",
       },
@@ -1101,7 +1207,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn ˈkɒntrɑːst/",
         translation: "Por el contrario",
         level: "B2",
-        definition: "Opposite.",
+        definition:
+          "Por el contrario. Opposite. Used to connect one idea to the next in a clear way.",
         examSentence: "In contrast to John, Mary works hard.",
         writingSwap: "Conversely",
       },
@@ -1110,7 +1217,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪnəzˈmʌtʃ æz/",
         translation: "En la medida en que",
         level: "C2",
-        definition: "Since.",
+        definition:
+          "En la medida en que. Since. Used to connect one idea to the next in a clear way.",
         examSentence: "Inasmuch as you are leader, you decide.",
         writingSwap: "Since",
       },
@@ -1119,7 +1227,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌɪnsɪˈdɛntəli/",
         translation: "Por cierto",
         level: "C1",
-        definition: "By the way.",
+        definition:
+          "Por cierto. By the way. Used to connect one idea to the next in a clear way.",
         examSentence: "Incidentally, I saw him.",
         writingSwap: "By the way",
       },
@@ -1128,7 +1237,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn laɪt əv/",
         translation: "A la luz de",
         level: "C1",
-        definition: "Considering.",
+        definition:
+          "A la luz de. Considering. Used to connect one idea to the next in a clear way.",
         examSentence: "In light of this, we stop.",
         writingSwap: "Considering",
       },
@@ -1137,7 +1247,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn pərˈtɪkjʊlər/",
         translation: "En particular",
         level: "B2",
-        definition: "Especially.",
+        definition:
+          "En particular. Especially. Used to connect one idea to the next in a clear way.",
         examSentence: "I like fruit, in particular apples.",
         writingSwap: "Especially",
       },
@@ -1146,7 +1257,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn ˈʌðər wɜːrdz/",
         translation: "En otras palabras",
         level: "B1",
-        definition: "To explain.",
+        definition:
+          "En otras palabras. To explain. Used to connect one idea to the next in a clear way.",
         examSentence: "He failed. In other words, he lost.",
         writingSwap: "That is to say",
       },
@@ -1155,7 +1267,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn fækt/",
         translation: "De hecho",
         level: "A2",
-        definition: "Actually.",
+        definition:
+          "De hecho. Actually. Used to connect one idea to the next in a clear way.",
         examSentence: "It's cold. In fact, it's freezing.",
         writingSwap: "Actually",
       },
@@ -1164,7 +1277,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn ˈsʌməri/",
         translation: "En resumen",
         level: "B2",
-        definition: "To sum up.",
+        definition:
+          "En resumen. To sum up. Used to connect one idea to the next in a clear way.",
         examSentence: "In summary, it works.",
         writingSwap: "To summarize",
       },
@@ -1173,7 +1287,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn kənˈkluːʒən/",
         translation: "En conclusión",
         level: "B1",
-        definition: "Finally.",
+        definition:
+          "En conclusión. Finally. Used to connect one idea to the next in a clear way.",
         examSentence: "In conclusion, we agree.",
         writingSwap: "To conclude",
       },
@@ -1182,7 +1297,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn ðə ˈmiːntaɪm/",
         translation: "Mientras tanto",
         level: "B2",
-        definition: "Meanwhile.",
+        definition:
+          "Mientras tanto. Meanwhile. Used to connect one idea to the next in a clear way.",
         examSentence: "Wait here. In the meantime, read this.",
         writingSwap: "Meanwhile",
       },
@@ -1191,7 +1307,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn ði ɪˈvɛnt əv/",
         translation: "En caso de",
         level: "B2",
-        definition: "If.",
+        definition:
+          "En caso de. If. Used to connect one idea to the next in a clear way.",
         examSentence: "In the event of fire, run.",
         writingSwap: "In case of",
       },
@@ -1200,7 +1317,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn spaɪt əv/",
         translation: "A pesar de",
         level: "B1",
-        definition: "Despite.",
+        definition:
+          "A pesar de. Despite. Used to connect one idea to the next in a clear way.",
         examSentence: "In spite of rain, we played.",
         writingSwap: "Despite",
       },
@@ -1209,7 +1327,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn ˈɛni keɪs/",
         translation: "En cualquier caso",
         level: "B1",
-        definition: "Anyway.",
+        definition:
+          "En cualquier caso. Anyway. Used to connect one idea to the next in a clear way.",
         examSentence: "In any case, I'm going.",
         writingSwap: "Anyway",
       },
@@ -1218,7 +1337,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn ʃɔːrt/",
         translation: "En resumen",
         level: "B1",
-        definition: "Briefly.",
+        definition:
+          "En resumen. Briefly. Used to connect one idea to the next in a clear way.",
         examSentence: "In short, no.",
         writingSwap: "Briefly",
       },
@@ -1227,7 +1347,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn briːf/",
         translation: "En breve",
         level: "B2",
-        definition: "Briefly.",
+        definition:
+          "En breve. Briefly. Used to connect one idea to the next in a clear way.",
         examSentence: "In brief, he died.",
         writingSwap: "Briefly",
       },
@@ -1236,7 +1357,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn ˈɛsns/",
         translation: "En esencia",
         level: "C1",
-        definition: "Basically.",
+        definition:
+          "En esencia. Basically. Used to connect one idea to the next in a clear way.",
         examSentence: "In essence, it is theft.",
         writingSwap: "Basically",
       },
@@ -1245,7 +1367,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn riˈælɪti/",
         translation: "En realidad",
         level: "B2",
-        definition: "Actually.",
+        definition:
+          "En realidad. Actually. Used to connect one idea to the next in a clear way.",
         examSentence: "He smiled, but in reality, he was sad.",
         writingSwap: "Actually",
       },
@@ -1254,7 +1377,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn tɜːrn/",
         translation: "A su vez",
         level: "B2",
-        definition: "Consequently.",
+        definition:
+          "A su vez. Consequently. Used to connect one idea to the next in a clear way.",
         examSentence: "This, in turn, caused delay.",
         writingSwap: "Consequently",
       },
@@ -1263,7 +1387,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪnˈdiːd/",
         translation: "De hecho",
         level: "C1",
-        definition: "Truly.",
+        definition:
+          "De hecho. Truly. Used to connect one idea to the next in a clear way.",
         examSentence: "It was indeed hot.",
         writingSwap: "Truly",
       },
@@ -1272,7 +1397,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪnˈstɛd/",
         translation: "En lugar de",
         level: "A2",
-        definition: "As an alternative.",
+        definition:
+          "En lugar de. As an alternative. Used to connect one idea to the next in a clear way.",
         examSentence: "I walked instead.",
         writingSwap: "Alternatively",
       },
@@ -1281,7 +1407,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪmˈpɔːrtəntli/",
         translation: "Importante",
         level: "B2",
-        definition: "Crucially.",
+        definition:
+          "Importante. Crucially. Used to connect one idea to the next in a clear way.",
         examSentence: "Importantly, he arrived.",
         writingSwap: "Crucially",
       },
@@ -1290,7 +1417,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈɪntrəstɪŋli/",
         translation: "Curiosamente",
         level: "B2",
-        definition: "It is interesting that.",
+        definition:
+          "Curiosamente. It is interesting that. Used to connect one idea to the next in a clear way.",
         examSentence: "Interestingly, he knew.",
         writingSwap: "Curiously",
       },
@@ -1299,7 +1427,8 @@ export const connectorsData: StopData = {
         ipa: "/aɪˈrɒnɪkli/",
         translation: "Irónicamente",
         level: "C1",
-        definition: "By irony.",
+        definition:
+          "Irónicamente. By irony. Used to connect one idea to the next in a clear way.",
         examSentence: "Ironically, it rained on the dry day.",
         writingSwap: "Paradoxically",
       },
@@ -1308,7 +1437,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪˈnɪʃəli/",
         translation: "Inicialmente",
         level: "B2",
-        definition: "At first.",
+        definition:
+          "Inicialmente. At first. Used to connect one idea to the next in a clear way.",
         examSentence: "Initially, I said no.",
         writingSwap: "At first",
       },
@@ -1317,7 +1447,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌɪnsoʊˈfɑːr æz/",
         translation: "En la medida en que",
         level: "C2",
-        definition: "To the extent.",
+        definition:
+          "En la medida en que. To the extent. Used to connect one idea to the next in a clear way.",
         examSentence: "Insofar as I can tell, it's true.",
         writingSwap: "To the extent that",
       },
@@ -1326,7 +1457,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn vjuː əv/",
         translation: "En vista de",
         level: "C1",
-        definition: "Considering.",
+        definition:
+          "En vista de. Considering. Used to connect one idea to the next in a clear way.",
         examSentence: "In view of the facts, he is guilty.",
         writingSwap: "Considering",
       },
@@ -1335,7 +1467,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn kəmˈpærɪsən/",
         translation: "En comparación",
         level: "B1",
-        definition: "Compared to.",
+        definition:
+          "En comparación. Compared to. Used to connect one idea to the next in a clear way.",
         examSentence: "It is small in comparison.",
         writingSwap: "Compared to",
       },
@@ -1344,7 +1477,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪn ə ˈnʌtʃɛl/",
         translation: "En pocas palabras",
         level: "C1",
-        definition: "Briefly.",
+        definition:
+          "En pocas palabras. Briefly. Used to connect one idea to the next in a clear way.",
         examSentence: "In a nutshell, yes.",
         writingSwap: "Briefly",
       },
@@ -1353,7 +1487,8 @@ export const connectorsData: StopData = {
         ipa: "/ɪt ˈfɒloʊz ðæt/",
         translation: "Se deduce que",
         level: "C2",
-        definition: "Logical result.",
+        definition:
+          "Se deduce que. Logical result. Used to connect one idea to the next in a clear way.",
         examSentence: "It follows that x equals y.",
         writingSwap: "Consequently",
       },
@@ -1366,7 +1501,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈlaɪkwaɪz/",
         translation: "Igualmente",
         level: "C1",
-        definition: "Similarly.",
+        definition:
+          "Igualmente. Similarly. Used to connect one idea to the next in a clear way.",
         examSentence: "He left, and she did likewise.",
         writingSwap: "Similarly",
       },
@@ -1375,7 +1511,8 @@ export const connectorsData: StopData = {
         ipa: "/lɛst/",
         translation: "No sea que",
         level: "C2",
-        definition: "To avoid.",
+        definition:
+          "No sea que. To avoid. Used to connect one idea to the next in a clear way.",
         examSentence: "Run lest you be caught.",
         writingSwap: "For fear that",
       },
@@ -1384,7 +1521,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈlɑːstli/",
         translation: "Por último",
         level: "B2",
-        definition: "Finally.",
+        definition:
+          "Por último. Finally. Used to connect one idea to the next in a clear way.",
         examSentence: "Lastly, add sugar.",
         writingSwap: "Finally",
       },
@@ -1393,7 +1531,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈleɪtər/",
         translation: "Más tarde",
         level: "A1",
-        definition: "After.",
+        definition:
+          "Más tarde. After. Used to connect one idea to the next in a clear way.",
         examSentence: "See you later.",
         writingSwap: "Afterwards",
       },
@@ -1402,7 +1541,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈlʌkɪli/",
         translation: "Por suerte",
         level: "B1",
-        definition: "Fortunately.",
+        definition:
+          "Por suerte. Fortunately. Used to connect one idea to the next in a clear way.",
         examSentence: "Luckily, I won.",
         writingSwap: "Fortunately",
       },
@@ -1411,7 +1551,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈlɑːrdʒli/",
         translation: "En gran medida",
         level: "C1",
-        definition: "Mostly.",
+        definition:
+          "En gran medida. Mostly. Used to connect one idea to the next in a clear way.",
         examSentence: "It was largely successful.",
         writingSwap: "Mostly",
       },
@@ -1420,7 +1561,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈlɒdʒɪkli/",
         translation: "Lógicamente",
         level: "B2",
-        definition: "Reasonably.",
+        definition:
+          "Lógicamente. Reasonably. Used to connect one idea to the next in a clear way.",
         examSentence: "Logically, it makes sense.",
         writingSwap: "Reasonably",
       },
@@ -1429,7 +1571,8 @@ export const connectorsData: StopData = {
         ipa: "/lɑːst bʌt nɒt liːst/",
         translation: "Por último pero no menos importante",
         level: "C1",
-        definition: "Final importance.",
+        definition:
+          "Por último pero no menos importante. Final importance. Used to connect one idea to the next in a clear way.",
         examSentence: "Last but not least, Tom.",
         writingSwap: "Finally",
       },
@@ -1442,7 +1585,8 @@ export const connectorsData: StopData = {
         ipa: "/mɔːrˈoʊvər/",
         translation: "Además",
         level: "B2",
-        definition: "In addition.",
+        definition:
+          "Además. In addition. Used to connect one idea to the next in a clear way.",
         examSentence: "It is cheap. Moreover, it is good.",
         writingSwap: "Furthermore",
       },
@@ -1451,7 +1595,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈmiːnwaɪl/",
         translation: "Mientras tanto",
         level: "B2",
-        definition: "During this time.",
+        definition:
+          "Mientras tanto. During this time. Used to connect one idea to the next in a clear way.",
         examSentence: "I cooked. Meanwhile, he read.",
         writingSwap: "In the meantime",
       },
@@ -1460,7 +1605,8 @@ export const connectorsData: StopData = {
         ipa: "/mɔːr ɪmˈpɔːrtəntli/",
         translation: "Más importante aún",
         level: "B2",
-        definition: "Greater importance.",
+        definition:
+          "Más importante aún. Greater importance. Used to connect one idea to the next in a clear way.",
         examSentence: "More importantly, be safe.",
         writingSwap: "Crucially",
       },
@@ -1469,7 +1615,8 @@ export const connectorsData: StopData = {
         ipa: "/moʊst ɪmˈpɔːrtəntli/",
         translation: "Lo más importante",
         level: "B2",
-        definition: "Greatest importance.",
+        definition:
+          "Lo más importante. Greatest importance. Used to connect one idea to the next in a clear way.",
         examSentence: "Most importantly, have fun.",
         writingSwap: "Above all",
       },
@@ -1478,7 +1625,8 @@ export const connectorsData: StopData = {
         ipa: "/mɔːr spəˈsɪfɪkli/",
         translation: "Más específicamente",
         level: "C1",
-        definition: "Detailed.",
+        definition:
+          "Más específicamente. Detailed. Used to connect one idea to the next in a clear way.",
         examSentence: "I like art, more specifically painting.",
         writingSwap: "Specifically",
       },
@@ -1487,7 +1635,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈmeɪnli/",
         translation: "Principalmente",
         level: "B1",
-        definition: "Chiefly.",
+        definition:
+          "Principalmente. Chiefly. Used to connect one idea to the next in a clear way.",
         examSentence: "It is mainly water.",
         writingSwap: "Primarily",
       },
@@ -1496,7 +1645,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈmoʊstli/",
         translation: "Mayormente",
         level: "B1",
-        definition: "Generally.",
+        definition:
+          "Mayormente. Generally. Used to connect one idea to the next in a clear way.",
         examSentence: "It is mostly true.",
         writingSwap: "Largely",
       },
@@ -1505,7 +1655,8 @@ export const connectorsData: StopData = {
         ipa: "/mʌtʃ æz/",
         translation: "Por mucho que",
         level: "C2",
-        definition: "Although.",
+        definition:
+          "Por mucho que. Used to introduce contrast or an unexpected second idea. Used to connect one idea to the next in a clear way.",
         examSentence: "Much as I like you, I must go.",
         writingSwap: "Although",
       },
@@ -1514,7 +1665,8 @@ export const connectorsData: StopData = {
         ipa: "/mɔːr tu ðə pɔɪnt/",
         translation: "Más al grano",
         level: "C1",
-        definition: "More relevantly.",
+        definition:
+          "Más al grano. More relevantly. Used to connect one idea to the next in a clear way.",
         examSentence: "More to the point, it's late.",
         writingSwap: "Relevantly",
       },
@@ -1527,7 +1679,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌnɛvərðəˈlɛs/",
         translation: "No obstante",
         level: "B2",
-        definition: "However.",
+        definition:
+          "No obstante. However. Used to connect one idea to the next in a clear way.",
         examSentence: "It rained; nevertheless, we played.",
         writingSwap: "However",
       },
@@ -1536,7 +1689,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌnɒtwɪðˈstændɪŋ/",
         translation: "A pesar de",
         level: "C1",
-        definition: "Despite.",
+        definition:
+          "A pesar de. Despite. Used to connect one idea to the next in a clear way.",
         examSentence: "Notwithstanding the cost, we bought it.",
         writingSwap: "Despite",
       },
@@ -1545,7 +1699,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈneɪmli/",
         translation: "A saber",
         level: "C1",
-        definition: "Specifically.",
+        definition:
+          "A saber. Specifically. Used to connect one idea to the next in a clear way.",
         examSentence: "One person, namely Tom.",
         writingSwap: "Specifically",
       },
@@ -1554,7 +1709,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌnʌnðəˈlɛs/",
         translation: "Sin embargo",
         level: "C1",
-        definition: "However.",
+        definition:
+          "Sin embargo. However. Used to connect one idea to the next in a clear way.",
         examSentence: "It was hard, nonetheless worth it.",
         writingSwap: "However",
       },
@@ -1563,7 +1719,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈnætʃərəli/",
         translation: "Naturalmente",
         level: "B1",
-        definition: "Of course.",
+        definition:
+          "Naturalmente. Of course. Used to connect one idea to the next in a clear way.",
         examSentence: "Naturally, I agreed.",
         writingSwap: "Of course",
       },
@@ -1572,7 +1729,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈnoʊtəbli/",
         translation: "Notablemente",
         level: "C1",
-        definition: "Especially.",
+        definition:
+          "Notablemente. Especially. Used to connect one idea to the next in a clear way.",
         examSentence: "Many failed, notably John.",
         writingSwap: "Especially",
       },
@@ -1581,7 +1739,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈnɔːrməli/",
         translation: "Normalmente",
         level: "A2",
-        definition: "Usually.",
+        definition:
+          "Normalmente. Usually. Used to connect one idea to the next in a clear way.",
         examSentence: "Normally I walk.",
         writingSwap: "Usually",
       },
@@ -1590,7 +1749,8 @@ export const connectorsData: StopData = {
         ipa: "/nɛkst/",
         translation: "Siguiente",
         level: "A1",
-        definition: "After.",
+        definition:
+          "Siguiente. After. Used to connect one idea to the next in a clear way.",
         examSentence: "Next, mix the eggs.",
         writingSwap: "Then",
       },
@@ -1599,7 +1759,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈnaɪðər nɔːr/",
         translation: "Ni...ni",
         level: "B1",
-        definition: "Not either.",
+        definition:
+          "Ni. Not either. Used to connect one idea to the next in a clear way.",
         examSentence: "Neither John nor I knew.",
         writingSwap: "Not...and not",
       },
@@ -1608,7 +1769,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈniːdləs tu seɪ/",
         translation: "Huelga decir",
         level: "C1",
-        definition: "Obviously.",
+        definition:
+          "Huelga decir. Obviously. Used to connect one idea to the next in a clear way.",
         examSentence: "Needless to say, he was mad.",
         writingSwap: "Obviously",
       },
@@ -1617,7 +1779,8 @@ export const connectorsData: StopData = {
         ipa: "/noʊ ˈmætər/",
         translation: "No importa",
         level: "B1",
-        definition: "Regardless.",
+        definition:
+          "No importa. Regardless. Used to connect one idea to the next in a clear way.",
         examSentence: "No matter what, I'll try.",
         writingSwap: "Regardless",
       },
@@ -1626,7 +1789,8 @@ export const connectorsData: StopData = {
         ipa: "/nɒt ˈoʊnli bʌt ˈɔːlsoʊ/",
         translation: "No solo... sino también",
         level: "B1",
-        definition: "Addition.",
+        definition:
+          "No solo. sino también. Addition. Used to connect one idea to the next in a clear way.",
         examSentence: "Not only smart, but also kind.",
         writingSwap: "Also",
       },
@@ -1635,7 +1799,8 @@ export const connectorsData: StopData = {
         ipa: "/nɒt tu ˈmɛnʃən/",
         translation: "Por no mencionar",
         level: "C1",
-        definition: "Also.",
+        definition:
+          "Por no mencionar. Used to add another related point. Used to connect one idea to the next in a clear way.",
         examSentence: "He's rich, not to mention handsome.",
         writingSwap: "Also",
       },
@@ -1648,7 +1813,8 @@ export const connectorsData: StopData = {
         ipa: "/ɒn ðə ˈkɒntrəri/",
         translation: "Al contrario",
         level: "B2",
-        definition: "Opposite is true.",
+        definition:
+          "Al contrario. Opposite is true. Used to connect one idea to the next in a clear way.",
         examSentence: "I'm not sad; on the contrary, I'm happy.",
         writingSwap: "Conversely",
       },
@@ -1657,7 +1823,8 @@ export const connectorsData: StopData = {
         ipa: "/ɒn ði ˈʌðər hænd/",
         translation: "Por otro lado",
         level: "B1",
-        definition: "Contrast.",
+        definition:
+          "Por otro lado. Contrast. Used to connect one idea to the next in a clear way.",
         examSentence: "It's nice, on the other hand it's pricey.",
         writingSwap: "However",
       },
@@ -1666,7 +1833,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈʌðərwaɪz/",
         translation: "De lo contrario",
         level: "B1",
-        definition: "Or else.",
+        definition:
+          "De lo contrario. Or else. Used to connect one idea to the next in a clear way.",
         examSentence: "Run, otherwise you'll miss it.",
         writingSwap: "Or else",
       },
@@ -1675,7 +1843,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈoʊvərɔːl/",
         translation: "En general",
         level: "B2",
-        definition: "Generally.",
+        definition:
+          "En general. Generally. Used to connect one idea to the next in a clear way.",
         examSentence: "Overall, it was good.",
         writingSwap: "Generally",
       },
@@ -1684,7 +1853,8 @@ export const connectorsData: StopData = {
         ipa: "/ɒn ðə hoʊl/",
         translation: "En conjunto",
         level: "B2",
-        definition: "Mostly.",
+        definition:
+          "En conjunto. Mostly. Used to connect one idea to the next in a clear way.",
         examSentence: "On the whole, I agree.",
         writingSwap: "Mostly",
       },
@@ -1693,7 +1863,8 @@ export const connectorsData: StopData = {
         ipa: "/əv kɔːrs/",
         translation: "Por supuesto",
         level: "A1",
-        definition: "Certainly.",
+        definition:
+          "Por supuesto. Certainly. Used to connect one idea to the next in a clear way.",
         examSentence: "Of course I will.",
         writingSwap: "Certainly",
       },
@@ -1702,7 +1873,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈɒbviəsli/",
         translation: "Obviamente",
         level: "B1",
-        definition: "Clearly.",
+        definition:
+          "Obviamente. Clearly. Used to connect one idea to the next in a clear way.",
         examSentence: "Obviously, he knows.",
         writingSwap: "Clearly",
       },
@@ -1711,7 +1883,8 @@ export const connectorsData: StopData = {
         ipa: "/əˈrɪdʒɪnəli/",
         translation: "Originalmente",
         level: "B1",
-        definition: "At first.",
+        definition:
+          "Originalmente. At first. Used to connect one idea to the next in a clear way.",
         examSentence: "Originally, it was blue.",
         writingSwap: "At first",
       },
@@ -1720,7 +1893,8 @@ export const connectorsData: StopData = {
         ipa: "/ɒn tɒp əv ðæt/",
         translation: "Además de eso",
         level: "C1",
-        definition: "Also.",
+        definition:
+          "Además de eso. Used to add another related point. Used to connect one idea to the next in a clear way.",
         examSentence: "He was rude, and on top of that, late.",
         writingSwap: "Furthermore",
       },
@@ -1729,7 +1903,8 @@ export const connectorsData: StopData = {
         ipa: "/ɒn əˈkaʊnt əv/",
         translation: "A causa de",
         level: "C1",
-        definition: "Because of.",
+        definition:
+          "A causa de. Because of. Used to connect one idea to the next in a clear way.",
         examSentence: "Delayed on account of rain.",
         writingSwap: "Due to",
       },
@@ -1738,7 +1913,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈoʊɪŋ tu/",
         translation: "Debido a",
         level: "B2",
-        definition: "Because of.",
+        definition:
+          "Debido a. Because of. Used to connect one idea to the next in a clear way.",
         examSentence: "Owing to rain, we stopped.",
         writingSwap: "Due to",
       },
@@ -1747,7 +1923,8 @@ export const connectorsData: StopData = {
         ipa: "/ɔːr ɛls/",
         translation: "O si no",
         level: "B1",
-        definition: "Otherwise.",
+        definition:
+          "O si no. Otherwise. Used to connect one idea to the next in a clear way.",
         examSentence: "Hurry or else.",
         writingSwap: "Otherwise",
       },
@@ -1756,7 +1933,8 @@ export const connectorsData: StopData = {
         ipa: "/ɒn ðə feɪs əv ɪt/",
         translation: "A primera vista",
         level: "C2",
-        definition: "Apparently.",
+        definition:
+          "A primera vista. Apparently. Used to connect one idea to the next in a clear way.",
         examSentence: "On the face of it, it seems simple.",
         writingSwap: "Apparently",
       },
@@ -1765,7 +1943,8 @@ export const connectorsData: StopData = {
         ipa: "/wʌn ˈriːzən ɪz/",
         translation: "Una razón es",
         level: "B1",
-        definition: "Explanation.",
+        definition:
+          "Una razón es. Explanation. Used to connect one idea to the next in a clear way.",
         examSentence: "One reason is the cost.",
         writingSwap: "Firstly",
       },
@@ -1778,7 +1957,8 @@ export const connectorsData: StopData = {
         ipa: "/prəˈvaɪdɪd ðæt/",
         translation: "Siempre que",
         level: "C1",
-        definition: "If.",
+        definition:
+          "Siempre que. If. Used to connect one idea to the next in a clear way.",
         examSentence: "You can go, provided that you work.",
         writingSwap: "If",
       },
@@ -1787,7 +1967,8 @@ export const connectorsData: StopData = {
         ipa: "/pʊt ˈsɪmpli/",
         translation: "En pocas palabras",
         level: "B2",
-        definition: "Simply.",
+        definition:
+          "En pocas palabras. Simply. Used to connect one idea to the next in a clear way.",
         examSentence: "Put simply, no.",
         writingSwap: "Simply",
       },
@@ -1796,7 +1977,8 @@ export const connectorsData: StopData = {
         ipa: "/prɪˈzjuːməbli/",
         translation: "Presumiblemente",
         level: "C1",
-        definition: "Probably.",
+        definition:
+          "Presumiblemente. Probably. Used to connect one idea to the next in a clear way.",
         examSentence: "Presumably, he is home.",
         writingSwap: "Probably",
       },
@@ -1805,7 +1987,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈpɜːrsənəli/",
         translation: "Personalmente",
         level: "B1",
-        definition: "In my view.",
+        definition:
+          "Personalmente. In my view. Used to connect one idea to the next in a clear way.",
         examSentence: "Personally, I like it.",
         writingSwap: "In my view",
       },
@@ -1814,7 +1997,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈpriːviəsli/",
         translation: "Previamente",
         level: "B1",
-        definition: "Before.",
+        definition:
+          "Previamente. Before. Used to connect one idea to the next in a clear way.",
         examSentence: "Previously, he was a teacher.",
         writingSwap: "Before",
       },
@@ -1823,7 +2007,8 @@ export const connectorsData: StopData = {
         ipa: "/praɪˈmɛrɪli/",
         translation: "Principalmente",
         level: "B2",
-        definition: "Mainly.",
+        definition:
+          "Principalmente. Mainly. Used to connect one idea to the next in a clear way.",
         examSentence: "It is primarily for kids.",
         writingSwap: "Mainly",
       },
@@ -1832,7 +2017,8 @@ export const connectorsData: StopData = {
         ipa: "/pərˈtɪkjʊlərli/",
         translation: "Particularmente",
         level: "B2",
-        definition: "Especially.",
+        definition:
+          "Particularmente. Especially. Used to connect one idea to the next in a clear way.",
         examSentence: "I like fruit, particularly apples.",
         writingSwap: "Especially",
       },
@@ -1841,7 +2027,8 @@ export const connectorsData: StopData = {
         ipa: "/pəˈtɛnʃəli/",
         translation: "Potencialmente",
         level: "B2",
-        definition: "Possibly.",
+        definition:
+          "Potencialmente. Used to show that something may be true or can be reasonably argued. Used to connect one idea to the next in a clear way.",
         examSentence: "It is potentially dangerous.",
         writingSwap: "Possibly",
       },
@@ -1850,7 +2037,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌpærəˈdɒksɪkli/",
         translation: "Paradójicamente",
         level: "C2",
-        definition: "Ironically.",
+        definition:
+          "Paradójicamente. Ironically. Used to connect one idea to the next in a clear way.",
         examSentence: "Paradoxically, less is more.",
         writingSwap: "Ironically",
       },
@@ -1859,7 +2047,8 @@ export const connectorsData: StopData = {
         ipa: "/prəˈvaɪdɪŋ/",
         translation: "Siempre que",
         level: "B2",
-        definition: "If.",
+        definition:
+          "Siempre que. If. Used to connect one idea to the next in a clear way.",
         examSentence: "Providing you pay, you can stay.",
         writingSwap: "If",
       },
@@ -1868,7 +2057,8 @@ export const connectorsData: StopData = {
         ipa: "/plʌs/",
         translation: "Además",
         level: "B1",
-        definition: "Also.",
+        definition:
+          "Además. Used to add another related point. Used to connect one idea to the next in a clear way.",
         examSentence: "It's cheap, plus it's good.",
         writingSwap: "Also",
       },
@@ -1881,7 +2071,8 @@ export const connectorsData: StopData = {
         ipa: "/rɪˈɡɑːrdləs/",
         translation: "A pesar de todo",
         level: "C1",
-        definition: "Anyway.",
+        definition:
+          "A pesar de todo. Anyway. Used to connect one idea to the next in a clear way.",
         examSentence: "I'll do it regardless.",
         writingSwap: "Anyway",
       },
@@ -1890,7 +2081,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈrɑːðər/",
         translation: "Más bien",
         level: "B2",
-        definition: "Instead.",
+        definition:
+          "Más bien. Instead. Used to connect one idea to the next in a clear way.",
         examSentence: "Not blue, rather green.",
         writingSwap: "Instead",
       },
@@ -1899,7 +2091,8 @@ export const connectorsData: StopData = {
         ipa: "/rɪˈɡɑːrdɪŋ/",
         translation: "Con respecto a",
         level: "B2",
-        definition: "About.",
+        definition:
+          "Con respecto a. About. Used to connect one idea to the next in a clear way.",
         examSentence: "Regarding your mail.",
         writingSwap: "About",
       },
@@ -1908,7 +2101,8 @@ export const connectorsData: StopData = {
         ipa: "/rɪˈspɛktɪvli/",
         translation: "Respectivamente",
         level: "C1",
-        definition: "In order.",
+        definition:
+          "Respectivamente. In order. Used to connect one idea to the next in a clear way.",
         examSentence: "A and B won 1st and 2nd respectively.",
         writingSwap: "In that order",
       },
@@ -1917,7 +2111,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈriːsəntli/",
         translation: "Recientemente",
         level: "A2",
-        definition: "Lately.",
+        definition:
+          "Recientemente. Lately. Used to connect one idea to the next in a clear way.",
         examSentence: "Recently, I moved.",
         writingSwap: "Lately",
       },
@@ -1926,7 +2121,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈrɛərli/",
         translation: "Raramente",
         level: "B1",
-        definition: "Seldom.",
+        definition:
+          "Raramente. Seldom. Used to connect one idea to the next in a clear way.",
         examSentence: "I rarely go there.",
         writingSwap: "Seldom",
       },
@@ -1935,7 +2131,8 @@ export const connectorsData: StopData = {
         ipa: "/rɪˈmɑːrkəbli/",
         translation: "Notablemente",
         level: "B2",
-        definition: "Surprisingly.",
+        definition:
+          "Notablemente. In a way that feels unexpected or causes surprise. Used to connect one idea to the next in a clear way.",
         examSentence: "Remarkably, he survived.",
         writingSwap: "Surprisingly",
       },
@@ -1944,7 +2141,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈraɪtli/",
         translation: "Con razón",
         level: "B2",
-        definition: "Correctly.",
+        definition:
+          "Con razón. In a correct and exact way, without mistakes. Used to connect one idea to the next in a clear way.",
         examSentence: "He wrongly or rightly refused.",
         writingSwap: "Correctly",
       },
@@ -1953,7 +2151,8 @@ export const connectorsData: StopData = {
         ipa: "/rɪˈzʌltɪŋ frɒm/",
         translation: "Resultante de",
         level: "C1",
-        definition: "Caused by.",
+        definition:
+          "Resultante de. Caused by. Used to connect one idea to the next in a clear way.",
         examSentence: "Damage resulting from fire.",
         writingSwap: "Caused by",
       },
@@ -1966,7 +2165,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈsʌbsɪkwəntli/",
         translation: "Posteriormente",
         level: "C1",
-        definition: "Later.",
+        definition:
+          "Posteriormente. Later. Used to connect one idea to the next in a clear way.",
         examSentence: "Subsequently, he died.",
         writingSwap: "Later",
       },
@@ -1975,7 +2175,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈsɪmɪlərli/",
         translation: "De manera similar",
         level: "B2",
-        definition: "Likewise.",
+        definition:
+          "De manera similar. Likewise. Used to connect one idea to the next in a clear way.",
         examSentence: "Similarly, cats sleep a lot.",
         writingSwap: "Likewise",
       },
@@ -1984,7 +2185,8 @@ export const connectorsData: StopData = {
         ipa: "/sɪns/",
         translation: "Ya que",
         level: "B2",
-        definition: "Because.",
+        definition:
+          "Ya que. Because. Used to connect one idea to the next in a clear way.",
         examSentence: "Since you ask, yes.",
         writingSwap: "Because",
       },
@@ -1993,7 +2195,8 @@ export const connectorsData: StopData = {
         ipa: "/soʊ/",
         translation: "Así que",
         level: "A1",
-        definition: "Therefore.",
+        definition:
+          "Así que. Therefore. Used to connect one idea to the next in a clear way.",
         examSentence: "It rained, so we stayed.",
         writingSwap: "Therefore",
       },
@@ -2002,7 +2205,8 @@ export const connectorsData: StopData = {
         ipa: "/spəˈsɪfɪkli/",
         translation: "Específicamente",
         level: "B2",
-        definition: "Particularly.",
+        definition:
+          "Específicamente. Particularly. Used to connect one idea to the next in a clear way.",
         examSentence: "Specifically, the red one.",
         writingSwap: "Particularly",
       },
@@ -2011,7 +2215,8 @@ export const connectorsData: StopData = {
         ipa: "/sərˈpraɪzɪŋli/",
         translation: "Sorprendentemente",
         level: "B2",
-        definition: "Unexpectedly.",
+        definition:
+          "Sorprendentemente. Unexpectedly. Used to connect one idea to the next in a clear way.",
         examSentence: "Surprisingly, he won.",
         writingSwap: "Unexpectedly",
       },
@@ -2020,7 +2225,8 @@ export const connectorsData: StopData = {
         ipa: "/sɪɡˈnɪfɪkəntli/",
         translation: "Significativamente",
         level: "B2",
-        definition: "Notably.",
+        definition:
+          "Significativamente. Notably. Used to connect one idea to the next in a clear way.",
         examSentence: "Prices rose significantly.",
         writingSwap: "Notably",
       },
@@ -2029,7 +2235,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈʃʊərli/",
         translation: "Seguramente",
         level: "B2",
-        definition: "Certainly.",
+        definition:
+          "Seguramente. Certainly. Used to connect one idea to the next in a clear way.",
         examSentence: "Surely you jest.",
         writingSwap: "Certainly",
       },
@@ -2038,7 +2245,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈʃɔːrtli/",
         translation: "En breve",
         level: "B1",
-        definition: "Soon.",
+        definition:
+          "En breve. Soon. Used to connect one idea to the next in a clear way.",
         examSentence: "He arrived shortly after.",
         writingSwap: "Soon",
       },
@@ -2056,7 +2264,8 @@ export const connectorsData: StopData = {
         ipa: "/soʊ æz tu/",
         translation: "Para",
         level: "B2",
-        definition: "In order to.",
+        definition:
+          "Para. In order to. Used to connect one idea to the next in a clear way.",
         examSentence: "He ran so as to arrive early.",
         writingSwap: "In order to",
       },
@@ -2065,7 +2274,8 @@ export const connectorsData: StopData = {
         ipa: "/soʊ ðæt/",
         translation: "Para que",
         level: "B1",
-        definition: "In order that.",
+        definition:
+          "Para que. In order that. Used to connect one idea to the next in a clear way.",
         examSentence: "Study so that you pass.",
         writingSwap: "In order that",
       },
@@ -2074,7 +2284,8 @@ export const connectorsData: StopData = {
         ipa: "/stɪl/",
         translation: "Aun así",
         level: "B1",
-        definition: "However.",
+        definition:
+          "Aun así. However. Used to connect one idea to the next in a clear way.",
         examSentence: "It's hard. Still, I'll try.",
         writingSwap: "However",
       },
@@ -2083,7 +2294,8 @@ export const connectorsData: StopData = {
         ipa: "/səˈpoʊzɪdli/",
         translation: "Supuestamente",
         level: "C1",
-        definition: "Allegedly.",
+        definition:
+          "Supuestamente. Allegedly. Used to connect one idea to the next in a clear way.",
         examSentence: "Supposedly, it's true.",
         writingSwap: "Allegedly",
       },
@@ -2092,7 +2304,8 @@ export const connectorsData: StopData = {
         ipa: "/sʌtʃ æz/",
         translation: "Tales como",
         level: "A2",
-        definition: "Like.",
+        definition:
+          "Tales como. Like. Used to connect one idea to the next in a clear way.",
         examSentence: "Fruits such as apples.",
         writingSwap: "Like",
       },
@@ -2101,7 +2314,8 @@ export const connectorsData: StopData = {
         ipa: "/streɪndʒ æz ɪt meɪ siːm/",
         translation: "Por extraño que parezca",
         level: "C2",
-        definition: "Unexpectedly.",
+        definition:
+          "Por extraño que parezca. Unexpectedly. Used to connect one idea to the next in a clear way.",
         examSentence: "Strange as it may seem, I like it.",
         writingSwap: "Surprisingly",
       },
@@ -2110,7 +2324,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈsɛkəndli/",
         translation: "En segundo lugar",
         level: "B1",
-        definition: "Second.",
+        definition:
+          "En segundo lugar. Second. Used to connect one idea to the next in a clear way.",
         examSentence: "Secondly, we need money.",
         writingSwap: "Second",
       },
@@ -2119,7 +2334,8 @@ export const connectorsData: StopData = {
         ipa: "/soʊ lɒŋ æz/",
         translation: "Siempre y cuando",
         level: "B2",
-        definition: "If.",
+        definition:
+          "Siempre y cuando. If. Used to connect one idea to the next in a clear way.",
         examSentence: "So long as you pay, it's ok.",
         writingSwap: "Provided that",
       },
@@ -2132,7 +2348,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈðɛərfɔːr/",
         translation: "Por lo tanto",
         level: "B1",
-        definition: "Consequently.",
+        definition:
+          "Por lo tanto. Consequently. Used to connect one idea to the next in a clear way.",
         examSentence: "I think, therefore I am.",
         writingSwap: "Consequently",
       },
@@ -2141,7 +2358,8 @@ export const connectorsData: StopData = {
         ipa: "/ðʌs/",
         translation: "Así",
         level: "C1",
-        definition: "Therefore.",
+        definition:
+          "Así. Therefore. Used to connect one idea to the next in a clear way.",
         examSentence: "He is the eldest, thus the heir.",
         writingSwap: "Therefore",
       },
@@ -2150,7 +2368,8 @@ export const connectorsData: StopData = {
         ipa: "/tu ðæt ɛnd/",
         translation: "Con ese fin",
         level: "C1",
-        definition: "For that purpose.",
+        definition:
+          "Con ese fin. For that purpose. Used to connect one idea to the next in a clear way.",
         examSentence: "To that end, we work hard.",
         writingSwap: "For that purpose",
       },
@@ -2159,7 +2378,8 @@ export const connectorsData: StopData = {
         ipa: "/tu ˈsʌməraɪz/",
         translation: "Para resumir",
         level: "B2",
-        definition: "In summary.",
+        definition:
+          "Para resumir. In summary. Used to connect one idea to the next in a clear way.",
         examSentence: "To summarize, we won.",
         writingSwap: "In summary",
       },
@@ -2168,7 +2388,8 @@ export const connectorsData: StopData = {
         ipa: "/tu kənˈkluːd/",
         translation: "Para concluir",
         level: "B1",
-        definition: "Finally.",
+        definition:
+          "Para concluir. Finally. Used to connect one idea to the next in a clear way.",
         examSentence: "To conclude, I thank you.",
         writingSwap: "Finally",
       },
@@ -2177,7 +2398,8 @@ export const connectorsData: StopData = {
         ipa: "/tu bɪˈɡɪn wɪð/",
         translation: "Para empezar",
         level: "B1",
-        definition: "First.",
+        definition:
+          "Para empezar. First. Used to connect one idea to the next in a clear way.",
         examSentence: "To begin with, it's cheap.",
         writingSwap: "First",
       },
@@ -2186,7 +2408,8 @@ export const connectorsData: StopData = {
         ipa: "/tu ˈɪləstreɪt/",
         translation: "Para ilustrar",
         level: "C1",
-        definition: "For example.",
+        definition:
+          "Para ilustrar. For example. Used to connect one idea to the next in a clear way.",
         examSentence: "To illustrate, look at this chart.",
         writingSwap: "For example",
       },
@@ -2195,7 +2418,8 @@ export const connectorsData: StopData = {
         ipa: "/tu pʊt ɪt əˈnʌðər weɪ/",
         translation: "Dicho de otra manera",
         level: "C1",
-        definition: "In other words.",
+        definition:
+          "Dicho de otra manera. In other words. Used to connect one idea to the next in a clear way.",
         examSentence: "To put it another way, no.",
         writingSwap: "In other words",
       },
@@ -2204,7 +2428,8 @@ export const connectorsData: StopData = {
         ipa: "/tu sʌm ɪkˈstɛnt/",
         translation: "Hasta cierto punto",
         level: "C1",
-        definition: "Partly.",
+        definition:
+          "Hasta cierto punto. Partly. Used to connect one idea to the next in a clear way.",
         examSentence: "I agree to some extent.",
         writingSwap: "Partly",
       },
@@ -2213,7 +2438,8 @@ export const connectorsData: StopData = {
         ipa: "/tu ə ˈsɜːrtn dɪˈɡriː/",
         translation: "En cierto grado",
         level: "C1",
-        definition: "Partly.",
+        definition:
+          "En cierto grado. Partly. Used to connect one idea to the next in a clear way.",
         examSentence: "True to a certain degree.",
         writingSwap: "Partly",
       },
@@ -2222,7 +2448,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈtɛknɪkli/",
         translation: "Técnicamente",
         level: "B2",
-        definition: "Strictly.",
+        definition:
+          "Técnicamente. Strictly. Used to connect one idea to the next in a clear way.",
         examSentence: "Technically, you are right.",
         writingSwap: "Strictly",
       },
@@ -2231,7 +2458,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈtɪpɪkli/",
         translation: "Típicamente",
         level: "B2",
-        definition: "Usually.",
+        definition:
+          "Típicamente. Usually. Used to connect one idea to the next in a clear way.",
         examSentence: "Typically, it snows here.",
         writingSwap: "Usually",
       },
@@ -2240,7 +2468,8 @@ export const connectorsData: StopData = {
         ipa: "/ðɛn/",
         translation: "Entonces",
         level: "A1",
-        definition: "Next.",
+        definition:
+          "Entonces. Next. Used to connect one idea to the next in a clear way.",
         examSentence: "Then we left.",
         writingSwap: "Next",
       },
@@ -2249,7 +2478,8 @@ export const connectorsData: StopData = {
         ipa: "/ðɛərˈæftər/",
         translation: "Después de eso",
         level: "C2",
-        definition: "After that.",
+        definition:
+          "Después de eso. After that. Used to connect one idea to the next in a clear way.",
         examSentence: "Thereafter, he was king.",
         writingSwap: "After that",
       },
@@ -2258,7 +2488,8 @@ export const connectorsData: StopData = {
         ipa: "/ðɛərˈbaɪ/",
         translation: "De este modo",
         level: "C1",
-        definition: "By that means.",
+        definition:
+          "De este modo. By that means. Used to connect one idea to the next in a clear way.",
         examSentence: "He signed, thereby agreeing.",
         writingSwap: "By that",
       },
@@ -2267,7 +2498,8 @@ export const connectorsData: StopData = {
         ipa: "/tu wɪt/",
         translation: "A saber",
         level: "C2",
-        definition: "Namely.",
+        definition:
+          "A saber. Namely. Used to connect one idea to the next in a clear way.",
         examSentence: "Two items, to wit, knife and fork.",
         writingSwap: "Namely",
       },
@@ -2276,7 +2508,8 @@ export const connectorsData: StopData = {
         ipa: "/tu biː ʃʊər/",
         translation: "Ciertamente",
         level: "C1",
-        definition: "Certainly.",
+        definition:
+          "Ciertamente. Certainly. Used to connect one idea to the next in a clear way.",
         examSentence: "He is young, to be sure.",
         writingSwap: "Certainly",
       },
@@ -2285,7 +2518,8 @@ export const connectorsData: StopData = {
         ipa: "/tu meɪk ˈmætərz wɜːrs/",
         translation: "Para empeorar las cosas",
         level: "B2",
-        definition: "Also.",
+        definition:
+          "Para empeorar las cosas. Used to add another related point. Used to connect one idea to the next in a clear way.",
         examSentence: "It rained, and to make matters worse, I fell.",
         writingSwap: "Furthermore",
       },
@@ -2294,7 +2528,8 @@ export const connectorsData: StopData = {
         ipa: "/θɜːrd/",
         translation: "Tercero",
         level: "B1",
-        definition: "3rd.",
+        definition:
+          "Tercero. 3rd. Used to connect one idea to the next in a clear way.",
         examSentence: "Third, we need a plan.",
         writingSwap: "Thirdly",
       },
@@ -2303,7 +2538,8 @@ export const connectorsData: StopData = {
         ipa: "/tu tɛl ðə truːθ/",
         translation: "A decir verdad",
         level: "B1",
-        definition: "Honestly.",
+        definition:
+          "A decir verdad. Honestly. Used to connect one idea to the next in a clear way.",
         examSentence: "To tell the truth, I hate it.",
         writingSwap: "Honestly",
       },
@@ -2312,7 +2548,8 @@ export const connectorsData: StopData = {
         ipa: "/ðoʊ/",
         translation: "Aunque",
         level: "B1",
-        definition: "Although.",
+        definition:
+          "Aunque. Used to introduce contrast or an unexpected second idea. Used to connect one idea to the next in a clear way.",
         examSentence: "Though tired, I worked.",
         writingSwap: "Although",
       },
@@ -2321,7 +2558,8 @@ export const connectorsData: StopData = {
         ipa: "/ðæt ɪz/",
         translation: "Es decir",
         level: "B1",
-        definition: "I.e.",
+        definition:
+          "Es decir. I. e. Used to connect one idea to the next in a clear way.",
         examSentence: "He left, that is, he quit.",
         writingSwap: "I.e.",
       },
@@ -2330,7 +2568,8 @@ export const connectorsData: StopData = {
         ipa: "/ðæt ɪz tu seɪ/",
         translation: "Es decir",
         level: "C1",
-        definition: "In other words.",
+        definition:
+          "Es decir. In other words. Used to connect one idea to the next in a clear way.",
         examSentence: "He died, that is to say, expired.",
         writingSwap: "In other words",
       },
@@ -2339,7 +2578,8 @@ export const connectorsData: StopData = {
         ipa: "/θæŋks tu/",
         translation: "Gracias a",
         level: "B1",
-        definition: "Due to.",
+        definition:
+          "Gracias a. Due to. Used to connect one idea to the next in a clear way.",
         examSentence: "Thanks to you, I won.",
         writingSwap: "Due to",
       },
@@ -2352,7 +2592,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈʌltɪmətli/",
         translation: "Fundamentalmente",
         level: "B2",
-        definition: "Finally.",
+        definition:
+          "Fundamentalmente. Finally. Used to connect one idea to the next in a clear way.",
         examSentence: "Ultimately, you decide.",
         writingSwap: "Finally",
       },
@@ -2361,7 +2602,8 @@ export const connectorsData: StopData = {
         ipa: "/ənˈlɛs/",
         translation: "A menos que",
         level: "B1",
-        definition: "If not.",
+        definition:
+          "A menos que. If not. Used to connect one idea to the next in a clear way.",
         examSentence: "Unless you pay, you leave.",
         writingSwap: "If not",
       },
@@ -2370,7 +2612,8 @@ export const connectorsData: StopData = {
         ipa: "/ʌnˈdaʊtɪdli/",
         translation: "Indudablemente",
         level: "C1",
-        definition: "Certainly.",
+        definition:
+          "Indudablemente. Certainly. Used to connect one idea to the next in a clear way.",
         examSentence: "He is undoubtedly the best.",
         writingSwap: "Certainly",
       },
@@ -2379,7 +2622,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈjuːʒuəli/",
         translation: "Usualmente",
         level: "A2",
-        definition: "Normally.",
+        definition:
+          "Usualmente. Normally. Used to connect one idea to the next in a clear way.",
         examSentence: "Usually I sleep early.",
         writingSwap: "Normally",
       },
@@ -2388,7 +2632,8 @@ export const connectorsData: StopData = {
         ipa: "/ˌʌnɪkˈspɛktɪdli/",
         translation: "Inesperadamente",
         level: "B2",
-        definition: "Surprisingly.",
+        definition:
+          "Inesperadamente. In a way that feels unexpected or causes surprise. Used to connect one idea to the next in a clear way.",
         examSentence: "Unexpectedly, he won.",
         writingSwap: "Surprisingly",
       },
@@ -2397,7 +2642,8 @@ export const connectorsData: StopData = {
         ipa: "/ʌnˈfɔːrtʃənətli/",
         translation: "Desafortunadamente",
         level: "A2",
-        definition: "Sadly.",
+        definition:
+          "Desafortunadamente. Sadly. Used to connect one idea to the next in a clear way.",
         examSentence: "Unfortunately, I lost.",
         writingSwap: "Regrettably",
       },
@@ -2406,7 +2652,8 @@ export const connectorsData: StopData = {
         ipa: "/ʌp tu ə pɔɪnt/",
         translation: "Hasta cierto punto",
         level: "C1",
-        definition: "Partly.",
+        definition:
+          "Hasta cierto punto. Partly. Used to connect one idea to the next in a clear way.",
         examSentence: "I agree up to a point.",
         writingSwap: "Partly",
       },
@@ -2415,7 +2662,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈʌndər ðiːz ˈsɜːrkəmstænsɪz/",
         translation: "Bajo estas circunstancias",
         level: "C1",
-        definition: "Given this.",
+        definition:
+          "Bajo estas circunstancias. Given this. Used to connect one idea to the next in a clear way.",
         examSentence: "Under these circumstances, we quit.",
         writingSwap: "Given this",
       },
@@ -2424,7 +2672,8 @@ export const connectorsData: StopData = {
         ipa: "/ənˈtɪl/",
         translation: "Hasta que",
         level: "A1",
-        definition: "Up to.",
+        definition:
+          "Hasta que. Up to. Used to connect one idea to the next in a clear way.",
         examSentence: "Wait until I come.",
         writingSwap: "Till",
       },
@@ -2433,7 +2682,8 @@ export const connectorsData: StopData = {
         ipa: "/əˈpɒn/",
         translation: "Al (hacer algo)",
         level: "B2",
-        definition: "On.",
+        definition:
+          "Al (hacer algo). On. Used to connect one idea to the next in a clear way.",
         examSentence: "Upon arriving, he slept.",
         writingSwap: "On",
       },
@@ -2446,7 +2696,8 @@ export const connectorsData: StopData = {
         ipa: "/wɛərˈæz/",
         translation: "Mientras que",
         level: "C1",
-        definition: "Contrast.",
+        definition:
+          "Mientras que. Contrast. Used to connect one idea to the next in a clear way.",
         examSentence: "I am poor, whereas he is rich.",
         writingSwap: "While",
       },
@@ -2455,7 +2706,8 @@ export const connectorsData: StopData = {
         ipa: "/waɪl/",
         translation: "Mientras/Si bien",
         level: "B2",
-        definition: "Although/During.",
+        definition:
+          "Mientras/Si bien. Although/During. Used to connect one idea to the next in a clear way.",
         examSentence: "While I agree, I can't help.",
         writingSwap: "Although",
       },
@@ -2464,7 +2716,8 @@ export const connectorsData: StopData = {
         ipa: "/wɪð ðɪs ɪn maɪnd/",
         translation: "Teniendo esto en cuenta",
         level: "C1",
-        definition: "Considering.",
+        definition:
+          "Teniendo esto en cuenta. Considering. Used to connect one idea to the next in a clear way.",
         examSentence: "With this in mind, let's start.",
         writingSwap: "Considering",
       },
@@ -2473,7 +2726,8 @@ export const connectorsData: StopData = {
         ipa: "/wɪð rɪˈɡɑːrd tu/",
         translation: "Con respecto a",
         level: "C1",
-        definition: "Regarding.",
+        definition:
+          "Con respecto a. Regarding. Used to connect one idea to the next in a clear way.",
         examSentence: "With regard to fees, they are low.",
         writingSwap: "Regarding",
       },
@@ -2482,7 +2736,8 @@ export const connectorsData: StopData = {
         ipa: "/wɪð rɪˈspɛkt tu/",
         translation: "Con respecto a",
         level: "C1",
-        definition: "Regarding.",
+        definition:
+          "Con respecto a. Regarding. Used to connect one idea to the next in a clear way.",
         examSentence: "With respect to time, we are late.",
         writingSwap: "Regarding",
       },
@@ -2491,7 +2746,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈwɛðər/",
         translation: "Si",
         level: "B1",
-        definition: "If.",
+        definition:
+          "Si. If. Used to connect one idea to the next in a clear way.",
         examSentence: "I don't know whether to go.",
         writingSwap: "If",
       },
@@ -2500,7 +2756,8 @@ export const connectorsData: StopData = {
         ipa: "/wɛn/",
         translation: "Cuando",
         level: "A1",
-        definition: "At time.",
+        definition:
+          "Cuando. At time. Used to connect one idea to the next in a clear way.",
         examSentence: "When I see him, I smile.",
         writingSwap: "As",
       },
@@ -2509,7 +2766,8 @@ export const connectorsData: StopData = {
         ipa: "/wɛər/",
         translation: "Donde",
         level: "A1",
-        definition: "Place.",
+        definition:
+          "Donde. Place. Used to connect one idea to the next in a clear way.",
         examSentence: "Where there is smoke, there is fire.",
         writingSwap: "Place",
       },
@@ -2518,7 +2776,8 @@ export const connectorsData: StopData = {
         ipa: "/wɒt ɪz mɔːr/",
         translation: "Es más",
         level: "C1",
-        definition: "Also.",
+        definition:
+          "Es más. Used to add another related point. Used to connect one idea to the next in a clear way.",
         examSentence: "It is cheap. What is more, it works.",
         writingSwap: "Furthermore",
       },
@@ -2527,7 +2786,8 @@ export const connectorsData: StopData = {
         ipa: "/ˈhoʊli/",
         translation: "Totalmente",
         level: "C1",
-        definition: "Completely.",
+        definition:
+          "Totalmente. Completely, with total certainty or no limit. Used to connect one idea to the next in a clear way.",
         examSentence: "I am wholly responsible.",
         writingSwap: "Completely",
       },
@@ -2536,7 +2796,8 @@ export const connectorsData: StopData = {
         ipa: "/wɒtˈɛvər/",
         translation: "Lo que sea",
         level: "B1",
-        definition: "Anything.",
+        definition:
+          "Lo que sea. Anything. Used to connect one idea to the next in a clear way.",
         examSentence: "Do whatever you want.",
         writingSwap: "Anything",
       },
@@ -2545,7 +2806,8 @@ export const connectorsData: StopData = {
         ipa: "/wɛnˈɛvər/",
         translation: "Cuando sea",
         level: "B1",
-        definition: "Any time.",
+        definition:
+          "Cuando sea. Any time. Used to connect one idea to the next in a clear way.",
         examSentence: "Call whenever.",
         writingSwap: "Any time",
       },
@@ -2554,7 +2816,8 @@ export const connectorsData: StopData = {
         ipa: "/wɛərˈɛvər/",
         translation: "Donde sea",
         level: "B1",
-        definition: "Any place.",
+        definition:
+          "Donde sea. Any place. Used to connect one idea to the next in a clear way.",
         examSentence: "Go wherever.",
         writingSwap: "Any place",
       },
@@ -2563,7 +2826,8 @@ export const connectorsData: StopData = {
         ipa: "/huːˈɛvər/",
         translation: "Quien sea",
         level: "B1",
-        definition: "Anyone.",
+        definition:
+          "Quien sea. Anyone. Used to connect one idea to the next in a clear way.",
         examSentence: "Whoever did this is smart.",
         writingSwap: "Anyone",
       },
@@ -2572,7 +2836,8 @@ export const connectorsData: StopData = {
         ipa: "/wɪð ði ɪkˈsɛpʃən əv/",
         translation: "A excepción de",
         level: "C1",
-        definition: "Except.",
+        definition:
+          "A excepción de. Except. Used to connect one idea to the next in a clear way.",
         examSentence: "All went with the exception of Tom.",
         writingSwap: "Except",
       },
@@ -2581,7 +2846,8 @@ export const connectorsData: StopData = {
         ipa: "/wɪð ði eɪm əv/",
         translation: "Con el objetivo de",
         level: "C1",
-        definition: "To.",
+        definition:
+          "Con el objetivo de. To. Used to connect one idea to the next in a clear way.",
         examSentence: "He studies with the aim of passing.",
         writingSwap: "To",
       },
@@ -2594,7 +2860,8 @@ export const connectorsData: StopData = {
         ipa: "/jɛt/",
         translation: "Sin embargo",
         level: "B2",
-        definition: "But.",
+        definition:
+          "Sin embargo. But. Used to connect one idea to the next in a clear way.",
         examSentence: "He is old, yet strong.",
         writingSwap: "However",
       },

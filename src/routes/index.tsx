@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { playNativeTTS } from "@/lib/audioUtils";
 import { AppSettings } from "@/lib/settingsStore";
 import { setSentryRouteContext } from "@/lib/sentry";
+import { VaultAddOptions } from "@/types";
 
 // Views
 const HomeView = lazy(() => import("@/pages/HomeView"));
@@ -26,9 +27,7 @@ const DailyLoopView = lazy(() => import("@/pages/DailyLoopView"));
 const StatsView = lazy(() => import("@/pages/StatsView"));
 const SettingsView = lazy(() => import("@/pages/SettingsView"));
 const ProfileView = lazy(() => import("@/pages/ProfileView"));
-const ContentCurationView = lazy(
-  () => import("@/pages/ContentCurationView"),
-);
+const ContentCurationView = lazy(() => import("@/pages/ContentCurationView"));
 const RoadmapView = lazy(() => import("@/pages/RoadmapView"));
 const CodeSyntaxBuilderView = lazy(
   () => import("@/pages/CodeSyntaxBuilderView"),
@@ -71,7 +70,7 @@ export const AnimatedRoutes = ({
   handleSettingsChange,
 }: {
   settings: AppSettings;
-  addToVault: (word: string, def: string, opts?: any) => void;
+  addToVault: (word: string, def: string, opts?: VaultAddOptions) => void;
   handleSettingsChange: (updates: Partial<AppSettings>) => void;
 }) => {
   const location = useLocation();

@@ -8,7 +8,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌæbsəˈluːtli/",
         translation: "Absolutamente",
         level: "B1",
-        definition: "Completely.",
+        definition:
+          "Absolutamente. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "It is absolutely vital.",
         transformation: "Adj Shift: Absolute necessity.",
       },
@@ -17,7 +18,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈbɪzməli/",
         translation: "Abismalmente",
         level: "C2",
-        definition: "Very badly.",
+        definition:
+          "Abismalmente. In an extremely bad or unsuccessful way. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "The project failed abysmally.",
         transformation: "Adj Shift: Abysmal failure.",
       },
@@ -26,7 +28,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈækjʊrətli/",
         translation: "Con precisión",
         level: "B2",
-        definition: "Correctly.",
+        definition:
+          "Con precisión. In a correct and exact way, without mistakes. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Describe it accurately.",
         transformation: "Noun Shift: With accuracy.",
       },
@@ -35,7 +38,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈkjuːtli/",
         translation: "Agudamente",
         level: "C2",
-        definition: "Intensely.",
+        definition:
+          "Agudamente. With strong force, feeling, or awareness. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "I am acutely aware of the problem.",
         transformation: "Adj Shift: Acute awareness.",
       },
@@ -44,7 +48,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈædəməntli/",
         translation: "Rotundamente",
         level: "C2",
-        definition: "Inflexibly.",
+        definition:
+          "Rotundamente. Without changing position, accepting compromise, or giving way. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He adamantly refused.",
         transformation: "Adj Shift: He was adamant.",
       },
@@ -53,7 +58,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈædɪkwətli/",
         translation: "Adecuadamente",
         level: "B2",
-        definition: "Sufficiently.",
+        definition:
+          "Adecuadamente. Enough for the purpose or situation. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "We are adequately prepared.",
         transformation: "Adj Shift: Adequate preparation.",
       },
@@ -71,7 +77,8 @@ export const emphasisData: StopData = {
         ipa: "/ədˈmɪtɪdli/",
         translation: "Ciertamente",
         level: "C1",
-        definition: "Conceding a point.",
+        definition:
+          "Ciertamente. Used when admitting that part of another point is true before continuing. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Admittedly, I was late.",
         transformation: "Passive: It is admitted.",
       },
@@ -80,7 +87,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈædvɜːrsli/",
         translation: "Adversamente",
         level: "C2",
-        definition: "Harmfully.",
+        definition:
+          "Adversamente. In a way that causes damage, difficulty, or negative effects. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "It affected us adversely.",
         transformation: "Adj Shift: Adverse effect.",
       },
@@ -89,7 +97,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈæɡənaɪzɪŋli/",
         translation: "Agónicamente",
         level: "C2",
-        definition: "Painfully slow/difficult.",
+        definition:
+          "Agónicamente. In a way that feels painfully slow, hard, or frustrating. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Agonizingly slow progress.",
         transformation: "Adj Shift: Agonizing progress.",
       },
@@ -98,7 +107,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈlɑːrmɪŋli/",
         translation: "Alarmantemente",
         level: "C1",
-        definition: "Disturbingly.",
+        definition:
+          "Alarmantemente. In a way that makes people worried, uneasy, or alarmed. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Prices rose alarmingly.",
         transformation: "Adj Shift: Alarming rise.",
       },
@@ -107,7 +117,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɔːltəˈɡɛðər/",
         translation: "En total/Del todo",
         level: "B2",
-        definition: "Completely.",
+        definition:
+          "En total/Del todo. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "It stopped altogether.",
         transformation: "Synonym: Completely.",
       },
@@ -116,7 +127,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈmeɪzɪŋli/",
         translation: "Sorprendentemente",
         level: "B1",
-        definition: "Surprisingly.",
+        definition:
+          "Sorprendentemente. In a way that feels unexpected or causes surprise. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Amazingly, he won.",
         transformation: "Adj Shift: It was amazing that...",
       },
@@ -125,7 +137,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈæmpli/",
         translation: "Ampliamente",
         level: "C2",
-        definition: "Sufficiently.",
+        definition:
+          "Ampliamente. Enough for the purpose or situation. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He was amply rewarded.",
         transformation: "Adj Shift: Ample reward.",
       },
@@ -134,7 +147,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈnɔɪɪŋli/",
         translation: "Molestamente",
         level: "B2",
-        definition: "Irritatingly.",
+        definition:
+          "Molestamente. Irritatingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Annoyingly, I forgot.",
         transformation: "Adj Shift: It was annoying that...",
       },
@@ -143,7 +157,8 @@ export const emphasisData: StopData = {
         ipa: "/əˌpɒləˈdʒɛtɪkli/",
         translation: "Disculpándose",
         level: "C1",
-        definition: "Showing regret.",
+        definition:
+          "Disculpándose. In a way that shows regret, apology, or embarrassment. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He smiled apologetically.",
         transformation: "Adj Shift: Apologetic smile.",
       },
@@ -152,7 +167,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈpɔːlɪŋli/",
         translation: "Espantosamente",
         level: "C2",
-        definition: "Shockingly.",
+        definition:
+          "Espantosamente. Shockingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Appallingly bad service.",
         transformation: "Adj Shift: Appalling service.",
       },
@@ -161,7 +177,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈpærəntli/",
         translation: "Aparentemente",
         level: "B2",
-        definition: "Seemingly.",
+        definition:
+          "Aparentemente. Based on what appears to be true, even if it is not fully certain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Apparently, it works.",
         transformation: "Verb Shift: It appears to work.",
       },
@@ -170,7 +187,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈpriːʃəbli/",
         translation: "Apreciablemente",
         level: "C2",
-        definition: "Significantly.",
+        definition:
+          "Apreciablemente. To a noticeable or meaningful degree. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "It is appreciably cooler.",
         transformation: "Adj Shift: Appreciable difference.",
       },
@@ -179,7 +197,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɑːrdəntli/",
         translation: "Ardientemente",
         level: "C2",
-        definition: "Passionately.",
+        definition:
+          "Ardientemente. With strong feeling, energy, or emotional force. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He ardently supports them.",
         transformation: "Adj Shift: Ardent support.",
       },
@@ -188,7 +207,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɑːrɡjuəbli/",
         translation: "Podría decirse",
         level: "C1",
-        definition: "Possibly.",
+        definition:
+          "Podría decirse. Used to show that something may be true or can be reasonably argued. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Arguably the best.",
         transformation: "Verb Shift: One could argue.",
       },
@@ -197,7 +217,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈsɪdjuəsli/",
         translation: "Asiduamente",
         level: "C2",
-        definition: "Diligently.",
+        definition:
+          "Asiduamente. With steady effort, care, and persistence. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He worked assiduously.",
         transformation: "Adj Shift: Assiduous work.",
       },
@@ -206,7 +227,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈstɒnɪʃɪŋli/",
         translation: "Asombrosamente",
         level: "B2",
-        definition: "Surprisingly.",
+        definition:
+          "Asombrosamente. In a way that feels unexpected or causes surprise. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Astonishingly fast.",
         transformation: "Adj Shift: Astonishing speed.",
       },
@@ -215,7 +237,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈstaʊndɪŋli/",
         translation: "Pasmósamente",
         level: "C1",
-        definition: "Amazingly.",
+        definition:
+          "Pasmósamente. In a way that feels astonishing or hard to believe. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Astoundingly simple.",
         transformation: "Adj Shift: Astounding simplicity.",
       },
@@ -224,7 +247,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌæstrəˈnɒmɪkli/",
         translation: "Astronómicamente",
         level: "C2",
-        definition: "Huge amount.",
+        definition:
+          "Astronómicamente. To an extremely large or unrealistic degree. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Prices are astronomically high.",
         transformation: "Adj Shift: Astronomical prices.",
       },
@@ -233,7 +257,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈtroʊʃəsli/",
         translation: "Atrozmente",
         level: "C2",
-        definition: "Very badly.",
+        definition:
+          "Atrozmente. In an extremely bad or unsuccessful way. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He behaved atrociously.",
         transformation: "Adj Shift: Atrocious behavior.",
       },
@@ -242,7 +267,8 @@ export const emphasisData: StopData = {
         ipa: "/ɔːˈdeɪʃəsli/",
         translation: "Audazmente",
         level: "C2",
-        definition: "Boldly.",
+        definition:
+          "Audazmente. In a confident and daring way. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He acted audaciously.",
         transformation: "Adj Shift: Audacious act.",
       },
@@ -251,7 +277,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈθɔːrɪtətɪvli/",
         translation: "Con autoridad",
         level: "C1",
-        definition: "Commandingly.",
+        definition:
+          "Con autoridad. In a way that sounds confident, authoritative, or in control. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "She spoke authoritatively.",
         transformation: "Adj Shift: Authoritative tone.",
       },
@@ -260,7 +287,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈævɪdli/",
         translation: "Ávidamente",
         level: "C1",
-        definition: "Enthusiastically.",
+        definition:
+          "Ávidamente. With strong interest, energy, or enjoyment. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He read avidly.",
         transformation: "Adj Shift: Avid reader.",
       },
@@ -269,7 +297,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɔːfʊli/",
         translation: "Terriblemente",
         level: "B1",
-        definition: "Very.",
+        definition:
+          "Terriblemente. Used to add strong emphasis and make the statement feel stronger. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "I am awfully sorry.",
         transformation: "Synonym: Terribly.",
       },
@@ -282,7 +311,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbædli/",
         translation: "Gravemente/Mucho",
         level: "B1",
-        definition: "Severely/Very much.",
+        definition:
+          "Gravemente/Mucho. To a severe degree or with a strong sense of need, damage, or urgency. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "I badly need a break.",
         transformation: "Noun Shift: Bad need.",
       },
@@ -291,7 +321,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbɛərli/",
         translation: "Apenas",
         level: "B2",
-        definition: "Scarcely.",
+        definition:
+          "Apenas. Only just, by a very small margin, or almost not at all. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "We barely made it.",
         transformation: "Inversion: Barely did we make it.",
       },
@@ -300,7 +331,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbeɪsɪkli/",
         translation: "Básicamente",
         level: "B2",
-        definition: "Fundamentally.",
+        definition:
+          "Básicamente. At the most basic or essential level. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Basically, it is done.",
         transformation: "Adj Shift: Basic fact.",
       },
@@ -309,7 +341,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbjuːtɪfʊli/",
         translation: "Hermosamente",
         level: "B1",
-        definition: "In a beautiful way.",
+        definition:
+          "Hermosamente. In a very beautiful, graceful, or pleasing way. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "She sings beautifully.",
         transformation: "Adj Shift: Beautiful singing.",
       },
@@ -318,7 +351,8 @@ export const emphasisData: StopData = {
         ipa: "/bɪˈɡrʌdʒɪŋli/",
         translation: "A regañadientes",
         level: "C2",
-        definition: "Reluctantly.",
+        definition:
+          "A regañadientes. In a way that shows unwillingness or resentment. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He agreed begrudgingly.",
         transformation: "Noun Shift: With a grudge.",
       },
@@ -336,7 +370,8 @@ export const emphasisData: StopData = {
         ipa: "/bɪˈwɪldərɪŋli/",
         translation: "Desconcertantemente",
         level: "C2",
-        definition: "Confusingly.",
+        definition:
+          "Desconcertantemente. In a way that is difficult to understand or follow. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Bewilderingly complex.",
         transformation: "Adj Shift: Bewildering complexity.",
       },
@@ -345,7 +380,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbɪtərli/",
         translation: "Amargamente",
         level: "C1",
-        definition: "Resentfully/Coldly.",
+        definition:
+          "Amargamente. With resentment, bitterness, or emotional coldness. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Bitterly disappointed.",
         transformation: "Adj Shift: Bitter disappointment.",
       },
@@ -354,7 +390,8 @@ export const emphasisData: StopData = {
         ipa: "/bɪˈzɑːrli/",
         translation: "Extrañamente",
         level: "C1",
-        definition: "Strangely.",
+        definition:
+          "Extrañamente. In a way that feels unusual or hard to explain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Bizarrely, he left.",
         transformation: "Adj Shift: It was bizarre that...",
       },
@@ -363,7 +400,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbleɪtəntli/",
         translation: "Descaradamente",
         level: "C2",
-        definition: "Openly unashamed.",
+        definition:
+          "Descaradamente. In an obvious way, without hiding the truth or the disrespect. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Blatantly false.",
         transformation: "Adj Shift: Blatant lie.",
       },
@@ -372,7 +410,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈblaɪndɪŋli/",
         translation: "Cegadoramente",
         level: "C2",
-        definition: "Extremely.",
+        definition:
+          "Cegadoramente. Extremely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Blindingly obvious.",
         transformation: "Adj Shift: Blinding light.",
       },
@@ -381,7 +420,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈblɪsfʊli/",
         translation: "Felizmente",
         level: "C2",
-        definition: "Happily unaware.",
+        definition:
+          "Felizmente. Happily unaware. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Blissfully ignorant.",
         transformation: "Adj Shift: Blissful ignorance.",
       },
@@ -390,7 +430,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈboʊldli/",
         translation: "Audazmente",
         level: "B2",
-        definition: "Bravely.",
+        definition:
+          "Audazmente. Bravely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He spoke boldly.",
         transformation: "Adj Shift: Bold speech.",
       },
@@ -399,7 +440,8 @@ export const emphasisData: StopData = {
         ipa: "/bɒmˈbæstɪkli/",
         translation: "Grandilocuentemente",
         level: "C2",
-        definition: "Pompously.",
+        definition:
+          "Grandilocuentemente. Pompously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He announced it bombastically.",
         transformation: "Adj Shift: Bombastic announcement.",
       },
@@ -408,7 +450,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbreɪvli/",
         translation: "Valientemente",
         level: "B1",
-        definition: "Courageously.",
+        definition:
+          "Valientemente. Courageously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fought bravely.",
         transformation: "Adj Shift: Brave fight.",
       },
@@ -417,7 +460,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbrɛθləsli/",
         translation: "Sin aliento",
         level: "C1",
-        definition: "Eagerly/Panting.",
+        definition:
+          "Sin aliento. Eagerly/Panting. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Waited breathlessly.",
         transformation: "Adj Shift: Breathless wait.",
       },
@@ -426,7 +470,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbriːfli/",
         translation: "Brevemente",
         level: "B1",
-        definition: "Shortly.",
+        definition:
+          "Brevemente. Shortly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Briefly mentioned.",
         transformation: "Adj Shift: Brief mention.",
       },
@@ -435,7 +480,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbraɪtli/",
         translation: "Brillantemente",
         level: "B1",
-        definition: "With light.",
+        definition:
+          "Brillantemente. With light. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Shone brightly.",
         transformation: "Adj Shift: Bright shine.",
       },
@@ -444,7 +490,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbrɪljəntli/",
         translation: "Brillantemente",
         level: "B2",
-        definition: "Excellently.",
+        definition:
+          "Brillantemente. Excellently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "He played brilliantly.",
         transformation: "Adj Shift: Brilliant play.",
       },
@@ -453,7 +500,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbrɪskli/",
         translation: "Enérgicamente",
         level: "C1",
-        definition: "Quickly.",
+        definition:
+          "Enérgicamente. Quickly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Walked briskly.",
         transformation: "Adj Shift: Brisk walk.",
       },
@@ -462,7 +510,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbrɔːdli/",
         translation: "En general",
         level: "B2",
-        definition: "Generally.",
+        definition:
+          "En general. Generally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Broadly speaking.",
         transformation: "Adj Shift: Broad terms.",
       },
@@ -471,7 +520,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbruːtəli/",
         translation: "Brutalmente",
         level: "C1",
-        definition: "Harshly.",
+        definition:
+          "Brutalmente. Harshly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Brutally honest.",
         transformation: "Adj Shift: Brutal honesty.",
       },
@@ -480,7 +530,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈbɪzɪli/",
         translation: "Afanosamente",
         level: "B1",
-        definition: "Actively.",
+        definition:
+          "Afanosamente. Actively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Working busily.",
         transformation: "Adj Shift: Busy work.",
       },
@@ -489,7 +540,8 @@ export const emphasisData: StopData = {
         ipa: "/baɪ noʊ miːnz/",
         translation: "De ninguna manera",
         level: "C1",
-        definition: "Not at all.",
+        definition:
+          "De ninguna manera. Not at all. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "By no means certain.",
         transformation: "Phrase: Not in any way.",
       },
@@ -511,7 +563,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkændɪdli/",
         translation: "Francamente",
         level: "C1",
-        definition: "Honestly.",
+        definition:
+          "Francamente. Honestly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Candidly, I dislike it.",
         transformation: "Adj Shift: Candid opinion.",
       },
@@ -520,7 +573,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌkætəˈstrɒfɪkli/",
         translation: "Catastróficamente",
         level: "C2",
-        definition: "Disastrously.",
+        definition:
+          "Catastróficamente. Disastrously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Failed catastrophically.",
         transformation: "Adj Shift: Catastrophic failure.",
       },
@@ -529,7 +583,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌkætəˈɡɒrɪkli/",
         translation: "Categóricamente",
         level: "C1",
-        definition: "Absolutely.",
+        definition:
+          "Categóricamente. Absolutely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Categorically denied.",
         transformation: "Adj Shift: Categorical denial.",
       },
@@ -538,7 +593,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsiːsləsli/",
         translation: "Incesantemente",
         level: "C2",
-        definition: "Without stop.",
+        definition:
+          "Incesantemente. Without stop. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Worked ceaselessly.",
         transformation: "Adj Shift: Ceaseless work.",
       },
@@ -547,7 +603,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɜːrtnli/",
         translation: "Ciertamente",
         level: "B1",
-        definition: "Surely.",
+        definition:
+          "Ciertamente. Surely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Certainly true.",
         transformation: "Adj Shift: Certain truth.",
       },
@@ -556,7 +613,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌkærəktəˈrɪstɪkli/",
         translation: "Típicamente",
         level: "C1",
-        definition: "Typically.",
+        definition:
+          "Típicamente. Typically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Characteristically late.",
         transformation: "Adj Shift: Characteristic behavior.",
       },
@@ -565,7 +623,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtʃiːfli/",
         translation: "Principalmente",
         level: "C1",
-        definition: "Mainly.",
+        definition:
+          "Principalmente. Mainly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Chiefly responsible.",
         transformation: "Adj Shift: Chief reason.",
       },
@@ -574,7 +633,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkrɒnɪkli/",
         translation: "Crónicamente",
         level: "C1",
-        definition: "Persistently.",
+        definition:
+          "Crónicamente. Persistently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Chronically ill.",
         transformation: "Adj Shift: Chronic illness.",
       },
@@ -583,7 +643,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈklɪərli/",
         translation: "Claramente",
         level: "B1",
-        definition: "Obviously.",
+        definition:
+          "Claramente. Obviously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Clearly wrong.",
         transformation: "Adj Shift: Clear error.",
       },
@@ -592,7 +653,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkloʊsli/",
         translation: "De cerca",
         level: "B1",
-        definition: "Carefully.",
+        definition:
+          "De cerca. Carefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Listen closely.",
         transformation: "Adj Shift: Close attention.",
       },
@@ -601,7 +663,8 @@ export const emphasisData: StopData = {
         ipa: "/koʊˈhɪərəntli/",
         translation: "Coherentemente",
         level: "C1",
-        definition: "Logically.",
+        definition:
+          "Coherentemente. Logically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Argue coherently.",
         transformation: "Adj Shift: Coherent argument.",
       },
@@ -610,7 +673,8 @@ export const emphasisData: StopData = {
         ipa: "/kəˈlɒsəli/",
         translation: "Colosalmente",
         level: "C2",
-        definition: "Hugely.",
+        definition:
+          "Colosalmente. Hugely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Colossally stupid.",
         transformation: "Adj Shift: Colossal stupidity.",
       },
@@ -619,7 +683,8 @@ export const emphasisData: StopData = {
         ipa: "/kəˈmɛndəbli/",
         translation: "Elogiablemente",
         level: "C2",
-        definition: "Praiseworthily.",
+        definition:
+          "Elogiablemente. Praiseworthily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted commendably.",
         transformation: "Adj Shift: Commendable act.",
       },
@@ -628,7 +693,8 @@ export const emphasisData: StopData = {
         ipa: "/kəmˈpærətɪvli/",
         translation: "Comparativamente",
         level: "C1",
-        definition: "Relatively.",
+        definition:
+          "Comparativamente. Relatively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Comparatively easy.",
         transformation: "Adj Shift: Comparative ease.",
       },
@@ -637,7 +703,8 @@ export const emphasisData: StopData = {
         ipa: "/kəmˈpɛlɪŋli/",
         translation: "Convincentemente",
         level: "C1",
-        definition: "Persuasively.",
+        definition:
+          "Convincentemente. Persuasively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke compellingly.",
         transformation: "Adj Shift: Compelling speech.",
       },
@@ -646,7 +713,8 @@ export const emphasisData: StopData = {
         ipa: "/kəmˈpliːtli/",
         translation: "Completamente",
         level: "A2",
-        definition: "Totally.",
+        definition:
+          "Completamente. Totally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Completely finished.",
         transformation: "Adj Shift: Complete finish.",
       },
@@ -655,7 +723,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌkɒmprɪˈhɛnsɪvli/",
         translation: "Exhaustivamente",
         level: "C1",
-        definition: "Thoroughly.",
+        definition:
+          "Exhaustivamente. Thoroughly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Beaten comprehensively.",
         transformation: "Adj Shift: Comprehensive defeat.",
       },
@@ -664,7 +733,8 @@ export const emphasisData: StopData = {
         ipa: "/kənˈsiːvəbli/",
         translation: "Concebiblemente",
         level: "C2",
-        definition: "Possibly.",
+        definition:
+          "Concebiblemente. Used to show that something may be true or can be reasonably argued. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Conceivably true.",
         transformation: "Adj Shift: Conceivable truth.",
       },
@@ -673,7 +743,8 @@ export const emphasisData: StopData = {
         ipa: "/kənˈkluːsɪvli/",
         translation: "Concluyentemente",
         level: "C1",
-        definition: "Decisively.",
+        definition:
+          "Concluyentemente. Decisively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Proved conclusively.",
         transformation: "Adj Shift: Conclusive proof.",
       },
@@ -682,7 +753,8 @@ export const emphasisData: StopData = {
         ipa: "/kənˈsɪdərəbli/",
         translation: "Considerablemente",
         level: "B2",
-        definition: "Significantly.",
+        definition:
+          "Considerablemente. To a noticeable or meaningful degree. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Considerably larger.",
         transformation: "Adj Shift: Considerable size.",
       },
@@ -691,7 +763,8 @@ export const emphasisData: StopData = {
         ipa: "/kənˈsɪstəntli/",
         translation: "Consistentemente",
         level: "B2",
-        definition: "Regularly.",
+        definition:
+          "Consistentemente. Regularly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Consistently late.",
         transformation: "Adj Shift: Consistent lateness.",
       },
@@ -700,7 +773,8 @@ export const emphasisData: StopData = {
         ipa: "/kənˈspɪkjuəsli/",
         translation: "Llamativamente",
         level: "C1",
-        definition: "Noticeably.",
+        definition:
+          "Llamativamente. Noticeably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Conspicuously absent.",
         transformation: "Adj Shift: Conspicuous absence.",
       },
@@ -709,7 +783,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkɒnstəntli/",
         translation: "Constantemente",
         level: "B2",
-        definition: "Always.",
+        definition:
+          "Constantemente. Always. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Constantly complaining.",
         transformation: "Adj Shift: Constant complaints.",
       },
@@ -718,7 +793,8 @@ export const emphasisData: StopData = {
         ipa: "/kənˈstrʌktɪvli/",
         translation: "Constructivamente",
         level: "C1",
-        definition: "Helpfully.",
+        definition:
+          "Constructivamente. Helpfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Engage constructively.",
         transformation: "Adj Shift: Constructive engagement.",
       },
@@ -727,7 +803,8 @@ export const emphasisData: StopData = {
         ipa: "/kənˈtɛmptʃuəsli/",
         translation: "Despectivamente",
         level: "C2",
-        definition: "Scornfully.",
+        definition:
+          "Despectivamente. Scornfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sneered contemptuously.",
         transformation: "Adj Shift: Contemptuous sneer.",
       },
@@ -736,7 +813,8 @@ export const emphasisData: StopData = {
         ipa: "/kənˈtɪnjuəli/",
         translation: "Continuamente",
         level: "B2",
-        definition: "Repeatedly.",
+        definition:
+          "Continuamente. Repeatedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Interrupted continually.",
         transformation: "Adj Shift: Continual interruption.",
       },
@@ -745,7 +823,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌkɒntrəˈvɜːrʃəli/",
         translation: "Controvertidamente",
         level: "B2",
-        definition: "Causing debate.",
+        definition:
+          "Controvertidamente. Causing debate. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Decided controversially.",
         transformation: "Adj Shift: Controversial decision.",
       },
@@ -754,7 +833,8 @@ export const emphasisData: StopData = {
         ipa: "/kənˈvɪnsɪŋli/",
         translation: "Convincentemente",
         level: "B2",
-        definition: "Believably.",
+        definition:
+          "Convincentemente. Believably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Argued convincingly.",
         transformation: "Adj Shift: Convincing argument.",
       },
@@ -763,7 +843,8 @@ export const emphasisData: StopData = {
         ipa: "/kəˈrɛktli/",
         translation: "Correctamente",
         level: "A2",
-        definition: "Rightly.",
+        definition:
+          "Correctamente. Rightly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Answered correctly.",
         transformation: "Adj Shift: Correct answer.",
       },
@@ -772,7 +853,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌkɒrɪˈspɒndɪŋli/",
         translation: "Correspondientemente",
         level: "C2",
-        definition: "Similarly.",
+        definition:
+          "Correspondientemente. Similarly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Prices rose correspondingly.",
         transformation: "Adj Shift: Corresponding rise.",
       },
@@ -781,7 +863,8 @@ export const emphasisData: StopData = {
         ipa: "/kəˈreɪdʒəsli/",
         translation: "Valientemente",
         level: "C1",
-        definition: "Bravely.",
+        definition:
+          "Valientemente. Bravely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fought courageously.",
         transformation: "Adj Shift: Courageous fight.",
       },
@@ -790,7 +873,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkrɪtɪkli/",
         translation: "Críticamente",
         level: "B2",
-        definition: "Crucially.",
+        definition:
+          "Críticamente. Crucially. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Critically ill.",
         transformation: "Adj Shift: Critical illness.",
       },
@@ -799,7 +883,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkruːʃəli/",
         translation: "Crucialmente",
         level: "C1",
-        definition: "Decisively.",
+        definition:
+          "Crucialmente. Decisively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Crucially important.",
         transformation: "Adj Shift: Crucial importance.",
       },
@@ -808,7 +893,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkʌnɪŋli/",
         translation: "Astutamente",
         level: "C2",
-        definition: "Cleverly.",
+        definition:
+          "Astutamente. Cleverly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Cunningly disguised.",
         transformation: "Adj Shift: Cunning disguise.",
       },
@@ -817,7 +903,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkjʊəriəsli/",
         translation: "Curiosamente",
         level: "B2",
-        definition: "Strangely.",
+        definition:
+          "Curiosamente. In a way that feels unusual or hard to explain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Curiously quiet.",
         transformation: "Adj Shift: Curious silence.",
       },
@@ -826,7 +913,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɪnɪkli/",
         translation: "Cínicamente",
         level: "C1",
-        definition: "Skeptically.",
+        definition:
+          "Cínicamente. Skeptically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled cynically.",
         transformation: "Adj Shift: Cynical smile.",
       },
@@ -839,7 +927,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdeɪndʒərəsli/",
         translation: "Peligrosamente",
         level: "B1",
-        definition: "Riskily.",
+        definition:
+          "Peligrosamente. Riskily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dangerously close.",
         transformation: "Adj Shift: Dangerous proximity.",
       },
@@ -848,7 +937,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɛərɪŋli/",
         translation: "Atrevidamente",
         level: "C1",
-        definition: "Boldly.",
+        definition:
+          "Atrevidamente. In a confident and daring way. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed daringly.",
         transformation: "Adj Shift: Daring dress.",
       },
@@ -857,7 +947,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdæzlɪŋli/",
         translation: "Deslumbrantemente",
         level: "C2",
-        definition: "Brilliantly.",
+        definition:
+          "Deslumbrantemente. Brilliantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dazzlingly bright.",
         transformation: "Adj Shift: Dazzling brightness.",
       },
@@ -866,7 +957,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɛdli/",
         translation: "Mortalmente",
         level: "B1",
-        definition: "Extremely.",
+        definition:
+          "Mortalmente. Extremely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Deadly serious.",
         transformation: "Adj Shift: Dead seriousness.",
       },
@@ -875,7 +967,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɪərli/",
         translation: "Encarecidamente",
         level: "B2",
-        definition: "Very much.",
+        definition:
+          "Encarecidamente. Very much. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Loved dearly.",
         transformation: "Adj Shift: Dear love.",
       },
@@ -884,7 +977,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈsɛptɪvli/",
         translation: "Engañosamente",
         level: "C1",
-        definition: "Misleadingly.",
+        definition:
+          "Engañosamente. Misleadingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Deceptively simple.",
         transformation: "Adj Shift: Deceptive simplicity.",
       },
@@ -893,7 +987,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈsaɪdɪdli/",
         translation: "Decididamente",
         level: "C1",
-        definition: "Undeniably.",
+        definition:
+          "Decididamente. Undeniably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Decidedly better.",
         transformation: "Adj Shift: Decided improvement.",
       },
@@ -902,7 +997,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈsaɪsɪvli/",
         translation: "Decisivamente",
         level: "C1",
-        definition: "Conclusively.",
+        definition:
+          "Decisivamente. Conclusively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted decisively.",
         transformation: "Adj Shift: Decisive action.",
       },
@@ -911,7 +1007,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdiːpli/",
         translation: "Profundamente",
         level: "B2",
-        definition: "Profoundly.",
+        definition:
+          "Profundamente. Profoundly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Deeply moved.",
         transformation: "Adj Shift: Deep emotion.",
       },
@@ -920,7 +1017,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈfaɪəntli/",
         translation: "Desafiantemente",
         level: "C1",
-        definition: "Rebelliously.",
+        definition:
+          "Desafiantemente. Rebelliously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stood defiantly.",
         transformation: "Adj Shift: Defiant stance.",
       },
@@ -929,7 +1027,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɛfɪnɪtli/",
         translation: "Definitivamente",
         level: "A2",
-        definition: "Certainly.",
+        definition:
+          "Definitivamente. Certainly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Definitely true.",
         transformation: "Adj Shift: Definite truth.",
       },
@@ -938,7 +1037,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈfɪnɪtɪvli/",
         translation: "Definitivamente (final)",
         level: "C1",
-        definition: "Finally.",
+        definition:
+          "Definitivamente (final). Finally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Proved definitively.",
         transformation: "Adj Shift: Definitive proof.",
       },
@@ -947,7 +1047,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɛftli/",
         translation: "Habilmente",
         level: "C2",
-        definition: "Skillfully.",
+        definition:
+          "Habilmente. Skillfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Deftly handled.",
         transformation: "Adj Shift: Deft handling.",
       },
@@ -956,7 +1057,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈlɪbərətli/",
         translation: "Deliberadamente",
         level: "B2",
-        definition: "Intentionally.",
+        definition:
+          "Deliberadamente. Intentionally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Deliberately ignored.",
         transformation: "Adj Shift: Deliberate ignorance.",
       },
@@ -965,7 +1067,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɛlɪkətli/",
         translation: "Delicadamente",
         level: "C1",
-        definition: "Gently.",
+        definition:
+          "Delicadamente. Gently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Held delicately.",
         transformation: "Adj Shift: Delicate touch.",
       },
@@ -974,7 +1077,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈlaɪtfʊli/",
         translation: "Encantadoramente",
         level: "B2",
-        definition: "Pleasantly.",
+        definition:
+          "Encantadoramente. Pleasantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Delightfully warm.",
         transformation: "Adj Shift: Delightful warmth.",
       },
@@ -983,7 +1087,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈmɒnstrəbli/",
         translation: "Demostrablemente",
         level: "C2",
-        definition: "Clearly.",
+        definition:
+          "Demostrablemente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Demonstrably false.",
         transformation: "Adj Shift: Demonstrable falsehood.",
       },
@@ -992,7 +1097,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈplɔːrəbli/",
         translation: "Deplorablemente",
         level: "C2",
-        definition: "Badly.",
+        definition:
+          "Deplorablemente. Badly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Deplorably low.",
         transformation: "Adj Shift: Deplorable level.",
       },
@@ -1001,7 +1107,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɛspərətli/",
         translation: "Desesperadamente",
         level: "B2",
-        definition: "Urgently.",
+        definition:
+          "Desesperadamente. Urgently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Desperately needed.",
         transformation: "Adj Shift: Desperate need.",
       },
@@ -1010,7 +1117,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈspɒndəntli/",
         translation: "Abatidamente",
         level: "C2",
-        definition: "Hopelessly.",
+        definition:
+          "Abatidamente. Hopelessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sighed despondently.",
         transformation: "Adj Shift: Despondent sigh.",
       },
@@ -1019,7 +1127,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈtɜːrmɪndli/",
         translation: "Decididamente",
         level: "C1",
-        definition: "Resolutely.",
+        definition:
+          "Decididamente. Resolutely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Walked determinedly.",
         transformation: "Adj Shift: Determined walk.",
       },
@@ -1028,7 +1137,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌdɛtrɪˈmɛntəli/",
         translation: "Perjudicialmente",
         level: "C2",
-        definition: "Harmfully.",
+        definition:
+          "Perjudicialmente. In a way that causes damage, difficulty, or negative effects. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Affected detrimentally.",
         transformation: "Adj Shift: Detrimental effect.",
       },
@@ -1037,7 +1147,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɛvəsteɪtɪŋli/",
         translation: "Devastadoramente",
         level: "C2",
-        definition: "Destructively.",
+        definition:
+          "Devastadoramente. Destructively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Devastatingly effective.",
         transformation: "Adj Shift: Devastating effect.",
       },
@@ -1046,7 +1157,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdiːviəsli/",
         translation: "Taimadamente",
         level: "C1",
-        definition: "Sneakily.",
+        definition:
+          "Taimadamente. Sneakily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Planned deviously.",
         transformation: "Adj Shift: Devious plan.",
       },
@@ -1055,7 +1167,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɛkstrəsli/",
         translation: "Diestramente",
         level: "C2",
-        definition: "Skillfully.",
+        definition:
+          "Diestramente. Skillfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dexterously made.",
         transformation: "Adj Shift: Dexterous skill.",
       },
@@ -1064,7 +1177,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌdaɪəˈmɛtrɪkli/",
         translation: "Diametralmente",
         level: "C2",
-        definition: "Completely.",
+        definition:
+          "Diametralmente. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Diametrically opposed.",
         transformation: "Adj Shift: Diametric opposition.",
       },
@@ -1073,7 +1187,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɪlɪdʒəntli/",
         translation: "Diligente",
         level: "C1",
-        definition: "Industriously.",
+        definition:
+          "Diligente. Industriously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Worked diligently.",
         transformation: "Adj Shift: Diligent work.",
       },
@@ -1082,7 +1197,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌdɪpləˈmætɪkli/",
         translation: "Diplomáticamente",
         level: "C1",
-        definition: "Tactfully.",
+        definition:
+          "Diplomáticamente. Tactfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Handled diplomatically.",
         transformation: "Adj Shift: Diplomatic handling.",
       },
@@ -1091,7 +1207,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈrɛktli/",
         translation: "Directamente",
         level: "B1",
-        definition: "Straight.",
+        definition:
+          "Directamente. Straight. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Go directly.",
         transformation: "Adj Shift: Direct route.",
       },
@@ -1100,7 +1217,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈzɑːstrəsli/",
         translation: "Desastrosamente",
         level: "B2",
-        definition: "Catastrophically.",
+        definition:
+          "Desastrosamente. Catastrophically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ended disastrously.",
         transformation: "Adj Shift: Disastrous end.",
       },
@@ -1109,7 +1227,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈskriːtli/",
         translation: "Discretamente",
         level: "C1",
-        definition: "Subtly.",
+        definition:
+          "Discretamente. Subtly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Left discreetly.",
         transformation: "Adj Shift: Discreet exit.",
       },
@@ -1118,7 +1237,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪsˈdeɪnfʊli/",
         translation: "Desdeñosamente",
         level: "C2",
-        definition: "Scornfully.",
+        definition:
+          "Desdeñosamente. Scornfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked disdainfully.",
         transformation: "Adj Shift: Disdainful look.",
       },
@@ -1127,7 +1247,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪsˈɡreɪsfʊli/",
         translation: "Vergonzosamente",
         level: "C1",
-        definition: "Shamefully.",
+        definition:
+          "Vergonzosamente. Shamefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Behaved disgracefully.",
         transformation: "Adj Shift: Disgraceful behavior.",
       },
@@ -1136,7 +1257,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪsˈɡʌstɪŋli/",
         translation: "Asquerosamente",
         level: "B2",
-        definition: "Repulsively.",
+        definition:
+          "Asquerosamente. Repulsively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Disgustingly dirty.",
         transformation: "Adj Shift: Disgusting dirt.",
       },
@@ -1145,7 +1267,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɪzməli/",
         translation: "Tristemente",
         level: "C1",
-        definition: "Gloomy.",
+        definition:
+          "Tristemente. Gloomy. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Failed dismally.",
         transformation: "Adj Shift: Dismal failure.",
       },
@@ -1154,7 +1277,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪsˈmɪsɪvli/",
         translation: "Despectivamente",
         level: "C2",
-        definition: "Rejecting.",
+        definition:
+          "Despectivamente. Rejecting. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Waved dismissively.",
         transformation: "Adj Shift: Dismissive wave.",
       },
@@ -1163,7 +1287,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌdɪsprəˈpɔːrʃənətli/",
         translation: "Desproporcionadamente",
         level: "C1",
-        definition: "Unequally.",
+        definition:
+          "Desproporcionadamente. Unequally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Affected disproportionately.",
         transformation: "Adj Shift: Disproportionate effect.",
       },
@@ -1172,7 +1297,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈstɪŋktli/",
         translation: "Claramente",
         level: "C1",
-        definition: "Clearly.",
+        definition:
+          "Claramente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Distinctly remember.",
         transformation: "Adj Shift: Distinct memory.",
       },
@@ -1181,7 +1307,8 @@ export const emphasisData: StopData = {
         ipa: "/dɪˈstɜːrbɪŋli/",
         translation: "Inquietantemente",
         level: "C1",
-        definition: "Worryingly.",
+        definition:
+          "Inquietantemente. Worryingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Disturbingly quiet.",
         transformation: "Adj Shift: Disturbing silence.",
       },
@@ -1190,7 +1317,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdɒɡɪdli/",
         translation: "Obstinadamente",
         level: "C2",
-        definition: "Persistently.",
+        definition:
+          "Obstinadamente. Persistently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Persisted doggedly.",
         transformation: "Adj Shift: Dogged persistence.",
       },
@@ -1199,7 +1327,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdaʊnraɪt/",
         translation: "Francamente",
         level: "C2",
-        definition: "Thoroughly.",
+        definition:
+          "Francamente. Thoroughly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Downright rude.",
         transformation: "Adj Shift: Downright rudeness.",
       },
@@ -1208,7 +1337,8 @@ export const emphasisData: StopData = {
         ipa: "/drəˈmætɪkli/",
         translation: "Dramáticamente",
         level: "B2",
-        definition: "Significantly.",
+        definition:
+          "Dramáticamente. To a noticeable or meaningful degree. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Changed dramatically.",
         transformation: "Adj Shift: Dramatic change.",
       },
@@ -1217,7 +1347,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdræstɪkli/",
         translation: "Drásticamente",
         level: "C1",
-        definition: "Severely.",
+        definition:
+          "Drásticamente. Severely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Reduced drastically.",
         transformation: "Adj Shift: Drastic reduction.",
       },
@@ -1226,7 +1357,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdrɛdfʊli/",
         translation: "Espantosamente",
         level: "B2",
-        definition: "Very.",
+        definition:
+          "Espantosamente. Used to add strong emphasis and make the statement feel stronger. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dreadfully sorry.",
         transformation: "Adj Shift: Dreadful sorrow.",
       },
@@ -1235,7 +1367,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdjuːtɪfʊli/",
         translation: "Obedientemente",
         level: "C1",
-        definition: "Obediently.",
+        definition:
+          "Obedientemente. Obediently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Followed dutifully.",
         transformation: "Adj Shift: Dutiful following.",
       },
@@ -1248,7 +1381,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈiːɡərli/",
         translation: "Ansiosamente",
         level: "B1",
-        definition: "Keenly.",
+        definition:
+          "Ansiosamente. Keenly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Waited eagerly.",
         transformation: "Adj Shift: Eager wait.",
       },
@@ -1257,7 +1391,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɜːrnɪstli/",
         translation: "Fervientemente",
         level: "C1",
-        definition: "Sincerely.",
+        definition:
+          "Fervientemente. Sincerely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke earnestly.",
         transformation: "Adj Shift: Earnest speech.",
       },
@@ -1266,7 +1401,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈstætɪkli/",
         translation: "Extáticamente",
         level: "C1",
-        definition: "Joyfully.",
+        definition:
+          "Extáticamente. Joyfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Greeted ecstatically.",
         transformation: "Adj Shift: Ecstatic greeting.",
       },
@@ -1275,7 +1411,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈfɛktɪvli/",
         translation: "Eficazmente",
         level: "B2",
-        definition: "Successfully.",
+        definition:
+          "Eficazmente. Successfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Solved effectively.",
         transformation: "Adj Shift: Effective solution.",
       },
@@ -1284,7 +1421,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈfɪʃəntli/",
         translation: "Eficientemente",
         level: "B1",
-        definition: "Competently.",
+        definition:
+          "Eficientemente. Competently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Worked efficiently.",
         transformation: "Adj Shift: Efficient work.",
       },
@@ -1293,7 +1431,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɛfərtləsli/",
         translation: "Sin esfuerzo",
         level: "B2",
-        definition: "Easily.",
+        definition:
+          "Sin esfuerzo. Easily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Won effortlessly.",
         transformation: "Adj Shift: Effortless win.",
       },
@@ -1302,7 +1441,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈɡriːdʒəsli/",
         translation: "Atrozmente",
         level: "C2",
-        definition: "Shockingly.",
+        definition:
+          "Atrozmente. Shockingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Egregiously wrong.",
         transformation: "Adj Shift: Egregious error.",
       },
@@ -1311,7 +1451,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈlæbərətli/",
         translation: "Elaboradamente",
         level: "C1",
-        definition: "Detailed.",
+        definition:
+          "Elaboradamente. Detailed. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Decorated elaborately.",
         transformation: "Adj Shift: Elaborate decoration.",
       },
@@ -1320,7 +1461,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɛlɪɡəntli/",
         translation: "Elegantemente",
         level: "B2",
-        definition: "Gracefully.",
+        definition:
+          "Elegantemente. Gracefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed elegantly.",
         transformation: "Adj Shift: Elegant dress.",
       },
@@ -1329,7 +1471,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɛləkwəntli/",
         translation: "Elocuentemente",
         level: "C1",
-        definition: "Fluently.",
+        definition:
+          "Elocuentemente. Fluently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke eloquently.",
         transformation: "Adj Shift: Eloquent speech.",
       },
@@ -1338,7 +1481,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪmˈbærəsɪŋli/",
         translation: "Vergonzosamente",
         level: "B2",
-        definition: "Awkwardly.",
+        definition:
+          "Vergonzosamente. Awkwardly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Embarrassingly simple.",
         transformation: "Adj Shift: Embarrassing simplicity.",
       },
@@ -1347,7 +1491,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɛmɪnəntli/",
         translation: "Eminentemente",
         level: "C2",
-        definition: "Highly.",
+        definition:
+          "Eminentemente. Highly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Eminently suitable.",
         transformation: "Adj Shift: Eminent suitability.",
       },
@@ -1356,7 +1501,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈmoʊʃənəli/",
         translation: "Emocionalmente",
         level: "B2",
-        definition: "With feeling.",
+        definition:
+          "Emocionalmente. With feeling. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Emotionally drained.",
         transformation: "Adj Shift: Emotional drain.",
       },
@@ -1365,7 +1511,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪmˈfætɪkli/",
         translation: "Enfáticamente",
         level: "C1",
-        definition: "Forcefully.",
+        definition:
+          "Enfáticamente. Forcefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stated emphatically.",
         transformation: "Adj Shift: Emphatic statement.",
       },
@@ -1374,7 +1521,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɛndləsli/",
         translation: "Interminablemente",
         level: "B2",
-        definition: "Without end.",
+        definition:
+          "Interminablemente. Without end. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Complained endlessly.",
         transformation: "Adj Shift: Endless complaints.",
       },
@@ -1383,7 +1531,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɛnərˈdʒɛtɪkli/",
         translation: "Energéticamente",
         level: "B2",
-        definition: "Actively.",
+        definition:
+          "Energéticamente. Actively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Exercised energetically.",
         transformation: "Adj Shift: Energetic exercise.",
       },
@@ -1392,7 +1541,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈnɔːrməsli/",
         translation: "Enormemente",
         level: "B2",
-        definition: "Hugely.",
+        definition:
+          "Enormemente. Hugely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Enormously popular.",
         transformation: "Adj Shift: Enormous popularity.",
       },
@@ -1401,7 +1551,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˌθjuːziˈæstɪkli/",
         translation: "Entusiastamente",
         level: "B2",
-        definition: "Eagerly.",
+        definition:
+          "Entusiastamente. Eagerly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Applauded enthusiastically.",
         transformation: "Adj Shift: Enthusiastic applause.",
       },
@@ -1410,7 +1561,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈtaɪərli/",
         translation: "Enteramente",
         level: "B2",
-        definition: "Completely.",
+        definition:
+          "Enteramente. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Entirely agree.",
         transformation: "Adj Shift: Entire agreement.",
       },
@@ -1419,7 +1571,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈiːkwəli/",
         translation: "Igualmente",
         level: "B1",
-        definition: "Evenly.",
+        definition:
+          "Igualmente. Evenly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Treated equally.",
         transformation: "Adj Shift: Equal treatment.",
       },
@@ -1428,7 +1581,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈspɛʃəli/",
         translation: "Especialmente",
         level: "A2",
-        definition: "Particularly.",
+        definition:
+          "Especialmente. Particularly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Especially good.",
         transformation: "Adj Shift: Special goodness.",
       },
@@ -1437,7 +1591,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈsɛnʃəli/",
         translation: "Esencialmente",
         level: "B2",
-        definition: "Basically.",
+        definition:
+          "Esencialmente. Basically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Essentially the same.",
         transformation: "Adj Shift: Essential sameness.",
       },
@@ -1446,7 +1601,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈtɜːrnəli/",
         translation: "Eternamente",
         level: "C1",
-        definition: "Forever.",
+        definition:
+          "Eternamente. Forever. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Eternally grateful.",
         transformation: "Adj Shift: Eternal gratitude.",
       },
@@ -1455,7 +1611,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɛθɪkli/",
         translation: "Éticamente",
         level: "C1",
-        definition: "Morally.",
+        definition:
+          "Éticamente. Morally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted ethically.",
         transformation: "Adj Shift: Ethical action.",
       },
@@ -1464,7 +1621,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈvɛntʃuəli/",
         translation: "Finalmente",
         level: "B1",
-        definition: "In the end.",
+        definition:
+          "Finalmente. In the end. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Eventually arrived.",
         transformation: "Adj Shift: Eventual arrival.",
       },
@@ -1473,7 +1631,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɛvɪdəntli/",
         translation: "Evidentemente",
         level: "B2",
-        definition: "Clearly.",
+        definition:
+          "Evidentemente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Evidently upset.",
         transformation: "Adj Shift: Evident upset.",
       },
@@ -1482,7 +1641,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪɡˈzæktli/",
         translation: "Exactamente",
         level: "A2",
-        definition: "Precisely.",
+        definition:
+          "Exactamente. Precisely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Exactly right.",
         transformation: "Adj Shift: Exactness.",
       },
@@ -1491,7 +1651,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈsiːdɪŋli/",
         translation: "Excesivamente",
         level: "C1",
-        definition: "Extremely.",
+        definition:
+          "Excesivamente. Extremely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Exceedingly rich.",
         transformation: "Adj Shift: Exceeding richness.",
       },
@@ -1500,7 +1661,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈsɛpʃənəli/",
         translation: "Excepcionalmente",
         level: "B2",
-        definition: "Unusually.",
+        definition:
+          "Excepcionalmente. Unusually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Exceptionally talented.",
         transformation: "Adj Shift: Exceptional talent.",
       },
@@ -1509,7 +1671,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈsɛsɪvli/",
         translation: "Excesivamente",
         level: "C1",
-        definition: "Too much.",
+        definition:
+          "Excesivamente. Too much. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Excessively high.",
         transformation: "Adj Shift: Excessive height.",
       },
@@ -1518,7 +1681,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈskluːsɪvli/",
         translation: "Exclusivamente",
         level: "B2",
-        definition: "Only.",
+        definition:
+          "Exclusivamente. Only. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Exclusively for members.",
         transformation: "Adj Shift: Exclusive membership.",
       },
@@ -1527,7 +1691,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈskruːʃieɪtɪŋli/",
         translation: "Atrozmente",
         level: "C2",
-        definition: "Painfully.",
+        definition:
+          "Atrozmente. Painfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Excruciatingly painful.",
         transformation: "Adj Shift: Excruciating pain.",
       },
@@ -1536,7 +1701,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪɡˈzɔːstɪvli/",
         translation: "Exhaustivamente",
         level: "C1",
-        definition: "Thoroughly.",
+        definition:
+          "Exhaustivamente. Thoroughly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Researched exhaustively.",
         transformation: "Adj Shift: Exhaustive research.",
       },
@@ -1545,7 +1711,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɛkspɜːrtli/",
         translation: "Expertamente",
         level: "C1",
-        definition: "Skillfully.",
+        definition:
+          "Expertamente. Skillfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Expertly done.",
         transformation: "Adj Shift: Expert job.",
       },
@@ -1554,7 +1721,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈsplɪsɪtli/",
         translation: "Explícitamente",
         level: "B2",
-        definition: "Clearly.",
+        definition:
+          "Explícitamente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stated explicitly.",
         transformation: "Adj Shift: Explicit statement.",
       },
@@ -1563,7 +1731,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈsprɛsli/",
         translation: "Expresamente",
         level: "C1",
-        definition: "Specifically.",
+        definition:
+          "Expresamente. Specifically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Expressly forbidden.",
         transformation: "Adj Shift: Express ban.",
       },
@@ -1572,7 +1741,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈskwɪzɪtli/",
         translation: "Exquisitamente",
         level: "C1",
-        definition: "Beautifully.",
+        definition:
+          "Exquisitamente. Beautifully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Exquisitely made.",
         transformation: "Adj Shift: Exquisite make.",
       },
@@ -1581,7 +1751,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈstɛnsɪvli/",
         translation: "Extensamente",
         level: "B2",
-        definition: "Widely.",
+        definition:
+          "Extensamente. Widely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Traveled extensively.",
         transformation: "Adj Shift: Extensive travel.",
       },
@@ -1590,7 +1761,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˌstrɔːrdnˈɛrɪli/",
         translation: "Extraordinariamente",
         level: "B2",
-        definition: "Remarkably.",
+        definition:
+          "Extraordinariamente. Remarkably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Extraordinarily kind.",
         transformation: "Adj Shift: Extraordinary kindness.",
       },
@@ -1599,7 +1771,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈstrævəɡəntli/",
         translation: "Extravagantemente",
         level: "C1",
-        definition: "Lavishly.",
+        definition:
+          "Extravagantemente. Lavishly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spent extravagantly.",
         transformation: "Adj Shift: Extravagant spending.",
       },
@@ -1608,7 +1781,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪkˈstriːmli/",
         translation: "Extremadamente",
         level: "A2",
-        definition: "Very.",
+        definition:
+          "Extremadamente. Used to add strong emphasis and make the statement feel stronger. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Extremely cold.",
         transformation: "Adj Shift: Extreme cold.",
       },
@@ -1617,7 +1791,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪɡˈzuːbərəntli/",
         translation: "Exuberantemente",
         level: "C2",
-        definition: "Energetically.",
+        definition:
+          "Exuberantemente. Energetically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Greeted exuberantly.",
         transformation: "Adj Shift: Exuberant greeting.",
       },
@@ -1630,7 +1805,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfæbjʊləsli/",
         translation: "Fabulosamente",
         level: "B2",
-        definition: "Incredibly.",
+        definition:
+          "Fabulosamente. Incredibly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fabulously wealthy.",
         transformation: "Adj Shift: Fabulous wealth.",
       },
@@ -1639,7 +1815,8 @@ export const emphasisData: StopData = {
         ipa: "/fəˈsiːʃəsli/",
         translation: "Chistosamente (mal)",
         level: "C2",
-        definition: "Not serious.",
+        definition:
+          "Chistosamente (mal). Not serious. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Remarked facetiously.",
         transformation: "Adj Shift: Facetious remark.",
       },
@@ -1648,7 +1825,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfeɪntli/",
         translation: "Débilmente",
         level: "B2",
-        definition: "Slightly.",
+        definition:
+          "Débilmente. Slightly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Faintly amused.",
         transformation: "Adj Shift: Faint amusement.",
       },
@@ -1657,7 +1835,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfeɪθfʊli/",
         translation: "Fielmente",
         level: "B2",
-        definition: "Loyally.",
+        definition:
+          "Fielmente. Loyally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Served faithfully.",
         transformation: "Adj Shift: Faithful service.",
       },
@@ -1666,7 +1845,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfeɪməsli/",
         translation: "Famosamente",
         level: "C1",
-        definition: "Well known.",
+        definition:
+          "Famosamente. Well known. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Famously said.",
         transformation: "Adj Shift: Famous quote.",
       },
@@ -1675,7 +1855,8 @@ export const emphasisData: StopData = {
         ipa: "/fəˈnætɪkli/",
         translation: "Fanáticamente",
         level: "C2",
-        definition: "Obsessively.",
+        definition:
+          "Fanáticamente. Obsessively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Followed fanatically.",
         transformation: "Adj Shift: Fanatical following.",
       },
@@ -1684,7 +1865,8 @@ export const emphasisData: StopData = {
         ipa: "/fænˈtæstɪkli/",
         translation: "Fantásticamente",
         level: "B1",
-        definition: "Incredibly.",
+        definition:
+          "Fantásticamente. Incredibly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fantastically rich.",
         transformation: "Adj Shift: Fantastic richness.",
       },
@@ -1693,7 +1875,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfeɪtəli/",
         translation: "Fatalmente",
         level: "B2",
-        definition: "Mortally.",
+        definition:
+          "Fatalmente. Mortally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fatally wounded.",
         transformation: "Adj Shift: Fatal wound.",
       },
@@ -1702,7 +1885,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɔːltləsli/",
         translation: "Impecablemente",
         level: "C2",
-        definition: "Perfectly.",
+        definition:
+          "Impecablemente. Perfectly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Performed faultlessly.",
         transformation: "Adj Shift: Faultless performance.",
       },
@@ -1711,7 +1895,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfeɪvərəbli/",
         translation: "Favorablemente",
         level: "B2",
-        definition: "Positively.",
+        definition:
+          "Favorablemente. Positively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Viewed favorably.",
         transformation: "Adj Shift: Favorable view.",
       },
@@ -1720,7 +1905,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɪərləsli/",
         translation: "Intrépidamente",
         level: "C1",
-        definition: "Bravely.",
+        definition:
+          "Intrépidamente. Bravely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fought fearlessly.",
         transformation: "Adj Shift: Fearless fight.",
       },
@@ -1729,7 +1915,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfiːzəbli/",
         translation: "Factiblemente",
         level: "C1",
-        definition: "Possibly.",
+        definition:
+          "Factiblemente. Used to show that something may be true or can be reasonably argued. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Could feasibly happen.",
         transformation: "Adj Shift: Feasible happening.",
       },
@@ -1738,7 +1925,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfiːbli/",
         translation: "Débilmente",
         level: "C2",
-        definition: "Weakly.",
+        definition:
+          "Débilmente. Weakly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Protested feebly.",
         transformation: "Adj Shift: Feeble protest.",
       },
@@ -1747,7 +1935,8 @@ export const emphasisData: StopData = {
         ipa: "/fəˈroʊʃəsli/",
         translation: "Ferozmente",
         level: "C1",
-        definition: "Fiercely.",
+        definition:
+          "Ferozmente. Fiercely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Growled ferociously.",
         transformation: "Adj Shift: Ferocious growl.",
       },
@@ -1756,7 +1945,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɜːrvəntli/",
         translation: "Fervientemente",
         level: "C2",
-        definition: "Passionately.",
+        definition:
+          "Fervientemente. With strong feeling, energy, or emotional force. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Prayed fervently.",
         transformation: "Adj Shift: Fervent prayer.",
       },
@@ -1765,7 +1955,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfiːvərɪʃli/",
         translation: "Febrilmente",
         level: "C2",
-        definition: "Excitedly.",
+        definition:
+          "Febrilmente. Excitedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Worked feverishly.",
         transformation: "Adj Shift: Feverish work.",
       },
@@ -1774,7 +1965,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɪɡjərətɪvli/",
         translation: "Figuradamente",
         level: "C2",
-        definition: "Metaphorically.",
+        definition:
+          "Figuradamente. Metaphorically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Speaking figuratively.",
         transformation: "Adj Shift: Figurative speech.",
       },
@@ -1783,7 +1975,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfaɪnəli/",
         translation: "Finalmente",
         level: "A1",
-        definition: "At last.",
+        definition:
+          "Finalmente. At last. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Finally arrived.",
         transformation: "Adj Shift: Final arrival.",
       },
@@ -1792,7 +1985,8 @@ export const emphasisData: StopData = {
         ipa: "/faɪˈnænʃəli/",
         translation: "Financieramente",
         level: "B1",
-        definition: "Money-wise.",
+        definition:
+          "Financieramente. Money-wise. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Financially stable.",
         transformation: "Adj Shift: Financial stability.",
       },
@@ -1801,7 +1995,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɜːrmli/",
         translation: "Firmemente",
         level: "B2",
-        definition: "Strongly.",
+        definition:
+          "Firmemente. Strongly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Firmly believe.",
         transformation: "Adj Shift: Firm belief.",
       },
@@ -1810,7 +2005,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɪtɪŋli/",
         translation: "Oportunamente",
         level: "C2",
-        definition: "Appropriately.",
+        definition:
+          "Oportunamente. Appropriately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fittingly ended.",
         transformation: "Adj Shift: Fitting end.",
       },
@@ -1819,7 +2015,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfleɪɡrəntli/",
         translation: "Flagrantemente",
         level: "C2",
-        definition: "Openly bad.",
+        definition:
+          "Flagrantemente. Openly bad. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Flagrantly violated.",
         transformation: "Adj Shift: Flagrant violation.",
       },
@@ -1828,7 +2025,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈflætli/",
         translation: "Rotundamente",
         level: "C1",
-        definition: "Absolutely.",
+        definition:
+          "Rotundamente. Absolutely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Flatly refused.",
         transformation: "Adj Shift: Flat refusal.",
       },
@@ -1837,7 +2035,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈflɔːləsli/",
         translation: "Sin fallos",
         level: "C1",
-        definition: "Perfectly.",
+        definition:
+          "Sin fallos. Perfectly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Executed flawlessly.",
         transformation: "Adj Shift: Flawless execution.",
       },
@@ -1846,7 +2045,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfluːəntli/",
         translation: "Con fluidez",
         level: "B1",
-        definition: "Smoothly.",
+        definition:
+          "Con fluidez. Smoothly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Speaks fluently.",
         transformation: "Adj Shift: Fluent speech.",
       },
@@ -1855,7 +2055,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɒndli/",
         translation: "Cariñosamente",
         level: "B2",
-        definition: "Lovingly.",
+        definition:
+          "Cariñosamente. Lovingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Remembered fondly.",
         transformation: "Adj Shift: Fond memory.",
       },
@@ -1864,7 +2065,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfuːlɪʃli/",
         translation: "Tontamente",
         level: "B2",
-        definition: "Stupidly.",
+        definition:
+          "Tontamente. Stupidly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted foolishly.",
         transformation: "Adj Shift: Foolish act.",
       },
@@ -1873,7 +2075,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɔːrsfʊli/",
         translation: "Enérgicamente",
         level: "B2",
-        definition: "Strongly.",
+        definition:
+          "Enérgicamente. Strongly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Argued forcefully.",
         transformation: "Adj Shift: Forceful argument.",
       },
@@ -1882,7 +2085,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɔːrsəbli/",
         translation: "Por la fuerza",
         level: "C1",
-        definition: "By force.",
+        definition:
+          "Por la fuerza. By force. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Removed forcibly.",
         transformation: "Adj Shift: Forcible removal.",
       },
@@ -1891,7 +2095,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɔːrmərli/",
         translation: "Anteriormente",
         level: "B1",
-        definition: "Previously.",
+        definition:
+          "Anteriormente. Previously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Formerly known as.",
         transformation: "Adj Shift: Former name.",
       },
@@ -1900,7 +2105,8 @@ export const emphasisData: StopData = {
         ipa: "/fɔːrˈtjuːɪtəsli/",
         translation: "Fortuitamente",
         level: "C2",
-        definition: "Luckily.",
+        definition:
+          "Fortuitamente. Luckily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Met fortuitously.",
         transformation: "Adj Shift: Fortuitous meeting.",
       },
@@ -1909,7 +2115,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɔːrtʃənətli/",
         translation: "Afortunadamente",
         level: "A2",
-        definition: "Luckily.",
+        definition:
+          "Afortunadamente. Luckily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fortunately, safe.",
         transformation: "Adj Shift: Fortunate safety.",
       },
@@ -1918,7 +2125,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfræŋkli/",
         translation: "Francamente",
         level: "B2",
-        definition: "Honestly.",
+        definition:
+          "Francamente. Honestly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Frankly speaking.",
         transformation: "Adj Shift: Frank speech.",
       },
@@ -1927,7 +2135,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfræntɪkli/",
         translation: "Frenéticamente",
         level: "B2",
-        definition: "Panic.",
+        definition:
+          "Frenéticamente. Panic. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Searched frantically.",
         transformation: "Adj Shift: Frantic search.",
       },
@@ -1936,7 +2145,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfrɔːdʒʊləntli/",
         translation: "Fraudulentamente",
         level: "C1",
-        definition: "Illegally.",
+        definition:
+          "Fraudulentamente. Illegally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Obtained fraudulently.",
         transformation: "Adj Shift: Fraudulent gain.",
       },
@@ -1945,7 +2155,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfriːli/",
         translation: "Libremente",
         level: "B2",
-        definition: "Without restriction.",
+        definition:
+          "Libremente. Without restriction. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Speak freely.",
         transformation: "Adj Shift: Free speech.",
       },
@@ -1954,7 +2165,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfriːkwəntli/",
         translation: "Frecuentemente",
         level: "B1",
-        definition: "Often.",
+        definition:
+          "Frecuentemente. Often. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Occurs frequently.",
         transformation: "Adj Shift: Frequent occurrence.",
       },
@@ -1963,7 +2175,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfraɪtnɪŋli/",
         translation: "Aterradoramente",
         level: "B2",
-        definition: "Scarily.",
+        definition:
+          "Aterradoramente. Scarily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Frighteningly real.",
         transformation: "Adj Shift: Frightening reality.",
       },
@@ -1972,7 +2185,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfrɪvələsli/",
         translation: "Frívolamente",
         level: "C2",
-        definition: "Not seriously.",
+        definition:
+          "Frívolamente. Not seriously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spent frivolously.",
         transformation: "Adj Shift: Frivolous spending.",
       },
@@ -1981,7 +2195,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfʊli/",
         translation: "Plenamente",
         level: "B1",
-        definition: "Completely.",
+        definition:
+          "Plenamente. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fully aware.",
         transformation: "Adj Shift: Full awareness.",
       },
@@ -1990,7 +2205,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌfʌndəˈmɛntli/",
         translation: "Fundamentalmente",
         level: "C1",
-        definition: "Basically.",
+        definition:
+          "Fundamentalmente. Basically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fundamentally different.",
         transformation: "Adj Shift: Fundamental difference.",
       },
@@ -1999,7 +2215,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfʌnɪli/",
         translation: "Curiosamente",
         level: "B2",
-        definition: "Strangely.",
+        definition:
+          "Curiosamente. In a way that feels unusual or hard to explain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Funnily enough.",
         transformation: "Adj Shift: Funny thing.",
       },
@@ -2008,7 +2225,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfjʊəriəsli/",
         translation: "Furiosamente",
         level: "B2",
-        definition: "Angrily.",
+        definition:
+          "Furiosamente. Angrily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Worked furiously.",
         transformation: "Adj Shift: Furious work.",
       },
@@ -2017,7 +2235,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɜːrtɪvli/",
         translation: "Furtivamente",
         level: "C2",
-        definition: "Secretly.",
+        definition:
+          "Furtivamente. Secretly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Glanced furtively.",
         transformation: "Adj Shift: Furtive glance.",
       },
@@ -2030,7 +2249,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡæləntli/",
         translation: "Gallardamente",
         level: "C2",
-        definition: "Bravely.",
+        definition:
+          "Gallardamente. Bravely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fought gallantly.",
         transformation: "Adj Shift: Gallant fight.",
       },
@@ -2039,7 +2259,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒɛnərəli/",
         translation: "Generalmente",
         level: "B1",
-        definition: "Usually.",
+        definition:
+          "Generalmente. Usually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Generally accepted.",
         transformation: "Adj Shift: General acceptance.",
       },
@@ -2048,7 +2269,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒɛnərəsli/",
         translation: "Generosamente",
         level: "B2",
-        definition: "Freely.",
+        definition:
+          "Generosamente. Freely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Gave generously.",
         transformation: "Adj Shift: Generous gift.",
       },
@@ -2057,7 +2279,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒiːniəli/",
         translation: "Cordialmente",
         level: "C2",
-        definition: "Friendly.",
+        definition:
+          "Cordialmente. Friendly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled genially.",
         transformation: "Adj Shift: Genial smile.",
       },
@@ -2066,7 +2289,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒɛntli/",
         translation: "Suavemente",
         level: "B1",
-        definition: "Softly.",
+        definition:
+          "Suavemente. Softly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Touched gently.",
         transformation: "Adj Shift: Gentle touch.",
       },
@@ -2075,7 +2299,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒɛnjuɪnli/",
         translation: "Genuinamente",
         level: "B2",
-        definition: "Truly.",
+        definition:
+          "Genuinamente. Truly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Genuinely sorry.",
         transformation: "Adj Shift: Genuine sorrow.",
       },
@@ -2084,7 +2309,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒɪndʒərli/",
         translation: "Cautelosamente",
         level: "C2",
-        definition: "Carefully.",
+        definition:
+          "Cautelosamente. Carefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Walked gingerly.",
         transformation: "Adj Shift: Ginger steps.",
       },
@@ -2093,7 +2319,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡlædli/",
         translation: "Gustosamente",
         level: "B1",
-        definition: "Happily.",
+        definition:
+          "Gustosamente. Happily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Gladly help.",
         transformation: "Adj Shift: Glad help.",
       },
@@ -2102,7 +2329,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡlɛərɪŋli/",
         translation: "Patentemente",
         level: "C2",
-        definition: "Obviously.",
+        definition:
+          "Patentemente. Obviously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Glaringly obvious.",
         transformation: "Adj Shift: Glaring error.",
       },
@@ -2111,7 +2339,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡliːfʊli/",
         translation: "Jubilosamente",
         level: "C2",
-        definition: "Happily.",
+        definition:
+          "Jubilosamente. Happily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Laughed gleefully.",
         transformation: "Adj Shift: Gleeful laugh.",
       },
@@ -2120,7 +2349,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡlɪbli/",
         translation: "Con labia",
         level: "C2",
-        definition: "Smoothly.",
+        definition:
+          "Con labia. Smoothly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke glibly.",
         transformation: "Adj Shift: Glib talk.",
       },
@@ -2129,7 +2359,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡluːmɪli/",
         translation: "Tristemente",
         level: "B2",
-        definition: "Sadly.",
+        definition:
+          "Tristemente. Sadly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stared gloomily.",
         transformation: "Adj Shift: Gloomy stare.",
       },
@@ -2138,7 +2369,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡlɔːriəsli/",
         translation: "Gloriosamente",
         level: "C1",
-        definition: "Wonderfully.",
+        definition:
+          "Gloriosamente. Wonderfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Gloriously happy.",
         transformation: "Adj Shift: Glorious happiness.",
       },
@@ -2147,7 +2379,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡloʊɪŋli/",
         translation: "Elogiosamente",
         level: "C2",
-        definition: "With praise.",
+        definition:
+          "Elogiosamente. With praise. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke glowingly.",
         transformation: "Adj Shift: Glowing report.",
       },
@@ -2156,7 +2389,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡreɪsfʊli/",
         translation: "Grácilmente",
         level: "B2",
-        definition: "Elegantly.",
+        definition:
+          "Grácilmente. Elegantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Danced gracefully.",
         transformation: "Adj Shift: Graceful dance.",
       },
@@ -2165,7 +2399,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡreɪʃəsli/",
         translation: "Gentilmente",
         level: "C1",
-        definition: "Politely.",
+        definition:
+          "Gentilmente. Politely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Accepted graciously.",
         transformation: "Adj Shift: Gracious acceptance.",
       },
@@ -2174,7 +2409,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡrædʒuəli/",
         translation: "Gradualmente",
         level: "B2",
-        definition: "Slowly.",
+        definition:
+          "Gradualmente. Slowly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Improved gradually.",
         transformation: "Adj Shift: Gradual improvement.",
       },
@@ -2183,7 +2419,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡræfɪkli/",
         translation: "Gráficamente",
         level: "C1",
-        definition: "Vividly.",
+        definition:
+          "Gráficamente. Vividly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Described graphically.",
         transformation: "Adj Shift: Graphic description.",
       },
@@ -2192,7 +2429,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡreɪtfʊli/",
         translation: "Agradecidamente",
         level: "B1",
-        definition: "Thankfully.",
+        definition:
+          "Agradecidamente. Thankfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Accepted gratefully.",
         transformation: "Adj Shift: Grateful acceptance.",
       },
@@ -2201,7 +2439,8 @@ export const emphasisData: StopData = {
         ipa: "/ɡrəˈtjuːɪtəsli/",
         translation: "Gratuitamente",
         level: "C2",
-        definition: "Unnecessarily.",
+        definition:
+          "Gratuitamente. Unnecessarily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Gratuitously violent.",
         transformation: "Adj Shift: Gratuitous violence.",
       },
@@ -2210,7 +2449,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡreɪvli/",
         translation: "Gravemente",
         level: "C1",
-        definition: "Seriously.",
+        definition:
+          "Gravemente. Seriously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Gravely ill.",
         transformation: "Adj Shift: Grave illness.",
       },
@@ -2219,7 +2459,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡreɪtli/",
         translation: "Grandemente",
         level: "B2",
-        definition: "Very much.",
+        definition:
+          "Grandemente. Very much. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Greatly appreciated.",
         transformation: "Adj Shift: Great appreciation.",
       },
@@ -2228,7 +2469,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡriːdɪli/",
         translation: "Codiciosamente",
         level: "B2",
-        definition: "Selfishly.",
+        definition:
+          "Codiciosamente. Selfishly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ate greedily.",
         transformation: "Adj Shift: Greedy eating.",
       },
@@ -2237,7 +2479,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡrɪmli/",
         translation: "Severamente",
         level: "C2",
-        definition: "Seriously.",
+        definition:
+          "Severamente. Seriously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled grimly.",
         transformation: "Adj Shift: Grim smile.",
       },
@@ -2246,7 +2489,8 @@ export const emphasisData: StopData = {
         ipa: "/ɡroʊˈtɛskli/",
         translation: "Grotescamente",
         level: "C2",
-        definition: "Ugly.",
+        definition:
+          "Grotescamente. Ugly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Grotesquely distorted.",
         transformation: "Adj Shift: Grotesque distortion.",
       },
@@ -2255,7 +2499,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡrʌdʒɪŋli/",
         translation: "A regañadientes",
         level: "C2",
-        definition: "Reluctantly.",
+        definition:
+          "A regañadientes. In a way that shows unwillingness or resentment. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Admitted grudgingly.",
         transformation: "Adj Shift: Grudging admission.",
       },
@@ -2264,7 +2509,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡrʌfli/",
         translation: "Broncamente",
         level: "C2",
-        definition: "Roughly.",
+        definition:
+          "Broncamente. Roughly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke gruffly.",
         transformation: "Adj Shift: Gruff voice.",
       },
@@ -2273,7 +2519,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɡɪltɪli/",
         translation: "Culpablemente",
         level: "B2",
-        definition: "With guilt.",
+        definition:
+          "Culpablemente. With guilt. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked guiltily.",
         transformation: "Adj Shift: Guilty look.",
       },
@@ -2286,7 +2533,8 @@ export const emphasisData: StopData = {
         ipa: "/həˈbɪtʃuəli/",
         translation: "Habitualmente",
         level: "C1",
-        definition: "Usually.",
+        definition:
+          "Habitualmente. Usually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Habitually late.",
         transformation: "Adj Shift: Habitual lateness.",
       },
@@ -2295,7 +2543,8 @@ export const emphasisData: StopData = {
         ipa: "/hɑːf ˈhɑːrtɪdli/",
         translation: "Sin entusiasmo",
         level: "C2",
-        definition: "Without spirit.",
+        definition:
+          "Sin entusiasmo. Without spirit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Tried half-heartedly.",
         transformation: "Adj Shift: Half-hearted try.",
       },
@@ -2304,7 +2553,8 @@ export const emphasisData: StopData = {
         ipa: "/hæpˈhæzərdli/",
         translation: "Al azar",
         level: "C2",
-        definition: "Randomly.",
+        definition:
+          "Al azar. Randomly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Arranged haphazardly.",
         transformation: "Adj Shift: Haphazard arrangement.",
       },
@@ -2313,7 +2563,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhæpɪli/",
         translation: "Felizmente",
         level: "A1",
-        definition: "With joy.",
+        definition:
+          "Felizmente. With joy. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Happily married.",
         transformation: "Adj Shift: Happy marriage.",
       },
@@ -2322,7 +2573,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɑːrdli/",
         translation: "Apenas",
         level: "B1",
-        definition: "Scarcely.",
+        definition:
+          "Apenas. Only just, by a very small margin, or almost not at all. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Hardly knew.",
         transformation: "Inversion: Hardly did I know.",
       },
@@ -2331,7 +2583,8 @@ export const emphasisData: StopData = {
         ipa: "/hɑːrˈmoʊniəsli/",
         translation: "Armoniosamente",
         level: "C1",
-        definition: "Peacefully.",
+        definition:
+          "Armoniosamente. Peacefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Lived harmoniously.",
         transformation: "Adj Shift: Harmonious life.",
       },
@@ -2340,7 +2593,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɑːrʃli/",
         translation: "Duramente",
         level: "B2",
-        definition: "Severely.",
+        definition:
+          "Duramente. Severely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Judged harshly.",
         transformation: "Adj Shift: Harsh judgment.",
       },
@@ -2349,7 +2603,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈheɪstɪli/",
         translation: "Apresuradamente",
         level: "C1",
-        definition: "Quickly.",
+        definition:
+          "Apresuradamente. Quickly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Left hastily.",
         transformation: "Adj Shift: Hasty departure.",
       },
@@ -2358,7 +2613,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɔːtɪli/",
         translation: "Altivamente",
         level: "C2",
-        definition: "Arrogantly.",
+        definition:
+          "Altivamente. Arrogantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke haughtily.",
         transformation: "Adj Shift: Haughty tone.",
       },
@@ -2367,7 +2623,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɛlθɪli/",
         translation: "Sanamente",
         level: "B1",
-        definition: "In a healthy way.",
+        definition:
+          "Sanamente. In a healthy way. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Eat healthily.",
         transformation: "Adj Shift: Healthy eating.",
       },
@@ -2376,7 +2633,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɑːrtɪli/",
         translation: "Cordialmente",
         level: "C1",
-        definition: "Enthusiastically.",
+        definition:
+          "Cordialmente. With strong interest, energy, or enjoyment. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ate heartily.",
         transformation: "Adj Shift: Hearty meal.",
       },
@@ -2385,7 +2643,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhiːtɪdli/",
         translation: "Acaloradamente",
         level: "C1",
-        definition: "Angrily.",
+        definition:
+          "Acaloradamente. Angrily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Argued heatedly.",
         transformation: "Adj Shift: Heated argument.",
       },
@@ -2394,7 +2653,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɛvɪli/",
         translation: "Pesadamente",
         level: "B2",
-        definition: "A lot.",
+        definition:
+          "Pesadamente. A lot. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Raining heavily.",
         transformation: "Adj Shift: Heavy rain.",
       },
@@ -2403,7 +2663,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhiːdləsli/",
         translation: "Imprudentemente",
         level: "C2",
-        definition: "Carelessly.",
+        definition:
+          "Imprudentemente. Carelessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ran heedlessly.",
         transformation: "Adj Shift: Heedless running.",
       },
@@ -2412,7 +2673,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɛlpfʊli/",
         translation: "Servicialmente",
         level: "B1",
-        definition: "Usefully.",
+        definition:
+          "Servicialmente. Usefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Suggested helpfully.",
         transformation: "Adj Shift: Helpful suggestion.",
       },
@@ -2421,7 +2683,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɛlpləsli/",
         translation: "Impotentemente",
         level: "B2",
-        definition: "Weakly.",
+        definition:
+          "Impotentemente. Weakly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Watched helplessly.",
         transformation: "Adj Shift: Helpless watch.",
       },
@@ -2430,7 +2693,8 @@ export const emphasisData: StopData = {
         ipa: "/hɪˈroʊɪkli/",
         translation: "Heroicamente",
         level: "B2",
-        definition: "Bravely.",
+        definition:
+          "Heroicamente. Bravely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fought heroically.",
         transformation: "Adj Shift: Heroic fight.",
       },
@@ -2439,7 +2703,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɛzɪtəntli/",
         translation: "Vacilantemente",
         level: "C1",
-        definition: "Unsurely.",
+        definition:
+          "Vacilantemente. Unsurely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke hesitantly.",
         transformation: "Adj Shift: Hesitant speech.",
       },
@@ -2448,7 +2713,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɪdiəsli/",
         translation: "Espantosamente",
         level: "C1",
-        definition: "Ugly.",
+        definition:
+          "Espantosamente. Ugly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Hideously deformed.",
         transformation: "Adj Shift: Hideous deformity.",
       },
@@ -2457,7 +2723,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhaɪli/",
         translation: "Altamente",
         level: "B1",
-        definition: "Very.",
+        definition:
+          "Altamente. Used to add strong emphasis and make the statement feel stronger. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Highly recommended.",
         transformation: "Adj Shift: High recommendation.",
       },
@@ -2466,7 +2733,8 @@ export const emphasisData: StopData = {
         ipa: "/hɪˈstɒrɪkli/",
         translation: "Históricamente",
         level: "B2",
-        definition: "In past.",
+        definition:
+          "Históricamente. In past. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Historically accurate.",
         transformation: "Adj Shift: Historical accuracy.",
       },
@@ -2475,7 +2743,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌhɪðərˈtuː/",
         translation: "Hasta ahora",
         level: "C2",
-        definition: "Previously.",
+        definition:
+          "Hasta ahora. Previously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Hitherto unknown.",
         transformation: "Synonym: Previously.",
       },
@@ -2484,7 +2753,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɒnɪstli/",
         translation: "Honestamente",
         level: "B1",
-        definition: "Truthfully.",
+        definition:
+          "Honestamente. Truthfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Answer honestly.",
         transformation: "Adj Shift: Honest answer.",
       },
@@ -2493,7 +2763,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhoʊpfʊli/",
         translation: "Con esperanza",
         level: "B1",
-        definition: "Ideally.",
+        definition:
+          "Con esperanza. Ideally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Hopefully, it rains.",
         transformation: "Adj Shift: It is hoped.",
       },
@@ -2502,7 +2773,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhoʊpləsli/",
         translation: "Desesperadamente",
         level: "B2",
-        definition: "Without hope.",
+        definition:
+          "Desesperadamente. Without hope. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Hopelessly lost.",
         transformation: "Adj Shift: Hopeless situation.",
       },
@@ -2511,7 +2783,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɒrəbli/",
         translation: "Horriblemente",
         level: "B1",
-        definition: "Badly.",
+        definition:
+          "Horriblemente. Badly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Horribly wrong.",
         transformation: "Adj Shift: Horrible error.",
       },
@@ -2520,7 +2793,8 @@ export const emphasisData: StopData = {
         ipa: "/hɒˈrɪfɪkli/",
         translation: "Terroríficamente",
         level: "C1",
-        definition: "Shockingly.",
+        definition:
+          "Terroríficamente. Shockingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Horrifically injured.",
         transformation: "Adj Shift: Horrific injury.",
       },
@@ -2529,7 +2803,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhɒtli/",
         translation: "Acaloradamente",
         level: "B2",
-        definition: "Intensely.",
+        definition:
+          "Acaloradamente. With strong force, feeling, or awareness. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Hotly debated.",
         transformation: "Adj Shift: Hot debate.",
       },
@@ -2538,7 +2813,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhjuːdʒli/",
         translation: "Enormemente",
         level: "B2",
-        definition: "Very.",
+        definition:
+          "Enormemente. Used to add strong emphasis and make the statement feel stronger. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Hugely successful.",
         transformation: "Adj Shift: Huge success.",
       },
@@ -2547,7 +2823,8 @@ export const emphasisData: StopData = {
         ipa: "/hjuːˈmeɪnli/",
         translation: "Humanamente",
         level: "C1",
-        definition: "Kindly.",
+        definition:
+          "Humanamente. Kindly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Treated humanely.",
         transformation: "Adj Shift: Humane treatment.",
       },
@@ -2556,7 +2833,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhʌmbli/",
         translation: "Humildemente",
         level: "C1",
-        definition: "Modestly.",
+        definition:
+          "Humildemente. Modestly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Accepted humbly.",
         transformation: "Adj Shift: Humble acceptance.",
       },
@@ -2565,7 +2843,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhʌŋɡrɪli/",
         translation: "Con hambre",
         level: "B2",
-        definition: "Greedily.",
+        definition:
+          "Con hambre. Greedily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ate hungrily.",
         transformation: "Adj Shift: Hungry eating.",
       },
@@ -2574,7 +2853,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhʌrɪdli/",
         translation: "Apresuradamente",
         level: "B2",
-        definition: "Quickly.",
+        definition:
+          "Apresuradamente. Quickly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Left hurriedly.",
         transformation: "Adj Shift: Hurried exit.",
       },
@@ -2583,7 +2863,8 @@ export const emphasisData: StopData = {
         ipa: "/hɪˈstɛrɪkli/",
         translation: "Histéricamente",
         level: "C1",
-        definition: "Wildly.",
+        definition:
+          "Histéricamente. Wildly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Laughed hysterically.",
         transformation: "Adj Shift: Hysterical laughter.",
       },
@@ -2596,7 +2877,8 @@ export const emphasisData: StopData = {
         ipa: "/aɪˈdiːəli/",
         translation: "Idealmente",
         level: "B2",
-        definition: "Perfectly.",
+        definition:
+          "Idealmente. Perfectly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ideally suited.",
         transformation: "Adj Shift: Ideal suit.",
       },
@@ -2605,7 +2887,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈliːɡəli/",
         translation: "Ilegalmente",
         level: "B2",
-        definition: "Against law.",
+        definition:
+          "Ilegalmente. Against law. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted illegally.",
         transformation: "Adj Shift: Illegal act.",
       },
@@ -2614,7 +2897,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈlɪsɪtli/",
         translation: "Ilícitamente",
         level: "C2",
-        definition: "Unlawfully.",
+        definition:
+          "Ilícitamente. Unlawfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Gained illicitly.",
         transformation: "Adj Shift: Illicit gain.",
       },
@@ -2623,7 +2907,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈmædʒɪnətɪvli/",
         translation: "Imaginativamente",
         level: "C1",
-        definition: "Creatively.",
+        definition:
+          "Imaginativamente. Creatively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Solved imaginatively.",
         transformation: "Adj Shift: Imaginative solution.",
       },
@@ -2632,7 +2917,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈmɛʒərəbli/",
         translation: "Inconmensurablemente",
         level: "C2",
-        definition: "Greatly.",
+        definition:
+          "Inconmensurablemente. Greatly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Immeasurably better.",
         transformation: "Adj Shift: Immeasurable improvement.",
       },
@@ -2641,7 +2927,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈmiːdiətli/",
         translation: "Inmediatamente",
         level: "A2",
-        definition: "At once.",
+        definition:
+          "Inmediatamente. At once. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Come immediately.",
         transformation: "Adj Shift: Immediate action.",
       },
@@ -2650,7 +2937,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈmɛnsli/",
         translation: "Inmensamente",
         level: "C1",
-        definition: "Hugely.",
+        definition:
+          "Inmensamente. Hugely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Immensely popular.",
         transformation: "Adj Shift: Immense popularity.",
       },
@@ -2659,7 +2947,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɪmɪnəntli/",
         translation: "Inminentemente",
         level: "C1",
-        definition: "Soon.",
+        definition:
+          "Inminentemente. Soon. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Arriving imminently.",
         transformation: "Adj Shift: Imminent arrival.",
       },
@@ -2668,7 +2957,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈmɒrəli/",
         translation: "Inmoralmente",
         level: "C1",
-        definition: "Wrongly.",
+        definition:
+          "Inmoralmente. Wrongly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted immorally.",
         transformation: "Adj Shift: Immoral act.",
       },
@@ -2677,7 +2967,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪmˈpɑːrʃəli/",
         translation: "Imparcialmente",
         level: "C1",
-        definition: "Fairly.",
+        definition:
+          "Imparcialmente. Fairly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Judged impartially.",
         transformation: "Adj Shift: Impartial judgment.",
       },
@@ -2686,7 +2977,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪmˈpeɪʃəntli/",
         translation: "Impacientemente",
         level: "B2",
-        definition: "Restlessly.",
+        definition:
+          "Impacientemente. Restlessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Waited impatiently.",
         transformation: "Adj Shift: Impatient wait.",
       },
@@ -2695,7 +2987,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪmˈpɛkəbli/",
         translation: "Impecablemente",
         level: "C1",
-        definition: "Perfectly.",
+        definition:
+          "Impecablemente. Perfectly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed impeccably.",
         transformation: "Adj Shift: Impeccable dress.",
       },
@@ -2704,7 +2997,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪmpərˈsɛptəbli/",
         translation: "Imperceptiblemente",
         level: "C2",
-        definition: "Slightly.",
+        definition:
+          "Imperceptiblemente. Slightly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Moved imperceptibly.",
         transformation: "Adj Shift: Imperceptible movement.",
       },
@@ -2713,7 +3007,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪmˈpɛtʃuəsli/",
         translation: "Impetuosamente",
         level: "C2",
-        definition: "Rashly.",
+        definition:
+          "Impetuosamente. Rashly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted impetuously.",
         transformation: "Adj Shift: Impetuous act.",
       },
@@ -2722,7 +3017,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪmˈplɪsɪtli/",
         translation: "Implícitamente",
         level: "C2",
-        definition: "Unspokenly.",
+        definition:
+          "Implícitamente. Unspokenly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Trusted implicitly.",
         transformation: "Adj Shift: Implicit trust.",
       },
@@ -2731,7 +3027,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪmˈpɔːrtəntli/",
         translation: "Importantemente",
         level: "B1",
-        definition: "Crucially.",
+        definition:
+          "Importantemente. Crucially. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Most importantly.",
         transformation: "Adj Shift: Important point.",
       },
@@ -2740,7 +3037,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪmˈprɛsɪvli/",
         translation: "Impresionantemente",
         level: "B2",
-        definition: "Admirably.",
+        definition:
+          "Impresionantemente. Admirably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Performed impressively.",
         transformation: "Adj Shift: Impressive performance.",
       },
@@ -2749,7 +3047,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪmˈpʌlsɪvli/",
         translation: "Impulsivamente",
         level: "C1",
-        definition: "Spontaneously.",
+        definition:
+          "Impulsivamente. Spontaneously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Bought impulsively.",
         transformation: "Adj Shift: Impulsive buy.",
       },
@@ -2758,7 +3057,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪnədˈvɜːrtəntli/",
         translation: "Inadvertidamente",
         level: "C2",
-        definition: "Accidentally.",
+        definition:
+          "Inadvertidamente. Accidentally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Deleted inadvertently.",
         transformation: "Adj Shift: Inadvertent deletion.",
       },
@@ -2767,7 +3067,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈsɛsəntli/",
         translation: "Incesantemente",
         level: "C2",
-        definition: "Constantly.",
+        definition:
+          "Incesantemente. Constantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Talked incessantly.",
         transformation: "Adj Shift: Incessant talk.",
       },
@@ -2776,7 +3077,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪnsɪˈdɛntəli/",
         translation: "Por cierto",
         level: "C1",
-        definition: "By the way.",
+        definition:
+          "Por cierto. By the way. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Incidentally, I saw him.",
         transformation: "Adj Shift: Incidental remark.",
       },
@@ -2785,7 +3087,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈkɒmpərəbli/",
         translation: "Incomparablemente",
         level: "C2",
-        definition: "Matchlessly.",
+        definition:
+          "Incomparablemente. Matchlessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Incomparably better.",
         transformation: "Adj Shift: Incomparable quality.",
       },
@@ -2794,7 +3097,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪnkənˈsiːvəbli/",
         translation: "Inconcebiblemente",
         level: "C2",
-        definition: "Unbelievably.",
+        definition:
+          "Inconcebiblemente. Unbelievably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Inconceivably vast.",
         transformation: "Adj Shift: Inconceivable size.",
       },
@@ -2803,7 +3107,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈkriːsɪŋli/",
         translation: "Cada vez más",
         level: "B2",
-        definition: "More and more.",
+        definition:
+          "Cada vez más. More and more. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Increasingly difficult.",
         transformation: "Noun Shift: Increasing difficulty.",
       },
@@ -2812,7 +3117,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈkrɛdəbli/",
         translation: "Increíblemente",
         level: "B1",
-        definition: "Unbelievably.",
+        definition:
+          "Increíblemente. Unbelievably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Incredibly fast.",
         transformation: "Adj Shift: Incredible speed.",
       },
@@ -2821,7 +3127,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈkrɛdjʊləsli/",
         translation: "Con incredulidad",
         level: "C2",
-        definition: "Disbelievingly.",
+        definition:
+          "Con incredulidad. Disbelievingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stared incredulously.",
         transformation: "Adj Shift: Incredulous stare.",
       },
@@ -2830,7 +3137,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈdɛfɪnɪtli/",
         translation: "Indefinidamente",
         level: "C1",
-        definition: "Forever.",
+        definition:
+          "Indefinidamente. Forever. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Postponed indefinitely.",
         transformation: "Adj Shift: Indefinite postponement.",
       },
@@ -2839,7 +3147,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪndɪˈpɛndəntli/",
         translation: "Independientemente",
         level: "B2",
-        definition: "Alone.",
+        definition:
+          "Independientemente. Alone. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Work independently.",
         transformation: "Adj Shift: Independent work.",
       },
@@ -2848,7 +3157,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪndɪˈskraɪbəbli/",
         translation: "Indescriptiblemente",
         level: "C2",
-        definition: "Beyond words.",
+        definition:
+          "Indescriptiblemente. Beyond words. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Indescribably beautiful.",
         transformation: "Adj Shift: Indescribable beauty.",
       },
@@ -2857,7 +3167,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈdɪfrəntli/",
         translation: "Indiferentemente",
         level: "C1",
-        definition: "Uncaringly.",
+        definition:
+          "Indiferentemente. Uncaringly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Shrugged indifferently.",
         transformation: "Adj Shift: Indifferent shrug.",
       },
@@ -2866,7 +3177,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈdɪɡnəntli/",
         translation: "Indignadamente",
         level: "C2",
-        definition: "Angrily.",
+        definition:
+          "Indignadamente. Angrily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Replied indignantly.",
         transformation: "Adj Shift: Indignant reply.",
       },
@@ -2875,7 +3187,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪndɪˈrɛktli/",
         translation: "Indirectamente",
         level: "B2",
-        definition: "Not directly.",
+        definition:
+          "Indirectamente. Not directly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Caused indirectly.",
         transformation: "Adj Shift: Indirect cause.",
       },
@@ -2884,7 +3197,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪndɪˈskrɪmɪnətli/",
         translation: "Indiscriminadamente",
         level: "C2",
-        definition: "Randomly.",
+        definition:
+          "Indiscriminadamente. Randomly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Attacked indiscriminately.",
         transformation: "Adj Shift: Indiscriminate attack.",
       },
@@ -2893,7 +3207,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪndɪˈspjuːtəbli/",
         translation: "Indiscutiblemente",
         level: "C2",
-        definition: "Undeniably.",
+        definition:
+          "Indiscutiblemente. Undeniably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Indisputably true.",
         transformation: "Adj Shift: Indisputable truth.",
       },
@@ -2902,7 +3217,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪndɪˈvɪdʒuəli/",
         translation: "Individualmente",
         level: "B2",
-        definition: "Separately.",
+        definition:
+          "Individualmente. Separately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Wrapped individually.",
         transformation: "Adj Shift: Individual wrap.",
       },
@@ -2911,7 +3227,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈɛvɪtəbli/",
         translation: "Inevitablemente",
         level: "C1",
-        definition: "Unavoidably.",
+        definition:
+          "Inevitablemente. Unavoidably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Inevitably happened.",
         transformation: "Adj Shift: Inevitable event.",
       },
@@ -2920,7 +3237,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈɛksərəbli/",
         translation: "Inexorablemente",
         level: "C2",
-        definition: "Unstoppably.",
+        definition:
+          "Inexorablemente. Unstoppably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Moved inexorably.",
         transformation: "Adj Shift: Inexorable movement.",
       },
@@ -2929,7 +3247,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪnɪkˈsplɪkəbli/",
         translation: "Inexplicablemente",
         level: "C2",
-        definition: "Mysteriously.",
+        definition:
+          "Inexplicablemente. Mysteriously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Vanished inexplicably.",
         transformation: "Adj Shift: Inexplicable vanishing.",
       },
@@ -2938,7 +3257,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪnɪkˈstrɪkəbli/",
         translation: "Inextricablemente",
         level: "C2",
-        definition: "Inseparably.",
+        definition:
+          "Inextricablemente. Inseparably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Linked inextricably.",
         transformation: "Adj Shift: Inextricable link.",
       },
@@ -2947,7 +3267,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɪnfɪnɪtli/",
         translation: "Infinitamente",
         level: "C1",
-        definition: "Endlessly.",
+        definition:
+          "Infinitamente. Endlessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Infinitely better.",
         transformation: "Adj Shift: Infinite improvement.",
       },
@@ -2956,7 +3277,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈfɔːrməli/",
         translation: "Informalmente",
         level: "B1",
-        definition: "Casually.",
+        definition:
+          "Informalmente. Casually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed informally.",
         transformation: "Adj Shift: Informal dress.",
       },
@@ -2965,7 +3287,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈfriːkwəntli/",
         translation: "Infrecuentemente",
         level: "C1",
-        definition: "Rarely.",
+        definition:
+          "Infrecuentemente. Rarely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Visit infrequently.",
         transformation: "Adj Shift: Infrequent visit.",
       },
@@ -2974,7 +3297,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈdʒiːniəsli/",
         translation: "Ingeniosamente",
         level: "C2",
-        definition: "Cleverly.",
+        definition:
+          "Ingeniosamente. Cleverly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Designed ingeniously.",
         transformation: "Adj Shift: Ingenious design.",
       },
@@ -2983,7 +3307,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈhɪərəntli/",
         translation: "Inherentemente",
         level: "C1",
-        definition: "Naturally.",
+        definition:
+          "Inherentemente. Naturally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Inherently risky.",
         transformation: "Adj Shift: Inherent risk.",
       },
@@ -2992,7 +3317,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈnɪʃəli/",
         translation: "Inicialmente",
         level: "B2",
-        definition: "At first.",
+        definition:
+          "Inicialmente. At first. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Initially refused.",
         transformation: "Adj Shift: Initial refusal.",
       },
@@ -3001,7 +3327,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈneɪtli/",
         translation: "Innatamente",
         level: "C2",
-        definition: "Naturally.",
+        definition:
+          "Innatamente. Naturally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Innately talented.",
         transformation: "Adj Shift: Innate talent.",
       },
@@ -3010,7 +3337,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɪnəsəntli/",
         translation: "Inocentemente",
         level: "B2",
-        definition: "Guiltlessly.",
+        definition:
+          "Inocentemente. Guiltlessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled innocently.",
         transformation: "Adj Shift: Innocent smile.",
       },
@@ -3019,7 +3347,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈɔːrdɪnətli/",
         translation: "Desmesuradamente",
         level: "C2",
-        definition: "Excessively.",
+        definition:
+          "Desmesuradamente. Excessively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Inordinately long.",
         transformation: "Adj Shift: Inordinate length.",
       },
@@ -3028,7 +3357,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈkwɪzɪtɪvli/",
         translation: "Inquisitivamente",
         level: "C2",
-        definition: "Curiously.",
+        definition:
+          "Inquisitivamente. Curiously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked inquisitively.",
         transformation: "Adj Shift: Inquisitive look.",
       },
@@ -3037,7 +3367,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈseɪnli/",
         translation: "Locamente",
         level: "B2",
-        definition: "Madly.",
+        definition:
+          "Locamente. Madly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Insanely jealous.",
         transformation: "Adj Shift: Insane jealousy.",
       },
@@ -3046,7 +3377,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈsɪdiəsli/",
         translation: "Insidiosamente",
         level: "C2",
-        definition: "Treacherously.",
+        definition:
+          "Insidiosamente. Treacherously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spread insidiously.",
         transformation: "Adj Shift: Insidious spread.",
       },
@@ -3055,7 +3387,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈsɪstəntli/",
         translation: "Insistentemente",
         level: "C1",
-        definition: "Persistently.",
+        definition:
+          "Insistentemente. Persistently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Demanded insistently.",
         transformation: "Adj Shift: Insistent demand.",
       },
@@ -3064,7 +3397,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɪnsələntli/",
         translation: "Insolentemente",
         level: "C2",
-        definition: "Rudely.",
+        definition:
+          "Insolentemente. Rudely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stared insolently.",
         transformation: "Adj Shift: Insolent stare.",
       },
@@ -3073,7 +3407,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪnstənˈteɪniəsli/",
         translation: "Instantáneamente",
         level: "C1",
-        definition: "Immediately.",
+        definition:
+          "Instantáneamente. Immediately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Died instantaneously.",
         transformation: "Adj Shift: Instantaneous death.",
       },
@@ -3082,7 +3417,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɪnstəntli/",
         translation: "Al instante",
         level: "B1",
-        definition: "Immediately.",
+        definition:
+          "Al instante. Immediately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stopped instantly.",
         transformation: "Adj Shift: Instant stop.",
       },
@@ -3091,7 +3427,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈstɪŋktɪvli/",
         translation: "Instintivamente",
         level: "B2",
-        definition: "Naturally.",
+        definition:
+          "Instintivamente. Naturally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Knew instinctively.",
         transformation: "Adj Shift: Instinctive knowledge.",
       },
@@ -3100,7 +3437,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪnsəˈfɪʃəntli/",
         translation: "Insuficientemente",
         level: "C1",
-        definition: "Inadequately.",
+        definition:
+          "Insuficientemente. Inadequately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Prepared insufficiently.",
         transformation: "Adj Shift: Insufficient preparation.",
       },
@@ -3109,7 +3447,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪntəˈlɛktʃuəli/",
         translation: "Intelectualmente",
         level: "B2",
-        definition: "Mentally.",
+        definition:
+          "Intelectualmente. Mentally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Intellectually gifted.",
         transformation: "Adj Shift: Intellectual gift.",
       },
@@ -3118,7 +3457,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈtɛlɪdʒəntli/",
         translation: "Inteligentemente",
         level: "B2",
-        definition: "Cleverly.",
+        definition:
+          "Inteligentemente. Cleverly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke intelligently.",
         transformation: "Adj Shift: Intelligent speech.",
       },
@@ -3127,7 +3467,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈtɛnsɪvli/",
         translation: "Intensivamente",
         level: "C1",
-        definition: "Thoroughly.",
+        definition:
+          "Intensivamente. Thoroughly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Farmed intensively.",
         transformation: "Adj Shift: Intensive farming.",
       },
@@ -3136,7 +3477,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈtɛnʃənəli/",
         translation: "Intencionalmente",
         level: "B2",
-        definition: "Deliberately.",
+        definition:
+          "Intencionalmente. Deliberately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Done intentionally.",
         transformation: "Adj Shift: Intentional act.",
       },
@@ -3145,7 +3487,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈtɛntli/",
         translation: "Atentamente",
         level: "C2",
-        definition: "Closely.",
+        definition:
+          "Atentamente. Closely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Listened intently.",
         transformation: "Adj Shift: Intent listener.",
       },
@@ -3154,7 +3497,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɪntrəstɪŋli/",
         translation: "Interesantemente",
         level: "B2",
-        definition: "Notably.",
+        definition:
+          "Interesantemente. Notably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Interestingly enough.",
         transformation: "Adj Shift: Interesting point.",
       },
@@ -3163,7 +3507,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪntərˈmɪtəntli/",
         translation: "Intermitentemente",
         level: "C2",
-        definition: "Sporadically.",
+        definition:
+          "Intermitentemente. Sporadically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Rained intermittently.",
         transformation: "Adj Shift: Intermittent rain.",
       },
@@ -3172,7 +3517,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈtɜːrnəli/",
         translation: "Internamente",
         level: "B2",
-        definition: "Inside.",
+        definition:
+          "Internamente. Inside. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Bleeding internally.",
         transformation: "Adj Shift: Internal bleeding.",
       },
@@ -3181,7 +3527,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪntərˈnæʃənəli/",
         translation: "Internacionalmente",
         level: "B2",
-        definition: "Globally.",
+        definition:
+          "Internacionalmente. Globally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Recognized internationally.",
         transformation: "Adj Shift: International recognition.",
       },
@@ -3190,7 +3537,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɪntɪmətli/",
         translation: "Íntimamente",
         level: "C1",
-        definition: "Closely.",
+        definition:
+          "Íntimamente. Closely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Knew intimately.",
         transformation: "Adj Shift: Intimate knowledge.",
       },
@@ -3199,7 +3547,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɪntrɪkətli/",
         translation: "Intricadamente",
         level: "C1",
-        definition: "Complexly.",
+        definition:
+          "Intricadamente. Complexly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Carved intricately.",
         transformation: "Adj Shift: Intricate carving.",
       },
@@ -3208,7 +3557,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈtriːɡɪŋli/",
         translation: "Intrigantemente",
         level: "C2",
-        definition: "Interestingly.",
+        definition:
+          "Intrigantemente. Interestingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Intriguingly ambiguous.",
         transformation: "Adj Shift: Intriguing ambiguity.",
       },
@@ -3217,7 +3567,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈtrɪnzɪkli/",
         translation: "Intrínsecamente",
         level: "C2",
-        definition: "Inherently.",
+        definition:
+          "Intrínsecamente. Inherently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Intrinsically valuable.",
         transformation: "Adj Shift: Intrinsic value.",
       },
@@ -3226,7 +3577,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈtjuːɪtɪvli/",
         translation: "Intuitivamente",
         level: "C1",
-        definition: "Instinctively.",
+        definition:
+          "Intuitivamente. Instinctively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Understood intuitively.",
         transformation: "Adj Shift: Intuitive understanding.",
       },
@@ -3235,7 +3587,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˈvɛəriəbli/",
         translation: "Invariablemente",
         level: "C1",
-        definition: "Always.",
+        definition:
+          "Invariablemente. Always. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Invariably late.",
         transformation: "Adj Shift: Invariable lateness.",
       },
@@ -3244,7 +3597,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪnˌvɒlənˈtɛrɪli/",
         translation: "Involuntariamente",
         level: "C1",
-        definition: "Unintentionally.",
+        definition:
+          "Involuntariamente. Unintentionally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Shuddered involuntarily.",
         transformation: "Adj Shift: Involuntary shudder.",
       },
@@ -3253,7 +3607,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɪnwərdli/",
         translation: "Interiormente",
         level: "C2",
-        definition: "Privately.",
+        definition:
+          "Interiormente. Privately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Groaned inwardly.",
         transformation: "Adj Shift: Inward groan.",
       },
@@ -3262,7 +3617,8 @@ export const emphasisData: StopData = {
         ipa: "/aɪˈrɒnɪkli/",
         translation: "Irónicamente",
         level: "C1",
-        definition: "Paradoxically.",
+        definition:
+          "Irónicamente. Paradoxically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ironically true.",
         transformation: "Adj Shift: Ironic truth.",
       },
@@ -3271,7 +3627,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈræʃənəli/",
         translation: "Irracionalmente",
         level: "C1",
-        definition: "Illogically.",
+        definition:
+          "Irracionalmente. Illogically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Behaving irrationally.",
         transformation: "Adj Shift: Irrational behavior.",
       },
@@ -3280,7 +3637,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪrɪˈfjuːtəbli/",
         translation: "Irrefutablemente",
         level: "C2",
-        definition: "Undeniably.",
+        definition:
+          "Irrefutablemente. Undeniably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Irrefutably proven.",
         transformation: "Adj Shift: Irrefutable proof.",
       },
@@ -3289,7 +3647,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈrɛpərəbli/",
         translation: "Irreparablemente",
         level: "C2",
-        definition: "Permanently.",
+        definition:
+          "Irreparablemente. Permanently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Damaged irreparably.",
         transformation: "Adj Shift: Irreparable damage.",
       },
@@ -3298,7 +3657,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪrɪˈzɪstəbli/",
         translation: "Irresistiblemente",
         level: "C1",
-        definition: "Overwhelmingly.",
+        definition:
+          "Irresistiblemente. Overwhelmingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Drawn irresistibly.",
         transformation: "Adj Shift: Irresistible attraction.",
       },
@@ -3307,7 +3667,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪrɪˈspɒnsəbli/",
         translation: "Irresponsablemente",
         level: "B2",
-        definition: "Recklessly.",
+        definition:
+          "Irresponsablemente. Recklessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted irresponsibly.",
         transformation: "Adj Shift: Irresponsible act.",
       },
@@ -3316,7 +3677,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪrɪˈtriːvəbli/",
         translation: "Irrecuperablemente",
         level: "C2",
-        definition: "Permanently.",
+        definition:
+          "Irrecuperablemente. Permanently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Lost irretrievably.",
         transformation: "Adj Shift: Irretrievable loss.",
       },
@@ -3325,7 +3687,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɪrɪˈvɜːrsəbli/",
         translation: "Irreversiblemente",
         level: "C2",
-        definition: "Permanently.",
+        definition:
+          "Irreversiblemente. Permanently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Changed irreversibly.",
         transformation: "Adj Shift: Irreversible change.",
       },
@@ -3334,7 +3697,8 @@ export const emphasisData: StopData = {
         ipa: "/ɪˈrɛvəkəbli/",
         translation: "Irrevocablemente",
         level: "C2",
-        definition: "Final.",
+        definition:
+          "Irrevocablemente. Final. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Changed irrevocably.",
         transformation: "Adj Shift: Irrevocable decision.",
       },
@@ -3343,7 +3707,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɪrɪtəbli/",
         translation: "Con irritación",
         level: "C2",
-        definition: "Annoyedly.",
+        definition:
+          "Con irritación. Annoyedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Snapped irritably.",
         transformation: "Adj Shift: Irritable snap.",
       },
@@ -3356,7 +3721,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒɛləsli/",
         translation: "Celosamente",
         level: "B2",
-        definition: "Enviously.",
+        definition:
+          "Celosamente. Enviously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Guarded jealously.",
         transformation: "Adj Shift: Jealous guard.",
       },
@@ -3365,7 +3731,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒoʊkɪŋli/",
         translation: "En broma",
         level: "B2",
-        definition: "Humorously.",
+        definition:
+          "En broma. Humorously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Said lovingly.",
         transformation: "Adj Shift: Joking tone.",
       },
@@ -3374,7 +3741,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒoʊviəli/",
         translation: "Jovialmente",
         level: "C2",
-        definition: "Cheerfully.",
+        definition:
+          "Jovialmente. Cheerfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Greeted jovially.",
         transformation: "Adj Shift: Jovial greeting.",
       },
@@ -3383,7 +3751,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒɔɪfʊli/",
         translation: "Alegremente",
         level: "B2",
-        definition: "Happily.",
+        definition:
+          "Alegremente. Happily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sang joyfully.",
         transformation: "Adj Shift: Joyful song.",
       },
@@ -3392,7 +3761,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒɔɪəsli/",
         translation: "Jubilosamente",
         level: "C1",
-        definition: "Happily.",
+        definition:
+          "Jubilosamente. Happily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Celebrated joyously.",
         transformation: "Adj Shift: Joyous celebration.",
       },
@@ -3401,7 +3771,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒuːbɪləntli/",
         translation: "Con júbilo",
         level: "C2",
-        definition: "Triumphantly.",
+        definition:
+          "Con júbilo. Triumphantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Shouted jubilantly.",
         transformation: "Adj Shift: Jubilant shout.",
       },
@@ -3410,7 +3781,8 @@ export const emphasisData: StopData = {
         ipa: "/dʒʌdʒˈmɛntəli/",
         translation: "Críticamente",
         level: "C1",
-        definition: "Critically.",
+        definition:
+          "Críticamente. Critically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked judgmentally.",
         transformation: "Adj Shift: Judgmental look.",
       },
@@ -3419,7 +3791,8 @@ export const emphasisData: StopData = {
         ipa: "/dʒuːˈdɪʃəsli/",
         translation: "Juiciosamente",
         level: "C2",
-        definition: "Wisely.",
+        definition:
+          "Juiciosamente. Wisely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spent judiciously.",
         transformation: "Adj Shift: Judicious spending.",
       },
@@ -3428,7 +3801,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈdʒʌstli/",
         translation: "Justamente",
         level: "C1",
-        definition: "Rightly.",
+        definition:
+          "Justamente. Rightly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Punished justly.",
         transformation: "Adj Shift: Just punishment.",
       },
@@ -3441,7 +3815,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkiːnli/",
         translation: "Agudamente",
         level: "C1",
-        definition: "Intensely.",
+        definition:
+          "Agudamente. With strong force, feeling, or awareness. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Keenly aware.",
         transformation: "Adj Shift: Keen awareness.",
       },
@@ -3450,7 +3825,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkaɪndli/",
         translation: "Amablemente",
         level: "B1",
-        definition: "Gently.",
+        definition:
+          "Amablemente. Gently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke kindly.",
         transformation: "Adj Shift: Kind words.",
       },
@@ -3459,7 +3835,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnɒlɪdʒəbli/",
         translation: "Con conocimiento",
         level: "C1",
-        definition: "Expertly.",
+        definition:
+          "Con conocimiento. Expertly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke knowledgeably.",
         transformation: "Adj Shift: Knowledgeable speech.",
       },
@@ -3472,7 +3849,8 @@ export const emphasisData: StopData = {
         ipa: "/ləˈbɔːriəsli/",
         translation: "Laboriosamente",
         level: "C2",
-        definition: "With difficulty.",
+        definition:
+          "Laboriosamente. With difficulty. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Climbed laboriously.",
         transformation: "Adj Shift: Laborious climb.",
       },
@@ -3481,7 +3859,8 @@ export const emphasisData: StopData = {
         ipa: "/ləˈkɒnɪkli/",
         translation: "Lacónicamente",
         level: "C2",
-        definition: "Briefly.",
+        definition:
+          "Lacónicamente. Briefly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Answered laconically.",
         transformation: "Adj Shift: Laconic answer.",
       },
@@ -3490,7 +3869,8 @@ export const emphasisData: StopData = {
         ipa: "/ləˈmɛntəbli/",
         translation: "Lamentablemente",
         level: "C2",
-        definition: "Regrettably.",
+        definition:
+          "Lamentablemente. Regrettably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Lamentably inadequate.",
         transformation: "Adj Shift: Lamentable inadequacy.",
       },
@@ -3499,7 +3879,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlæŋɡwɪdli/",
         translation: "Lánguidamente",
         level: "C2",
-        definition: "Lazily.",
+        definition:
+          "Lánguidamente. Lazily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Waved languidly.",
         transformation: "Adj Shift: Languid wave.",
       },
@@ -3508,7 +3889,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlɑːstɪŋli/",
         translation: "Duraderamente",
         level: "C2",
-        definition: "Permanently.",
+        definition:
+          "Duraderamente. Permanently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Lastingly impressed.",
         transformation: "Adj Shift: Lasting impression.",
       },
@@ -3517,7 +3899,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlɑːstli/",
         translation: "Por último",
         level: "B2",
-        definition: "Finally.",
+        definition:
+          "Por último. Finally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Lastly, I want to say.",
         transformation: "Adj Shift: Last point.",
       },
@@ -3526,7 +3909,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈleɪtli/",
         translation: "Últimamente",
         level: "B1",
-        definition: "Recently.",
+        definition:
+          "Últimamente. Recently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Seen him lately.",
         transformation: "Adj Shift: Recent sighting.",
       },
@@ -3535,7 +3919,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlɑːfəbli/",
         translation: "Ridículamente",
         level: "C2",
-        definition: "Absurdly.",
+        definition:
+          "Ridículamente. Absurdly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Laughably small.",
         transformation: "Adj Shift: Laughable size.",
       },
@@ -3544,7 +3929,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlævɪʃli/",
         translation: "Lujosamente",
         level: "C1",
-        definition: "Richly.",
+        definition:
+          "Lujosamente. Richly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Decorated lavishly.",
         transformation: "Adj Shift: Lavish decoration.",
       },
@@ -3553,7 +3939,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlɔːfʊli/",
         translation: "Legalmente",
         level: "C1",
-        definition: "Legally.",
+        definition:
+          "Legalmente. Legally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted lawfully.",
         transformation: "Adj Shift: Lawful act.",
       },
@@ -3562,7 +3949,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈleɪzɪli/",
         translation: "Perezosamente",
         level: "B1",
-        definition: "Slothfully.",
+        definition:
+          "Perezosamente. Slothfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stretched lazily.",
         transformation: "Adj Shift: Lazy stretch.",
       },
@@ -3571,7 +3959,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈliːɡəli/",
         translation: "Legalmente",
         level: "B2",
-        definition: "By law.",
+        definition:
+          "Legalmente. By law. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Legally binding.",
         transformation: "Adj Shift: Legal binding.",
       },
@@ -3580,7 +3969,8 @@ export const emphasisData: StopData = {
         ipa: "/lɪˈdʒɪtɪmətli/",
         translation: "Legítimamente",
         level: "C1",
-        definition: "Rightfully.",
+        definition:
+          "Legítimamente. Rightfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Earned legitimately.",
         transformation: "Adj Shift: Legitimate earnings.",
       },
@@ -3589,7 +3979,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlɛʒərli/",
         translation: "Pausadamente",
         level: "C1",
-        definition: "Unhurriedly.",
+        definition:
+          "Pausadamente. Unhurriedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Walked leisurely.",
         transformation: "Adj Shift: Leisurely walk.",
       },
@@ -3598,7 +3989,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlɪbərəli/",
         translation: "Liberalmente",
         level: "B2",
-        definition: "Generously.",
+        definition:
+          "Liberalmente. Generously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Applied liberally.",
         transformation: "Adj Shift: Liberal application.",
       },
@@ -3607,7 +3999,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlaɪtli/",
         translation: "Ligeramente",
         level: "B2",
-        definition: "Gently.",
+        definition:
+          "Ligeramente. Gently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Touched lightly.",
         transformation: "Adj Shift: Light touch.",
       },
@@ -3616,7 +4009,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlaɪkli/",
         translation: "Probablemente",
         level: "B1",
-        definition: "Probably.",
+        definition:
+          "Probablemente. Probably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Most likely.",
         transformation: "Adj Shift: Likely outcome.",
       },
@@ -3625,7 +4019,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlɪtərəli/",
         translation: "Literalmente",
         level: "B2",
-        definition: "Exactly.",
+        definition:
+          "Literalmente. Exactly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Literally true.",
         transformation: "Adj Shift: Literal truth.",
       },
@@ -3634,7 +4029,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlaɪvli/",
         translation: "Animadamente",
         level: "B1",
-        definition: "Energetically.",
+        definition:
+          "Animadamente. Energetically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stepped lively.",
         transformation: "Adj Shift: Lively step.",
       },
@@ -3643,7 +4039,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈloʊkəli/",
         translation: "Localmente",
         level: "B1",
-        definition: "Nearby.",
+        definition:
+          "Localmente. Nearby. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sourced locally.",
         transformation: "Adj Shift: Local source.",
       },
@@ -3652,7 +4049,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlɒdʒɪkli/",
         translation: "Lógicamente",
         level: "B2",
-        definition: "Reasonably.",
+        definition:
+          "Lógicamente. Reasonably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Think logically.",
         transformation: "Adj Shift: Logical thought.",
       },
@@ -3661,7 +4059,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlɒŋɪŋli/",
         translation: "Con anhelo",
         level: "C2",
-        definition: "Yearningly.",
+        definition:
+          "Con anhelo. Yearningly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked longingly.",
         transformation: "Adj Shift: Longing look.",
       },
@@ -3670,7 +4069,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈluːsli/",
         translation: "Vagamente",
         level: "B2",
-        definition: "Not tightly.",
+        definition:
+          "Vagamente. Not tightly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Based loosely.",
         transformation: "Adj Shift: Loose basis.",
       },
@@ -3679,7 +4079,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlaʊdli/",
         translation: "Ruidosamente",
         level: "A2",
-        definition: "Noisily.",
+        definition:
+          "Ruidosamente. Noisily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke loudly.",
         transformation: "Adj Shift: Loud speech.",
       },
@@ -3688,7 +4089,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlʌvɪŋli/",
         translation: "Amorosamente",
         level: "B2",
-        definition: "Affectionately.",
+        definition:
+          "Amorosamente. Affectionately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Gazed lovingly.",
         transformation: "Adj Shift: Loving gaze.",
       },
@@ -3697,7 +4099,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlɔɪəli/",
         translation: "Lealmente",
         level: "B2",
-        definition: "Faithfully.",
+        definition:
+          "Lealmente. Faithfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Served loyally.",
         transformation: "Adj Shift: Loyal service.",
       },
@@ -3706,7 +4109,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈluːsɪdli/",
         translation: "Lúcidamente",
         level: "C2",
-        definition: "Clearly.",
+        definition:
+          "Lúcidamente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Explained lucidly.",
         transformation: "Adj Shift: Lucid explanation.",
       },
@@ -3715,7 +4119,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈlʌkɪli/",
         translation: "Afortunadamente",
         level: "B1",
-        definition: "Fortunately.",
+        definition:
+          "Afortunadamente. Fortunately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Luckily escaped.",
         transformation: "Adj Shift: Lucky escape.",
       },
@@ -3724,7 +4129,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈluːdɪkrəsli/",
         translation: "Ridículamente",
         level: "C2",
-        definition: "Absurdly.",
+        definition:
+          "Ridículamente. Absurdly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ludicrously expensive.",
         transformation: "Adj Shift: Ludicrous expense.",
       },
@@ -3733,7 +4139,8 @@ export const emphasisData: StopData = {
         ipa: "/lʌɡˈʒʊəriəsli/",
         translation: "Lujosamente",
         level: "B2",
-        definition: "Richly.",
+        definition:
+          "Lujosamente. Richly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Lived luxuriously.",
         transformation: "Adj Shift: Luxurious life.",
       },
@@ -3746,7 +4153,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmædli/",
         translation: "Locamente",
         level: "B2",
-        definition: "Insanely.",
+        definition:
+          "Locamente. Insanely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Madly in love.",
         transformation: "Adj Shift: Mad love.",
       },
@@ -3755,7 +4163,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmædʒɪkli/",
         translation: "Mágicamente",
         level: "B2",
-        definition: "Supernaturally.",
+        definition:
+          "Mágicamente. Supernaturally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Appeared magically.",
         transformation: "Adj Shift: Magical appearance.",
       },
@@ -3764,7 +4173,8 @@ export const emphasisData: StopData = {
         ipa: "/mæɡˈnænɪməsli/",
         translation: "Magnánimemente",
         level: "C2",
-        definition: "Generously.",
+        definition:
+          "Magnánimemente. Generously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Forgave magnanimously.",
         transformation: "Adj Shift: Magnanimous forgiveness.",
       },
@@ -3773,7 +4183,8 @@ export const emphasisData: StopData = {
         ipa: "/mæɡˈnɪfɪsəntli/",
         translation: "Magníficamente",
         level: "B2",
-        definition: "Splendidly.",
+        definition:
+          "Magníficamente. Splendidly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Performed magnificently.",
         transformation: "Adj Shift: Magnificent performance.",
       },
@@ -3782,7 +4193,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmeɪnli/",
         translation: "Principalmente",
         level: "B1",
-        definition: "Chiefly.",
+        definition:
+          "Principalmente. Chiefly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Mainly because.",
         transformation: "Adj Shift: Main reason.",
       },
@@ -3791,7 +4203,8 @@ export const emphasisData: StopData = {
         ipa: "/məˈdʒɛstɪkli/",
         translation: "Majestuosamente",
         level: "C1",
-        definition: "Royally.",
+        definition:
+          "Majestuosamente. Royally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Rose majestically.",
         transformation: "Adj Shift: Majestic rise.",
       },
@@ -3800,7 +4213,8 @@ export const emphasisData: StopData = {
         ipa: "/məˈlɪʃəsli/",
         translation: "Maliciosamente",
         level: "C1",
-        definition: "Spitefully.",
+        definition:
+          "Maliciosamente. Spitefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Damaged maliciously.",
         transformation: "Adj Shift: Malicious damage.",
       },
@@ -3809,7 +4223,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmænjuəli/",
         translation: "Manualmente",
         level: "B2",
-        definition: "By hand.",
+        definition:
+          "Manualmente. By hand. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Operated manually.",
         transformation: "Adj Shift: Manual operation.",
       },
@@ -3818,7 +4233,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɑːrdʒɪnəli/",
         translation: "Marginalmente",
         level: "C1",
-        definition: "Slightly.",
+        definition:
+          "Marginalmente. Slightly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Marginally better.",
         transformation: "Adj Shift: Marginal improvement.",
       },
@@ -3827,7 +4243,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɑːrkɪdli/",
         translation: "Marcadamente",
         level: "C1",
-        definition: "Noticeably.",
+        definition:
+          "Marcadamente. Noticeably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Markedly different.",
         transformation: "Adj Shift: Marked difference.",
       },
@@ -3836,7 +4253,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɑːrvələsli/",
         translation: "Maravillosamente",
         level: "B2",
-        definition: "Wonderfully.",
+        definition:
+          "Maravillosamente. Wonderfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Did marvelously.",
         transformation: "Adj Shift: Marvelous job.",
       },
@@ -3845,7 +4263,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmæsɪvli/",
         translation: "Masivamente",
         level: "B2",
-        definition: "Huge.",
+        definition:
+          "Masivamente. Huge. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Massively popular.",
         transformation: "Adj Shift: Massive popularity.",
       },
@@ -3854,7 +4273,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɑːstərfʊli/",
         translation: "Magistralmente",
         level: "C2",
-        definition: "Skillfully.",
+        definition:
+          "Magistralmente. Skillfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Painted masterfully.",
         transformation: "Adj Shift: Masterful painting.",
       },
@@ -3863,7 +4283,8 @@ export const emphasisData: StopData = {
         ipa: "/məˈtɪəriəli/",
         translation: "Materialmente",
         level: "C2",
-        definition: "Significantly.",
+        definition:
+          "Materialmente. To a noticeable or meaningful degree. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Differed materially.",
         transformation: "Adj Shift: Material difference.",
       },
@@ -3872,7 +4293,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌmæθəˈmætɪkli/",
         translation: "Matemáticamente",
         level: "B2",
-        definition: "By math.",
+        definition:
+          "Matemáticamente. By math. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Proven mathematically.",
         transformation: "Adj Shift: Mathematical proof.",
       },
@@ -3881,7 +4303,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmiːnɪŋfʊli/",
         translation: "Significativamente",
         level: "C1",
-        definition: "Importantly.",
+        definition:
+          "Significativamente. Importantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Contributed meaningfully.",
         transformation: "Adj Shift: Meaningful contribution.",
       },
@@ -3890,7 +4313,8 @@ export const emphasisData: StopData = {
         ipa: "/mɪˈkænɪkli/",
         translation: "Mecánicamente",
         level: "B2",
-        definition: "Automatically.",
+        definition:
+          "Mecánicamente. Automatically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Repeated mechanically.",
         transformation: "Adj Shift: Mechanical repetition.",
       },
@@ -3899,7 +4323,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɛdɪkli/",
         translation: "Médicamente",
         level: "B2",
-        definition: "By medicine.",
+        definition:
+          "Médicamente. By medicine. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Medically fit.",
         transformation: "Adj Shift: Medical fitness.",
       },
@@ -3908,7 +4333,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmiːkli/",
         translation: "Mansamente",
         level: "C2",
-        definition: "Submissively.",
+        definition:
+          "Mansamente. Submissively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Followed meekly.",
         transformation: "Adj Shift: Meek follower.",
       },
@@ -3917,7 +4343,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɛmərəbli/",
         translation: "Memorablemente",
         level: "C1",
-        definition: "Unforgettably.",
+        definition:
+          "Memorablemente. Unforgettably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Performed memorably.",
         transformation: "Adj Shift: Memorable performance.",
       },
@@ -3926,7 +4353,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɛnəsɪŋli/",
         translation: "Amenazadoramente",
         level: "C1",
-        definition: "Threateningly.",
+        definition:
+          "Amenazadoramente. Threateningly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Approached menacingly.",
         transformation: "Adj Shift: Menacing approach.",
       },
@@ -3935,7 +4363,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɛntəli/",
         translation: "Mentalmente",
         level: "B1",
-        definition: "In mind.",
+        definition:
+          "Mentalmente. In mind. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Mentally ill.",
         transformation: "Adj Shift: Mental illness.",
       },
@@ -3944,7 +4373,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɜːrsɪfʊli/",
         translation: "Misericordiosamente",
         level: "C2",
-        definition: "Thankfully.",
+        definition:
+          "Misericordiosamente. Thankfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Mercifully short.",
         transformation: "Adj Shift: Merciful shortness.",
       },
@@ -3953,7 +4383,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɜːrsɪləsli/",
         translation: "Despiadadamente",
         level: "C1",
-        definition: "Cruelly.",
+        definition:
+          "Despiadadamente. Cruelly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Teased mercilessly.",
         transformation: "Adj Shift: Merciless teasing.",
       },
@@ -3962,7 +4393,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɪərli/",
         translation: "Meramente",
         level: "C1",
-        definition: "Only.",
+        definition:
+          "Meramente. Only. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Merely a joke.",
         transformation: "Adj Shift: Mere joke.",
       },
@@ -3971,7 +4403,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɛrɪli/",
         translation: "Alegremente",
         level: "C1",
-        definition: "Happily.",
+        definition:
+          "Alegremente. Happily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Singing merrily.",
         transformation: "Adj Shift: Merry song.",
       },
@@ -3980,7 +4413,8 @@ export const emphasisData: StopData = {
         ipa: "/məˈθɒdɪkli/",
         translation: "Metódicamente",
         level: "C2",
-        definition: "Systematically.",
+        definition:
+          "Metódicamente. Systematically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Searched methodically.",
         transformation: "Adj Shift: Methodical search.",
       },
@@ -3989,7 +4423,8 @@ export const emphasisData: StopData = {
         ipa: "/məˈtɪkjʊləsli/",
         translation: "Meticulosamente",
         level: "C2",
-        definition: "Carefully.",
+        definition:
+          "Meticulosamente. Carefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Planned meticulously.",
         transformation: "Adj Shift: Meticulous plan.",
       },
@@ -3998,7 +4433,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmaɪldli/",
         translation: "Levemente",
         level: "C1",
-        definition: "Slightly.",
+        definition:
+          "Levemente. Slightly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Mildly amusing.",
         transformation: "Adj Shift: Mild amusement.",
       },
@@ -4007,7 +4443,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌmɪlɪˈtɛrɪli/",
         translation: "Militarmente",
         level: "B2",
-        definition: "By war.",
+        definition:
+          "Militarmente. By war. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Intervened militarily.",
         transformation: "Adj Shift: Military intervention.",
       },
@@ -4016,7 +4453,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɪnɪməli/",
         translation: "Mínimamente",
         level: "C1",
-        definition: "Least amount.",
+        definition:
+          "Mínimamente. Least amount. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Invasive minimally.",
         transformation: "Adj Shift: Minimal invasion.",
       },
@@ -4025,7 +4463,8 @@ export const emphasisData: StopData = {
         ipa: "/mɪˈrækjʊləsli/",
         translation: "Milagrosamente",
         level: "C1",
-        definition: "Amazingly.",
+        definition:
+          "Milagrosamente. In a way that feels astonishing or hard to believe. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Survived miraculously.",
         transformation: "Adj Shift: Miraculous survival.",
       },
@@ -4034,7 +4473,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɪstʃɪvəsli/",
         translation: "Traviesamente",
         level: "C2",
-        definition: "Naughtily.",
+        definition:
+          "Traviesamente. Naughtily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Grinned mischievously.",
         transformation: "Adj Shift: Mischievous grin.",
       },
@@ -4043,7 +4483,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɪzərəbli/",
         translation: "Miserablemente",
         level: "B2",
-        definition: "Unhappily.",
+        definition:
+          "Miserablemente. Unhappily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Failed miserably.",
         transformation: "Adj Shift: Miserable failure.",
       },
@@ -4052,7 +4493,8 @@ export const emphasisData: StopData = {
         ipa: "/mɪˈsteɪkənli/",
         translation: "Erróneamente",
         level: "B2",
-        definition: "Wrongly.",
+        definition:
+          "Erróneamente. Wrongly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Believed mistakenly.",
         transformation: "Adj Shift: Mistaken belief.",
       },
@@ -4061,7 +4503,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɒkɪŋli/",
         translation: "Burlonamente",
         level: "C2",
-        definition: "Scornfully.",
+        definition:
+          "Burlonamente. Scornfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Laughed mockingly.",
         transformation: "Adj Shift: Mocking laugh.",
       },
@@ -4070,7 +4513,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɒdərətli/",
         translation: "Moderadamente",
         level: "B2",
-        definition: "Fairly.",
+        definition:
+          "Moderadamente. Fairly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Moderately successful.",
         transformation: "Adj Shift: Moderate success.",
       },
@@ -4079,7 +4523,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɒdɪstli/",
         translation: "Modestamente",
         level: "B2",
-        definition: "Humbly.",
+        definition:
+          "Modestamente. Humbly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed modestly.",
         transformation: "Adj Shift: Modest dress.",
       },
@@ -4088,7 +4533,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌmoʊmənˈtɛrɪli/",
         translation: "Momentáneamente",
         level: "B2",
-        definition: "Briefly.",
+        definition:
+          "Momentáneamente. Briefly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Paused momentarily.",
         transformation: "Adj Shift: Momentary pause.",
       },
@@ -4097,7 +4543,8 @@ export const emphasisData: StopData = {
         ipa: "/məˈnɒtənəsli/",
         translation: "Monótonamente",
         level: "C1",
-        definition: "Boringly.",
+        definition:
+          "Monótonamente. Boringly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Droned monotonously.",
         transformation: "Adj Shift: Monotonous drone.",
       },
@@ -4106,7 +4553,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɔːrəli/",
         translation: "Moralmente",
         level: "B2",
-        definition: "Ethically.",
+        definition:
+          "Moralmente. Ethically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Morally wrong.",
         transformation: "Adj Shift: Moral wrong.",
       },
@@ -4115,7 +4563,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɔːrbɪdli/",
         translation: "Morboamente",
         level: "C2",
-        definition: "Unhealthily.",
+        definition:
+          "Morboamente. Unhealthily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Morbidly obese.",
         transformation: "Adj Shift: Morbid obesity.",
       },
@@ -4124,7 +4573,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɔːrtəli/",
         translation: "Mortalmente",
         level: "C2",
-        definition: "Fatally.",
+        definition:
+          "Mortalmente. Fatally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Mortally wounded.",
         transformation: "Adj Shift: Mortal wound.",
       },
@@ -4133,7 +4583,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmoʊstli/",
         translation: "Mayormente",
         level: "A2",
-        definition: "Mainly.",
+        definition:
+          "Mayormente. Mainly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Mostly sunny.",
         transformation: "Adj Shift: Most sun.",
       },
@@ -4142,7 +4593,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmɔːrnfʊli/",
         translation: "Lúgubremente",
         level: "C2",
-        definition: "Sadly.",
+        definition:
+          "Lúgubremente. Sadly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Howled mournfully.",
         transformation: "Adj Shift: Mournful howl.",
       },
@@ -4151,7 +4603,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmuːvɪŋli/",
         translation: "Conmovedoramente",
         level: "C2",
-        definition: "Touchingly.",
+        definition:
+          "Conmovedoramente. Touchingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke movingly.",
         transformation: "Adj Shift: Moving speech.",
       },
@@ -4160,7 +4613,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmjuːzɪkli/",
         translation: "Musicalmente",
         level: "B1",
-        definition: "In music.",
+        definition:
+          "Musicalmente. In music. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Musically gifted.",
         transformation: "Adj Shift: Musical gift.",
       },
@@ -4169,7 +4623,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈmjuːtʃuəli/",
         translation: "Mutuamente",
         level: "B2",
-        definition: "Jointly.",
+        definition:
+          "Mutuamente. Jointly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Mutually beneficial.",
         transformation: "Adj Shift: Mutual benefit.",
       },
@@ -4178,7 +4633,8 @@ export const emphasisData: StopData = {
         ipa: "/mɪˈstɪəriəsli/",
         translation: "Misteriosamente",
         level: "B2",
-        definition: "Strangely.",
+        definition:
+          "Misteriosamente. In a way that feels unusual or hard to explain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Disappeared mysteriously.",
         transformation: "Adj Shift: Mysterious disappearance.",
       },
@@ -4191,7 +4647,8 @@ export const emphasisData: StopData = {
         ipa: "/naɪˈiːvli/",
         translation: "Ingenuamente",
         level: "C1",
-        definition: "Innocently.",
+        definition:
+          "Ingenuamente. Innocently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Believed naively.",
         transformation: "Adj Shift: Naive belief.",
       },
@@ -4200,7 +4657,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnæroʊli/",
         translation: "Por poco",
         level: "B2",
-        definition: "Barely.",
+        definition:
+          "Por poco. Barely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Narrowly escaped.",
         transformation: "Adj Shift: Narrow escape.",
       },
@@ -4209,7 +4667,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnæʃənəli/",
         translation: "Nacionalmente",
         level: "B1",
-        definition: "Countrywide.",
+        definition:
+          "Nacionalmente. Countrywide. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Known nationally.",
         transformation: "Adj Shift: National fame.",
       },
@@ -4218,7 +4677,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnætʃərəli/",
         translation: "Naturalmente",
         level: "B1",
-        definition: "Of course.",
+        definition:
+          "Naturalmente. Of course. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Naturally, I agreed.",
         transformation: "Adj Shift: Natural agreement.",
       },
@@ -4227,7 +4687,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈniːtli/",
         translation: "Cuidadosamente",
         level: "B2",
-        definition: "Tidily.",
+        definition:
+          "Cuidadosamente. Tidily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Folded neatly.",
         transformation: "Adj Shift: Neat fold.",
       },
@@ -4236,7 +4697,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌnɛsəˈsɛrɪli/",
         translation: "Necesariamente",
         level: "B2",
-        definition: "Inevitably.",
+        definition:
+          "Necesariamente. Inevitably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Not necessarily true.",
         transformation: "Adj Shift: Necessary truth.",
       },
@@ -4245,7 +4707,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈniːdləsli/",
         translation: "Innecesariamente",
         level: "C1",
-        definition: "Pointlessly.",
+        definition:
+          "Innecesariamente. Pointlessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Worried needlessly.",
         transformation: "Adj Shift: Needless worry.",
       },
@@ -4254,7 +4717,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnɛɡətɪvli/",
         translation: "Negativamente",
         level: "B2",
-        definition: "Badly.",
+        definition:
+          "Negativamente. Badly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Impacted negatively.",
         transformation: "Adj Shift: Negative impact.",
       },
@@ -4263,7 +4727,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnɛɡlɪdʒəbli/",
         translation: "Insignificantemente",
         level: "C2",
-        definition: "Slightly.",
+        definition:
+          "Insignificantemente. Slightly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Increased negligibly.",
         transformation: "Adj Shift: Negligible increase.",
       },
@@ -4272,7 +4737,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnɜːrvəsli/",
         translation: "Nerviosamente",
         level: "B1",
-        definition: "Anxiously.",
+        definition:
+          "Nerviosamente. Anxiously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Laughed nervously.",
         transformation: "Adj Shift: Nervous laugh.",
       },
@@ -4281,7 +4747,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnjuːli/",
         translation: "Recientemente",
         level: "B2",
-        definition: "Recently.",
+        definition:
+          "Recientemente. Recently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Newly married.",
         transformation: "Adj Shift: New marriage.",
       },
@@ -4290,7 +4757,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnaɪsli/",
         translation: "Agradablemente",
         level: "A2",
-        definition: "Pleasantly.",
+        definition:
+          "Agradablemente. Pleasantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Asking nicely.",
         transformation: "Adj Shift: Nice request.",
       },
@@ -4299,7 +4767,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnɪmbli/",
         translation: "Ágilmente",
         level: "C2",
-        definition: "Agilely.",
+        definition:
+          "Ágilmente. Agilely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Jumped nimbly.",
         transformation: "Adj Shift: Nimble jump.",
       },
@@ -4308,7 +4777,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnoʊbli/",
         translation: "Noblemente",
         level: "C2",
-        definition: "Honorably.",
+        definition:
+          "Noblemente. Honorably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted nobly.",
         transformation: "Adj Shift: Noble act.",
       },
@@ -4317,7 +4787,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnɔɪzɪli/",
         translation: "Ruidosamente",
         level: "B1",
-        definition: "Loudly.",
+        definition:
+          "Ruidosamente. Loudly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Chewing noisily.",
         transformation: "Adj Shift: Noisy chewing.",
       },
@@ -4326,7 +4797,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnɒmɪnəli/",
         translation: "Nominalmente",
         level: "C2",
-        definition: "In name only.",
+        definition:
+          "Nominalmente. In name only. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Nominally in charge.",
         transformation: "Adj Shift: Nominal charge.",
       },
@@ -4335,7 +4807,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌnɒnʃəˈlɑːntli/",
         translation: "Despreocupadamente",
         level: "C2",
-        definition: "Casually.",
+        definition:
+          "Despreocupadamente. Casually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Shrugged nonchalantly.",
         transformation: "Adj Shift: Nonchalant shrug.",
       },
@@ -4344,7 +4817,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnɔːrməli/",
         translation: "Normalmente",
         level: "A2",
-        definition: "Usually.",
+        definition:
+          "Normalmente. Usually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Behave normally.",
         transformation: "Adj Shift: Normal behavior.",
       },
@@ -4353,7 +4827,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnoʊtəbli/",
         translation: "Notablemente",
         level: "C1",
-        definition: "Especially.",
+        definition:
+          "Notablemente. Especially. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Notably absent.",
         transformation: "Adj Shift: Notable absence.",
       },
@@ -4362,7 +4837,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈnoʊtɪsəbli/",
         translation: "Notablemente",
         level: "B2",
-        definition: "Visibly.",
+        definition:
+          "Notablemente. Visibly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Noticeably colder.",
         transformation: "Adj Shift: Noticeable cold.",
       },
@@ -4371,7 +4847,8 @@ export const emphasisData: StopData = {
         ipa: "/noʊˈtɔːriəsli/",
         translation: "Notoriamente",
         level: "C1",
-        definition: "Infamously.",
+        definition:
+          "Notoriamente. Infamously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Notoriously difficult.",
         transformation: "Adj Shift: Notorious difficulty.",
       },
@@ -4380,7 +4857,8 @@ export const emphasisData: StopData = {
         ipa: "/nuːˈmɛrɪkli/",
         translation: "Numéricamente",
         level: "C1",
-        definition: "By number.",
+        definition:
+          "Numéricamente. By number. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Superior numerically.",
         transformation: "Adj Shift: Numerical superiority.",
       },
@@ -4389,7 +4867,8 @@ export const emphasisData: StopData = {
         ipa: "/njuːˈtrɪʃənəli/",
         translation: "Nutricionalmente",
         level: "C1",
-        definition: "Dietary.",
+        definition:
+          "Nutricionalmente. Dietary. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Balanced nutritionally.",
         transformation: "Adj Shift: Nutritional balance.",
       },
@@ -4402,7 +4881,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈbiːdiəntli/",
         translation: "Obedientemente",
         level: "C1",
-        definition: "Submissively.",
+        definition:
+          "Obedientemente. Submissively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Followed obediently.",
         transformation: "Adj Shift: Obedient follower.",
       },
@@ -4411,7 +4891,8 @@ export const emphasisData: StopData = {
         ipa: "/əbˈdʒɛktɪvli/",
         translation: "Objetivamente",
         level: "C1",
-        definition: "Impartially.",
+        definition:
+          "Objetivamente. Impartially. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Viewed objectively.",
         transformation: "Adj Shift: Objective view.",
       },
@@ -4420,7 +4901,8 @@ export const emphasisData: StopData = {
         ipa: "/əbˈsɛsɪvli/",
         translation: "Obsesivamente",
         level: "C1",
-        definition: "Excessively.",
+        definition:
+          "Obsesivamente. Excessively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Checked obsessively.",
         transformation: "Adj Shift: Obsessive check.",
       },
@@ -4429,7 +4911,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɒbstɪnətli/",
         translation: "Obstinadamente",
         level: "C2",
-        definition: "Stubbornly.",
+        definition:
+          "Obstinadamente. Stubbornly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Refused obstinately.",
         transformation: "Adj Shift: Obstinate refusal.",
       },
@@ -4438,7 +4921,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɒbviəsli/",
         translation: "Obviamente",
         level: "B1",
-        definition: "Clearly.",
+        definition:
+          "Obviamente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Obviously happy.",
         transformation: "Adj Shift: Obvious happiness.",
       },
@@ -4447,7 +4931,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈkeɪʒənəli/",
         translation: "Ocasionalmente",
         level: "B1",
-        definition: "Sometimes.",
+        definition:
+          "Ocasionalmente. Sometimes. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Visit occasionally.",
         transformation: "Adj Shift: Occasional visit.",
       },
@@ -4456,7 +4941,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɒdli/",
         translation: "Extrañamente",
         level: "B2",
-        definition: "Strangely.",
+        definition:
+          "Extrañamente. In a way that feels unusual or hard to explain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Behaving oddly.",
         transformation: "Adj Shift: Odd behavior.",
       },
@@ -4465,7 +4951,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈfɛnsɪvli/",
         translation: "Ofensivamente",
         level: "C1",
-        definition: "Rudely.",
+        definition:
+          "Ofensivamente. Rudely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke offensively.",
         transformation: "Adj Shift: Offensive speech.",
       },
@@ -4474,7 +4961,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈfɪʃəli/",
         translation: "Oficialmente",
         level: "B2",
-        definition: "Formally.",
+        definition:
+          "Oficialmente. Formally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Announced officially.",
         transformation: "Adj Shift: Official announcement.",
       },
@@ -4483,7 +4971,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɒfən/",
         translation: "A menudo",
         level: "A1",
-        definition: "Frequently.",
+        definition:
+          "A menudo. Frequently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Visit often.",
         transformation: "Freq: Frequent visit.",
       },
@@ -4492,7 +4981,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɒmɪnəsli/",
         translation: "Ominosamente",
         level: "C2",
-        definition: "Threateningly.",
+        definition:
+          "Ominosamente. Threateningly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Rumbled ominously.",
         transformation: "Adj Shift: Ominous rumble.",
       },
@@ -4501,7 +4991,8 @@ export const emphasisData: StopData = {
         ipa: "/wʌns/",
         translation: "Una vez",
         level: "A1",
-        definition: "One time.",
+        definition:
+          "Una vez. One time. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Tried once.",
         transformation: "Num: One try.",
       },
@@ -4510,7 +5001,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈoʊnli/",
         translation: "Solo",
         level: "A1",
-        definition: "Just.",
+        definition:
+          "Solo. Just. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Only you.",
         transformation: "Adj Shift: Sole person.",
       },
@@ -4519,7 +5011,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈoʊpənli/",
         translation: "Abiertamente",
         level: "B2",
-        definition: "Publicly.",
+        definition:
+          "Abiertamente. Publicly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Wept openly.",
         transformation: "Adj Shift: Open weeping.",
       },
@@ -4528,7 +5021,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɒptɪˈmɪstɪkli/",
         translation: "Optimistamente",
         level: "B2",
-        definition: "Hopefully.",
+        definition:
+          "Optimistamente. Hopefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke optimistically.",
         transformation: "Adj Shift: Optimistic speech.",
       },
@@ -4537,7 +5031,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɔːrəli/",
         translation: "Oralmente",
         level: "C1",
-        definition: "By mouth.",
+        definition:
+          "Oralmente. By mouth. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Taken orally.",
         transformation: "Adj Shift: Oral intake.",
       },
@@ -4546,7 +5041,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɔːrdɪˈnɛrɪli/",
         translation: "Ordinariamente",
         level: "C1",
-        definition: "Usually.",
+        definition:
+          "Ordinariamente. Usually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Not ordinarily done.",
         transformation: "Adj Shift: Ordinary practice.",
       },
@@ -4555,7 +5051,8 @@ export const emphasisData: StopData = {
         ipa: "/ɔːrˈɡænɪkli/",
         translation: "Orgánicamente",
         level: "B2",
-        definition: "Naturally.",
+        definition:
+          "Orgánicamente. Naturally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Grown organically.",
         transformation: "Adj Shift: Organic growth.",
       },
@@ -4564,7 +5061,8 @@ export const emphasisData: StopData = {
         ipa: "/əˈrɪdʒɪnəli/",
         translation: "Originalmente",
         level: "B1",
-        definition: "At first.",
+        definition:
+          "Originalmente. At first. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Originally planned.",
         transformation: "Adj Shift: Original plan.",
       },
@@ -4573,7 +5071,8 @@ export const emphasisData: StopData = {
         ipa: "/ɒˈstɛnsəbli/",
         translation: "Aparentemente",
         level: "C2",
-        definition: "Seemingly.",
+        definition:
+          "Aparentemente. Based on what appears to be true, even if it is not fully certain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ostensibly for work.",
         transformation: "Adj Shift: Ostensible reason.",
       },
@@ -4582,7 +5081,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌɒstɛnˈteɪʃəsli/",
         translation: "Ostentosamente",
         level: "C2",
-        definition: "Showily.",
+        definition:
+          "Ostentosamente. Showily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed ostentatiously.",
         transformation: "Adj Shift: Ostentatious dress.",
       },
@@ -4591,7 +5091,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʌðərwaɪz/",
         translation: "De lo contrario",
         level: "B1",
-        definition: "Or else.",
+        definition:
+          "De lo contrario. Or else. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Do it, otherwise leave.",
         transformation: "Conj: Or.",
       },
@@ -4600,7 +5101,8 @@ export const emphasisData: StopData = {
         ipa: "/aʊtˈreɪdʒəsli/",
         translation: "Escandalosamente",
         level: "C1",
-        definition: "Shockingly.",
+        definition:
+          "Escandalosamente. Shockingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Outrageously expensive.",
         transformation: "Adj Shift: Outrageous expense.",
       },
@@ -4609,7 +5111,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈaʊtwərdli/",
         translation: "Exteriormente",
         level: "C1",
-        definition: "Externally.",
+        definition:
+          "Exteriormente. Externally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Outwardly calm.",
         transformation: "Adj Shift: Outward calm.",
       },
@@ -4618,7 +5121,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈoʊvərli/",
         translation: "Excesivamente",
         level: "B2",
-        definition: "Too.",
+        definition:
+          "Excesivamente. Too. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Overly cautious.",
         transformation: "Adj Shift: Over caution.",
       },
@@ -4627,7 +5131,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌoʊvərˈnaɪt/",
         translation: "De la noche a la mañana",
         level: "B1",
-        definition: "Quickly.",
+        definition:
+          "De la noche a la mañana. Quickly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Change overnight.",
         transformation: "Adj Shift: Overnight change.",
       },
@@ -4636,7 +5141,8 @@ export const emphasisData: StopData = {
         ipa: "/oʊˈvɜːrtli/",
         translation: "Abiertamente",
         level: "C2",
-        definition: "Openly.",
+        definition:
+          "Abiertamente. Openly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Overtly hostile.",
         transformation: "Adj Shift: Overt hostility.",
       },
@@ -4645,7 +5151,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌoʊvərˈwɛlmɪŋli/",
         translation: "Abrumadoramente",
         level: "C1",
-        definition: "Strongly.",
+        definition:
+          "Abrumadoramente. Strongly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Voted overwhelmingly.",
         transformation: "Adj Shift: Overwhelming vote.",
       },
@@ -4658,7 +5165,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpeɪnfʊli/",
         translation: "Dolorosamente",
         level: "B2",
-        definition: "Extremely.",
+        definition:
+          "Dolorosamente. Extremely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Painfully slow.",
         transformation: "Adj Shift: Painful slowness.",
       },
@@ -4667,7 +5175,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpælpəbli/",
         translation: "Palpablemente",
         level: "C2",
-        definition: "Noticeably.",
+        definition:
+          "Palpablemente. Noticeably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Palpably tense.",
         transformation: "Adj Shift: Palpable tension.",
       },
@@ -4676,7 +5185,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌpærəˈdɒksɪkli/",
         translation: "Paradójicamente",
         level: "C2",
-        definition: "Ironically.",
+        definition:
+          "Paradójicamente. Ironically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Paradoxically true.",
         transformation: "Adj Shift: Paradoxical truth.",
       },
@@ -4685,7 +5195,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɑːrʃəli/",
         translation: "Parcialmente",
         level: "B2",
-        definition: "Partly.",
+        definition:
+          "Parcialmente. Partly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Partially finished.",
         transformation: "Adj Shift: Partial completion.",
       },
@@ -4694,7 +5205,8 @@ export const emphasisData: StopData = {
         ipa: "/pərˈtɪkjʊlərli/",
         translation: "Particularmente",
         level: "B2",
-        definition: "Especially.",
+        definition:
+          "Particularmente. Especially. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Particularly good.",
         transformation: "Adj Shift: Particular goodness.",
       },
@@ -4703,7 +5215,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpæʃənətli/",
         translation: "Apasionadamente",
         level: "B2",
-        definition: "Intensely.",
+        definition:
+          "Apasionadamente. With strong force, feeling, or awareness. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Kissed passionately.",
         transformation: "Adj Shift: Passionate kiss.",
       },
@@ -4712,7 +5225,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpæsɪvli/",
         translation: "Pasivamente",
         level: "C1",
-        definition: "Inactively.",
+        definition:
+          "Pasivamente. Inactively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sat passively.",
         transformation: "Adj Shift: Passive sitting.",
       },
@@ -4721,7 +5235,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpeɪtəntli/",
         translation: "Patentemente",
         level: "C2",
-        definition: "Clearly.",
+        definition:
+          "Patentemente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Patently false.",
         transformation: "Adj Shift: Patent falsehood.",
       },
@@ -4730,7 +5245,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpeɪʃəntli/",
         translation: "Pacientemente",
         level: "B1",
-        definition: "Calmly.",
+        definition:
+          "Pacientemente. Calmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Waited patiently.",
         transformation: "Adj Shift: Patient wait.",
       },
@@ -4739,7 +5255,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpiːsfʊli/",
         translation: "Pacíficamente",
         level: "B1",
-        definition: "Calmly.",
+        definition:
+          "Pacíficamente. Calmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Slept peacefully.",
         transformation: "Adj Shift: Peaceful sleep.",
       },
@@ -4748,7 +5265,8 @@ export const emphasisData: StopData = {
         ipa: "/pɪˈkjuːliərli/",
         translation: "Peculiarmente",
         level: "C1",
-        definition: "Strangely.",
+        definition:
+          "Peculiarmente. In a way that feels unusual or hard to explain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smelled peculiarly.",
         transformation: "Adj Shift: Peculiar smell.",
       },
@@ -4757,7 +5275,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɛnsɪvli/",
         translation: "Pensativamente",
         level: "C2",
-        definition: "Thoughtfully.",
+        definition:
+          "Pensativamente. Thoughtfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stared pensively.",
         transformation: "Adj Shift: Pensive stare.",
       },
@@ -4766,7 +5285,8 @@ export const emphasisData: StopData = {
         ipa: "/pərˈsɛptəbli/",
         translation: "Perceptiblemente",
         level: "C2",
-        definition: "Noticeably.",
+        definition:
+          "Perceptiblemente. Noticeably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Moved perceptibly.",
         transformation: "Adj Shift: Perceptible movement.",
       },
@@ -4775,7 +5295,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɜːrfɪktli/",
         translation: "Perfectamente",
         level: "B1",
-        definition: "Completely.",
+        definition:
+          "Perfectamente. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Perfectly fine.",
         transformation: "Adj Shift: Perfect condition.",
       },
@@ -4784,7 +5305,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɛrɪləsli/",
         translation: "Peligrosamente",
         level: "C2",
-        definition: "Dangerously.",
+        definition:
+          "Peligrosamente. Dangerously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Perilously close.",
         transformation: "Adj Shift: Perilous proximity.",
       },
@@ -4793,7 +5315,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌpɪəriˈɒdɪkli/",
         translation: "Periódicamente",
         level: "C1",
-        definition: "Regularly.",
+        definition:
+          "Periódicamente. Regularly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Checked periodically.",
         transformation: "Adj Shift: Periodic check.",
       },
@@ -4802,7 +5325,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɜːrmənəntli/",
         translation: "Permanentemente",
         level: "B2",
-        definition: "Forever.",
+        definition:
+          "Permanentemente. Forever. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Closed permanently.",
         transformation: "Adj Shift: Permanent closure.",
       },
@@ -4811,7 +5335,8 @@ export const emphasisData: StopData = {
         ipa: "/pərˈpɛtʃuəli/",
         translation: "Perpetuamente",
         level: "C2",
-        definition: "Constantly.",
+        definition:
+          "Perpetuamente. Constantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Perpetually late.",
         transformation: "Adj Shift: Perpetual lateness.",
       },
@@ -4820,7 +5345,8 @@ export const emphasisData: StopData = {
         ipa: "/pərˈsɪstəntli/",
         translation: "Persistentemente",
         level: "C1",
-        definition: "Constantly.",
+        definition:
+          "Persistentemente. Constantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Rained persistently.",
         transformation: "Adj Shift: Persistent rain.",
       },
@@ -4829,7 +5355,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɜːrsənəli/",
         translation: "Personalmente",
         level: "B1",
-        definition: "Individually.",
+        definition:
+          "Personalmente. Individually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Take it personally.",
         transformation: "Adj Shift: Personal affront.",
       },
@@ -4838,7 +5365,8 @@ export const emphasisData: StopData = {
         ipa: "/pərˈsweɪsɪvli/",
         translation: "Persuasivamente",
         level: "C1",
-        definition: "Convincingly.",
+        definition:
+          "Persuasivamente. Convincingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Argued persuasively.",
         transformation: "Adj Shift: Persuasive argument.",
       },
@@ -4847,7 +5375,8 @@ export const emphasisData: StopData = {
         ipa: "/fɪˈnɒmɪnəli/",
         translation: "Fenomenalmente",
         level: "C2",
-        definition: "Extraordinarily.",
+        definition:
+          "Fenomenalmente. Extraordinarily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Phenomenally successful.",
         transformation: "Adj Shift: Phenomenal success.",
       },
@@ -4856,7 +5385,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌfɪləˈsɒfɪkli/",
         translation: "Filosóficamente",
         level: "C1",
-        definition: "Calmly.",
+        definition:
+          "Filosóficamente. Calmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Accepted philosophically.",
         transformation: "Adj Shift: Philosophical acceptance.",
       },
@@ -4865,7 +5395,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈfɪzɪkli/",
         translation: "Físicamente",
         level: "B1",
-        definition: "Bodily.",
+        definition:
+          "Físicamente. Bodily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Physically fit.",
         transformation: "Adj Shift: Physical fitness.",
       },
@@ -4874,7 +5405,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpleɪnli/",
         translation: "Llanamente",
         level: "C1",
-        definition: "Clearly.",
+        definition:
+          "Llanamente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stated plainly.",
         transformation: "Adj Shift: Plain statement.",
       },
@@ -4883,7 +5415,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpleɪfʊli/",
         translation: "Juguetonamente",
         level: "C1",
-        definition: "Jokingly.",
+        definition:
+          "Juguetonamente. Jokingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Teased playfully.",
         transformation: "Adj Shift: Playful tease.",
       },
@@ -4892,7 +5425,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈplɛzəntli/",
         translation: "Agradablemente",
         level: "B1",
-        definition: "Nicely.",
+        definition:
+          "Agradablemente. Nicely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Pleasantly surprised.",
         transformation: "Adj Shift: Pleasant surprise.",
       },
@@ -4901,7 +5435,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɔɪnjəntli/",
         translation: "Conmovedoramente",
         level: "C2",
-        definition: "Touchingly.",
+        definition:
+          "Conmovedoramente. Touchingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Wrote poignantly.",
         transformation: "Adj Shift: Poignant writing.",
       },
@@ -4910,7 +5445,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɔɪntɪdli/",
         translation: "Intencionadamente",
         level: "C2",
-        definition: "Significantly.",
+        definition:
+          "Intencionadamente. To a noticeable or meaningful degree. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked pointedly.",
         transformation: "Adj Shift: Pointed look.",
       },
@@ -4919,7 +5455,8 @@ export const emphasisData: StopData = {
         ipa: "/pəˈlaɪtli/",
         translation: "Cortésmente",
         level: "A2",
-        definition: "Respectfully.",
+        definition:
+          "Cortésmente. Respectfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Asked politely.",
         transformation: "Adj Shift: Polite request.",
       },
@@ -4928,7 +5465,8 @@ export const emphasisData: StopData = {
         ipa: "/pəˈlɪtɪkli/",
         translation: "Políticamente",
         level: "B2",
-        definition: "Governmentally.",
+        definition:
+          "Políticamente. Governmentally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Politically active.",
         transformation: "Adj Shift: Political activity.",
       },
@@ -4937,7 +5475,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpʊərli/",
         translation: "Pobremente/Mal",
         level: "B1",
-        definition: "Badly.",
+        definition:
+          "Pobremente/Mal. Badly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Performed poorly.",
         transformation: "Adj Shift: Poor performance.",
       },
@@ -4946,7 +5485,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɒpjʊlərli/",
         translation: "Popularmente",
         level: "B2",
-        definition: "Widely.",
+        definition:
+          "Popularmente. Widely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Popularly believed.",
         transformation: "Adj Shift: Popular belief.",
       },
@@ -4955,7 +5495,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɒzətɪvli/",
         translation: "Positivamente",
         level: "B2",
-        definition: "Definitely.",
+        definition:
+          "Positivamente. Definitely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Positively glowing.",
         transformation: "Adj Shift: Positive glow.",
       },
@@ -4964,7 +5505,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɒsəbli/",
         translation: "Posiblemente",
         level: "A2",
-        definition: "Maybe.",
+        definition:
+          "Posiblemente. Maybe. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Could possibly work.",
         transformation: "Adj Shift: Possible solution.",
       },
@@ -4973,7 +5515,8 @@ export const emphasisData: StopData = {
         ipa: "/pəˈtɛnʃəli/",
         translation: "Potencialmente",
         level: "B2",
-        definition: "Possibly.",
+        definition:
+          "Potencialmente. Used to show that something may be true or can be reasonably argued. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Potentially dangerous.",
         transformation: "Adj Shift: Potential danger.",
       },
@@ -4982,7 +5525,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpaʊərfʊli/",
         translation: "Poderosamente",
         level: "B2",
-        definition: "Strongly.",
+        definition:
+          "Poderosamente. Strongly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Built powerfully.",
         transformation: "Adj Shift: Powerful build.",
       },
@@ -4991,7 +5535,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpræktɪkli/",
         translation: "Prácticamente",
         level: "B1",
-        definition: "Almost.",
+        definition:
+          "Prácticamente. Almost. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Practically empty.",
         transformation: "Adj Shift: Practical emptiness.",
       },
@@ -5000,7 +5545,8 @@ export const emphasisData: StopData = {
         ipa: "/præɡˈmætɪkli/",
         translation: "Pragmáticamente",
         level: "C1",
-        definition: "Realistically.",
+        definition:
+          "Pragmáticamente. Realistically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Solved pragmatically.",
         transformation: "Adj Shift: Pragmatic solution.",
       },
@@ -5009,7 +5555,8 @@ export const emphasisData: StopData = {
         ipa: "/prɪˈkɛəriəsli/",
         translation: "Precariamente",
         level: "C2",
-        definition: "Unstably.",
+        definition:
+          "Precariamente. Unstably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Balanced precariously.",
         transformation: "Adj Shift: Precarious balance.",
       },
@@ -5018,7 +5565,8 @@ export const emphasisData: StopData = {
         ipa: "/prɪˈsaɪsli/",
         translation: "Precisamente",
         level: "B2",
-        definition: "Exactly.",
+        definition:
+          "Precisamente. Exactly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Precisely at noon.",
         transformation: "Adj Shift: Precise time.",
       },
@@ -5027,7 +5575,8 @@ export const emphasisData: StopData = {
         ipa: "/prɪˈdɒmɪnəntli/",
         translation: "Predominantemente",
         level: "C1",
-        definition: "Mainly.",
+        definition:
+          "Predominantemente. Mainly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Predominantly white.",
         transformation: "Adj Shift: Predominant color.",
       },
@@ -5036,7 +5585,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌpriːməˈtjʊərli/",
         translation: "Prematuramente",
         level: "C1",
-        definition: "Too soon.",
+        definition:
+          "Prematuramente. Too soon. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Aged prematurely.",
         transformation: "Adj Shift: Premature aging.",
       },
@@ -5045,7 +5595,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈprɛzəntli/",
         translation: "Actualmente",
         level: "B2",
-        definition: "Currently.",
+        definition:
+          "Actualmente. Currently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Presently unavailable.",
         transformation: "Adj Shift: Present unavailability.",
       },
@@ -5054,7 +5605,8 @@ export const emphasisData: StopData = {
         ipa: "/prɪˈzjuːməbli/",
         translation: "Presumiblemente",
         level: "B2",
-        definition: "Probably.",
+        definition:
+          "Presumiblemente. Probably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Presumably lost.",
         transformation: "Adj Shift: Presumed loss.",
       },
@@ -5063,7 +5615,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpriːviəsli/",
         translation: "Previamente",
         level: "B1",
-        definition: "Before.",
+        definition:
+          "Previamente. Before. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Previously owned.",
         transformation: "Adj Shift: Previous owner.",
       },
@@ -5072,7 +5625,8 @@ export const emphasisData: StopData = {
         ipa: "/praɪˈmɛrɪli/",
         translation: "Primordialmente",
         level: "B2",
-        definition: "Mainly.",
+        definition:
+          "Primordialmente. Mainly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Primarily for kids.",
         transformation: "Adj Shift: Primary purpose.",
       },
@@ -5081,7 +5635,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈprɪnsɪpəli/",
         translation: "Principalmente",
         level: "C1",
-        definition: "Chiefly.",
+        definition:
+          "Principalmente. Chiefly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Principally known.",
         transformation: "Adj Shift: Principal fame.",
       },
@@ -5090,7 +5645,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpraɪvətli/",
         translation: "Privadamente",
         level: "B1",
-        definition: "Secretly.",
+        definition:
+          "Privadamente. Secretly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke privately.",
         transformation: "Adj Shift: Private talk.",
       },
@@ -5099,7 +5655,8 @@ export const emphasisData: StopData = {
         ipa: "/proʊˈæktɪvli/",
         translation: "Proactivamente",
         level: "C1",
-        definition: "Actively.",
+        definition:
+          "Proactivamente. Actively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted proactively.",
         transformation: "Adj Shift: Proactive action.",
       },
@@ -5108,7 +5665,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈprɒbəbli/",
         translation: "Probablemente",
         level: "A1",
-        definition: "Likely.",
+        definition:
+          "Probablemente. Likely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Probably rain.",
         transformation: "Adj Shift: Probable rain.",
       },
@@ -5117,7 +5675,8 @@ export const emphasisData: StopData = {
         ipa: "/prəˈdʌktɪvli/",
         translation: "Productivamente",
         level: "C1",
-        definition: "Usefully.",
+        definition:
+          "Productivamente. Usefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Used productively.",
         transformation: "Adj Shift: Productive use.",
       },
@@ -5126,7 +5685,8 @@ export const emphasisData: StopData = {
         ipa: "/prəˈfɛʃənəli/",
         translation: "Profesionalmente",
         level: "B2",
-        definition: "Expertly.",
+        definition:
+          "Profesionalmente. Expertly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Done professionally.",
         transformation: "Adj Shift: Professional job.",
       },
@@ -5135,7 +5695,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈprɒfɪtəbli/",
         translation: "Rentablemente",
         level: "C1",
-        definition: "Gainfully.",
+        definition:
+          "Rentablemente. Gainfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Invested profitably.",
         transformation: "Adj Shift: Profitable investment.",
       },
@@ -5144,7 +5705,8 @@ export const emphasisData: StopData = {
         ipa: "/prəˈfaʊndli/",
         translation: "Profundamente",
         level: "C1",
-        definition: "Deeply.",
+        definition:
+          "Profundamente. Deeply. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Profoundly moved.",
         transformation: "Adj Shift: Profound emotion.",
       },
@@ -5153,7 +5715,8 @@ export const emphasisData: StopData = {
         ipa: "/prəˈfjuːsli/",
         translation: "Profusamente",
         level: "C2",
-        definition: "Abundantly.",
+        definition:
+          "Profusamente. Abundantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Bleeding profusely.",
         transformation: "Adj Shift: Profuse bleeding.",
       },
@@ -5162,7 +5725,8 @@ export const emphasisData: StopData = {
         ipa: "/prəˈɡrɛsɪvli/",
         translation: "Progresivamente",
         level: "B2",
-        definition: "Increasingly.",
+        definition:
+          "Progresivamente. Increasingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Got progressively worse.",
         transformation: "Adj Shift: Progressive worsening.",
       },
@@ -5171,7 +5735,8 @@ export const emphasisData: StopData = {
         ipa: "/proʊˈhɪbɪtɪvli/",
         translation: "Prohibitivamente",
         level: "C2",
-        definition: "Excessively.",
+        definition:
+          "Prohibitivamente. Excessively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Prohibitively expensive.",
         transformation: "Adj Shift: Prohibitive cost.",
       },
@@ -5180,7 +5745,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈprɒmɪnəntli/",
         translation: "Prominentemente",
         level: "C1",
-        definition: "Noticeably.",
+        definition:
+          "Prominentemente. Noticeably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Displayed prominently.",
         transformation: "Adj Shift: Prominent display.",
       },
@@ -5189,7 +5755,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈprɒmptli/",
         translation: "Puntualmente",
         level: "B2",
-        definition: "Immediately.",
+        definition:
+          "Puntualmente. Immediately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Arrived promptly.",
         transformation: "Adj Shift: Prompt arrival.",
       },
@@ -5198,7 +5765,8 @@ export const emphasisData: StopData = {
         ipa: "/prəˈpɔːrʃənətli/",
         translation: "Proporcionalmente",
         level: "C2",
-        definition: "Correspondingly.",
+        definition:
+          "Proporcionalmente. Correspondingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Increased proportionately.",
         transformation: "Adj Shift: Proportionate increase.",
       },
@@ -5207,7 +5775,8 @@ export const emphasisData: StopData = {
         ipa: "/prəˈtɛktɪvli/",
         translation: "Protectoramente",
         level: "C1",
-        definition: "Defensively.",
+        definition:
+          "Protectoramente. Defensively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Held protectively.",
         transformation: "Adj Shift: Protective hold.",
       },
@@ -5216,7 +5785,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpraʊdli/",
         translation: "Orgullosamente",
         level: "B1",
-        definition: "With pride.",
+        definition:
+          "Orgullosamente. With pride. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stood proudly.",
         transformation: "Adj Shift: Proud stance.",
       },
@@ -5225,7 +5795,8 @@ export const emphasisData: StopData = {
         ipa: "/prəˈvɒkətɪvli/",
         translation: "Provocativamente",
         level: "C2",
-        definition: "Sexily/Aggressively.",
+        definition:
+          "Provocativamente. Sexily/Aggressively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed provocatively.",
         transformation: "Adj Shift: Provocative dress.",
       },
@@ -5234,7 +5805,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpruːdəntli/",
         translation: "Prudentemente",
         level: "C2",
-        definition: "Wisely.",
+        definition:
+          "Prudentemente. Wisely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted prudently.",
         transformation: "Adj Shift: Prudent act.",
       },
@@ -5243,7 +5815,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌsaɪkəˈlɒdʒɪkli/",
         translation: "Psicológicamente",
         level: "B2",
-        definition: "Mentally.",
+        definition:
+          "Psicológicamente. Mentally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Psychologically damaging.",
         transformation: "Adj Shift: Psychological damage.",
       },
@@ -5252,7 +5825,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpʌblɪkli/",
         translation: "Públicamente",
         level: "B2",
-        definition: "Openly.",
+        definition:
+          "Públicamente. Openly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Announced publicly.",
         transformation: "Adj Shift: Public announcement.",
       },
@@ -5261,7 +5835,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpʌŋktʃuəli/",
         translation: "Puntualmente",
         level: "B2",
-        definition: "On time.",
+        definition:
+          "Puntualmente. On time. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Arrived punctually.",
         transformation: "Adj Shift: Punctual arrival.",
       },
@@ -5270,7 +5845,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpjʊərli/",
         translation: "Puramente",
         level: "B2",
-        definition: "Only.",
+        definition:
+          "Puramente. Only. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Purely accidental.",
         transformation: "Adj Shift: Pure accident.",
       },
@@ -5279,7 +5855,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɜːrpəsfʊli/",
         translation: "Con determinación",
         level: "C1",
-        definition: "Determinedly.",
+        definition:
+          "Con determinación. Determinedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Walked purposefully.",
         transformation: "Adj Shift: Purposeful walk.",
       },
@@ -5288,7 +5865,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈpɜːrpəsli/",
         translation: "A propósito",
         level: "C1",
-        definition: "Intentionally.",
+        definition:
+          "A propósito. Intentionally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Did it purposely.",
         transformation: "Adj Shift: Purposeful act.",
       },
@@ -5301,7 +5879,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkwɒlɪtətɪvli/",
         translation: "Cualitativamente",
         level: "C2",
-        definition: "Regarding quality.",
+        definition:
+          "Cualitativamente. Regarding quality. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Qualitatively different.",
         transformation: "Adj Shift: Qualitative difference.",
       },
@@ -5310,7 +5889,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkwɛrʊləsli/",
         translation: "Quejumbrosamente",
         level: "C2",
-        definition: "Complainingly.",
+        definition:
+          "Quejumbrosamente. Complainingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Asked querulously.",
         transformation: "Adj Shift: Querulous tone.",
       },
@@ -5319,7 +5899,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkwɛstʃənəbli/",
         translation: "Cuestionablemente",
         level: "C1",
-        definition: "Dubiously.",
+        definition:
+          "Cuestionablemente. Dubiously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Behaved questionably.",
         transformation: "Adj Shift: Questionable behavior.",
       },
@@ -5328,7 +5909,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkwɛstʃənɪŋli/",
         translation: "Interrogativamente",
         level: "C1",
-        definition: "Curiously.",
+        definition:
+          "Interrogativamente. Curiously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked questioningly.",
         transformation: "Adj Shift: Questioning look.",
       },
@@ -5337,7 +5919,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkwɪkli/",
         translation: "Rápidamente",
         level: "A1",
-        definition: "Fast.",
+        definition:
+          "Rápidamente. Fast. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Run quickly.",
         transformation: "Adj Shift: Quick run.",
       },
@@ -5346,7 +5929,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkwaɪətli/",
         translation: "Tranquilamente",
         level: "A2",
-        definition: "Silently.",
+        definition:
+          "Tranquilamente. Silently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sat quietly.",
         transformation: "Adj Shift: Quiet sitting.",
       },
@@ -5355,7 +5939,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈkwɪzɪkli/",
         translation: "Burlonamente",
         level: "C2",
-        definition: "Puzzled.",
+        definition:
+          "Burlonamente. Puzzled. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked quizzically.",
         transformation: "Adj Shift: Quizzical look.",
       },
@@ -5368,7 +5953,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrædɪkli/",
         translation: "Radicalmente",
         level: "B2",
-        definition: "Fundamentally.",
+        definition:
+          "Radicalmente. At the most basic or essential level. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Changed radically.",
         transformation: "Adj Shift: Radical change.",
       },
@@ -5377,7 +5963,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrændəmli/",
         translation: "Al azar",
         level: "B2",
-        definition: "Arbitrarily.",
+        definition:
+          "Al azar. Arbitrarily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Chosen randomly.",
         transformation: "Adj Shift: Random choice.",
       },
@@ -5386,7 +5973,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈræpɪdli/",
         translation: "Rápidamente",
         level: "B1",
-        definition: "Fast.",
+        definition:
+          "Rápidamente. Fast. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Growing rapidly.",
         transformation: "Adj Shift: Rapid growth.",
       },
@@ -5395,7 +5983,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɛərli/",
         translation: "Raramente",
         level: "B1",
-        definition: "Seldom.",
+        definition:
+          "Raramente. Seldom. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Rarely seen.",
         transformation: "Adj Shift: Rare sight.",
       },
@@ -5404,7 +5993,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈræʃli/",
         translation: "Imprudentemente",
         level: "C2",
-        definition: "Recklessly.",
+        definition:
+          "Imprudentemente. Recklessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted rashly.",
         transformation: "Adj Shift: Rash act.",
       },
@@ -5413,7 +6003,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈræʃənəli/",
         translation: "Racionalmente",
         level: "C1",
-        definition: "Logically.",
+        definition:
+          "Racionalmente. Logically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Thinking rationally.",
         transformation: "Adj Shift: Rational thought.",
       },
@@ -5422,7 +6013,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrævənəsli/",
         translation: "Vorazmente",
         level: "C2",
-        definition: "Hungrily.",
+        definition:
+          "Vorazmente. Hungrily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ate ravenously.",
         transformation: "Adj Shift: Ravenous appetite.",
       },
@@ -5431,7 +6023,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɛdɪli/",
         translation: "Fácilmente",
         level: "C1",
-        definition: "Willingly/Easily.",
+        definition:
+          "Fácilmente. Willingly/Easily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Readily available.",
         transformation: "Adj Shift: Ready availability.",
       },
@@ -5440,7 +6033,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌriːəˈlɪstɪkli/",
         translation: "Realistamente",
         level: "B2",
-        definition: "Practically.",
+        definition:
+          "Realistamente. Practically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Think realistically.",
         transformation: "Adj Shift: Realistic thought.",
       },
@@ -5449,7 +6043,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈriːəli/",
         translation: "Realmente",
         level: "A1",
-        definition: "Truly.",
+        definition:
+          "Realmente. Truly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Really good.",
         transformation: "Adj Shift: Real good.",
       },
@@ -5458,7 +6053,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈriːzənəbli/",
         translation: "Razonablemente",
         level: "B1",
-        definition: "Fairly.",
+        definition:
+          "Razonablemente. Fairly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Reasonably priced.",
         transformation: "Adj Shift: Reasonable price.",
       },
@@ -5467,7 +6063,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌriːəˈʃʊərɪŋli/",
         translation: "Tranquilizadoramente",
         level: "C1",
-        definition: "Comfortingly.",
+        definition:
+          "Tranquilizadoramente. Comfortingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled reassuringly.",
         transformation: "Adj Shift: Reassuring smile.",
       },
@@ -5476,7 +6073,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈriːsəntli/",
         translation: "Recientemente",
         level: "A2",
-        definition: "Lately.",
+        definition:
+          "Recientemente. Lately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Happened recently.",
         transformation: "Adj Shift: Recent event.",
       },
@@ -5485,7 +6083,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɛkləsli/",
         translation: "Imprudentemente",
         level: "C1",
-        definition: "Carelessly.",
+        definition:
+          "Imprudentemente. Carelessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Drove recklessly.",
         transformation: "Adj Shift: Reckless driving.",
       },
@@ -5494,7 +6093,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈflɛktɪvli/",
         translation: "Reflexivamente",
         level: "C2",
-        definition: "Thoughtfully.",
+        definition:
+          "Reflexivamente. Thoughtfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Gazed reflectively.",
         transformation: "Adj Shift: Reflective gaze.",
       },
@@ -5503,7 +6103,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈfrɛʃɪŋli/",
         translation: "Refrescantemente",
         level: "C1",
-        definition: "Pleasantly.",
+        definition:
+          "Refrescantemente. Pleasantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Refreshingly honest.",
         transformation: "Adj Shift: Refreshing honesty.",
       },
@@ -5512,7 +6113,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈɡɑːrdləs/",
         translation: "Independientemente",
         level: "C1",
-        definition: "Anyway.",
+        definition:
+          "Independientemente. Anyway. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Regardless of cost.",
         transformation: "Phrase: Without regard.",
       },
@@ -5521,7 +6123,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈɡrɛtfʊli/",
         translation: "Con pesar",
         level: "C1",
-        definition: "Sorowfully.",
+        definition:
+          "Con pesar. Sorowfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sighed regretfully.",
         transformation: "Adj Shift: Regretful sigh.",
       },
@@ -5530,7 +6133,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈɡrɛtəbli/",
         translation: "Lamentablemente",
         level: "C2",
-        definition: "Sadly.",
+        definition:
+          "Lamentablemente. Sadly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Regrettably true.",
         transformation: "Adj Shift: Regrettable truth.",
       },
@@ -5539,7 +6143,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɛɡjʊlərli/",
         translation: "Regularmente",
         level: "A2",
-        definition: "Often.",
+        definition:
+          "Regularmente. Often. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Exercise regularly.",
         transformation: "Adj Shift: Regular exercise.",
       },
@@ -5548,7 +6153,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɛlətɪvli/",
         translation: "Relativamente",
         level: "B1",
-        definition: "Comparatively.",
+        definition:
+          "Relativamente. Comparatively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Relatively easy.",
         transformation: "Adj Shift: Relative ease.",
       },
@@ -5557,7 +6163,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈlɛntləsli/",
         translation: "Implacablemente",
         level: "C2",
-        definition: "Unceasingly.",
+        definition:
+          "Implacablemente. Unceasingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Worked relentlessly.",
         transformation: "Adj Shift: Relentless work.",
       },
@@ -5566,7 +6173,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈlaɪəbli/",
         translation: "Fiablemente",
         level: "B2",
-        definition: "Dependably.",
+        definition:
+          "Fiablemente. Dependably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Works reliably.",
         transformation: "Adj Shift: Reliable work.",
       },
@@ -5575,7 +6183,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈlʌktəntli/",
         translation: "De mala gana",
         level: "B2",
-        definition: "Unwillingly.",
+        definition:
+          "De mala gana. Unwillingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Agreed reluctantly.",
         transformation: "Adj Shift: Reluctant agreement.",
       },
@@ -5584,7 +6193,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈmɑːrkəbli/",
         translation: "Notablemente",
         level: "B2",
-        definition: "Surprisingly.",
+        definition:
+          "Notablemente. In a way that feels unexpected or causes surprise. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Remarkably good.",
         transformation: "Adj Shift: Remarkable goodness.",
       },
@@ -5593,7 +6203,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈmoʊtli/",
         translation: "Remotamente",
         level: "B2",
-        definition: "From afar.",
+        definition:
+          "Remotamente. From afar. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Work remotely.",
         transformation: "Adj Shift: Remote work.",
       },
@@ -5602,7 +6213,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈpiːtɪdli/",
         translation: "Repetidamente",
         level: "B2",
-        definition: "Again and again.",
+        definition:
+          "Repetidamente. Again and again. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Asked repeatedly.",
         transformation: "Adj Shift: Repeated requests.",
       },
@@ -5611,7 +6223,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈpɔːrtɪdli/",
         translation: "Según se informa",
         level: "C1",
-        definition: "Supposedly.",
+        definition:
+          "Según se informa. Supposedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Reportedly killed.",
         transformation: "Adj Shift: Reported death.",
       },
@@ -5620,7 +6233,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈpjuːtɪdli/",
         translation: "Supuestamente",
         level: "C2",
-        definition: "Allegedly.",
+        definition:
+          "Supuestamente. Allegedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Reputedly rich.",
         transformation: "Adj Shift: Reputed wealth.",
       },
@@ -5629,7 +6243,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈzɛntfʊli/",
         translation: "Con resentimiento",
         level: "C2",
-        definition: "Bitterly.",
+        definition:
+          "Con resentimiento. Bitterly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Glared resentfully.",
         transformation: "Adj Shift: Resentful glare.",
       },
@@ -5638,7 +6253,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈzaɪnɪdli/",
         translation: "Resignadamente",
         level: "C2",
-        definition: "Acceptingly.",
+        definition:
+          "Resignadamente. Acceptingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sighed resignedly.",
         transformation: "Adj Shift: Resigned sigh.",
       },
@@ -5647,7 +6263,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɛzəluːtli/",
         translation: "Resueltamente",
         level: "C2",
-        definition: "Firmly.",
+        definition:
+          "Resueltamente. Firmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stood resolutely.",
         transformation: "Adj Shift: Resolute stand.",
       },
@@ -5656,7 +6273,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈzaʊndɪŋli/",
         translation: "Rotundamente",
         level: "C2",
-        definition: "Completely.",
+        definition:
+          "Rotundamente. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Resoundingly successful.",
         transformation: "Adj Shift: Resounding success.",
       },
@@ -5665,7 +6283,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈspɛktfʊli/",
         translation: "Respetuosamente",
         level: "B2",
-        definition: "Politely.",
+        definition:
+          "Respetuosamente. Politely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Listened respectfully.",
         transformation: "Adj Shift: Respectful listener.",
       },
@@ -5674,7 +6293,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈspɛktɪvli/",
         translation: "Respectivamente",
         level: "C1",
-        definition: "In order.",
+        definition:
+          "Respectivamente. In order. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "A and B, respectively.",
         transformation: "Phrase: In that order.",
       },
@@ -5683,7 +6303,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈspɒnsəbli/",
         translation: "Responsablemente",
         level: "B2",
-        definition: "Sensibly.",
+        definition:
+          "Responsablemente. Sensibly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted responsibly.",
         transformation: "Adj Shift: Responsible act.",
       },
@@ -5692,7 +6313,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɛstləsli/",
         translation: "Inquietamente",
         level: "C2",
-        definition: "Uneasily.",
+        definition:
+          "Inquietamente. Uneasily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Slept restlessly.",
         transformation: "Adj Shift: Restless sleep.",
       },
@@ -5701,7 +6323,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌrɛtrəˈspɛktɪvli/",
         translation: "Retrospectivamente",
         level: "C2",
-        definition: "Looking back.",
+        definition:
+          "Retrospectivamente. Looking back. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Applied retrospectively.",
         transformation: "Adj Shift: Retrospective application.",
       },
@@ -5710,7 +6333,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɛvərəntli/",
         translation: "Reverentemente",
         level: "C2",
-        definition: "Respectfully.",
+        definition:
+          "Reverentemente. Respectfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Bowed reverently.",
         transformation: "Adj Shift: Reverent bow.",
       },
@@ -5719,7 +6343,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɪtʃli/",
         translation: "Ricamente",
         level: "C1",
-        definition: "Fully.",
+        definition:
+          "Ricamente. Fully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Richly deserved.",
         transformation: "Adj Shift: Rich reward.",
       },
@@ -5728,7 +6353,8 @@ export const emphasisData: StopData = {
         ipa: "/rɪˈdɪkjʊləsli/",
         translation: "Ridículamente",
         level: "B2",
-        definition: "Absurdly.",
+        definition:
+          "Ridículamente. Absurdly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ridiculously cheap.",
         transformation: "Adj Shift: Ridiculous price.",
       },
@@ -5737,7 +6363,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈraɪtfʊli/",
         translation: "Legítimamente",
         level: "C1",
-        definition: "Justly.",
+        definition:
+          "Legítimamente. Justly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Rightfully yours.",
         transformation: "Adj Shift: Rightful owner.",
       },
@@ -5746,7 +6373,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈraɪtli/",
         translation: "Con razón",
         level: "B2",
-        definition: "Correctly.",
+        definition:
+          "Con razón. In a correct and exact way, without mistakes. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Rightly concerned.",
         transformation: "Adj Shift: Right concern.",
       },
@@ -5755,7 +6383,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɪdʒɪdli/",
         translation: "Rígidamente",
         level: "C1",
-        definition: "Stiffly.",
+        definition:
+          "Rígidamente. Stiffly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stuck rigidly.",
         transformation: "Adj Shift: Rigid adherence.",
       },
@@ -5764,7 +6393,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɪɡərəsli/",
         translation: "Rigurosamente",
         level: "C1",
-        definition: "Strictly.",
+        definition:
+          "Rigurosamente. Strictly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Tested rigorously.",
         transformation: "Adj Shift: Rigorous test.",
       },
@@ -5773,7 +6403,8 @@ export const emphasisData: StopData = {
         ipa: "/roʊˈbʌstli/",
         translation: "Robustamente",
         level: "C1",
-        definition: "Strongly.",
+        definition:
+          "Robustamente. Strongly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Defended robustly.",
         transformation: "Adj Shift: Robust defense.",
       },
@@ -5782,7 +6413,8 @@ export const emphasisData: StopData = {
         ipa: "/roʊˈmæntɪkli/",
         translation: "Románticamente",
         level: "B1",
-        definition: "Lovingly.",
+        definition:
+          "Románticamente. Lovingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Involved romantically.",
         transformation: "Adj Shift: Romantic involvement.",
       },
@@ -5791,7 +6423,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrʌfli/",
         translation: "Aproximadamente",
         level: "B1",
-        definition: "About.",
+        definition:
+          "Aproximadamente. About. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Roughly speaking.",
         transformation: "Adj Shift: Rough estimate.",
       },
@@ -5800,7 +6433,8 @@ export const emphasisData: StopData = {
         ipa: "/ruːˈtiːnli/",
         translation: "Rutinariamente",
         level: "C1",
-        definition: "Regularly.",
+        definition:
+          "Rutinariamente. Regularly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Checked routinely.",
         transformation: "Adj Shift: Routine check.",
       },
@@ -5809,7 +6443,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈruːdli/",
         translation: "Groseramente",
         level: "B1",
-        definition: "Impolitely.",
+        definition:
+          "Groseramente. Impolitely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Interrupted rudely.",
         transformation: "Adj Shift: Rude interruption.",
       },
@@ -5818,7 +6453,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈruːfʊli/",
         translation: "Con arrepentimiento",
         level: "C2",
-        definition: "Regretfully.",
+        definition:
+          "Con arrepentimiento. Regretfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled ruefully.",
         transformation: "Adj Shift: Rueful smile.",
       },
@@ -5827,7 +6463,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈruːθləsli/",
         translation: "Despiadadamente",
         level: "C1",
-        definition: "Cruelly.",
+        definition:
+          "Despiadadamente. Cruelly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Exploited ruthlessly.",
         transformation: "Adj Shift: Ruthless exploitation.",
       },
@@ -5840,7 +6477,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsædli/",
         translation: "Tristemente",
         level: "A2",
-        definition: "Unhappily.",
+        definition:
+          "Tristemente. Unhappily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sadly, he died.",
         transformation: "Adj Shift: Sad death.",
       },
@@ -5849,7 +6487,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈseɪfli/",
         translation: "A salvo",
         level: "A2",
-        definition: "Securely.",
+        definition:
+          "A salvo. Securely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Arrived safely.",
         transformation: "Adj Shift: Safe arrival.",
       },
@@ -5858,7 +6497,8 @@ export const emphasisData: StopData = {
         ipa: "/sɑːrˈkæstɪkli/",
         translation: "Sarcásticamente",
         level: "B2",
-        definition: "Mockingly.",
+        definition:
+          "Sarcásticamente. Mockingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Said sarcastically.",
         transformation: "Adj Shift: Sarcastic remark.",
       },
@@ -5867,7 +6507,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌsætɪsˈfæktərɪli/",
         translation: "Satisfactoriamente",
         level: "B2",
-        definition: "Acceptably.",
+        definition:
+          "Satisfactoriamente. Acceptably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Completed satisfactorily.",
         transformation: "Adj Shift: Satisfactory completion.",
       },
@@ -5876,7 +6517,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsævɪdʒli/",
         translation: "Salvaje",
         level: "C1",
-        definition: "Fiercely.",
+        definition:
+          "Salvaje. Fiercely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Attacked savagely.",
         transformation: "Adj Shift: Savage attack.",
       },
@@ -5885,7 +6527,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈskɛərsli/",
         translation: "Apenas",
         level: "C1",
-        definition: "Barely.",
+        definition:
+          "Apenas. Barely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Scarcely believable.",
         transformation: "Adj Shift: Scarce belief.",
       },
@@ -5894,7 +6537,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈskɔːrnfʊli/",
         translation: "Despectivamente",
         level: "C2",
-        definition: "Disdainfully.",
+        definition:
+          "Despectivamente. Disdainfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked scornfully.",
         transformation: "Adj Shift: Scornful look.",
       },
@@ -5903,7 +6547,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈskruːpjʊləsli/",
         translation: "Escrupulosamente",
         level: "C2",
-        definition: "Carefully.",
+        definition:
+          "Escrupulosamente. Carefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Cleaned scrupulously.",
         transformation: "Adj Shift: Scrupulous cleaning.",
       },
@@ -5912,7 +6557,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsiːmləsli/",
         translation: "Perfectamente",
         level: "C1",
-        definition: "Smoothly.",
+        definition:
+          "Perfectamente. Smoothly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Integrated seamlessly.",
         transformation: "Adj Shift: Seamless integration.",
       },
@@ -5921,7 +6567,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsiːkrətɪvli/",
         translation: "Reservadamente",
         level: "C1",
-        definition: "Privately.",
+        definition:
+          "Reservadamente. Privately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted secretively.",
         transformation: "Adj Shift: Secretive behavior.",
       },
@@ -5930,7 +6577,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsiːkrətli/",
         translation: "En secreto",
         level: "B1",
-        definition: "Privately.",
+        definition:
+          "En secreto. Privately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Met secretly.",
         transformation: "Adj Shift: Secret meeting.",
       },
@@ -5939,7 +6587,8 @@ export const emphasisData: StopData = {
         ipa: "/sɪˈkjʊərli/",
         translation: "Seguramente",
         level: "B2",
-        definition: "Firmly.",
+        definition:
+          "Seguramente. Firmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fastened securely.",
         transformation: "Adj Shift: Secure fastening.",
       },
@@ -5948,7 +6597,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsiːmɪŋli/",
         translation: "Aparentemente",
         level: "C1",
-        definition: "Apparently.",
+        definition:
+          "Aparentemente. Apparently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Seemingly easy.",
         transformation: "Verb Shift: Seems easy.",
       },
@@ -5957,7 +6607,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɛldəm/",
         translation: "Raramente",
         level: "C1",
-        definition: "Rarely.",
+        definition:
+          "Raramente. Rarely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Seldom seen.",
         transformation: "Freq: Rare sight.",
       },
@@ -5966,7 +6617,8 @@ export const emphasisData: StopData = {
         ipa: "/sɪˈlɛktɪvli/",
         translation: "Selectivamente",
         level: "C1",
-        definition: "Choosily.",
+        definition:
+          "Selectivamente. Choosily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Applied selectively.",
         transformation: "Adj Shift: Selective application.",
       },
@@ -5975,7 +6627,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɛlfɪʃli/",
         translation: "Egoístamente",
         level: "B1",
-        definition: "Greedily.",
+        definition:
+          "Egoístamente. Greedily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted selfishly.",
         transformation: "Adj Shift: Selfish act.",
       },
@@ -5984,7 +6637,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɛnsəbli/",
         translation: "Sensatamente",
         level: "B2",
-        definition: "Wisely.",
+        definition:
+          "Sensatamente. Wisely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Decided sensibly.",
         transformation: "Adj Shift: Sensible decision.",
       },
@@ -5993,7 +6647,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɛnsɪtɪvli/",
         translation: "Sensiblemente",
         level: "B2",
-        definition: "Carefully.",
+        definition:
+          "Sensiblemente. Carefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Handled sensitively.",
         transformation: "Adj Shift: Sensitive handling.",
       },
@@ -6002,7 +6657,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɛpərətli/",
         translation: "Por separado",
         level: "B1",
-        definition: "Individually.",
+        definition:
+          "Por separado. Individually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Packed separately.",
         transformation: "Adj Shift: Separate packing.",
       },
@@ -6011,7 +6667,8 @@ export const emphasisData: StopData = {
         ipa: "/sɪˈriːnli/",
         translation: "Serenamente",
         level: "C2",
-        definition: "Calmly.",
+        definition:
+          "Serenamente. Calmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled serenely.",
         transformation: "Adj Shift: Serene smile.",
       },
@@ -6020,7 +6677,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɪəriəsli/",
         translation: "Seriamente",
         level: "A2",
-        definition: "Gravely.",
+        definition:
+          "Seriamente. Gravely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Taken seriously.",
         transformation: "Adj Shift: Serious matter.",
       },
@@ -6029,7 +6687,8 @@ export const emphasisData: StopData = {
         ipa: "/sɪˈvɪərli/",
         translation: "Severamente",
         level: "B2",
-        definition: "Harshly.",
+        definition:
+          "Severamente. Harshly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Damaged severely.",
         transformation: "Adj Shift: Severe damage.",
       },
@@ -6038,7 +6697,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʃeɪmfʊli/",
         translation: "Vergonzosamente",
         level: "C1",
-        definition: "Disgracefully.",
+        definition:
+          "Vergonzosamente. Disgracefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Treated shamefully.",
         transformation: "Adj Shift: Shameful treatment.",
       },
@@ -6047,7 +6707,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʃeɪmləsli/",
         translation: "Descaradamente",
         level: "C1",
-        definition: "Brazenly.",
+        definition:
+          "Descaradamente. Brazenly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Lied shamelessly.",
         transformation: "Adj Shift: Shameless lie.",
       },
@@ -6056,7 +6717,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʃɑːrpli/",
         translation: "Bruscamente",
         level: "B2",
-        definition: "Abruptly.",
+        definition:
+          "Bruscamente. Abruptly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Rose sharply.",
         transformation: "Adj Shift: Sharp rise.",
       },
@@ -6065,7 +6727,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʃiːpɪʃli/",
         translation: "Avergonzadamente",
         level: "C2",
-        definition: "Embarrassedly.",
+        definition:
+          "Avergonzadamente. Embarrassedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Grinned sheepishly.",
         transformation: "Adj Shift: Sheepish grin.",
       },
@@ -6074,7 +6737,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʃɒkɪŋli/",
         translation: "Chocantemente",
         level: "B2",
-        definition: "Appallingly.",
+        definition:
+          "Chocantemente. Appallingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Shockingly bad.",
         transformation: "Adj Shift: Shocking quality.",
       },
@@ -6083,7 +6747,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʃɔːrtli/",
         translation: "En breve",
         level: "B1",
-        definition: "Soon.",
+        definition:
+          "En breve. Soon. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Arriving shortly.",
         transformation: "Adj Shift: Short wait.",
       },
@@ -6092,7 +6757,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʃruːdli/",
         translation: "Astutamente",
         level: "C2",
-        definition: "Cleverly.",
+        definition:
+          "Astutamente. Cleverly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Invested shrewdly.",
         transformation: "Adj Shift: Shrewd investment.",
       },
@@ -6101,7 +6767,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʃaɪli/",
         translation: "Tímidamente",
         level: "B1",
-        definition: "Bashfully.",
+        definition:
+          "Tímidamente. Bashfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled shyly.",
         transformation: "Adj Shift: Shy smile.",
       },
@@ -6110,7 +6777,8 @@ export const emphasisData: StopData = {
         ipa: "/sɪɡˈnɪfɪkəntli/",
         translation: "Significativamente",
         level: "B2",
-        definition: "Notably.",
+        definition:
+          "Significativamente. Notably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Changed significantly.",
         transformation: "Adj Shift: Significant change.",
       },
@@ -6119,7 +6787,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsaɪləntli/",
         translation: "Silenciosamente",
         level: "B1",
-        definition: "Quietly.",
+        definition:
+          "Silenciosamente. Quietly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Wept silently.",
         transformation: "Adj Shift: Silent weeping.",
       },
@@ -6128,7 +6797,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɪmɪlərli/",
         translation: "Similarmente",
         level: "B2",
-        definition: "Likewise.",
+        definition:
+          "Similarmente. Likewise. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Reacted similarly.",
         transformation: "Adj Shift: Similar reaction.",
       },
@@ -6137,7 +6807,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɪmpli/",
         translation: "Simplemente",
         level: "B1",
-        definition: "Just.",
+        definition:
+          "Simplemente. Just. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Simply the best.",
         transformation: "Adj Shift: Simple truth.",
       },
@@ -6146,7 +6817,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌsaɪməlˈteɪniəsli/",
         translation: "Simultáneamente",
         level: "C1",
-        definition: "Together.",
+        definition:
+          "Simultáneamente. Together. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Happened simultaneously.",
         transformation: "Adj Shift: Simultaneous events.",
       },
@@ -6155,7 +6827,8 @@ export const emphasisData: StopData = {
         ipa: "/sɪnˈsɪərli/",
         translation: "Sinceramente",
         level: "B1",
-        definition: "Honestly.",
+        definition:
+          "Sinceramente. Honestly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Yours sincerely.",
         transformation: "Adj Shift: Sincere wish.",
       },
@@ -6164,7 +6837,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɪŋɡjʊlərli/",
         translation: "Singularmente",
         level: "C2",
-        definition: "Uniquely.",
+        definition:
+          "Singularmente. Uniquely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Singularly unattractive.",
         transformation: "Adj Shift: Singular lack.",
       },
@@ -6173,7 +6847,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈskɛptɪkli/",
         translation: "Escépticamente",
         level: "C1",
-        definition: "Doubtfully.",
+        definition:
+          "Escépticamente. Doubtfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked skeptically.",
         transformation: "Adj Shift: Skeptical look.",
       },
@@ -6182,7 +6857,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈskɪlfʊli/",
         translation: "Habilmente",
         level: "B2",
-        definition: "Expertly.",
+        definition:
+          "Habilmente. Expertly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Played skillfully.",
         transformation: "Adj Shift: Skillful play.",
       },
@@ -6191,7 +6867,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsliːpɪli/",
         translation: "Con sueño",
         level: "B1",
-        definition: "Drowsily.",
+        definition:
+          "Con sueño. Drowsily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Answered sleepily.",
         transformation: "Adj Shift: Sleepy answer.",
       },
@@ -6200,7 +6877,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈslaɪtli/",
         translation: "Ligeramente",
         level: "B1",
-        definition: "A bit.",
+        definition:
+          "Ligeramente. A bit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Slightly better.",
         transformation: "Adj Shift: Slight improvement.",
       },
@@ -6209,7 +6887,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsloʊli/",
         translation: "Lentamente",
         level: "A1",
-        definition: "Not fast.",
+        definition:
+          "Lentamente. Not fast. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Walked slowly.",
         transformation: "Adj Shift: Slow walk.",
       },
@@ -6218,7 +6897,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsmɑːrtli/",
         translation: "Elegantemente/Listamente",
         level: "B1",
-        definition: "Neatly/Cleverly.",
+        definition:
+          "Elegantemente/Listamente. Neatly/Cleverly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed smartly.",
         transformation: "Adj Shift: Smart dress.",
       },
@@ -6227,7 +6907,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsmuːðli/",
         translation: "Suavemente",
         level: "B2",
-        definition: "Easily.",
+        definition:
+          "Suavemente. Easily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ran smoothly.",
         transformation: "Adj Shift: Smooth run.",
       },
@@ -6236,7 +6917,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsmʌɡli/",
         translation: "Con presunción",
         level: "C2",
-        definition: "Self-satisfiedly.",
+        definition:
+          "Con presunción. Self-satisfiedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled smugly.",
         transformation: "Adj Shift: Smug smile.",
       },
@@ -6245,7 +6927,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsoʊbərli/",
         translation: "Sobriamente",
         level: "C2",
-        definition: "Seriously.",
+        definition:
+          "Sobriamente. Seriously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke soberly.",
         transformation: "Adj Shift: Sober speech.",
       },
@@ -6254,7 +6937,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsoʊʃəli/",
         translation: "Socialmente",
         level: "B1",
-        definition: "In society.",
+        definition:
+          "Socialmente. In society. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Socially active.",
         transformation: "Adj Shift: Social activity.",
       },
@@ -6263,7 +6947,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɒftli/",
         translation: "Suavemente",
         level: "A2",
-        definition: "Quietly.",
+        definition:
+          "Suavemente. Quietly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke softly.",
         transformation: "Adj Shift: Soft voice.",
       },
@@ -6272,7 +6957,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsoʊlli/",
         translation: "Únicamente",
         level: "C1",
-        definition: "Only.",
+        definition:
+          "Únicamente. Only. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Solely responsible.",
         transformation: "Adj Shift: Sole responsibility.",
       },
@@ -6281,7 +6967,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɒləmli/",
         translation: "Solemnemente",
         level: "C1",
-        definition: "Seriously.",
+        definition:
+          "Solemnemente. Seriously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Swore solemnly.",
         transformation: "Adj Shift: Solemn oath.",
       },
@@ -6290,7 +6977,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɒlɪdli/",
         translation: "Sólidamente",
         level: "C1",
-        definition: "Firmly.",
+        definition:
+          "Sólidamente. Firmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Built solidly.",
         transformation: "Adj Shift: Solid build.",
       },
@@ -6299,7 +6987,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɒmbərli/",
         translation: "Sombríamente",
         level: "C2",
-        definition: "Gloomily.",
+        definition:
+          "Sombríamente. Gloomily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed somberly.",
         transformation: "Adj Shift: Somber dress.",
       },
@@ -6308,7 +6997,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsʌmhaʊ/",
         translation: "De algún modo",
         level: "B1",
-        definition: "In some way.",
+        definition:
+          "De algún modo. In some way. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Managed somehow.",
         transformation: "Phrase: In some way.",
       },
@@ -6317,7 +7007,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsʌmtaɪmz/",
         translation: "A veces",
         level: "A1",
-        definition: "Occasionally.",
+        definition:
+          "A veces. Occasionally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sometimes I go.",
         transformation: "Freq: Occasional trip.",
       },
@@ -6326,7 +7017,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsʌmwɒt/",
         translation: "Algo",
         level: "B1",
-        definition: "A bit.",
+        definition:
+          "Algo. A bit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Somewhat tired.",
         transformation: "Phrase: A bit.",
       },
@@ -6335,7 +7027,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsʌmwɛər/",
         translation: "En algún lugar",
         level: "A1",
-        definition: "Some place.",
+        definition:
+          "En algún lugar. Some place. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Somewhere nice.",
         transformation: "Phrase: Some place.",
       },
@@ -6344,7 +7037,8 @@ export const emphasisData: StopData = {
         ipa: "/suːn/",
         translation: "Pronto",
         level: "A1",
-        definition: "Shortly.",
+        definition:
+          "Pronto. Shortly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "See you soon.",
         transformation: "Phrase: In a short time.",
       },
@@ -6353,7 +7047,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɔːrli/",
         translation: "Gravemente",
         level: "C1",
-        definition: "Badly.",
+        definition:
+          "Gravemente. Badly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sorely missed.",
         transformation: "Adj Shift: Sore need.",
       },
@@ -6362,7 +7057,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsɒroʊfʊli/",
         translation: "Con pena",
         level: "C2",
-        definition: "Sadly.",
+        definition:
+          "Con pena. Sadly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked sorrowfully.",
         transformation: "Adj Shift: Sorrowful look.",
       },
@@ -6371,7 +7067,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsaʊndli/",
         translation: "Profundamente",
         level: "C2",
-        definition: "Deeply.",
+        definition:
+          "Profundamente. Deeply. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Slept soundly.",
         transformation: "Adj Shift: Sound sleep.",
       },
@@ -6380,7 +7077,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈspɛərɪŋli/",
         translation: "Con moderación",
         level: "C2",
-        definition: "Economically.",
+        definition:
+          "Con moderación. Economically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Used sparingly.",
         transformation: "Adj Shift: Sparing use.",
       },
@@ -6389,7 +7087,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈspɑːrsli/",
         translation: "Escasamente",
         level: "C2",
-        definition: "Thinly.",
+        definition:
+          "Escasamente. Thinly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sparsely populated.",
         transformation: "Adj Shift: Sparse population.",
       },
@@ -6398,7 +7097,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈspɛʃəli/",
         translation: "Especialmente",
         level: "A2",
-        definition: "Specifically.",
+        definition:
+          "Especialmente. Specifically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Made specially.",
         transformation: "Adj Shift: Special make.",
       },
@@ -6407,7 +7107,8 @@ export const emphasisData: StopData = {
         ipa: "/spəˈsɪfɪkli/",
         translation: "Específicamente",
         level: "B2",
-        definition: "Particularly.",
+        definition:
+          "Específicamente. Particularly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Asked specifically.",
         transformation: "Adj Shift: Specific request.",
       },
@@ -6416,7 +7117,8 @@ export const emphasisData: StopData = {
         ipa: "/spɛkˈtækjʊlərli/",
         translation: "Espectacularmente",
         level: "B2",
-        definition: "Amazingly.",
+        definition:
+          "Espectacularmente. In a way that feels astonishing or hard to believe. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Failed spectacularly.",
         transformation: "Adj Shift: Spectacular failure.",
       },
@@ -6425,7 +7127,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈspiːdɪli/",
         translation: "Velozmente",
         level: "C1",
-        definition: "Fast.",
+        definition:
+          "Velozmente. Fast. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Recovered speedily.",
         transformation: "Adj Shift: Speedy recovery.",
       },
@@ -6434,7 +7137,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈspɪrɪtʃuəli/",
         translation: "Espiritualmente",
         level: "C1",
-        definition: "In spirit.",
+        definition:
+          "Espiritualmente. In spirit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Connected spiritually.",
         transformation: "Adj Shift: Spiritual connection.",
       },
@@ -6443,7 +7147,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsplɛndɪdli/",
         translation: "Espléndidamente",
         level: "C1",
-        definition: "Excellently.",
+        definition:
+          "Espléndidamente. Excellently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Went splendidly.",
         transformation: "Adj Shift: Splendid event.",
       },
@@ -6452,7 +7157,8 @@ export const emphasisData: StopData = {
         ipa: "/spɒnˈteɪniəsli/",
         translation: "Espontáneamente",
         level: "C1",
-        definition: "Unplanned.",
+        definition:
+          "Espontáneamente. Unplanned. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Combusted spontaneously.",
         transformation: "Adj Shift: Spontaneous combustion.",
       },
@@ -6461,7 +7167,8 @@ export const emphasisData: StopData = {
         ipa: "/spəˈrædɪkli/",
         translation: "Esporádicamente",
         level: "C2",
-        definition: "Occasionally.",
+        definition:
+          "Esporádicamente. Occasionally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Occurred sporadically.",
         transformation: "Adj Shift: Sporadic occurrence.",
       },
@@ -6470,7 +7177,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈspɒtləsli/",
         translation: "Impecablemente",
         level: "C1",
-        definition: "Cleanly.",
+        definition:
+          "Impecablemente. Cleanly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spotlessly clean.",
         transformation: "Adj Shift: Spotless clean.",
       },
@@ -6479,7 +7187,8 @@ export const emphasisData: StopData = {
         ipa: "/skwɛərli/",
         translation: "De lleno",
         level: "C2",
-        definition: "Directly.",
+        definition:
+          "De lleno. Directly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Hit squarely.",
         transformation: "Adj Shift: Square hit.",
       },
@@ -6488,7 +7197,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstæɡərɪŋli/",
         translation: "Asombrosamente",
         level: "C2",
-        definition: "Amazingly.",
+        definition:
+          "Asombrosamente. In a way that feels astonishing or hard to believe. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Staggeringly high.",
         transformation: "Adj Shift: Staggering height.",
       },
@@ -6497,7 +7207,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstɑːrkli/",
         translation: "Marcadamente",
         level: "C2",
-        definition: "Clearly.",
+        definition:
+          "Marcadamente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Contrasted starkly.",
         transformation: "Adj Shift: Stark contrast.",
       },
@@ -6506,7 +7217,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstɑːrtlɪŋli/",
         translation: "Sorprendentemente",
         level: "C2",
-        definition: "Surprisingly.",
+        definition:
+          "Sorprendentemente. In a way that feels unexpected or causes surprise. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Startlingly clear.",
         transformation: "Adj Shift: Startling clarity.",
       },
@@ -6515,7 +7227,8 @@ export const emphasisData: StopData = {
         ipa: "/stəˈtɪstɪkli/",
         translation: "Estadísticamente",
         level: "C1",
-        definition: "By numbers.",
+        definition:
+          "Estadísticamente. By numbers. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Statistically significant.",
         transformation: "Adj Shift: Statistical significance.",
       },
@@ -6524,7 +7237,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstɛdfɑːstli/",
         translation: "Firme",
         level: "C2",
-        definition: "Firmly.",
+        definition:
+          "Firme. Firmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Refused steadfastly.",
         transformation: "Adj Shift: Steadfast refusal.",
       },
@@ -6533,7 +7247,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstɛdɪli/",
         translation: "Constantemente",
         level: "B2",
-        definition: "Regularly.",
+        definition:
+          "Constantemente. Regularly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Improved steadily.",
         transformation: "Adj Shift: Steady improvement.",
       },
@@ -6542,7 +7257,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstɛlθɪli/",
         translation: "Sigilosamente",
         level: "C2",
-        definition: "Secretly.",
+        definition:
+          "Sigilosamente. Secretly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Moved stealthily.",
         transformation: "Adj Shift: Stealthy movement.",
       },
@@ -6551,7 +7267,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstiːpli/",
         translation: "Empinadamente",
         level: "B2",
-        definition: "Sharply.",
+        definition:
+          "Empinadamente. Sharply. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Rose steeply.",
         transformation: "Adj Shift: Steep rise.",
       },
@@ -6560,7 +7277,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstɜːrnli/",
         translation: "Severamente",
         level: "C2",
-        definition: "Strictly.",
+        definition:
+          "Severamente. Strictly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked sternly.",
         transformation: "Adj Shift: Stern look.",
       },
@@ -6569,7 +7287,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstɪfli/",
         translation: "Tiesamente",
         level: "C1",
-        definition: "Rigidly.",
+        definition:
+          "Tiesamente. Rigidly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Walked stiffly.",
         transformation: "Adj Shift: Stiff walk.",
       },
@@ -6578,7 +7297,8 @@ export const emphasisData: StopData = {
         ipa: "/stɪl/",
         translation: "Todavía",
         level: "A1",
-        definition: "Yet.",
+        definition:
+          "Todavía. Yet. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Still here.",
         transformation: "Phrase: Even now.",
       },
@@ -6587,7 +7307,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstoʊɪkli/",
         translation: "Estoicamente",
         level: "C2",
-        definition: "Calmly.",
+        definition:
+          "Estoicamente. Calmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Endured stoically.",
         transformation: "Adj Shift: Stoic endurance.",
       },
@@ -6596,7 +7317,8 @@ export const emphasisData: StopData = {
         ipa: "/streɪt/",
         translation: "Directamente",
         level: "B1",
-        definition: "Directly.",
+        definition:
+          "Directamente. Directly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Go straight.",
         transformation: "Adj Shift: Straight line.",
       },
@@ -6605,7 +7327,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstreɪndʒli/",
         translation: "Extrañamente",
         level: "B1",
-        definition: "Oddly.",
+        definition:
+          "Extrañamente. Oddly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Behaving strangely.",
         transformation: "Adj Shift: Strange behavior.",
       },
@@ -6614,7 +7337,8 @@ export const emphasisData: StopData = {
         ipa: "/strəˈtiːdʒɪkli/",
         translation: "Estratégicamente",
         level: "C1",
-        definition: "Tactically.",
+        definition:
+          "Estratégicamente. Tactically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Placed strategically.",
         transformation: "Adj Shift: Strategic placement.",
       },
@@ -6623,7 +7347,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstrɛnjuəsli/",
         translation: "Enérgicamente",
         level: "C2",
-        definition: "Vigorously.",
+        definition:
+          "Enérgicamente. Vigorously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Denied strenuously.",
         transformation: "Adj Shift: Strenuous denial.",
       },
@@ -6632,7 +7357,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstrɪktli/",
         translation: "Estrictamente",
         level: "B2",
-        definition: "Rigidly.",
+        definition:
+          "Estrictamente. Rigidly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Strictly forbidden.",
         transformation: "Adj Shift: Strict rule.",
       },
@@ -6641,7 +7367,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstraɪkɪŋli/",
         translation: "Llamativamente",
         level: "C1",
-        definition: "Noticeably.",
+        definition:
+          "Llamativamente. Noticeably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Strikingly beautiful.",
         transformation: "Adj Shift: Striking beauty.",
       },
@@ -6650,7 +7377,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstrɒŋli/",
         translation: "Fuertemente",
         level: "B2",
-        definition: "Firmly.",
+        definition:
+          "Fuertemente. Firmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Strongly advise.",
         transformation: "Adj Shift: Strong advice.",
       },
@@ -6659,7 +7387,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstrʌktʃərəli/",
         translation: "Estructuralmente",
         level: "C1",
-        definition: "In structure.",
+        definition:
+          "Estructuralmente. In structure. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Structurally sound.",
         transformation: "Adj Shift: Structural soundness.",
       },
@@ -6668,7 +7397,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstʌbərnli/",
         translation: "Tercamente",
         level: "B2",
-        definition: "Obstinately.",
+        definition:
+          "Tercamente. Obstinately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Refused stubbornly.",
         transformation: "Adj Shift: Stubborn refusal.",
       },
@@ -6677,7 +7407,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstʌnɪŋli/",
         translation: "Impresionantemente",
         level: "C1",
-        definition: "Amazingly.",
+        definition:
+          "Impresionantemente. In a way that feels astonishing or hard to believe. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stunningly attractive.",
         transformation: "Adj Shift: Stunning attraction.",
       },
@@ -6686,7 +7417,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstjuːpɪdli/",
         translation: "Estúpidamente",
         level: "B1",
-        definition: "Foolishly.",
+        definition:
+          "Estúpidamente. Foolishly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted stupidly.",
         transformation: "Adj Shift: Stupid act.",
       },
@@ -6695,7 +7427,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈstaɪlɪʃli/",
         translation: "Con estilo",
         level: "B2",
-        definition: "Fashionably.",
+        definition:
+          "Con estilo. Fashionably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed stylishly.",
         transformation: "Adj Shift: Stylish dress.",
       },
@@ -6704,7 +7437,8 @@ export const emphasisData: StopData = {
         ipa: "/sʌbˈkɒnʃəsli/",
         translation: "Subconscientemente",
         level: "C1",
-        definition: "Unknowingly.",
+        definition:
+          "Subconscientemente. Unknowingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Knew subconsciously.",
         transformation: "Adj Shift: Subconscious knowledge.",
       },
@@ -6713,7 +7447,8 @@ export const emphasisData: StopData = {
         ipa: "/səbˈdʒɛktɪvli/",
         translation: "Subjetivamente",
         level: "C1",
-        definition: "Personally.",
+        definition:
+          "Subjetivamente. Personally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Viewed subjectively.",
         transformation: "Adj Shift: Subjective view.",
       },
@@ -6722,7 +7457,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsʌbsɪkwəntli/",
         translation: "Posteriormente",
         level: "B2",
-        definition: "Later.",
+        definition:
+          "Posteriormente. Later. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Subsequently died.",
         transformation: "Adj Shift: Subsequent death.",
       },
@@ -6731,7 +7467,8 @@ export const emphasisData: StopData = {
         ipa: "/səbˈstænʃəli/",
         translation: "Sustancialmente",
         level: "C1",
-        definition: "Significantly.",
+        definition:
+          "Sustancialmente. To a noticeable or meaningful degree. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Increased substantially.",
         transformation: "Adj Shift: Substantial increase.",
       },
@@ -6740,7 +7477,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsʌtli/",
         translation: "Sutilmente",
         level: "C2",
-        definition: "Slightly.",
+        definition:
+          "Sutilmente. Slightly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Changed subtly.",
         transformation: "Adj Shift: Subtle change.",
       },
@@ -6749,7 +7487,8 @@ export const emphasisData: StopData = {
         ipa: "/səkˈsɛsfʊli/",
         translation: "Exitosamente",
         level: "B1",
-        definition: "Well.",
+        definition:
+          "Exitosamente. Well. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Completed successfully.",
         transformation: "Adj Shift: Successful completion.",
       },
@@ -6758,7 +7497,8 @@ export const emphasisData: StopData = {
         ipa: "/səkˈsɛsɪvli/",
         translation: "Sucesivamente",
         level: "C2",
-        definition: "Consecutively.",
+        definition:
+          "Sucesivamente. Consecutively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Won successively.",
         transformation: "Adj Shift: Successive wins.",
       },
@@ -6767,7 +7507,8 @@ export const emphasisData: StopData = {
         ipa: "/səkˈsɪŋktli/",
         translation: "Sucintamente",
         level: "C2",
-        definition: "Briefly.",
+        definition:
+          "Sucintamente. Briefly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Put succinctly.",
         transformation: "Adj Shift: Succinct summary.",
       },
@@ -6776,7 +7517,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsʌdnli/",
         translation: "De repente",
         level: "A2",
-        definition: "Quickly.",
+        definition:
+          "De repente. Quickly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stopped suddenly.",
         transformation: "Adj Shift: Sudden stop.",
       },
@@ -6785,7 +7527,8 @@ export const emphasisData: StopData = {
         ipa: "/səˈfɪʃəntli/",
         translation: "Suficientemente",
         level: "B2",
-        definition: "Enough.",
+        definition:
+          "Suficientemente. Enough. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sufficiently recovered.",
         transformation: "Adj Shift: Sufficient recovery.",
       },
@@ -6794,7 +7537,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsuːtəbli/",
         translation: "Adecuadamente",
         level: "B2",
-        definition: "Appropriately.",
+        definition:
+          "Adecuadamente. Appropriately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed suitably.",
         transformation: "Adj Shift: Suitable dress.",
       },
@@ -6803,7 +7547,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈsʌlənli/",
         translation: "Hurañamente",
         level: "C2",
-        definition: "Morosely.",
+        definition:
+          "Hurañamente. Morosely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stared sullenly.",
         transformation: "Adj Shift: Sullen stare.",
       },
@@ -6812,7 +7557,8 @@ export const emphasisData: StopData = {
         ipa: "/suːˈpɜːrbli/",
         translation: "Soberbiamente",
         level: "C1",
-        definition: "Excellently.",
+        definition:
+          "Soberbiamente. Excellently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Played superbly.",
         transformation: "Adj Shift: Superb play.",
       },
@@ -6821,7 +7567,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌsuːpərˈfɪʃəli/",
         translation: "Superficialmente",
         level: "C1",
-        definition: "Slightly.",
+        definition:
+          "Superficialmente. Slightly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Resembles superficially.",
         transformation: "Adj Shift: Superficial resemblance.",
       },
@@ -6830,7 +7577,8 @@ export const emphasisData: StopData = {
         ipa: "/səˈpoʊzɪdli/",
         translation: "Supuestamente",
         level: "B2",
-        definition: "Allegedly.",
+        definition:
+          "Supuestamente. Allegedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Supposedly true.",
         transformation: "Adj Shift: Supposed truth.",
       },
@@ -6839,7 +7587,8 @@ export const emphasisData: StopData = {
         ipa: "/suːˈpriːmli/",
         translation: "Supremamente",
         level: "C1",
-        definition: "Extremely.",
+        definition:
+          "Supremamente. Extremely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Supremely confident.",
         transformation: "Adj Shift: Supreme confidence.",
       },
@@ -6848,7 +7597,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʃʊərli/",
         translation: "Seguramente",
         level: "B2",
-        definition: "Certainly.",
+        definition:
+          "Seguramente. Certainly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Surely you jest.",
         transformation: "Adj Shift: Sure thing.",
       },
@@ -6857,7 +7607,8 @@ export const emphasisData: StopData = {
         ipa: "/sərˈpraɪzɪŋli/",
         translation: "Sorprendentemente",
         level: "B2",
-        definition: "Unexpectedly.",
+        definition:
+          "Sorprendentemente. Unexpectedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Surprisingly good.",
         transformation: "Adj Shift: Surprising result.",
       },
@@ -6866,7 +7617,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌsʌrəpˈtɪʃəsli/",
         translation: "Furtivamente",
         level: "C2",
-        definition: "Secretly.",
+        definition:
+          "Furtivamente. Secretly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Glanced surreptitiously.",
         transformation: "Adj Shift: Surreptitious glance.",
       },
@@ -6875,7 +7627,8 @@ export const emphasisData: StopData = {
         ipa: "/səˈspɪʃəsli/",
         translation: "Sospechosamente",
         level: "B2",
-        definition: "Doubtfully.",
+        definition:
+          "Sospechosamente. Doubtfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Eyed suspiciously.",
         transformation: "Adj Shift: Suspicious eye.",
       },
@@ -6884,7 +7637,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈswiːtli/",
         translation: "Dulcemente",
         level: "B1",
-        definition: "Pleasantly.",
+        definition:
+          "Dulcemente. Pleasantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled sweetly.",
         transformation: "Adj Shift: Sweet smile.",
       },
@@ -6893,7 +7647,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈswɪftli/",
         translation: "Velozmente",
         level: "C1",
-        definition: "Fast.",
+        definition:
+          "Velozmente. Fast. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted swiftly.",
         transformation: "Adj Shift: Swift action.",
       },
@@ -6902,7 +7657,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌsɪmpəˈθɛtɪkli/",
         translation: "Compasivamente",
         level: "B2",
-        definition: "Kindly.",
+        definition:
+          "Compasivamente. Kindly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Listened sympathetically.",
         transformation: "Adj Shift: Sympathetic ear.",
       },
@@ -6911,7 +7667,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌsɪstəˈmætɪkli/",
         translation: "Sistemáticamente",
         level: "C1",
-        definition: "Methodically.",
+        definition:
+          "Sistemáticamente. Methodically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Checked systematically.",
         transformation: "Adj Shift: Systematic check.",
       },
@@ -6924,7 +7681,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtæktfʊli/",
         translation: "Con tacto",
         level: "C1",
-        definition: "Politely.",
+        definition:
+          "Con tacto. Politely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Declined tactfully.",
         transformation: "Adj Shift: Tactful decline.",
       },
@@ -6933,7 +7691,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtændʒəbli/",
         translation: "Tangiblemente",
         level: "C2",
-        definition: "Noticeably.",
+        definition:
+          "Tangiblemente. Noticeably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Tangibly better.",
         transformation: "Adj Shift: Tangible improvement.",
       },
@@ -6942,7 +7701,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈteɪstfʊli/",
         translation: "Con buen gusto",
         level: "C1",
-        definition: "Elegantly.",
+        definition:
+          "Con buen gusto. Elegantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Decorated tastefully.",
         transformation: "Adj Shift: Tasteful decoration.",
       },
@@ -6951,7 +7711,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɪərfʊli/",
         translation: "Entre lágrimas",
         level: "B2",
-        definition: "Crying.",
+        definition:
+          "Entre lágrimas. Crying. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Begged tearfully.",
         transformation: "Adj Shift: Tearful plea.",
       },
@@ -6960,7 +7721,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɛknɪkli/",
         translation: "Técnicamente",
         level: "B2",
-        definition: "Strictly.",
+        definition:
+          "Técnicamente. Strictly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Technically possible.",
         transformation: "Adj Shift: Technical possibility.",
       },
@@ -6969,7 +7731,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtiːdiəsli/",
         translation: "Tediosamente",
         level: "C2",
-        definition: "Boringly.",
+        definition:
+          "Tediosamente. Boringly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Copied tediously.",
         transformation: "Adj Shift: Tedious copying.",
       },
@@ -6978,7 +7741,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌtɛmpərəˈmɛntəli/",
         translation: "Temperamentalmente",
         level: "C2",
-        definition: "By nature.",
+        definition:
+          "Temperamentalmente. By nature. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Temperamentally unsuited.",
         transformation: "Adj Shift: Temperamental nature.",
       },
@@ -6987,7 +7751,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɛmpərɛrɪli/",
         translation: "Temporalmente",
         level: "B2",
-        definition: "Briefly.",
+        definition:
+          "Temporalmente. Briefly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Closed temporarily.",
         transformation: "Adj Shift: Temporary closure.",
       },
@@ -6996,7 +7761,8 @@ export const emphasisData: StopData = {
         ipa: "/təˈneɪʃəsli/",
         translation: "Tenazmente",
         level: "C2",
-        definition: "Persistently.",
+        definition:
+          "Tenazmente. Persistently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fought tenaciously.",
         transformation: "Adj Shift: Tenacious fight.",
       },
@@ -7005,7 +7771,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɛndərli/",
         translation: "Tiernamente",
         level: "B2",
-        definition: "Gently.",
+        definition:
+          "Tiernamente. Gently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Kissed tenderly.",
         transformation: "Adj Shift: Tender kiss.",
       },
@@ -7014,7 +7781,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɛnsli/",
         translation: "Tensamente",
         level: "B2",
-        definition: "Nervously.",
+        definition:
+          "Tensamente. Nervously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Waited tensely.",
         transformation: "Adj Shift: Tense wait.",
       },
@@ -7023,7 +7791,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɛntətɪvli/",
         translation: "Tentativamente",
         level: "C2",
-        definition: "Hesitantly.",
+        definition:
+          "Tentativamente. Hesitantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stepped tentatively.",
         transformation: "Adj Shift: Tentative step.",
       },
@@ -7032,7 +7801,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɛrəbli/",
         translation: "Terriblemente",
         level: "B1",
-        definition: "Very.",
+        definition:
+          "Terriblemente. Used to add strong emphasis and make the statement feel stronger. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Terribly sorry.",
         transformation: "Adj Shift: Terrible sorrow.",
       },
@@ -7041,7 +7811,8 @@ export const emphasisData: StopData = {
         ipa: "/təˈrɪfɪkli/",
         translation: "Estupendamente",
         level: "C1",
-        definition: "Extremely.",
+        definition:
+          "Estupendamente. Extremely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Terrifically fast.",
         transformation: "Adj Shift: Terrific speed.",
       },
@@ -7050,7 +7821,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɜːrsli/",
         translation: "Secamente",
         level: "C2",
-        definition: "Briefly.",
+        definition:
+          "Secamente. Briefly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Answered tersely.",
         transformation: "Adj Shift: Terse answer.",
       },
@@ -7059,7 +7831,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈθæŋkfʊli/",
         translation: "Afortunadamente",
         level: "B2",
-        definition: "Luckily.",
+        definition:
+          "Afortunadamente. Luckily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Thankfully, no one hurt.",
         transformation: "Adj Shift: Thankful relief.",
       },
@@ -7068,7 +7841,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌθɪəˈrɛtɪkli/",
         translation: "Teóricamente",
         level: "B2",
-        definition: "In theory.",
+        definition:
+          "Teóricamente. In theory. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Theoretically possible.",
         transformation: "Adj Shift: Theoretical possibility.",
       },
@@ -7077,7 +7851,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈθɪkli/",
         translation: "Densamente",
         level: "B2",
-        definition: "Heavily.",
+        definition:
+          "Densamente. Heavily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Thickly wooded.",
         transformation: "Adj Shift: Thick woods.",
       },
@@ -7086,7 +7861,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈθɪnli/",
         translation: "Finamente",
         level: "B2",
-        definition: "Sparsely.",
+        definition:
+          "Finamente. Sparsely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Thinly populated.",
         transformation: "Adj Shift: Thin population.",
       },
@@ -7095,7 +7871,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈθʌrəli/",
         translation: "A fondo",
         level: "C1",
-        definition: "Completely.",
+        definition:
+          "A fondo. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Thoroughly enjoyed.",
         transformation: "Adj Shift: Thorough enjoyment.",
       },
@@ -7104,7 +7881,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈθɔːtfʊli/",
         translation: "Pensativamente",
         level: "B2",
-        definition: "Considerately.",
+        definition:
+          "Pensativamente. Considerately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked thoughtfully.",
         transformation: "Adj Shift: Thoughtful look.",
       },
@@ -7113,7 +7891,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈθrɛtnɪŋli/",
         translation: "Amenazadoramente",
         level: "C1",
-        definition: "Menacingly.",
+        definition:
+          "Amenazadoramente. Menacingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Growled threateningly.",
         transformation: "Adj Shift: Threatening growl.",
       },
@@ -7122,7 +7901,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtaɪtli/",
         translation: "Apretadamente",
         level: "B1",
-        definition: "Firmly.",
+        definition:
+          "Apretadamente. Firmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Held tightly.",
         transformation: "Adj Shift: Tight hold.",
       },
@@ -7131,7 +7911,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɪmɪdli/",
         translation: "Tímidamente",
         level: "C1",
-        definition: "Shyly.",
+        definition:
+          "Tímidamente. Shyly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Knocked timidly.",
         transformation: "Adj Shift: Timid knock.",
       },
@@ -7140,7 +7921,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtaɪərləsli/",
         translation: "Incansablemente",
         level: "C2",
-        definition: "Unceasingly.",
+        definition:
+          "Incansablemente. Unceasingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Worked tirelessly.",
         transformation: "Adj Shift: Tireless work.",
       },
@@ -7149,7 +7931,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɒlərəntli/",
         translation: "Tolerantemente",
         level: "B2",
-        definition: "Patiently.",
+        definition:
+          "Tolerantemente. Patiently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled tolerantly.",
         transformation: "Adj Shift: Tolerant smile.",
       },
@@ -7158,7 +7941,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɒpɪkli/",
         translation: "Tópicamente",
         level: "C2",
-        definition: "Locally/Currently.",
+        definition:
+          "Tópicamente. Locally/Currently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Applied topically.",
         transformation: "Adj Shift: Topical application.",
       },
@@ -7167,7 +7951,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtoʊtəli/",
         translation: "Totalmente",
         level: "A2",
-        definition: "Completely.",
+        definition:
+          "Totalmente. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Totally different.",
         transformation: "Adj Shift: Total difference.",
       },
@@ -7176,7 +7961,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtʌtʃɪŋli/",
         translation: "Conmovedoramente",
         level: "C2",
-        definition: "Movingly.",
+        definition:
+          "Conmovedoramente. Movingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke touchingly.",
         transformation: "Adj Shift: Touching speech.",
       },
@@ -7185,7 +7971,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtʌfli/",
         translation: "Duramente",
         level: "C1",
-        definition: "Firmly.",
+        definition:
+          "Duramente. Firmly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Negotiated toughly.",
         transformation: "Adj Shift: Tough negotiation.",
       },
@@ -7194,7 +7981,8 @@ export const emphasisData: StopData = {
         ipa: "/trəˈdɪʃənəli/",
         translation: "Tradicionalmente",
         level: "B1",
-        definition: "Customarily.",
+        definition:
+          "Tradicionalmente. Customarily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Traditionally eaten.",
         transformation: "Adj Shift: Traditional food.",
       },
@@ -7203,7 +7991,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtrædʒɪkli/",
         translation: "Trágicamente",
         level: "B2",
-        definition: "Sadly.",
+        definition:
+          "Trágicamente. Sadly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Died tragically.",
         transformation: "Adj Shift: Tragic death.",
       },
@@ -7212,7 +8001,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtræŋkwɪli/",
         translation: "Tranquilamente",
         level: "C2",
-        definition: "Peacefully.",
+        definition:
+          "Tranquilamente. Peacefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Lived tranquilly.",
         transformation: "Adj Shift: Tranquil life.",
       },
@@ -7221,7 +8011,8 @@ export const emphasisData: StopData = {
         ipa: "/trænsˈpærəntli/",
         translation: "Transparentemente",
         level: "C2",
-        definition: "Clearly.",
+        definition:
+          "Transparentemente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Transparently honest.",
         transformation: "Adj Shift: Transparent honesty.",
       },
@@ -7230,7 +8021,8 @@ export const emphasisData: StopData = {
         ipa: "/trɪˈmɛndəsli/",
         translation: "Tremendamente",
         level: "B2",
-        definition: "Greatly.",
+        definition:
+          "Tremendamente. Greatly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Tremendously successful.",
         transformation: "Adj Shift: Tremendous success.",
       },
@@ -7239,7 +8031,8 @@ export const emphasisData: StopData = {
         ipa: "/traɪˈʌmfəntli/",
         translation: "Triunfalmente",
         level: "C1",
-        definition: "Victoriously.",
+        definition:
+          "Triunfalmente. Victoriously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Marched triumphantly.",
         transformation: "Adj Shift: Triumphant march.",
       },
@@ -7248,7 +8041,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtruːli/",
         translation: "Verdaderamente",
         level: "A2",
-        definition: "Sincerely.",
+        definition:
+          "Verdaderamente. Sincerely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Truly sorry.",
         transformation: "Adj Shift: True sorrow.",
       },
@@ -7257,7 +8051,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtrʌstfʊli/",
         translation: "Con confianza",
         level: "C1",
-        definition: "Trustingly.",
+        definition:
+          "Con confianza. Trustingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Followed trustfully.",
         transformation: "Adj Shift: Trustful follower.",
       },
@@ -7266,7 +8061,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtruːθfʊli/",
         translation: "Verazmente",
         level: "B2",
-        definition: "Honestly.",
+        definition:
+          "Verazmente. Honestly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Answered truthfully.",
         transformation: "Adj Shift: Truthful answer.",
       },
@@ -7275,7 +8071,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈtɪpɪkli/",
         translation: "Típicamente",
         level: "B1",
-        definition: "Usually.",
+        definition:
+          "Típicamente. Usually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Typically late.",
         transformation: "Adj Shift: Typical lateness.",
       },
@@ -7288,7 +8085,8 @@ export const emphasisData: StopData = {
         ipa: "/juːˈbɪkwɪtəsli/",
         translation: "Omnipresentemente",
         level: "C2",
-        definition: "Everywhere.",
+        definition:
+          "Omnipresentemente. Everywhere. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Found ubiquitously.",
         transformation: "Adj Shift: Ubiquitous presence.",
       },
@@ -7297,7 +8095,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʌltɪmətli/",
         translation: "Fundamentalmente",
         level: "B2",
-        definition: "Finally.",
+        definition:
+          "Fundamentalmente. Finally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ultimately responsible.",
         transformation: "Adj Shift: Ultimate responsibility.",
       },
@@ -7306,7 +8105,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnəˈbæʃtli/",
         translation: "Descaradamente",
         level: "C2",
-        definition: "Shamelessly.",
+        definition:
+          "Descaradamente. Shamelessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Wept unabashedly.",
         transformation: "Adj Shift: Unabashed weeping.",
       },
@@ -7315,7 +8115,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnəˈkaʊntəbli/",
         translation: "Inexplicablemente",
         level: "C2",
-        definition: "Strangely.",
+        definition:
+          "Inexplicablemente. In a way that feels unusual or hard to explain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Vanished unaccountably.",
         transformation: "Adj Shift: Unaccountable act.",
       },
@@ -7324,7 +8125,8 @@ export const emphasisData: StopData = {
         ipa: "/juːˈnænɪməsli/",
         translation: "Unánimemente",
         level: "C1",
-        definition: "By everyone.",
+        definition:
+          "Unánimemente. By everyone. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Agreed unanimously.",
         transformation: "Adj Shift: Unanimous agreement.",
       },
@@ -7333,7 +8135,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈbɛərəbli/",
         translation: "Insoportablemente",
         level: "B2",
-        definition: "Intolerably.",
+        definition:
+          "Insoportablemente. Intolerably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Unbearably hot.",
         transformation: "Adj Shift: Unbearable heat.",
       },
@@ -7342,7 +8145,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnbɪˈliːvəbli/",
         translation: "Increíblemente",
         level: "B2",
-        definition: "Incredibly.",
+        definition:
+          "Increíblemente. Incredibly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Unbelievably lucky.",
         transformation: "Adj Shift: Unbelievable luck.",
       },
@@ -7351,7 +8155,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈkænɪli/",
         translation: "Misteriosamente",
         level: "C2",
-        definition: "Strangely.",
+        definition:
+          "Misteriosamente. In a way that feels unusual or hard to explain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Resembled uncannily.",
         transformation: "Adj Shift: Uncanny resemblance.",
       },
@@ -7360,7 +8165,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈsɜːrtnli/",
         translation: "Inciertamente",
         level: "C1",
-        definition: "Hesitantly.",
+        definition:
+          "Inciertamente. Hesitantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Paused uncertainly.",
         transformation: "Adj Shift: Uncertain pause.",
       },
@@ -7369,7 +8175,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnkærəktəˈrɪstɪkli/",
         translation: "Atípicamente",
         level: "C2",
-        definition: "Unusually.",
+        definition:
+          "Atípicamente. Unusually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Quiet uncharacteristically.",
         transformation: "Adj Shift: Uncharacteristic quiet.",
       },
@@ -7378,7 +8185,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnkənˈdɪʃənəli/",
         translation: "Incondicionalmente",
         level: "C1",
-        definition: "Without limits.",
+        definition:
+          "Incondicionalmente. Without limits. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Loved unconditionally.",
         transformation: "Adj Shift: Unconditional love.",
       },
@@ -7387,7 +8195,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈkɒnʃəsli/",
         translation: "Inconscientemente",
         level: "B2",
-        definition: "Unknowingly.",
+        definition:
+          "Inconscientemente. Unknowingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Reacted unconsciously.",
         transformation: "Adj Shift: Unconscious reaction.",
       },
@@ -7396,7 +8205,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnkənˈtroʊləbli/",
         translation: "Incontrolablemente",
         level: "B2",
-        definition: "Wildly.",
+        definition:
+          "Incontrolablemente. Wildly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Shaking uncontrollably.",
         transformation: "Adj Shift: Uncontrollable shaking.",
       },
@@ -7405,7 +8215,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌndɪˈnaɪəbli/",
         translation: "Innegablemente",
         level: "C1",
-        definition: "Indisputably.",
+        definition:
+          "Innegablemente. Indisputably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Undeniably true.",
         transformation: "Adj Shift: Undeniable truth.",
       },
@@ -7414,7 +8225,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌndərˈstændəbli/",
         translation: "Comprensiblemente",
         level: "B2",
-        definition: "Naturally.",
+        definition:
+          "Comprensiblemente. Naturally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Understandably upset.",
         transformation: "Adj Shift: Understandable upset.",
       },
@@ -7423,7 +8235,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌndərˈsteɪtɪdli/",
         translation: "Sutilmente",
         level: "C2",
-        definition: "Subtly.",
+        definition:
+          "Sutilmente. Subtly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed understatedly.",
         transformation: "Adj Shift: Understated dress.",
       },
@@ -7432,7 +8245,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌndɪˈzɜːrvɪdli/",
         translation: "Inmerecidamente",
         level: "C2",
-        definition: "Unfairly.",
+        definition:
+          "Inmerecidamente. Unfairly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Punished undeservedly.",
         transformation: "Adj Shift: Undeserved punishment.",
       },
@@ -7441,7 +8255,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈdaʊtɪdli/",
         translation: "Indudablemente",
         level: "B2",
-        definition: "Certainly.",
+        definition:
+          "Indudablemente. Certainly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Undoubtedly the best.",
         transformation: "Adj Shift: Undoubted best.",
       },
@@ -7450,7 +8265,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈiːzɪli/",
         translation: "Inquietamente",
         level: "B2",
-        definition: "Anxiously.",
+        definition:
+          "Inquietamente. Anxiously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Shifted uneasily.",
         transformation: "Adj Shift: Uneasy shift.",
       },
@@ -7459,7 +8275,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnɪˈkwɪvəkəli/",
         translation: "Inequívocamente",
         level: "C2",
-        definition: "Clearly.",
+        definition:
+          "Inequívocamente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stated unequivocally.",
         transformation: "Adj Shift: Unequivocal statement.",
       },
@@ -7468,7 +8285,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnɪkˈspɛktɪdli/",
         translation: "Inesperadamente",
         level: "B2",
-        definition: "Surprisingly.",
+        definition:
+          "Inesperadamente. In a way that feels unexpected or causes surprise. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Arrived unexpectedly.",
         transformation: "Adj Shift: Unexpected arrival.",
       },
@@ -7477,7 +8295,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnˈfɛərli/",
         translation: "Injustamente",
         level: "B1",
-        definition: "Unjustly.",
+        definition:
+          "Injustamente. Unjustly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Treated unfairly.",
         transformation: "Adj Shift: Unfair treatment.",
       },
@@ -7486,7 +8305,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈfeɪlɪŋli/",
         translation: "Infaliblemente",
         level: "C2",
-        definition: "Always.",
+        definition:
+          "Infaliblemente. Always. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Unfailingly polite.",
         transformation: "Adj Shift: Unfailing politeness.",
       },
@@ -7495,7 +8315,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnfərˈɡɛtəbli/",
         translation: "Inolvidablemente",
         level: "C1",
-        definition: "Memorably.",
+        definition:
+          "Inolvidablemente. Memorably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Unforgettably beautiful.",
         transformation: "Adj Shift: Unforgettable beauty.",
       },
@@ -7504,7 +8325,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈfɔːrtʃənətli/",
         translation: "Desafortunadamente",
         level: "A2",
-        definition: "Regrettably.",
+        definition:
+          "Desafortunadamente. Regrettably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Unfortunately, no.",
         transformation: "Adj Shift: Unfortunate fact.",
       },
@@ -7513,7 +8335,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈjuːnɪfɔːrmli/",
         translation: "Uniformemente",
         level: "C1",
-        definition: "Consistently.",
+        definition:
+          "Uniformemente. Consistently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Uniformly excellent.",
         transformation: "Adj Shift: Uniform excellence.",
       },
@@ -7522,7 +8345,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnɪˈmædʒɪnəbli/",
         translation: "Inimaginablemente",
         level: "C2",
-        definition: "Incredibly.",
+        definition:
+          "Inimaginablemente. Incredibly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Unimaginably vast.",
         transformation: "Adj Shift: Unimaginable vastness.",
       },
@@ -7531,7 +8355,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnɪnˈtɛnʃənəli/",
         translation: "Sin querer",
         level: "B2",
-        definition: "Accidentally.",
+        definition:
+          "Sin querer. Accidentally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Did it unintentionally.",
         transformation: "Adj Shift: Unintentional act.",
       },
@@ -7540,7 +8365,8 @@ export const emphasisData: StopData = {
         ipa: "/juˈniːkli/",
         translation: "Únicamente",
         level: "B2",
-        definition: "Distinctively.",
+        definition:
+          "Únicamente. Distinctively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Uniquely qualified.",
         transformation: "Adj Shift: Unique qualification.",
       },
@@ -7549,7 +8375,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌjuːnɪˈvɜːrsəli/",
         translation: "Universalmente",
         level: "B2",
-        definition: "Everywhere.",
+        definition:
+          "Universalmente. Everywhere. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Universally accepted.",
         transformation: "Adj Shift: Universal acceptance.",
       },
@@ -7558,7 +8385,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˌdʒʌstɪˈfaɪəbli/",
         translation: "Injustificadamente",
         level: "C2",
-        definition: "Without cause.",
+        definition:
+          "Injustificadamente. Without cause. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Attacked unjustifiably.",
         transformation: "Adj Shift: Unjustifiable attack.",
       },
@@ -7567,7 +8395,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈkaɪndli/",
         translation: "Desagradablemente",
         level: "B2",
-        definition: "Harshly.",
+        definition:
+          "Desagradablemente. Harshly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke unkindly.",
         transformation: "Adj Shift: Unkind word.",
       },
@@ -7576,7 +8405,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnmɪˈsteɪkəbli/",
         translation: "Inconfundiblemente",
         level: "C1",
-        definition: "Clearly.",
+        definition:
+          "Inconfundiblemente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Unmistakably him.",
         transformation: "Adj Shift: Unmistakable sign.",
       },
@@ -7585,7 +8415,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈnætʃərəli/",
         translation: "Antinaturalmente",
         level: "C1",
-        definition: "Strangely.",
+        definition:
+          "Antinaturalmente. In a way that feels unusual or hard to explain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Twisted unnaturally.",
         transformation: "Adj Shift: Unnatural twist.",
       },
@@ -7594,7 +8425,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈnɛsəsɛrɪli/",
         translation: "Innecesariamente",
         level: "B2",
-        definition: "Needlessly.",
+        definition:
+          "Innecesariamente. Needlessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Worried unnecessarily.",
         transformation: "Adj Shift: Unnecessary worry.",
       },
@@ -7603,7 +8435,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnəbˈtruːsɪvli/",
         translation: "Discretamente",
         level: "C2",
-        definition: "Quietly.",
+        definition:
+          "Discretamente. Quietly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Entered unobtrusively.",
         transformation: "Adj Shift: Unobtrusive entry.",
       },
@@ -7612,7 +8445,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈkwɛstʃənəbli/",
         translation: "Indiscutiblemente",
         level: "C1",
-        definition: "Undeniably.",
+        definition:
+          "Indiscutiblemente. Undeniably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Unquestionably true.",
         transformation: "Adj Shift: Unquestionable truth.",
       },
@@ -7621,7 +8455,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌʌnrɪˈzɜːrvɪdli/",
         translation: "Sin reservas",
         level: "C2",
-        definition: "Completely.",
+        definition:
+          "Sin reservas. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Apologize unreservedly.",
         transformation: "Adj Shift: Unreserved apology.",
       },
@@ -7630,7 +8465,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈsɛlfɪʃli/",
         translation: "Desinteresadamente",
         level: "C1",
-        definition: "Generously.",
+        definition:
+          "Desinteresadamente. Generously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Gave unselfishly.",
         transformation: "Adj Shift: Unselfish gift.",
       },
@@ -7639,7 +8475,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈstɛdɪli/",
         translation: "Inestablemente",
         level: "C1",
-        definition: "Shakily.",
+        definition:
+          "Inestablemente. Shakily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Walked unsteadily.",
         transformation: "Adj Shift: Unsteady walk.",
       },
@@ -7648,7 +8485,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈjuːʒuəli/",
         translation: "Inusualmente",
         level: "B2",
-        definition: "Remarkably.",
+        definition:
+          "Inusualmente. Remarkably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Unusually quiet.",
         transformation: "Adj Shift: Unusual quiet.",
       },
@@ -7657,7 +8495,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈwɪlɪŋli/",
         translation: "De mala gana",
         level: "B2",
-        definition: "Reluctantly.",
+        definition:
+          "De mala gana. In a way that shows unwillingness or resentment. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Went unwillingly.",
         transformation: "Adj Shift: Unwilling participant.",
       },
@@ -7666,7 +8505,8 @@ export const emphasisData: StopData = {
         ipa: "/ʌnˈwɪtɪŋli/",
         translation: "Involuntariamente",
         level: "C2",
-        definition: "Unknowingly.",
+        definition:
+          "Involuntariamente. Unknowingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Insulted unwittingly.",
         transformation: "Adj Shift: Unwitting insult.",
       },
@@ -7675,7 +8515,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʌpwərdli/",
         translation: "Hacia arriba",
         level: "C1",
-        definition: "Rising.",
+        definition:
+          "Hacia arriba. Rising. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Adjusted upwardly.",
         transformation: "Adj Shift: Upward adjustment.",
       },
@@ -7684,7 +8525,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈɜːrdʒəntli/",
         translation: "Urgentemente",
         level: "B2",
-        definition: "Pressingly.",
+        definition:
+          "Urgentemente. Pressingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Needed urgently.",
         transformation: "Adj Shift: Urgent need.",
       },
@@ -7693,7 +8535,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈjuːsfʊli/",
         translation: "Útilmente",
         level: "B1",
-        definition: "Productively.",
+        definition:
+          "Útilmente. Productively. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spent usefully.",
         transformation: "Adj Shift: Useful spending.",
       },
@@ -7702,7 +8545,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈjuːʒuəli/",
         translation: "Usualmente",
         level: "A1",
-        definition: "Normally.",
+        definition:
+          "Usualmente. Normally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Usually go.",
         transformation: "Freq: Usual trip.",
       },
@@ -7711,7 +8555,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈʌtərli/",
         translation: "Totalmente",
         level: "C1",
-        definition: "Completely.",
+        definition:
+          "Totalmente. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Utterly exhausted.",
         transformation: "Adj Shift: Utter exhaustion.",
       },
@@ -7724,7 +8569,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈveɪkəntli/",
         translation: "Con la mirada perdida",
         level: "C2",
-        definition: "Blankly.",
+        definition:
+          "Con la mirada perdida. Blankly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stared vacantly.",
         transformation: "Adj Shift: Vacant stare.",
       },
@@ -7733,7 +8579,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈveɪɡli/",
         translation: "Vagamente",
         level: "B2",
-        definition: "Unclearly.",
+        definition:
+          "Vagamente. Unclearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Remember vaguely.",
         transformation: "Adj Shift: Vague memory.",
       },
@@ -7742,7 +8589,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈveɪnli/",
         translation: "En vano",
         level: "C1",
-        definition: "Uselessly.",
+        definition:
+          "En vano. Uselessly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Tried vainly.",
         transformation: "Adj Shift: Vain attempt.",
       },
@@ -7751,7 +8599,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvæliəntli/",
         translation: "Valientemente",
         level: "C2",
-        definition: "Bravely.",
+        definition:
+          "Valientemente. Bravely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Fought valiantly.",
         transformation: "Adj Shift: Valiant fight.",
       },
@@ -7760,7 +8609,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvælɪdli/",
         translation: "Válidamente",
         level: "C1",
-        definition: "Legally.",
+        definition:
+          "Válidamente. Legally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Argued validly.",
         transformation: "Adj Shift: Valid argument.",
       },
@@ -7769,7 +8619,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɛəriəbli/",
         translation: "Variablemente",
         level: "C1",
-        definition: "Changeably.",
+        definition:
+          "Variablemente. Changeably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted variably.",
         transformation: "Adj Shift: Variable action.",
       },
@@ -7778,7 +8629,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɛəriəsli/",
         translation: "De diversas formas",
         level: "C1",
-        definition: "Differently.",
+        definition:
+          "De diversas formas. Differently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Described variously.",
         transformation: "Adj Shift: Various descriptions.",
       },
@@ -7787,7 +8639,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɑːstli/",
         translation: "Enormemente",
         level: "C1",
-        definition: "Greatly.",
+        definition:
+          "Enormemente. Greatly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Vastly superior.",
         transformation: "Adj Shift: Vast superiority.",
       },
@@ -7796,7 +8649,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈviːəməntli/",
         translation: "Vehementemente",
         level: "C2",
-        definition: "Strongly.",
+        definition:
+          "Vehementemente. Strongly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Denied vehemently.",
         transformation: "Adj Shift: Vehement denial.",
       },
@@ -7805,7 +8659,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɛndʒfʊli/",
         translation: "Vengativamente",
         level: "C2",
-        definition: "Spitefully.",
+        definition:
+          "Vengativamente. Spitefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted vengefully.",
         transformation: "Adj Shift: Vengeful act.",
       },
@@ -7814,7 +8669,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɛnəməsli/",
         translation: "Venenosamente",
         level: "C2",
-        definition: "Spitefully.",
+        definition:
+          "Venenosamente. Spitefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spat venomously.",
         transformation: "Adj Shift: Venomous spit.",
       },
@@ -7823,7 +8679,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɜːrbəli/",
         translation: "Verbalmente",
         level: "B2",
-        definition: "Orally.",
+        definition:
+          "Verbalmente. Orally. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Agreed verbally.",
         transformation: "Adj Shift: Verbal agreement.",
       },
@@ -7832,7 +8689,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɛrɪtəbli/",
         translation: "Verdaderamente",
         level: "C2",
-        definition: "Truly.",
+        definition:
+          "Verdaderamente. Truly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Veritably flew.",
         transformation: "Adj Shift: Veritable flight.",
       },
@@ -7841,7 +8699,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɜːrtɪkli/",
         translation: "Verticalmente",
         level: "B2",
-        definition: "Upright.",
+        definition:
+          "Verticalmente. Upright. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Climbed vertically.",
         transformation: "Adj Shift: Vertical climb.",
       },
@@ -7850,7 +8709,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɛri/",
         translation: "Muy",
         level: "A1",
-        definition: "Extremely.",
+        definition:
+          "Muy. Extremely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Very good.",
         transformation: "Adj Shift: Very much.",
       },
@@ -7859,7 +8719,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɪʃəsli/",
         translation: "Viciosamente",
         level: "C1",
-        definition: "Cruelly.",
+        definition:
+          "Viciosamente. Cruelly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Attacked viciously.",
         transformation: "Adj Shift: Vicious attack.",
       },
@@ -7868,7 +8729,8 @@ export const emphasisData: StopData = {
         ipa: "/vɪkˈtɔːriəsli/",
         translation: "Victoriosamente",
         level: "C1",
-        definition: "Triumphantly.",
+        definition:
+          "Victoriosamente. Triumphantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Returned victoriously.",
         transformation: "Adj Shift: Victorious return.",
       },
@@ -7877,7 +8739,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɪdʒɪləntli/",
         translation: "Vigilantemente",
         level: "C2",
-        definition: "Watchfully.",
+        definition:
+          "Vigilantemente. Watchfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Guarded vigilantly.",
         transformation: "Adj Shift: Vigilant guard.",
       },
@@ -7886,7 +8749,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɪɡərəsli/",
         translation: "Vigorosamente",
         level: "C1",
-        definition: "Energetically.",
+        definition:
+          "Vigorosamente. Energetically. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Shook vigorously.",
         transformation: "Adj Shift: Vigorous shake.",
       },
@@ -7895,7 +8759,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvaɪlli/",
         translation: "Vilmente",
         level: "C2",
-        definition: "Nastily.",
+        definition:
+          "Vilmente. Nastily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Treated vilely.",
         transformation: "Adj Shift: Vile treatment.",
       },
@@ -7904,7 +8769,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɪlənəsli/",
         translation: "Villanamente",
         level: "C2",
-        definition: "Wickedly.",
+        definition:
+          "Villanamente. Wickedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Laughed villainously.",
         transformation: "Adj Shift: Villainous laugh.",
       },
@@ -7913,7 +8779,8 @@ export const emphasisData: StopData = {
         ipa: "/vɪnˈdɪktɪvli/",
         translation: "Vengativamente",
         level: "C2",
-        definition: "Revengefully.",
+        definition:
+          "Vengativamente. Revengefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted vindictively.",
         transformation: "Adj Shift: Vindictive act.",
       },
@@ -7922,7 +8789,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvaɪələntli/",
         translation: "Violentamente",
         level: "B2",
-        definition: "Forcefully.",
+        definition:
+          "Violentamente. Forcefully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Shook violently.",
         transformation: "Adj Shift: Violent shake.",
       },
@@ -7931,7 +8799,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɜːrtʃuəli/",
         translation: "Virtualmente",
         level: "B2",
-        definition: "Almost.",
+        definition:
+          "Virtualmente. Almost. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Virtually impossible.",
         transformation: "Adj Shift: Virtual impossibility.",
       },
@@ -7940,7 +8809,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɜːrtʃuəsli/",
         translation: "Virtuosamente",
         level: "C2",
-        definition: "Righteously.",
+        definition:
+          "Virtuosamente. Righteously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Lived virtuously.",
         transformation: "Adj Shift: Virtuous life.",
       },
@@ -7949,7 +8819,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɪzəbli/",
         translation: "Visiblemente",
         level: "B2",
-        definition: "Noticeably.",
+        definition:
+          "Visiblemente. Noticeably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Visibly shaken.",
         transformation: "Adj Shift: Visible shake.",
       },
@@ -7958,7 +8829,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɪʒuəli/",
         translation: "Visualmente",
         level: "B2",
-        definition: "By sight.",
+        definition:
+          "Visualmente. By sight. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Visually stunning.",
         transformation: "Adj Shift: Visual stunner.",
       },
@@ -7967,7 +8839,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvaɪtəli/",
         translation: "Vitalmente",
         level: "B2",
-        definition: "Crucially.",
+        definition:
+          "Vitalmente. Crucially. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Vitally important.",
         transformation: "Adj Shift: Vital importance.",
       },
@@ -7976,7 +8849,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvɪvɪdli/",
         translation: "Vívidamente",
         level: "B2",
-        definition: "Clearly.",
+        definition:
+          "Vívidamente. Clearly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Remember vividly.",
         transformation: "Adj Shift: Vivid memory.",
       },
@@ -7985,7 +8859,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈvoʊkəli/",
         translation: "Vocalmente",
         level: "C1",
-        definition: "Loudly.",
+        definition:
+          "Vocalmente. Loudly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Supported vocally.",
         transformation: "Adj Shift: Vocal support.",
       },
@@ -7994,7 +8869,8 @@ export const emphasisData: StopData = {
         ipa: "/voʊˈkeɪʃənəli/",
         translation: "Vocacionalmente",
         level: "C2",
-        definition: "Job-wise.",
+        definition:
+          "Vocacionalmente. Job-wise. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Trained vocationally.",
         transformation: "Adj Shift: Vocational training.",
       },
@@ -8003,7 +8879,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌvɒlənˈtɛrɪli/",
         translation: "Voluntariamente",
         level: "B2",
-        definition: "Willingly.",
+        definition:
+          "Voluntariamente. Willingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Left voluntarily.",
         transformation: "Adj Shift: Voluntary departure.",
       },
@@ -8012,7 +8889,8 @@ export const emphasisData: StopData = {
         ipa: "/vəˈreɪʃəsli/",
         translation: "Vorazmente",
         level: "C2",
-        definition: "Greedily.",
+        definition:
+          "Vorazmente. Greedily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Read voraciously.",
         transformation: "Adj Shift: Voracious reader.",
       },
@@ -8025,7 +8903,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɔːrmli/",
         translation: "Cálidamente",
         level: "B1",
-        definition: "Friendly.",
+        definition:
+          "Cálidamente. Friendly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Greeted warmly.",
         transformation: "Adj Shift: Warm greeting.",
       },
@@ -8034,7 +8913,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɛərɪli/",
         translation: "Cautelosamente",
         level: "C2",
-        definition: "Cautiously.",
+        definition:
+          "Cautelosamente. Cautiously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Eyed warily.",
         transformation: "Adj Shift: Wary eye.",
       },
@@ -8043,7 +8923,8 @@ export const emphasisData: StopData = {
         ipa: "/wɔːrm ˈhɑːrtɪdli/",
         translation: "Con buen corazón",
         level: "C1",
-        definition: "Kindly.",
+        definition:
+          "Con buen corazón. Kindly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Helped warm-heartedly.",
         transformation: "Adj Shift: Warm-hearted help.",
       },
@@ -8052,7 +8933,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈweɪstfʊli/",
         translation: "Derrochadoramente",
         level: "C1",
-        definition: "Extravagantly.",
+        definition:
+          "Derrochadoramente. Extravagantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Used wastefully.",
         transformation: "Adj Shift: Wasteful use.",
       },
@@ -8061,7 +8943,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɒtʃfʊli/",
         translation: "Vigilantemente",
         level: "C1",
-        definition: "Observantly.",
+        definition:
+          "Vigilantemente. Observantly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Stood watchfully.",
         transformation: "Adj Shift: Watchful stance.",
       },
@@ -8070,7 +8953,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwiːkli/",
         translation: "Débilmente",
         level: "B1",
-        definition: "Feebly.",
+        definition:
+          "Débilmente. Feebly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled weakly.",
         transformation: "Adj Shift: Weak smile.",
       },
@@ -8079,7 +8963,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɛlθɪli/",
         translation: "Ricamente",
         level: "C2",
-        definition: "Richly.",
+        definition:
+          "Ricamente. Richly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Lived wealthily.",
         transformation: "Adj Shift: Wealthy life.",
       },
@@ -8088,7 +8973,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɪərɪli/",
         translation: "Cansadamente",
         level: "C2",
-        definition: "Tiredly.",
+        definition:
+          "Cansadamente. Tiredly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Sighed wearily.",
         transformation: "Adj Shift: Weary sigh.",
       },
@@ -8097,7 +8983,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwiːkli/",
         translation: "Semanalmente",
         level: "A2",
-        definition: "Every week.",
+        definition:
+          "Semanalmente. Every week. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Met weekly.",
         transformation: "Freq: Weekly meeting.",
       },
@@ -8106,7 +8993,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwiːpɪli/",
         translation: "Llorosamente",
         level: "C2",
-        definition: "Tearfully.",
+        definition:
+          "Llorosamente. Tearfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Spoke weepily.",
         transformation: "Adj Shift: Weepy voice.",
       },
@@ -8115,7 +9003,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɪərdli/",
         translation: "Extrañamente",
         level: "B2",
-        definition: "Strangely.",
+        definition:
+          "Extrañamente. In a way that feels unusual or hard to explain. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Acted weirdly.",
         transformation: "Adj Shift: Weird act.",
       },
@@ -8124,7 +9013,8 @@ export const emphasisData: StopData = {
         ipa: "/wɛl/",
         translation: "Bien",
         level: "A1",
-        definition: "Good.",
+        definition:
+          "Bien. Good. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Did well.",
         transformation: "Adj Shift: Good job.",
       },
@@ -8133,7 +9023,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɪmzɪkli/",
         translation: "Caprichosamente",
         level: "C2",
-        definition: "Playfully.",
+        definition:
+          "Caprichosamente. Playfully. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled whimsically.",
         transformation: "Adj Shift: Whimsical smile.",
       },
@@ -8142,7 +9033,8 @@ export const emphasisData: StopData = {
         ipa: "/ˌhoʊlˈhɑːrtɪdli/",
         translation: "De todo corazón",
         level: "C1",
-        definition: "Sincerely.",
+        definition:
+          "De todo corazón. Sincerely. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Agreed wholeheartedly.",
         transformation: "Adj Shift: Wholehearted agreement.",
       },
@@ -8151,7 +9043,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈhoʊli/",
         translation: "Totalmente",
         level: "C2",
-        definition: "Completely.",
+        definition:
+          "Totalmente. Completely, with total certainty or no limit. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Wholly owned.",
         transformation: "Adj Shift: Whole ownership.",
       },
@@ -8160,7 +9053,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɪkɪdli/",
         translation: "Malvadamente",
         level: "B2",
-        definition: "Evilly.",
+        definition:
+          "Malvadamente. Evilly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Laughed wickedly.",
         transformation: "Adj Shift: Wicked laugh.",
       },
@@ -8169,7 +9063,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwaɪdli/",
         translation: "Ampliamente",
         level: "B2",
-        definition: "Broadly.",
+        definition:
+          "Ampliamente. Broadly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Widely known.",
         transformation: "Adj Shift: Wide fame.",
       },
@@ -8178,7 +9073,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwaɪldli/",
         translation: "Salvaje/Locamente",
         level: "B2",
-        definition: "Uncontrollably.",
+        definition:
+          "Salvaje/Locamente. Uncontrollably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Cheered wildly.",
         transformation: "Adj Shift: Wild cheer.",
       },
@@ -8187,7 +9083,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɪlfʊli/",
         translation: "Intencionadamente",
         level: "C2",
-        definition: "Deliberately.",
+        definition:
+          "Intencionadamente. Deliberately. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Ignored willfully.",
         transformation: "Adj Shift: Willful ignorance.",
       },
@@ -8196,7 +9093,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɪlɪŋli/",
         translation: "Voluntariamente",
         level: "B2",
-        definition: "Readily.",
+        definition:
+          "Voluntariamente. Readily. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Went willingly.",
         transformation: "Adj Shift: Willing goer.",
       },
@@ -8205,7 +9103,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwaɪzli/",
         translation: "Sabiamente",
         level: "B1",
-        definition: "Sensibly.",
+        definition:
+          "Sabiamente. Sensibly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Chose wisely.",
         transformation: "Adj Shift: Wise choice.",
       },
@@ -8214,7 +9113,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɪstfʊli/",
         translation: "Melancólicamente",
         level: "C2",
-        definition: "Longingly.",
+        definition:
+          "Melancólicamente. Longingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Looked wistfully.",
         transformation: "Adj Shift: Wistful look.",
       },
@@ -8223,7 +9123,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɪtɪli/",
         translation: "Ingeniosamente",
         level: "C1",
-        definition: "Cleverly.",
+        definition:
+          "Ingeniosamente. Cleverly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Replied wittily.",
         transformation: "Adj Shift: Witty reply.",
       },
@@ -8232,7 +9133,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwoʊfʊli/",
         translation: "Lamentablemente",
         level: "C2",
-        definition: "Deplorably.",
+        definition:
+          "Lamentablemente. Deplorably. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Woefully inadequate.",
         transformation: "Adj Shift: Woeful inadequacy.",
       },
@@ -8241,7 +9143,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwʌndərfʊli/",
         translation: "Maravillosamente",
         level: "A2",
-        definition: "Greatly.",
+        definition:
+          "Maravillosamente. Greatly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Wonderfully done.",
         transformation: "Adj Shift: Wonderful job.",
       },
@@ -8250,7 +9153,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwʌndrəsli/",
         translation: "Asombrosamente",
         level: "C2",
-        definition: "Amazingly.",
+        definition:
+          "Asombrosamente. In a way that feels astonishing or hard to believe. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Wondrously strange.",
         transformation: "Adj Shift: Wondrous sight.",
       },
@@ -8259,7 +9163,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwʌrɪdli/",
         translation: "Con preocupación",
         level: "B2",
-        definition: "Anxiously.",
+        definition:
+          "Con preocupación. Anxiously. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Asked worriedly.",
         transformation: "Adj Shift: Worried question.",
       },
@@ -8268,7 +9173,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈwɜːrðɪli/",
         translation: "Dignamente",
         level: "C2",
-        definition: "Deservedly.",
+        definition:
+          "Dignamente. Deservedly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Served worthily.",
         transformation: "Adj Shift: Worthy service.",
       },
@@ -8277,7 +9183,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈrɒŋli/",
         translation: "Erróneamente",
         level: "B2",
-        definition: "Incorrectly.",
+        definition:
+          "Erróneamente. Incorrectly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Accused wrongly.",
         transformation: "Adj Shift: Wrong accusation.",
       },
@@ -8286,7 +9193,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈraɪli/",
         translation: "Irónicamente",
         level: "C2",
-        definition: "Dryly.",
+        definition:
+          "Irónicamente. Dryly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Smiled wryly.",
         transformation: "Adj Shift: Wry smile.",
       },
@@ -8299,7 +9207,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈjɪərli/",
         translation: "Anualmente",
         level: "B1",
-        definition: "Annually.",
+        definition:
+          "Anualmente. Annually. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Paid yearly.",
         transformation: "Freq: Yearly payment.",
       },
@@ -8308,7 +9217,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈjɜːrnɪŋli/",
         translation: "Con anhelo",
         level: "C2",
-        definition: "Longingly.",
+        definition:
+          "Con anhelo. Longingly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Gazed yearningly.",
         transformation: "Adj Shift: Yearning gaze.",
       },
@@ -8317,7 +9227,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈjuːθfʊli/",
         translation: "Juvenilmente",
         level: "B2",
-        definition: "With youth.",
+        definition:
+          "Juvenilmente. With youth. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Dressed youthfully.",
         transformation: "Adj Shift: Youthful dress.",
       },
@@ -8330,7 +9241,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈzɛləsli/",
         translation: "Celosamente",
         level: "C2",
-        definition: "Fervently.",
+        definition:
+          "Celosamente. Fervently. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Guarded zealously.",
         transformation: "Adj Shift: Zealous guard.",
       },
@@ -8339,7 +9251,8 @@ export const emphasisData: StopData = {
         ipa: "/ˈzɛstfʊli/",
         translation: "Con entusiasmo",
         level: "C2",
-        definition: "Eagerly.",
+        definition:
+          "Con entusiasmo. Eagerly. Used to emphasize the degree, attitude, or effect of an action or description.",
         examSentence: "Played zestfully.",
         transformation: "Adj Shift: Zestful play.",
       },

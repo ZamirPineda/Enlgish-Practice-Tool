@@ -72,7 +72,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɔːltər/",
         translation: "Alterar",
         level: "B2",
-        definition: "To change slightly.",
+        definition:
+          "Alterar. To change slightly Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The pattern altered significantly.",
       },
       {
@@ -152,7 +153,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/əˈsɛnd/",
         translation: "Ascender",
         level: "C1",
-        definition: "To go up.",
+        definition:
+          "Ascender. To go up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Prices ascended steadily.",
       },
       {
@@ -168,7 +170,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/əˈstɒnɪʃɪŋ/",
         translation: "Asombroso",
         level: "C1",
-        definition: "Extremely surprising.",
+        definition:
+          "Asombroso. Extremely surprising Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "An astonishing rise in profits.",
       },
       {
@@ -176,7 +179,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌæstrəˈnɒmɪkəl/",
         translation: "Astronómico",
         level: "C2",
-        definition: "Extremely large (amount).",
+        definition:
+          "Astronómico. Extremely large (amount) Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Astronomical costs.",
       },
       {
@@ -200,7 +204,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈævərɪdʒ/",
         translation: "Promedio",
         level: "B1",
-        definition: "The mean value.",
+        definition:
+          "Promedio. The mean value Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The average remained stable.",
       },
       {
@@ -208,7 +213,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/əˈbrʌpt/",
         translation: "Abrupto",
         level: "C1",
-        definition: "Sudden and unexpected.",
+        definition:
+          "Abrupto. Sudden and unexpected Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "An abrupt drop in numbers.",
       },
       {
@@ -216,7 +222,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈæbsəluːt/",
         translation: "Absoluto",
         level: "B2",
-        definition: "Total; complete.",
+        definition:
+          "Absoluto. Total; complete Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "An absolute majority.",
       },
       {
@@ -232,7 +239,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/əˈkjuːt/",
         translation: "Agudo",
         level: "C1",
-        definition: "Severe or sharp.",
+        definition:
+          "Agudo. Severe or sharp Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "An acute shortage.",
       },
     ],
@@ -308,7 +316,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/baʊns bæk/",
         translation: "Recuperarse",
         level: "C1",
-        definition: "To recover quickly.",
+        definition:
+          "Recuperarse. To recover quickly Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The economy bounced back.",
       },
       {
@@ -324,7 +333,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/briːf/",
         translation: "Breve",
         level: "B1",
-        definition: "Short in duration.",
+        definition:
+          "Breve. Short in duration Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "A brief period of stability.",
       },
       {
@@ -340,7 +350,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈbrɔːdn/",
         translation: "Ampliar",
         level: "B2",
-        definition: "To become wider.",
+        definition:
+          "Ampliar. To become wider Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The gap broadened.",
       },
       {
@@ -356,7 +367,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/bɪld ʌp/",
         translation: "Acumularse",
         level: "B2",
-        definition: "To increase gradually.",
+        definition:
+          "Acumularse. To increase gradually Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Inventory built up.",
       },
       {
@@ -364,7 +376,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/bʌlk/",
         translation: "Mayor parte",
         level: "C1",
-        definition: "The majority.",
+        definition:
+          "Mayor parte. The majority Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The bulk of the income.",
       },
       {
@@ -372,7 +385,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈbɔɪənt/",
         translation: "Al alza/Boyante",
         level: "C2",
-        definition: "Growing or expanding.",
+        definition:
+          "Al alza/Boyante. Growing or expanding Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "A buoyant market.",
       },
       {
@@ -396,7 +410,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/baɪ kəmˈpærɪsn/",
         translation: "En comparación",
         level: "B2",
-        definition: "When compared.",
+        definition:
+          "En comparación. When compared Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Low by comparison.",
       },
       {
@@ -420,7 +435,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/breɪk ˈiːvən/",
         translation: "Cubrir gastos",
         level: "C1",
-        definition: "Costs equal income.",
+        definition:
+          "Cubrir gastos. Costs equal income Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The company broke even.",
       },
       {
@@ -428,7 +444,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈbreɪkdaʊn/",
         translation: "Desglose",
         level: "B2",
-        definition: "Detailed analysis.",
+        definition:
+          "Desglose. Detailed analysis Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "A breakdown of costs.",
       },
     ],
@@ -440,7 +457,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈkælkjʊleɪt/",
         translation: "Calcular",
         level: "B1",
-        definition: "To determine mathematically.",
+        definition:
+          "Calcular. To determine mathematically Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Calculated the difference.",
       },
       {
@@ -472,7 +490,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsiːlɪŋ/",
         translation: "Techo (límite)",
         level: "C1",
-        definition: "An upper limit.",
+        definition:
+          "Techo (límite). An upper limit Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Hit a ceiling.",
       },
       {
@@ -496,7 +515,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/klaɪm/",
         translation: "Subir",
         level: "B1",
-        definition: "To go up.",
+        definition:
+          "Subir. To go up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Sales climbed steadily.",
       },
       {
@@ -504,7 +524,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kəˈlæps/",
         translation: "Colapsar",
         level: "B2",
-        definition: "To fall suddenly.",
+        definition:
+          "Colapsar. To fall suddenly Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The market collapsed.",
       },
       {
@@ -512,7 +533,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kəmˈbaɪn/",
         translation: "Combinar",
         level: "B1",
-        definition: "To join together.",
+        definition:
+          "Combinar. To join together Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Combined total.",
       },
       {
@@ -528,7 +550,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kəmˈpɛər/",
         translation: "Comparar",
         level: "A2",
-        definition: "To estimate similarity.",
+        definition:
+          "Comparar. To estimate similarity Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Compare the two years.",
       },
       {
@@ -536,7 +559,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kəmˈpærɪsn/",
         translation: "Comparación",
         level: "B1",
-        definition: "The act of comparing.",
+        definition:
+          "Comparación. The act of comparing Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "In comparison to...",
       },
       {
@@ -560,7 +584,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kəmˈpaɪl/",
         translation: "Recopilar",
         level: "C1",
-        definition: "To collect information.",
+        definition:
+          "Recopilar. To collect information Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Data compiled from...",
       },
       {
@@ -568,7 +593,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kəmˈpliːt/",
         translation: "Completo",
         level: "A2",
-        definition: "Total.",
+        definition:
+          "Completo. Total Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "A complete turnaround.",
       },
       {
@@ -576,7 +602,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kəmˈpraɪz/",
         translation: "Comprender/Constituir",
         level: "C1",
-        definition: "To consist of.",
+        definition:
+          "Comprender/Constituir. To consist of Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Women comprise 50%.",
       },
       {
@@ -584,7 +611,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kəmˈpjuːt/",
         translation: "Computar",
         level: "C1",
-        definition: "To calculate.",
+        definition:
+          "Computar. To calculate Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Computed the average.",
       },
       {
@@ -592,7 +620,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈkɒnsəntreɪtɪd/",
         translation: "Concentrado",
         level: "C1",
-        definition: "Gathered together.",
+        definition:
+          "Concentrado. Gathered together Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Concentrated in urban areas.",
       },
       {
@@ -608,7 +637,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kənˈsɪdərəbl/",
         translation: "Considerable",
         level: "B2",
-        definition: "Notably large.",
+        definition:
+          "Considerable. Notably large Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "A considerable amount.",
       },
       {
@@ -616,7 +646,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kənˈsɪstənt/",
         translation: "Consistente",
         level: "B2",
-        definition: "Constant.",
+        definition:
+          "Consistente. Constant Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Consistent growth.",
       },
       {
@@ -624,7 +655,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈkɒnstənt/",
         translation: "Constante",
         level: "B2",
-        definition: "Unchanging.",
+        definition:
+          "Constante. Unchanging Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Remained constant.",
       },
       {
@@ -640,7 +672,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kənˈsjuːm/",
         translation: "Consumir",
         level: "B2",
-        definition: "To use up.",
+        definition:
+          "Consumir. To use up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Consumed 50% of resources.",
       },
       {
@@ -648,7 +681,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/kənˈtɪnjuː/",
         translation: "Continuar",
         level: "A2",
-        definition: "To keep going.",
+        definition:
+          "Continuar. To keep going Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Continued to rise.",
       },
       {
@@ -656,7 +690,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈkɒntrɑːst/",
         translation: "Contraste",
         level: "B1",
-        definition: "Difference.",
+        definition:
+          "Contraste. Difference Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "In contrast to...",
       },
       {
@@ -684,7 +719,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈdeɪtə/",
         translation: "Datos",
         level: "B1",
-        definition: "Facts and statistics.",
+        definition:
+          "Datos. Facts and statistics Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Decade",
@@ -698,70 +734,80 @@ export const ieltsTrendsData: StopData = {
         ipa: "/diːˈsɛləreɪt/",
         translation: "Desacelerar",
         level: "C1",
-        definition: "To slow down.",
+        definition:
+          "Desacelerar. To slow down Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Decline",
         ipa: "/dɪˈklaɪn/",
         translation: "Declive/Disminuir",
         level: "B2",
-        definition: "To go down.",
+        definition:
+          "Declive/Disminuir. To go down Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Decrease",
         ipa: "/dɪˈkriːs/",
         translation: "Disminuir",
         level: "B1",
-        definition: "To become smaller.",
+        definition:
+          "Disminuir. To become smaller Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Deep",
         ipa: "/diːp/",
         translation: "Profundo",
         level: "B1",
-        definition: "Far down.",
+        definition:
+          "Profundo. Far down Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Deficit",
         ipa: "/ˈdɛfɪsɪt/",
         translation: "Déficit",
         level: "C1",
-        definition: "Shortage.",
+        definition:
+          "Déficit. Shortage Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Degree",
         ipa: "/dɪˈɡriː/",
         translation: "Grado",
         level: "B1",
-        definition: "Amount or level.",
+        definition:
+          "Grado. Amount or level Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Demand",
         ipa: "/dɪˈmɑːnd/",
         translation: "Demanda",
         level: "B1",
-        definition: "Desire for goods.",
+        definition:
+          "Demanda. Desire for goods Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Demonstrate",
         ipa: "/ˈdɛmənstreɪt/",
         translation: "Demostrar",
         level: "B2",
-        definition: "To show clearly.",
+        definition:
+          "Demostrar. To show clearly Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Dense",
         ipa: "/dɛns/",
         translation: "Denso",
         level: "C1",
-        definition: "Closely compacted.",
+        definition:
+          "Denso. Closely compacted Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Density",
         ipa: "/ˈdɛnsɪti/",
         translation: "Densidad",
         level: "C1",
-        definition: "Mass per volume.",
+        definition:
+          "Densidad. Mass per volume Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Depict",
@@ -782,14 +828,16 @@ export const ieltsTrendsData: StopData = {
         ipa: "/dɪˈraɪv/",
         translation: "Derivar",
         level: "C1",
-        definition: "To obtain from.",
+        definition:
+          "Derivar. To obtain from Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Descend",
         ipa: "/dɪˈsɛnd/",
         translation: "Descender",
         level: "C1",
-        definition: "To go down.",
+        definition:
+          "Descender. To go down Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Describe",
@@ -803,49 +851,56 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈdiːteɪl/",
         translation: "Detalle",
         level: "B1",
-        definition: "Small fact.",
+        definition:
+          "Detalle. Small fact Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Deteriorate",
         ipa: "/dɪˈtɪəriəreɪt/",
         translation: "Deteriorarse",
         level: "C1",
-        definition: "To become worse.",
+        definition:
+          "Deteriorarse. To become worse Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Deviation",
         ipa: "/ˌdiːviˈeɪʃən/",
         translation: "Desviación",
         level: "C2",
-        definition: "Departure from standard.",
+        definition:
+          "Desviación. Departure from standard Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Diagram",
         ipa: "/ˈdaɪəɡræm/",
         translation: "Diagrama",
         level: "B1",
-        definition: "Drawing showing arrangement.",
+        definition:
+          "Diagrama. Drawing showing arrangement Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Differ",
         ipa: "/ˈdɪfər/",
         translation: "Diferir",
         level: "B1",
-        definition: "To be unlike.",
+        definition:
+          "Diferir. To be unlike Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Difference",
         ipa: "/ˈdɪfrəns/",
         translation: "Diferencia",
         level: "A1",
-        definition: "Point of unlikeness.",
+        definition:
+          "Diferencia. Point of unlikeness Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Differential",
         ipa: "/ˌdɪfəˈrɛnʃəl/",
         translation: "Diferencial",
         level: "C2",
-        definition: "Difference between things.",
+        definition:
+          "Diferencial. Difference between things Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Diminish",
@@ -859,49 +914,56 @@ export const ieltsTrendsData: StopData = {
         ipa: "/dɪp/",
         translation: "Bajada breve",
         level: "C1",
-        definition: "Brief drop.",
+        definition:
+          "Bajada breve. Brief drop Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Direct",
         ipa: "/dɪˈrɛkt/",
         translation: "Directo",
         level: "B1",
-        definition: "Straight.",
+        definition:
+          "Directo. Straight Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Direction",
         ipa: "/dɪˈrɛkʃən/",
         translation: "Dirección",
         level: "A2",
-        definition: "Course taken.",
+        definition:
+          "Dirección. Course taken Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Discrepancy",
         ipa: "/dɪˈskrɛpənsi/",
         translation: "Discrepancia",
         level: "C2",
-        definition: "Lack of compatibility.",
+        definition:
+          "Discrepancia. Lack of compatibility Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Discrete",
         ipa: "/dɪˈskriːt/",
         translation: "Discreto (separado)",
         level: "C2",
-        definition: "Individually separate.",
+        definition:
+          "Discreto (separado). Individually separate Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Disparity",
         ipa: "/dɪˈspærɪti/",
         translation: "Disparidad",
         level: "C2",
-        definition: "Great difference.",
+        definition:
+          "Disparidad. Great difference Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Display",
         ipa: "/dɪˈspleɪ/",
         translation: "Mostrar",
         level: "B1",
-        definition: "To show.",
+        definition:
+          "Mostrar. To show Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Disproportionate",
@@ -915,105 +977,120 @@ export const ieltsTrendsData: StopData = {
         ipa: "/dɪˈstɪŋkt/",
         translation: "Distinto",
         level: "B2",
-        definition: "Recognizably different.",
+        definition:
+          "Distinto. Recognizably different Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Distribute",
         ipa: "/dɪˈstrɪbjuːt/",
         translation: "Distribuir",
         level: "B2",
-        definition: "To share out.",
+        definition:
+          "Distribuir. To share out Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Diverge",
         ipa: "/daɪˈvɜːrdʒ/",
         translation: "Divergir",
         level: "C2",
-        definition: "Separate from route.",
+        definition:
+          "Divergir. Separate from route Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Dive",
         ipa: "/daɪv/",
         translation: "Caer en picado",
         level: "C1",
-        definition: "Plunge steeply.",
+        definition:
+          "Caer en picado. Plunge steeply Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Dominant",
         ipa: "/ˈdɒmɪnənt/",
         translation: "Dominante",
         level: "C1",
-        definition: "Most important.",
+        definition:
+          "Dominante. Most important Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Double",
         ipa: "/ˈdʌbəl/",
         translation: "Doblar",
         level: "B1",
-        definition: "Multiply by two.",
+        definition:
+          "Doblar. Multiply by two Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Downward",
         ipa: "/ˈdaʊnwərd/",
         translation: "Hacia abajo",
         level: "B2",
-        definition: "Moving down.",
+        definition:
+          "Hacia abajo. Moving down Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Drastic",
         ipa: "/ˈdræstɪk/",
         translation: "Drástico",
         level: "C1",
-        definition: "Extreme effect.",
+        definition:
+          "Drástico. Extreme effect Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Dramatic",
         ipa: "/drəˈmætɪk/",
         translation: "Dramático",
         level: "B2",
-        definition: "Sudden and striking.",
+        definition:
+          "Dramático. Sudden and striking Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Drift",
         ipa: "/drɪft/",
         translation: "Deriva",
         level: "C1",
-        definition: "Slow movement.",
+        definition:
+          "Deriva. Slow movement Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Drop",
         ipa: "/drɒp/",
         translation: "Caer",
         level: "A2",
-        definition: "Fall.",
+        definition:
+          "Caer. Fall Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Dual",
         ipa: "/ˈdjuːəl/",
         translation: "Dual",
         level: "C1",
-        definition: "Consisting of two.",
+        definition:
+          "Dual. Consisting of two Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Duration",
         ipa: "/djʊˈreɪʃən/",
         translation: "Duración",
         level: "B2",
-        definition: "Time something lasts.",
+        definition:
+          "Duración. Time something lasts Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Dwindle",
         ipa: "/ˈdwɪndl/",
         translation: "Menguar",
         level: "C2",
-        definition: "Diminish gradually.",
+        definition:
+          "Menguar. Diminish gradually Often used in formal English to describe data, change, comparison, or trends.",
       },
       {
         word: "Dynamic",
         ipa: "/daɪˈnæmɪk/",
         translation: "Dinámico",
         level: "B2",
-        definition: "Constant change.",
+        definition:
+          "Dinámico. Constant change Often used in formal English to describe data, change, comparison, or trends.",
       },
     ],
   },
@@ -1024,7 +1101,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈklɪps/",
         translation: "Eclipsar/Superar",
         level: "C2",
-        definition: "To surpass.",
+        definition:
+          "Eclipsar/Superar. To surpass Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Solar eclipses wind power.",
       },
       {
@@ -1040,7 +1118,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈfɛkt/",
         translation: "Efecto",
         level: "B1",
-        definition: "Result.",
+        definition:
+          "Efecto. Result Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The effect of the policy.",
       },
       {
@@ -1048,7 +1127,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈfɛktɪv/",
         translation: "Efectivo",
         level: "B2",
-        definition: "Successful.",
+        definition:
+          "Efectivo. Successful Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Effective measures.",
       },
       {
@@ -1056,7 +1136,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈfɪʃənsi/",
         translation: "Eficiencia",
         level: "C1",
-        definition: "Productivity.",
+        definition:
+          "Eficiencia. Productivity Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Improved efficiency.",
       },
       {
@@ -1064,7 +1145,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈlæps/",
         translation: "Transcurrir",
         level: "C2",
-        definition: "Pass (time).",
+        definition:
+          "Transcurrir. Pass (time) Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Time elapsed.",
       },
       {
@@ -1072,7 +1154,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɛlɪmənt/",
         translation: "Elemento",
         level: "B1",
-        definition: "Part.",
+        definition:
+          "Elemento. Part Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Key element.",
       },
       {
@@ -1080,7 +1163,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɛlɪveɪt/",
         translation: "Elevar",
         level: "C1",
-        definition: "Lift up.",
+        definition:
+          "Elevar. Lift up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Elevated numbers.",
       },
       {
@@ -1088,7 +1172,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈlɪmɪneɪt/",
         translation: "Eliminar",
         level: "C1",
-        definition: "Remove.",
+        definition:
+          "Eliminar. Remove Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Eliminate errors.",
       },
       {
@@ -1096,7 +1181,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈmɜːrdʒ/",
         translation: "Surgir",
         level: "B2",
-        definition: "Become apparent.",
+        definition:
+          "Surgir. Become apparent Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Trends emerged.",
       },
       {
@@ -1104,7 +1190,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɛmfəsɪs/",
         translation: "Énfasis",
         level: "B2",
-        definition: "Importance.",
+        definition:
+          "Énfasis. Importance Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Place emphasis on.",
       },
       {
@@ -1112,7 +1199,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɛmfəsaɪz/",
         translation: "Enfatizar",
         level: "B2",
-        definition: "Stress.",
+        definition:
+          "Enfatizar. Stress Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Emphasize the growth.",
       },
       {
@@ -1120,7 +1208,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɛmˈpɪrɪkəl/",
         translation: "Empírico",
         level: "C2",
-        definition: "Based on observation.",
+        definition:
+          "Empírico. Based on observation Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Empirical data.",
       },
       {
@@ -1128,7 +1217,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈkʌmpəs/",
         translation: "Abarcar",
         level: "C1",
-        definition: "Include.",
+        definition:
+          "Abarcar. Include Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Encompasses all sectors.",
       },
       {
@@ -1136,7 +1226,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈkaʊntər/",
         translation: "Encontrar",
         level: "B2",
-        definition: "Meet unexpectedly.",
+        definition:
+          "Encontrar. Meet unexpectedly Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Encountered a drop.",
       },
       {
@@ -1144,7 +1235,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈkʌrɪdʒ/",
         translation: "Fomentar",
         level: "B1",
-        definition: "Stimulate.",
+        definition:
+          "Fomentar. Stimulate Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Encourages spending.",
       },
       {
@@ -1152,7 +1244,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɛnd/",
         translation: "Fin",
         level: "A1",
-        definition: "Conclusion.",
+        definition:
+          "Fin. Conclusion Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "At the end of the period.",
       },
       {
@@ -1160,7 +1253,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈhɑːns/",
         translation: "Mejorar/Realzar",
         level: "C1",
-        definition: "Improve quality.",
+        definition:
+          "Mejorar/Realzar. Improve quality Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Enhanced performance.",
       },
       {
@@ -1168,7 +1262,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈnɔːrməs/",
         translation: "Enorme",
         level: "B2",
-        definition: "Very large.",
+        definition:
+          "Enorme. Very large Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Enormous increase.",
       },
       {
@@ -1176,7 +1271,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈʃʊər/",
         translation: "Asegurar",
         level: "B2",
-        definition: "Make certain.",
+        definition:
+          "Asegurar. Make certain Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Ensure stability.",
       },
       {
@@ -1184,7 +1280,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈteɪl/",
         translation: "Implicar",
         level: "C1",
-        definition: "Involve.",
+        definition:
+          "Implicar. Involve Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Entails risk.",
       },
       {
@@ -1192,7 +1289,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈiːkwəl/",
         translation: "Igual",
         level: "A2",
-        definition: "Same.",
+        definition:
+          "Igual. Same Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Equal amounts.",
       },
       {
@@ -1200,7 +1298,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/iˈkwɒlɪti/",
         translation: "Igualdad",
         level: "C1",
-        definition: "Being equal.",
+        definition:
+          "Igualdad. Being equal Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Gender equality.",
       },
       {
@@ -1208,7 +1307,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌiːkwɪˈlɪbriəm/",
         translation: "Equilibrio",
         level: "C2",
-        definition: "Balance.",
+        definition:
+          "Equilibrio. Balance Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Market equilibrium.",
       },
       {
@@ -1216,7 +1316,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈkwɪvələnt/",
         translation: "Equivalente",
         level: "C1",
-        definition: "Equal in value.",
+        definition:
+          "Equivalente. Equal in value Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Equivalent to.",
       },
       {
@@ -1224,7 +1325,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈrætɪk/",
         translation: "Errático",
         level: "C2",
-        definition: "Unpredictable.",
+        definition:
+          "Errático. Unpredictable Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Erratic behavior.",
       },
       {
@@ -1232,7 +1334,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɛskəleɪt/",
         translation: "Escalar",
         level: "C1",
-        definition: "Increase rapidly.",
+        definition:
+          "Escalar. Increase rapidly Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Prices escalated.",
       },
       {
@@ -1240,7 +1343,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈsɛnʃəl/",
         translation: "Esencial",
         level: "B2",
-        definition: "Necessary.",
+        definition:
+          "Esencial. Necessary Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Essential factor.",
       },
       {
@@ -1248,7 +1352,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈstæblɪʃ/",
         translation: "Establecer",
         level: "B2",
-        definition: "Set up.",
+        definition:
+          "Establecer. Set up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Established a pattern.",
       },
       {
@@ -1256,7 +1361,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɛstɪmeɪt/",
         translation: "Estimar",
         level: "B2",
-        definition: "Rough calculation.",
+        definition:
+          "Estimar. Rough calculation Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Estimated figures.",
       },
       {
@@ -1264,7 +1370,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈvæljʊeɪt/",
         translation: "Evaluar",
         level: "C1",
-        definition: "Assess.",
+        definition:
+          "Evaluar. Assess Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Evaluate the data.",
       },
       {
@@ -1272,7 +1379,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈvɒlv/",
         translation: "Evolucionar",
         level: "C1",
-        definition: "Develop.",
+        definition:
+          "Evolucionar. Develop Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Evolved over time.",
       },
       {
@@ -1280,7 +1388,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪɡˈzækt/",
         translation: "Exacto",
         level: "B1",
-        definition: "Precise.",
+        definition:
+          "Exacto. Precise Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Exact number.",
       },
       {
@@ -1288,7 +1397,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈsiːd/",
         translation: "Exceder",
         level: "C1",
-        definition: "Go beyond.",
+        definition:
+          "Exceder. Go beyond Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Exceeded expectations.",
       },
       {
@@ -1296,7 +1406,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɛksɛs/",
         translation: "Exceso",
         level: "C1",
-        definition: "Too much.",
+        definition:
+          "Exceso. Too much Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "In excess of.",
       },
       {
@@ -1304,7 +1415,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈskluːsɪv/",
         translation: "Exclusivo",
         level: "C1",
-        definition: "Restricted.",
+        definition:
+          "Exclusivo. Restricted Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Exclusive data.",
       },
       {
@@ -1312,7 +1424,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪɡˈzɪbɪt/",
         translation: "Exhibir/Mostrar",
         level: "C1",
-        definition: "Show.",
+        definition:
+          "Exhibir/Mostrar. Show Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Exhibited growth.",
       },
       {
@@ -1320,7 +1433,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈspænd/",
         translation: "Expandir",
         level: "B1",
-        definition: "Grow larger.",
+        definition:
+          "Expandir. Grow larger Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Expanded rapidly.",
       },
       {
@@ -1328,7 +1442,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈspænʃən/",
         translation: "Expansión",
         level: "B2",
-        definition: "Growth.",
+        definition:
+          "Expansión. Growth Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Market expansion.",
       },
       {
@@ -1344,7 +1459,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈspɛndɪtʃər/",
         translation: "Gasto",
         level: "C1",
-        definition: "Money spent.",
+        definition:
+          "Gasto. Money spent Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Public expenditure.",
       },
       {
@@ -1352,7 +1468,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈsplɪsɪt/",
         translation: "Explícito",
         level: "C2",
-        definition: "Clear.",
+        definition:
+          "Explícito. Clear Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Explicit trend.",
       },
       {
@@ -1360,7 +1477,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈsploʊd/",
         translation: "Explotar (crecer)",
         level: "B1",
-        definition: "Increase suddenly.",
+        definition:
+          "Explotar (crecer). Increase suddenly Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Demand exploded.",
       },
       {
@@ -1368,7 +1486,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌɛkspoʊˈnɛnʃəl/",
         translation: "Exponencial",
         level: "C2",
-        definition: "Very rapid.",
+        definition:
+          "Exponencial. Very rapid Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Exponential growth.",
       },
       {
@@ -1376,7 +1495,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɛkspɔːrt/",
         translation: "Exportar",
         level: "B1",
-        definition: "Send goods out.",
+        definition:
+          "Exportar. Send goods out Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Exports rose.",
       },
       {
@@ -1384,7 +1504,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈstɛnd/",
         translation: "Extender",
         level: "B2",
-        definition: "Stretch.",
+        definition:
+          "Extender. Stretch Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Extended period.",
       },
       {
@@ -1392,7 +1513,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈstɛnsɪv/",
         translation: "Extenso",
         level: "C1",
-        definition: "Large scale.",
+        definition:
+          "Extenso. Large scale Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Extensive damage.",
       },
       {
@@ -1400,7 +1522,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈstɛnt/",
         translation: "Grado/Alcance",
         level: "B2",
-        definition: "Degree.",
+        definition:
+          "Grado/Alcance. Degree Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "To some extent.",
       },
       {
@@ -1408,7 +1531,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈstɜːrnl/",
         translation: "Externo",
         level: "B2",
-        definition: "Outside.",
+        definition:
+          "Externo. Outside Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "External factors.",
       },
       {
@@ -1416,7 +1540,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɛkstrə/",
         translation: "Extra",
         level: "A1",
-        definition: "Additional.",
+        definition:
+          "Extra. Additional Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Extra cost.",
       },
       {
@@ -1424,7 +1549,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɛkstrækt/",
         translation: "Extraer",
         level: "C1",
-        definition: "Remove.",
+        definition:
+          "Extraer. Remove Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Extract data.",
       },
       {
@@ -1432,7 +1558,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈstrɔːrdnɛri/",
         translation: "Extraordinario",
         level: "B2",
-        definition: "Unusual.",
+        definition:
+          "Extraordinario. Unusual Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Extraordinary rise.",
       },
       {
@@ -1440,7 +1567,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪkˈstriːm/",
         translation: "Extremo",
         level: "B2",
-        definition: "Severe.",
+        definition:
+          "Extremo. Severe Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Extreme changes.",
       },
     ],
@@ -1452,7 +1580,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfæktər/",
         translation: "Factor",
         level: "B2",
-        definition: "Influence.",
+        definition:
+          "Factor. Influence Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Key factor.",
       },
       {
@@ -1460,7 +1589,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/feɪd/",
         translation: "Desvanecerse",
         level: "C1",
-        definition: "Disappear gradually.",
+        definition:
+          "Desvanecerse. Disappear gradually Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Trend faded.",
       },
       {
@@ -1468,7 +1598,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/fɔːl/",
         translation: "Caer",
         level: "A2",
-        definition: "Drop.",
+        definition:
+          "Caer. Drop Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Fell sharply.",
       },
       {
@@ -1476,7 +1607,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfiːtʃər/",
         translation: "Característica",
         level: "B2",
-        definition: "Attribute.",
+        definition:
+          "Característica. Attribute Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Main feature.",
       },
       {
@@ -1484,7 +1616,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfɪɡjər/",
         translation: "Cifra",
         level: "B1",
-        definition: "Number.",
+        definition:
+          "Cifra. Number Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Sales figures.",
       },
       {
@@ -1492,7 +1625,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfaɪnl/",
         translation: "Final",
         level: "A2",
-        definition: "Last.",
+        definition:
+          "Final. Last Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Final result.",
       },
       {
@@ -1500,7 +1634,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/faɪˈnænʃəl/",
         translation: "Financiero",
         level: "B2",
-        definition: "Money related.",
+        definition:
+          "Financiero. Money related Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Financial crisis.",
       },
       {
@@ -1508,7 +1643,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfɪnɪʃ/",
         translation: "Terminar",
         level: "A1",
-        definition: "End.",
+        definition:
+          "Terminar. End Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Finished high.",
       },
       {
@@ -1516,7 +1652,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/fɪkst/",
         translation: "Fijo",
         level: "B2",
-        definition: "Stable.",
+        definition:
+          "Fijo. Stable Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Fixed rate.",
       },
       {
@@ -1524,7 +1661,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/flæt/",
         translation: "Plano",
         level: "B2",
-        definition: "Level.",
+        definition:
+          "Plano. Level Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Remained flat.",
       },
       {
@@ -1532,7 +1670,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈflætn aʊt/",
         translation: "Aplanarse",
         level: "C1",
-        definition: "Level off.",
+        definition:
+          "Aplanarse. Level off Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Curve flattened out.",
       },
       {
@@ -1540,7 +1679,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈflʌktʃu.eɪt/",
         translation: "Fluctuar",
         level: "C1",
-        definition: "Vary.",
+        definition:
+          "Fluctuar. Vary Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Fluctuated wildly.",
       },
       {
@@ -1548,7 +1688,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌflʌktʃuˈeɪʃən/",
         translation: "Fluctuación",
         level: "C1",
-        definition: "Variation.",
+        definition:
+          "Fluctuación. Variation Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Showed fluctuation.",
       },
       {
@@ -1556,7 +1697,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfoʊkəs/",
         translation: "Enfoque",
         level: "B2",
-        definition: "Center.",
+        definition:
+          "Enfoque. Center Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Focus on growth.",
       },
       {
@@ -1564,7 +1706,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfɒloʊ/",
         translation: "Seguir",
         level: "A1",
-        definition: "Come after.",
+        definition:
+          "Seguir. Come after Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Followed a pattern.",
       },
       {
@@ -1572,7 +1715,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfɔːrkɑːst/",
         translation: "Pronóstico",
         level: "B2",
-        definition: "Prediction.",
+        definition:
+          "Pronóstico. Prediction Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Sales forecast.",
       },
       {
@@ -1580,7 +1724,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/fɔːrm/",
         translation: "Formar",
         level: "A1",
-        definition: "Shape.",
+        definition:
+          "Formar. Shape Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Formed a peak.",
       },
       {
@@ -1588,7 +1733,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfɔːrmər/",
         translation: "Anterior",
         level: "B2",
-        definition: "Previous.",
+        definition:
+          "Anterior. Previous Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Former level.",
       },
       {
@@ -1596,7 +1742,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfrækʃən/",
         translation: "Fracción",
         level: "C1",
-        definition: "Small part.",
+        definition:
+          "Fracción. Small part Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "A fraction of.",
       },
       {
@@ -1604,7 +1751,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfriːkwənt/",
         translation: "Frecuente",
         level: "B2",
-        definition: "Often.",
+        definition:
+          "Frecuente. Often Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Frequent changes.",
       },
       {
@@ -1612,7 +1760,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/fjuːəl/",
         translation: "Impulsar (fig)",
         level: "C1",
-        definition: "Stimulate.",
+        definition:
+          "Impulsar (fig). Stimulate Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Fueled growth.",
       },
       {
@@ -1620,7 +1769,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/fʊlˈfɪl/",
         translation: "Cumplir",
         level: "C1",
-        definition: "Satisfy.",
+        definition:
+          "Cumplir. Satisfy Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Fulfilled demand.",
       },
       {
@@ -1628,7 +1778,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfʌŋkʃən/",
         translation: "Función",
         level: "B2",
-        definition: "Purpose.",
+        definition:
+          "Función. Purpose Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Function of time.",
       },
       {
@@ -1636,7 +1787,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌfʌndəˈmɛntl/",
         translation: "Fundamental",
         level: "C1",
-        definition: "Basic.",
+        definition:
+          "Fundamental. Basic Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Fundamental shift.",
       },
       {
@@ -1644,7 +1796,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈfɜːrðər/",
         translation: "Más/Adicional",
         level: "B1",
-        definition: "More.",
+        definition:
+          "Más/Adicional. More Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Further increase.",
       },
     ],
@@ -1656,7 +1809,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɡeɪn/",
         translation: "Ganar",
         level: "B2",
-        definition: "Increase.",
+        definition:
+          "Ganar. Increase Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Gained momentum.",
       },
       {
@@ -1664,7 +1818,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɡæp/",
         translation: "Brecha",
         level: "B2",
-        definition: "Difference.",
+        definition:
+          "Brecha. Difference Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Gap widened.",
       },
       {
@@ -1672,7 +1827,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɡæðər/",
         translation: "Reunir",
         level: "B2",
-        definition: "Collect.",
+        definition:
+          "Reunir. Collect Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Gathered data.",
       },
       {
@@ -1680,7 +1836,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈdʒɛnərəl/",
         translation: "General",
         level: "B1",
-        definition: "Overall.",
+        definition:
+          "General. Overall Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "General trend.",
       },
       {
@@ -1688,7 +1845,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈdʒɛnəreɪt/",
         translation: "Generar",
         level: "B2",
-        definition: "Produce.",
+        definition:
+          "Generar. Produce Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Generated profit.",
       },
       {
@@ -1696,7 +1854,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɡloʊbəl/",
         translation: "Global",
         level: "B2",
-        definition: "Worldwide.",
+        definition:
+          "Global. Worldwide Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Global market.",
       },
       {
@@ -1704,7 +1863,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɡoʊ daʊn/",
         translation: "Bajar",
         level: "A2",
-        definition: "Decrease.",
+        definition:
+          "Bajar. Decrease Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Went down.",
       },
       {
@@ -1712,7 +1872,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɡoʊ ʌp/",
         translation: "Subir",
         level: "A2",
-        definition: "Increase.",
+        definition:
+          "Subir. Increase Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Went up.",
       },
       {
@@ -1720,7 +1881,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɡoʊl/",
         translation: "Meta",
         level: "B1",
-        definition: "Target.",
+        definition:
+          "Meta. Target Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reached goal.",
       },
       {
@@ -1728,7 +1890,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɡrædʒuəl/",
         translation: "Gradual",
         level: "B2",
-        definition: "Slow.",
+        definition:
+          "Gradual. Slow Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Gradual rise.",
       },
       {
@@ -1736,7 +1899,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɡrɑːf/",
         translation: "Gráfico",
         level: "A2",
-        definition: "Chart.",
+        definition:
+          "Gráfico. Chart Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "As seen in the graph.",
       },
       {
@@ -1744,7 +1908,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɡreɪt/",
         translation: "Grande",
         level: "A1",
-        definition: "Large.",
+        definition:
+          "Grande. Large Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Great deal.",
       },
       {
@@ -1752,7 +1917,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɡroʊs/",
         translation: "Bruto",
         level: "C1",
-        definition: "Total.",
+        definition:
+          "Bruto. Total Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Gross income.",
       },
       {
@@ -1760,7 +1926,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɡroʊ/",
         translation: "Crecer",
         level: "A2",
-        definition: "Increase.",
+        definition:
+          "Crecer. Increase Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Grew rapidly.",
       },
       {
@@ -1768,7 +1935,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɡroʊθ/",
         translation: "Crecimiento",
         level: "B2",
-        definition: "Increase.",
+        definition:
+          "Crecimiento. Increase Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Steady growth.",
       },
     ],
@@ -1780,7 +1948,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/hɑːf/",
         translation: "Mitad",
         level: "A1",
-        definition: "50%.",
+        definition:
+          "Mitad. 50% Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Cut in half.",
       },
       {
@@ -1788,7 +1957,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/hɔːlt/",
         translation: "Detenerse",
         level: "C1",
-        definition: "Stop.",
+        definition:
+          "Detenerse. Stop Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Came to a halt.",
       },
       {
@@ -1796,7 +1966,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/hæv/",
         translation: "Reducir a la mitad",
         level: "C1",
-        definition: "Reduce by 50%.",
+        definition:
+          "Reducir a la mitad. Reduce by 50% Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Halved in size.",
       },
       {
@@ -1804,7 +1975,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈhɑːrdli/",
         translation: "Apenas",
         level: "B2",
-        definition: "Barely.",
+        definition:
+          "Apenas. Barely Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Hardly changed.",
       },
       {
@@ -1812,7 +1984,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈhɛvi/",
         translation: "Pesado/Fuerte",
         level: "B1",
-        definition: "Great degree.",
+        definition:
+          "Pesado/Fuerte. Great degree Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Heavy decline.",
       },
       {
@@ -1820,7 +1993,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/haɪt/",
         translation: "Altura/Pico",
         level: "B2",
-        definition: "Top.",
+        definition:
+          "Altura/Pico. Top Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reached new heights.",
       },
       {
@@ -1828,7 +2002,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/haɪ/",
         translation: "Alto/Máximo",
         level: "A2",
-        definition: "Tall/Peak.",
+        definition:
+          "Alto/Máximo. Tall/Peak Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Record high.",
       },
       {
@@ -1836,7 +2011,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈhaɪlaɪt/",
         translation: "Destacar",
         level: "B2",
-        definition: "Emphasize.",
+        definition:
+          "Destacar. Emphasize Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Highlights the fact.",
       },
       {
@@ -1844,7 +2020,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/hɪt/",
         translation: "Alcanzar/Golpear",
         level: "B1",
-        definition: "Reach.",
+        definition:
+          "Alcanzar/Golpear. Reach Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Hit a peak.",
       },
       {
@@ -1852,7 +2029,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/hɪt ə loʊ/",
         translation: "Tocar mínimo",
         level: "C1",
-        definition: "Lowest point.",
+        definition:
+          "Tocar mínimo. Lowest point Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Hit a low of 5.",
       },
       {
@@ -1860,7 +2038,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌhɒrɪˈzɒntl/",
         translation: "Horizontal",
         level: "C1",
-        definition: "Flat.",
+        definition:
+          "Horizontal. Flat Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Horizontal axis.",
       },
       {
@@ -1868,7 +2047,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈhɒvər/",
         translation: "Rondar/Oscilar",
         level: "C1",
-        definition: "Stay around.",
+        definition:
+          "Rondar/Oscilar. Stay around Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Hovered around 10%.",
       },
       {
@@ -1876,7 +2056,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/hjuːdʒ/",
         translation: "Enorme",
         level: "B1",
-        definition: "Very big.",
+        definition:
+          "Enorme. Very big Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Huge difference.",
       },
     ],
@@ -1888,7 +2069,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/aɪˈdɛntɪkəl/",
         translation: "Idéntico",
         level: "B2",
-        definition: "Same.",
+        definition:
+          "Idéntico. Same Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Identical rates.",
       },
       {
@@ -1896,7 +2078,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/aɪˈdɛntɪfaɪ/",
         translation: "Identificar",
         level: "B2",
-        definition: "Recognize.",
+        definition:
+          "Identificar. Recognize Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Identify trends.",
       },
       {
@@ -1904,7 +2087,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪləstreɪt/",
         translation: "Ilustrar",
         level: "B2",
-        definition: "Show.",
+        definition:
+          "Ilustrar. Show Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Illustrates the change.",
       },
       {
@@ -1912,7 +2096,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪmpækt/",
         translation: "Impacto",
         level: "B2",
-        definition: "Effect.",
+        definition:
+          "Impacto. Effect Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Big impact.",
       },
       {
@@ -1920,7 +2105,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪmˈplaɪ/",
         translation: "Implicar",
         level: "C1",
-        definition: "Suggest.",
+        definition:
+          "Implicar. Suggest Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Implies growth.",
       },
       {
@@ -1928,7 +2114,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪmpɔːrt/",
         translation: "Importar",
         level: "B1",
-        definition: "Bring in.",
+        definition:
+          "Importar. Bring in Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Imports rose.",
       },
       {
@@ -1936,7 +2123,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪmˈpruːv/",
         translation: "Mejorar",
         level: "A2",
-        definition: "Get better.",
+        definition:
+          "Mejorar. Get better Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Improved steadily.",
       },
       {
@@ -1944,7 +2132,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪmˈpruːvmənt/",
         translation: "Mejora",
         level: "B1",
-        definition: "Betterment.",
+        definition:
+          "Mejora. Betterment Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Showed improvement.",
       },
       {
@@ -1952,7 +2141,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈklaɪn/",
         translation: "Inclinarse/Subir",
         level: "C2",
-        definition: "Slope up.",
+        definition:
+          "Inclinarse/Subir. Slope up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Inclined upwards.",
       },
       {
@@ -1960,7 +2150,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈkluːd/",
         translation: "Incluir",
         level: "A2",
-        definition: "Contain.",
+        definition:
+          "Incluir. Contain Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Includes data.",
       },
       {
@@ -1968,7 +2159,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪnkʌm/",
         translation: "Ingresos",
         level: "B2",
-        definition: "Earnings.",
+        definition:
+          "Ingresos. Earnings Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Income levels.",
       },
       {
@@ -1976,7 +2168,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌɪnkənˈsɪstənt/",
         translation: "Inconsistente",
         level: "C1",
-        definition: "Not steady.",
+        definition:
+          "Inconsistente. Not steady Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Inconsistent data.",
       },
       {
@@ -1984,7 +2177,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈkriːs/",
         translation: "Aumentar",
         level: "A2",
-        definition: "Go up.",
+        definition:
+          "Aumentar. Go up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Increased by 5%.",
       },
       {
@@ -1992,7 +2186,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪnkrəmənt/",
         translation: "Incremento",
         level: "C2",
-        definition: "Increase.",
+        definition:
+          "Incremento. Increase Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Small increments.",
       },
       {
@@ -2000,7 +2195,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪndɛks/",
         translation: "Índice",
         level: "C1",
-        definition: "Indicator.",
+        definition:
+          "Índice. Indicator Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Price index.",
       },
       {
@@ -2008,7 +2204,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪndɪkeɪt/",
         translation: "Indicar",
         level: "B2",
-        definition: "Show.",
+        definition:
+          "Indicar. Show Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Indicates a fall.",
       },
       {
@@ -2016,7 +2213,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌɪndɪˈvɪdʒuəl/",
         translation: "Individual",
         level: "B1",
-        definition: "Single.",
+        definition:
+          "Individual. Single Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Individual cases.",
       },
       {
@@ -2024,7 +2222,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈdʌstriəl/",
         translation: "Industrial",
         level: "B2",
-        definition: "Manufacturing.",
+        definition:
+          "Industrial. Manufacturing Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Industrial output.",
       },
       {
@@ -2032,7 +2231,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈɛvɪtəbli/",
         translation: "Inevitablemente",
         level: "C1",
-        definition: "Unavoidably.",
+        definition:
+          "Inevitablemente. Unavoidably Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Inevitably rose.",
       },
       {
@@ -2040,7 +2240,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈfɜːr/",
         translation: "Inferir",
         level: "C2",
-        definition: "Deduce.",
+        definition:
+          "Inferir. Deduce Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Can infer that...",
       },
       {
@@ -2048,7 +2249,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈfleɪʃən/",
         translation: "Inflación",
         level: "B2",
-        definition: "Price rise.",
+        definition:
+          "Inflación. Price rise Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Inflation rate.",
       },
       {
@@ -2056,7 +2258,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪnfluəns/",
         translation: "Influencia",
         level: "B2",
-        definition: "Effect.",
+        definition:
+          "Influencia. Effect Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Influenced by.",
       },
       {
@@ -2064,7 +2267,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈnɪʃəl/",
         translation: "Inicial",
         level: "B2",
-        definition: "First.",
+        definition:
+          "Inicial. First Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Initial value.",
       },
       {
@@ -2072,7 +2276,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪnpʊt/",
         translation: "Entrada/Aporte",
         level: "C1",
-        definition: "Contribution.",
+        definition:
+          "Entrada/Aporte. Contribution Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Data input.",
       },
       {
@@ -2080,7 +2285,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sɪɡˈnɪfɪkənt/",
         translation: "Significativo",
         level: "B2",
-        definition: "Important.",
+        definition:
+          "Significativo. Important Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Significant change.",
       },
       {
@@ -2088,7 +2294,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌɪnsɪɡˈnɪfɪkənt/",
         translation: "Insignificante",
         level: "C1",
-        definition: "Tiny.",
+        definition:
+          "Insignificante. Tiny Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Insignificant drop.",
       },
       {
@@ -2096,7 +2303,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌɪnstəˈbɪlɪti/",
         translation: "Inestabilidad",
         level: "C1",
-        definition: "Unsteady.",
+        definition:
+          "Inestabilidad. Unsteady Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Market instability.",
       },
       {
@@ -2104,7 +2312,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌɪntərˈmɪtənt/",
         translation: "Intermitente",
         level: "C2",
-        definition: "Sporadic.",
+        definition:
+          "Intermitente. Sporadic Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Intermittent growth.",
       },
       {
@@ -2112,7 +2321,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌɪntərˈsɛkt/",
         translation: "Intersectar",
         level: "C1",
-        definition: "Cross.",
+        definition:
+          "Intersectar. Cross Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Lines intersect.",
       },
       {
@@ -2120,7 +2330,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪntərvəl/",
         translation: "Intervalo",
         level: "C1",
-        definition: "Gap.",
+        definition:
+          "Intervalo. Gap Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Time intervals.",
       },
       {
@@ -2128,7 +2339,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈvɛəriəbli/",
         translation: "Invariablemente",
         level: "C2",
-        definition: "Always.",
+        definition:
+          "Invariablemente. Always Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Invariably high.",
       },
       {
@@ -2136,7 +2348,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɪnvɜːrs/",
         translation: "Inverso",
         level: "C2",
-        definition: "Opposite.",
+        definition:
+          "Inverso. Opposite Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Inverse relation.",
       },
       {
@@ -2144,7 +2357,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪnˈvɛstmənt/",
         translation: "Inversión",
         level: "B2",
-        definition: "Money put in.",
+        definition:
+          "Inversión. Money put in Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Return on investment.",
       },
       {
@@ -2152,7 +2366,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɪˈrɛɡjʊlər/",
         translation: "Irregular",
         level: "C1",
-        definition: "Uneven.",
+        definition:
+          "Irregular. Uneven Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Irregular pattern.",
       },
     ],
@@ -2164,7 +2379,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/læk/",
         translation: "Carecer",
         level: "B1",
-        definition: "Be without.",
+        definition:
+          "Carecer. Be without Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Lack of growth.",
       },
       {
@@ -2172,7 +2388,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/læɡ/",
         translation: "Quedarse atrás",
         level: "C1",
-        definition: "Fall behind.",
+        definition:
+          "Quedarse atrás. Fall behind Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Lagged behind.",
       },
       {
@@ -2180,7 +2397,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/lɑːrdʒ/",
         translation: "Grande",
         level: "A1",
-        definition: "Big.",
+        definition:
+          "Grande. Big Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Large increase.",
       },
       {
@@ -2188,7 +2406,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈlɑːrdʒli/",
         translation: "En gran medida",
         level: "C1",
-        definition: "Mostly.",
+        definition:
+          "En gran medida. Mostly Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Largely due to.",
       },
       {
@@ -2196,7 +2415,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/lɑːst/",
         translation: "Durar/Último",
         level: "A2",
-        definition: "Endure.",
+        definition:
+          "Durar/Último. Endure Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Lasted two years.",
       },
       {
@@ -2204,7 +2424,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/leɪt/",
         translation: "Tardío",
         level: "A2",
-        definition: "End of period.",
+        definition:
+          "Tardío. End of period Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Late 90s.",
       },
       {
@@ -2212,7 +2433,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/lɔːntʃ/",
         translation: "Lanzar",
         level: "B2",
-        definition: "Start.",
+        definition:
+          "Lanzar. Start Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Product launch.",
       },
       {
@@ -2220,7 +2442,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/liːd/",
         translation: "Liderar",
         level: "B1",
-        definition: "Be first.",
+        definition:
+          "Liderar. Be first Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Leading cause.",
       },
       {
@@ -2228,7 +2451,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/liːp/",
         translation: "Saltar",
         level: "C1",
-        definition: "Jump high.",
+        definition:
+          "Saltar. Jump high Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Leaped to 10%.",
       },
       {
@@ -2236,7 +2460,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/liːst/",
         translation: "Menos",
         level: "A2",
-        definition: "Smallest.",
+        definition:
+          "Menos. Smallest Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Least popular.",
       },
       {
@@ -2244,7 +2469,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/lɛs/",
         translation: "Menos",
         level: "A1",
-        definition: "Smaller amount.",
+        definition:
+          "Menos. Smaller amount Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Less than.",
       },
       {
@@ -2252,7 +2478,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈlɛvəl/",
         translation: "Nivel",
         level: "B1",
-        definition: "Amount.",
+        definition:
+          "Nivel. Amount Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "High level.",
       },
       {
@@ -2260,7 +2487,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈlɛvəl ɒf/",
         translation: "Nivelarse",
         level: "C1",
-        definition: "Stabilize.",
+        definition:
+          "Nivelarse. Stabilize Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Leveled off.",
       },
       {
@@ -2268,7 +2496,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈlaɪkli/",
         translation: "Probable",
         level: "B1",
-        definition: "Probable.",
+        definition:
+          "Probable. Probable Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Likely to rise.",
       },
       {
@@ -2276,7 +2505,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈlɪmɪt/",
         translation: "Límite",
         level: "B1",
-        definition: "Cap.",
+        definition:
+          "Límite. Cap Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reached limit.",
       },
       {
@@ -2284,7 +2514,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/laɪn ɡrɑːf/",
         translation: "Gráfico de líneas",
         level: "B1",
-        definition: "Chart type.",
+        definition:
+          "Gráfico de líneas. Chart type Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The line graph.",
       },
       {
@@ -2292,7 +2523,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈlɪniər/",
         translation: "Lineal",
         level: "C2",
-        definition: "Straight line.",
+        definition:
+          "Lineal. Straight line Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Linear growth.",
       },
       {
@@ -2300,7 +2532,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/lɪŋk/",
         translation: "Vínculo",
         level: "B1",
-        definition: "Connection.",
+        definition:
+          "Vínculo. Connection Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Linked to.",
       },
       {
@@ -2308,7 +2541,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈlɪtl/",
         translation: "Poco",
         level: "A1",
-        definition: "Small.",
+        definition:
+          "Poco. Small Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Little change.",
       },
       {
@@ -2316,7 +2550,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈloʊkəl/",
         translation: "Local",
         level: "B1",
-        definition: "Nearby.",
+        definition:
+          "Local. Nearby Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Local market.",
       },
       {
@@ -2324,7 +2559,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/loʊˈkeɪt/",
         translation: "Ubicar",
         level: "B1",
-        definition: "Find.",
+        definition:
+          "Ubicar. Find Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Located at.",
       },
       {
@@ -2332,7 +2568,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/lɒŋ tɜːrm/",
         translation: "A largo plazo",
         level: "B2",
-        definition: "Long time.",
+        definition:
+          "A largo plazo. Long time Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Long-term trend.",
       },
       {
@@ -2340,7 +2577,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/lʊk/",
         translation: "Mirar",
         level: "A1",
-        definition: "Observe.",
+        definition:
+          "Mirar. Observe Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Look at the chart.",
       },
       {
@@ -2348,7 +2586,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/luːz/",
         translation: "Perder",
         level: "A2",
-        definition: "Drop.",
+        definition:
+          "Perder. Drop Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Lost value.",
       },
       {
@@ -2356,7 +2595,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/lɒs/",
         translation: "Pérdida",
         level: "B1",
-        definition: "Deficit.",
+        definition:
+          "Pérdida. Deficit Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Net loss.",
       },
       {
@@ -2364,7 +2604,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/loʊ/",
         translation: "Bajo/Mínimo",
         level: "A2",
-        definition: "Small amount.",
+        definition:
+          "Bajo/Mínimo. Small amount Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "All-time low.",
       },
       {
@@ -2372,7 +2613,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈloʊər/",
         translation: "Bajar/Inferior",
         level: "B1",
-        definition: "Reduce.",
+        definition:
+          "Bajar/Inferior. Reduce Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Lowered costs.",
       },
     ],
@@ -2384,7 +2626,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmæɡnɪtjuːd/",
         translation: "Magnitud",
         level: "C2",
-        definition: "Size.",
+        definition:
+          "Magnitud. Size Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Order of magnitude.",
       },
       {
@@ -2392,7 +2635,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/meɪn/",
         translation: "Principal",
         level: "A2",
-        definition: "Chief.",
+        definition:
+          "Principal. Chief Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Main factor.",
       },
       {
@@ -2400,7 +2644,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/meɪnˈteɪn/",
         translation: "Mantener",
         level: "B2",
-        definition: "Keep up.",
+        definition:
+          "Mantener. Keep up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Maintained level.",
       },
       {
@@ -2408,7 +2653,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmeɪdʒər/",
         translation: "Mayor/Principal",
         level: "B2",
-        definition: "Big.",
+        definition:
+          "Mayor/Principal. Big Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Major change.",
       },
       {
@@ -2416,7 +2662,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/məˈdʒɒrɪti/",
         translation: "Mayoría",
         level: "B2",
-        definition: "Most.",
+        definition:
+          "Mayoría. Most Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The majority.",
       },
       {
@@ -2424,7 +2671,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/meɪk ʌp/",
         translation: "Constituir",
         level: "B2",
-        definition: "Form.",
+        definition:
+          "Constituir. Form Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Makes up 50%.",
       },
       {
@@ -2432,7 +2680,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmænɪdʒ/",
         translation: "Gestionar",
         level: "B1",
-        definition: "Handle.",
+        definition:
+          "Gestionar. Handle Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Managed to rise.",
       },
       {
@@ -2440,7 +2689,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmɑːrdʒɪnəl/",
         translation: "Marginal",
         level: "C1",
-        definition: "Slight.",
+        definition:
+          "Marginal. Slight Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Marginal gain.",
       },
       {
@@ -2448,7 +2698,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/mɑːrk/",
         translation: "Marcar",
         level: "B1",
-        definition: "Indicate.",
+        definition:
+          "Marcar. Indicate Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Marked a shift.",
       },
       {
@@ -2456,7 +2707,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/mɑːrkt/",
         translation: "Marcado",
         level: "C1",
-        definition: "Noticeable.",
+        definition:
+          "Marcado. Noticeable Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Marked increase.",
       },
       {
@@ -2464,7 +2716,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmæsɪv/",
         translation: "Masivo",
         level: "B2",
-        definition: "Huge.",
+        definition:
+          "Masivo. Huge Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Massive drop.",
       },
       {
@@ -2472,7 +2725,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/mætʃ/",
         translation: "Igualar",
         level: "B1",
-        definition: "Equal.",
+        definition:
+          "Igualar. Equal Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Matched previous year.",
       },
       {
@@ -2480,7 +2734,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmæksɪməm/",
         translation: "Máximo",
         level: "B2",
-        definition: "Highest.",
+        definition:
+          "Máximo. Highest Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Maximum value.",
       },
       {
@@ -2488,7 +2743,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/miːn/",
         translation: "Media/Significar",
         level: "B2",
-        definition: "Average/Signify.",
+        definition:
+          "Media/Significar. Average/Signify Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Mean income.",
       },
       {
@@ -2496,7 +2752,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmɛʒər/",
         translation: "Medir",
         level: "B2",
-        definition: "Quantify.",
+        definition:
+          "Medir. Quantify Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Measured in tons.",
       },
       {
@@ -2504,7 +2761,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmiːdiən/",
         translation: "Mediana",
         level: "C1",
-        definition: "Middle value.",
+        definition:
+          "Mediana. Middle value Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Median age.",
       },
       {
@@ -2512,7 +2770,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmiːdiəm/",
         translation: "Medio",
         level: "B1",
-        definition: "Average.",
+        definition:
+          "Medio. Average Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Medium range.",
       },
       {
@@ -2520,7 +2779,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/mɜːrdʒ/",
         translation: "Fusionarse",
         level: "C1",
-        definition: "Combine.",
+        definition:
+          "Fusionarse. Combine Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Merged together.",
       },
       {
@@ -2528,7 +2788,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmɪnɪməl/",
         translation: "Mínimo",
         level: "C1",
-        definition: "Smallest.",
+        definition:
+          "Mínimo. Smallest Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Minimal change.",
       },
       {
@@ -2536,7 +2797,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmɪnɪmaɪz/",
         translation: "Minimizar",
         level: "C1",
-        definition: "Reduce.",
+        definition:
+          "Minimizar. Reduce Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Minimize loss.",
       },
       {
@@ -2544,7 +2806,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmɪnɪməm/",
         translation: "Mínimo",
         level: "B1",
-        definition: "Lowest.",
+        definition:
+          "Mínimo. Lowest Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Minimum wage.",
       },
       {
@@ -2552,7 +2815,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmaɪnər/",
         translation: "Menor",
         level: "B2",
-        definition: "Small.",
+        definition:
+          "Menor. Small Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Minor fluctuation.",
       },
       {
@@ -2560,7 +2824,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/maɪˈnɒrɪti/",
         translation: "Minoría",
         level: "B2",
-        definition: "Small part.",
+        definition:
+          "Minoría. Small part Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "A minority.",
       },
       {
@@ -2568,7 +2833,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmɪrər/",
         translation: "Reflejar",
         level: "C1",
-        definition: "Copy.",
+        definition:
+          "Reflejar. Copy Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Mirrored the trend.",
       },
       {
@@ -2576,7 +2842,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmɒdərət/",
         translation: "Moderado",
         level: "C1",
-        definition: "Average.",
+        definition:
+          "Moderado. Average Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Moderate growth.",
       },
       {
@@ -2584,7 +2851,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmɒdɪst/",
         translation: "Modesto",
         level: "C1",
-        definition: "Small.",
+        definition:
+          "Modesto. Small Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Modest rise.",
       },
       {
@@ -2592,7 +2860,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmoʊməntɛri/",
         translation: "Momentáneo",
         level: "C2",
-        definition: "Brief.",
+        definition:
+          "Momentáneo. Brief Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Momentary dip.",
       },
       {
@@ -2600,7 +2869,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmʌnθli/",
         translation: "Mensual",
         level: "A2",
-        definition: "Every month.",
+        definition:
+          "Mensual. Every month Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Monthly sales.",
       },
       {
@@ -2608,7 +2878,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/mɔːr/",
         translation: "Más",
         level: "A1",
-        definition: "Greater.",
+        definition:
+          "Más. Greater Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "More than.",
       },
       {
@@ -2616,7 +2887,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/moʊst/",
         translation: "La mayoría",
         level: "A1",
-        definition: "Biggest part.",
+        definition:
+          "La mayoría. Biggest part Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Most people.",
       },
       {
@@ -2624,7 +2896,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/maʊnt/",
         translation: "Montar/Subir",
         level: "C2",
-        definition: "Rise.",
+        definition:
+          "Montar/Subir. Rise Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Debts mounted.",
       },
       {
@@ -2632,7 +2905,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmuːvmənt/",
         translation: "Movimiento",
         level: "B1",
-        definition: "Change.",
+        definition:
+          "Movimiento. Change Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Upward movement.",
       },
       {
@@ -2640,7 +2914,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmʌltɪpl/",
         translation: "Múltiple",
         level: "C1",
-        definition: "Many.",
+        definition:
+          "Múltiple. Many Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Multiple peaks.",
       },
       {
@@ -2648,7 +2923,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈmʌltɪplaɪ/",
         translation: "Multiplicar",
         level: "B2",
-        definition: "Increase times.",
+        definition:
+          "Multiplicar. Increase times Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Multiplied by 2.",
       },
     ],
@@ -2660,7 +2936,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈneɪdɪər/",
         translation: "Nadir/Punto más bajo",
         level: "C2",
-        definition: "Lowest point.",
+        definition:
+          "Nadir/Punto más bajo. Lowest point Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reached its nadir.",
       },
       {
@@ -2668,7 +2945,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈnæroʊ/",
         translation: "Estrecho/Reducir",
         level: "B2",
-        definition: "Become smaller.",
+        definition:
+          "Estrecho/Reducir. Become smaller Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Gap narrowed.",
       },
       {
@@ -2676,7 +2954,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈnɪərli/",
         translation: "Casi",
         level: "A2",
-        definition: "Almost.",
+        definition:
+          "Casi. Almost Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Nearly half.",
       },
       {
@@ -2684,7 +2963,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈnɛɡətɪv/",
         translation: "Negativo",
         level: "B1",
-        definition: "Bad/Down.",
+        definition:
+          "Negativo. Bad/Down Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Negative trend.",
       },
       {
@@ -2692,7 +2972,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈnɛɡlɪdʒəbl/",
         translation: "Insignificante",
         level: "C2",
-        definition: "Tiny.",
+        definition:
+          "Insignificante. Tiny Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Negligible change.",
       },
       {
@@ -2700,7 +2981,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/nɛt/",
         translation: "Neto",
         level: "C1",
-        definition: "Final.",
+        definition:
+          "Neto. Final Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Net profit.",
       },
       {
@@ -2708,7 +2990,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈnjuːtrəl/",
         translation: "Neutral",
         level: "B2",
-        definition: "No change.",
+        definition:
+          "Neutral. No change Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Remained neutral.",
       },
       {
@@ -2716,7 +2999,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈnɒmɪnəl/",
         translation: "Nominal",
         level: "C2",
-        definition: "Small.",
+        definition:
+          "Nominal. Small Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Nominal increase.",
       },
       {
@@ -2724,7 +3008,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈnoʊtəbl/",
         translation: "Notable",
         level: "C1",
-        definition: "Significant.",
+        definition:
+          "Notable. Significant Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Notable rise.",
       },
       {
@@ -2732,7 +3017,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈnoʊtɪsəbl/",
         translation: "Notorio",
         level: "B2",
-        definition: "Visible.",
+        definition:
+          "Notorio. Visible Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Noticeable drop.",
       },
       {
@@ -2740,7 +3026,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈnʌmbər/",
         translation: "Número",
         level: "A1",
-        definition: "Count.",
+        definition:
+          "Número. Count Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The number of.",
       },
       {
@@ -2748,7 +3035,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈnjuːmərəs/",
         translation: "Numerosos",
         level: "C1",
-        definition: "Many.",
+        definition:
+          "Numerosos. Many Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Numerous cases.",
       },
     ],
@@ -2760,7 +3048,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/əbˈzɜːrv/",
         translation: "Observar",
         level: "B2",
-        definition: "See.",
+        definition:
+          "Observar. See Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Observed trend.",
       },
       {
@@ -2768,7 +3057,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/əˈkɜːr/",
         translation: "Ocurrir",
         level: "B1",
-        definition: "Happen.",
+        definition:
+          "Ocurrir. Happen Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Changes occurred.",
       },
       {
@@ -2776,7 +3066,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɒfsɛt/",
         translation: "Compensar",
         level: "C2",
-        definition: "Counteract.",
+        definition:
+          "Compensar. Counteract Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Gains offset losses.",
       },
       {
@@ -2784,7 +3075,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈoʊnli/",
         translation: "Solo",
         level: "A1",
-        definition: "Just.",
+        definition:
+          "Solo. Just Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Only 5%.",
       },
       {
@@ -2792,7 +3084,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɒpəzɪt/",
         translation: "Opuesto",
         level: "A2",
-        definition: "Contrary.",
+        definition:
+          "Opuesto. Contrary Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Opposite direction.",
       },
       {
@@ -2800,7 +3093,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɒptɪməl/",
         translation: "Óptimo",
         level: "C1",
-        definition: "Best.",
+        definition:
+          "Óptimo. Best Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Optimal level.",
       },
       {
@@ -2816,7 +3110,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈaʊtkʌm/",
         translation: "Resultado",
         level: "C1",
-        definition: "Result.",
+        definition:
+          "Resultado. Result Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Final outcome.",
       },
       {
@@ -2824,7 +3119,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌaʊtˈnʌmbər/",
         translation: "Superar en número",
         level: "C1",
-        definition: "Be more than.",
+        definition:
+          "Superar en número. Be more than Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Men outnumbered women.",
       },
       {
@@ -2832,7 +3128,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌaʊtpərˈfɔːrm/",
         translation: "Superar (rendimiento)",
         level: "C1",
-        definition: "Do better.",
+        definition:
+          "Superar (rendimiento). Do better Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Outperformed rivals.",
       },
       {
@@ -2840,7 +3137,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈaʊtpʊt/",
         translation: "Producción",
         level: "C1",
-        definition: "Production.",
+        definition:
+          "Producción. Production Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Industrial output.",
       },
       {
@@ -2848,7 +3146,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌaʊtˈstrɪp/",
         translation: "Sobrepasar",
         level: "C2",
-        definition: "Exceed.",
+        definition:
+          "Sobrepasar. Exceed Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Demand outstripped supply.",
       },
       {
@@ -2856,7 +3155,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌaʊtˈweɪ/",
         translation: "Pesar más que",
         level: "C1",
-        definition: "Be more important.",
+        definition:
+          "Pesar más que. Be more important Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Benefits outweigh costs.",
       },
       {
@@ -2864,7 +3164,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌoʊvərˈɔːl/",
         translation: "Global/En general",
         level: "B2",
-        definition: "Total.",
+        definition:
+          "Global/En general. Total Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Overall trend.",
       },
       {
@@ -2872,7 +3173,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌoʊvərˈkʌm/",
         translation: "Superar",
         level: "B2",
-        definition: "Defeat.",
+        definition:
+          "Superar. Defeat Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Overcome deficit.",
       },
       {
@@ -2880,7 +3182,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌoʊvərˈlæp/",
         translation: "Superponerse",
         level: "C1",
-        definition: "Cover part of.",
+        definition:
+          "Superponerse. Cover part of Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Periods overlap.",
       },
       {
@@ -2888,7 +3191,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌoʊvərˈteɪk/",
         translation: "Adelantar/Superar",
         level: "B2",
-        definition: "Pass.",
+        definition:
+          "Adelantar/Superar. Pass Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Overtook the US.",
       },
       {
@@ -2896,7 +3200,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈoʊvərvjuː/",
         translation: "Visión general",
         level: "B2",
-        definition: "Summary.",
+        definition:
+          "Visión general. Summary Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Brief overview.",
       },
     ],
@@ -2908,7 +3213,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/peɪs/",
         translation: "Ritmo",
         level: "C1",
-        definition: "Speed.",
+        definition:
+          "Ritmo. Speed Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Slow pace.",
       },
       {
@@ -2916,7 +3222,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈpærəlɛl/",
         translation: "Paralelo",
         level: "C1",
-        definition: "Similar.",
+        definition:
+          "Paralelo. Similar Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Parallel trends.",
       },
       {
@@ -2924,7 +3231,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/pɑːrt/",
         translation: "Parte",
         level: "A1",
-        definition: "Piece.",
+        definition:
+          "Parte. Piece Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Small part.",
       },
       {
@@ -2932,7 +3240,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈpɑːrʃəl/",
         translation: "Parcial",
         level: "C1",
-        definition: "Incomplete.",
+        definition:
+          "Parcial. Incomplete Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Partial recovery.",
       },
       {
@@ -2940,7 +3249,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈpætərn/",
         translation: "Patrón",
         level: "B2",
-        definition: "Repeated form.",
+        definition:
+          "Patrón. Repeated form Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Similar pattern.",
       },
       {
@@ -2948,7 +3258,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/piːk/",
         translation: "Pico",
         level: "B2",
-        definition: "Highest point.",
+        definition:
+          "Pico. Highest point Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reached a peak.",
       },
       {
@@ -2956,7 +3267,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/pərˈsɛntɪdʒ/",
         translation: "Porcentaje",
         level: "B1",
-        definition: "Part of 100.",
+        definition:
+          "Porcentaje. Part of 100 Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "High percentage.",
       },
       {
@@ -2964,7 +3276,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈpɪəriəd/",
         translation: "Período",
         level: "B1",
-        definition: "Time.",
+        definition:
+          "Período. Time Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Over a period.",
       },
       {
@@ -2972,7 +3285,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈpɜːrmənənt/",
         translation: "Permanente",
         level: "B2",
-        definition: "Lasting.",
+        definition:
+          "Permanente. Lasting Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Permanent change.",
       },
       {
@@ -2980,7 +3294,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/pərˈsɪst/",
         translation: "Persistir",
         level: "C1",
-        definition: "Continue.",
+        definition:
+          "Persistir. Continue Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Trend persisted.",
       },
       {
@@ -2988,7 +3303,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/fɪˈnɒmɪnəl/",
         translation: "Fenomenal",
         level: "C2",
-        definition: "Remarkable.",
+        definition:
+          "Fenomenal. Remarkable Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Phenomenal growth.",
       },
       {
@@ -2996,7 +3312,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/paɪ tʃɑːrt/",
         translation: "Gráfico circular",
         level: "B1",
-        definition: "Circle graph.",
+        definition:
+          "Gráfico circular. Circle graph Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "As shown in the pie chart.",
       },
       {
@@ -3004,7 +3321,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/plæˈtoʊ/",
         translation: "Meseta/Estancarse",
         level: "C1",
-        definition: "Level off.",
+        definition:
+          "Meseta/Estancarse. Level off Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reached a plateau.",
       },
       {
@@ -3012,7 +3330,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/plʌndʒ/",
         translation: "Desplomarse",
         level: "C1",
-        definition: "Dive.",
+        definition:
+          "Desplomarse. Dive Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Plunged to zero.",
       },
       {
@@ -3020,7 +3339,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈplʌmɪt/",
         translation: "Caer en picado",
         level: "C1",
-        definition: "Fall fast.",
+        definition:
+          "Caer en picado. Fall fast Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Prices plummeted.",
       },
       {
@@ -3028,7 +3348,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/pɔɪnt/",
         translation: "Punto",
         level: "A2",
-        definition: "Item/Place.",
+        definition:
+          "Punto. Item/Place Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Lowest point.",
       },
       {
@@ -3036,7 +3357,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/pʊər/",
         translation: "Pobre",
         level: "A1",
-        definition: "Bad/Low.",
+        definition:
+          "Pobre. Bad/Low Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Poor performance.",
       },
       {
@@ -3044,7 +3366,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈpɔːrʃən/",
         translation: "Porción",
         level: "B2",
-        definition: "Part.",
+        definition:
+          "Porción. Part Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Large portion.",
       },
       {
@@ -3052,7 +3375,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈpɒzətɪv/",
         translation: "Positivo",
         level: "B1",
-        definition: "Good.",
+        definition:
+          "Positivo. Good Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Positive trend.",
       },
       {
@@ -3060,7 +3384,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈpɒsəbl/",
         translation: "Posible",
         level: "A2",
-        definition: "Can happen.",
+        definition:
+          "Posible. Can happen Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "It is possible.",
       },
       {
@@ -3068,7 +3393,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/pəˈtɛnʃəl/",
         translation: "Potencial",
         level: "B2",
-        definition: "Possible future.",
+        definition:
+          "Potencial. Possible future Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Potential growth.",
       },
       {
@@ -3076,7 +3402,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/prɪˈsiːd/",
         translation: "Preceder",
         level: "C1",
-        definition: "Come before.",
+        definition:
+          "Preceder. Come before Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Preceded by a fall.",
       },
       {
@@ -3084,7 +3411,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/prɪˈsaɪs/",
         translation: "Preciso",
         level: "B2",
-        definition: "Exact.",
+        definition:
+          "Preciso. Exact Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Precise figure.",
       },
       {
@@ -3092,7 +3420,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/prɪˈdɪkt/",
         translation: "Predecir",
         level: "B1",
-        definition: "Forecast.",
+        definition:
+          "Predecir. Forecast Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Predicted to rise.",
       },
       {
@@ -3100,7 +3429,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/prɪˈdɒmɪnənt/",
         translation: "Predominante",
         level: "C1",
-        definition: "Main.",
+        definition:
+          "Predominante. Main Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Predominant feature.",
       },
       {
@@ -3108,7 +3438,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/prɪˈlɪmɪnɛri/",
         translation: "Preliminar",
         level: "C1",
-        definition: "First.",
+        definition:
+          "Preliminar. First Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Preliminary data.",
       },
       {
@@ -3116,7 +3447,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈpriːviəs/",
         translation: "Previo",
         level: "B1",
-        definition: "Before.",
+        definition:
+          "Previo. Before Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Previous year.",
       },
       {
@@ -3124,7 +3456,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈpraɪməri/",
         translation: "Primario",
         level: "B2",
-        definition: "Main.",
+        definition:
+          "Primario. Main Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Primary source.",
       },
       {
@@ -3132,7 +3465,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈprɪnsɪpəl/",
         translation: "Principal",
         level: "C1",
-        definition: "Main.",
+        definition:
+          "Principal. Main Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Principal cause.",
       },
       {
@@ -3140,7 +3474,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈprɒbəbl/",
         translation: "Probable",
         level: "B2",
-        definition: "Likely.",
+        definition:
+          "Probable. Likely Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Probable outcome.",
       },
       {
@@ -3148,7 +3483,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/prəˈsiːd/",
         translation: "Proceder",
         level: "C1",
-        definition: "Go on.",
+        definition:
+          "Proceder. Go on Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Proceeded to fall.",
       },
       {
@@ -3156,7 +3492,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈprəʊsɛs/",
         translation: "Proceso",
         level: "B1",
-        definition: "Series of actions.",
+        definition:
+          "Proceso. Series of actions Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Slow process.",
       },
       {
@@ -3164,7 +3501,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/prəˈdjuːs/",
         translation: "Producir",
         level: "B1",
-        definition: "Make.",
+        definition:
+          "Producir. Make Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Produced goods.",
       },
       {
@@ -3172,7 +3510,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈproʊfaɪl/",
         translation: "Perfil",
         level: "B2",
-        definition: "Outline.",
+        definition:
+          "Perfil. Outline Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Age profile.",
       },
       {
@@ -3180,7 +3519,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈprɒfɪt/",
         translation: "Beneficio",
         level: "B2",
-        definition: "Gain.",
+        definition:
+          "Beneficio. Gain Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Net profit.",
       },
       {
@@ -3188,7 +3528,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈprəʊɡrɛs/",
         translation: "Progreso",
         level: "B1",
-        definition: "Advance.",
+        definition:
+          "Progreso. Advance Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Made progress.",
       },
       {
@@ -3196,7 +3537,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/prəˈɡrɛsɪv/",
         translation: "Progresivo",
         level: "C1",
-        definition: "Gradual.",
+        definition:
+          "Progresivo. Gradual Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Progressive decline.",
       },
       {
@@ -3204,7 +3546,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈprɒdʒɛkt/",
         translation: "Proyectar",
         level: "C1",
-        definition: "Forecast.",
+        definition:
+          "Proyectar. Forecast Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Projected to grow.",
       },
       {
@@ -3212,7 +3555,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈprɒmɪnənt/",
         translation: "Prominente",
         level: "C1",
-        definition: "Noticeable.",
+        definition:
+          "Prominente. Noticeable Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Prominent peak.",
       },
       {
@@ -3220,7 +3564,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/prəˈpɔːrʃən/",
         translation: "Proporción",
         level: "B2",
-        definition: "Part.",
+        definition:
+          "Proporción. Part Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "High proportion.",
       },
       {
@@ -3228,7 +3573,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/prəˈpɔːrʃənl/",
         translation: "Proporcional",
         level: "C1",
-        definition: "Balanced.",
+        definition:
+          "Proporcional. Balanced Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Proportional to.",
       },
     ],
@@ -3240,7 +3586,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/reɪs/",
         translation: "Acelerar/Carrera",
         level: "C1",
-        definition: "Move fast.",
+        definition:
+          "Acelerar/Carrera. Move fast Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Raced ahead.",
       },
       {
@@ -3248,7 +3595,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈrædɪkəl/",
         translation: "Radical",
         level: "C1",
-        definition: "Extreme.",
+        definition:
+          "Radical. Extreme Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Radical change.",
       },
       {
@@ -3256,7 +3604,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/reɪz/",
         translation: "Aumentar",
         level: "B1",
-        definition: "Lift.",
+        definition:
+          "Aumentar. Lift Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Raised rates.",
       },
       {
@@ -3264,7 +3613,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈræli/",
         translation: "Repuntar",
         level: "C2",
-        definition: "Recover.",
+        definition:
+          "Repuntar. Recover Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Market rallied.",
       },
       {
@@ -3272,7 +3622,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈrændəm/",
         translation: "Aleatorio",
         level: "B2",
-        definition: "No pattern.",
+        definition:
+          "Aleatorio. No pattern Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Random fluctuations.",
       },
       {
@@ -3280,7 +3631,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/reɪndʒ/",
         translation: "Oscilar/Rango",
         level: "B2",
-        definition: "Vary.",
+        definition:
+          "Oscilar/Rango. Vary Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Ranged from 5 to 10.",
       },
       {
@@ -3288,7 +3640,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ræŋk/",
         translation: "Clasificar",
         level: "B2",
-        definition: "Order.",
+        definition:
+          "Clasificar. Order Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Ranked first.",
       },
       {
@@ -3296,7 +3649,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈræpɪd/",
         translation: "Rápido",
         level: "B2",
-        definition: "Fast.",
+        definition:
+          "Rápido. Fast Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Rapid growth.",
       },
       {
@@ -3304,7 +3658,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɛər/",
         translation: "Raro",
         level: "B1",
-        definition: "Uncommon.",
+        definition:
+          "Raro. Uncommon Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Rare occurrence.",
       },
       {
@@ -3312,7 +3667,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/reɪt/",
         translation: "Tasa/Velocidad",
         level: "B2",
-        definition: "Speed/Ratio.",
+        definition:
+          "Tasa/Velocidad. Speed/Ratio Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Growth rate.",
       },
       {
@@ -3320,7 +3676,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈreɪʃioʊ/",
         translation: "Proporción",
         level: "C1",
-        definition: "Relation.",
+        definition:
+          "Proporción. Relation Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Ratio of 2 to 1.",
       },
       {
@@ -3328,7 +3685,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/riːtʃ/",
         translation: "Alcanzar",
         level: "B1",
-        definition: "Arrive at.",
+        definition:
+          "Alcanzar. Arrive at Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reached a peak.",
       },
       {
@@ -3336,7 +3694,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈbaʊnd/",
         translation: "Rebotar",
         level: "C1",
-        definition: "Recover.",
+        definition:
+          "Rebotar. Recover Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Prices rebounded.",
       },
       {
@@ -3344,7 +3703,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈsiːd/",
         translation: "Retroceder",
         level: "C2",
-        definition: "Go back.",
+        definition:
+          "Retroceder. Go back Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Flood waters receded.",
       },
       {
@@ -3352,7 +3712,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈriːsənt/",
         translation: "Reciente",
         level: "A2",
-        definition: "New.",
+        definition:
+          "Reciente. New Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Recent trends.",
       },
       {
@@ -3360,7 +3721,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈsɛʃən/",
         translation: "Recesión",
         level: "C1",
-        definition: "Downturn.",
+        definition:
+          "Recesión. Downturn Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Economic recession.",
       },
       {
@@ -3368,7 +3730,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈrɛkɔːrd/",
         translation: "Récord/Registrar",
         level: "B2",
-        definition: "Best/Write.",
+        definition:
+          "Récord/Registrar. Best/Write Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Record high.",
       },
       {
@@ -3376,7 +3739,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈkʌvər/",
         translation: "Recuperarse",
         level: "B2",
-        definition: "Get better.",
+        definition:
+          "Recuperarse. Get better Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Recovered losses.",
       },
       {
@@ -3384,7 +3748,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈkʌvəri/",
         translation: "Recuperación",
         level: "B2",
-        definition: "Improvement.",
+        definition:
+          "Recuperación. Improvement Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Signs of recovery.",
       },
       {
@@ -3392,7 +3757,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈkɜːr/",
         translation: "Recurrir/Repetirse",
         level: "C2",
-        definition: "Happen again.",
+        definition:
+          "Recurrir/Repetirse. Happen again Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Problem recurred.",
       },
       {
@@ -3400,7 +3766,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈdjuːs/",
         translation: "Reducir",
         level: "B1",
-        definition: "Make smaller.",
+        definition:
+          "Reducir. Make smaller Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reduced by half.",
       },
       {
@@ -3408,7 +3775,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈdʌkʃən/",
         translation: "Reducción",
         level: "B2",
-        definition: "Decrease.",
+        definition:
+          "Reducción. Decrease Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reduction in cost.",
       },
       {
@@ -3416,7 +3784,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈflɛkt/",
         translation: "Reflejar",
         level: "B2",
-        definition: "Show.",
+        definition:
+          "Reflejar. Show Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reflects the trend.",
       },
       {
@@ -3424,7 +3793,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈɡeɪn/",
         translation: "Recuperar",
         level: "C1",
-        definition: "Get back.",
+        definition:
+          "Recuperar. Get back Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Regained ground.",
       },
       {
@@ -3432,7 +3802,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈrɛdʒɪstər/",
         translation: "Registrar",
         level: "B2",
-        definition: "Record.",
+        definition:
+          "Registrar. Record Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Registered a fall.",
       },
       {
@@ -3440,7 +3811,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈrɛɡjʊlər/",
         translation: "Regular",
         level: "A2",
-        definition: "Normal.",
+        definition:
+          "Regular. Normal Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Regular intervals.",
       },
       {
@@ -3448,7 +3820,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈrɛlətɪv/",
         translation: "Relativo",
         level: "B2",
-        definition: "Compared to.",
+        definition:
+          "Relativo. Compared to Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Relative stability.",
       },
       {
@@ -3456,7 +3829,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈmeɪn/",
         translation: "Permanecer",
         level: "B1",
-        definition: "Stay.",
+        definition:
+          "Permanecer. Stay Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Remained steady.",
       },
       {
@@ -3464,7 +3838,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈmɑːrkəbl/",
         translation: "Notable",
         level: "B2",
-        definition: "Amazing.",
+        definition:
+          "Notable. Amazing Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Remarkable rise.",
       },
       {
@@ -3472,7 +3847,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌrɛprɪˈzɛnt/",
         translation: "Representar",
         level: "B1",
-        definition: "Show.",
+        definition:
+          "Representar. Show Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Represents 50%.",
       },
       {
@@ -3480,7 +3856,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈzʌlt/",
         translation: "Resultado",
         level: "A2",
-        definition: "Outcome.",
+        definition:
+          "Resultado. Outcome Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The result was...",
       },
       {
@@ -3488,7 +3865,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈzjuːm/",
         translation: "Reanudar",
         level: "C1",
-        definition: "Start again.",
+        definition:
+          "Reanudar. Start again Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Growth resumed.",
       },
       {
@@ -3496,7 +3874,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈteɪn/",
         translation: "Retener",
         level: "C1",
-        definition: "Keep.",
+        definition:
+          "Retener. Keep Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Retained value.",
       },
       {
@@ -3504,7 +3883,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈtɜːrn/",
         translation: "Retorno/Volver",
         level: "A2",
-        definition: "Go back.",
+        definition:
+          "Retorno/Volver. Go back Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Returned to normal.",
       },
       {
@@ -3512,7 +3892,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈviːl/",
         translation: "Revelar",
         level: "B2",
-        definition: "Show.",
+        definition:
+          "Revelar. Show Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Revealed a gap.",
       },
       {
@@ -3520,7 +3901,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈvɜːrs/",
         translation: "Revertir",
         level: "C1",
-        definition: "Go back.",
+        definition:
+          "Revertir. Go back Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Trend reversed.",
       },
       {
@@ -3528,7 +3910,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈvjuː/",
         translation: "Revisión",
         level: "B1",
-        definition: "Check.",
+        definition:
+          "Revisión. Check Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Annual review.",
       },
       {
@@ -3536,7 +3919,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɪˈvaɪv/",
         translation: "Revivir",
         level: "C1",
-        definition: "Bring back.",
+        definition:
+          "Revivir. Bring back Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Revived interest.",
       },
       {
@@ -3544,7 +3928,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/raɪz/",
         translation: "Subir",
         level: "A2",
-        definition: "Go up.",
+        definition:
+          "Subir. Go up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Rose sharply.",
       },
       {
@@ -3552,7 +3937,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈrɒkɪt/",
         translation: "Dispararse",
         level: "C1",
-        definition: "Go up fast.",
+        definition:
+          "Dispararse. Go up fast Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Prices rocketed.",
       },
       {
@@ -3560,7 +3946,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rʌf/",
         translation: "Aproximado/Áspero",
         level: "B2",
-        definition: "Not exact.",
+        definition:
+          "Aproximado/Áspero. Not exact Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Rough estimate.",
       },
     ],
@@ -3572,7 +3959,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/seɪm/",
         translation: "Mismo",
         level: "A1",
-        definition: "Identical.",
+        definition:
+          "Mismo. Identical Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Remained the same.",
       },
       {
@@ -3580,7 +3968,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/skeɪl/",
         translation: "Escala",
         level: "B2",
-        definition: "Size.",
+        definition:
+          "Escala. Size Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Large scale.",
       },
       {
@@ -3588,7 +3977,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sɪˈnɑːrioʊ/",
         translation: "Escenario",
         level: "C1",
-        definition: "Situation.",
+        definition:
+          "Escenario. Situation Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Best case scenario.",
       },
       {
@@ -3596,7 +3986,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsɛktər/",
         translation: "Sector",
         level: "B2",
-        definition: "Part of economy.",
+        definition:
+          "Sector. Part of economy Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Industrial sector.",
       },
       {
@@ -3604,7 +3995,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsɛɡmənt/",
         translation: "Segmento",
         level: "C1",
-        definition: "Part.",
+        definition:
+          "Segmento. Part Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Market segment.",
       },
       {
@@ -3612,7 +4004,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsɛldəm/",
         translation: "Rara vez",
         level: "C1",
-        definition: "Rarely.",
+        definition:
+          "Rara vez. Rarely Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Seldom seen.",
       },
       {
@@ -3620,7 +4013,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsiːkwəns/",
         translation: "Secuencia",
         level: "C1",
-        definition: "Order.",
+        definition:
+          "Secuencia. Order Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "In sequence.",
       },
       {
@@ -3628,7 +4022,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsɪəriːz/",
         translation: "Serie",
         level: "B1",
-        definition: "Chain.",
+        definition:
+          "Serie. Chain Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Series of events.",
       },
       {
@@ -3636,7 +4031,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sɪˈvɪər/",
         translation: "Severo",
         level: "B2",
-        definition: "Serious.",
+        definition:
+          "Severo. Serious Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Severe drop.",
       },
       {
@@ -3644,7 +4040,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʃɛər/",
         translation: "Parte/Cuota",
         level: "B1",
-        definition: "Portion.",
+        definition:
+          "Parte/Cuota. Portion Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Market share.",
       },
       {
@@ -3652,7 +4049,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʃɑːrp/",
         translation: "Brusco/Afilado",
         level: "B2",
-        definition: "Sudden.",
+        definition:
+          "Brusco/Afilado. Sudden Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Sharp rise.",
       },
       {
@@ -3660,7 +4058,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʃɪft/",
         translation: "Cambio",
         level: "B2",
-        definition: "Move.",
+        definition:
+          "Cambio. Move Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Shift in focus.",
       },
       {
@@ -3668,7 +4067,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʃɔːrt/",
         translation: "Corto",
         level: "A1",
-        definition: "Brief.",
+        definition:
+          "Corto. Brief Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Short period.",
       },
       {
@@ -3676,7 +4076,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʃɔːrtɪdʒ/",
         translation: "Escasez",
         level: "C1",
-        definition: "Lack.",
+        definition:
+          "Escasez. Lack Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Water shortage.",
       },
       {
@@ -3684,7 +4085,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʃoʊ/",
         translation: "Mostrar",
         level: "A1",
-        definition: "Display.",
+        definition:
+          "Mostrar. Display Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Graph shows.",
       },
       {
@@ -3692,7 +4094,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʃrɪŋk/",
         translation: "Encogerse",
         level: "C1",
-        definition: "Get smaller.",
+        definition:
+          "Encogerse. Get smaller Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Economy shrank.",
       },
       {
@@ -3700,7 +4103,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sɪɡˈnɪfɪkənt/",
         translation: "Significativo",
         level: "B2",
-        definition: "Important.",
+        definition:
+          "Significativo. Important Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Significant growth.",
       },
       {
@@ -3708,7 +4112,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsɪmɪlər/",
         translation: "Similar",
         level: "A2",
-        definition: "Alike.",
+        definition:
+          "Similar. Alike Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Similar trends.",
       },
       {
@@ -3716,7 +4121,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsɪmpl/",
         translation: "Simple",
         level: "A2",
-        definition: "Easy.",
+        definition:
+          "Simple. Easy Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Simple pattern.",
       },
       {
@@ -3724,7 +4130,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sɪŋk/",
         translation: "Hundirse",
         level: "C1",
-        definition: "Go down.",
+        definition:
+          "Hundirse. Go down Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Profits sank.",
       },
       {
@@ -3732,7 +4139,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈskaɪrɒkɪt/",
         translation: "Dispararse",
         level: "C1",
-        definition: "Rise fast.",
+        definition:
+          "Dispararse. Rise fast Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Costs skyrocketed.",
       },
       {
@@ -3740,7 +4148,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/slæʃ/",
         translation: "Recortar drásticamente",
         level: "C2",
-        definition: "Cut.",
+        definition:
+          "Recortar drásticamente. Cut Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Slashed prices.",
       },
       {
@@ -3748,7 +4157,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/slaɪd/",
         translation: "Deslizarse/Bajar",
         level: "C1",
-        definition: "Fall.",
+        definition:
+          "Deslizarse/Bajar. Fall Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Slid down.",
       },
       {
@@ -3756,7 +4166,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/slaɪt/",
         translation: "Ligero",
         level: "B2",
-        definition: "Small.",
+        definition:
+          "Ligero. Small Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Slight change.",
       },
       {
@@ -3764,7 +4175,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/slɪp/",
         translation: "Resbalar/Caer",
         level: "C1",
-        definition: "Fall.",
+        definition:
+          "Resbalar/Caer. Fall Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Slipped back.",
       },
       {
@@ -3772,7 +4184,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sloʊ/",
         translation: "Lento",
         level: "A1",
-        definition: "Not fast.",
+        definition:
+          "Lento. Not fast Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Slow growth.",
       },
       {
@@ -3780,7 +4193,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sloʊ daʊn/",
         translation: "Desacelerar",
         level: "B1",
-        definition: "Decelerate.",
+        definition:
+          "Desacelerar. Decelerate Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Growth slowed down.",
       },
       {
@@ -3788,7 +4202,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/smɔːl/",
         translation: "Pequeño",
         level: "A1",
-        definition: "Little.",
+        definition:
+          "Pequeño. Little Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Small fraction.",
       },
       {
@@ -3796,7 +4211,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/smuːð/",
         translation: "Suave",
         level: "C1",
-        definition: "Even.",
+        definition:
+          "Suave. Even Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Smooth curve.",
       },
       {
@@ -3804,7 +4220,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sɔːr/",
         translation: "Remontar el vuelo",
         level: "C1",
-        definition: "Rise high.",
+        definition:
+          "Remontar el vuelo. Rise high Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Soared to new highs.",
       },
       {
@@ -3812,7 +4229,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/soʊl/",
         translation: "Único",
         level: "C1",
-        definition: "Only.",
+        definition:
+          "Único. Only Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Sole reason.",
       },
       {
@@ -3820,7 +4238,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sɔːrs/",
         translation: "Fuente",
         level: "B1",
-        definition: "Origin.",
+        definition:
+          "Fuente. Origin Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Data source.",
       },
       {
@@ -3828,7 +4247,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/spɑːrk/",
         translation: "Chispa/Provocar",
         level: "C2",
-        definition: "Trigger.",
+        definition:
+          "Chispa/Provocar. Trigger Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Sparked a rise.",
       },
       {
@@ -3836,7 +4256,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/spəˈsɪfɪk/",
         translation: "Específico",
         level: "B2",
-        definition: "Particular.",
+        definition:
+          "Específico. Particular Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Specific time.",
       },
       {
@@ -3844,7 +4265,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/spɛkˈtækjʊlər/",
         translation: "Espectacular",
         level: "C1",
-        definition: "Amazing.",
+        definition:
+          "Espectacular. Amazing Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Spectacular rise.",
       },
       {
@@ -3852,7 +4274,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/spiːd/",
         translation: "Velocidad",
         level: "B1",
-        definition: "Rate.",
+        definition:
+          "Velocidad. Rate Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "At high speed.",
       },
       {
@@ -3860,7 +4283,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈspaɪrəl/",
         translation: "Espiral",
         level: "C2",
-        definition: "Twist.",
+        definition:
+          "Espiral. Twist Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Spiraled out of control.",
       },
       {
@@ -3868,7 +4292,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/splɪt/",
         translation: "Dividir",
         level: "B2",
-        definition: "Separate.",
+        definition:
+          "Dividir. Separate Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Split evenly.",
       },
       {
@@ -3876,7 +4301,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsteɪbəlaɪz/",
         translation: "Estabilizarse",
         level: "C1",
-        definition: "Steady.",
+        definition:
+          "Estabilizarse. Steady Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Stabilized at 5%.",
       },
       {
@@ -3884,7 +4310,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsteɪbəl/",
         translation: "Estable",
         level: "B2",
-        definition: "Steady.",
+        definition:
+          "Estable. Steady Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Remained stable.",
       },
       {
@@ -3892,7 +4319,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/stæɡˈneɪt/",
         translation: "Estancarse",
         level: "C2",
-        definition: "Stand still.",
+        definition:
+          "Estancarse. Stand still Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Economy stagnated.",
       },
       {
@@ -3900,7 +4328,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/stænd æt/",
         translation: "Situarse en",
         level: "B2",
-        definition: "Be at.",
+        definition:
+          "Situarse en. Be at Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Stood at 50.",
       },
       {
@@ -3908,7 +4337,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈstændərd/",
         translation: "Estándar",
         level: "B1",
-        definition: "Normal.",
+        definition:
+          "Estándar. Normal Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Standard rate.",
       },
       {
@@ -3916,7 +4346,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈstætɪk/",
         translation: "Estático",
         level: "C1",
-        definition: "Still.",
+        definition:
+          "Estático. Still Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Remained static.",
       },
       {
@@ -3924,7 +4355,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/stəˈtɪstɪk/",
         translation: "Estadística",
         level: "C1",
-        definition: "Number.",
+        definition:
+          "Estadística. Number Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Key statistic.",
       },
       {
@@ -3932,7 +4364,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsteɪtəs/",
         translation: "Estado",
         level: "C1",
-        definition: "Rank.",
+        definition:
+          "Estado. Rank Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Current status.",
       },
       {
@@ -3940,7 +4373,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈstɛdi/",
         translation: "Constante",
         level: "B2",
-        definition: "Regular.",
+        definition:
+          "Constante. Regular Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Steady flow.",
       },
       {
@@ -3948,7 +4382,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/stiːp/",
         translation: "Empinado",
         level: "C1",
-        definition: "Sharp.",
+        definition:
+          "Empinado. Sharp Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Steep fall.",
       },
       {
@@ -3956,7 +4391,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/stɛp/",
         translation: "Paso",
         level: "A2",
-        definition: "Stage.",
+        definition:
+          "Paso. Stage Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Next step.",
       },
       {
@@ -3964,7 +4400,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈstɪmjʊleɪt/",
         translation: "Estimular",
         level: "C1",
-        definition: "Encourage.",
+        definition:
+          "Estimular. Encourage Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Stimulate growth.",
       },
       {
@@ -3972,7 +4409,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/stɒp/",
         translation: "Parar",
         level: "A1",
-        definition: "End.",
+        definition:
+          "Parar. End Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Stopped rising.",
       },
       {
@@ -3980,7 +4418,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/streɪt/",
         translation: "Recto",
         level: "B1",
-        definition: "Direct.",
+        definition:
+          "Recto. Direct Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Straight line.",
       },
       {
@@ -3988,7 +4427,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈstraɪkɪŋ/",
         translation: "Llamativo",
         level: "C1",
-        definition: "Noticeable.",
+        definition:
+          "Llamativo. Noticeable Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Striking difference.",
       },
       {
@@ -3996,7 +4436,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/strɒŋ/",
         translation: "Fuerte",
         level: "A2",
-        definition: "Powerful.",
+        definition:
+          "Fuerte. Powerful Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Strong growth.",
       },
       {
@@ -4004,7 +4445,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈstrʌktʃər/",
         translation: "Estructura",
         level: "B2",
-        definition: "Form.",
+        definition:
+          "Estructura. Form Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Market structure.",
       },
       {
@@ -4012,7 +4454,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/səbˈstænʃəl/",
         translation: "Sustancial",
         level: "C1",
-        definition: "Big.",
+        definition:
+          "Sustancial. Big Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Substantial amount.",
       },
       {
@@ -4020,7 +4463,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsʌbstɪtuːt/",
         translation: "Sustituto",
         level: "C1",
-        definition: "Replace.",
+        definition:
+          "Sustituto. Replace Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Substitute product.",
       },
       {
@@ -4028,7 +4472,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/səkˈsɛsɪv/",
         translation: "Sucesivo",
         level: "C2",
-        definition: "Consecutive.",
+        definition:
+          "Sucesivo. Consecutive Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Successive years.",
       },
       {
@@ -4036,7 +4481,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsʌdn/",
         translation: "Repentino",
         level: "B1",
-        definition: "Quick.",
+        definition:
+          "Repentino. Quick Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Sudden change.",
       },
       {
@@ -4044,7 +4490,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sʌm/",
         translation: "Suma",
         level: "B1",
-        definition: "Total.",
+        definition:
+          "Suma. Total Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "The sum of.",
       },
       {
@@ -4052,7 +4499,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsʌməri/",
         translation: "Resumen",
         level: "B2",
-        definition: "Brief.",
+        definition:
+          "Resumen. Brief Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Brief summary.",
       },
       {
@@ -4060,7 +4508,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/suːˈpɪəriər/",
         translation: "Superior",
         level: "C1",
-        definition: "Better.",
+        definition:
+          "Superior. Better Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Superior numbers.",
       },
       {
@@ -4068,7 +4517,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/səˈplaɪ/",
         translation: "Suministro",
         level: "B2",
-        definition: "Provide.",
+        definition:
+          "Suministro. Provide Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Supply and demand.",
       },
       {
@@ -4076,7 +4526,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sɜːrdʒ/",
         translation: "Oleada/Surgir",
         level: "C1",
-        definition: "Rush.",
+        definition:
+          "Oleada/Surgir. Rush Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "A surge in users.",
       },
       {
@@ -4084,7 +4535,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/sərˈpɑːs/",
         translation: "Sobrepasar",
         level: "C1",
-        definition: "Exceed.",
+        definition:
+          "Sobrepasar. Exceed Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Surpassed sales.",
       },
       {
@@ -4092,7 +4544,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈsɜːrveɪ/",
         translation: "Encuesta",
         level: "B2",
-        definition: "Study.",
+        definition:
+          "Encuesta. Study Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Recent survey.",
       },
       {
@@ -4100,7 +4553,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/səˈsteɪn/",
         translation: "Sostener",
         level: "C1",
-        definition: "Keep up.",
+        definition:
+          "Sostener. Keep up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Sustained growth.",
       },
       {
@@ -4108,7 +4562,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/swɪft/",
         translation: "Veloz",
         level: "C1",
-        definition: "Fast.",
+        definition:
+          "Veloz. Fast Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Swift recovery.",
       },
       {
@@ -4116,7 +4571,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/swɪŋ/",
         translation: "Oscilar",
         level: "C1",
-        definition: "Move back/forth.",
+        definition:
+          "Oscilar. Move back/forth Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wide swings.",
       },
       {
@@ -4124,7 +4580,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌsɪstəˈmætɪk/",
         translation: "Sistemático",
         level: "C2",
-        definition: "Orderly.",
+        definition:
+          "Sistemático. Orderly Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Systematic change.",
       },
     ],
@@ -4136,7 +4593,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈteɪbl/",
         translation: "Tabla",
         level: "A1",
-        definition: "Data grid.",
+        definition:
+          "Tabla. Data grid Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Table 1 shows.",
       },
       {
@@ -4144,7 +4602,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtæli/",
         translation: "Cuenta/Concordar",
         level: "C2",
-        definition: "Count.",
+        definition:
+          "Cuenta/Concordar. Count Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Final tally.",
       },
       {
@@ -4152,7 +4611,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtɑːrɡɪt/",
         translation: "Objetivo",
         level: "B1",
-        definition: "Goal.",
+        definition:
+          "Objetivo. Goal Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Met the target.",
       },
       {
@@ -4160,7 +4620,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtɛmpərɛri/",
         translation: "Temporal",
         level: "B1",
-        definition: "Brief.",
+        definition:
+          "Temporal. Brief Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Temporary dip.",
       },
       {
@@ -4168,7 +4629,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtɛndənsi/",
         translation: "Tendencia",
         level: "B2",
-        definition: "Lean.",
+        definition:
+          "Tendencia. Lean Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Tendency to rise.",
       },
       {
@@ -4176,7 +4638,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/tɜːrm/",
         translation: "Término",
         level: "B1",
-        definition: "Period.",
+        definition:
+          "Término. Period Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Long term.",
       },
       {
@@ -4184,7 +4647,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtɜːrmɪneɪt/",
         translation: "Terminar",
         level: "C1",
-        definition: "End.",
+        definition:
+          "Terminar. End Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Terminated contract.",
       },
       {
@@ -4192,7 +4656,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ðæn/",
         translation: "Que (comparación)",
         level: "A1",
-        definition: "Compare.",
+        definition:
+          "Que (comparación). Compare Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "More than.",
       },
       {
@@ -4200,7 +4665,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈθriːfoʊld/",
         translation: "Triple",
         level: "C2",
-        definition: "x3.",
+        definition:
+          "Triple. X3 Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Increased threefold.",
       },
       {
@@ -4208,7 +4674,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈθrɛʃhoʊld/",
         translation: "Umbral",
         level: "C2",
-        definition: "Limit.",
+        definition:
+          "Umbral. Limit Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Crossed the threshold.",
       },
       {
@@ -4216,7 +4683,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/θruːˈaʊt/",
         translation: "A lo largo de",
         level: "B2",
-        definition: "During all.",
+        definition:
+          "A lo largo de. During all Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Throughout the year.",
       },
       {
@@ -4224,7 +4692,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtaɪni/",
         translation: "Diminuto",
         level: "B1",
-        definition: "Small.",
+        definition:
+          "Diminuto. Small Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Tiny fraction.",
       },
       {
@@ -4232,7 +4701,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/tɒp/",
         translation: "Cima",
         level: "A1",
-        definition: "Peak.",
+        definition:
+          "Cima. Peak Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Top of the list.",
       },
       {
@@ -4240,7 +4710,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtɒpəl/",
         translation: "Derribar/Caer",
         level: "C2",
-        definition: "Fall.",
+        definition:
+          "Derribar/Caer. Fall Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Toppled record.",
       },
       {
@@ -4248,7 +4719,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtoʊtəl/",
         translation: "Total",
         level: "A2",
-        definition: "Sum.",
+        definition:
+          "Total. Sum Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Total amount.",
       },
       {
@@ -4256,7 +4728,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/treɪs/",
         translation: "Rastro/Seguir",
         level: "C1",
-        definition: "Track.",
+        definition:
+          "Rastro/Seguir. Track Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Trace the line.",
       },
       {
@@ -4264,7 +4737,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/træk/",
         translation: "Seguir/Pista",
         level: "B2",
-        definition: "Follow.",
+        definition:
+          "Seguir/Pista. Follow Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Track changes.",
       },
       {
@@ -4272,7 +4746,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/treɪd/",
         translation: "Comercio",
         level: "B1",
-        definition: "Business.",
+        definition:
+          "Comercio. Business Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Trade deficit.",
       },
       {
@@ -4280,7 +4755,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/trəˈdʒɛktəri/",
         translation: "Trayectoria",
         level: "C2",
-        definition: "Path.",
+        definition:
+          "Trayectoria. Path Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Upward trajectory.",
       },
       {
@@ -4288,7 +4764,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/trænˈzækʃən/",
         translation: "Transacción",
         level: "C1",
-        definition: "Deal.",
+        definition:
+          "Transacción. Deal Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Transaction volume.",
       },
       {
@@ -4296,7 +4773,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtrænsfɜːr/",
         translation: "Transferir",
         level: "B2",
-        definition: "Move.",
+        definition:
+          "Transferir. Move Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Transferred funds.",
       },
       {
@@ -4304,7 +4782,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/trænsˈfɔːrm/",
         translation: "Transformar",
         level: "B2",
-        definition: "Change.",
+        definition:
+          "Transformar. Change Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Transformed the market.",
       },
       {
@@ -4312,7 +4791,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/trænˈzɪʃən/",
         translation: "Transición",
         level: "C1",
-        definition: "Changeover.",
+        definition:
+          "Transición. Changeover Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Transition period.",
       },
       {
@@ -4320,7 +4800,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/trɛnd/",
         translation: "Tendencia",
         level: "B1",
-        definition: "Direction.",
+        definition:
+          "Tendencia. Direction Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Upward trend.",
       },
       {
@@ -4328,7 +4809,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtrɪɡər/",
         translation: "Desencadenar",
         level: "C1",
-        definition: "Start.",
+        definition:
+          "Desencadenar. Start Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Triggered a fall.",
       },
       {
@@ -4336,7 +4818,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtrɪpəl/",
         translation: "Triplicar",
         level: "B2",
-        definition: "x3.",
+        definition:
+          "Triplicar. X3 Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Tripled in size.",
       },
       {
@@ -4344,7 +4827,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtrɪviəl/",
         translation: "Trivial",
         level: "C1",
-        definition: "Unimportant.",
+        definition:
+          "Trivial. Unimportant Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Trivial amount.",
       },
       {
@@ -4352,7 +4836,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/trɒf/",
         translation: "Valle (gráfico)",
         level: "C2",
-        definition: "Low point.",
+        definition:
+          "Valle (gráfico). Low point Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reached a trough.",
       },
       {
@@ -4360,7 +4845,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtʌmbəl/",
         translation: "Caer rodando",
         level: "C2",
-        definition: "Fall.",
+        definition:
+          "Caer rodando. Fall Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Shares tumbled.",
       },
       {
@@ -4368,7 +4854,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtɜːrbjʊlənt/",
         translation: "Turbulento",
         level: "C2",
-        definition: "Unstable.",
+        definition:
+          "Turbulento. Unstable Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Turbulent times.",
       },
       {
@@ -4376,7 +4863,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/tɜːrn/",
         translation: "Giro/Cambio",
         level: "A1",
-        definition: "Change.",
+        definition:
+          "Giro/Cambio. Change Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Turn of events.",
       },
       {
@@ -4384,7 +4872,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtɜːrnˌoʊvər/",
         translation: "Volumen de negocios",
         level: "C1",
-        definition: "Revenue.",
+        definition:
+          "Volumen de negocios. Revenue Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Annual turnover.",
       },
       {
@@ -4392,7 +4881,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/twaɪs/",
         translation: "Dos veces",
         level: "A1",
-        definition: "x2.",
+        definition:
+          "Dos veces. X2 Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Twice as much.",
       },
       {
@@ -4400,7 +4890,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtuːfoʊld/",
         translation: "Doble",
         level: "C2",
-        definition: "Double.",
+        definition:
+          "Doble. Double Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Twofold increase.",
       },
       {
@@ -4408,7 +4899,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈtɪpɪkəl/",
         translation: "Típico",
         level: "B1",
-        definition: "Normal.",
+        definition:
+          "Típico. Normal Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Typical pattern.",
       },
     ],
@@ -4420,7 +4912,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌltɪmət/",
         translation: "Final",
         level: "B2",
-        definition: "Final.",
+        definition:
+          "Final. Final Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Ultimate goal.",
       },
       {
@@ -4428,7 +4921,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʌnˈtʃeɪndʒd/",
         translation: "Sin cambios",
         level: "B1",
-        definition: "Same.",
+        definition:
+          "Sin cambios. Same Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Remained unchanged.",
       },
       {
@@ -4436,7 +4930,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌʌndərˈmaɪn/",
         translation: "Socavar",
         level: "C2",
-        definition: "Weaken.",
+        definition:
+          "Socavar. Weaken Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Undermined growth.",
       },
       {
@@ -4444,7 +4939,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌʌndərˈpɪn/",
         translation: "Apuntalar",
         level: "C2",
-        definition: "Support.",
+        definition:
+          "Apuntalar. Support Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Underpinned the success.",
       },
       {
@@ -4452,7 +4948,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌndjʊleɪt/",
         translation: "Ondular",
         level: "C2",
-        definition: "Wave.",
+        definition:
+          "Ondular. Wave Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Undulating line.",
       },
       {
@@ -4460,7 +4957,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʌnˈiːvən/",
         translation: "Desigual",
         level: "C1",
-        definition: "Not flat.",
+        definition:
+          "Desigual. Not flat Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Uneven distribution.",
       },
       {
@@ -4468,7 +4966,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌʌnɪkˈspɛktɪd/",
         translation: "Inesperado",
         level: "B1",
-        definition: "Surprise.",
+        definition:
+          "Inesperado. Surprise Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Unexpected rise.",
       },
       {
@@ -4476,7 +4975,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʌnˈfoʊld/",
         translation: "Desarrollarse",
         level: "C1",
-        definition: "Happen.",
+        definition:
+          "Desarrollarse. Happen Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Events unfolded.",
       },
       {
@@ -4484,7 +4984,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈjuːnɪfɔːrm/",
         translation: "Uniforme",
         level: "B2",
-        definition: "Same.",
+        definition:
+          "Uniforme. Same Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Uniform growth.",
       },
       {
@@ -4492,7 +4993,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/juːˈniːk/",
         translation: "Único",
         level: "B1",
-        definition: "One only.",
+        definition:
+          "Único. One only Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Unique case.",
       },
       {
@@ -4500,7 +5002,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈjuːnɪt/",
         translation: "Unidad",
         level: "A2",
-        definition: "One.",
+        definition:
+          "Unidad. One Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Per unit.",
       },
       {
@@ -4508,7 +5011,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/juːˈnaɪt/",
         translation: "Unir",
         level: "B2",
-        definition: "Join.",
+        definition:
+          "Unir. Join Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "United efforts.",
       },
       {
@@ -4516,7 +5020,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌjuːnɪˈvɜːrsəl/",
         translation: "Universal",
         level: "C1",
-        definition: "Global.",
+        definition:
+          "Universal. Global Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Universal trend.",
       },
       {
@@ -4524,7 +5029,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌʌnprɪˈdɪktəbl/",
         translation: "Impredecible",
         level: "B2",
-        definition: "Unknown.",
+        definition:
+          "Impredecible. Unknown Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Unpredictable market.",
       },
       {
@@ -4532,7 +5038,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʌnˈprɛsɪdɛntɪd/",
         translation: "Sin precedentes",
         level: "C2",
-        definition: "New.",
+        definition:
+          "Sin precedentes. New Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Unprecedented fall.",
       },
       {
@@ -4540,7 +5047,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʌnˈsteɪbəl/",
         translation: "Inestable",
         level: "C1",
-        definition: "Shaky.",
+        definition:
+          "Inestable. Shaky Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Unstable prices.",
       },
       {
@@ -4548,7 +5056,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʌnˈstɛdi/",
         translation: "Inseguro",
         level: "C1",
-        definition: "Not firm.",
+        definition:
+          "Inseguro. Not firm Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Unsteady progress.",
       },
       {
@@ -4556,7 +5065,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʌp/",
         translation: "Arriba",
         level: "A1",
-        definition: "Higher.",
+        definition:
+          "Arriba. Higher Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Went up.",
       },
       {
@@ -4564,7 +5074,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌpdeɪt/",
         translation: "Actualizar",
         level: "B1",
-        definition: "New info.",
+        definition:
+          "Actualizar. New info Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Updated figures.",
       },
       {
@@ -4572,7 +5083,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌpɡreɪd/",
         translation: "Mejorar",
         level: "B2",
-        definition: "Better.",
+        definition:
+          "Mejorar. Better Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "System upgrade.",
       },
       {
@@ -4580,7 +5092,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ʌpˈhoʊld/",
         translation: "Mantener/Defender",
         level: "C2",
-        definition: "Support.",
+        definition:
+          "Mantener/Defender. Support Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Upheld value.",
       },
       {
@@ -4588,7 +5101,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌpər/",
         translation: "Superior",
         level: "B1",
-        definition: "Higher.",
+        definition:
+          "Superior. Higher Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Upper limit.",
       },
       {
@@ -4596,7 +5110,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌpraɪt/",
         translation: "Vertical",
         level: "C1",
-        definition: "Vertical.",
+        definition:
+          "Vertical. Vertical Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Upright bar.",
       },
       {
@@ -4604,7 +5119,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌpsɛts/",
         translation: "Contratiempos",
         level: "C1",
-        definition: "Problems.",
+        definition:
+          "Contratiempos. Problems Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Minor upsets.",
       },
       {
@@ -4612,7 +5128,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌpsɜːrdʒ/",
         translation: "Repunte",
         level: "C2",
-        definition: "Rise.",
+        definition:
+          "Repunte. Rise Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Upsurge in crime.",
       },
       {
@@ -4620,7 +5137,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌpswɪŋ/",
         translation: "Alza",
         level: "C2",
-        definition: "Rise.",
+        definition:
+          "Alza. Rise Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Economic upswing.",
       },
       {
@@ -4628,7 +5146,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌptɜːrn/",
         translation: "Mejora",
         level: "C1",
-        definition: "Rise.",
+        definition:
+          "Mejora. Rise Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Upturn in sales.",
       },
       {
@@ -4636,7 +5155,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈʌpwərd/",
         translation: "Ascendente",
         level: "B2",
-        definition: "Going up.",
+        definition:
+          "Ascendente. Going up Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Upward trend.",
       },
       {
@@ -4644,7 +5164,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈɜːrbən/",
         translation: "Urbano",
         level: "B2",
-        definition: "City.",
+        definition:
+          "Urbano. City Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Urban growth.",
       },
       {
@@ -4652,7 +5173,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ɜːrdʒ/",
         translation: "Instar/Impulso",
         level: "C1",
-        definition: "Push.",
+        definition:
+          "Instar/Impulso. Push Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Urge to buy.",
       },
       {
@@ -4660,7 +5182,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈjuːsɪdʒ/",
         translation: "Uso",
         level: "C1",
-        definition: "Use.",
+        definition:
+          "Uso. Use Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Data usage.",
       },
       {
@@ -4668,7 +5191,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/juːz/",
         translation: "Usar",
         level: "A1",
-        definition: "Employ.",
+        definition:
+          "Usar. Employ Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Use of tech.",
       },
       {
@@ -4676,7 +5200,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈjuːʒuəli/",
         translation: "Usualmente",
         level: "A1",
-        definition: "Often.",
+        definition:
+          "Usualmente. Often Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Usually stable.",
       },
       {
@@ -4684,7 +5209,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/juːˈtɪlɪti/",
         translation: "Utilidad",
         level: "C1",
-        definition: "Usefulness.",
+        definition:
+          "Utilidad. Usefulness Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Marginal utility.",
       },
       {
@@ -4692,7 +5218,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈjuːtɪlaɪz/",
         translation: "Utilizar",
         level: "C1",
-        definition: "Use.",
+        definition:
+          "Utilizar. Use Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Resources utilized.",
       },
     ],
@@ -4704,7 +5231,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvæsɪleɪt/",
         translation: "Vacilar",
         level: "C2",
-        definition: "Waver.",
+        definition:
+          "Vacilar. Waver Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Vacillated between options.",
       },
       {
@@ -4712,7 +5240,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/veɪɡ/",
         translation: "Vago",
         level: "C1",
-        definition: "Unclear.",
+        definition:
+          "Vago. Unclear Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Vague data.",
       },
       {
@@ -4720,7 +5249,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvælɪd/",
         translation: "Válido",
         level: "B2",
-        definition: "Correct.",
+        definition:
+          "Válido. Correct Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Valid point.",
       },
       {
@@ -4728,7 +5258,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/vəˈlɪdɪti/",
         translation: "Validez",
         level: "C1",
-        definition: "Truth.",
+        definition:
+          "Validez. Truth Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Check validity.",
       },
       {
@@ -4736,7 +5267,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvæli/",
         translation: "Valle (gráfico)",
         level: "B1",
-        definition: "Low point.",
+        definition:
+          "Valle (gráfico). Low point Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "A valley in the graph.",
       },
       {
@@ -4744,7 +5276,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvæljuəbl/",
         translation: "Valioso",
         level: "B1",
-        definition: "Worth much.",
+        definition:
+          "Valioso. Worth much Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Valuable asset.",
       },
       {
@@ -4752,7 +5285,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌvæljʊˈeɪʃən/",
         translation: "Valoración",
         level: "C1",
-        definition: "Worth.",
+        definition:
+          "Valoración. Worth Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Company valuation.",
       },
       {
@@ -4760,7 +5294,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvæljuː/",
         translation: "Valor",
         level: "A1",
-        definition: "Worth.",
+        definition:
+          "Valor. Worth Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Total value.",
       },
       {
@@ -4768,7 +5303,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvænɪʃ/",
         translation: "Desaparecer",
         level: "B2",
-        definition: "Go away.",
+        definition:
+          "Desaparecer. Go away Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Profits vanished.",
       },
       {
@@ -4776,7 +5312,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɛəriəbl/",
         translation: "Variable",
         level: "C1",
-        definition: "Changing.",
+        definition:
+          "Variable. Changing Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Variable cost.",
       },
       {
@@ -4784,7 +5321,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɛəriəns/",
         translation: "Varianza",
         level: "C2",
-        definition: "Difference.",
+        definition:
+          "Varianza. Difference Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Variance in data.",
       },
       {
@@ -4792,7 +5330,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɛəriənt/",
         translation: "Variante",
         level: "C1",
-        definition: "Type.",
+        definition:
+          "Variante. Type Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Variant of virus.",
       },
       {
@@ -4800,7 +5339,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌvɛəriˈeɪʃən/",
         translation: "Variación",
         level: "B2",
-        definition: "Change.",
+        definition:
+          "Variación. Change Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Little variation.",
       },
       {
@@ -4808,7 +5348,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɛərid/",
         translation: "Variado",
         level: "B2",
-        definition: "Mixed.",
+        definition:
+          "Variado. Mixed Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Varied results.",
       },
       {
@@ -4816,7 +5357,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/vəˈraɪəti/",
         translation: "Variedad",
         level: "B1",
-        definition: "Mix.",
+        definition:
+          "Variedad. Mix Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Variety of reasons.",
       },
       {
@@ -4824,7 +5366,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɛəriəs/",
         translation: "Varios",
         level: "A2",
-        definition: "Many.",
+        definition:
+          "Varios. Many Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Various factors.",
       },
       {
@@ -4832,7 +5375,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɛəri/",
         translation: "Variar",
         level: "B2",
-        definition: "Change.",
+        definition:
+          "Variar. Change Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Rates vary.",
       },
       {
@@ -4840,7 +5384,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/vɑːst/",
         translation: "Vasto",
         level: "C1",
-        definition: "Huge.",
+        definition:
+          "Vasto. Huge Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Vast majority.",
       },
       {
@@ -4848,7 +5393,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/vəˈlɒsɪti/",
         translation: "Velocidad",
         level: "C2",
-        definition: "Speed.",
+        definition:
+          "Velocidad. Speed Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Velocity of change.",
       },
       {
@@ -4856,7 +5402,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɛntʃər/",
         translation: "Empresa/Riesgo",
         level: "C1",
-        definition: "Business.",
+        definition:
+          "Empresa/Riesgo. Business Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "New venture.",
       },
       {
@@ -4864,7 +5411,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɛrɪfaɪ/",
         translation: "Verificar",
         level: "C1",
-        definition: "Check.",
+        definition:
+          "Verificar. Check Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Verify the numbers.",
       },
       {
@@ -4872,7 +5420,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɜːrtɪkəl/",
         translation: "Vertical",
         level: "B2",
-        definition: "Up/down.",
+        definition:
+          "Vertical. Up/down Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Vertical axis.",
       },
       {
@@ -4880,7 +5429,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɛri/",
         translation: "Muy",
         level: "A1",
-        definition: "Highly.",
+        definition:
+          "Muy. Highly Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Very high.",
       },
       {
@@ -4888,7 +5438,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvaɪəbl/",
         translation: "Viable",
         level: "C1",
-        definition: "Workable.",
+        definition:
+          "Viable. Workable Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Viable option.",
       },
       {
@@ -4896,7 +5447,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/vjuː/",
         translation: "Vista/Opinión",
         level: "A2",
-        definition: "Sight.",
+        definition:
+          "Vista/Opinión. Sight Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Point of view.",
       },
       {
@@ -4904,7 +5456,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɪɡərəs/",
         translation: "Vigoroso",
         level: "C1",
-        definition: "Strong.",
+        definition:
+          "Vigoroso. Strong Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Vigorous growth.",
       },
       {
@@ -4912,7 +5465,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvaɪəleɪt/",
         translation: "Violar",
         level: "C1",
-        definition: "Break rule.",
+        definition:
+          "Violar. Break rule Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Violated trend.",
       },
       {
@@ -4920,7 +5474,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɜːrtʃuəl/",
         translation: "Virtual",
         level: "B2",
-        definition: "Digital.",
+        definition:
+          "Virtual. Digital Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Virtual sales.",
       },
       {
@@ -4928,7 +5483,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɪzɪbl/",
         translation: "Visible",
         level: "B2",
-        definition: "Seen.",
+        definition:
+          "Visible. Seen Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Visible drop.",
       },
       {
@@ -4936,7 +5492,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɪʒən/",
         translation: "Visión",
         level: "B2",
-        definition: "Sight.",
+        definition:
+          "Visión. Sight Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Future vision.",
       },
       {
@@ -4944,7 +5501,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɪʒuəl/",
         translation: "Visual",
         level: "B2",
-        definition: "Seen.",
+        definition:
+          "Visual. Seen Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Visual aid.",
       },
       {
@@ -4952,7 +5510,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɪʒuəlaɪz/",
         translation: "Visualizar",
         level: "C1",
-        definition: "Imagine.",
+        definition:
+          "Visualizar. Imagine Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Visualize data.",
       },
       {
@@ -4960,7 +5519,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvaɪtl/",
         translation: "Vital",
         level: "C1",
-        definition: "Crucial.",
+        definition:
+          "Vital. Crucial Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Vital part.",
       },
       {
@@ -4968,7 +5528,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɪvɪd/",
         translation: "Vívido",
         level: "C1",
-        definition: "Clear.",
+        definition:
+          "Vívido. Clear Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Vivid picture.",
       },
       {
@@ -4976,7 +5537,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/vɔɪs/",
         translation: "Voz/Expresar",
         level: "B2",
-        definition: "Say.",
+        definition:
+          "Voz/Expresar. Say Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Voiced concern.",
       },
       {
@@ -4984,7 +5546,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɒlətaɪl/",
         translation: "Volátil",
         level: "C1",
-        definition: "Unstable.",
+        definition:
+          "Volátil. Unstable Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Volatile market.",
       },
       {
@@ -4992,7 +5555,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɒljuːm/",
         translation: "Volumen",
         level: "B2",
-        definition: "Amount.",
+        definition:
+          "Volumen. Amount Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "High volume.",
       },
       {
@@ -5000,7 +5564,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvɒləntɛri/",
         translation: "Voluntario",
         level: "C1",
-        definition: "Free will.",
+        definition:
+          "Voluntario. Free will Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Voluntary turnover.",
       },
       {
@@ -5008,7 +5573,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌvɒlənˈtɪər/",
         translation: "Voluntario",
         level: "B2",
-        definition: "Helper.",
+        definition:
+          "Voluntario. Helper Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Volunteer numbers.",
       },
       {
@@ -5016,7 +5582,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/voʊt/",
         translation: "Voto",
         level: "B1",
-        definition: "Choose.",
+        definition:
+          "Voto. Choose Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Cast a vote.",
       },
       {
@@ -5024,7 +5591,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈvʌlnərəbl/",
         translation: "Vulnerable",
         level: "C1",
-        definition: "Weak.",
+        definition:
+          "Vulnerable. Weak Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Vulnerable sector.",
       },
     ],
@@ -5036,7 +5604,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/weɪdʒ/",
         translation: "Salario",
         level: "B2",
-        definition: "Pay.",
+        definition:
+          "Salario. Pay Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Average wage.",
       },
       {
@@ -5044,7 +5613,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/weɪt/",
         translation: "Esperar",
         level: "A1",
-        definition: "Stay.",
+        definition:
+          "Esperar. Stay Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wait time.",
       },
       {
@@ -5052,7 +5622,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/weɪk/",
         translation: "Estela/Despertar",
         level: "C2",
-        definition: "Path.",
+        definition:
+          "Estela/Despertar. Path Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "In the wake of.",
       },
       {
@@ -5060,7 +5631,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɔːk/",
         translation: "Caminar",
         level: "A1",
-        definition: "Move.",
+        definition:
+          "Caminar. Move Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Slow walk.",
       },
       {
@@ -5068,7 +5640,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/weɪn/",
         translation: "Menguar",
         level: "C2",
-        definition: "Decrease.",
+        definition:
+          "Menguar. Decrease Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Influence waned.",
       },
       {
@@ -5076,7 +5649,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɒnt/",
         translation: "Querer",
         level: "A1",
-        definition: "Desire.",
+        definition:
+          "Querer. Desire Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Want to grow.",
       },
       {
@@ -5084,7 +5658,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɔːrn/",
         translation: "Advertir",
         level: "B1",
-        definition: "Alert.",
+        definition:
+          "Advertir. Alert Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Warned of drop.",
       },
       {
@@ -5092,7 +5667,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwɒrənt/",
         translation: "Justificar",
         level: "C1",
-        definition: "Justify.",
+        definition:
+          "Justificar. Justify Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Warranted rise.",
       },
       {
@@ -5100,7 +5676,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɒʃ/",
         translation: "Lavar",
         level: "A1",
-        definition: "Clean.",
+        definition:
+          "Lavar. Clean Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Washed away.",
       },
       {
@@ -5108,7 +5685,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/weɪst/",
         translation: "Desperdicio",
         level: "B1",
-        definition: "Trash.",
+        definition:
+          "Desperdicio. Trash Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reduce waste.",
       },
       {
@@ -5116,7 +5694,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɒtʃ/",
         translation: "Mirar",
         level: "A1",
-        definition: "See.",
+        definition:
+          "Mirar. See Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Watch trends.",
       },
       {
@@ -5124,7 +5703,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwɔːtər/",
         translation: "Agua/Regar",
         level: "A1",
-        definition: "Liquid.",
+        definition:
+          "Agua/Regar. Liquid Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Water usage.",
       },
       {
@@ -5132,7 +5712,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/weɪv/",
         translation: "Ola/Ondear",
         level: "B1",
-        definition: "Move.",
+        definition:
+          "Ola/Ondear. Move Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wave of growth.",
       },
       {
@@ -5140,7 +5721,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈweɪvər/",
         translation: "Vacilar",
         level: "C2",
-        definition: "Unsteady.",
+        definition:
+          "Vacilar. Unsteady Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Prices wavered.",
       },
       {
@@ -5148,7 +5730,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wæks/",
         translation: "Crecer",
         level: "C2",
-        definition: "Increase.",
+        definition:
+          "Crecer. Increase Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wax and wane.",
       },
       {
@@ -5156,7 +5739,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/weɪ/",
         translation: "Camino/Manera",
         level: "A1",
-        definition: "Method.",
+        definition:
+          "Camino/Manera. Method Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Way up.",
       },
       {
@@ -5164,7 +5748,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wiːk/",
         translation: "Débil",
         level: "A2",
-        definition: "Not strong.",
+        definition:
+          "Débil. Not strong Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Weak growth.",
       },
       {
@@ -5172,7 +5757,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwiːkən/",
         translation: "Debilitar",
         level: "C1",
-        definition: "Less strong.",
+        definition:
+          "Debilitar. Less strong Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Economy weakened.",
       },
       {
@@ -5180,7 +5766,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɛlθ/",
         translation: "Riqueza",
         level: "B2",
-        definition: "Money.",
+        definition:
+          "Riqueza. Money Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wealth gap.",
       },
       {
@@ -5188,7 +5775,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɛər/",
         translation: "Desgastar",
         level: "B1",
-        definition: "Erode.",
+        definition:
+          "Desgastar. Erode Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wore down.",
       },
       {
@@ -5196,7 +5784,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwiːkli/",
         translation: "Semanal",
         level: "A2",
-        definition: "7 days.",
+        definition:
+          "Semanal. 7 days Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Weekly rate.",
       },
       {
@@ -5204,7 +5793,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/weɪ/",
         translation: "Pesar",
         level: "B1",
-        definition: "Measure.",
+        definition:
+          "Pesar. Measure Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Weigh the options.",
       },
       {
@@ -5212,7 +5802,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/weɪt/",
         translation: "Peso",
         level: "B1",
-        definition: "Mass.",
+        definition:
+          "Peso. Mass Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Lose weight.",
       },
       {
@@ -5220,7 +5811,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwɛlkəm/",
         translation: "Bienvenido",
         level: "A1",
-        definition: "Greet.",
+        definition:
+          "Bienvenido. Greet Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Welcome change.",
       },
       {
@@ -5228,7 +5820,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɛl/",
         translation: "Bien",
         level: "A1",
-        definition: "Good.",
+        definition:
+          "Bien. Good Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Did well.",
       },
       {
@@ -5236,7 +5829,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/hoʊl/",
         translation: "Entero",
         level: "A2",
-        definition: "All.",
+        definition:
+          "Entero. All Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Whole year.",
       },
       {
@@ -5244,7 +5838,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/waɪd/",
         translation: "Ancho",
         level: "A2",
-        definition: "Broad.",
+        definition:
+          "Ancho. Broad Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wide gap.",
       },
       {
@@ -5252,7 +5847,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwaɪdn/",
         translation: "Ensanchar",
         level: "C1",
-        definition: "Expand.",
+        definition:
+          "Ensanchar. Expand Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Gap widened.",
       },
       {
@@ -5260,7 +5856,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwaɪdsprɛd/",
         translation: "Generalizado",
         level: "C1",
-        definition: "Common.",
+        definition:
+          "Generalizado. Common Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Widespread use.",
       },
       {
@@ -5268,7 +5865,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɪdθ/",
         translation: "Anchura",
         level: "C1",
-        definition: "Size.",
+        definition:
+          "Anchura. Size Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Width of bar.",
       },
       {
@@ -5276,7 +5874,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/waɪld/",
         translation: "Salvaje",
         level: "A2",
-        definition: "Untamed.",
+        definition:
+          "Salvaje. Untamed Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wild swings.",
       },
       {
@@ -5284,7 +5883,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɪl/",
         translation: "Voluntad/Futuro",
         level: "A1",
-        definition: "Future.",
+        definition:
+          "Voluntad/Futuro. Future Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Will rise.",
       },
       {
@@ -5292,7 +5892,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɪn/",
         translation: "Ganar",
         level: "A1",
-        definition: "Succeed.",
+        definition:
+          "Ganar. Succeed Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Win share.",
       },
       {
@@ -5300,7 +5901,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/waɪnd/",
         translation: "Viento",
         level: "A2",
-        definition: "Air.",
+        definition:
+          "Viento. Air Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wind power.",
       },
       {
@@ -5308,7 +5910,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/waɪp/",
         translation: "Limpiar/Borrar",
         level: "B2",
-        definition: "Remove.",
+        definition:
+          "Limpiar/Borrar. Remove Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wiped out gains.",
       },
       {
@@ -5316,7 +5919,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/waɪz/",
         translation: "Sabio",
         level: "B2",
-        definition: "Smart.",
+        definition:
+          "Sabio. Smart Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wise move.",
       },
       {
@@ -5324,7 +5928,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɪʃ/",
         translation: "Desear",
         level: "A2",
-        definition: "Hope.",
+        definition:
+          "Desear. Hope Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wish to grow.",
       },
       {
@@ -5332,7 +5937,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɪðˈdrɔː/",
         translation: "Retirar",
         level: "C1",
-        definition: "Remove.",
+        definition:
+          "Retirar. Remove Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Withdrew funds.",
       },
       {
@@ -5340,7 +5946,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɪðˈhoʊld/",
         translation: "Retener",
         level: "C2",
-        definition: "Keep.",
+        definition:
+          "Retener. Keep Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Withheld data.",
       },
       {
@@ -5348,7 +5955,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɪˈðɪn/",
         translation: "Dentro de",
         level: "B1",
-        definition: "Inside.",
+        definition:
+          "Dentro de. Inside Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Within a year.",
       },
       {
@@ -5356,7 +5964,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɪˈðaʊt/",
         translation: "Sin",
         level: "A1",
-        definition: "Lacking.",
+        definition:
+          "Sin. Lacking Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Without change.",
       },
       {
@@ -5364,7 +5973,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɪðˈstænd/",
         translation: "Resistir",
         level: "C2",
-        definition: "Endure.",
+        definition:
+          "Resistir. Endure Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Withstand pressure.",
       },
       {
@@ -5372,7 +5982,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwɪtnəs/",
         translation: "Presenciar",
         level: "C1",
-        definition: "See.",
+        definition:
+          "Presenciar. See Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Witnessed a rise.",
       },
       {
@@ -5380,7 +5991,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwʌndər/",
         translation: "Preguntarse",
         level: "B1",
-        definition: "Think.",
+        definition:
+          "Preguntarse. Think Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "No wonder.",
       },
       {
@@ -5388,7 +6000,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɜːrk/",
         translation: "Trabajo",
         level: "A1",
-        definition: "Job.",
+        definition:
+          "Trabajo. Job Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Workforce.",
       },
       {
@@ -5396,7 +6009,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɜːrld/",
         translation: "Mundo",
         level: "A1",
-        definition: "Earth.",
+        definition:
+          "Mundo. Earth Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "World market.",
       },
       {
@@ -5404,7 +6018,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwɜːrldwaɪd/",
         translation: "Mundial",
         level: "B2",
-        definition: "Global.",
+        definition:
+          "Mundial. Global Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Worldwide sales.",
       },
       {
@@ -5412,7 +6027,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwʌri/",
         translation: "Preocupación",
         level: "A2",
-        definition: "Fear.",
+        definition:
+          "Preocupación. Fear Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Cause for worry.",
       },
       {
@@ -5420,7 +6036,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɜːrs/",
         translation: "Peor",
         level: "A2",
-        definition: "Bader.",
+        definition:
+          "Peor. Bader Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Got worse.",
       },
       {
@@ -5428,7 +6045,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwɜːrsən/",
         translation: "Empeorar",
         level: "C1",
-        definition: "Degrade.",
+        definition:
+          "Empeorar. Degrade Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Situation worsened.",
       },
       {
@@ -5436,7 +6054,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɜːrst/",
         translation: "Peor",
         level: "A2",
-        definition: "Most bad.",
+        definition:
+          "Peor. Most bad Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Worst case.",
       },
       {
@@ -5444,7 +6063,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wɜːrθ/",
         translation: "Valor",
         level: "B1",
-        definition: "Value.",
+        definition:
+          "Valor. Value Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Net worth.",
       },
       {
@@ -5452,7 +6072,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˌwɜːrθˈwaɪl/",
         translation: "Valer la pena",
         level: "C1",
-        definition: "Good.",
+        definition:
+          "Valer la pena. Good Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Worthwhile gain.",
       },
       {
@@ -5460,7 +6081,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈwɜːrði/",
         translation: "Digno",
         level: "C1",
-        definition: "Good.",
+        definition:
+          "Digno. Good Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Noteworthy.",
       },
       {
@@ -5468,7 +6090,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/wuːnd/",
         translation: "Herida",
         level: "B2",
-        definition: "Hurt.",
+        definition:
+          "Herida. Hurt Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wounded economy.",
       },
       {
@@ -5476,7 +6099,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ræp/",
         translation: "Envolver",
         level: "B2",
-        definition: "Cover.",
+        definition:
+          "Envolver. Cover Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wrap up.",
       },
       {
@@ -5484,7 +6108,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɛk/",
         translation: "Naufragio/Arruinar",
         level: "C1",
-        definition: "Destroy.",
+        definition:
+          "Naufragio/Arruinar. Destroy Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Wrecked plans.",
       },
       {
@@ -5492,7 +6117,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/raɪt/",
         translation: "Escribir",
         level: "A1",
-        definition: "Pen.",
+        definition:
+          "Escribir. Pen Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Write off.",
       },
       {
@@ -5500,7 +6126,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/rɒŋ/",
         translation: "Incorrecto",
         level: "A1",
-        definition: "Bad.",
+        definition:
+          "Incorrecto. Bad Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Went wrong.",
       },
     ],
@@ -5512,7 +6139,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈzɛnɪθ/",
         translation: "Cénit",
         level: "C2",
-        definition: "Highest point.",
+        definition:
+          "Cénit. Highest point Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Reached its zenith.",
       },
       {
@@ -5520,7 +6148,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/ˈzɪəroʊ/",
         translation: "Cero",
         level: "A1",
-        definition: "Nothing.",
+        definition:
+          "Cero. Nothing Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Dropped to zero.",
       },
       {
@@ -5528,7 +6157,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/zoʊn/",
         translation: "Zona",
         level: "B1",
-        definition: "Area.",
+        definition:
+          "Zona. Area Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Growth zone.",
       },
       {
@@ -5536,7 +6166,8 @@ export const ieltsTrendsData: StopData = {
         ipa: "/zuːm/",
         translation: "Dispararse",
         level: "C2",
-        definition: "Move fast.",
+        definition:
+          "Dispararse. Move fast Often used in formal English to describe data, change, comparison, or trends.",
         examSentence: "Prices zoomed up.",
       },
     ],

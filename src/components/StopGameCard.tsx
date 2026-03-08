@@ -43,7 +43,7 @@ interface StopGameCardProps {
   theme: any;
   onPlay: (word: string) => void;
   onPractice: () => void;
-  onSave: (word: string, def: string) => void;
+  onSave: (item: StopItem) => void;
   isAudioLoading: boolean;
   isPracticing: boolean;
   isSaved: boolean;
@@ -612,9 +612,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
             />
           </button>
           <button
-            onClick={() =>
-              onSave(item.word, item.definition || item.translation)
-            }
+            onClick={() => onSave(item)}
             disabled={isSaved}
             className={`h-8 w-8 flex items-center justify-center rounded-full transition-colors ${isSaved ? "bg-emerald-900/30 text-emerald-400" : "bg-slate-700 text-emerald-400 hover:bg-emerald-500 hover:text-white"}`}
             title="Save"

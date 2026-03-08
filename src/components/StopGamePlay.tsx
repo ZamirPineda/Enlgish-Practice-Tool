@@ -1,6 +1,12 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import { stopGameData } from "@/features/data/stopGameData";
-import { StopCategory } from "@/types";
+import { StopCategory, StopItem, VaultAddOptions } from "@/types";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import {
   GroupName,
@@ -25,13 +31,14 @@ import Card from "@/components/ui/Card";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { toast } from "@/components/ui/Toast";
+import { buildVaultAddOptionsFromStopItem } from "@/lib/vaultEntries";
 
 interface StopGamePlayProps {
   onPlayWord: (word: string) => void;
   onAddToVault: (
     word: string,
     definition: string,
-    options?: { category?: string; tags?: string[] },
+    options?: VaultAddOptions,
   ) => void;
 }
 
@@ -39,13 +46,12 @@ const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 type StopGameAdaptiveLevel = "Relaxed" | "Normal" | "Hard";
 const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
 const UPSHIFT_AFTER_CORRECT_STREAK = 3;
-const STOP_GAME_DIFFICULTY = createAdaptiveDifficultyEngine<StopGameAdaptiveLevel>(
-  {
+const STOP_GAME_DIFFICULTY =
+  createAdaptiveDifficultyEngine<StopGameAdaptiveLevel>({
     gameId: "stop_game",
     levels: ["Relaxed", "Normal", "Hard"],
     defaultLevel: "Normal",
-  },
-);
+  });
 
 export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   onPlayWord,
@@ -77,11 +83,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   const [difficulty, setDifficulty] = useState<15 | 30 | 60>(30);
   const [categoryDifficulty, setCategoryDifficulty] =
     useState<StopGameAdaptiveLevel>(STOP_GAME_DIFFICULTY.defaultLevel);
-  const [hintedWord, setHintedWord] = useState<{
-    word: string;
-    definition?: string;
-    translation?: string;
-  } | null>(null);
+  const [hintedWord, setHintedWord] = useState<StopItem | null>(null);
   const [waitingForContinue, setWaitingForContinue] = useState(false);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error" | "info";
@@ -174,8 +176,9 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   }, [selectedGroup, categoryDifficulty]);
 
   const handleCategoryDifficultySelect = (nextLevel: StopGameAdaptiveLevel) => {
-    setCategoryDifficulty((currentLevel) =>
-      STOP_GAME_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    setCategoryDifficulty(
+      (currentLevel) =>
+        STOP_GAME_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
 
@@ -368,7 +371,10 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
       }));
 
       onAddToVault(selectedWordForFeedback.word, definition, {
-        category: currentCategory || undefined,
+        ...buildVaultAddOptionsFromStopItem(
+          selectedWordForFeedback,
+          currentCategory || undefined,
+        ),
       });
 
       setWaitingForContinue(true);
@@ -576,94 +582,96 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
   if (!isPlaying) {
     return (
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-background flex flex-col items-center justify-center">
-        <Card className="max-w-md w-full p-6 text-center space-y-6 bg-surface-1">
-          <h2 className="text-2xl font-bold text-text-primary">
-            Stop Game Challenge
-          </h2>
-          <p className="text-text-secondary">
-            Select a category group and test your vocabulary! You will be given
-            a letter and a category, and you must type a valid word.
-          </p>
+      <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-[calc(env(safe-area-inset-bottom)+6.5rem)] md:pb-6 bg-background">
+        <div className="flex min-h-full flex-col items-center justify-start md:justify-center">
+          <Card className="max-w-md w-full p-6 text-center space-y-6 bg-surface-1">
+            <h2 className="text-2xl font-bold text-text-primary">
+              Stop Game Challenge
+            </h2>
+            <p className="text-text-secondary">
+              Select a category group and test your vocabulary! You will be
+              given a letter and a category, and you must type a valid word.
+            </p>
 
-          <div className="space-y-2 text-left">
-            <label className="text-sm font-bold text-text-muted">
-              Category Group
-            </label>
-            <select
-              value={selectedGroup}
-              onChange={(e) => setSelectedGroup(e.target.value as GroupName)}
-              className="w-full bg-surface-2 border border-border text-text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-focus focus:border-transparent outline-none"
+            <div className="space-y-2 text-left">
+              <label className="text-sm font-bold text-text-muted">
+                Category Group
+              </label>
+              <select
+                value={selectedGroup}
+                onChange={(e) => setSelectedGroup(e.target.value as GroupName)}
+                className="w-full bg-surface-2 border border-border text-text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-focus focus:border-transparent outline-none"
+              >
+                {(Object.keys(CATEGORY_GROUPS) as GroupName[]).map((group) => (
+                  <option key={group} value={group}>
+                    {group}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-2 text-left">
+              <label className="text-sm font-bold text-text-muted">
+                Category Difficulty
+              </label>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleCategoryDifficultySelect("Relaxed")}
+                  className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Relaxed" ? "bg-success border-success text-white shadow-lg shadow-success/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                >
+                  Relaxed
+                </button>
+                <button
+                  onClick={() => handleCategoryDifficultySelect("Normal")}
+                  className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Normal" ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                >
+                  Normal
+                </button>
+                <button
+                  onClick={() => handleCategoryDifficultySelect("Hard")}
+                  className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Hard" ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                >
+                  Hard
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-2 text-left">
+              <label className="text-sm font-bold text-text-muted">
+                Time Limit (per word)
+              </label>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setDifficulty(60)}
+                  className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 60 ? "bg-success border-success text-white shadow-lg shadow-success/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                >
+                  60s
+                </button>
+                <button
+                  onClick={() => setDifficulty(30)}
+                  className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 30 ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                >
+                  30s
+                </button>
+                <button
+                  onClick={() => setDifficulty(15)}
+                  className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 15 ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                >
+                  15s
+                </button>
+              </div>
+            </div>
+
+            <Button
+              onClick={startGame}
+              variant="primary"
+              fullWidth
+              className="py-3 text-lg font-bold bg-gradient-to-r from-sky-500 to-emerald-500 hover:from-sky-400 hover:to-emerald-400 border-none text-white"
             >
-              {(Object.keys(CATEGORY_GROUPS) as GroupName[]).map((group) => (
-                <option key={group} value={group}>
-                  {group}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="space-y-2 text-left">
-            <label className="text-sm font-bold text-text-muted">
-              Category Difficulty
-            </label>
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleCategoryDifficultySelect("Relaxed")}
-                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Relaxed" ? "bg-success border-success text-white shadow-lg shadow-success/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
-              >
-                Relaxed
-              </button>
-              <button
-                onClick={() => handleCategoryDifficultySelect("Normal")}
-                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Normal" ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
-              >
-                Normal
-              </button>
-              <button
-                onClick={() => handleCategoryDifficultySelect("Hard")}
-                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Hard" ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
-              >
-                Hard
-              </button>
-            </div>
-          </div>
-
-          <div className="space-y-2 text-left">
-            <label className="text-sm font-bold text-text-muted">
-              Time Limit (per word)
-            </label>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setDifficulty(60)}
-                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 60 ? "bg-success border-success text-white shadow-lg shadow-success/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
-              >
-                60s
-              </button>
-              <button
-                onClick={() => setDifficulty(30)}
-                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 30 ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
-              >
-                30s
-              </button>
-              <button
-                onClick={() => setDifficulty(15)}
-                className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 15 ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
-              >
-                15s
-              </button>
-            </div>
-          </div>
-
-          <Button
-            onClick={startGame}
-            variant="primary"
-            fullWidth
-            className="py-3 text-lg font-bold bg-gradient-to-r from-sky-500 to-emerald-500 hover:from-sky-400 hover:to-emerald-400 border-none text-white"
-          >
-            Start Game
-          </Button>
-        </Card>
+              Start Game
+            </Button>
+          </Card>
+        </div>
       </div>
     );
   }
@@ -698,239 +706,246 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     })();
 
     return (
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-background flex flex-col items-center justify-center">
-        <Card className="max-w-2xl w-full p-8 text-center space-y-8 animate-fade-in shadow-2xl border-t-4 border-accent bg-surface-1">
-          <div>
-            <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-2">
-              Game Complete!
-            </h2>
-            <p className="text-text-secondary text-lg">{gradeInfo.message}</p>
-          </div>
+      <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-[calc(env(safe-area-inset-bottom)+6.5rem)] md:pb-6 bg-background">
+        <div className="flex min-h-full flex-col items-center justify-start md:justify-center">
+          <Card className="max-w-2xl w-full p-8 text-center space-y-8 animate-fade-in shadow-2xl border-t-4 border-accent bg-surface-1">
+            <div>
+              <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-2">
+                Game Complete!
+              </h2>
+              <p className="text-text-secondary text-lg">{gradeInfo.message}</p>
+            </div>
 
-          {/* This is rendered when game is over, we trigger the game played quest automatically when this mounts */}
-          {(() => {
-            progressQuest("play_game", 1, "stop");
-            progressQuest("play_game", 1, "any");
-            return null;
-          })()}
+            {/* This is rendered when game is over, we trigger the game played quest automatically when this mounts */}
+            {(() => {
+              progressQuest("play_game", 1, "stop");
+              progressQuest("play_game", 1, "any");
+              return null;
+            })()}
 
-          <div className="flex justify-center items-center gap-8 py-4">
-            <div className="text-center">
-              <div className="text-sm font-bold text-text-muted uppercase tracking-widest mb-1">
-                Rank
-              </div>
-              <div
-                className={`text-7xl font-black ${gradeInfo.color} drop-shadow-lg animate-bounce`}
-              >
-                {gradeInfo.grade}
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
-              <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
-                Total Score
-              </div>
-              <div className="text-3xl font-black text-success-hover">
-                {score}
-              </div>
-            </div>
-            <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
-              <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
-                Best Streak
-              </div>
-              <div className="text-3xl font-black text-amber-500">
-                🔥 {bestStreak}
-              </div>
-            </div>
-            <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
-              <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
-                Accuracy
-              </div>
-              <div className="text-3xl font-black text-accent-hover">
-                {gameStats.correct + gameStats.incorrect > 0
-                  ? Math.round(
-                      (gameStats.correct /
-                        (gameStats.correct + gameStats.incorrect)) *
-                        100,
-                    )
-                  : 0}
-                %
-              </div>
-            </div>
-            <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
-              <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
-                Words Seen
-              </div>
-              <div className="text-3xl font-black text-purple-500">
-                {gameStats.history.length}
-              </div>
-            </div>
-          </div>
-
-          <div className="w-full text-left max-h-60 overflow-y-auto pr-2 space-y-2 text-sm bg-surface-2 p-2 rounded-lg scrollbar-thin scrollbar-thumb-border">
-            <div className="sticky top-0 bg-surface-2 py-2 z-10 w-full mb-2 border-b border-border font-bold uppercase text-text-muted text-xs tracking-wider">
-              Session History (Newest First)
-            </div>
-            {gameStats.history
-              .slice()
-              .reverse()
-              .map((item, idx) => (
+            <div className="flex justify-center items-center gap-8 py-4">
+              <div className="text-center">
+                <div className="text-sm font-bold text-text-muted uppercase tracking-widest mb-1">
+                  Rank
+                </div>
                 <div
-                  key={idx}
-                  className={`p-3 rounded-lg flex justify-between items-center ${
-                    item.status === "correct" ||
-                    item.status === "self-corrected"
-                      ? "bg-success/10 border border-success/20"
-                      : item.status === "skipped"
-                        ? "bg-surface-hover border border-border"
-                        : "bg-red-500/10 border border-red-500/20"
-                  }`}
+                  className={`text-7xl font-black ${gradeInfo.color} drop-shadow-lg animate-bounce`}
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="font-black text-text-secondary w-6 h-6 flex items-center justify-center bg-surface-1 rounded text-xs">
-                      {item.letter}
-                    </span>
-                    <div className="flex flex-col text-left">
-                      <span className="text-[10px] text-text-muted uppercase leading-tight truncate max-w-[120px]">
-                        {item.category}
-                      </span>
-                      <span
-                        className={`font-medium ${item.status === "correct" ? "text-text-primary" : "text-text-secondary"}`}
-                      >
-                        {item.word}
-                      </span>
-                    </div>
-                  </div>
-                  <span
-                    className={`text-[10px] uppercase font-bold px-2 py-1 rounded ${
+                  {gradeInfo.grade}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+              <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
+                <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
+                  Total Score
+                </div>
+                <div className="text-3xl font-black text-success-hover">
+                  {score}
+                </div>
+              </div>
+              <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
+                <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
+                  Best Streak
+                </div>
+                <div className="text-3xl font-black text-amber-500">
+                  🔥 {bestStreak}
+                </div>
+              </div>
+              <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
+                <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
+                  Accuracy
+                </div>
+                <div className="text-3xl font-black text-accent-hover">
+                  {gameStats.correct + gameStats.incorrect > 0
+                    ? Math.round(
+                        (gameStats.correct /
+                          (gameStats.correct + gameStats.incorrect)) *
+                          100,
+                      )
+                    : 0}
+                  %
+                </div>
+              </div>
+              <div className="bg-surface-2 p-4 rounded-2xl border border-border hover:bg-surface-hover transition-colors">
+                <div className="text-xs font-bold text-text-muted uppercase tracking-wider mb-1">
+                  Words Seen
+                </div>
+                <div className="text-3xl font-black text-purple-500">
+                  {gameStats.history.length}
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full text-left max-h-60 overflow-y-auto pr-2 space-y-2 text-sm bg-surface-2 p-2 rounded-lg scrollbar-thin scrollbar-thumb-border">
+              <div className="sticky top-0 bg-surface-2 py-2 z-10 w-full mb-2 border-b border-border font-bold uppercase text-text-muted text-xs tracking-wider">
+                Session History (Newest First)
+              </div>
+              {gameStats.history
+                .slice()
+                .reverse()
+                .map((item, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-3 rounded-lg flex justify-between items-center ${
                       item.status === "correct" ||
                       item.status === "self-corrected"
-                        ? "bg-success text-white"
+                        ? "bg-success/10 border border-success/20"
                         : item.status === "skipped"
-                          ? "bg-surface-hover text-text-muted"
-                          : "bg-red-500 text-white"
+                          ? "bg-surface-hover border border-border"
+                          : "bg-red-500/10 border border-red-500/20"
                     }`}
                   >
-                    {item.status === "self-corrected"
-                      ? "I WAS RIGHT"
-                      : item.status}
-                  </span>
-                </div>
-              ))}
-          </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-black text-text-secondary w-6 h-6 flex items-center justify-center bg-surface-1 rounded text-xs">
+                        {item.letter}
+                      </span>
+                      <div className="flex flex-col text-left">
+                        <span className="text-[10px] text-text-muted uppercase leading-tight truncate max-w-[120px]">
+                          {item.category}
+                        </span>
+                        <span
+                          className={`font-medium ${item.status === "correct" ? "text-text-primary" : "text-text-secondary"}`}
+                        >
+                          {item.word}
+                        </span>
+                      </div>
+                    </div>
+                    <span
+                      className={`text-[10px] uppercase font-bold px-2 py-1 rounded ${
+                        item.status === "correct" ||
+                        item.status === "self-corrected"
+                          ? "bg-success text-white"
+                          : item.status === "skipped"
+                            ? "bg-surface-hover text-text-muted"
+                            : "bg-red-500 text-white"
+                      }`}
+                    >
+                      {item.status === "self-corrected"
+                        ? "I WAS RIGHT"
+                        : item.status}
+                    </span>
+                  </div>
+                ))}
+            </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
-            <Button
-              onClick={() => {
-                setShowSummary(false);
-                startGame();
-              }}
-              variant="primary"
-              className="w-full sm:w-auto py-3 px-8 text-lg font-bold flex-1"
-            >
-              Play Again
-            </Button>
-            <Button
-              onClick={() => {
-                setShowSummary(false);
-                setIsPlaying(false);
-              }}
-              variant="secondary"
-              className="w-full sm:w-auto py-3 px-8 text-lg flex-1"
-            >
-              Back to Menu
-            </Button>
-          </div>
-        </Card>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+              <Button
+                onClick={() => {
+                  setShowSummary(false);
+                  startGame();
+                }}
+                variant="primary"
+                className="w-full sm:w-auto py-3 px-8 text-lg font-bold flex-1"
+              >
+                Play Again
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowSummary(false);
+                  setIsPlaying(false);
+                }}
+                variant="secondary"
+                className="w-full sm:w-auto py-3 px-8 text-lg flex-1"
+              >
+                Back to Menu
+              </Button>
+            </div>
+          </Card>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-background flex flex-col items-center justify-center">
-      <div className="max-w-lg w-full space-y-6">
-        <div className="flex justify-between items-center">
-          <div className="flex gap-4 items-center">
-            <div className="text-xl font-bold text-text-primary">
-              Score: <span className="text-success">{score}</span>
-            </div>
-            {currentStreak > 1 && (
-              <div className="text-sm font-bold text-amber-500 animate-pulse">
-                🔥 {currentStreak} Streak!{" "}
-                {currentStreak >= 5 ? "(3x)" : currentStreak >= 3 ? "(2x)" : ""}
+    <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-[calc(env(safe-area-inset-bottom)+6.5rem)] md:pb-6 bg-background">
+      <div className="flex min-h-full flex-col items-center justify-start md:justify-center">
+        <div className="max-w-lg w-full space-y-6">
+          <div className="flex justify-between items-center">
+            <div className="flex gap-4 items-center">
+              <div className="text-xl font-bold text-text-primary">
+                Score: <span className="text-success">{score}</span>
               </div>
-            )}
+              {currentStreak > 1 && (
+                <div className="text-sm font-bold text-amber-500 animate-pulse">
+                  🔥 {currentStreak} Streak!{" "}
+                  {currentStreak >= 5
+                    ? "(3x)"
+                    : currentStreak >= 3
+                      ? "(2x)"
+                      : ""}
+                </div>
+              )}
+            </div>
+            <button
+              onClick={handleEndGame}
+              className="text-text-muted hover:text-text-primary text-sm font-bold transition-colors"
+            >
+              End Game
+            </button>
           </div>
-          <button
-            onClick={handleEndGame}
-            className="text-text-muted hover:text-text-primary text-sm font-bold transition-colors"
+
+          {/* Enhanced Timer Progress Bar */}
+          <div className="w-full h-6 bg-surface-2 rounded-full overflow-hidden shadow-inner mb-4 border border-border">
+            <div
+              className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 5 ? "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= difficulty / 2 ? "bg-amber-400" : "bg-success"}`}
+              style={{ width: `${(timeLeft / difficulty) * 100}%` }}
+            />
+          </div>
+
+          <Card
+            className={`p-8 text-center border-t-4 ${theme?.accentColor || "border-accent"} relative overflow-hidden shadow-2xl bg-surface-1`}
           >
-            End Game
-          </button>
-        </div>
-
-        {/* Enhanced Timer Progress Bar */}
-        <div className="w-full h-6 bg-surface-2 rounded-full overflow-hidden shadow-inner mb-4 border border-border">
-          <div
-            className={`h-full transition-all duration-1000 ease-linear rounded-full ${timeLeft <= 5 ? "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] animate-pulse" : timeLeft <= difficulty / 2 ? "bg-amber-400" : "bg-success"}`}
-            style={{ width: `${(timeLeft / difficulty) * 100}%` }}
-          />
-        </div>
-
-        <Card
-          className={`p-8 text-center border-t-4 ${theme?.accentColor || "border-accent"} relative overflow-hidden shadow-2xl bg-surface-1`}
-        >
-          <div
-            key={`${currentLetter}-${currentCategory}`}
-            className="space-y-8 animate-fade-in"
-          >
-            <div>
-              <div className="text-sm font-bold text-text-muted uppercase tracking-widest mb-2">
-                Letter
+            <div
+              key={`${currentLetter}-${currentCategory}`}
+              className="space-y-8 animate-fade-in"
+            >
+              <div>
+                <div className="text-sm font-bold text-text-muted uppercase tracking-widest mb-2">
+                  Letter
+                </div>
+                <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-text-primary to-text-muted drop-shadow-lg transform transition-transform hover:scale-110">
+                  {currentLetter}
+                </div>
               </div>
-              <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-text-primary to-text-muted drop-shadow-lg transform transition-transform hover:scale-110">
-                {currentLetter}
-              </div>
-            </div>
 
-            <div>
-              <div className="text-sm font-bold text-text-muted uppercase tracking-widest mb-2">
-                Category
+              <div>
+                <div className="text-sm font-bold text-text-muted uppercase tracking-widest mb-2">
+                  Category
+                </div>
+                <div className="flex items-center justify-center gap-3 bg-surface-2 p-4 rounded-2xl border border-border">
+                  <span className="text-4xl animate-bounce">
+                    {currentCategory &&
+                      getCategoryIcon(currentCategory as StopCategory)}
+                  </span>
+                  <h3
+                    className={`text-3xl font-bold ${theme?.textClass || "text-text-primary"}`}
+                  >
+                    {currentCategory}
+                  </h3>
+                </div>
               </div>
-              <div className="flex items-center justify-center gap-3 bg-surface-2 p-4 rounded-2xl border border-border">
-                <span className="text-4xl animate-bounce">
-                  {currentCategory &&
-                    getCategoryIcon(currentCategory as StopCategory)}
-                </span>
-                <h3
-                  className={`text-3xl font-bold ${theme?.textClass || "text-text-primary"}`}
-                >
-                  {currentCategory}
-                </h3>
-              </div>
-            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4 pt-4">
-              <div className="relative">
-                <Input
-                  ref={inputRef}
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => {
-                    if (feedback) return; // Prevent typing while waiting for next round
-                    setInputValue(e.target.value);
-                    if (e.target.value === "") {
-                      resetTranscript();
+              <form onSubmit={handleSubmit} className="space-y-4 pt-4">
+                <div className="relative">
+                  <Input
+                    ref={inputRef}
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => {
+                      if (feedback) return; // Prevent typing while waiting for next round
+                      setInputValue(e.target.value);
+                      if (e.target.value === "") {
+                        resetTranscript();
+                      }
+                    }}
+                    placeholder={
+                      micState === "listening"
+                        ? "Listening..."
+                        : "Type or speak your answer..."
                     }
-                  }}
-                  placeholder={
-                    micState === "listening"
-                      ? "Listening..."
-                      : "Type or speak your answer..."
-                  }
-                  className={`text-center text-xl py-4 pr-12 transition-all duration-300 outline-none rounded-xl border border-border bg-surface-1 text-text-primary
+                    className={`text-center text-xl py-4 pr-12 transition-all duration-300 outline-none rounded-xl border border-border bg-surface-1 text-text-primary
                     ${
                       micState === "listening"
                         ? "ring-4 ring-red-500/60 bg-red-500/10 shadow-[0_0_25px_rgba(239,68,68,0.6)] border-red-500/50"
@@ -943,141 +958,142 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                         : ""
                     }
                   `}
-                  autoFocus
-                  disabled={waitingForContinue}
-                />
-                <button
-                  type="button"
-                  onClick={
-                    micState === "listening" ? stopListening : startListening
-                  }
-                  className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all duration-300 z-10 ${
-                    micState === "listening"
-                      ? "bg-red-500 text-white hover:bg-red-600 animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.8)] scale-110"
-                      : "text-text-muted hover:text-text-primary hover:bg-surface-hover"
-                  }`}
-                  disabled={feedback !== null || waitingForContinue}
-                  title={
-                    micState === "listening"
-                      ? "Stop Listening"
-                      : "Start Listening"
-                  }
-                  aria-label={
-                    micState === "listening"
-                      ? "Stop Listening"
-                      : "Start Listening"
-                  }
-                >
-                  {micState === "listening" ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
-                      <path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
-                      />
-                    </svg>
-                  )}
-                </button>
-              </div>
-
-              {feedback && (
-                <div
-                  className={`text-sm font-bold ${feedback.type === "success" ? "text-success" : "text-error"} animate-fade-in`}
-                >
-                  {feedback.message}
+                    autoFocus
+                    disabled={waitingForContinue}
+                  />
+                  <button
+                    type="button"
+                    onClick={
+                      micState === "listening" ? stopListening : startListening
+                    }
+                    className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all duration-300 z-10 ${
+                      micState === "listening"
+                        ? "bg-red-500 text-white hover:bg-red-600 animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.8)] scale-110"
+                        : "text-text-muted hover:text-text-primary hover:bg-surface-hover"
+                    }`}
+                    disabled={feedback !== null || waitingForContinue}
+                    title={
+                      micState === "listening"
+                        ? "Stop Listening"
+                        : "Start Listening"
+                    }
+                    aria-label={
+                      micState === "listening"
+                        ? "Stop Listening"
+                        : "Start Listening"
+                    }
+                  >
+                    {micState === "listening" ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
+                        <path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
+                        />
+                      </svg>
+                    )}
+                  </button>
                 </div>
-              )}
 
-              {hint && !feedback && (
-                <div className="text-sm font-medium text-amber-500 bg-amber-500/10 p-3 rounded-lg animate-fade-in border border-amber-500/20">
-                  {hint}
-                </div>
-              )}
-
-              <div className="flex gap-2">
-                {waitingForContinue ? (
-                  <>
-                    <Button
-                      type="button"
-                      variant="primary"
-                      className="flex-1 py-3 text-lg font-bold shadow-lg"
-                      onClick={handleContinue}
-                      autoFocus
-                    >
-                      Continue
-                    </Button>
-                    {feedback?.type === "error" &&
-                      !feedback.isSkip &&
-                      inputValue.trim().length > 0 && (
-                        <Button
-                          type="button"
-                          variant="secondary"
-                          className="py-3 px-6 whitespace-nowrap border-amber-500/50 text-amber-500 hover:bg-amber-500 hover:text-white transition-all font-bold group relative"
-                          onClick={handleIWasRight}
-                          title="I typed a valid word!"
-                        >
-                          I was right!
-                          <span className="absolute -top-3 -right-2 opacity-0 group-hover:opacity-100 bg-amber-500 text-white text-[10px] py-0.5 px-2 rounded-full transition-opacity shadow-lg">
-                            Get Points
-                          </span>
-                        </Button>
-                      )}
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      type="submit"
-                      variant="primary"
-                      className="flex-1 py-3"
-                      disabled={!inputValue.trim() || feedback !== null}
-                    >
-                      Submit
-                    </Button>
-                    <button
-                      type="button"
-                      onClick={handleGetHint}
-                      className="px-4 py-3 bg-surface-2 hover:bg-surface-hover text-amber-500 border border-border rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed relative group"
-                      disabled={feedback !== null}
-                      title="Get a hint (-5s)"
-                      aria-label="Get a hint (-5s)"
-                    >
-                      💡
-                      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                        -5s
-                      </span>
-                    </button>
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      onClick={() => handleFailOrSkip(true)}
-                      className="py-3"
-                      disabled={feedback !== null}
-                    >
-                      Skip
-                    </Button>
-                  </>
+                {feedback && (
+                  <div
+                    className={`text-sm font-bold ${feedback.type === "success" ? "text-success" : "text-error"} animate-fade-in`}
+                  >
+                    {feedback.message}
+                  </div>
                 )}
-              </div>
-            </form>
-          </div>
-        </Card>
+
+                {hint && !feedback && (
+                  <div className="text-sm font-medium text-amber-500 bg-amber-500/10 p-3 rounded-lg animate-fade-in border border-amber-500/20">
+                    {hint}
+                  </div>
+                )}
+
+                <div className="flex gap-2">
+                  {waitingForContinue ? (
+                    <>
+                      <Button
+                        type="button"
+                        variant="primary"
+                        className="flex-1 py-3 text-lg font-bold shadow-lg"
+                        onClick={handleContinue}
+                        autoFocus
+                      >
+                        Continue
+                      </Button>
+                      {feedback?.type === "error" &&
+                        !feedback.isSkip &&
+                        inputValue.trim().length > 0 && (
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            className="py-3 px-6 whitespace-nowrap border-amber-500/50 text-amber-500 hover:bg-amber-500 hover:text-white transition-all font-bold group relative"
+                            onClick={handleIWasRight}
+                            title="I typed a valid word!"
+                          >
+                            I was right!
+                            <span className="absolute -top-3 -right-2 opacity-0 group-hover:opacity-100 bg-amber-500 text-white text-[10px] py-0.5 px-2 rounded-full transition-opacity shadow-lg">
+                              Get Points
+                            </span>
+                          </Button>
+                        )}
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        className="flex-1 py-3"
+                        disabled={!inputValue.trim() || feedback !== null}
+                      >
+                        Submit
+                      </Button>
+                      <button
+                        type="button"
+                        onClick={handleGetHint}
+                        className="px-4 py-3 bg-surface-2 hover:bg-surface-hover text-amber-500 border border-border rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed relative group"
+                        disabled={feedback !== null}
+                        title="Get a hint (-5s)"
+                        aria-label="Get a hint (-5s)"
+                      >
+                        💡
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                          -5s
+                        </span>
+                      </button>
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => handleFailOrSkip(true)}
+                        className="py-3"
+                        disabled={feedback !== null}
+                      >
+                        Skip
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </form>
+            </div>
+          </Card>
+        </div>
       </div>
     </div>
   );

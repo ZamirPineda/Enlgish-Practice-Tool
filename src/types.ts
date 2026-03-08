@@ -69,6 +69,22 @@ export interface SrsVocabularyItem {
   fsrsData?: FsrsCard; // For Phase 7 FSRS integration
 }
 
+export interface VaultAddOptions {
+  category?: string;
+  tags?: string[];
+  ipa?: string;
+  example?: string;
+  originalContext?: string;
+  partOfSpeech?: string;
+  translation?: string;
+  sourceDefinition?: string;
+  examSentence?: string;
+  context?: string;
+  transformation?: string;
+  level?: string;
+  synonyms?: string[];
+}
+
 // This is the structure the AI will return
 export interface SrsFeedback {
   word: string;
