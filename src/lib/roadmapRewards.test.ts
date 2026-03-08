@@ -11,6 +11,10 @@ import {
 } from "@/lib/roadmapRewards";
 
 describe("roadmapRewards", () => {
+  const dayOne = new Date("2026-03-06T12:00:00.000Z");
+  const dayTwo = new Date("2026-03-07T12:00:00.000Z");
+  const dayThree = new Date("2026-03-08T12:00:00.000Z");
+
   beforeEach(() => {
     localStorage.clear();
     vi.useRealTimers();
@@ -167,10 +171,12 @@ describe("roadmapRewards", () => {
       previousProgress,
       nextProgress,
       rewards,
-      new Date("2026-03-06T12:00:00.000Z"),
+      dayOne,
     );
 
-    expect(getRoadmapContinuityStatus(result.nextRewards)).toMatchObject({
+    expect(
+      getRoadmapContinuityStatus(result.nextRewards, dayOne),
+    ).toMatchObject({
       currentStreak: 1,
       bestStreak: 1,
       activeDays: 1,
@@ -189,10 +195,12 @@ describe("roadmapRewards", () => {
       previousProgress,
       nextProgress,
       rewards,
-      new Date("2026-03-07T12:00:00.000Z"),
+      dayTwo,
     );
 
-    expect(getRoadmapContinuityStatus(result.nextRewards)).toMatchObject({
+    expect(
+      getRoadmapContinuityStatus(result.nextRewards, dayTwo),
+    ).toMatchObject({
       currentStreak: 2,
       bestStreak: 2,
       activeDays: 2,
@@ -211,13 +219,15 @@ describe("roadmapRewards", () => {
       previousProgress,
       nextProgress,
       rewards,
-      new Date("2026-03-08T12:00:00.000Z"),
+      dayThree,
     );
 
     expect(result.grants.map((grant) => grant.badge.title)).toContain(
       "Racha roadmap: 3 dias",
     );
-    expect(getRoadmapContinuityStatus(result.nextRewards)).toMatchObject({
+    expect(
+      getRoadmapContinuityStatus(result.nextRewards, dayThree),
+    ).toMatchObject({
       currentStreak: 3,
       bestStreak: 3,
       activeDays: 3,

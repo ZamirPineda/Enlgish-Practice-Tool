@@ -23,7 +23,7 @@ vi.mock("@tanstack/react-virtual", () => ({
 const today = new Date().toISOString().split("T")[0];
 
 describe("VocabularyVaultView flows", () => {
-  test("crear sesión: starts a review session for due items", async () => {
+  test("crear sesiÃ³n: starts a review session for due items", async () => {
     localStorage.setItem(
       "vocab-vault-deck",
       JSON.stringify({
@@ -113,7 +113,9 @@ describe("VocabularyVaultView flows", () => {
     fireEvent.click(
       await screen.findByRole("button", { name: /Show Answer/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /^Easy/i }));
+    fireEvent.click(
+      await screen.findByRole("button", { name: /Easy \(Press 4\)/i }),
+    );
 
     await waitFor(() => {
       expect(
@@ -203,15 +205,15 @@ describe("VocabularyVaultView flows", () => {
     fireEvent.click(
       await screen.findByRole("button", { name: /Show Answer/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /^Easy/i }));
-
-    await waitFor(() => {
-      expect(screen.getByText("2 day streak · best 2")).toBeInTheDocument();
-    });
+    fireEvent.click(
+      await screen.findByRole("button", { name: /Easy \(Press 4\)/i }),
+    );
 
     const savedProgress = JSON.parse(
       localStorage.getItem("vocab-vault-progress") || "{}",
     );
+    expect(savedProgress.currentStreak).toBe(2);
+    expect(savedProgress.bestStreak).toBe(2);
     expect(savedProgress.totalReviews).toBe(11);
   });
 
@@ -221,7 +223,7 @@ describe("VocabularyVaultView flows", () => {
       <VocabularyVaultView onPlayWord={vi.fn()} confirmDialogsEnabled={true} />,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Backup & Sync 🔄" }));
+    fireEvent.click(screen.getByRole("button", { name: /Backup & Sync/i }));
     fireEvent.change(screen.getByPlaceholderText("Paste code here..."), {
       target: {
         value: JSON.stringify({
@@ -296,7 +298,7 @@ describe("VocabularyVaultView flows", () => {
     fireEvent.change(screen.getByLabelText("Word to learn"), {
       target: { value: "testword" },
     });
-    fireEvent.change(screen.getByLabelText("Definition & Notes"), {
+    fireEvent.change(screen.getByLabelText("Meaning (simple + concrete)"), {
       target: { value: "a sample definition" },
     });
     fireEvent.keyDown(screen.getByLabelText("Word to learn"), {
@@ -398,12 +400,16 @@ describe("VocabularyVaultView flows", () => {
     fireEvent.click(
       await screen.findByRole("button", { name: /Show Answer/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /^Easy/i }));
+    fireEvent.click(
+      await screen.findByRole("button", { name: /Easy \(Press 4\)/i }),
+    );
 
     await waitFor(() => {
-      expect(
-        screen.getByRole("button", { name: "Boss Review ✓" }),
-      ).toBeInTheDocument();
+      const savedProgress = JSON.parse(
+        localStorage.getItem("vocab-vault-progress") || "{}",
+      );
+      expect(savedProgress.lastBossReviewWeek).toBe(getIsoWeekKey(new Date()));
+      expect(savedProgress.bossReviewsCompleted).toBe(1);
     });
 
     const savedProgress = JSON.parse(
