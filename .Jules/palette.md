@@ -29,7 +29,3 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
-
-## 2026-03-09 - [Dynamic Icon-Only Button State Accessibility]
-**Learning:** Icon-only buttons with state (e.g., Shuffle, Autoplay, Reveal) were only communicating their state visually. Screen readers require `aria-pressed` and dynamic `aria-label` / `title` attributes (e.g., "Shuffle Words" vs "Unshuffle Words") to understand the toggle nature of the button.
-**Action:** When implementing or fixing icon-only toggle buttons, always provide a dynamic `aria-label` and `title` reflecting the *action* of the current state, and include `aria-pressed={boolean_state}`.
