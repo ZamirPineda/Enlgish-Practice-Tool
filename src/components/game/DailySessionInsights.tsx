@@ -150,6 +150,11 @@ const DailySessionInsights: React.FC<DailySessionInsightsProps> = ({
           onClick={handleClaimReward}
           disabled={!summary.rewardEligible || summary.rewardClaimed}
           className={`inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-black transition-colors ${summary.rewardEligible && !summary.rewardClaimed ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-surface-1 text-text-muted border border-border"}`}
+          aria-label={
+            summary.rewardClaimed
+              ? "Daily session reward already claimed"
+              : `Claim +${summary.rewardXp} XP for daily session`
+          }
         >
           <Award className="w-4 h-4" />
           {summary.rewardClaimed
