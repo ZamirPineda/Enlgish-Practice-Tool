@@ -29,3 +29,7 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+
+## 2025-03-11 - State-Aware Icon Buttons
+**Learning:** Adding state-dependent `aria-label` and `aria-pressed` to icon-only buttons (like "Shuffle/Unshuffle" or "Start/Stop Auto-play") vastly improves accessibility over static tooltips by providing context-aware feedback directly to screen readers. We found this specifically missing in `StopGameBrowse.tsx`.
+**Action:** When creating or fixing toggle buttons, ensure the label, title, and ARIA state dynamically reflect the current state instead of simply declaring what the button does in general.
