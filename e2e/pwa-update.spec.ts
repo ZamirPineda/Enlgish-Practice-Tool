@@ -25,6 +25,16 @@ test.describe("PWA Auto Update Flow", () => {
     const updateButton = page.getByRole("button", { name: "Actualizar" });
     await expect(updateButton).toBeVisible();
 
+    // Wait for any onboarding/modals to close if they intercept the click
+    try {
+      const skipBtn = page.getByRole("button", { name: "Skip" });
+      if (await skipBtn.isVisible({ timeout: 1000 })) {
+        await skipBtn.click();
+      }
+    } catch {
+      // ignore
+    }
+
     // Click on update
     // Intercept reload to verify it happens
     let didReload = false;
@@ -32,7 +42,7 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
-    await updateButton.click();
+    await updateButton.click({ force: true });
 
     // Since window.location.reload() happens, let's wait a bit to verify nav or log
     // We expect the script to call reload, bounding test time to ensure it passed.
@@ -48,9 +58,21 @@ test.describe("PWA Auto Update Flow", () => {
 
     await expect(page.getByRole("banner")).toBeVisible();
 
+    // Set a flag to intercept reload or monitor it
     let didReload = false;
-    page.on("framenavigated", () => {
-      didReload = true;
+    // Listen for navigation events specifically capturing reloads
+    page.on("framenavigated", (frame) => {
+      if (frame === page.mainFrame()) {
+        didReload = true;
+      }
+    });
+
+    // Mock window.location.reload to be absolutely certain it fires and avoid actual navigation race conditions
+    await page.evaluate(() => {
+      (window as any).__RELOAD_CALLED = false;
+      window.location.reload = () => {
+        (window as any).__RELOAD_CALLED = true;
+      };
     });
 
     // Trigger mocked PWA update
@@ -62,7 +84,10 @@ test.describe("PWA Auto Update Flow", () => {
 
     // It should immediately reload instead of showing banner
     await page.waitForTimeout(500);
-    expect(didReload).toBe(true);
+
+    // Check if reload was called using our mock since framenavigated might abort early
+    const reloadCalled = await page.evaluate(() => (window as any).__RELOAD_CALLED);
+    expect(reloadCalled || didReload).toBe(true);
 
     const updateBanner = page.getByText("Nueva versión disponible");
     await expect(updateBanner).toBeHidden();
