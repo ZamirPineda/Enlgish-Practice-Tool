@@ -383,7 +383,7 @@ const RoadmapView: React.FC = () => {
                   <Tab
                     key={route.id}
                     id={route.id}
-                    className="flex items-center rounded-full border border-border bg-surface-2 px-4 py-2 text-sm font-black text-text-secondary outline-none transition-colors data-[hovered]:bg-surface-hover data-[hovered]:text-text-primary data-[selected]:border-accent data-[selected]:bg-accent data-[selected]:text-white data-[focus-visible]:ring-2 data-[focus-visible]:ring-accent/40"
+                    className="flex items-center rounded-full border border-border bg-surface-2 px-4 py-2 text-sm font-black text-text-secondary outline-none transition-colors data-[hovered]:bg-surface-hover data-[hovered]:text-text-primary data-[selected]:border-accent data-[selected]:bg-accent data-[selected]:text-slate-900 data-[focus-visible]:ring-2 data-[focus-visible]:ring-accent/40"
                   >
                     {route.icon}
                     {route.label}
@@ -802,7 +802,7 @@ const RoadmapView: React.FC = () => {
                                                                 to={buildRoadmapNodeSessionHref(
                                                                   node,
                                                                 )}
-                                                                className="inline-flex w-full items-center justify-center rounded-xl bg-accent px-4 py-3 text-sm font-black text-white hover:bg-accent-hover transition-colors"
+                                                                className="inline-flex w-full items-center justify-center rounded-xl bg-accent px-4 py-3 text-sm font-black text-slate-900 hover:bg-accent-hover transition-colors"
                                                               >
                                                                 Iniciar Practica
                                                               </Link>

@@ -623,7 +623,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                 </button>
                 <button
                   onClick={() => handleCategoryDifficultySelect("Normal")}
-                  className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Normal" ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                  className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Normal" ? "bg-accent border-accent text-slate-900 shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
                 >
                   Normal
                 </button>
@@ -649,7 +649,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                 </button>
                 <button
                   onClick={() => setDifficulty(30)}
-                  className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 30 ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                  className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 30 ? "bg-accent border-accent text-slate-900 shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
                 >
                   30s
                 </button>

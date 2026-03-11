@@ -309,7 +309,7 @@ const HomeView: React.FC = () => {
                 <button
                   onClick={handleAddDailyPhrase}
                   disabled={isDailyPhraseAdded}
-                  className={`min-h-[40px] px-4 rounded-lg text-sm font-black transition-colors ${isDailyPhraseAdded ? "bg-surface-2 text-text-muted border border-border" : "bg-accent hover:bg-accent-hover text-white"}`}
+                  className={`min-h-[40px] px-4 rounded-lg text-sm font-black transition-colors ${isDailyPhraseAdded ? "bg-surface-2 text-text-muted border border-border" : "bg-accent hover:bg-accent-hover text-slate-900"}`}
                 >
                   {isDailyPhraseAdded
                     ? "Added to Vault"

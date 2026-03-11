@@ -703,7 +703,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                                     onPlayWord(textA);
                                   }}
                                   disabled={!!isWordAudioLoading}
-                                  className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-accent text-white hover:bg-accent-hover" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"}`}
+                                  className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-accent text-slate-900 hover:bg-accent-hover" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-slate-900"}`}
                                   aria-label={`Listen to "${textA}"`}
                                 >
                                   {isWordAudioLoading === textA ? (
@@ -755,7 +755,7 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                                     onPlayWord(textB);
                                   }}
                                   disabled={!!isWordAudioLoading}
-                                  className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-accent text-white hover:bg-accent-hover" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"}`}
+                                  className={`h-9 w-9 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 ${isFront ? "bg-accent text-slate-900 hover:bg-accent-hover" : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-slate-900"}`}
                                   aria-label={`Listen to "${textB}"`}
                                 >
                                   {isWordAudioLoading === textB ? (
@@ -919,8 +919,8 @@ const StudyDeckView: React.FC<StudyDeckViewProps> = ({
                                 className={`h-10 w-10 flex items-center justify-center rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed
                                                       ${
                                                         isFront
-                                                          ? "bg-accent text-white hover:bg-accent-hover shadow-lg shadow-accent/20"
-                                                          : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-white"
+                                                          ? "bg-accent text-slate-900 hover:bg-accent-hover shadow-lg shadow-accent/20"
+                                                          : "bg-surface-2 text-text-secondary hover:bg-accent hover:text-slate-900"
                                                       }
                                                   `}
                                 aria-label={`Listen to "${fullText}"`}
