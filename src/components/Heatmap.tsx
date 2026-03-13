@@ -284,6 +284,7 @@ const Heatmap: React.FC<HeatmapProps> = ({ days }) => {
                       className={`h-3 w-3 rounded-[2px] ${day.inRange ? getIntensityClass(day.count) : "bg-transparent"}`}
                       title={`${day.date}: ${day.count} tarjetas repasadas`}
                       aria-label={`${day.date}: ${day.count} tarjetas repasadas`}
+                      role="img"
                     />
                   ))}
                 </div>
