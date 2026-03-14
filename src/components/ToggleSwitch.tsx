@@ -16,16 +16,19 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       <div className="relative">
         <input
           type="checkbox"
+          role="switch"
           className="sr-only"
           checked={checked}
           onChange={(e) => onChange(e.target.checked)}
         />
         <div
+          aria-hidden="true"
           className={`block w-10 h-6 rounded-full transition-colors ${
             checked ? "bg-accent" : "bg-surface-hover"
           }`}
         ></div>
         <div
+          aria-hidden="true"
           className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${checked ? "transform translate-x-4" : ""}`}
         ></div>
       </div>

@@ -29,3 +29,6 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+## 2026-03-09 - [Custom Toggle Accessibility]
+**Learning:** Custom toggle buttons (using `input[type="checkbox"]` implicitly hidden via `sr-only`) often lack the `role="switch"` attribute, which prevents screen readers from announcing them explicitly as switches instead of checkboxes. Their inner decorative elements also often lack `aria-hidden="true"`, causing screen reader clutter.
+**Action:** Always add `role="switch"` to visually hidden inputs implementing toggles, and ensure inner decorative visual-only `div`s have `aria-hidden="true"`.
