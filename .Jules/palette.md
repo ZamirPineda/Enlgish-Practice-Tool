@@ -29,3 +29,7 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+
+## 2026-03-15 - [Toggle Buttons Pattern in Browse Mode]
+**Learning:** Icon-only toggle buttons in browse/study modes (e.g., Shuffle, Autoplay, Reveal) often use emojis or simple icons without semantic meaning for screen readers. They also lack state indication.
+**Action:** For all toggleable icon-only buttons, ensure the `aria-label`, `title`, and `aria-pressed` attributes are dynamic and reflect the current active state rather than displaying a static description.
