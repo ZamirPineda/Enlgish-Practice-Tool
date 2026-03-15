@@ -227,7 +227,7 @@ const DailyProgressWidget: React.FC = () => {
         <div className="w-full md:w-auto flex flex-col gap-3">
           <Link
             to="/vault"
-            className="w-full md:w-auto whitespace-nowrap px-6 py-3 bg-accent hover:bg-accent-hover text-white font-black rounded-xl transition-transform hover:-translate-y-0.5 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+            className="w-full md:w-auto whitespace-nowrap px-6 py-3 bg-accent hover:bg-accent-hover text-slate-900 font-black rounded-xl transition-transform hover:-translate-y-0.5 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
           >
             Study Now <ChevronRight className="w-4 h-4" />
           </Link>
@@ -263,7 +263,7 @@ const DailyProgressWidget: React.FC = () => {
           <p className="text-[10px] font-bold uppercase tracking-widest text-text-muted">
             Strongest
           </p>
-          <p className="text-sm font-bold text-emerald-500 mt-1">
+          <p className="text-sm font-bold text-emerald-400 mt-1">
             {strongestRouteLabel}
           </p>
         </div>

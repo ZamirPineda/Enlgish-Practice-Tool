@@ -93,7 +93,7 @@ const DailySessionInsights: React.FC<DailySessionInsightsProps> = ({
           <p className="text-[10px] font-bold uppercase tracking-widest text-text-muted">
             Strongest
           </p>
-          <p className="text-sm font-bold text-emerald-500 mt-1">
+          <p className="text-sm font-bold text-emerald-400 mt-1">
             {strongestRouteLabel}
           </p>
         </div>
