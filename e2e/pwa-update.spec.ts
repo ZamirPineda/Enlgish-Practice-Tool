@@ -1,9 +1,23 @@
 import { test, expect } from "@playwright/test";
 
+const COMPLETED_ONBOARDING_SETTINGS = {
+  theme: "dark",
+  reducedMotion: true,
+  ttsAutoPlay: true,
+  confirmDialogs: true,
+  hasCompletedOnboarding: true,
+};
+
 test.describe("PWA Auto Update Flow", () => {
   test("Shows update banner when in active session (mocked SW update)", async ({
     page,
   }) => {
+    await page.goto("/");
+    await page.evaluate((settings) => {
+      window.localStorage.setItem("app-settings", JSON.stringify(settings));
+    }, COMPLETED_ONBOARDING_SETTINGS);
+    await page.reload();
+
     // Navigate to a game route (active session)
     await page.goto("/#/stop?mode=game");
 
@@ -43,6 +57,12 @@ test.describe("PWA Auto Update Flow", () => {
   test("Does not show banner, but auto-reloads if NOT in active session", async ({
     page,
   }) => {
+    await page.goto("/");
+    await page.evaluate((settings) => {
+      window.localStorage.setItem("app-settings", JSON.stringify(settings));
+    }, COMPLETED_ONBOARDING_SETTINGS);
+    await page.reload();
+
     // Navigate to home (not an active session)
     await page.goto("/#/");
 
