@@ -9,13 +9,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-accent text-white shadow-md shadow-accent/20 hover:bg-accent-hover hover:shadow-xl hover:shadow-accent/30",
+          "bg-accent text-slate-900 font-bold shadow-md shadow-accent/20 hover:bg-accent-hover hover:shadow-xl hover:shadow-accent/30",
         secondary:
           "bg-surface-2 text-text-primary border border-border hover:bg-surface-hover",
         ghost: "bg-transparent text-text-secondary hover:bg-surface-hover",
         outline: "bg-transparent border border-border text-text-primary hover:bg-surface-hover",
         success:
-          "bg-success text-white shadow-md shadow-success/20 hover:bg-success-hover hover:shadow-xl hover:shadow-success/30",
+          "bg-success text-slate-900 font-bold shadow-md shadow-success/20 hover:bg-success-hover hover:shadow-xl hover:shadow-success/30",
       },
       size: {
         sm: "h-9 px-3 text-xs",
