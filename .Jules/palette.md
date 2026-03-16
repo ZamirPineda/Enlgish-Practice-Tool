@@ -29,3 +29,7 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+
+## 2025-03-16 - Accessible Toggle Buttons
+**Learning:** For toggle buttons (like Shuffle, Autoplay, Reveal All), changing both the `aria-label` AND the `aria-pressed` state causes screen readers to redundantly announce the state change (e.g., "Turn off Autoplay, toggle button, pressed").
+**Action:** Keep a static label (e.g., `aria-label="Autoplay"`) and let `aria-pressed={boolean}` handle communicating the current state. The `title` attribute can still be dynamic for sighted users on hover.

@@ -403,18 +403,32 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                         }}
                         className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${isShuffled ? "bg-purple-600 border-purple-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-purple-400"}`}
                         title={isShuffled ? "Unshuffle" : "Shuffle Words"}
+                        aria-label="Shuffle Words"
+                        aria-pressed={isShuffled}
                       >
                         🔀
                       </button>
                       <button
                         onClick={() => setStudyAutoPlay(!studyAutoPlay)}
                         className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${studyAutoPlay ? "bg-[var(--color-accent)] border-[var(--color-accent)] text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"}`}
+                        title={
+                          studyAutoPlay
+                            ? "Turn off Autoplay"
+                            : "Turn on Autoplay"
+                        }
+                        aria-label="Autoplay"
+                        aria-pressed={studyAutoPlay}
                       >
                         {studyAutoPlay ? "🔊" : "🔈"}
                       </button>
                       <button
                         onClick={() => setStudyRevealAll(!studyRevealAll)}
                         className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${studyRevealAll ? "bg-amber-600 border-amber-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-amber-400"}`}
+                        title={
+                          studyRevealAll ? "Hide All Words" : "Reveal All Words"
+                        }
+                        aria-label="Reveal All Words"
+                        aria-pressed={studyRevealAll}
                       >
                         {studyRevealAll ? "Hide" : "Reveal"}
                       </button>
