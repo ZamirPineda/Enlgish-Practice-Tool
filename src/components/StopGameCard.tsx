@@ -596,7 +596,7 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
                 ? micState === "listening"
                   ? "bg-red-500 text-white animate-pulse"
                   : "bg-emerald-600 text-white hover:bg-emerald-500"
-                : "bg-surface-3 text-accent hover:bg-accent hover:text-white"
+                : "bg-surface-3 text-accent hover:bg-accent hover:text-slate-900"
             }`}
             title={
               isPracticing

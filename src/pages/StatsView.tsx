@@ -763,7 +763,7 @@ const StatsView: React.FC = () => {
               <button
                 key={filter}
                 onClick={() => setCategoryFilter(filter)}
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all capitalize ${categoryFilter === filter ? "bg-accent text-white shadow-sm" : "text-text-muted hover:text-text-primary"}`}
+                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all capitalize ${categoryFilter === filter ? "bg-accent text-slate-900 shadow-sm" : "text-text-muted hover:text-text-primary"}`}
               >
                 {filter}
               </button>
@@ -787,7 +787,7 @@ const StatsView: React.FC = () => {
             </p>
             <Link
               to="/vault"
-              className="inline-flex px-8 py-4 rounded-xl bg-accent hover:bg-accent-hover transition-all duration-300 text-white font-black shadow-[0_8px_30px_rgb(0,0,0,0.12)] shadow-accent/20 hover:-translate-y-1 hover:shadow-accent/40"
+              className="inline-flex px-8 py-4 rounded-xl bg-accent hover:bg-accent-hover transition-all duration-300 text-slate-900 font-black shadow-[0_8px_30px_rgb(0,0,0,0.12)] shadow-accent/20 hover:-translate-y-1 hover:shadow-accent/40"
             >
               Start first session
             </Link>
@@ -974,13 +974,13 @@ const StatsView: React.FC = () => {
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 <button
                   onClick={() => setAnalyticsRange("week")}
-                  className={`min-h-[36px] px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${analyticsRange === "week" ? "bg-accent text-white border-accent" : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"}`}
+                  className={`min-h-[36px] px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${analyticsRange === "week" ? "bg-accent text-slate-900 border-accent" : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"}`}
                 >
                   This week
                 </button>
                 <button
                   onClick={() => setAnalyticsRange("30d")}
-                  className={`min-h-[36px] px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${analyticsRange === "30d" ? "bg-accent text-white border-accent" : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"}`}
+                  className={`min-h-[36px] px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${analyticsRange === "30d" ? "bg-accent text-slate-900 border-accent" : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"}`}
                 >
                   Last 30 days
                 </button>
@@ -994,7 +994,7 @@ const StatsView: React.FC = () => {
                     onClick={() => setFocusRouteFilter("all")}
                     className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
                       focusRouteFilter === "all"
-                        ? "bg-accent text-white border-accent"
+                        ? "bg-accent text-slate-900 border-accent"
                         : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"
                     }`}
                   >
@@ -1006,7 +1006,7 @@ const StatsView: React.FC = () => {
                       onClick={() => setFocusRouteFilter(route)}
                       className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
                         focusRouteFilter === route
-                          ? "bg-accent text-white border-accent"
+                          ? "bg-accent text-slate-900 border-accent"
                           : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"
                       }`}
                     >
@@ -1265,7 +1265,7 @@ const StatsView: React.FC = () => {
                         onClick={() => setSelectedErrorGame("all")}
                         className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
                           selectedErrorGame === "all"
-                            ? "bg-accent text-white border-accent"
+                            ? "bg-accent text-slate-900 border-accent"
                             : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"
                         }`}
                       >
@@ -1277,7 +1277,7 @@ const StatsView: React.FC = () => {
                           onClick={() => setSelectedErrorGame(game)}
                           className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
                             selectedErrorGame === game
-                              ? "bg-accent text-white border-accent"
+                              ? "bg-accent text-slate-900 border-accent"
                               : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"
                           }`}
                         >
