@@ -92,6 +92,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         <button
           onClick={onExit}
           className="text-slate-400 hover:text-white transition-colors"
+          aria-label="Salir de tarjetas"
         >
           ✕ Salir
         </button>
@@ -99,9 +100,19 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleFlip();
+          }
+        }}
+        role="button"
+        tabIndex={0}
+        aria-label="Voltear tarjeta"
+        aria-expanded={isFlipped}
       >
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
@@ -151,7 +162,8 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handlePrev();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
+                aria-label="Tarjeta anterior"
               >
                 Anterior
               </button>
@@ -160,7 +172,8 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handleNext();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
+                aria-label="Tarjeta siguiente"
               >
                 Siguiente
               </button>

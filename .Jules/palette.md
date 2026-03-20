@@ -29,3 +29,7 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+
+## 2026-03-20 - [MathFlashCard Keyboard Accessibility]
+**Learning:** The interactive flashcard `div` lacked keyboard accessibility and screen reader instructions. Adding `role="button"`, `tabIndex={0}`, `onKeyDown`, and `aria-label="Voltear tarjeta"` made it fully accessible without changing its visual appearance.
+**Action:** When creating custom interactive elements (like cards that flip), always ensure they are accessible via keyboard (handling Enter and Space) and have appropriate ARIA roles and labels.
