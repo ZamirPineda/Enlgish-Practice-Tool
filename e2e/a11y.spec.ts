@@ -19,7 +19,7 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/vault");
-    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(1000); // waitForLoadState("networkidle") hangs in some CI setups
 
     const results = await new AxeBuilder({ page }).analyze();
 
