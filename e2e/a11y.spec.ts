@@ -33,6 +33,11 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/calculus");
+
+    // Wait until we are no longer in a navigation or splash state
+    await page.waitForFunction(() => {
+        return !document.querySelector('.splash-screen-or-loading') && document.querySelector('body');
+    }, null, { timeout: 10000 }).catch(() => {});
     await page.waitForLoadState("networkidle");
 
     const results = await new AxeBuilder({ page }).analyze();
