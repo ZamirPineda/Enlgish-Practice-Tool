@@ -50,7 +50,7 @@ test("adds item to Vault and keeps it after reload", async ({ page }) => {
 
   await page.getByPlaceholder("e.g. Ubiquitous").fill("E2E Persistence Word");
   await page
-    .getByPlaceholder("Meaning, Example, etc.")
+    .getByLabel("Meaning (simple + concrete)")
     .fill("Word created by e2e test");
   await page.getByRole("button", { name: "Save Word" }).click();
 
@@ -90,7 +90,7 @@ test("starts review session and completes 3 steps", async ({ page }) => {
   for (let step = 1; step <= 3; step += 1) {
     await expect(page.getByText(`Review ${step} / 3`)).toBeVisible();
     await page.getByRole("button", { name: /Show Answer/i }).click();
-    await page.getByRole("button", { name: /^Got it/i }).click();
+    await page.getByRole("button", { name: /^Easy/i }).click();
   }
 
   await expect(
