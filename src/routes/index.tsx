@@ -36,6 +36,8 @@ const CodeBugHunterView = lazy(() => import("@/pages/CodeBugHunterView"));
 const DiplomaticReviewerView = lazy(
   () => import("@/pages/DiplomaticReviewerView"),
 );
+const VerbPatternGameView = lazy(() => import("@/pages/VerbPatternGameView"));
+const TriviaGameView = lazy(() => import("@/pages/TriviaGameView"));
 
 // Tech Games
 const TechHubView = lazy(() =>
@@ -151,6 +153,8 @@ export const AnimatedRoutes = ({
           path="/diplomatic-reviewer"
           element={<DiplomaticReviewerView />}
         />
+        <Route path="/verb-patterns" element={<VerbPatternGameView />} />
+        <Route path="/trivia" element={<TriviaGameView />} />
         <Route path="/tech-hub" element={<TechHubView />} />
         <Route
           path="/tech-games/flashcards/:deckId"

@@ -459,10 +459,12 @@ const App: React.FC = () => {
               <NavItem to="/docs?mode=game">🎯 Docs Hunt</NavItem>
               <NavItem to="/syntax-builder">⌨️ Syntax Builder</NavItem>
               <NavItem to="/bug-hunter">🐛 Bug Hunter</NavItem>
+              <NavItem to="/verb-patterns">🔀 Verb Patterns</NavItem>
               <NavItem to="/tech-hub">💻 Tech Hub</NavItem>
               <NavItem to="/diplomatic-reviewer">
                 💬 Diplomatic Reviewer
               </NavItem>
+              <NavItem to="/trivia">🧠 Trivia Quiz</NavItem>
             </NavGroup>
             <NavItem to="/roadmap">Roadmap</NavItem>
             <NavItem to="/content-curation">Curacion</NavItem>
@@ -545,10 +547,12 @@ const App: React.FC = () => {
                     <NavItem to="/docs?mode=game">🎯 Docs Hunt</NavItem>
                     <NavItem to="/syntax-builder">⌨️ Syntax Builder</NavItem>
                     <NavItem to="/bug-hunter">🐛 Bug Hunter</NavItem>
+                    <NavItem to="/verb-patterns">🔀 Verb Patterns</NavItem>
                     <NavItem to="/tech-hub">💻 Tech Hub</NavItem>
                     <NavItem to="/diplomatic-reviewer">
                       💬 Diplomatic Reviewer
                     </NavItem>
+                    <NavItem to="/trivia">🧠 Trivia Quiz</NavItem>
                   </div>
                   <NavItem to="/roadmap">Roadmap</NavItem>
                   <NavItem to="/content-curation">Curacion</NavItem>

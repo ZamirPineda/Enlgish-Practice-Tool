@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -70,7 +76,8 @@ const buildAdaptiveCodeSyntaxRounds = (
   }));
 };
 
-const ADAPTIVE_CODE_SYNTAX_ROUNDS = buildAdaptiveCodeSyntaxRounds(codeSyntaxData);
+const ADAPTIVE_CODE_SYNTAX_ROUNDS =
+  buildAdaptiveCodeSyntaxRounds(codeSyntaxData);
 
 const shuffleTokens = (tokens: string[]): string[] => {
   const shuffled = [...tokens];
@@ -102,9 +109,29 @@ const getLanguageColor = (language: string) => {
       return "text-green-400";
     case "sql":
       return "text-purple-400";
+    case "java":
+      return "text-orange-400";
+    case "python":
+      return "text-emerald-400";
     default:
       return "text-text-primary";
   }
+};
+
+const LANGUAGE_CATEGORIES = (() => {
+  const langs = new Set(codeSyntaxData.map((s) => s.language));
+  return ["all", ...Array.from(langs).sort()] as const;
+})();
+
+const LANGUAGE_LABEL: Record<string, string> = {
+  all: "All",
+  typescript: "TypeScript",
+  javascript: "JavaScript",
+  python: "Python",
+  java: "Java",
+  css: "CSS",
+  sql: "SQL",
+  bash: "Bash",
 };
 
 const CodeSyntaxBuilderView: React.FC = () => {
@@ -124,17 +151,21 @@ const CodeSyntaxBuilderView: React.FC = () => {
   const [selectedLevel, setSelectedLevel] = useState<CodeSyntaxLevel>(
     resolveRoadmapLevel(roadmapConfig?.difficulty),
   );
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const rounds = useMemo(() => {
-    const levelRounds = ADAPTIVE_CODE_SYNTAX_ROUNDS.filter(
+    let pool = ADAPTIVE_CODE_SYNTAX_ROUNDS.filter(
       (item) => item.adaptiveLevel === selectedLevel,
     );
-    const filteredLevelRounds = levelRounds.filter((item) =>
+    if (selectedCategory !== "all") {
+      const catPool = pool.filter((item) => item.language === selectedCategory);
+      if (catPool.length > 0) pool = catPool;
+    }
+    const filteredPool = pool.filter((item) =>
       matchesRoadmapTags(item.tags, roadmapConfig?.tags || []),
     );
-    const candidateRounds =
-      filteredLevelRounds.length > 0 ? filteredLevelRounds : levelRounds;
+    const candidateRounds = filteredPool.length > 0 ? filteredPool : pool;
     const shuffled = [...candidateRounds];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -142,7 +173,7 @@ const CodeSyntaxBuilderView: React.FC = () => {
     }
     // Pick 5 random rounds per session
     return shuffled.slice(0, SESSION_ROUND_LIMIT);
-  }, [roadmapConfig?.tags, selectedLevel]);
+  }, [roadmapConfig?.tags, selectedLevel, selectedCategory]);
 
   const [roundIndex, setRoundIndex] = useState(0);
   const sessionStartTime = useRef<number>(Date.now());
@@ -157,12 +188,16 @@ const CodeSyntaxBuilderView: React.FC = () => {
   const correctStreakRef = useRef(0);
 
   const round = rounds[roundIndex];
-  const roundTime = getTimeByPreset(ROUND_TIME_SECONDS[selectedLevel], timePreset);
+  const roundTime = getTimeByPreset(
+    ROUND_TIME_SECONDS[selectedLevel],
+    timePreset,
+  );
   const levelMultiplier = LEVEL_SCORE_MULTIPLIER[selectedLevel];
 
   const handleLevelSelect = (nextLevel: CodeSyntaxLevel) => {
-    setSelectedLevel((currentLevel) =>
-      CODE_SYNTAX_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    setSelectedLevel(
+      (currentLevel) =>
+        CODE_SYNTAX_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
 
@@ -248,7 +283,15 @@ const CodeSyntaxBuilderView: React.FC = () => {
         );
       }
     }
-  }, [hasStarted, submitted, timeLeft, round, roundIndex, rounds.length, selectedLevel]);
+  }, [
+    hasStarted,
+    submitted,
+    timeLeft,
+    round,
+    roundIndex,
+    rounds.length,
+    selectedLevel,
+  ]);
 
   const shuffledTokens = useMemo(
     () => shuffleTokens(round?.tokens || []),
@@ -271,7 +314,9 @@ const CodeSyntaxBuilderView: React.FC = () => {
   const userSyntax = selectedTokens.join(" ");
   const isCorrect = submitted && userSyntax === expectedSyntax;
   const basePoints = Math.round(BASE_POINTS_PER_CORRECT * levelMultiplier);
-  const timeBonus = Math.round(timeLeft * TIME_BONUS_MULTIPLIER * levelMultiplier);
+  const timeBonus = Math.round(
+    timeLeft * TIME_BONUS_MULTIPLIER * levelMultiplier,
+  );
 
   const startSession = useCallback(() => {
     sessionStartTime.current = Date.now();
@@ -485,6 +530,23 @@ const CodeSyntaxBuilderView: React.FC = () => {
     >
       <div className="space-y-3">
         <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
+          Tecnología / Lenguaje
+        </p>
+        <div className="flex justify-center flex-wrap gap-2">
+          {LANGUAGE_CATEGORIES.map((cat) => (
+            <Button
+              key={`cat-${cat}`}
+              size="sm"
+              variant={selectedCategory === cat ? "primary" : "secondary"}
+              onClick={() => setSelectedCategory(cat)}
+            >
+              {LANGUAGE_LABEL[cat] || cat}
+            </Button>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
           Dificultad
         </p>
         <div className="flex justify-center flex-wrap gap-2">
@@ -612,7 +674,8 @@ const CodeSyntaxBuilderView: React.FC = () => {
               <div className="space-y-1">
                 <p>✅ Sintaxis impecable.</p>
                 <p className="text-xs font-black uppercase tracking-widest">
-                  +{lastRoundPoints} pts (base {basePoints} + bonus {timeBonus} x{levelMultiplier})
+                  +{lastRoundPoints} pts (base {basePoints} + bonus {timeBonus}{" "}
+                  x{levelMultiplier})
                 </p>
               </div>
             ) : timeoutReached ? (
@@ -761,4 +824,3 @@ const CodeSyntaxBuilderView: React.FC = () => {
 };
 
 export default CodeSyntaxBuilderView;
-

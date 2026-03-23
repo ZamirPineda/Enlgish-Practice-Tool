@@ -190,7 +190,7 @@ const FeedbackDisplay = ({
   );
 };
 
-export const StopGameCard: React.FC<StopGameCardProps> = ({
+const StopGameCardComponent: React.FC<StopGameCardProps> = ({
   item,
   category,
   theme,
@@ -210,6 +210,8 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
 }) => {
   const [layer, setLayer] = useState(1);
   const [isRevealed, setIsRevealed] = useState(false);
+  const studyIntensity =
+    isStudyMode && !studyRevealAll && !isRevealed ? 1 : isStudyMode ? 0.45 : 0;
 
   useEffect(() => {
     setIsRevealed(false);
@@ -291,8 +293,31 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
         }
       }}
       tabIndex={isStudyMode ? 0 : undefined}
-      className={`study-card flex flex-col group bg-surface-1/40 p-2.5 rounded-lg border transition-all hover:bg-surface-2 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary ${theme.glow} ${isPracticing ? "border-primary/50 bg-surface-2" : isSaved ? "border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.1)]" : "border-transparent hover:border-border"} ${onDetailClick || (isStudyMode && !studyRevealAll && !isRevealed) ? "cursor-pointer hover:scale-[1.02]" : ""}`}
+      className={`study-card relative flex flex-col group overflow-hidden bg-surface-1/40 p-2.5 rounded-lg border transition-all hover:bg-surface-2 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary ${theme.glow} ${isPracticing ? "border-primary/50 bg-surface-2" : isSaved ? "border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.1)]" : isStudyMode && !studyRevealAll && !isRevealed ? "border-primary/25 shadow-[0_0_0_1px_rgba(96,165,250,0.12)]" : "border-transparent hover:border-border"} ${onDetailClick || (isStudyMode && !studyRevealAll && !isRevealed) ? "cursor-pointer hover:scale-[1.02]" : ""}`}
     >
+      {isStudyMode ? (
+        <>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-70"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(125,211,252,0.18), transparent 52%)",
+              opacity: 0.38 + studyIntensity * 0.24,
+              transform: `scale(${1 + studyIntensity * 0.04})`,
+            }}
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-20"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(148,163,184,0.14), transparent)",
+              opacity: 0.28 + studyIntensity * 0.24,
+            }}
+          />
+        </>
+      ) : null}
       <div className="flex items-center justify-between">
         <div className="min-w-0 pr-2 flex-1">
           {/* Top Row: Flag/Color/Word/Level */}
@@ -333,6 +358,11 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
             {item.tag && !isIrregularVerb && (
               <span className="text-[9px] font-bold bg-surface-3 text-text-muted px-1.5 py-0.5 rounded border border-border uppercase tracking-wide">
                 {item.tag}
+              </span>
+            )}
+            {isStudyMode && !studyRevealAll && !isRevealed && (
+              <span className="text-[9px] font-bold bg-primary/10 text-primary px-1.5 py-0.5 rounded border border-primary/20 uppercase tracking-[0.18em] animate-pulse">
+                Tap to reveal
               </span>
             )}
           </div>
@@ -670,3 +700,23 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
     </div>
   );
 };
+
+export const StopGameCard = React.memo(
+  StopGameCardComponent,
+  (prev, next) =>
+    prev.item === next.item &&
+    prev.category === next.category &&
+    prev.theme === next.theme &&
+    prev.isAudioLoading === next.isAudioLoading &&
+    prev.isPracticing === next.isPracticing &&
+    prev.isSaved === next.isSaved &&
+    prev.micState === next.micState &&
+    prev.transcript === next.transcript &&
+    prev.feedback === next.feedback &&
+    prev.isStudyMode === next.isStudyMode &&
+    prev.studyRevealAll === next.studyRevealAll &&
+    prev.studyAutoPlay === next.studyAutoPlay &&
+    Boolean(prev.onDetailClick) === Boolean(next.onDetailClick),
+);
+
+StopGameCard.displayName = "StopGameCard";

@@ -32,6 +32,20 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { toast } from "@/components/ui/Toast";
 import { buildVaultAddOptionsFromStopItem } from "@/lib/vaultEntries";
+import {
+  StopCategorySpotlight,
+  supportsStopCategorySpotlight,
+} from "@/components/game/StopCategorySpotlight";
+import {
+  getCountryReferenceByCapital,
+  getCountryReferenceByName,
+} from "@/lib/geographyReference";
+import AmbientOrbScene from "@/components/visual/AmbientOrbScene";
+import InsightPanel from "@/components/visual/InsightPanel";
+import { getStopVisualThemeFromCategory } from "@/lib/stopVisualThemes";
+import StopFeedbackStage from "@/components/stop/StopFeedbackStage";
+import StopStreakCelebration from "@/components/stop/StopStreakCelebration";
+import StopSessionSummary from "@/components/stop/StopSessionSummary";
 
 interface StopGamePlayProps {
   onPlayWord: (word: string) => void;
@@ -85,6 +99,14 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     useState<StopGameAdaptiveLevel>(STOP_GAME_DIFFICULTY.defaultLevel);
   const [hintedWord, setHintedWord] = useState<StopItem | null>(null);
   const [waitingForContinue, setWaitingForContinue] = useState(false);
+  const [pendingSaveWord, setPendingSaveWord] = useState<{
+    word: StopItem;
+    category?: StopCategory;
+  } | null>(null);
+  const [feedbackSpotlight, setFeedbackSpotlight] = useState<{
+    word: StopItem;
+    category: StopCategory;
+  } | null>(null);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error" | "info";
     message: string;
@@ -215,6 +237,8 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setHintedWord(null);
     setFeedback(null);
     setWaitingForContinue(false);
+    setPendingSaveWord(null);
+    setFeedbackSpotlight(null);
     // Important: clear the transcript to avoid "ghost" words from previous rounds appearing
     resetTranscript();
     setTimeLeft(difficulty); // Reset Timer
@@ -246,20 +270,50 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setHint(null);
     setHintedWord(null);
     setFeedback(null);
+    setFeedbackSpotlight(null);
     wrongStreakRef.current = 0;
     correctStreakRef.current = 0;
     stopListening();
     resetTranscript();
   };
 
+  const geographyReference = useMemo(() => {
+    if (!feedbackSpotlight) return null;
+    return feedbackSpotlight.category === "Countries"
+      ? getCountryReferenceByName(feedbackSpotlight.word.word)
+      : feedbackSpotlight.category === "Capitals"
+        ? getCountryReferenceByCapital(feedbackSpotlight.word.word)
+        : null;
+  }, [feedbackSpotlight]);
+
+  const visualTheme = useMemo(
+    () => getStopVisualThemeFromCategory(currentCategory),
+    [currentCategory],
+  );
+  const roundPressure = useMemo(() => {
+    if (!difficulty) return 0;
+    return Math.max(0, Math.min(1, 1 - timeLeft / difficulty));
+  }, [difficulty, timeLeft]);
+  const streakEnergy = useMemo(
+    () => Math.max(0, Math.min(1, currentStreak / 6)),
+    [currentStreak],
+  );
+  const sessionDurationSeconds = useMemo(
+    () => Math.max(1, Math.round((Date.now() - sessionStartTime) / 1000)),
+    [sessionStartTime, showSummary],
+  );
+
+  useEffect(() => {
+    if (!showSummary) return;
+    progressQuest("play_game", 1, "stop");
+    progressQuest("play_game", 1, "any");
+  }, [showSummary]);
+
   const handleEndGame = () => {
-    const durationInSeconds = Math.round(
-      (Date.now() - sessionStartTime) / 1000,
-    );
     trackAnalyticsEvent("session_end", {
       game: "stop_game",
       mode: selectedGroup,
-      duration: durationInSeconds,
+      duration: sessionDurationSeconds,
     });
     setShowSummary(true);
   };
@@ -281,12 +335,55 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
     setHintedWord(randomWord);
 
-    if (randomWord.definition) {
+    // --- Build the best non-redundant hint ---
+    const wordLower = randomWord.word.toLowerCase().trim();
+
+    // Check if translation is effectively the same as the word
+    const translationMatchesWord =
+      randomWord.translation.toLowerCase().trim() === wordLower;
+
+    // Check if tag is redundant with the category (e.g. tag "Vegetable" inside "Fruits & Vegetables")
+    const categoryLower = (currentCategory || "").toLowerCase();
+    const tagIsRedundant =
+      !randomWord.tag ||
+      categoryLower.includes(randomWord.tag.toLowerCase()) ||
+      randomWord.tag.toLowerCase().includes(categoryLower);
+
+    // Check if definition just restates the translation (pattern: "... known in Spanish as 'X'")
+    const definitionIsUseful =
+      randomWord.definition &&
+      !(
+        translationMatchesWord &&
+        randomWord.definition.toLowerCase().includes("known in spanish as")
+      );
+
+    // Priority chain: definition → translation → examSentence → example → tag → IPA → prefix
+    if (definitionIsUseful) {
       setHint(`💡 Hint: ${randomWord.definition}`);
-    } else {
+    } else if (randomWord.translation && !translationMatchesWord) {
       setHint(
         `💡 Hint: The Spanish translation is "${randomWord.translation}"`,
       );
+    } else if (randomWord.examSentence) {
+      // Mask the word in the sentence to create a fill-in-the-blank clue
+      const masked = randomWord.examSentence.replace(
+        new RegExp(randomWord.word, "gi"),
+        "_____",
+      );
+      setHint(`💡 Hint: "${masked}"`);
+    } else if (randomWord.example) {
+      const masked = randomWord.example.replace(
+        new RegExp(randomWord.word, "gi"),
+        "_____",
+      );
+      setHint(`💡 Hint: "${masked}"`);
+    } else if (randomWord.tag && !tagIsRedundant) {
+      setHint(`💡 Hint: It's classified as: ${randomWord.tag}`);
+    } else if (randomWord.ipa) {
+      setHint(`💡 Hint: It's pronounced ${randomWord.ipa}`);
+    } else {
+      const prefix = randomWord.word.slice(0, 2);
+      setHint(`💡 Hint: It starts with "${prefix}..."`);
     }
   };
 
@@ -344,7 +441,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
       setFeedback({
         type: "error",
-        message: `${messagePrefix} A valid answer is: "${selectedWordForFeedback.word}". Added to Vault!`,
+        message: `${messagePrefix} A valid answer is: "${selectedWordForFeedback.word}".`,
         isTimeout,
         isSkip,
       });
@@ -370,12 +467,17 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         ],
       }));
 
-      onAddToVault(selectedWordForFeedback.word, definition, {
-        ...buildVaultAddOptionsFromStopItem(
-          selectedWordForFeedback,
-          currentCategory || undefined,
-        ),
+      // Store the word for optional saving instead of auto-saving
+      setPendingSaveWord({
+        word: selectedWordForFeedback,
+        category: (currentCategory as StopCategory) || undefined,
       });
+      if (supportsStopCategorySpotlight(currentCategory)) {
+        setFeedbackSpotlight({
+          word: selectedWordForFeedback,
+          category: currentCategory,
+        });
+      }
 
       setWaitingForContinue(true);
     } else {
@@ -388,6 +490,19 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   };
 
   const handleContinue = () => {
+    pickNextChallenge();
+  };
+
+  const handleSaveToVault = () => {
+    if (!pendingSaveWord) return;
+    const { word: item, category } = pendingSaveWord;
+    const definition = item.definition || item.translation || "";
+    onAddToVault(item.word, definition, {
+      ...buildVaultAddOptionsFromStopItem(item, category),
+    });
+    setPendingSaveWord(null);
+    toast.success(`"${item.word}" saved to Vault!`);
+    // Auto-continue to next challenge after saving
     pickNextChallenge();
   };
 
@@ -455,11 +570,17 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     const normalizedInput = inputValue.trim().toLowerCase();
     const validWords =
       stopGameData[currentLetter]?.[currentCategory as StopCategory] || [];
+    let matchedItem: StopItem | null = null;
 
     // 1. Check for exact match
-    let isCorrect = validWords.some(
-      (item) => item.word.toLowerCase() === normalizedInput,
-    );
+    let isCorrect = false;
+    for (const item of validWords) {
+      if (item.word.toLowerCase() === normalizedInput) {
+        isCorrect = true;
+        matchedItem = item;
+        break;
+      }
+    }
 
     let isCloseMatch = false;
     let actualCorrectWord = "";
@@ -476,6 +597,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             isCorrect = true;
             isCloseMatch = true;
             actualCorrectWord = item.word;
+            matchedItem = item;
             break; // Stop at first close match found
           }
         }
@@ -560,6 +682,13 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         category: currentCategory,
         duration: Math.max(1, difficulty - timeLeft),
       });
+
+      if (matchedItem && supportsStopCategorySpotlight(currentCategory)) {
+        setFeedbackSpotlight({
+          word: matchedItem,
+          category: currentCategory,
+        });
+      }
 
       // Reward daily quest
       progressQuest("correct_answers", 1, "stop");
@@ -681,6 +810,25 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     : null;
 
   if (showSummary) {
+    return (
+      <StopSessionSummary
+        score={score}
+        bestStreak={bestStreak}
+        selectedGroup={selectedGroup}
+        difficulty={difficulty}
+        sessionDurationSeconds={sessionDurationSeconds}
+        gameStats={gameStats}
+        onPlayAgain={() => {
+          setShowSummary(false);
+          startGame();
+        }}
+        onBackToMenu={() => {
+          setShowSummary(false);
+          setIsPlaying(false);
+        }}
+      />
+    );
+
     const gradeInfo = (() => {
       if (score >= 50)
         return {
@@ -886,6 +1034,75 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             </button>
           </div>
 
+          <div className="grid gap-3 md:grid-cols-[minmax(0,1.2fr)_10rem]">
+            <AmbientOrbScene
+              compact
+              variant={
+                waitingForContinue
+                  ? feedback?.type === "success"
+                    ? "emerald"
+                    : "sunset"
+                  : visualTheme.scene
+              }
+              label="Stop Momentum"
+              title={`${currentLetter || "?"} - ${currentCategory || "Ready"}`}
+              description={
+                waitingForContinue
+                  ? feedback?.type === "success"
+                    ? "Successful rounds now land with a clearer visual release."
+                    : "Wrong answers and pressure moments now have a stronger visual cue."
+                  : "During the round, this surface supports pace without stealing attention from the answer flow."
+              }
+              intensity={waitingForContinue ? 0.8 : roundPressure}
+              energy={
+                waitingForContinue
+                  ? feedback?.type === "success"
+                    ? 0.85
+                    : 0.35
+                  : streakEnergy
+              }
+            />
+            <InsightPanel
+              compact
+              eyebrow="Round Surface"
+              title={
+                waitingForContinue
+                  ? feedback?.type === "success"
+                    ? "Round cleared"
+                    : "Pressure check"
+                  : currentStreak > 1
+                    ? `${currentStreak} streak`
+                    : "Live round"
+              }
+              description={
+                waitingForContinue
+                  ? "Round feedback now reads as a tactical state, not a detached decoration."
+                  : "This panel reacts to momentum, pressure, and streak without turning into UI noise."
+              }
+              accent={
+                waitingForContinue
+                  ? feedback?.type === "success"
+                    ? "emerald"
+                    : "amber"
+                  : visualTheme.accent
+              }
+              motif="game"
+              topic={visualTheme.topic}
+              statALabel="Timer"
+              statAValue={`${timeLeft}s`}
+              statBLabel="Score"
+              statBValue={`${score}`}
+              intensity={waitingForContinue ? 0.75 : roundPressure}
+              energy={
+                waitingForContinue
+                  ? feedback?.type === "success"
+                    ? 0.9
+                    : 0.3
+                  : streakEnergy
+              }
+            />
+          </div>
+
           {/* Enhanced Timer Progress Bar */}
           <div className="w-full h-6 bg-surface-2 rounded-full overflow-hidden shadow-inner mb-4 border border-border">
             <div
@@ -1026,6 +1243,34 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                   </div>
                 )}
 
+                {feedback && (
+                  <StopFeedbackStage
+                    feedbackType={feedback.type}
+                    category={currentCategory}
+                    item={feedbackSpotlight?.word}
+                    isTimeout={feedback.isTimeout}
+                    isSkip={feedback.isSkip}
+                  />
+                )}
+
+                {feedback?.type === "success" && currentStreak >= 5 && (
+                  <StopStreakCelebration streak={currentStreak} score={score} />
+                )}
+
+                {feedback &&
+                  feedbackSpotlight &&
+                  supportsStopCategorySpotlight(feedbackSpotlight.category) && (
+                    <StopCategorySpotlight
+                      item={feedbackSpotlight.word}
+                      category={feedbackSpotlight.category}
+                      title={
+                        geographyReference
+                          ? "Geography Spotlight"
+                          : "Category Spotlight"
+                      }
+                    />
+                  )}
+
                 <div className="flex gap-2">
                   {waitingForContinue ? (
                     <>
@@ -1038,6 +1283,17 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                       >
                         Continue
                       </Button>
+                      {pendingSaveWord && (
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          className="py-3 px-6 whitespace-nowrap border-emerald-500/50 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all font-bold"
+                          onClick={handleSaveToVault}
+                          title="Save this word to your Vault"
+                        >
+                          💾 Save
+                        </Button>
+                      )}
                       {feedback?.type === "error" &&
                         !feedback.isSkip &&
                         inputValue.trim().length > 0 && (

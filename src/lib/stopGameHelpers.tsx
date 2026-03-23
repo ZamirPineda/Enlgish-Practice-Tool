@@ -846,10 +846,20 @@ export const COUNTRY_CODES: Record<string, string> = {
   Macau: "mo",
 };
 
-export const getFlagUrl = (countryName: string | undefined): string | null => {
+export const getCountryCodeFromName = (
+  countryName: string | undefined,
+): string | null => {
   if (!countryName) return null;
   const primaryCountry = countryName.split("/")[0].trim();
   const code = COUNTRY_CODES[primaryCountry];
-  if (code) return `https://flagcdn.com/w40/${code}.png`;
+  return code ?? null;
+};
+
+export const getFlagUrl = (
+  countryName: string | undefined,
+  width = 40,
+): string | null => {
+  const code = getCountryCodeFromName(countryName);
+  if (code) return `https://flagcdn.com/w${width}/${code}.png`;
   return null;
 };

@@ -27,6 +27,7 @@ import Modal from "@/components/ui/Modal";
 import SlideOver from "@/components/ui/SlideOver";
 import ViewToolbar from "@/components/ui/ViewToolbar";
 import { cn } from "@/lib/cn";
+import VaultItemInspector from "@/components/vault/VaultItemInspector";
 import {
   initVaultSearchWorker,
   updateWorkerDeck,
@@ -316,6 +317,9 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
   const [searchResults, setSearchResults] = useState<VaultSearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [inspectedItem, setInspectedItem] = useState<SrsVocabularyItem | null>(
+    null,
+  );
 
   // Removed generatedData logic as AI is gone
 
@@ -1636,6 +1640,15 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       {rowItems.map(({ item, matches }) => (
                         <div
                           key={item.word}
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => setInspectedItem(item)}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                              event.preventDefault();
+                              setInspectedItem(item);
+                            }
+                          }}
                           className={`overflow-hidden border border-white/10 bg-surface-1/95 p-5 rounded-[1.75rem] shadow-[0_22px_70px_-42px_rgba(15,23,42,0.95)] transition duration-300 ease-out will-change-transform group relative flex md:hover:-translate-y-1 md:hover:-rotate-1 active:translate-y-1 active:rotate-1 ${viewMode === "grid" ? "flex-col" : "flex-row items-center gap-6"}`}
                         >
                           <div
@@ -1649,7 +1662,8 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                                 />
                               </h3>
                               <button
-                                onClick={() => {
+                                onClick={(event) => {
+                                  event.stopPropagation();
                                   onPlayWord(item.word);
                                   trackAnalyticsEvent("speaking_used", {
                                     source: "collection_audio",
@@ -1661,25 +1675,28 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                               >
                                 <PlayIcon className="h-4 w-4" />
                               </button>
-                              <SpeechPracticeButton
-                                targetText={item.word}
-                                onCorrect={() => {}}
-                                onUsage={() =>
-                                  trackAnalyticsEvent("speaking_used", {
-                                    source: "speech_practice",
-                                    word: item.word,
-                                  })
-                                }
-                              />
+                              <div onClick={(event) => event.stopPropagation()}>
+                                <SpeechPracticeButton
+                                  targetText={item.word}
+                                  onCorrect={() => {}}
+                                  onUsage={() =>
+                                    trackAnalyticsEvent("speaking_used", {
+                                      source: "speech_practice",
+                                      word: item.word,
+                                    })
+                                  }
+                                />
+                              </div>
                             </div>
                             {viewMode === "grid" && (
                               <div className="flex items-center gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all">
                                 <button
-                                  onClick={() =>
+                                  onClick={(event) => {
+                                    event.stopPropagation();
                                     handleEditWord(
                                       item.word.trim().toLowerCase(),
-                                    )
-                                  }
+                                    );
+                                  }}
                                   className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-xl"
                                   aria-label={`Edit ${item.word}`}
                                 >
@@ -1699,7 +1716,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                                   </svg>
                                 </button>
                                 <button
-                                  onClick={() => handleDelete(item.word)}
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    handleDelete(item.word);
+                                  }}
                                   className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-xl"
                                   aria-label={`Delete ${item.word}`}
                                 >
@@ -1759,9 +1779,12 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           {viewMode === "list" && (
                             <div className="flex items-center gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all ml-4">
                               <button
-                                onClick={() =>
-                                  handleEditWord(item.word.trim().toLowerCase())
-                                }
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  handleEditWord(
+                                    item.word.trim().toLowerCase(),
+                                  );
+                                }}
                                 className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-xl"
                                 aria-label={`Edit ${item.word}`}
                               >
@@ -1781,7 +1804,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                                 </svg>
                               </button>
                               <button
-                                onClick={() => handleDelete(item.word)}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  handleDelete(item.word);
+                                }}
                                 className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-xl"
                                 aria-label={`Delete ${item.word}`}
                               >
@@ -2097,6 +2123,13 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           </Button>
         </div>
       </SlideOver>
+
+      <VaultItemInspector
+        item={inspectedItem}
+        isOpen={Boolean(inspectedItem)}
+        onClose={() => setInspectedItem(null)}
+        onPlayWord={onPlayWord}
+      />
     </div>
   );
 };

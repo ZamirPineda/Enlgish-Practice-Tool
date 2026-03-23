@@ -24,24 +24,39 @@ type RawCodeBugPrompt = Omit<
 const DEV_REASONING_OBJECTIVE: PracticeRouteObjective = "dev_reasoning";
 
 const inferCodeBugTags = (prompt: RawCodeBugPrompt): string[] => {
-  const haystack = `${prompt.id} ${prompt.language} ${prompt.explanation}`.toLowerCase();
+  const haystack =
+    `${prompt.id} ${prompt.language} ${prompt.explanation}`.toLowerCase();
   const tags = [prompt.language, "debugging", "dev_reasoning"];
 
   if (haystack.includes("react")) tags.push("react");
-  if (haystack.includes("typescript") || haystack.includes("ts_")) tags.push("typescript");
-  if (haystack.includes("javascript") || haystack.includes("js_")) tags.push("javascript");
+  if (haystack.includes("typescript") || haystack.includes("ts_"))
+    tags.push("typescript");
+  if (haystack.includes("javascript") || haystack.includes("js_"))
+    tags.push("javascript");
   if (haystack.includes("sql")) tags.push("sql");
   if (haystack.includes("python")) tags.push("python");
   if (haystack.includes("css")) tags.push("css");
   if (haystack.includes("bash")) tags.push("bash");
-  if (haystack.includes("security") || haystack.includes("injection")) tags.push("security");
-  if (haystack.includes("async") || haystack.includes("promise")) tags.push("async");
-  if (haystack.includes("performance") || haystack.includes("memo")) tags.push("performance");
+  if (haystack.includes("java") && !haystack.includes("javascript"))
+    tags.push("java");
+  if (haystack.includes("spring") || haystack.includes("springboot"))
+    tags.push("springboot");
+  if (haystack.includes("quarkus")) tags.push("quarkus");
+  if (haystack.includes("kafka")) tags.push("kafka");
+  if (haystack.includes("spark")) tags.push("spark");
+  if (haystack.includes("security") || haystack.includes("injection"))
+    tags.push("security");
+  if (haystack.includes("async") || haystack.includes("promise"))
+    tags.push("async");
+  if (haystack.includes("performance") || haystack.includes("memo"))
+    tags.push("performance");
 
   return uniqueTags(tags);
 };
 
-const annotateCodeBugPrompts = (prompts: RawCodeBugPrompt[]): CodeBugPrompt[] => {
+const annotateCodeBugPrompts = (
+  prompts: RawCodeBugPrompt[],
+): CodeBugPrompt[] => {
   const ranked = prompts
     .map((prompt, index) => ({
       prompt,
@@ -49,9 +64,13 @@ const annotateCodeBugPrompts = (prompts: RawCodeBugPrompt[]): CodeBugPrompt[] =>
       score:
         prompt.codeLines.length * 10 +
         Math.round(prompt.explanation.length / 40) +
-        (["tsx", "typescript", "sql", "golang"].includes(prompt.language) ? 2 : 0),
+        (["tsx", "typescript", "sql", "golang"].includes(prompt.language)
+          ? 2
+          : 0),
     }))
-    .sort((left, right) => left.score - right.score || left.index - right.index);
+    .sort(
+      (left, right) => left.score - right.score || left.index - right.index,
+    );
 
   const difficultyById = new Map<string, PracticeDifficultyTier>();
   ranked.forEach(({ prompt }, rank) => {
@@ -428,13 +447,10 @@ const rawCodeBugsData: RawCodeBugPrompt[] = [
   {
     id: "bash_unquoted_path",
     language: "bash",
-    codeLines: [
-      "TARGET=/tmp/My Project",
-      "cp $TARGET/report.txt ./backup/",
-    ],
+    codeLines: ["TARGET=/tmp/My Project", "cp $TARGET/report.txt ./backup/"],
     bugLineIndex: 1,
     explanation:
-      "La variable sin comillas se parte por espacios y Bash interpreta rutas separadas. Debe ser cp \"$TARGET/report.txt\" ./backup/.",
+      'La variable sin comillas se parte por espacios y Bash interpreta rutas separadas. Debe ser cp "$TARGET/report.txt" ./backup/.',
   },
   {
     id: "css_box_sizing_overflow",
@@ -463,8 +479,284 @@ const rawCodeBugsData: RawCodeBugPrompt[] = [
     explanation:
       "El callback captura un valor viejo de count. Si hay varios clics rápidos, se pierden incrementos. Usa setCount((current) => current + 1).",
   },
+  // ── Java ──
+  {
+    id: "java_equals_hashcode",
+    language: "java",
+    codeLines: [
+      "public class User {",
+      "  private String name;",
+      "  @Override",
+      "  public boolean equals(Object o) {",
+      "    if (this == o) return true;",
+      "    if (!(o instanceof User)) return false;",
+      "    return name.equals(((User) o).name);",
+      "  }",
+      "}",
+    ],
+    bugLineIndex: 3,
+    explanation:
+      "Se sobrescribe equals() pero no hashCode(). Los objetos iguales deben tener el mismo hashCode, de lo contrario fallan en HashMap/HashSet.",
+  },
+  {
+    id: "java_string_equality",
+    language: "java",
+    codeLines: [
+      'String a = new String("hello");',
+      'String b = new String("hello");',
+      "if (a == b) {",
+      '  System.out.println("Equal");',
+      "}",
+    ],
+    bugLineIndex: 2,
+    explanation:
+      "'==' compara referencias, no contenido. Dos objetos String creados con 'new' son distintas referencias. Usa a.equals(b).",
+  },
+  {
+    id: "java_concurrent_modification",
+    language: "java",
+    codeLines: [
+      'List<String> names = new ArrayList<>(List.of("a", "b", "c"));',
+      "for (String name : names) {",
+      '  if (name.equals("b")) {',
+      "    names.remove(name);",
+      "  }",
+      "}",
+    ],
+    bugLineIndex: 3,
+    explanation:
+      "Modificar una lista durante un for-each lanza ConcurrentModificationException. Usa Iterator.remove() o removeIf().",
+  },
+  // ── Spring Boot ──
+  {
+    id: "spring_transactional_private",
+    language: "java",
+    codeLines: [
+      "@Service",
+      "public class OrderService {",
+      "  @Transactional",
+      "  private void processOrder(Order order) {",
+      "    orderRepo.save(order);",
+      "    paymentService.charge(order);",
+      "  }",
+      "}",
+    ],
+    bugLineIndex: 3,
+    explanation:
+      "Spring @Transactional no funciona en métodos private porque los proxies AOP no pueden interceptarlos. El método debe ser public.",
+  },
+  {
+    id: "spring_circular_dependency",
+    language: "java",
+    codeLines: [
+      "@Service",
+      "public class ServiceA {",
+      "  @Autowired",
+      "  private ServiceB serviceB;",
+      "}",
+      "@Service",
+      "public class ServiceB {",
+      "  @Autowired",
+      "  private ServiceA serviceA;",
+      "}",
+    ],
+    bugLineIndex: 3,
+    explanation:
+      "Dependencia circular: ServiceA depende de ServiceB y viceversa. Desde Spring 6 no se soporta por defecto. Usa @Lazy o reestructura el diseño.",
+  },
+  {
+    id: "spring_missing_request_body",
+    language: "java",
+    codeLines: [
+      "@RestController",
+      "public class UserController {",
+      '  @PostMapping("/users")',
+      "  public ResponseEntity<User> create(User user) {",
+      "    return ResponseEntity.ok(userService.save(user));",
+      "  }",
+      "}",
+    ],
+    bugLineIndex: 3,
+    explanation:
+      "Falta la anotación @RequestBody en el parámetro. Sin ella, Spring intenta resolver User como query params en vez del body JSON.",
+  },
+  // ── Quarkus ──
+  {
+    id: "quarkus_blocking_on_reactive",
+    language: "java",
+    codeLines: [
+      '@Path("/items")',
+      "public class ItemResource {",
+      "  @GET",
+      "  public List<Item> getAll() {",
+      "    return Item.listAll();",
+      "  }",
+      "}",
+    ],
+    bugLineIndex: 3,
+    explanation:
+      "En Quarkus con RESTEasy Reactive, los endpoints corren en el event-loop por defecto. Llamar una operación bloqueante sin @Blocking bloquea el hilo del event-loop.",
+  },
+  {
+    id: "quarkus_no_args_constructor",
+    language: "java",
+    codeLines: [
+      "@Entity",
+      "public class Product {",
+      "  @Id @GeneratedValue",
+      "  private Long id;",
+      "  private String name;",
+      "  public Product(String name) {",
+      "    this.name = name;",
+      "  }",
+      "}",
+    ],
+    bugLineIndex: 5,
+    explanation:
+      "Las entidades JPA en Quarkus (Hibernate ORM) requieren un constructor sin argumentos (puede ser protected). Sin él, falla la instanciación.",
+  },
+  {
+    id: "quarkus_inject_static",
+    language: "java",
+    codeLines: [
+      "@ApplicationScoped",
+      "public class NotificationService {",
+      "  @Inject",
+      "  static EmailSender sender;",
+      "  public void notify(String msg) {",
+      "    sender.send(msg);",
+      "  }",
+      "}",
+    ],
+    bugLineIndex: 3,
+    explanation:
+      "CDI no puede inyectar campos estáticos. @Inject solo funciona en campos de instancia. Quita 'static' del campo sender.",
+  },
+  // ── Kafka ──
+  {
+    id: "kafka_auto_commit_bug",
+    language: "java",
+    codeLines: [
+      "Properties props = new Properties();",
+      'props.put("enable.auto.commit", "true");',
+      'props.put("auto.commit.interval.ms", "1000");',
+      "KafkaConsumer<String,String> consumer = new KafkaConsumer<>(props);",
+      'consumer.subscribe(List.of("orders"));',
+      "while (true) {",
+      "  var records = consumer.poll(Duration.ofMillis(100));",
+      "  processRecords(records); // may throw",
+      "}",
+    ],
+    bugLineIndex: 1,
+    explanation:
+      "Con auto-commit habilitado, los offsets se commitean antes de que el procesamiento termine. Si processRecords falla, se pierden mensajes. Usa manual commit.",
+  },
+  {
+    id: "kafka_serdes_mismatch",
+    language: "java",
+    codeLines: [
+      "Properties props = new Properties();",
+      'props.put("key.serializer", StringSerializer.class.getName());',
+      'props.put("value.serializer", StringSerializer.class.getName());',
+      "KafkaProducer<String,Order> producer = new KafkaProducer<>(props);",
+      'producer.send(new ProducerRecord<>("orders", order.getId(), order));',
+    ],
+    bugLineIndex: 2,
+    explanation:
+      "El value.serializer es StringSerializer, pero el tipo del valor es Order. Se necesita un JsonSerializer o un serializador personalizado.",
+  },
+  {
+    id: "kafka_consumer_no_group",
+    language: "java",
+    codeLines: [
+      "Properties props = new Properties();",
+      'props.put("bootstrap.servers", "localhost:9092");',
+      'props.put("key.deserializer", StringDeserializer.class.getName());',
+      'props.put("value.deserializer", StringDeserializer.class.getName());',
+      "KafkaConsumer<String,String> consumer = new KafkaConsumer<>(props);",
+      'consumer.subscribe(List.of("events"));',
+    ],
+    bugLineIndex: 4,
+    explanation:
+      "Falta 'group.id' en las propiedades del consumidor. Sin group.id, Kafka lanzará InvalidGroupIdException al hacer subscribe.",
+  },
+  // ── Spark ──
+  {
+    id: "spark_collect_oom",
+    language: "java",
+    codeLines: [
+      'Dataset<Row> bigData = spark.read().parquet("hdfs://data/events");',
+      "List<Row> allRows = bigData.collectAsList();",
+      "allRows.forEach(row -> process(row));",
+    ],
+    bugLineIndex: 1,
+    explanation:
+      "collect() trae TODOS los datos al driver. Con datasets grandes causa OutOfMemoryError. Usa foreach() o transformaciones distribuidas.",
+  },
+  {
+    id: "spark_shuffle_no_repartition",
+    language: "python",
+    codeLines: [
+      "df = spark.read.csv('huge_file.csv', header=True)",
+      "result = df.groupBy('country').count()",
+      "result = result.join(other_df, 'country')",
+      "result.write.parquet('output/')",
+    ],
+    bugLineIndex: 0,
+    explanation:
+      "Leer un archivo CSV gigante sin repartition genera particiones desbalanceadas. Agrega .repartition(200) después de la lectura para paralelismo uniforme.",
+  },
+  {
+    id: "spark_unpersisted_reuse",
+    language: "python",
+    codeLines: [
+      "df = spark.read.parquet('events/')",
+      "filtered = df.filter(df.status == 'active')",
+      "count_by_region = filtered.groupBy('region').count()",
+      "avg_by_region = filtered.groupBy('region').avg('amount')",
+      "count_by_region.show()",
+      "avg_by_region.show()",
+    ],
+    bugLineIndex: 1,
+    explanation:
+      "'filtered' se usa dos veces sin persist()/cache(). Spark recalcula todo el DAG desde el parquet en cada acción. Usa filtered.cache() después del filter.",
+  },
+  // ── Python extra ──
+  {
+    id: "python_late_binding_closure",
+    language: "python",
+    codeLines: [
+      "funcs = []",
+      "for i in range(4):",
+      "    funcs.append(lambda: i)",
+      "print([f() for f in funcs])",
+    ],
+    bugLineIndex: 2,
+    explanation:
+      "Las closures en Python capturan la variable, no su valor. Todas devuelven 3 (último valor de i). Usa 'lambda i=i: i' para capturar el valor.",
+  },
+  {
+    id: "python_is_vs_equals",
+    language: "python",
+    codeLines: ["a = 1000", "b = 1000", "if a is b:", "    print('same')"],
+    bugLineIndex: 2,
+    explanation:
+      "'is' compara identidad de objeto, no igualdad. Para enteros grandes (>256), Python no cachea objetos, así que 'is' puede fallar. Usa '=='.",
+  },
+  {
+    id: "python_except_broad",
+    language: "python",
+    codeLines: [
+      "try:",
+      "    result = process_data(input)",
+      "except:",
+      "    pass",
+    ],
+    bugLineIndex: 2,
+    explanation:
+      "'except:' sin tipo captura TODO incluyendo KeyboardInterrupt y SystemExit. Siempre especifica el tipo: 'except Exception as e:'.",
+  },
 ];
 
 export const codeBugsData: CodeBugPrompt[] =
   annotateCodeBugPrompts(rawCodeBugsData);
-

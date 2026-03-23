@@ -32,6 +32,7 @@ import {
   Code2,
   Bug,
   MessageCircleHeart,
+  Brain,
 } from "lucide-react";
 import DailyProgressWidget from "@/components/DailyProgressWidget";
 
@@ -136,6 +137,16 @@ const FEATURED_GAMES = [
     color: "text-indigo-500",
     border: "border-indigo-500",
     bg: "bg-indigo-50",
+  },
+  {
+    id: "trivia",
+    path: "/trivia",
+    title: "Trivia Quiz",
+    desc: "Cultura general bilingüe EN/ES.",
+    icon: Brain,
+    color: "text-fuchsia-500",
+    border: "border-fuchsia-500",
+    bg: "bg-fuchsia-50",
   },
 ];
 
@@ -665,6 +676,27 @@ const HomeView: React.FC = () => {
                 </h3>
                 <p className="text-text-secondary text-xs flex-1">
                   Preguntas teóricas de software engineering.
+                </p>
+              </Card>
+            </Link>
+
+            <Link
+              to="/trivia"
+              className="group block min-w-[260px] md:min-w-0 snap-start"
+            >
+              <Card
+                interactive
+                className="h-full p-5 border-t-4 border-fuchsia-500 bg-surface-1 flex flex-col"
+              >
+                <div className="mb-3 text-fuchsia-500 group-hover:scale-110 transition-transform origin-left">
+                  <Brain className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Trivia Quiz 🧠
+                </h3>
+                <p className="text-text-secondary text-xs flex-1">
+                  Cultura general bilingüe EN/ES. Historia, geografía, ciencia y
+                  más.
                 </p>
               </Card>
             </Link>

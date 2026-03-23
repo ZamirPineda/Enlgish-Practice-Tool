@@ -23,6 +23,7 @@ import {
   MILESTONE_TITLES,
 } from "@/lib/xpStore";
 import { getRankForLevel } from "@/lib/levelRanks";
+import ProfileVisualIdentity from "@/components/profile/ProfileVisualIdentity";
 
 type ProfileTab = "account" | "settings" | "activity";
 
@@ -258,136 +259,147 @@ export default function ProfileView({
         <div className="mt-6">
           {/* TAB 1: Información de Cuenta (Personalización de Avatar) */}
           {activeTab === "account" && (
-            <form
-              onSubmit={handleSave}
-              className="bg-surface-1 rounded-xl p-6 shadow-sm border border-border space-y-6"
-            >
-              {/* Display Name */}
-              <div>
-                <label className="block text-sm font-bold text-text-primary mb-2">
-                  Display Name
-                </label>
-                <input
-                  type="text"
-                  {...register("name")}
-                  className="w-full bg-surface-2 border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
-                  placeholder="Enter your hero name"
-                />
-                {errors.name?.message && (
-                  <p className="mt-1 text-xs text-red-400">{errors.name.message}</p>
-                )}
-              </div>
-
-              {/* Avatar Style Art */}
-              <div>
-                <label className="block text-sm font-bold text-text-primary mb-2">
-                  Art Style
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {avatarStyles.map((style) => (
-                    <Button
-                      key={style.id}
-                      type="button"
-                      variant="ghost"
-                      onClick={() =>
-                        setValue("avatarStyle", style.id, {
-                          shouldDirty: true,
-                          shouldValidate: true,
-                        })
-                      }
-                      aria-pressed={formValues.avatarStyle === style.id}
-                      className={`h-auto flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
-                        formValues.avatarStyle === style.id
-                          ? "border-accent bg-accent/10 scale-105"
-                          : "border-border bg-surface-2 hover:border-accent/50"
-                      }`}
-                    >
-                      <span className="text-2xl mb-1">{style.emoji}</span>
-                      <span className="text-[10px] font-bold text-center leading-tight">
-                        {style.name}
-                      </span>
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Avatar DNA / Seed */}
-              <div>
-                <label className="block text-sm font-bold text-text-primary mb-2 flex justify-between items-center">
-                  <span>Avatar DNA (Seed)</span>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleRandomize}
-                    className="h-auto px-0 py-0 text-xs text-accent hover:underline"
-                  >
-                    <span>🎲 Randomize</span>
-                  </Button>
-                </label>
-                <input
-                  type="text"
-                  {...register("seed")}
-                  className="w-full bg-surface-2 border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all font-mono text-sm"
-                  placeholder="Type anything to change the look..."
-                />
-                {errors.seed?.message && (
-                  <p className="mt-1 text-xs text-red-400">{errors.seed.message}</p>
-                )}
-                <p className="text-xs text-text-muted mt-2">
-                  The DNA string completely changes how your character looks.
-                  Try typing your favorite English word!
-                </p>
-              </div>
-
-              {/* Background Color */}
-              <div>
-                <label className="block text-sm font-bold text-text-primary mb-2">
-                  Background Color
-                </label>
-                <div className="flex flex-wrap gap-3">
-                  {backgroundColors.map((color) => (
-                    <Button
-                      key={color}
-                      type="button"
-                      variant="ghost"
-                      onClick={() =>
-                        setValue("backgroundColor", color, {
-                          shouldDirty: true,
-                          shouldValidate: true,
-                        })
-                      }
-                      aria-pressed={formValues.backgroundColor === color}
-                      className={`h-10 w-10 rounded-full border-2 p-0 transition-all flex items-center justify-center ${
-                        formValues.backgroundColor === color
-                          ? "border-accent scale-110 shadow-[0_0_10px_rgba(56,189,248,0.5)]"
-                          : "border-border hover:scale-105"
-                      }`}
-                      style={{
-                        backgroundColor:
-                          color === "transparent"
-                            ? "var(--color-surface-2)"
-                            : `#${color}`,
-                      }}
-                      aria-label={`Background color ${color}`}
-                    >
-                      {color === "transparent" && (
-                        <span className="text-xs block transform rotate-45 text-text-muted">
-                          /
-                        </span>
-                      )}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              <Button
-                type="submit"
-                className="mt-4 h-auto w-full py-4 text-lg font-black"
+            <div className="space-y-6">
+              <ProfileVisualIdentity
+                level={level}
+                totalXp={totalXp}
+                rankTitle={currentRank.title}
+              />
+              <form
+                onSubmit={handleSave}
+                className="bg-surface-1 rounded-xl p-6 shadow-sm border border-border space-y-6"
               >
-                <span>💾</span> Save Character Profile
-              </Button>
-            </form>
+                {/* Display Name */}
+                <div>
+                  <label className="block text-sm font-bold text-text-primary mb-2">
+                    Display Name
+                  </label>
+                  <input
+                    type="text"
+                    {...register("name")}
+                    className="w-full bg-surface-2 border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                    placeholder="Enter your hero name"
+                  />
+                  {errors.name?.message && (
+                    <p className="mt-1 text-xs text-red-400">
+                      {errors.name.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Avatar Style Art */}
+                <div>
+                  <label className="block text-sm font-bold text-text-primary mb-2">
+                    Art Style
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {avatarStyles.map((style) => (
+                      <Button
+                        key={style.id}
+                        type="button"
+                        variant="ghost"
+                        onClick={() =>
+                          setValue("avatarStyle", style.id, {
+                            shouldDirty: true,
+                            shouldValidate: true,
+                          })
+                        }
+                        aria-pressed={formValues.avatarStyle === style.id}
+                        className={`h-auto flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
+                          formValues.avatarStyle === style.id
+                            ? "border-accent bg-accent/10 scale-105"
+                            : "border-border bg-surface-2 hover:border-accent/50"
+                        }`}
+                      >
+                        <span className="text-2xl mb-1">{style.emoji}</span>
+                        <span className="text-[10px] font-bold text-center leading-tight">
+                          {style.name}
+                        </span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Avatar DNA / Seed */}
+                <div>
+                  <label className="block text-sm font-bold text-text-primary mb-2 flex justify-between items-center">
+                    <span>Avatar DNA (Seed)</span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleRandomize}
+                      className="h-auto px-0 py-0 text-xs text-accent hover:underline"
+                    >
+                      <span>🎲 Randomize</span>
+                    </Button>
+                  </label>
+                  <input
+                    type="text"
+                    {...register("seed")}
+                    className="w-full bg-surface-2 border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all font-mono text-sm"
+                    placeholder="Type anything to change the look..."
+                  />
+                  {errors.seed?.message && (
+                    <p className="mt-1 text-xs text-red-400">
+                      {errors.seed.message}
+                    </p>
+                  )}
+                  <p className="text-xs text-text-muted mt-2">
+                    The DNA string completely changes how your character looks.
+                    Try typing your favorite English word!
+                  </p>
+                </div>
+
+                {/* Background Color */}
+                <div>
+                  <label className="block text-sm font-bold text-text-primary mb-2">
+                    Background Color
+                  </label>
+                  <div className="flex flex-wrap gap-3">
+                    {backgroundColors.map((color) => (
+                      <Button
+                        key={color}
+                        type="button"
+                        variant="ghost"
+                        onClick={() =>
+                          setValue("backgroundColor", color, {
+                            shouldDirty: true,
+                            shouldValidate: true,
+                          })
+                        }
+                        aria-pressed={formValues.backgroundColor === color}
+                        className={`h-10 w-10 rounded-full border-2 p-0 transition-all flex items-center justify-center ${
+                          formValues.backgroundColor === color
+                            ? "border-accent scale-110 shadow-[0_0_10px_rgba(56,189,248,0.5)]"
+                            : "border-border hover:scale-105"
+                        }`}
+                        style={{
+                          backgroundColor:
+                            color === "transparent"
+                              ? "var(--color-surface-2)"
+                              : `#${color}`,
+                        }}
+                        aria-label={`Background color ${color}`}
+                      >
+                        {color === "transparent" && (
+                          <span className="text-xs block transform rotate-45 text-text-muted">
+                            /
+                          </span>
+                        )}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="mt-4 h-auto w-full py-4 text-lg font-black"
+                >
+                  <span>💾</span> Save Character Profile
+                </Button>
+              </form>
+            </div>
           )}
 
           {/* TAB 2: Activity e Historial */}
