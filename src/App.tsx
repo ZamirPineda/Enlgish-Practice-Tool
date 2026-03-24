@@ -83,7 +83,7 @@ const NavItem = ({
       className={() =>
         `flex items-center gap-2 whitespace-nowrap px-3 md:px-4 py-2 min-h-[44px] rounded-lg font-bold text-sm md:text-base transition-all active:scale-[0.98] ${
           isQueryMatch
-            ? "shadow-md bg-accent text-white"
+            ? "shadow-md bg-accent text-slate-900"
             : "bg-transparent hover:bg-surface-hover text-text-secondary"
         }`
       }
@@ -609,7 +609,7 @@ const App: React.FC = () => {
             </p>
             <button
               onClick={handleUpdate}
-              className="mt-2 rounded-lg bg-accent hover:bg-accent-hover px-3 py-1.5 text-sm font-bold text-white transition-colors w-full"
+              className="mt-2 rounded-lg bg-accent hover:bg-accent-hover px-3 py-1.5 text-sm font-bold text-slate-900 transition-colors w-full"
             >
               Actualizar
             </button>
