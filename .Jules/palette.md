@@ -37,3 +37,6 @@
 ## 2026-03-25 - [Custom Toggle Focus Visibility]
 **Learning:** Custom toggle buttons implemented with visually hidden inputs (sr-only) hide native focus outlines.
 **Action:** Use Tailwind's 'peer' class on the hidden checkbox and 'peer-focus-visible' on the sibling decorative div to ensure keyboard focus rings are visible.
+## 2025-05-18 - Tooltip divs without role fail Axe checks
+**Learning:** Using `aria-label` on generic structural elements like `div` (e.g., for tooltip-enabled cells in a heatmap) fails Axe accessibility checks. A valid semantic role must be provided.
+**Action:** Always provide a valid semantic role like `role="img"` or `role="button"` when adding `aria-label` to a generic container element, depending on its interactive nature.
