@@ -753,6 +753,162 @@ const AnimalGlyph: React.FC<{ icon: string }> = ({ icon }) => {
   }
 };
 
+const AnimalSilhouette: React.FC<{
+  icon: string;
+  word: string;
+}> = ({ icon, word }) => {
+  const normalizedWord = word.toLowerCase();
+
+  if (icon === "Wing") {
+    return (
+      <svg
+        viewBox="0 0 240 160"
+        className="h-40 w-full max-w-[18rem] fill-current"
+      >
+        <path d="M32 114c18-28 38-44 61-49 16-4 26-12 31-23 12 5 20 13 24 25 10-3 19-9 27-17 11 9 17 21 20 35-14-3-27-3-40 2 8 5 16 13 23 23-18 0-34-5-47-14-18 16-40 23-66 18-14-3-25-3-33 0Z" />
+        <path
+          d="M85 92c14-7 27-18 38-35M109 99c14-7 28-19 42-39M134 101c12-4 25-12 38-24"
+          fill="none"
+          stroke="rgba(255,255,255,0.34)"
+          strokeWidth="5"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "Wave" || icon === "Tide") {
+    return (
+      <svg
+        viewBox="0 0 240 160"
+        className="h-40 w-full max-w-[18rem] fill-current"
+      >
+        <path d="M30 100c27-19 54-29 81-29 20 0 34 6 46 17l25-10c12 6 21 15 27 27-17 1-31 6-41 15 12 0 23 5 33 14-22 5-45 4-70-4-15-5-31-7-49-5-22 3-39 2-52-5Z" />
+        <path
+          d="M172 83c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9Z"
+          fill="rgba(8,18,32,0.45)"
+        />
+        <path
+          d="M29 124c24 9 52 10 84 1 31-8 63-8 96 1"
+          fill="none"
+          stroke="rgba(255,255,255,0.28)"
+          strokeWidth="5"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "Scale") {
+    return (
+      <svg
+        viewBox="0 0 240 160"
+        className="h-40 w-full max-w-[18rem] fill-current"
+      >
+        <path d="M24 106c19-26 42-42 67-48 29-7 52-10 70-8 17 2 31 9 43 20-21 10-40 17-56 20 16 4 30 14 42 31-30 7-58 6-84-4-18-7-38-10-60-11-12-1-19-7-22-20Z" />
+        <path
+          d="M75 85c9 4 16 11 22 21M104 74c11 5 18 13 22 25M136 67c11 4 19 13 23 26"
+          fill="none"
+          stroke="rgba(255,255,255,0.34)"
+          strokeWidth="5"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "Shell") {
+    return (
+      <svg
+        viewBox="0 0 240 160"
+        className="h-40 w-full max-w-[18rem] fill-current"
+      >
+        <path d="M64 109c0-31 25-56 56-56 26 0 47 20 47 44 0 21-16 38-36 38H64c-17 0-30-12-30-27 0-14 12-26 30-28Z" />
+        <path
+          d="M88 101c10-3 17-2 24 3 8 6 12 13 13 23M96 83c13 3 23 9 31 19M117 70c14 7 24 17 31 31"
+          fill="none"
+          stroke="rgba(255,255,255,0.34)"
+          strokeWidth="5"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "Ripple") {
+    return (
+      <svg
+        viewBox="0 0 240 160"
+        className="h-40 w-full max-w-[18rem] fill-current"
+      >
+        <path d="M70 97c8-25 26-40 55-43 31-4 52 8 63 34-19 11-34 15-46 12 3 10 3 19 0 27-24 3-44 1-60-8-13-6-28-8-45-6 5-7 13-13 24-16 2 0 5 0 9 0Z" />
+        <path
+          d="M58 122c18-8 39-11 62-9 23 2 43 0 61-8M87 73c9 7 16 15 20 26"
+          fill="none"
+          stroke="rgba(255,255,255,0.32)"
+          strokeWidth="5"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "Cell") {
+    return (
+      <svg
+        viewBox="0 0 240 160"
+        className="h-40 w-full max-w-[18rem] fill-current"
+      >
+        <path d="M121 26c46 0 82 28 82 58s-36 50-82 50-82-20-82-50 36-58 82-58Z" />
+        <path
+          d="M102 62c12-10 30-11 43-2 14 10 17 27 7 41-10 14-27 17-41 8-14-10-17-28-9-47Z"
+          fill="rgba(8,18,32,0.32)"
+        />
+        <circle cx="146" cy="69" r="7" fill="rgba(255,255,255,0.28)" />
+        <circle cx="83" cy="87" r="5" fill="rgba(255,255,255,0.2)" />
+      </svg>
+    );
+  }
+
+  if (normalizedWord.includes("elephant")) {
+    return (
+      <svg
+        viewBox="0 0 240 160"
+        className="h-40 w-full max-w-[18rem] fill-current"
+      >
+        <path d="M34 109c0-20 16-37 39-43 6-15 23-25 46-25 35 0 61 22 61 50 0 8-1 15-5 22h-23v24h-15v-24h-30v24H92v-24H64v24H49v-28c-10-2-15-9-15-20Zm126-30c6 0 11 5 11 11s-5 11-11 11c-7 0-12-5-12-11s5-11 12-11Z" />
+      </svg>
+    );
+  }
+
+  if (normalizedWord.includes("giraffe")) {
+    return (
+      <svg
+        viewBox="0 0 240 160"
+        className="h-40 w-full max-w-[18rem] fill-current"
+      >
+        <path d="M84 48c2-13 12-20 21-20 11 0 20 7 22 20l5 31h26c20 0 35 13 35 30 0 9-5 17-14 22v20h-14v-18h-28v18h-15v-18H98v18H84v-18H71c-14 0-23-8-23-20 0-15 13-27 31-31l17-3-12-31Zm39 6c0 4 3 7 7 7s7-3 7-7-3-7-7-7-7 3-7 7Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg
+      viewBox="0 0 240 160"
+      className="h-40 w-full max-w-[18rem] fill-current"
+    >
+      <path d="M39 104c0-22 16-39 39-43 11-14 27-22 48-22 34 0 58 18 66 47 12 2 19 10 19 22 0 15-13 27-32 27h-19v18h-14v-18H94v18H80v-18H60v18H45v-22c-4-6-6-12-6-20Zm108-30c6 0 11 4 11 10s-5 10-11 10-11-4-11-10 5-10 11-10Z" />
+      <path
+        d="M28 129c22 4 39 4 52 0M156 130c18 3 34 2 49-3"
+        fill="none"
+        stroke="rgba(255,255,255,0.26)"
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+};
+
 const LandmarkGlyph: React.FC<{ icon: string }> = ({ icon }) => {
   switch (icon) {
     case "tower":
@@ -1484,27 +1640,50 @@ const AnimalSpotlightCard: React.FC<{
         className={`relative overflow-hidden bg-gradient-to-br ${profile.palette} px-5 py-6 text-slate-50`}
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(8,18,32,0.28),transparent_34%)]" />
-        <div className="relative flex items-center gap-5">
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(180deg,transparent,rgba(8,18,32,0.26))]" />
+        <motion.div
+          aria-hidden="true"
+          className="absolute left-6 top-6 h-24 w-24 rounded-full bg-white/10 blur-2xl"
+          animate={{ opacity: [0.2, 0.45, 0.2], scale: [0.96, 1.08, 0.96] }}
+          transition={{
+            duration: 5.4,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+        />
+        <div className="relative grid gap-5 lg:grid-cols-[minmax(0,1fr)_12rem] lg:items-center">
           <motion.div
-            animate={{ y: [0, -4, 0] }}
+            animate={{ y: [0, -4, 0], rotate: [0, -1.5, 0, 1.5, 0] }}
             transition={{
-              duration: 4,
+              duration: 5.2,
               repeat: Number.POSITIVE_INFINITY,
               ease: "easeInOut",
             }}
-            className="flex h-28 w-28 items-center justify-center rounded-[32px] border border-white/20 bg-slate-950/25 text-white shadow-2xl backdrop-blur-sm"
+            className="relative overflow-hidden rounded-[36px] border border-white/15 bg-slate-950/20 px-5 py-4 text-white shadow-2xl backdrop-blur-sm"
           >
-            <AnimalGlyph icon={profile.icon} />
+            <div className="absolute inset-x-0 bottom-0 h-10 bg-white/10 blur-xl" />
+            <div className="relative flex min-h-[10rem] items-end justify-center">
+              <AnimalSilhouette icon={profile.icon} word={item.word} />
+            </div>
           </motion.div>
-          <div className="flex-1">
-            <div className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-200/80">
-              Wildlife Profile
+          <div className="flex min-w-0 items-start gap-4">
+            <div className="hidden rounded-[28px] border border-white/20 bg-slate-950/25 p-4 text-white shadow-xl backdrop-blur-sm sm:flex">
+              <AnimalGlyph icon={profile.icon} />
             </div>
-            <div className="mt-2 text-2xl font-black tracking-tight">
-              {item.word}
-            </div>
-            <div className="mt-2 text-sm leading-6 text-slate-100/90">
-              {profile.trait}
+            <div className="flex-1">
+              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-200/80">
+                Wildlife Profile
+              </div>
+              <div className="mt-2 text-2xl font-black tracking-tight">
+                {item.word}
+              </div>
+              <div className="mt-2 max-w-xl text-sm leading-6 text-slate-100/90">
+                {profile.trait}
+              </div>
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-slate-950/25 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-100/85">
+                <span className="h-2 w-2 rounded-full bg-emerald-300" />
+                Habitat Mood: {profile.habitat}
+              </div>
             </div>
           </div>
         </div>

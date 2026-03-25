@@ -221,6 +221,7 @@ const AmbientOrbScene: React.FC<AmbientOrbSceneProps> = ({
               fov: compact ? 48 : 42,
             }}
             gl={{ alpha: true, antialias: true }}
+            style={{ pointerEvents: "none" }}
           >
             <color attach="background" args={["#020617"]} />
             <fog attach="fog" args={["#020617", 5, 11]} />

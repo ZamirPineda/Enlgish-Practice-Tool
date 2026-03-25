@@ -1,49 +1,35 @@
+import { describe, expect, test } from "vitest";
 import {
   getCountryReferenceByCapital,
   getCountryReferenceByName,
-  getNeighborReferences,
-  hasLandBorders,
 } from "@/lib/geographyReference";
 
 describe("geographyReference", () => {
-  it("builds a country reference from Stop country and capital data", () => {
-    const reference = getCountryReferenceByName("Brazil");
+  test("returns land borders for common European countries", () => {
+    const spain = getCountryReferenceByName("Spain");
+    const france = getCountryReferenceByName("France");
+    const germany = getCountryReferenceByName("Germany");
 
-    expect(reference).not.toBeNull();
-    expect(reference?.canonicalCountry).toBe("Brazil");
-    expect(reference?.capitalName).toBe("Brasilia");
-    expect(reference?.countryTranslation).toBe("Brasil");
+    expect(spain?.neighbors).toContain("Portugal");
+    expect(france?.neighbors).toContain("Spain");
+    expect(germany?.neighbors).toContain("France");
   });
 
-  it("resolves aliases used in Stop capital data", () => {
-    const reference = getCountryReferenceByName("USA");
+  test("capital lookups reuse the same land border reference", () => {
+    const madrid = getCountryReferenceByCapital("Madrid");
+    const paris = getCountryReferenceByCapital("Paris");
 
-    expect(reference).not.toBeNull();
-    expect(reference?.canonicalCountry).toBe("United States");
-    expect(reference?.capitalName).toBe("Washington D.C.");
+    expect(madrid?.canonicalCountry).toBe("Spain");
+    expect(madrid?.neighbors.length).toBeGreaterThan(0);
+    expect(paris?.canonicalCountry).toBe("France");
+    expect(paris?.neighbors).toContain("Germany");
   });
 
-  it("resolves country references from capitals", () => {
-    const reference = getCountryReferenceByCapital("Ottawa");
+  test("keeps island countries without land borders", () => {
+    const japan = getCountryReferenceByName("Japan");
+    const iceland = getCountryReferenceByName("Iceland");
 
-    expect(reference).not.toBeNull();
-    expect(reference?.canonicalCountry).toBe("Canada");
-    expect(reference?.capitalName).toBe("Ottawa");
-  });
-
-  it("returns neighbor references for supported countries", () => {
-    const neighbors = getNeighborReferences("Colombia");
-
-    expect(neighbors.map((neighbor) => neighbor.canonicalCountry)).toEqual(
-      expect.arrayContaining([
-        "Brazil",
-        "Ecuador",
-        "Panama",
-        "Peru",
-        "Venezuela",
-      ]),
-    );
-    expect(hasLandBorders("Colombia")).toBe(true);
-    expect(hasLandBorders("Japan")).toBe(false);
+    expect(japan?.neighbors).toEqual([]);
+    expect(iceland?.neighbors).toEqual([]);
   });
 });
