@@ -19,7 +19,7 @@ Aplicación web (React + Vite + TypeScript) para practicar inglés con varias mo
 ### Mínimos para desarrollo local
 
 - **Node.js 20+** (el workflow de CI usa Node 20)
-- **pnpm 9+** (recomendado con Node 20)
+- **pnpm 10.26+** (alineado con la política de seguridad del repo)
 
 ### Opcionales (scripts auxiliares)
 
@@ -35,8 +35,12 @@ git clone https://github.com/ZamirPineda/Enlgish-Practice-Tool.git
 # 2) Entrar al proyecto
 cd Enlgish-Practice-Tool
 
-# 3) Instalar dependencias
-pnpm install
+# 3) Activar Corepack y preparar la versión fijada de pnpm
+corepack enable
+corepack prepare pnpm@10.26.0 --activate
+
+# 4) Instalar dependencias
+pnpm install --frozen-lockfile
 ```
 
 ## Ejecutar en local (desarrollo)
@@ -117,9 +121,36 @@ pnpm run format
 pnpm run typecheck
 ```
 
+### Instalación segura con pnpm
+
+El repo usa una política restrictiva en `pnpm-workspace.yaml`:
+
+- solo `esbuild` puede ejecutar scripts de instalación;
+- cualquier nuevo `preinstall` / `install` / `postinstall` no aprobado falla;
+- `pnpm` rechaza versiones publicadas hace menos de 24 horas;
+- se bloquean subdependencias transitivas con fuentes exóticas.
+
+Comandos recomendados:
+
+```bash
+corepack enable
+corepack prepare pnpm@10.26.0 --activate
+pnpm install --frozen-lockfile
+pnpm audit --audit-level=high
+```
+
+Si quieres inspeccionar un cambio sin permitir scripts de instalación, usa temporalmente:
+
+```bash
+pnpm install --ignore-scripts --frozen-lockfile
+```
+
+Ese modo sirve para revisión, pero no sustituye la instalación normal porque `esbuild` necesita su paso de instalación.
+
 ### Pre-commit (Husky + lint-staged)
 
-Al instalar dependencias (`pnpm install`) se activa Husky vía script `prepare`.
+Al instalar dependencias en una copia local con `.git/`, se activa Husky vía script `prepare`.
+En CI y entornos con `HUSKY=0`, ese paso se omite.
 
 En cada commit, el hook `pre-commit` ejecuta `lint-staged` sobre archivos staged:
 
