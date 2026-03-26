@@ -29,3 +29,9 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+
+## 2024-05-18 - Styling custom toggles with Tailwind CSS
+
+**Learning:** When styling custom UI controls (like toggles or switches) with visually hidden inputs ('sr-only' class), the decorative UI elements need proper focus indicators to ensure keyboard accessibility. Additionally, they should be hidden from screen readers to prevent clutter and confusion.
+
+**Action:** Add `role="switch"` and `aria-checked` to the visually hidden `input[type="checkbox"]` to provide the correct semantic role. Apply Tailwind's `peer` class to the input. On the sibling decorative visual track element, use `peer-focus-visible:ring-2 peer-focus-visible:ring-focus peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background` to provide a clear and accessible keyboard focus indicator. Also, apply `aria-hidden="true"` and `pointer-events-none` (if applicable) to decorative elements.
