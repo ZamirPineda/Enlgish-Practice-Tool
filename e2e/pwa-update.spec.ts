@@ -10,6 +10,12 @@ test.describe("PWA Auto Update Flow", () => {
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
 
+    // Close onboarding if it appears
+    const skipButton = page.getByRole("button", { name: "Skip" });
+    if (await skipButton.isVisible()) {
+      await skipButton.click();
+    }
+
     // Trigger mocked PWA update
     await page.evaluate(() => {
       if ((window as any).__TRIGGER_PWA_UPDATE) {
