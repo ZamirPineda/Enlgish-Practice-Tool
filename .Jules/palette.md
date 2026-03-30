@@ -29,3 +29,7 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+
+## 2026-03-08 - [Toolbar Toggle Buttons Accessibility]
+**Learning:** Toolbar action buttons (e.g. Shuffle, Autoplay, Reveal in StopGameBrowse) were implemented as icon-only without proper ARIA attributes, violating the requirement that toggleable icon-only buttons need a static `aria-label` for feature description and a dynamic `aria-pressed` for state, with dynamic `title` for hover tooltips.
+**Action:** Always verify toolbar icon groupings to ensure `aria-label`, `aria-pressed` (if toggleable), and `title` attributes are applied.
