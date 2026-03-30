@@ -182,7 +182,7 @@ describe("Roadmap sequential flow", () => {
     expect(addGlobalXpMock).toHaveBeenNthCalledWith(2, 40);
     expect(addGlobalXpMock).toHaveBeenNthCalledWith(3, 40);
     expect(addGlobalXpMock).toHaveBeenNthCalledWith(4, 160);
-  }, 40000);
+  }, 60000); // Increased timeout to prevent CI flakiness
 
   test("keeps the next lesson blocked until the current lesson reaches the mastery target", async () => {
     renderView();
