@@ -10,6 +10,13 @@ test.describe("PWA Auto Update Flow", () => {
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
 
+    // Wait and dismiss any onboarding modal that intercepts clicks
+    await page.waitForTimeout(500);
+    const skipButton = page.getByRole("button", { name: /Skip/i });
+    if (await skipButton.isVisible()) {
+      await skipButton.click();
+    }
+
     // Trigger mocked PWA update
     await page.evaluate(() => {
       if ((window as any).__TRIGGER_PWA_UPDATE) {
@@ -47,6 +54,13 @@ test.describe("PWA Auto Update Flow", () => {
     await page.goto("/#/");
 
     await expect(page.getByRole("banner")).toBeVisible();
+
+    // Wait and dismiss any onboarding modal that intercepts clicks
+    await page.waitForTimeout(500);
+    const skipButton = page.getByRole("button", { name: /Skip/i });
+    if (await skipButton.isVisible()) {
+      await skipButton.click();
+    }
 
     let didReload = false;
     page.on("framenavigated", () => {
