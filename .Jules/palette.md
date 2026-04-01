@@ -29,3 +29,7 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+
+## 2026-04-01 - [ToggleSwitch Accessibility]
+**Learning:** When styling custom UI controls (like toggles) with visually hidden inputs ('sr-only'), use Tailwind's 'peer' class on the input and 'peer-focus-visible' on sibling decorative elements to provide accessible keyboard focus indicators. Visually hidden inputs also need role='switch' and aria-label to guarantee an accessible name for screen readers.
+**Action:** Add role='switch', aria-label, 'peer', 'peer-focus-visible' utilities and aria-hidden to decorative elements for any visually hidden custom switch inputs.
