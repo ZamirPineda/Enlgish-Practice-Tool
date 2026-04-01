@@ -33,3 +33,7 @@
 ## 2026-04-01 - [ToggleSwitch Accessibility]
 **Learning:** When styling custom UI controls (like toggles) with visually hidden inputs ('sr-only'), use Tailwind's 'peer' class on the input and 'peer-focus-visible' on sibling decorative elements to provide accessible keyboard focus indicators. Visually hidden inputs also need role='switch' and aria-label to guarantee an accessible name for screen readers.
 **Action:** Add role='switch', aria-label, 'peer', 'peer-focus-visible' utilities and aria-hidden to decorative elements for any visually hidden custom switch inputs.
+
+## 2026-04-01 - [ToggleSwitch Accessibility]
+**Learning:** When styling custom UI controls (like toggles) with visually hidden inputs ('sr-only'), use Tailwind's 'peer' class on the input and 'peer-focus-visible' on sibling decorative elements to provide accessible keyboard focus indicators. Visually hidden inputs also need role='switch' and aria-label to guarantee an accessible name for screen readers.
+**Action:** Add role='switch', aria-label, 'peer', 'peer-focus-visible' utilities and aria-hidden to decorative elements for any visually hidden custom switch inputs.
