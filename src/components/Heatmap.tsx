@@ -269,7 +269,7 @@ const Heatmap: React.FC<HeatmapProps> = ({ days }) => {
               ))}
             </div>
 
-            <div className="flex gap-[3px]" aria-label="Heatmap de repaso">
+            <div className="flex gap-[3px]" role="img" aria-label="Heatmap de repaso">
               {weeks.map((week, weekIndex) => (
                 <div
                   key={`week-${weekIndex}`}
@@ -281,6 +281,7 @@ const Heatmap: React.FC<HeatmapProps> = ({ days }) => {
                   {week.map((day) => (
                     <div
                       key={day.date}
+                      role="img"
                       className={`h-3 w-3 rounded-[2px] ${day.inRange ? getIntensityClass(day.count) : "bg-transparent"}`}
                       title={`${day.date}: ${day.count} tarjetas repasadas`}
                       aria-label={`${day.date}: ${day.count} tarjetas repasadas`}
@@ -295,6 +296,7 @@ const Heatmap: React.FC<HeatmapProps> = ({ days }) => {
 
       <div
         className="flex justify-end items-center mt-3 text-xs text-slate-400"
+        role="img"
         aria-label="Leyenda de intensidad"
       >
         <div className="flex items-center gap-2">
