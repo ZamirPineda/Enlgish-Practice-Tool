@@ -1,3 +1,0 @@
-auditConfig:
-  ignoreCves:
-    - GHSA-r5fr-rjxr-66jc
