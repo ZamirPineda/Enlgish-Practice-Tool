@@ -103,7 +103,7 @@
       "picomatch@<2.3.2": "2.3.2",
       "picomatch@>=4.0.0 <4.0.4": "4.0.4",
       "happy-dom": "20.8.9",
-      "lodash": "^4.17.21",
+      "lodash": "^4.18.1",
       "lodash.assignwith": "^4.2.0"
     }
   }
