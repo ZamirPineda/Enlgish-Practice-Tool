@@ -212,8 +212,14 @@ describe("contentInventoryPicker", () => {
       },
     });
 
-    expect(firstPick.map((item) => item.id)).toEqual([items[0].id, items[1].id]);
-    expect(secondPick.map((item) => item.id)).toEqual([items[2].id, items[3].id]);
+    expect(firstPick.map((item) => item.id)).toEqual([
+      items[0].id,
+      items[1].id,
+    ]);
+    expect(secondPick.map((item) => item.id)).toEqual([
+      items[2].id,
+      items[3].id,
+    ]);
   });
 
   test("pickNextItems falls back to recent items when the pool is exhausted", () => {
@@ -265,7 +271,10 @@ describe("contentInventoryPicker", () => {
 
     expect(firstPick).toHaveLength(2);
     expect(secondPick).toHaveLength(2);
-    expect(secondPick.map((item) => item.id)).toEqual([items[0].id, items[1].id]);
+    expect(secondPick.map((item) => item.id)).toEqual([
+      items[0].id,
+      items[1].id,
+    ]);
   });
 
   test("pickNextItems stays stable with a single-item dataset across repeated picks", () => {
@@ -386,8 +395,16 @@ describe("contentInventoryPicker", () => {
       (event) => event.name === "content_selected",
     );
     expect(selectionEvents).toHaveLength(4);
-    expect(selectionEvents.slice(0, 2).every((event) => event.payload.repeated === false)).toBe(true);
-    expect(selectionEvents.slice(2).every((event) => event.payload.repeated === true)).toBe(true);
+    expect(
+      selectionEvents
+        .slice(0, 2)
+        .every((event) => event.payload.repeated === false),
+    ).toBe(true);
+    expect(
+      selectionEvents
+        .slice(2)
+        .every((event) => event.payload.repeated === true),
+    ).toBe(true);
   });
 
   test("pickNextItems preserves variety through long sessions before repeating", () => {
@@ -409,19 +426,21 @@ describe("contentInventoryPicker", () => {
     const index = buildContentInventoryIndex(items);
     const sessionId = createContentSelectionSession("speed_builder");
 
-    const rounds = Array.from({ length: 7 }, () =>
-      pickNextItems({
-        index,
-        limit: 1,
-        skills: ["english"],
-        shuffle: false,
-        historyScope: {
-          gameId: "speed_builder",
-          sessionId,
-          gameWindow: 8,
-          sessionWindow: 8,
-        },
-      })[0],
+    const rounds = Array.from(
+      { length: 7 },
+      () =>
+        pickNextItems({
+          index,
+          limit: 1,
+          skills: ["english"],
+          shuffle: false,
+          historyScope: {
+            gameId: "speed_builder",
+            sessionId,
+            gameWindow: 8,
+            sessionWindow: 8,
+          },
+        })[0],
     );
 
     expect(rounds.slice(0, 5).map((item) => item.id)).toEqual(
@@ -435,8 +454,16 @@ describe("contentInventoryPicker", () => {
       (event) => event.name === "content_selected",
     );
     expect(selectionEvents).toHaveLength(7);
-    expect(selectionEvents.slice(0, 5).every((event) => event.payload.repeated === false)).toBe(true);
-    expect(selectionEvents.slice(5).every((event) => event.payload.repeated === true)).toBe(true);
+    expect(
+      selectionEvents
+        .slice(0, 5)
+        .every((event) => event.payload.repeated === false),
+    ).toBe(true);
+    expect(
+      selectionEvents
+        .slice(5)
+        .every((event) => event.payload.repeated === true),
+    ).toBe(true);
   });
 
   test("pickNextTechDeckCards returns cards from selected deck", () => {

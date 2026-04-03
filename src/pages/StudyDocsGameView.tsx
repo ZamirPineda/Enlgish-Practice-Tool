@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -371,217 +377,226 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
     }
   }, []);
 
-  const getDocContent = useCallback(async (
-    docEntry: StudyDocEntry,
-  ): Promise<ParsedDocContent | null> => {
-    if (docCache[docEntry.path]) {
-      return docCache[docEntry.path];
-    }
-
-    try {
-      const response = await fetch(toDocUrl(docEntry.path));
-      if (!response.ok) return null;
-      const html = await response.text();
-      const parsed = extractDocContent(html, docEntry.title);
-      if (!parsed) return null;
-      setDocCache((previous) => ({ ...previous, [docEntry.path]: parsed }));
-      return parsed;
-    } catch {
-      return null;
-    }
-  }, [docCache]);
-
-  const buildTitleOptions = useCallback((correctDoc: StudyDocEntry): string[] => {
-    const sameCategory = filteredEntries
-      .filter(
-        (entry) =>
-          entry.path !== correctDoc.path &&
-          entry.category === correctDoc.category,
-      )
-      .map((entry) => entry.title);
-
-    const fallbackPool = filteredEntries
-      .filter((entry) => entry.path !== correctDoc.path)
-      .map((entry) => entry.title);
-
-    const distractors = shuffle(
-      sameCategory.length >= 3 ? sameCategory : fallbackPool,
-    ).slice(0, 3);
-
-    return shuffle([correctDoc.title, ...distractors]);
-  }, [filteredEntries]);
-
-  const getNextRound = useCallback(async (
-    level: DocsGameLevel = selectedLevel,
-  ): Promise<QuizRound | null> => {
-    if (filteredEntries.length < 4) return null;
-
-    const candidatePoolSize =
-      level === "hard" ? 20 : level === "easy" ? 10 : 15;
-    const candidates = shuffle(filteredEntries).slice(0, candidatePoolSize);
-    for (const docEntry of candidates) {
-      const parsed = await getDocContent(docEntry);
-      if (!parsed) continue;
-
-      const questionTypes: (
-        | "document"
-        | "tooltip"
-        | "strong"
-        | "heading"
-        | "cloze"
-      )[] = [];
-      if (parsed.paragraphs.length > 0) {
-        questionTypes.push("document");
-        if (level === "easy") questionTypes.push("document");
-      }
-      if (parsed.headings.length > 0) {
-        questionTypes.push("heading");
-        if (level !== "hard") questionTypes.push("heading");
-      }
-      if (parsed.tooltips.length > 0 && level !== "easy") {
-        questionTypes.push("tooltip");
-        if (level === "hard") questionTypes.push("tooltip");
-      }
-      if (parsed.strongTerms.length > 0 && level !== "easy") {
-        questionTypes.push("strong");
-        if (level === "hard") questionTypes.push("strong");
+  const getDocContent = useCallback(
+    async (docEntry: StudyDocEntry): Promise<ParsedDocContent | null> => {
+      if (docCache[docEntry.path]) {
+        return docCache[docEntry.path];
       }
 
-      const allTerms = Array.from(
-        new Set([
-          ...parsed.tooltips.map((t) => t.term),
-          ...parsed.strongTerms.map((s) => s.term),
-        ]),
-      );
-      const parsWithTerms = parsed.paragraphs.filter((p) =>
-        allTerms.some((t) => p.includes(t) && t.length > 4),
-      );
+      try {
+        const response = await fetch(toDocUrl(docEntry.path));
+        if (!response.ok) return null;
+        const html = await response.text();
+        const parsed = extractDocContent(html, docEntry.title);
+        if (!parsed) return null;
+        setDocCache((previous) => ({ ...previous, [docEntry.path]: parsed }));
+        return parsed;
+      } catch {
+        return null;
+      }
+    },
+    [docCache],
+  );
 
-      if (level !== "easy" && parsWithTerms.length > 0 && allTerms.length >= 4) {
-        questionTypes.push("cloze");
-        if (level === "hard") {
-          questionTypes.push("cloze");
-          questionTypes.push("cloze");
+  const buildTitleOptions = useCallback(
+    (correctDoc: StudyDocEntry): string[] => {
+      const sameCategory = filteredEntries
+        .filter(
+          (entry) =>
+            entry.path !== correctDoc.path &&
+            entry.category === correctDoc.category,
+        )
+        .map((entry) => entry.title);
+
+      const fallbackPool = filteredEntries
+        .filter((entry) => entry.path !== correctDoc.path)
+        .map((entry) => entry.title);
+
+      const distractors = shuffle(
+        sameCategory.length >= 3 ? sameCategory : fallbackPool,
+      ).slice(0, 3);
+
+      return shuffle([correctDoc.title, ...distractors]);
+    },
+    [filteredEntries],
+  );
+
+  const getNextRound = useCallback(
+    async (level: DocsGameLevel = selectedLevel): Promise<QuizRound | null> => {
+      if (filteredEntries.length < 4) return null;
+
+      const candidatePoolSize =
+        level === "hard" ? 20 : level === "easy" ? 10 : 15;
+      const candidates = shuffle(filteredEntries).slice(0, candidatePoolSize);
+      for (const docEntry of candidates) {
+        const parsed = await getDocContent(docEntry);
+        if (!parsed) continue;
+
+        const questionTypes: (
+          | "document"
+          | "tooltip"
+          | "strong"
+          | "heading"
+          | "cloze"
+        )[] = [];
+        if (parsed.paragraphs.length > 0) {
+          questionTypes.push("document");
+          if (level === "easy") questionTypes.push("document");
         }
-      }
-
-      if (questionTypes.length === 0) continue;
-
-      const selectedType = shuffle(questionTypes)[0];
-
-      if (selectedType === "cloze") {
-        const p = shuffle(parsWithTerms)[0];
-        const term = shuffle(
-          allTerms.filter((t) => p.includes(t) && t.length > 4),
-        )[0];
-        const clozeText = p.split(term).join("_______");
-        const distractorsPool = allTerms.filter((t) => t !== term);
-        const options = shuffle([
-          term,
-          ...shuffle(distractorsPool).slice(0, 3),
-        ]);
-
-        if (options.length === 4) {
-          return {
-            prompt: "Completa el siguiente fragmento correctamente",
-            clueLabel: "Fragmento",
-            clueText: clozeText,
-            answerTypeLabel: `Origen: ${docEntry.title}`,
-            correctAnswer: term,
-            options,
-          };
+        if (parsed.headings.length > 0) {
+          questionTypes.push("heading");
+          if (level !== "hard") questionTypes.push("heading");
         }
-      }
+        if (parsed.tooltips.length > 0 && level !== "easy") {
+          questionTypes.push("tooltip");
+          if (level === "hard") questionTypes.push("tooltip");
+        }
+        if (parsed.strongTerms.length > 0 && level !== "easy") {
+          questionTypes.push("strong");
+          if (level === "hard") questionTypes.push("strong");
+        }
 
-      if (selectedType === "tooltip") {
-        const target = shuffle(parsed.tooltips)[0];
-        const sameDocTerms = parsed.tooltips
-          .filter((t) => t.term !== target.term)
-          .map((t) => t.term);
-        const fallbackDistractors = [
-          ...parsed.headings,
-          ...parsed.strongTerms.map((s) => s.term),
-        ].filter((t) => t !== target.term);
-        const distractorsPool =
-          sameDocTerms.length >= 3
-            ? sameDocTerms
-            : [...sameDocTerms, ...fallbackDistractors];
+        const allTerms = Array.from(
+          new Set([
+            ...parsed.tooltips.map((t) => t.term),
+            ...parsed.strongTerms.map((s) => s.term),
+          ]),
+        );
+        const parsWithTerms = parsed.paragraphs.filter((p) =>
+          allTerms.some((t) => p.includes(t) && t.length > 4),
+        );
 
-        if (distractorsPool.length >= 3) {
+        if (
+          level !== "easy" &&
+          parsWithTerms.length > 0 &&
+          allTerms.length >= 4
+        ) {
+          questionTypes.push("cloze");
+          if (level === "hard") {
+            questionTypes.push("cloze");
+            questionTypes.push("cloze");
+          }
+        }
+
+        if (questionTypes.length === 0) continue;
+
+        const selectedType = shuffle(questionTypes)[0];
+
+        if (selectedType === "cloze") {
+          const p = shuffle(parsWithTerms)[0];
+          const term = shuffle(
+            allTerms.filter((t) => p.includes(t) && t.length > 4),
+          )[0];
+          const clozeText = p.split(term).join("_______");
+          const distractorsPool = allTerms.filter((t) => t !== term);
           const options = shuffle([
-            target.term,
+            term,
             ...shuffle(distractorsPool).slice(0, 3),
           ]);
+
+          if (options.length === 4) {
+            return {
+              prompt: "Completa el siguiente fragmento correctamente",
+              clueLabel: "Fragmento",
+              clueText: clozeText,
+              answerTypeLabel: `Origen: ${docEntry.title}`,
+              correctAnswer: term,
+              options,
+            };
+          }
+        }
+
+        if (selectedType === "tooltip") {
+          const target = shuffle(parsed.tooltips)[0];
+          const sameDocTerms = parsed.tooltips
+            .filter((t) => t.term !== target.term)
+            .map((t) => t.term);
+          const fallbackDistractors = [
+            ...parsed.headings,
+            ...parsed.strongTerms.map((s) => s.term),
+          ].filter((t) => t !== target.term);
+          const distractorsPool =
+            sameDocTerms.length >= 3
+              ? sameDocTerms
+              : [...sameDocTerms, ...fallbackDistractors];
+
+          if (distractorsPool.length >= 3) {
+            const options = shuffle([
+              target.term,
+              ...shuffle(distractorsPool).slice(0, 3),
+            ]);
+            return {
+              prompt: "¿A qué concepto corresponde esta definición?",
+              clueLabel: "Definición extraída",
+              clueText: target.definition,
+              answerTypeLabel: `Origen: ${docEntry.title}`,
+              correctAnswer: target.term,
+              options,
+            };
+          }
+        }
+
+        if (selectedType === "strong") {
+          const target = shuffle(parsed.strongTerms)[0];
+          const sameDocTerms = parsed.strongTerms
+            .filter((t) => t.term !== target.term)
+            .map((t) => t.term);
+          const fallbackDistractors = [
+            ...parsed.tooltips.map((t) => t.term),
+            ...parsed.headings,
+          ].filter((t) => t !== target.term);
+          const distractorsPool =
+            sameDocTerms.length >= 3
+              ? sameDocTerms
+              : [...sameDocTerms, ...fallbackDistractors];
+
+          if (distractorsPool.length >= 3) {
+            const options = shuffle([
+              target.term,
+              ...shuffle(distractorsPool).slice(0, 3),
+            ]);
+            return {
+              prompt:
+                "¿A qué elemento o característica corresponde esta descripción?",
+              clueLabel: "Descripción extraída",
+              clueText: target.description,
+              answerTypeLabel: `Origen: ${docEntry.title}`,
+              correctAnswer: target.term,
+              options,
+            };
+          }
+        }
+
+        const docOptions = buildTitleOptions(docEntry);
+        if (docOptions.length < 4) continue;
+
+        if (selectedType === "heading") {
+          const heading = shuffle(parsed.headings)[0];
           return {
-            prompt: "¿A qué concepto corresponde esta definición?",
-            clueLabel: "Definición extraída",
-            clueText: target.definition,
-            answerTypeLabel: `Origen: ${docEntry.title}`,
-            correctAnswer: target.term,
-            options,
+            prompt: "¿A qué documento pertenece esta sección?",
+            clueLabel: "Sección del documento",
+            clueText: heading,
+            answerTypeLabel: "Esperado: Título del documento",
+            correctAnswer: docEntry.title,
+            options: docOptions,
           };
         }
-      }
 
-      if (selectedType === "strong") {
-        const target = shuffle(parsed.strongTerms)[0];
-        const sameDocTerms = parsed.strongTerms
-          .filter((t) => t.term !== target.term)
-          .map((t) => t.term);
-        const fallbackDistractors = [
-          ...parsed.tooltips.map((t) => t.term),
-          ...parsed.headings,
-        ].filter((t) => t !== target.term);
-        const distractorsPool =
-          sameDocTerms.length >= 3
-            ? sameDocTerms
-            : [...sameDocTerms, ...fallbackDistractors];
-
-        if (distractorsPool.length >= 3) {
-          const options = shuffle([
-            target.term,
-            ...shuffle(distractorsPool).slice(0, 3),
-          ]);
-          return {
-            prompt:
-              "¿A qué elemento o característica corresponde esta descripción?",
-            clueLabel: "Descripción extraída",
-            clueText: target.description,
-            answerTypeLabel: `Origen: ${docEntry.title}`,
-            correctAnswer: target.term,
-            options,
-          };
-        }
-      }
-
-      const docOptions = buildTitleOptions(docEntry);
-      if (docOptions.length < 4) continue;
-
-      if (selectedType === "heading") {
-        const heading = shuffle(parsed.headings)[0];
+        const excerpt = shuffle(parsed.paragraphs)[0];
         return {
-          prompt: "¿A qué documento pertenece esta sección?",
-          clueLabel: "Sección del documento",
-          clueText: heading,
+          prompt: "¿De qué documento en general proviene este fragmento real?",
+          clueLabel: "Fragmento extraído",
+          clueText: excerpt,
           answerTypeLabel: "Esperado: Título del documento",
           correctAnswer: docEntry.title,
           options: docOptions,
         };
       }
 
-      const excerpt = shuffle(parsed.paragraphs)[0];
-      return {
-        prompt: "¿De qué documento en general proviene este fragmento real?",
-        clueLabel: "Fragmento extraído",
-        clueText: excerpt,
-        answerTypeLabel: "Esperado: Título del documento",
-        correctAnswer: docEntry.title,
-        options: docOptions,
-      };
-    }
-
-    return null;
-  }, [buildTitleOptions, filteredEntries, getDocContent, selectedLevel]);
+      return null;
+    },
+    [buildTitleOptions, filteredEntries, getDocContent, selectedLevel],
+  );
 
   const finishGame = () => {
     setGameState("finished");
@@ -670,12 +685,7 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
 
     didAutoStartRef.current = true;
     void startGame();
-  }, [
-    filteredEntries.length,
-    gameState,
-    roadmapConfig?.autostart,
-    startGame,
-  ]);
+  }, [filteredEntries.length, gameState, roadmapConfig?.autostart, startGame]);
 
   const handleAnswer = (option: string) => {
     if (!currentRound || selectedOption) return;
@@ -883,7 +893,8 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
           </span>
         </div>
         <p className="text-sm text-text-secondary mt-3">
-          Adivina la categoría correcta del documento. {gameDuration} segundos, 3 vidas, combo y score.
+          Adivina la categoría correcta del documento. {gameDuration} segundos,
+          3 vidas, combo y score.
         </p>
       </Card>
 
@@ -1120,4 +1131,3 @@ const StudyDocsGameView: React.FC<StudyDocsGameViewProps> = ({ fileTree }) => {
 };
 
 export default StudyDocsGameView;
-

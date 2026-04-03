@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle2, Circle, Trophy } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -33,7 +39,10 @@ const PROGRESS_STYLE = {
   dev: "border-violet-500/40 bg-violet-500/10 text-violet-500 shadow-violet-500/20",
 };
 
-const formatDurationLabel = (startedAt: string, completedAt: string): string => {
+const formatDurationLabel = (
+  startedAt: string,
+  completedAt: string,
+): string => {
   const totalSeconds = Math.max(
     0,
     Math.round(
@@ -199,7 +208,13 @@ const DailyLoopView: React.FC = () => {
     if (!shouldAutoStart || loop || didAutoStartRef.current) return;
     didAutoStartRef.current = true;
     handleStartLoop(requestedFocusRoute ?? selectedFocusRoute);
-  }, [shouldAutoStart, loop, handleStartLoop, requestedFocusRoute, selectedFocusRoute]);
+  }, [
+    shouldAutoStart,
+    loop,
+    handleStartLoop,
+    requestedFocusRoute,
+    selectedFocusRoute,
+  ]);
 
   const handleStartLoopClick = () => {
     if (requestedFocusRoute) {
@@ -224,8 +239,9 @@ const DailyLoopView: React.FC = () => {
       game: "daily_loop",
       focusRoute: updatedLoop.focusRoute,
       stepId,
-      completedSteps: updatedLoop.steps.filter((step) => Boolean(step.completedAt))
-        .length,
+      completedSteps: updatedLoop.steps.filter((step) =>
+        Boolean(step.completedAt),
+      ).length,
       totalSteps: updatedLoop.steps.length,
     });
 
@@ -438,7 +454,8 @@ const DailyLoopView: React.FC = () => {
                         Sesiones
                       </p>
                       <p className="text-sm font-black text-text-primary">
-                        {loopSummary.completedSessions}/{loopSummary.totalSessions}
+                        {loopSummary.completedSessions}/
+                        {loopSummary.totalSessions}
                       </p>
                     </div>
                     <div className="rounded-lg border border-border bg-surface-1 px-3 py-2">
@@ -454,8 +471,8 @@ const DailyLoopView: React.FC = () => {
                         Mix
                       </p>
                       <p className="text-sm font-black text-text-primary">
-                        E{loopSummary.englishCompleted} M{loopSummary.mathCompleted} D
-                        {loopSummary.devCompleted}
+                        E{loopSummary.englishCompleted} M
+                        {loopSummary.mathCompleted} D{loopSummary.devCompleted}
                       </p>
                     </div>
                     <div className="rounded-lg border border-border bg-surface-1 px-3 py-2">

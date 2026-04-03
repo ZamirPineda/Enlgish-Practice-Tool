@@ -110,7 +110,8 @@ const DEMO_JSON_BATCH = JSON.stringify(
         difficulty: "core",
         format: "open_response",
         prompt: "Explain circuit breakers in one sentence",
-        answer: "They stop repeated failing calls until the dependency recovers.",
+        answer:
+          "They stop repeated failing calls until the dependency recovers.",
         tags: ["backend", "resilience"],
         metadata: {
           routeObjective: "dev_reasoning",
@@ -166,7 +167,9 @@ const serializeWorkspaceRowsToJsonDocument = (
     {
       packVersion,
       sourceLabel,
-      items: createLintableRowsFromCurationWorkspace(rows).map((row) => row.record),
+      items: createLintableRowsFromCurationWorkspace(rows).map(
+        (row) => row.record,
+      ),
     },
     null,
     2,
@@ -199,7 +202,9 @@ const SortableWorkspaceRow = ({
   onMoveUp,
   onMoveDown,
 }: {
-  row: ReturnType<ReturnType<typeof useReactTable<ContentCurationWorkspaceRow>>["getRowModel"]>["rows"][number];
+  row: ReturnType<
+    ReturnType<typeof useReactTable<ContentCurationWorkspaceRow>>["getRowModel"]
+  >["rows"][number];
   onEdit: () => void;
   onApprove: () => void;
   onReject: () => void;
@@ -207,10 +212,16 @@ const SortableWorkspaceRow = ({
   onMoveUp: () => void;
   onMoveDown: () => void;
 }) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({
-      id: row.original.id,
-    });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: row.original.id,
+  });
 
   return (
     <TableRow
@@ -306,15 +317,18 @@ const SortableWorkspaceRow = ({
 };
 
 const ContentCurationView: React.FC = () => {
-  const [sourceFormat, setSourceFormat] = React.useState<"json" | "csv">("json");
+  const [sourceFormat, setSourceFormat] = React.useState<"json" | "csv">(
+    "json",
+  );
   const [contentInput, setContentInput] = React.useState(DEMO_JSON_BATCH);
   const [workspaceRows, setWorkspaceRows] = React.useState<
     ContentCurationWorkspaceRow[]
   >([]);
-  const [issues, setIssues] = React.useState<AuthoredContentValidationIssue[]>([]);
-  const [lintReport, setLintReport] = React.useState<ContentAuthoringLintReport | null>(
-    null,
+  const [issues, setIssues] = React.useState<AuthoredContentValidationIssue[]>(
+    [],
   );
+  const [lintReport, setLintReport] =
+    React.useState<ContentAuthoringLintReport | null>(null);
   const [bundleResult, setBundleResult] = React.useState<
     ImportedAuthoredContentResult["bundle"] | null
   >(null);
@@ -325,16 +339,18 @@ const ContentCurationView: React.FC = () => {
   const [draftSourceLabel, setDraftSourceLabel] = React.useState(
     DEFAULT_CURATION_SOURCE_LABEL,
   );
-  const [selectedEditorRowId, setSelectedEditorRowId] = React.useState<string | null>(
-    null,
+  const [selectedEditorRowId, setSelectedEditorRowId] = React.useState<
+    string | null
+  >(null);
+  const [filters, setFilters] = React.useState<ContentCurationWorkspaceFilters>(
+    {
+      search: "",
+      skill: "all",
+      status: "all",
+      format: "all",
+      routeObjective: "all",
+    },
   );
-  const [filters, setFilters] = React.useState<ContentCurationWorkspaceFilters>({
-    search: "",
-    skill: "all",
-    status: "all",
-    format: "all",
-    routeObjective: "all",
-  });
 
   const loadBatch = React.useCallback(
     (format: "json" | "csv", content: string) => {
@@ -430,8 +446,12 @@ const ContentCurationView: React.FC = () => {
 
   const filterOptions = React.useMemo(
     () => ({
-      skills: Array.from(new Set(workspaceRows.map((row) => row.record.skill))).sort(),
-      formats: Array.from(new Set(workspaceRows.map((row) => row.record.format))).sort(),
+      skills: Array.from(
+        new Set(workspaceRows.map((row) => row.record.skill)),
+      ).sort(),
+      formats: Array.from(
+        new Set(workspaceRows.map((row) => row.record.format)),
+      ).sort(),
       routeObjectives: Array.from(
         new Set(
           workspaceRows.map(
@@ -443,27 +463,33 @@ const ContentCurationView: React.FC = () => {
     [workspaceRows],
   );
 
-  const handleDragEnd = React.useCallback((event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) {
-      return;
-    }
+  const handleDragEnd = React.useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event;
+      if (!over || active.id === over.id) {
+        return;
+      }
 
-    syncWorkspaceDraft(
-      reorderContentCurationWorkspaceRows(
-        workspaceRows,
-        String(active.id),
-        String(over.id),
-      ),
-    );
-  }, [syncWorkspaceDraft, workspaceRows]);
+      syncWorkspaceDraft(
+        reorderContentCurationWorkspaceRows(
+          workspaceRows,
+          String(active.id),
+          String(over.id),
+        ),
+      );
+    },
+    [syncWorkspaceDraft, workspaceRows],
+  );
 
-  const setFilteredStatus = React.useCallback((status: ContentCurationStatus) => {
-    const rowIds = visibleRows.map((row) => row.id);
-    setWorkspaceRows((previous) =>
-      setContentCurationWorkspaceStatus(previous, rowIds, status),
-    );
-  }, [visibleRows]);
+  const setFilteredStatus = React.useCallback(
+    (status: ContentCurationStatus) => {
+      const rowIds = visibleRows.map((row) => row.id);
+      setWorkspaceRows((previous) =>
+        setContentCurationWorkspaceStatus(previous, rowIds, status),
+      );
+    },
+    [visibleRows],
+  );
 
   const resetFilteredStatus = React.useCallback(() => {
     const rowIds = visibleRows.map((row) => row.id);
@@ -476,7 +502,8 @@ const ContentCurationView: React.FC = () => {
     (input: ContentCurationEditorSubmitInput) => {
       const nextRows = upsertContentCurationWorkspaceRow(workspaceRows, input);
       const submittedRow =
-        nextRows.find((row) => row.id === input.rowId) || nextRows[nextRows.length - 1];
+        nextRows.find((row) => row.id === input.rowId) ||
+        nextRows[nextRows.length - 1];
 
       syncWorkspaceDraft(nextRows);
       setSelectedEditorRowId(submittedRow?.id || null);
@@ -757,7 +784,8 @@ const ContentCurationView: React.FC = () => {
                   onChange={(event) =>
                     setFilters((previous) => ({
                       ...previous,
-                      status: event.target.value as ContentCurationWorkspaceFilters["status"],
+                      status: event.target
+                        .value as ContentCurationWorkspaceFilters["status"],
                     }))
                   }
                 >
@@ -869,58 +897,62 @@ const ContentCurationView: React.FC = () => {
                         </TableCell>
                       </TableRow>
                     ) : (
-                      table.getRowModel().rows.map((row) => (
-                        <SortableWorkspaceRow
-                          key={row.id}
-                          row={row}
-                          onEdit={() => setSelectedEditorRowId(row.original.id)}
-                          onApprove={() =>
-                            setWorkspaceRows((previous) =>
-                              setContentCurationWorkspaceStatus(
-                                previous,
-                                [row.original.id],
-                                "approved",
-                              ),
-                            )
-                          }
-                          onReject={() =>
-                            setWorkspaceRows((previous) =>
-                              setContentCurationWorkspaceStatus(
-                                previous,
-                                [row.original.id],
-                                "rejected",
-                              ),
-                            )
-                          }
-                          onReset={() =>
-                            setWorkspaceRows((previous) =>
-                              resetContentCurationWorkspaceStatus(previous, [
-                                row.original.id,
-                              ]),
-                            )
-                          }
-                          onMoveUp={() =>
-                            syncWorkspaceDraft(
-                              moveContentCurationWorkspaceRow(
-                                workspaceRows,
-                                row.original.id,
-                                "up",
-                                getVisibleRowIds(visibleRows),
-                              ),
-                            )
-                          }
-                          onMoveDown={() =>
-                            syncWorkspaceDraft(
-                              moveContentCurationWorkspaceRow(
-                                workspaceRows,
-                                row.original.id,
-                                "down",
-                                getVisibleRowIds(visibleRows),
-                              ),
-                            )
-                          }
-                        />
-                      ))
+                      table
+                        .getRowModel()
+                        .rows.map((row) => (
+                          <SortableWorkspaceRow
+                            key={row.id}
+                            row={row}
+                            onEdit={() =>
+                              setSelectedEditorRowId(row.original.id)
+                            }
+                            onApprove={() =>
+                              setWorkspaceRows((previous) =>
+                                setContentCurationWorkspaceStatus(
+                                  previous,
+                                  [row.original.id],
+                                  "approved",
+                                ),
+                              )
+                            }
+                            onReject={() =>
+                              setWorkspaceRows((previous) =>
+                                setContentCurationWorkspaceStatus(
+                                  previous,
+                                  [row.original.id],
+                                  "rejected",
+                                ),
+                              )
+                            }
+                            onReset={() =>
+                              setWorkspaceRows((previous) =>
+                                resetContentCurationWorkspaceStatus(previous, [
+                                  row.original.id,
+                                ]),
+                              )
+                            }
+                            onMoveUp={() =>
+                              syncWorkspaceDraft(
+                                moveContentCurationWorkspaceRow(
+                                  workspaceRows,
+                                  row.original.id,
+                                  "up",
+                                  getVisibleRowIds(visibleRows),
+                                ),
+                              )
+                            }
+                            onMoveDown={() =>
+                              syncWorkspaceDraft(
+                                moveContentCurationWorkspaceRow(
+                                  workspaceRows,
+                                  row.original.id,
+                                  "down",
+                                  getVisibleRowIds(visibleRows),
+                                ),
+                              )
+                            }
+                          />
+                        ))
                     )}
                   </TableBody>
                 </Table>
@@ -956,7 +988,10 @@ const ContentCurationView: React.FC = () => {
                 {(lintReport?.nearDuplicatePairs.length || 0) > 0 ? (
                   <div className="space-y-2 rounded-xl bg-surface-2 p-3">
                     {lintReport!.nearDuplicatePairs.slice(0, 3).map((pair) => (
-                      <div key={pair.key} className="rounded-lg bg-surface-1 p-3">
+                      <div
+                        key={pair.key}
+                        className="rounded-lg bg-surface-1 p-3"
+                      >
                         <p className="font-semibold text-text-primary">
                           Rows {pair.rowNumbers[0]} and {pair.rowNumbers[1]}
                         </p>

@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -138,8 +144,9 @@ const SpeedBuilderView: React.FC = () => {
   );
 
   const handleLevelSelect = (nextLevel: SpeedBuilderLevel) => {
-    setSelectedLevel((currentLevel) =>
-      SPEED_BUILDER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    setSelectedLevel(
+      (currentLevel) =>
+        SPEED_BUILDER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
 

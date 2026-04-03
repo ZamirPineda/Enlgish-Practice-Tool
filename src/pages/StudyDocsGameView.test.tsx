@@ -56,10 +56,22 @@ const buildDocHtml = (term: string, suffix: string) => `
 `;
 
 const docsByPath: Record<string, string> = {
-  "Category/doc1.html": buildDocHtml("Orchestrator", "for pipelines and queue handling"),
-  "Category/doc2.html": buildDocHtml("Gateway", "for traffic shaping and authentication"),
-  "Category/doc3.html": buildDocHtml("Indexer", "for retrieval and ranking operations"),
-  "Category/doc4.html": buildDocHtml("Replicator", "for backup and synchronization logic"),
+  "Category/doc1.html": buildDocHtml(
+    "Orchestrator",
+    "for pipelines and queue handling",
+  ),
+  "Category/doc2.html": buildDocHtml(
+    "Gateway",
+    "for traffic shaping and authentication",
+  ),
+  "Category/doc3.html": buildDocHtml(
+    "Indexer",
+    "for retrieval and ranking operations",
+  ),
+  "Category/doc4.html": buildDocHtml(
+    "Replicator",
+    "for backup and synchronization logic",
+  ),
 };
 
 describe("StudyDocsGameView", () => {
@@ -77,7 +89,9 @@ describe("StudyDocsGameView", () => {
 
   const startGame = async () => {
     fireEvent.click(screen.getByRole("button", { name: "Iniciar juego" }));
-    expect(await screen.findByText("Combo", {}, { timeout: 7000 })).toBeInTheDocument();
+    expect(
+      await screen.findByText("Combo", {}, { timeout: 7000 }),
+    ).toBeInTheDocument();
   };
 
   const answerWithOptionIndex = async (index: number) => {
@@ -90,7 +104,9 @@ describe("StudyDocsGameView", () => {
       });
     });
     await waitFor(() => {
-      expect(screen.queryByText("Cargando siguiente reto...")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("Cargando siguiente reto..."),
+      ).not.toBeInTheDocument();
     });
   };
 
@@ -134,9 +150,7 @@ describe("StudyDocsGameView", () => {
     ).toBeInTheDocument();
   });
 
-  test(
-    "auto-downshifts difficulty after 3 wrong answers and logs cause",
-    async () => {
+  test("auto-downshifts difficulty after 3 wrong answers and logs cause", async () => {
     renderView();
 
     fireEvent.click(screen.getAllByRole("button", { name: "Hard" })[0]);
@@ -160,13 +174,9 @@ describe("StudyDocsGameView", () => {
       trigger: "consecutive_wrong",
       changed: true,
     });
-    },
-    15000,
-  );
+  }, 15000);
 
-  test(
-    "auto-upshifts difficulty after 3 correct answers and logs cause",
-    async () => {
+  test("auto-upshifts difficulty after 3 correct answers and logs cause", async () => {
     renderView();
 
     fireEvent.click(screen.getAllByRole("button", { name: "Easy" })[0]);
@@ -190,7 +200,5 @@ describe("StudyDocsGameView", () => {
       trigger: "consecutive_correct",
       changed: true,
     });
-    },
-    15000,
-  );
+  }, 15000);
 });

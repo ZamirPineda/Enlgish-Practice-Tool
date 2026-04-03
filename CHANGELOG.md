@@ -2,86 +2,76 @@
 
 ## [1.24.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.23.0...english-practice-pal-v1.24.0) (2026-03-07)
 
-
 ### Features
 
-* **content:** add roadmap inventory coverage guards ([e8f0aa4](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/e8f0aa450fd99343309a70f47fba37547c105da0))
-* **roadmap:** expand roadmap flow and rewards UI ([0236249](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/0236249c3681ee6c439225e12013c579fee14540))
+- **content:** add roadmap inventory coverage guards ([e8f0aa4](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/e8f0aa450fd99343309a70f47fba37547c105da0))
+- **roadmap:** expand roadmap flow and rewards UI ([0236249](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/0236249c3681ee6c439225e12013c579fee14540))
 
 ## [1.23.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.22.0...english-practice-pal-v1.23.0) (2026-03-07)
 
-
 ### Features
 
-* add sequential roadmap progression ([cc558fd](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/cc558fd88c58df2947001f263010c5a3bda940c2))
-* add unified content inventory and curation workflow ([8691e51](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/8691e51009db947404a85ce7d2be5969a1cac961))
-* **app-403:** integrate sentry with route and game context ([d2514a3](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/d2514a38bd9de914af80d22d61a3ccfa27d7003a))
-* **app-501:** add canonical content inventory schema and tests ([93f3ead](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/93f3ead057f542be2d9c3ed38484d90787b6def7))
-* **app-502:** add adapters from study deck, vault and tech decks ([98d5608](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/98d5608bb24020c96a88b5dd352e11ea2774787f))
-
+- add sequential roadmap progression ([cc558fd](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/cc558fd88c58df2947001f263010c5a3bda940c2))
+- add unified content inventory and curation workflow ([8691e51](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/8691e51009db947404a85ce7d2be5969a1cac961))
+- **app-403:** integrate sentry with route and game context ([d2514a3](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/d2514a38bd9de914af80d22d61a3ccfa27d7003a))
+- **app-501:** add canonical content inventory schema and tests ([93f3ead](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/93f3ead057f542be2d9c3ed38484d90787b6def7))
+- **app-502:** add adapters from study deck, vault and tech decks ([98d5608](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/98d5608bb24020c96a88b5dd352e11ea2774787f))
 
 ### Bug Fixes
 
-* resolve authoring pipeline lint error ([9659ecd](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/9659ecd129c1edc61a63582edf328ba2c4f8af00))
+- resolve authoring pipeline lint error ([9659ecd](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/9659ecd129c1edc61a63582edf328ba2c4f8af00))
 
 ## [1.22.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.21.0...english-practice-pal-v1.22.0) (2026-03-04)
 
-
 ### Features
 
-* **app-300:** finish adaptive rollout across games with daily-loop compatibility ([cc9c45c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/cc9c45c75982dcd411364a2cdf897c27c0fd5f99))
-* **app-401:** add focus-route metrics and move rollout controls to settings ([1119256](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/11192567a611d554139bf55e3c9636ec5fa58541))
-* **app-402:** capture and persist web vitals locally ([23a236f](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/23a236f9a3160194c63c369c36bcefa3caa1af87))
+- **app-300:** finish adaptive rollout across games with daily-loop compatibility ([cc9c45c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/cc9c45c75982dcd411364a2cdf897c27c0fd5f99))
+- **app-401:** add focus-route metrics and move rollout controls to settings ([1119256](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/11192567a611d554139bf55e3c9636ec5fa58541))
+- **app-402:** capture and persist web vitals locally ([23a236f](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/23a236f9a3160194c63c369c36bcefa3caa1af87))
 
 ## [1.21.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.20.0...english-practice-pal-v1.21.0) (2026-03-04)
 
-
 ### Features
 
-* **app-104:** add daily loop flow with persistence and rewards ([e3c1fbf](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/e3c1fbfc69f6fe5c146bfe565524488724234193))
-* **app-104:** integrate sonner global toasts and align roadmap ([fccbff0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/fccbff044838032a7cf9bdf507296b5660f3cb15))
-* **app-105:** add motion transitions for game start and summary ([9a4df42](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/9a4df42b089d6fbbed5881fd6cef9f400c558e73))
-* **app-201:** enforce daily loop sequence 2 english + 1 math + 1 dev ([3705bec](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/3705beca8b4503c2572a08ddf52783554d395c05))
-* complete daily loop flow and QA (APP-202 to APP-207) ([2cf84ea](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/2cf84ea378223f971efa9066f4ff9e726ee9998d))
-
+- **app-104:** add daily loop flow with persistence and rewards ([e3c1fbf](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/e3c1fbfc69f6fe5c146bfe565524488724234193))
+- **app-104:** integrate sonner global toasts and align roadmap ([fccbff0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/fccbff044838032a7cf9bdf507296b5660f3cb15))
+- **app-105:** add motion transitions for game start and summary ([9a4df42](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/9a4df42b089d6fbbed5881fd6cef9f400c558e73))
+- **app-201:** enforce daily loop sequence 2 english + 1 math + 1 dev ([3705bec](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/3705beca8b4503c2572a08ddf52783554d395c05))
+- complete daily loop flow and QA (APP-202 to APP-207) ([2cf84ea](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/2cf84ea378223f971efa9066f4ff9e726ee9998d))
 
 ### Bug Fixes
 
-* **app-106:** add dialog title and description for modal accessibility ([1bc37bf](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/1bc37bfd39b0b5e8251a6f763ef474034ddaf69f))
+- **app-106:** add dialog title and description for modal accessibility ([1bc37bf](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/1bc37bfd39b0b5e8251a6f763ef474034ddaf69f))
 
 ## [1.20.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.19.1...english-practice-pal-v1.20.0) (2026-03-04)
 
-
 ### Features
 
-* **app-103:** unify shell/hud and session insights across remaining games ([454465a](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/454465a16ab82cd979462b7adad0cf2e4c1b9959))
-* **games:** show daily session insights on game completion ([4114376](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/41143762d0cc21a3e57f009de9a85a0c4046038b))
-* **games:** unify start shell and hud across core practice views ([1b399ec](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/1b399ecd00e96c4b2612be780f06d3dccc9f67ed))
-* **home:** add daily session summary and claimable reward ([87373c9](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/87373c9de5be2fb063115df9b292cf4314f9c64f))
-* **rewards:** add weekly consistency milestones and route visuals ([eba661c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/eba661ced4fa64613167de830a5c4a7e785d7bf3))
+- **app-103:** unify shell/hud and session insights across remaining games ([454465a](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/454465a16ab82cd979462b7adad0cf2e4c1b9959))
+- **games:** show daily session insights on game completion ([4114376](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/41143762d0cc21a3e57f009de9a85a0c4046038b))
+- **games:** unify start shell and hud across core practice views ([1b399ec](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/1b399ecd00e96c4b2612be780f06d3dccc9f67ed))
+- **home:** add daily session summary and claimable reward ([87373c9](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/87373c9de5be2fb063115df9b292cf4314f9c64f))
+- **rewards:** add weekly consistency milestones and route visuals ([eba661c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/eba661ced4fa64613167de830a5c4a7e785d7bf3))
 
 ## [1.19.1](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.19.0...english-practice-pal-v1.19.1) (2026-03-03)
 
-
 ### Bug Fixes
 
-* **workflows:** add enablement: true to pages action ([989729e](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/989729ea038394ecd63e6d52174b559a364327d9))
+- **workflows:** add enablement: true to pages action ([989729e](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/989729ea038394ecd63e6d52174b559a364327d9))
 
 ## [1.19.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.18.2...english-practice-pal-v1.19.0) (2026-03-02)
 
-
 ### Features
 
-* **profile:** rediseño completo del perfil y expansión de logros globales ([b141dfb](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/b141dfbfd768d4eb9c2d4391c5210c774f543fa9))
+- **profile:** rediseño completo del perfil y expansión de logros globales ([b141dfb](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/b141dfbfd768d4eb9c2d4391c5210c774f543fa9))
 
 ## [1.18.2](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.18.1...english-practice-pal-v1.18.2) (2026-03-01)
 
-
 ### Bug Fixes
 
-* **ci:** setup pnpm before setup-node cache ([7dcde6e](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/7dcde6e598919601c8b25c187cfdb096a6d8ae6b))
-* **ci:** use packageManager pnpm version in actions ([6de0e6c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/6de0e6c2e92333b68b87fc2dadf4c0f224829d63))
-* **security:** remediate pnpm audit high vulnerabilities ([fb78383](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/fb78383052b5638072b9a9adb2c0c3829ec5eba0))
+- **ci:** setup pnpm before setup-node cache ([7dcde6e](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/7dcde6e598919601c8b25c187cfdb096a6d8ae6b))
+- **ci:** use packageManager pnpm version in actions ([6de0e6c](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/6de0e6c2e92333b68b87fc2dadf4c0f224829d63))
+- **security:** remediate pnpm audit high vulnerabilities ([fb78383](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/fb78383052b5638072b9a9adb2c0c3829ec5eba0))
 
 ## [1.18.1](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.18.0...english-practice-pal-v1.18.1) (2026-02-28)
 

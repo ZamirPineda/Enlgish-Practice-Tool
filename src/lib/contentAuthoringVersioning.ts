@@ -38,7 +38,8 @@ export interface VersionedContentInventoryBundleSnapshot {
   changelog?: AuthoredContentChangelog;
 }
 
-const toUnique = (values: string[]) => Array.from(new Set(values.filter(Boolean)));
+const toUnique = (values: string[]) =>
+  Array.from(new Set(values.filter(Boolean)));
 
 const buildSkillBreakdown = (pack: ContentInventoryPack) =>
   pack.items.reduce<Record<string, number>>((accumulator, item) => {
@@ -53,10 +54,13 @@ const formatBreakdown = (counts: Record<string, number>) =>
     .join(", ");
 
 const buildItemLookup = (pack: ContentInventoryPack) =>
-  pack.items.reduce<Record<string, (typeof pack.items)[number]>>((accumulator, item) => {
-    accumulator[item.id] = item;
-    return accumulator;
-  }, {});
+  pack.items.reduce<Record<string, (typeof pack.items)[number]>>(
+    (accumulator, item) => {
+      accumulator[item.id] = item;
+      return accumulator;
+    },
+    {},
+  );
 
 const createAutomaticNotes = (input: {
   pack: ContentInventoryPack;
@@ -93,9 +97,7 @@ const createAutomaticNotes = (input: {
   }
 
   notes.push(`Current pack now contains ${summary.totalItems} items.`);
-  notes.push(
-    `Rollback target: ${input.previousBundle.packVersion}.`,
-  );
+  notes.push(`Rollback target: ${input.previousBundle.packVersion}.`);
 
   return notes;
 };
@@ -112,13 +114,17 @@ export const buildAuthoredContentChangelog = (input: {
   const previousById = previousPack ? buildItemLookup(previousPack) : {};
   const currentById = buildItemLookup(input.pack);
 
-  const addedCount = input.pack.items.filter((item) => !previousById[item.id]).length;
+  const addedCount = input.pack.items.filter(
+    (item) => !previousById[item.id],
+  ).length;
   const removedCount = previousPack
     ? previousPack.items.filter((item) => !currentById[item.id]).length
     : 0;
   const updatedCount = input.pack.items.filter((item) => {
     const previousItem = previousById[item.id];
-    return Boolean(previousItem) && previousItem.fingerprint !== item.fingerprint;
+    return (
+      Boolean(previousItem) && previousItem.fingerprint !== item.fingerprint
+    );
   }).length;
 
   const summary = {

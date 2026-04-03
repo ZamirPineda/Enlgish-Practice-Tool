@@ -43,7 +43,9 @@ describe("CodeSyntaxBuilderView", () => {
     const title = screen.getByText("Bloques disponibles");
     const container = title.nextElementSibling as HTMLElement | null;
     expect(container).toBeTruthy();
-    const tokenButton = within(container!).getAllByRole("button", { name: token })[0];
+    const tokenButton = within(container!).getAllByRole("button", {
+      name: token,
+    })[0];
     fireEvent.click(tokenButton);
   };
 

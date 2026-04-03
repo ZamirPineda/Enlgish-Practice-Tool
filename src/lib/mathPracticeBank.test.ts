@@ -36,8 +36,8 @@ describe("mathPracticeBank", () => {
           question.referenceValue === "Sustitución trigonométrica básica",
       ),
     ).toBe(true);
-    expect(
-      hard.some((question) => question.difficultyTier === "expert"),
-    ).toBe(true);
+    expect(hard.some((question) => question.difficultyTier === "expert")).toBe(
+      true,
+    );
   });
 });

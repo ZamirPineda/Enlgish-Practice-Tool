@@ -53,7 +53,11 @@ const parseConfig = (value: unknown): AdaptiveRolloutConfig | null => {
   return {
     globalEnabled: candidate.globalEnabled !== false,
     disabledGames: Array.isArray(candidate.disabledGames)
-      ? toUniqueGameIds(candidate.disabledGames.filter((item): item is string => typeof item === "string"))
+      ? toUniqueGameIds(
+          candidate.disabledGames.filter(
+            (item): item is string => typeof item === "string",
+          ),
+        )
       : [],
     updatedAt:
       typeof candidate.updatedAt === "string" && candidate.updatedAt.length > 0
@@ -86,7 +90,8 @@ const writeConfig = (config: AdaptiveRolloutConfig): AdaptiveRolloutConfig => {
   return config;
 };
 
-export const getAdaptiveRolloutConfig = (): AdaptiveRolloutConfig => readConfig();
+export const getAdaptiveRolloutConfig = (): AdaptiveRolloutConfig =>
+  readConfig();
 
 export const isAdaptiveDifficultyEnabledForGame = (gameId: string): boolean => {
   const config = readConfig();

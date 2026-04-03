@@ -264,9 +264,7 @@ describe("contentAuthoringPipeline", () => {
     expect(rebuiltBundle.packVersion).toBe("3.0.0");
     expect(rebuiltBundle.changelog.current.version).toBe("3.0.0");
     expect(rebuiltBundle.changelog.current.notes).toEqual(
-      expect.arrayContaining([
-        "Initial content pack release with 1 items.",
-      ]),
+      expect.arrayContaining(["Initial content pack release with 1 items."]),
     );
   });
 

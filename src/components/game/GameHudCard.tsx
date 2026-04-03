@@ -60,4 +60,3 @@ const GameHudCard: React.FC<GameHudCardProps> = ({
 };
 
 export default GameHudCard;
-

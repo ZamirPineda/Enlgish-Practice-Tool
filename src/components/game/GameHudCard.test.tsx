@@ -38,4 +38,3 @@ describe("GameHudCard", () => {
     expect(screen.getByRole("button", { name: "A2" })).toBeInTheDocument();
   });
 });
-

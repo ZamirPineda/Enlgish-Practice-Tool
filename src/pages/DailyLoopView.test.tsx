@@ -71,7 +71,9 @@ describe("DailyLoopView", () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByRole("dialog", { name: "Elige primero la ruta objetivo" }),
+        screen.queryByRole("dialog", {
+          name: "Elige primero la ruta objetivo",
+        }),
       ).not.toBeInTheDocument();
     });
 
@@ -151,7 +153,9 @@ describe("DailyLoopView", () => {
     saveDailyLoopState(interruptedLoop);
 
     render(
-      <MemoryRouter initialEntries={["/daily-loop?autostart=1&focus=math_speed"]}>
+      <MemoryRouter
+        initialEntries={["/daily-loop?autostart=1&focus=math_speed"]}
+      >
         <DailyLoopView />
       </MemoryRouter>,
     );
@@ -208,7 +212,9 @@ describe("DailyLoopView", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Iniciar Daily Loop" }));
-    fireEvent.click(screen.getAllByRole("button", { name: "Marcar completada" })[0]);
+    fireEvent.click(
+      screen.getAllByRole("button", { name: "Marcar completada" })[0],
+    );
     expect(screen.getByText("Progreso: 1 / 4 sesiones")).toBeInTheDocument();
 
     firstRender.unmount();
@@ -242,7 +248,10 @@ describe("DailyLoopView", () => {
         index === 0 ? { ...step, adaptiveLevel: "B2" } : step,
       ),
     };
-    localStorage.setItem(DAILY_LOOP_STORAGE_KEY, JSON.stringify(withAdaptiveHint));
+    localStorage.setItem(
+      DAILY_LOOP_STORAGE_KEY,
+      JSON.stringify(withAdaptiveHint),
+    );
 
     render(
       <MemoryRouter>

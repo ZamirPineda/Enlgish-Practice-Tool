@@ -48,7 +48,11 @@ describe("contentAuthoringLinter", () => {
           tags: ["backend"],
           alternatives: [],
           hints: [],
-          metadata: { routeObjective: "dev_reasoning", topic: "api", cefr: "B2" },
+          metadata: {
+            routeObjective: "dev_reasoning",
+            topic: "api",
+            cefr: "B2",
+          },
           active: true,
         },
       },
@@ -64,7 +68,11 @@ describe("contentAuthoringLinter", () => {
           tags: ["api"],
           alternatives: [],
           hints: [],
-          metadata: { routeObjective: "dev_reasoning", topic: "backend", cefr: "B2" },
+          metadata: {
+            routeObjective: "dev_reasoning",
+            topic: "backend",
+            cefr: "B2",
+          },
           active: true,
         },
       },
@@ -86,6 +94,8 @@ describe("contentAuthoringLinter", () => {
         similarity: expect.any(Number),
       }),
     ]);
-    expect(report.nearDuplicatePairs[0]!.similarity).toBeGreaterThanOrEqual(0.82);
+    expect(report.nearDuplicatePairs[0]!.similarity).toBeGreaterThanOrEqual(
+      0.82,
+    );
   });
 });

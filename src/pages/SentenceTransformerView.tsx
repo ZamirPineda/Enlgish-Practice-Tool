@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -102,9 +108,7 @@ const SentenceTransformerView: React.FC = () => {
     [searchParams],
   );
   const didAutoStartRef = useRef(false);
-  const resolveRoadmapLevel = (
-    value?: string | null,
-  ): TransformerLevel => {
+  const resolveRoadmapLevel = (value?: string | null): TransformerLevel => {
     if (value && LEVEL_ORDER.includes(value as TransformerLevel)) {
       return value as TransformerLevel;
     }
@@ -151,9 +155,10 @@ const SentenceTransformerView: React.FC = () => {
   );
 
   const handleLevelSelect = (nextLevel: TransformerLevel) => {
-    setSelectedLevel((currentLevel) =>
-      SENTENCE_TRANSFORMER_DIFFICULTY.setLevel(currentLevel, nextLevel)
-        .nextLevel,
+    setSelectedLevel(
+      (currentLevel) =>
+        SENTENCE_TRANSFORMER_DIFFICULTY.setLevel(currentLevel, nextLevel)
+          .nextLevel,
     );
   };
 

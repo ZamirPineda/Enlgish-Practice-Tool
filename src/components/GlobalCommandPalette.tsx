@@ -407,7 +407,9 @@ export const GlobalCommandPalette: React.FC<GlobalCommandPaletteProps> = ({
                   className="mb-1 flex cursor-pointer items-start justify-between rounded-lg px-3 py-2 text-sm outline-none data-[selected=true]:bg-surface-2 data-[selected=true]:text-text-primary"
                 >
                   <div className="min-w-0">
-                    <p className="font-semibold text-text-primary">{item.title}</p>
+                    <p className="font-semibold text-text-primary">
+                      {item.title}
+                    </p>
                     <p className="truncate text-xs text-text-secondary">
                       {item.subtitle}
                     </p>
@@ -429,8 +431,8 @@ export const GlobalCommandPalette: React.FC<GlobalCommandPaletteProps> = ({
         ))}
       </CommandMenu.List>
       <div className="border-t border-border px-3 py-2 text-xs text-text-muted">
-        Tip: escribe skill (`english`, `math`, `dev`) o tags como `deck`, `quiz`,
-        `game`.
+        Tip: escribe skill (`english`, `math`, `dev`) o tags como `deck`,
+        `quiz`, `game`.
       </div>
     </CommandMenu.Dialog>
   );

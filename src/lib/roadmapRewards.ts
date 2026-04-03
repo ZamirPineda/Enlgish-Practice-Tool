@@ -1,5 +1,8 @@
 import { toDateKey } from "@/lib/activityTracker";
-import { buildRoadmapProgressSnapshot, type RoadmapProgressState } from "@/lib/roadmapProgress";
+import {
+  buildRoadmapProgressSnapshot,
+  type RoadmapProgressState,
+} from "@/lib/roadmapProgress";
 import {
   buildRoadmapModelIndex,
   type RoadmapDefinition,
@@ -329,7 +332,8 @@ export const applyRoadmapRewards = (
   ]);
 
   roadmapIndex.unitsInOrder.forEach((unit) => {
-    const wasCompleted = previousSnapshot.unitProgressById[unit.id]?.isCompleted;
+    const wasCompleted =
+      previousSnapshot.unitProgressById[unit.id]?.isCompleted;
     const isCompleted = nextSnapshot.unitProgressById[unit.id]?.isCompleted;
 
     if (!wasCompleted && isCompleted) {
@@ -352,8 +356,10 @@ export const applyRoadmapRewards = (
   });
 
   definition.modules.forEach((module) => {
-    const wasCompleted = previousSnapshot.statusByModuleId[module.id] === "completed";
-    const isCompleted = nextSnapshot.statusByModuleId[module.id] === "completed";
+    const wasCompleted =
+      previousSnapshot.statusByModuleId[module.id] === "completed";
+    const isCompleted =
+      nextSnapshot.statusByModuleId[module.id] === "completed";
 
     if (!wasCompleted && isCompleted) {
       const rewardId = `module:${module.id}`;

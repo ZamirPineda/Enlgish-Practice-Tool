@@ -105,7 +105,9 @@ describe("ParaphraseDuelView", () => {
     renderView();
     startGame();
 
-    fireEvent.click(screen.getByRole("button", { name: "Set paraphrase level C1" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Set paraphrase level C1" }),
+    );
     expect(screen.getByText("28s")).toBeInTheDocument();
 
     for (let index = 0; index < 3; index += 1) {

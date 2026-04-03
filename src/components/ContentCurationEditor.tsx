@@ -263,7 +263,9 @@ const ContentCurationEditor: React.FC<ContentCurationEditorProps> = ({
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="text-lg font-black text-text-primary">
-            {selectedRow ? `Edit row ${selectedRow.rowNumber}` : "Add draft row"}
+            {selectedRow
+              ? `Edit row ${selectedRow.rowNumber}`
+              : "Add draft row"}
           </h2>
           <p className="mt-1 text-sm text-text-secondary">
             Typed authoring stays aligned with the same schema and quality rules

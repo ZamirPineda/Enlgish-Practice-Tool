@@ -122,9 +122,7 @@ export const moveContentCurationWorkspaceRow = (
   scopeRowIds?: string[],
 ): ContentCurationWorkspaceRow[] => {
   const scopedRowIds = scopeRowIds?.length
-    ? rows
-        .filter((row) => scopeRowIds.includes(row.id))
-        .map((row) => row.id)
+    ? rows.filter((row) => scopeRowIds.includes(row.id)).map((row) => row.id)
     : rows.map((row) => row.id);
 
   const currentIndex = scopedRowIds.indexOf(rowId);
@@ -132,14 +130,17 @@ export const moveContentCurationWorkspaceRow = (
     return rows;
   }
 
-  const targetIndex =
-    direction === "up" ? currentIndex - 1 : currentIndex + 1;
+  const targetIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
 
   if (targetIndex < 0 || targetIndex >= scopedRowIds.length) {
     return rows;
   }
 
-  return reorderContentCurationWorkspaceRows(rows, rowId, scopedRowIds[targetIndex]);
+  return reorderContentCurationWorkspaceRows(
+    rows,
+    rowId,
+    scopedRowIds[targetIndex],
+  );
 };
 
 export const upsertContentCurationWorkspaceRow = (

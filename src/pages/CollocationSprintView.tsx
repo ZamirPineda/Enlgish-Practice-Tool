@@ -85,8 +85,9 @@ const CollocationSprintView: React.FC = () => {
   );
 
   const handleLevelSelect = (nextLevel: SprintLevel) => {
-    setSelectedLevel((currentLevel) =>
-      COLLOCATION_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    setSelectedLevel(
+      (currentLevel) =>
+        COLLOCATION_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
 

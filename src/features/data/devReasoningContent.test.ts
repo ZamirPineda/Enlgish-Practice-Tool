@@ -33,17 +33,17 @@ describe("dev reasoning content", () => {
   });
 
   test("includes the new classified prompts added for APP-603", () => {
-    expect(codeBugsData.some((prompt) => prompt.id === "ts_async_foreach")).toBe(
-      true,
-    );
+    expect(
+      codeBugsData.some((prompt) => prompt.id === "ts_async_foreach"),
+    ).toBe(true);
     expect(
       codeBugsData.some((prompt) => prompt.id === "sql_left_join_filtered"),
     ).toBe(true);
     expect(
       codeSyntaxData.some((prompt) => prompt.id === "ts_async_fetch_wrapper"),
     ).toBe(true);
-    expect(codeSyntaxData.some((prompt) => prompt.id === "sql_group_by_having")).toBe(
-      true,
-    );
+    expect(
+      codeSyntaxData.some((prompt) => prompt.id === "sql_group_by_having"),
+    ).toBe(true);
   });
 });

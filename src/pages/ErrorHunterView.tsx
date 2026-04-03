@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -49,13 +55,12 @@ const BASE_POINTS_PER_CORRECT = 120;
 const TIME_BONUS_MULTIPLIER = 3;
 const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
 const UPSHIFT_AFTER_CORRECT_STREAK = 3;
-const ERROR_HUNTER_DIFFICULTY = createAdaptiveDifficultyEngine<ErrorHunterLevel>(
-  {
+const ERROR_HUNTER_DIFFICULTY =
+  createAdaptiveDifficultyEngine<ErrorHunterLevel>({
     gameId: "error_hunter",
     levels: LEVEL_ORDER,
     defaultLevel: "B1",
-  },
-);
+  });
 
 const normalizeSentence = (text: string) =>
   text
@@ -120,8 +125,9 @@ const ErrorHunterView: React.FC = () => {
   );
 
   const handleLevelSelect = (nextLevel: ErrorHunterLevel) => {
-    setSelectedLevel((currentLevel) =>
-      ERROR_HUNTER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    setSelectedLevel(
+      (currentLevel) =>
+        ERROR_HUNTER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
 
@@ -679,7 +685,3 @@ const ErrorHunterView: React.FC = () => {
 };
 
 export default ErrorHunterView;
-
-
-
-

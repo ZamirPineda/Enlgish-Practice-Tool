@@ -75,9 +75,10 @@ const DiplomaticReviewerView: React.FC = () => {
   const round = rounds[roundIndex];
   const roundTime = getTimeByPreset(ROUND_TIME_SECONDS, timePreset);
   const handleLevelSelect = (nextLevel: DiplomaticLevel) => {
-    setSelectedLevel((currentLevel) =>
-      DIPLOMATIC_REVIEWER_DIFFICULTY.setLevel(currentLevel, nextLevel)
-        .nextLevel,
+    setSelectedLevel(
+      (currentLevel) =>
+        DIPLOMATIC_REVIEWER_DIFFICULTY.setLevel(currentLevel, nextLevel)
+          .nextLevel,
     );
   };
 
@@ -175,7 +176,15 @@ const DiplomaticReviewerView: React.FC = () => {
         );
       }
     }
-  }, [hasStarted, submitted, timeLeft, round, roundIndex, rounds.length, selectedLevel]);
+  }, [
+    hasStarted,
+    submitted,
+    timeLeft,
+    round,
+    roundIndex,
+    rounds.length,
+    selectedLevel,
+  ]);
 
   if (!round) return null;
 
@@ -488,10 +497,14 @@ const DiplomaticReviewerView: React.FC = () => {
                     }`}
                   >
                     {btnVariant === "success" && (
-                      <span className="text-sm leading-none font-black">âœ“</span>
+                      <span className="text-sm leading-none font-black">
+                        âœ“
+                      </span>
                     )}
                     {btnVariant === "danger" && (
-                      <span className="text-sm leading-none font-black">Ã—</span>
+                      <span className="text-sm leading-none font-black">
+                        Ã—
+                      </span>
                     )}
                   </div>
                   <span className="font-medium">{opt.text}</span>
@@ -661,4 +674,3 @@ const DiplomaticReviewerView: React.FC = () => {
 };
 
 export default DiplomaticReviewerView;
-
