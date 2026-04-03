@@ -6,7 +6,10 @@ import GameShell from "@/components/game/GameShell";
 describe("GameShell", () => {
   test("renders start screen before session starts", () => {
     render(
-      <GameShell hasStarted={false} startScreen={<p>Start panel</p>}>
+      <GameShell
+        hasStarted={false}
+        startScreen={<p>Start panel</p>}
+      >
         <p>Active game</p>
       </GameShell>,
     );
@@ -17,7 +20,10 @@ describe("GameShell", () => {
 
   test("renders game content after session starts", () => {
     render(
-      <GameShell hasStarted startScreen={<p>Start panel</p>}>
+      <GameShell
+        hasStarted
+        startScreen={<p>Start panel</p>}
+      >
         <p>Active game</p>
       </GameShell>,
     );

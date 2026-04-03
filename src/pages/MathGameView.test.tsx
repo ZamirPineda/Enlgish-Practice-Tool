@@ -63,9 +63,7 @@ describe("MathGameView", () => {
         question.referenceLabel &&
         question.referenceValue &&
         !bodyText.includes(
-          normalizeText(
-            `${question.referenceLabel}: ${question.referenceValue}`,
-          ),
+          normalizeText(`${question.referenceLabel}: ${question.referenceValue}`),
         )
       ) {
         return false;
@@ -147,9 +145,7 @@ describe("MathGameView", () => {
     renderView();
     startGame();
 
-    fireEvent.click(
-      screen.getByRole("button", { name: "Set math level Hard" }),
-    );
+    fireEvent.click(screen.getByRole("button", { name: "Set math level Hard" }));
 
     for (let index = 0; index < 3; index += 1) {
       answerIncorrectly("hard");
@@ -175,9 +171,7 @@ describe("MathGameView", () => {
     renderView();
     startGame();
 
-    fireEvent.click(
-      screen.getByRole("button", { name: "Set math level Easy" }),
-    );
+    fireEvent.click(screen.getByRole("button", { name: "Set math level Easy" }));
 
     for (let index = 0; index < 3; index += 1) {
       answerCorrectly("easy");

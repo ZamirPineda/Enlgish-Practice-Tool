@@ -73,20 +73,17 @@ export const getWeeklyConsistencyStatus = (
   const activityData = getGlobalActivityData();
   const claims = readClaims();
 
-  const activeDays = Object.entries(activityData).reduce(
-    (count, [dateKey, day]) => {
-      if (getIsoWeekKey(parseDateKey(dateKey)) !== weekKey) return count;
+  const activeDays = Object.entries(activityData).reduce((count, [dateKey, day]) => {
+    if (getIsoWeekKey(parseDateKey(dateKey)) !== weekKey) return count;
 
-      const isActive =
-        (day?.cards ?? 0) > 0 ||
-        (day?.xp ?? 0) > 0 ||
-        (day?.time ?? 0) > 0 ||
-        (day?.score ?? 0) > 0;
+    const isActive =
+      (day?.cards ?? 0) > 0 ||
+      (day?.xp ?? 0) > 0 ||
+      (day?.time ?? 0) > 0 ||
+      (day?.score ?? 0) > 0;
 
-      return isActive ? count + 1 : count;
-    },
-    0,
-  );
+    return isActive ? count + 1 : count;
+  }, 0);
 
   const tiers: WeeklyConsistencyTierStatus[] = WEEKLY_CONSISTENCY_TIERS.map(
     (tier) => ({

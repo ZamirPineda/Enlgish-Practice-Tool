@@ -97,9 +97,8 @@ const TabooEnglishView: React.FC = () => {
   );
 
   const handleLevelSelect = (nextLevel: TabooLevel) => {
-    setSelectedLevel(
-      (currentLevel) =>
-        TABOO_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    setSelectedLevel((currentLevel) =>
+      TABOO_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
 

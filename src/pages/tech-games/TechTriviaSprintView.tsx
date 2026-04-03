@@ -62,12 +62,13 @@ const DIFFICULTY_BASE_TIME: Record<TriviaDifficulty, number> = {
 };
 const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
 const UPSHIFT_AFTER_CORRECT_STREAK = 3;
-const TRIVIA_DIFFICULTY_ENGINE =
-  createAdaptiveDifficultyEngine<TriviaDifficulty>({
+const TRIVIA_DIFFICULTY_ENGINE = createAdaptiveDifficultyEngine<TriviaDifficulty>(
+  {
     gameId: "tech_trivia",
     levels: ["easy", "normal", "hard"],
     defaultLevel: "normal",
-  });
+  },
+);
 
 const shuffle = <T,>(items: T[]) => [...items].sort(() => 0.5 - Math.random());
 
@@ -108,10 +109,7 @@ export const TechTriviaSprintView: React.FC = () => {
     setDeckCards([]);
   }, [deckId]);
 
-  const questionTime = getTimeByPreset(
-    DIFFICULTY_BASE_TIME[difficulty],
-    timePreset,
-  );
+  const questionTime = getTimeByPreset(DIFFICULTY_BASE_TIME[difficulty], timePreset);
 
   const currentCard = cards[currentIndex];
 
@@ -146,10 +144,7 @@ export const TechTriviaSprintView: React.FC = () => {
             Math.min(previous, DIFFICULTY_LIVES[transition.nextLevel]),
           );
           setTimeLeft(
-            getTimeByPreset(
-              DIFFICULTY_BASE_TIME[transition.nextLevel],
-              timePreset,
-            ),
+            getTimeByPreset(DIFFICULTY_BASE_TIME[transition.nextLevel], timePreset),
           );
         }
       }

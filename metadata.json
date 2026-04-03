@@ -1,5 +1,7 @@
 {
   "name": "English Practice Pal",
   "description": "An interactive application to practice English speaking. Get real-time feedback on pronunciation and grammar, with conversations tailored to your proficiency level (A1-C1). The app maintains conversation history for contextual learning.",
-  "requestFramePermissions": ["microphone"]
+  "requestFramePermissions": [
+    "microphone"
+  ]
 }

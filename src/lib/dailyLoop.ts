@@ -218,9 +218,9 @@ const GAME_CONFIG_BY_ID = Object.values(GAME_POOL)
     return accumulator;
   }, {});
 
-let dailyLoopInventoryIndexCache: ReturnType<
-  typeof buildContentInventoryIndex
-> | null = null;
+let dailyLoopInventoryIndexCache:
+  | ReturnType<typeof buildContentInventoryIndex>
+  | null = null;
 
 const hashString = (value: string): number => {
   let hash = 0;
@@ -315,9 +315,7 @@ const pickGamesForCategory = ({
         categories: [focusRoute],
         excludeIds,
         shuffle: true,
-        random: createSeededRandom(
-          `${dateKey}-${focusRoute}-${category}-focus`,
-        ),
+        random: createSeededRandom(`${dateKey}-${focusRoute}-${category}-focus`),
         historyScope,
       }),
     );
@@ -350,13 +348,14 @@ const buildLoopSteps = (
   focusRoute: DailyLoopFocusRoute,
 ): DailyLoopStep[] => {
   const sessionId = createContentSelectionSession(`daily_loop:${dateKey}`);
-  const latestAdaptiveLevelByGame = getAdaptiveDifficultyLog().reduce<
-    Record<string, string>
-  >((accumulator, entry) => {
-    if (!entry.changed) return accumulator;
-    accumulator[normalizeGameId(entry.gameId)] = entry.nextLevel;
-    return accumulator;
-  }, {});
+  const latestAdaptiveLevelByGame = getAdaptiveDifficultyLog().reduce<Record<string, string>>(
+    (accumulator, entry) => {
+      if (!entry.changed) return accumulator;
+      accumulator[normalizeGameId(entry.gameId)] = entry.nextLevel;
+      return accumulator;
+    },
+    {},
+  );
 
   const categoryGames: Record<DailyLoopCategory, LoopGameConfig[]> = {
     english: pickGamesForCategory({

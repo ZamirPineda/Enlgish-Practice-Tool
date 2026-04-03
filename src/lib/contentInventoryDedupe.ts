@@ -38,13 +38,12 @@ const SOURCE_PRIORITY: Record<ContentInventorySource, number> = {
   manual: 30,
 };
 
-const DIFFICULTY_PRIORITY: Record<ContentInventoryItem["difficulty"], number> =
-  {
-    expert: 4,
-    stretch: 3,
-    core: 2,
-    foundation: 1,
-  };
+const DIFFICULTY_PRIORITY: Record<ContentInventoryItem["difficulty"], number> = {
+  expert: 4,
+  stretch: 3,
+  core: 2,
+  foundation: 1,
+};
 
 const toUnique = (values: string[]) =>
   Array.from(new Set(values.filter((value) => value.length > 0)));
@@ -58,10 +57,7 @@ const scoreItemForDedup = (item: ContentInventoryItem): number =>
   item.hints.length * 0.1 +
   item.alternatives.length * 0.1;
 
-const compareItems = (
-  left: ContentInventoryItem,
-  right: ContentInventoryItem,
-) =>
+const compareItems = (left: ContentInventoryItem, right: ContentInventoryItem) =>
   scoreItemForDedup(right) - scoreItemForDedup(left) ||
   left.id.localeCompare(right.id);
 
@@ -178,11 +174,7 @@ export const dedupeContentInventoryItems = (
     (item) => item.fingerprint,
     "fingerprint",
   );
-  const idPass = dedupeByKey(
-    fingerprintPass.items,
-    (item) => item.id,
-    "id_collision",
-  );
+  const idPass = dedupeByKey(fingerprintPass.items, (item) => item.id, "id_collision");
 
   return {
     items: idPass.items,

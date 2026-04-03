@@ -140,15 +140,8 @@ export const roadmapDefinitionSchema = z
         if (unit.routeObjective !== module.routeObjective) {
           context.addIssue({
             code: z.ZodIssueCode.custom,
-            path: [
-              "modules",
-              moduleIndex,
-              "units",
-              unitIndex,
-              "routeObjective",
-            ],
-            message:
-              "Unit routeObjective must match parent module routeObjective",
+            path: ["modules", moduleIndex, "units", unitIndex, "routeObjective"],
+            message: "Unit routeObjective must match parent module routeObjective",
           });
         }
 
@@ -241,24 +234,22 @@ export const roadmapDefinitionSchema = z
 
     definition.modules.forEach((module, moduleIndex) => {
       module.units.forEach((unit, unitIndex) => {
-        unit.prerequisiteUnitIds.forEach(
-          (prerequisiteUnitId, prerequisiteIndex) => {
-            if (!unitIds.has(prerequisiteUnitId)) {
-              context.addIssue({
-                code: z.ZodIssueCode.custom,
-                path: [
-                  "modules",
-                  moduleIndex,
-                  "units",
-                  unitIndex,
-                  "prerequisiteUnitIds",
-                  prerequisiteIndex,
-                ],
-                message: `Unknown prerequisite unit id ${prerequisiteUnitId}`,
-              });
-            }
-          },
-        );
+        unit.prerequisiteUnitIds.forEach((prerequisiteUnitId, prerequisiteIndex) => {
+          if (!unitIds.has(prerequisiteUnitId)) {
+            context.addIssue({
+              code: z.ZodIssueCode.custom,
+              path: [
+                "modules",
+                moduleIndex,
+                "units",
+                unitIndex,
+                "prerequisiteUnitIds",
+                prerequisiteIndex,
+              ],
+              message: `Unknown prerequisite unit id ${prerequisiteUnitId}`,
+            });
+          }
+        });
 
         unit.lessons.forEach((lesson, lessonIndex) => {
           lesson.prerequisiteLessonIds.forEach(

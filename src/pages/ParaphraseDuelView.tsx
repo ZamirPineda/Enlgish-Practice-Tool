@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useMemo,
-  useState,
-  useCallback,
-} from "react";
+import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -139,9 +133,8 @@ const ParaphraseDuelView: React.FC = () => {
   );
 
   const handleLevelSelect = (nextLevel: DuelLevel) => {
-    setSelectedLevel(
-      (currentLevel) =>
-        PARAPHRASE_DUEL_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    setSelectedLevel((currentLevel) =>
+      PARAPHRASE_DUEL_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
 

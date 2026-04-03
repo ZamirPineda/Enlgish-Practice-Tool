@@ -28,15 +28,13 @@ interface AdaptiveDifficultyBaseParams<TLevel extends string> {
   timestamp?: string;
 }
 
-export interface SetDifficultyLevelParams<
-  TLevel extends string,
-> extends AdaptiveDifficultyBaseParams<TLevel> {
+export interface SetDifficultyLevelParams<TLevel extends string>
+  extends AdaptiveDifficultyBaseParams<TLevel> {
   targetLevel: TLevel;
 }
 
-export interface ShiftDifficultyLevelParams<
-  TLevel extends string,
-> extends AdaptiveDifficultyBaseParams<TLevel> {
+export interface ShiftDifficultyLevelParams<TLevel extends string>
+  extends AdaptiveDifficultyBaseParams<TLevel> {
   direction: AdaptiveDifficultyDirection;
   steps?: number;
 }
@@ -88,9 +86,7 @@ export interface AdaptiveDifficultyLogEntry {
 export const ADAPTIVE_DIFFICULTY_LOG_KEY = "skillpal-adaptive-difficulty-log";
 const MAX_ADAPTIVE_DIFFICULTY_LOG_ENTRIES = 200;
 
-const assertNonEmptyLevels = <TLevel extends string>(
-  levels: readonly TLevel[],
-) => {
+const assertNonEmptyLevels = <TLevel extends string>(levels: readonly TLevel[]) => {
   if (levels.length === 0) {
     throw new Error("Adaptive difficulty requires at least one level.");
   }

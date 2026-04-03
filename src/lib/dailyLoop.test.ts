@@ -86,9 +86,7 @@ describe("dailyLoop", () => {
     expect(secondEnglishGameIds).toHaveLength(2);
     expect(secondEnglishGameIds).not.toEqual(firstEnglishGameIds);
     expect(
-      secondEnglishGameIds.some((gameId) =>
-        firstEnglishGameIds.includes(gameId),
-      ),
+      secondEnglishGameIds.some((gameId) => firstEnglishGameIds.includes(gameId)),
     ).toBe(false);
   });
 

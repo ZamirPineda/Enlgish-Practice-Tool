@@ -112,9 +112,8 @@ const compareRowsForSampling = (
   right: LintableAuthoredContentRow,
 ) =>
   hashString(`${seed}::${batchId}::${left.rowNumber}::${left.record.prompt}`) -
-    hashString(
-      `${seed}::${batchId}::${right.rowNumber}::${right.record.prompt}`,
-    ) || left.rowNumber - right.rowNumber;
+    hashString(`${seed}::${batchId}::${right.rowNumber}::${right.record.prompt}`) ||
+  left.rowNumber - right.rowNumber;
 
 const toSampleItem = (
   row: LintableAuthoredContentRow,
@@ -147,9 +146,7 @@ export const createContentAuthoringReviewSample = ({
     .map<ContentAuthoringReviewBatch>(([categoryValue, bucket]) => {
       const batchId = buildBatchId(category, categoryValue);
       const sampled = [...bucket]
-        .sort((left, right) =>
-          compareRowsForSampling(seed, batchId, left, right),
-        )
+        .sort((left, right) => compareRowsForSampling(seed, batchId, left, right))
         .slice(0, normalizedSampleSize)
         .map(toSampleItem);
 
@@ -177,15 +174,16 @@ export const applyContentAuthoringBatchDecisions = (input: {
   sample: ContentAuthoringReviewSample;
   decisions: ContentAuthoringBatchDecision[];
 }): ApplyContentAuthoringBatchDecisionsResult => {
-  const rowsByBatchId = input.rows.reduce<
-    Record<string, LintableAuthoredContentRow[]>
-  >((accumulator, row) => {
-    const categoryValue = resolveCategoryValue(row, input.sample.category);
-    const batchId = buildBatchId(input.sample.category, categoryValue);
-    accumulator[batchId] = accumulator[batchId] || [];
-    accumulator[batchId].push(row);
-    return accumulator;
-  }, {});
+  const rowsByBatchId = input.rows.reduce<Record<string, LintableAuthoredContentRow[]>>(
+    (accumulator, row) => {
+      const categoryValue = resolveCategoryValue(row, input.sample.category);
+      const batchId = buildBatchId(input.sample.category, categoryValue);
+      accumulator[batchId] = accumulator[batchId] || [];
+      accumulator[batchId].push(row);
+      return accumulator;
+    },
+    {},
+  );
 
   const decisionByBatchId = input.decisions.reduce<
     Record<string, ContentAuthoringBatchDecision>
@@ -198,8 +196,8 @@ export const applyContentAuthoringBatchDecisions = (input: {
   const rejectedRows: LintableAuthoredContentRow[] = [];
   const pendingRows: LintableAuthoredContentRow[] = [];
 
-  const outcomes =
-    input.sample.batches.map<ContentAuthoringBatchDecisionOutcome>((batch) => {
+  const outcomes = input.sample.batches.map<ContentAuthoringBatchDecisionOutcome>(
+    (batch) => {
       const decision = decisionByBatchId[batch.batchId];
       const bucketRows = [...(rowsByBatchId[batch.batchId] || [])].sort(
         (left, right) => left.rowNumber - right.rowNumber,
@@ -230,7 +228,8 @@ export const applyContentAuthoringBatchDecisions = (input: {
         decidedAt: decision.decidedAt,
         rowNumbers: bucketRows.map((row) => row.rowNumber),
       };
-    });
+    },
+  );
 
   return {
     approvedRows,

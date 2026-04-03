@@ -216,10 +216,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({
               <Select
                 value={formValues.theme}
                 onValueChange={(value) =>
-                  applySettingUpdate(
-                    "theme",
-                    value as SettingsFormValues["theme"],
-                  )
+                  applySettingUpdate("theme", value as SettingsFormValues["theme"])
                 }
               >
                 <SelectTrigger id="theme-select">
@@ -311,8 +308,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                      Ajusta meta diaria y hora de cierre para calcular la
-                      racha.
+                      Ajusta meta diaria y hora de cierre para calcular la racha.
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -362,9 +358,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                     onChange={(event) =>
                       applySettingUpdate(
                         "dailyGoalTarget",
-                        Number(
-                          event.target.value,
-                        ) as SettingsFormValues["dailyGoalTarget"],
+                        Number(event.target.value) as SettingsFormValues["dailyGoalTarget"],
                       )
                     }
                   />

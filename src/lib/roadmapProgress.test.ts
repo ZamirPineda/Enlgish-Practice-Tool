@@ -36,18 +36,14 @@ describe("roadmapProgress", () => {
       progress,
     );
 
-    expect(
-      blockedSnapshot.lessonProgressById.lesson_english_opening,
-    ).toMatchObject({
+    expect(blockedSnapshot.lessonProgressById.lesson_english_opening).toMatchObject({
       status: "in_progress",
       isCompleted: false,
       masteryTarget: 70,
       masteryAverage: 60,
       blockingReason: "Necesitas mastery minima de 70%. Actual: 60%.",
     });
-    expect(blockedSnapshot.statusByLessonId.lesson_english_followup).toBe(
-      "locked",
-    );
+    expect(blockedSnapshot.statusByLessonId.lesson_english_followup).toBe("locked");
     expect(blockedSnapshot.routeSummaries.english_interview.currentNodeId).toBe(
       "node_interview_opener",
     );
@@ -64,13 +60,13 @@ describe("roadmapProgress", () => {
       progress,
     );
 
-    expect(
-      unlockedSnapshot.lessonProgressById.lesson_english_opening,
-    ).toMatchObject({
-      status: "completed",
-      isCompleted: true,
-      masteryAverage: 70,
-    });
+    expect(unlockedSnapshot.lessonProgressById.lesson_english_opening).toMatchObject(
+      {
+        status: "completed",
+        isCompleted: true,
+        masteryAverage: 70,
+      },
+    );
     expect(unlockedSnapshot.statusByLessonId.lesson_english_followup).toBe(
       "in_progress",
     );

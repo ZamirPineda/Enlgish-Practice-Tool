@@ -562,12 +562,7 @@ const StatsView: React.FC = () => {
         categoryFilter,
         focusRouteFilter,
       }),
-    [
-      filteredAnalytics,
-      contentTelemetryAvailableItems,
-      categoryFilter,
-      focusRouteFilter,
-    ],
+    [filteredAnalytics, contentTelemetryAvailableItems, categoryFilter, focusRouteFilter],
   );
   const previousContentTelemetrySummary = useMemo(
     () =>
@@ -577,12 +572,7 @@ const StatsView: React.FC = () => {
         categoryFilter,
         focusRouteFilter,
       }),
-    [
-      previousAnalytics,
-      contentTelemetryAvailableItems,
-      categoryFilter,
-      focusRouteFilter,
-    ],
+    [previousAnalytics, contentTelemetryAvailableItems, categoryFilter, focusRouteFilter],
   );
   const contentTelemetryRouteSummary = useMemo(
     () =>
@@ -1192,8 +1182,7 @@ const StatsView: React.FC = () => {
                   <p
                     className={`text-xs mt-1 ${getDeltaClass(coverageRateDelta)}`}
                   >
-                    vs prev: {formatDelta(roundToOneDecimal(coverageRateDelta))}
-                    %
+                    vs prev: {formatDelta(roundToOneDecimal(coverageRateDelta))}%
                   </p>
                 </article>
               </div>
@@ -1212,8 +1201,7 @@ const StatsView: React.FC = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                     {contentTelemetryRouteSummary.map((item) => {
                       const isHighlighted =
-                        focusRouteFilter === "all" ||
-                        focusRouteFilter === item.route;
+                        focusRouteFilter === "all" || focusRouteFilter === item.route;
 
                       return (
                         <article
@@ -1229,8 +1217,7 @@ const StatsView: React.FC = () => {
                             Coverage: {item.coverageRate}%
                           </p>
                           <p className="text-xs text-text-secondary mt-1">
-                            Unique: {item.uniqueSelected} /{" "}
-                            {item.availableItems}
+                            Unique: {item.uniqueSelected} / {item.availableItems}
                           </p>
                           <p className="text-xs text-amber-400 mt-1 uppercase font-bold tracking-widest">
                             Repeat: {item.repeatRate}%

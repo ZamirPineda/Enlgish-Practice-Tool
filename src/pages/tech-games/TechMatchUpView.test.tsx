@@ -66,9 +66,7 @@ describe("TechMatchUpView", () => {
 
     const promptButton = promptButtons[0];
     const promptText = promptButton.textContent || "";
-    const currentCard = techDecks[0].cards.find(
-      (item) => item.prompt === promptText,
-    );
+    const currentCard = techDecks[0].cards.find((item) => item.prompt === promptText);
     expect(currentCard).toBeDefined();
     const correctAnswer = currentCard!.answer;
 
@@ -136,9 +134,7 @@ describe("TechMatchUpView", () => {
   test("auto-upshifts difficulty after 3 correct matches and logs cause", () => {
     renderView();
 
-    fireEvent.click(
-      screen.getByRole("button", { name: /Facil \(2 rondas\)/i }),
-    );
+    fireEvent.click(screen.getByRole("button", { name: /Facil \(2 rondas\)/i }));
     startSession();
 
     for (let index = 0; index < 3; index += 1) {

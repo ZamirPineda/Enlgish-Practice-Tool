@@ -174,8 +174,7 @@ describe("contentCurationWorkspace", () => {
       record: {
         ...workspaceRows[1].record,
         prompt: "Explain eventual consistency in one sentence",
-        answer:
-          "Replicas converge over time instead of synchronizing immediately.",
+        answer: "Replicas converge over time instead of synchronizing immediately.",
         tags: ["backend", "consistency"],
       },
       status: "approved",

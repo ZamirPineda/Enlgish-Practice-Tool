@@ -40,12 +40,13 @@ const DIFFICULTY_PAIRS_PER_SET: Record<MatchDifficulty, number> = {
 };
 const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
 const UPSHIFT_AFTER_CORRECT_STREAK = 3;
-const MATCH_UP_DIFFICULTY_ENGINE =
-  createAdaptiveDifficultyEngine<MatchDifficulty>({
+const MATCH_UP_DIFFICULTY_ENGINE = createAdaptiveDifficultyEngine<MatchDifficulty>(
+  {
     gameId: "tech_matchup",
     levels: ["easy", "normal", "hard"],
     defaultLevel: "normal",
-  });
+  },
+);
 
 const shuffle = <T,>(items: T[]) => [...items].sort(() => 0.5 - Math.random());
 
@@ -300,12 +301,12 @@ export const TechMatchUpView: React.FC = () => {
       const nextCompleted = completedSets + 1;
       setCompletedSets(nextCompleted);
       if (nextCompleted >= totalSets) {
-        setIsFinished(true);
-        wrongStreakRef.current = 0;
-        correctStreakRef.current = 0;
-        return;
-      }
-      prepareSet();
+      setIsFinished(true);
+      wrongStreakRef.current = 0;
+      correctStreakRef.current = 0;
+      return;
+    }
+    prepareSet();
     }, 1000);
 
     return () => clearTimeout(timer);

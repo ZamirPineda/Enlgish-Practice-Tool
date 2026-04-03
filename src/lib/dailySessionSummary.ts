@@ -153,9 +153,7 @@ export const getTodaySessionSummary = (
   ROUTES.forEach((route) => {
     const bucket = routeBuckets[route];
     bucket.accuracy =
-      bucket.attempts > 0
-        ? toPercent((bucket.correct / bucket.attempts) * 100)
-        : 0;
+      bucket.attempts > 0 ? toPercent((bucket.correct / bucket.attempts) * 100) : 0;
   });
 
   const totalAnswers = correctAnswers + wrongAnswers;

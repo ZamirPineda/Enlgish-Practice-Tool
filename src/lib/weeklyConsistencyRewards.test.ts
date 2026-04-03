@@ -36,15 +36,15 @@ describe("weeklyConsistencyRewards", () => {
 
     const status = getWeeklyConsistencyStatus();
     expect(status.activeDays).toBe(5);
-    expect(
-      status.tiers.find((tier) => tier.id === "consistency_3")?.eligible,
-    ).toBe(true);
-    expect(
-      status.tiers.find((tier) => tier.id === "consistency_5")?.eligible,
-    ).toBe(true);
-    expect(
-      status.tiers.find((tier) => tier.id === "consistency_7")?.eligible,
-    ).toBe(false);
+    expect(status.tiers.find((tier) => tier.id === "consistency_3")?.eligible).toBe(
+      true,
+    );
+    expect(status.tiers.find((tier) => tier.id === "consistency_5")?.eligible).toBe(
+      true,
+    );
+    expect(status.tiers.find((tier) => tier.id === "consistency_7")?.eligible).toBe(
+      false,
+    );
 
     const claim = claimWeeklyConsistencyReward("consistency_5");
     expect(claim.ok).toBe(true);
@@ -52,9 +52,7 @@ describe("weeklyConsistencyRewards", () => {
       expect(claim.rewardXp).toBe(60);
     }
 
-    expect(isWeeklyConsistencyClaimed(status.weekKey, "consistency_5")).toBe(
-      true,
-    );
+    expect(isWeeklyConsistencyClaimed(status.weekKey, "consistency_5")).toBe(true);
     expect(claimWeeklyConsistencyReward("consistency_5")).toEqual({
       ok: false,
       reason: "already_claimed",

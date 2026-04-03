@@ -101,9 +101,7 @@ describe("StudyDocsQuizView", () => {
 
     for (let index = 0; index < 3; index += 1) {
       const question = getCurrentQuestion();
-      fireEvent.click(
-        screen.getByRole("button", { name: question.correctAnswer }),
-      );
+      fireEvent.click(screen.getByRole("button", { name: question.correctAnswer }));
       if (index < 2) {
         fireEvent.click(screen.getByRole("button", { name: "Continuar" }));
       }

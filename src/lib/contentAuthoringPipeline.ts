@@ -139,10 +139,7 @@ const KNOWN_CSV_COLUMNS = new Set([
 ]);
 
 const normalizeHeader = (value: string) =>
-  value
-    .trim()
-    .toLowerCase()
-    .replace(/[\s_-]+/g, "");
+  value.trim().toLowerCase().replace(/[\s_-]+/g, "");
 
 const splitListCell = (value: string): string[] => {
   const trimmed = value.trim();
@@ -187,10 +184,7 @@ const buildRowIssue = (
 const safeParseAuthoredRecord = (
   rowNumber: number,
   candidate: unknown,
-): {
-  row: AuthoredContentRecord | null;
-  issues: AuthoredContentValidationIssue[];
-} => {
+): { row: AuthoredContentRecord | null; issues: AuthoredContentValidationIssue[] } => {
   const parsed = authoredContentRecordSchema.safeParse(candidate);
   if (parsed.success) {
     return { row: parsed.data, issues: [] };
@@ -270,22 +264,20 @@ const coerceCsvRecord = (
   headers: string[],
   values: string[],
 ): Record<string, unknown> => {
-  const rawRecord = headers.reduce<Record<string, string>>(
-    (accumulator, header, index) => {
-      accumulator[header] = values[index] ?? "";
+  const rawRecord = headers.reduce<Record<string, string>>((accumulator, header, index) => {
+    accumulator[header] = values[index] ?? "";
+    return accumulator;
+  }, {});
+
+  const metadataExtras = Object.entries(rawRecord).reduce<Record<string, unknown>>(
+    (accumulator, [header, value]) => {
+      if (!KNOWN_CSV_COLUMNS.has(header) && value.trim().length > 0) {
+        accumulator[header] = value.trim();
+      }
       return accumulator;
     },
     {},
   );
-
-  const metadataExtras = Object.entries(rawRecord).reduce<
-    Record<string, unknown>
-  >((accumulator, [header, value]) => {
-    if (!KNOWN_CSV_COLUMNS.has(header) && value.trim().length > 0) {
-      accumulator[header] = value.trim();
-    }
-    return accumulator;
-  }, {});
 
   return {
     id: rawRecord.id || undefined,
@@ -315,9 +307,7 @@ const coerceCsvRecord = (
   };
 };
 
-export const parseAuthoredContentCsv = (
-  input: string,
-): ParsedAuthoredContentInput => {
+export const parseAuthoredContentCsv = (input: string): ParsedAuthoredContentInput => {
   const table = parseCsvTable(input);
   if (table.length === 0) {
     return {
@@ -389,7 +379,10 @@ const parseAuthoredContentCsvWithRows = (
 export const parseAuthoredContentJson = (
   input: string | unknown,
 ): ParsedAuthoredContentInput => {
-  const rawValue = typeof input === "string" ? JSON.parse(input) : input;
+  const rawValue =
+    typeof input === "string"
+      ? JSON.parse(input)
+      : input;
   const parsed = authoredContentJsonDocumentSchema.parse(rawValue);
 
   if (Array.isArray(parsed)) {
@@ -433,10 +426,8 @@ const applyQualityValidation = (
     issues: AuthoredContentValidationIssue[];
   }>(
     (accumulator, row) => {
-      const qualityIssues = validateAuthoredContentRecordQuality(
-        row.record,
-      ).map((issue) =>
-        buildRowIssue(row.rowNumber, issue.field, issue.message),
+      const qualityIssues = validateAuthoredContentRecordQuality(row.record).map(
+        (issue) => buildRowIssue(row.rowNumber, issue.field, issue.message),
       );
 
       if (qualityIssues.length === 0) {
@@ -452,10 +443,7 @@ const applyQualityValidation = (
 
 export const buildContentInventoryFromAuthoredRowsWithReport = (
   rows: AuthoredContentRecord[],
-): {
-  pack: ContentInventoryPack;
-  dedupeReport: ContentInventoryDedupeReport;
-} => {
+): { pack: ContentInventoryPack; dedupeReport: ContentInventoryDedupeReport } => {
   const validatedRows = rows.filter(
     (row) => validateAuthoredContentRecordQuality(row).length === 0,
   );

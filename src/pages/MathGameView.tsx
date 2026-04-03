@@ -129,9 +129,8 @@ const MathGameView: React.FC = () => {
   const currentQuestion: MathPracticeQuestion | null =
     questionBank[questionIndex] || null;
   const handleLevelSelect = (nextLevel: MathAdaptiveLevel) => {
-    setSelectedLevel(
-      (currentLevel) =>
-        MATH_GAME_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    setSelectedLevel((currentLevel) =>
+      MATH_GAME_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
 
@@ -140,22 +139,19 @@ const MathGameView: React.FC = () => {
     setSelectedLevel(resolveRoadmapLevel(roadmapConfig.difficulty));
   }, [roadmapConfig?.difficulty]);
 
-  const getNextQuestionIndex = useCallback(
-    (currentIndex: number) => {
-      if (questionBank.length <= 1) return 0;
-      let nextIndex = Math.floor(Math.random() * questionBank.length);
-      let attempts = 0;
-      while (nextIndex === currentIndex && attempts < 5) {
-        nextIndex = Math.floor(Math.random() * questionBank.length);
-        attempts += 1;
-      }
-      if (nextIndex === currentIndex) {
-        return (currentIndex + 1) % questionBank.length;
-      }
-      return nextIndex;
-    },
-    [questionBank.length],
-  );
+  const getNextQuestionIndex = useCallback((currentIndex: number) => {
+    if (questionBank.length <= 1) return 0;
+    let nextIndex = Math.floor(Math.random() * questionBank.length);
+    let attempts = 0;
+    while (nextIndex === currentIndex && attempts < 5) {
+      nextIndex = Math.floor(Math.random() * questionBank.length);
+      attempts += 1;
+    }
+    if (nextIndex === currentIndex) {
+      return (currentIndex + 1) % questionBank.length;
+    }
+    return nextIndex;
+  }, [questionBank.length]);
 
   useEffect(() => {
     if (questionBank.length === 0) return;
@@ -251,7 +247,12 @@ const MathGameView: React.FC = () => {
 
     didAutoStartRef.current = true;
     startGame();
-  }, [gameState, questionBank.length, roadmapConfig?.autostart, startGame]);
+  }, [
+    gameState,
+    questionBank.length,
+    roadmapConfig?.autostart,
+    startGame,
+  ]);
 
   const handleOptionSelect = (option: string) => {
     if (!currentQuestion || selectedOption) return;
@@ -445,8 +446,7 @@ const MathGameView: React.FC = () => {
           </div>
         </div>
         <p className="text-text-secondary text-sm mt-3">
-          {gameDuration} segundos, 3 vidas y combo por respuestas correctas
-          seguidas.
+          {gameDuration} segundos, 3 vidas y combo por respuestas correctas seguidas.
         </p>
       </Card>
 

@@ -42,13 +42,7 @@ describe("contentAuthoringQuality", () => {
         "Replica lag",
         "Packet loss",
       ],
-      hints: [
-        "Think resilience",
-        "Think timeout budgets",
-        "Think fallback",
-        "Think retries",
-        "Think bulkheads",
-      ],
+      hints: ["Think resilience", "Think timeout budgets", "Think fallback", "Think retries", "Think bulkheads"],
       metadata: {
         routeObjective: "dev_reasoning",
       },
@@ -98,7 +92,9 @@ describe("contentAuthoringQuality", () => {
       ]),
     );
     expect(transformIssues).toEqual(
-      expect.arrayContaining([expect.objectContaining({ field: "answer" })]),
+      expect.arrayContaining([
+        expect.objectContaining({ field: "answer" }),
+      ]),
     );
   });
 
@@ -109,8 +105,7 @@ describe("contentAuthoringQuality", () => {
       difficulty: "foundation",
       format: "open_response",
       prompt: "Explain eventual consistency in distributed systems.",
-      answer:
-        "A model where replicas converge over time instead of immediately.",
+      answer: "A model where replicas converge over time instead of immediately.",
       tags: ["distributed", "consistency"],
       alternatives: [],
       hints: [],

@@ -354,8 +354,7 @@ export const TechFlashcardsView: React.FC = () => {
         description="Repasa conceptos y valida tu dominio."
         meta={
           <p className="text-xs text-text-muted mt-1">
-            Dificultad: {DIFFICULTY_LABEL[difficulty]} | Ritmo sugerido:{" "}
-            {pacePerCard}s por carta
+            Dificultad: {DIFFICULTY_LABEL[difficulty]} | Ritmo sugerido: {pacePerCard}s por carta
           </p>
         }
         status={`Carta ${currentIndex + 1} / ${cards.length}`}

@@ -54,9 +54,7 @@ describe("DiplomaticReviewerView", () => {
     render(<DiplomaticReviewerView />);
     startGame();
 
-    const wrongOption = getCurrentRound().options.find(
-      (option) => !option.isCorrect,
-    );
+    const wrongOption = getCurrentRound().options.find((option) => !option.isCorrect);
     expect(wrongOption).toBeDefined();
 
     fireEvent.click(screen.getByRole("button", { name: wrongOption!.text }));
@@ -83,9 +81,7 @@ describe("DiplomaticReviewerView", () => {
         (option) => option.isCorrect,
       );
       expect(correctOption).toBeDefined();
-      fireEvent.click(
-        screen.getByRole("button", { name: correctOption!.text }),
-      );
+      fireEvent.click(screen.getByRole("button", { name: correctOption!.text }));
       if (index < 2) {
         fireEvent.click(
           screen.getByRole("button", { name: /Siguiente Situaci/i }),

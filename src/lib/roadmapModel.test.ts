@@ -205,9 +205,7 @@ describe("roadmapModel", () => {
     expect(index.unitsInOrder).toHaveLength(3);
     expect(index.lessonsInOrder).toHaveLength(3);
     expect(index.nodesInOrder).toHaveLength(5);
-    expect(index.moduleIdsByRoute.english_interview).toEqual([
-      "module-english-1",
-    ]);
+    expect(index.moduleIdsByRoute.english_interview).toEqual(["module-english-1"]);
     expect(index.nodeIdsByRoute.dev_reasoning).toEqual([
       "node-dev-1",
       "node-dev-2",

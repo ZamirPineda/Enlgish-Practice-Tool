@@ -1,12 +1,6 @@
 import React from "react";
 import { describe, expect, test } from "vitest";
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import ContentCurationView from "@/pages/ContentCurationView";
 
 describe("ContentCurationView", () => {
@@ -14,9 +8,7 @@ describe("ContentCurationView", () => {
     render(<ContentCurationView />);
 
     expect(
-      await screen.findByText(
-        "Give a concise interview answer about ownership",
-      ),
+      await screen.findByText("Give a concise interview answer about ownership"),
     ).toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText("Filter by skill"), {
@@ -57,9 +49,7 @@ describe("ContentCurationView", () => {
     render(<ContentCurationView />);
 
     expect(
-      await screen.findByText(
-        "Give a concise interview answer about ownership",
-      ),
+      await screen.findByText("Give a concise interview answer about ownership"),
     ).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Create row" }));
@@ -82,8 +72,7 @@ describe("ContentCurationView", () => {
     });
     fireEvent.change(screen.getByLabelText("Editor answer"), {
       target: {
-        value:
-          "Replicas converge over time instead of synchronizing immediately.",
+        value: "Replicas converge over time instead of synchronizing immediately.",
       },
     });
     fireEvent.change(screen.getByLabelText("Editor tags"), {
@@ -112,9 +101,7 @@ describe("ContentCurationView", () => {
     fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
 
     expect(
-      await screen.findByText(
-        "Explain idempotency for retries in one sentence",
-      ),
+      await screen.findByText("Explain idempotency for retries in one sentence"),
     ).toBeInTheDocument();
     expect(
       screen.queryByText("Explain idempotency in APIs in one sentence"),

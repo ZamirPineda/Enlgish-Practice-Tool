@@ -37,9 +37,7 @@ describe("TechBossView", () => {
   };
 
   const answerCurrentQuestion = (correct: boolean) => {
-    fireEvent.click(
-      screen.getByRole("button", { name: correct ? "VERDADERO" : "FALSO" }),
-    );
+    fireEvent.click(screen.getByRole("button", { name: correct ? "VERDADERO" : "FALSO" }));
     act(() => {
       vi.advanceTimersByTime(2100);
     });

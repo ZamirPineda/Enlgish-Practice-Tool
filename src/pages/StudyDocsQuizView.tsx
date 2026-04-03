@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useMemo,
-  useState,
-  useCallback,
-} from "react";
+import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -74,9 +68,7 @@ const buildAdaptiveDocsQuizQuestions = (
         ) +
         (question.subCategory ? 8 : 0),
     }))
-    .sort(
-      (left, right) => left.score - right.score || left.index - right.index,
-    );
+    .sort((left, right) => left.score - right.score || left.index - right.index);
 
   const total = ranked.length;
   const levelById = new Map<string, DocsQuizLevel>();
@@ -127,10 +119,7 @@ const StudyDocsQuizView: React.FC = () => {
   );
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
-  const questionTime = getTimeByPreset(
-    TIME_PER_QUESTION[selectedLevel],
-    timePreset,
-  );
+  const questionTime = getTimeByPreset(TIME_PER_QUESTION[selectedLevel], timePreset);
   const [timeLeft, setTimeLeft] = useState(questionTime);
   const [lives, setLives] = useState(INITIAL_LIVES);
   const [score, setScore] = useState(0);
@@ -178,9 +167,7 @@ const StudyDocsQuizView: React.FC = () => {
         ),
       );
       const candidateQuestions =
-        filteredLevelQuestions.length > 0
-          ? filteredLevelQuestions
-          : levelQuestions;
+        filteredLevelQuestions.length > 0 ? filteredLevelQuestions : levelQuestions;
       if (candidateQuestions.length === 0) {
         return shuffle([...ADAPTIVE_DOCS_QUIZ_QUESTIONS]);
       }
@@ -532,8 +519,7 @@ const StudyDocsQuizView: React.FC = () => {
           </span>
         </div>
         <p className="text-sm text-text-secondary mt-3">
-          Prepárate para entrevistas de FAANG o certificaciones. {questionTime}{" "}
-          segundos por pregunta, 3 vidas. Lee cuidadosamente.
+          Prepárate para entrevistas de FAANG o certificaciones. {questionTime} segundos por pregunta, 3 vidas. Lee cuidadosamente.
         </p>
       </Card>
 

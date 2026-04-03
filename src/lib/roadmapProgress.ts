@@ -10,7 +10,10 @@ import {
 export const ROADMAP_PROGRESS_STORAGE_KEY = "skillpal-roadmap-progress";
 export const ROADMAP_PROGRESS_SCHEMA_VERSION = 2;
 
-export type RoadmapNodeProgressStatus = "locked" | "in_progress" | "completed";
+export type RoadmapNodeProgressStatus =
+  | "locked"
+  | "in_progress"
+  | "completed";
 
 export interface RoadmapProgressState {
   schemaVersion: typeof ROADMAP_PROGRESS_SCHEMA_VERSION;
@@ -369,8 +372,8 @@ export const buildRoadmapProgressSnapshot = (
   progress: RoadmapProgressState,
 ): RoadmapProgressSnapshot => {
   const index = buildRoadmapModelIndex(definition);
-  const validCompletedNodeIds = progress.completedNodeIds.filter((nodeId) =>
-    Boolean(index.nodesById[nodeId]),
+  const validCompletedNodeIds = progress.completedNodeIds.filter(
+    (nodeId) => Boolean(index.nodesById[nodeId]),
   );
   const completedSet = new Set(validCompletedNodeIds);
   const masteryByNodeId = normalizeMasteryByNodeId(
@@ -383,14 +386,12 @@ export const buildRoadmapProgressSnapshot = (
   const statusByModuleId: Record<string, RoadmapNodeProgressStatus> = {};
   const lessonProgressById: Record<string, RoadmapLessonProgressSummary> = {};
   const unitProgressById: Record<string, RoadmapUnitProgressSummary> = {};
-  const routeSummaries: Record<
-    RoadmapRouteObjective,
-    RoadmapRouteProgressSummary
-  > = {
-    english_interview: { ...DEFAULT_ROUTE_SUMMARIES.english_interview },
-    math_speed: { ...DEFAULT_ROUTE_SUMMARIES.math_speed },
-    dev_reasoning: { ...DEFAULT_ROUTE_SUMMARIES.dev_reasoning },
-  };
+  const routeSummaries: Record<RoadmapRouteObjective, RoadmapRouteProgressSummary> =
+    {
+      english_interview: { ...DEFAULT_ROUTE_SUMMARIES.english_interview },
+      math_speed: { ...DEFAULT_ROUTE_SUMMARIES.math_speed },
+      dev_reasoning: { ...DEFAULT_ROUTE_SUMMARIES.dev_reasoning },
+    };
   const lessonCompletionById: Record<string, boolean> = {};
   const unitCompletionById: Record<string, boolean> = {};
   const moduleCompletionById: Record<string, boolean> = {};
@@ -426,8 +427,7 @@ export const buildRoadmapProgressSnapshot = (
 
     module.units.forEach((unit, unitIndex) => {
       const indexedUnit = index.unitsById[unit.id];
-      const previousUnitId =
-        unitIndex > 0 ? module.units[unitIndex - 1].id : null;
+      const previousUnitId = unitIndex > 0 ? module.units[unitIndex - 1].id : null;
       const unitBlockingReason = getUnitBlockingReason(
         indexedUnit,
         previousUnitId,
@@ -544,8 +544,7 @@ export const buildRoadmapProgressSnapshot = (
       });
 
       routeSummaries[routeObjective].currentNodeId = currentNode
-        ? firstIncompleteNodeByLessonId[currentNode.id] ||
-          currentNode.nodes[0].id
+        ? firstIncompleteNodeByLessonId[currentNode.id] || currentNode.nodes[0].id
         : null;
     },
   );

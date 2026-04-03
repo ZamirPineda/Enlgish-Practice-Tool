@@ -284,9 +284,7 @@ describe("StatsView", () => {
     expect(dailyLoopCard).toHaveTextContent("Started: 1 | Steps: 2");
     expect(dailyLoopCard).toHaveTextContent("Rewards: 1");
     const repeatRateCard = screen.getByText("Repeat Rate").closest("article");
-    const coverageCard = screen
-      .getByText("Content Coverage")
-      .closest("article");
+    const coverageCard = screen.getByText("Content Coverage").closest("article");
     expect(repeatRateCard).toHaveTextContent("50%");
     expect(repeatRateCard).toHaveTextContent("1 repeated of 2 selections");
     expect(coverageCard).toHaveTextContent("33.3%");

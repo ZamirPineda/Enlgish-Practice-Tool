@@ -83,13 +83,10 @@ const calculateDiceCoefficient = (left: string, right: string): number => {
 
   const gramsLeft = toNgrams(left, 2);
   const gramsRight = toNgrams(right, 2);
-  const rightCounts = gramsRight.reduce<Map<string, number>>(
-    (accumulator, gram) => {
-      accumulator.set(gram, (accumulator.get(gram) || 0) + 1);
-      return accumulator;
-    },
-    new Map(),
-  );
+  const rightCounts = gramsRight.reduce<Map<string, number>>((accumulator, gram) => {
+    accumulator.set(gram, (accumulator.get(gram) || 0) + 1);
+    return accumulator;
+  }, new Map());
 
   let matches = 0;
   gramsLeft.forEach((gram) => {
@@ -185,26 +182,25 @@ export const lintAuthoredContentRows = (
     .map<ContentAuthoringExactDuplicateGroup>(([key, bucket]) => ({
       type: "exact_duplicate",
       key,
-      rowNumbers: bucket
-        .map((row) => row.rowNumber)
-        .sort((left, right) => left - right),
+      rowNumbers: bucket.map((row) => row.rowNumber).sort((left, right) => left - right),
       promptPreview: buildPromptPreview(bucket[0].record.prompt),
     }))
     .sort((left, right) => left.rowNumbers[0] - right.rowNumbers[0]);
 
   const exactKeys = new Set(exactDuplicateGroups.map((group) => group.key));
-  const bucketedRows = rows.reduce<
-    Record<string, LintableAuthoredContentRow[]>
-  >((accumulator, row) => {
-    const bucketKey = [
-      row.record.skill,
-      row.record.format,
-      row.record.metadata.routeObjective || "any",
-    ].join("::");
-    accumulator[bucketKey] = accumulator[bucketKey] || [];
-    accumulator[bucketKey].push(row);
-    return accumulator;
-  }, {});
+  const bucketedRows = rows.reduce<Record<string, LintableAuthoredContentRow[]>>(
+    (accumulator, row) => {
+      const bucketKey = [
+        row.record.skill,
+        row.record.format,
+        row.record.metadata.routeObjective || "any",
+      ].join("::");
+      accumulator[bucketKey] = accumulator[bucketKey] || [];
+      accumulator[bucketKey].push(row);
+      return accumulator;
+    },
+    {},
+  );
 
   const nearDuplicatePairs: ContentAuthoringNearDuplicatePair[] = [];
 
@@ -220,18 +216,11 @@ export const lintAuthoredContentRows = (
         const leftKey = createExactDuplicateKey(left.record);
         const rightKey = createExactDuplicateKey(right.record);
 
-        if (
-          leftKey === rightKey ||
-          exactKeys.has(leftKey) ||
-          exactKeys.has(rightKey)
-        ) {
+        if (leftKey === rightKey || exactKeys.has(leftKey) || exactKeys.has(rightKey)) {
           continue;
         }
 
-        const similarity = calculateNearDuplicateScore(
-          left.record,
-          right.record,
-        );
+        const similarity = calculateNearDuplicateScore(left.record, right.record);
         if (similarity < NEAR_DUPLICATE_THRESHOLD) {
           continue;
         }

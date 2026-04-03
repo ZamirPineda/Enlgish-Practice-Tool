@@ -50,7 +50,7 @@ describe("adaptiveRollout", () => {
     expect(config.globalEnabled).toBe(true);
     expect(config.disabledGames).toHaveLength(0);
     expect(localStorage.getItem(ADAPTIVE_ROLLOUT_STORAGE_KEY)).toContain(
-      '"globalEnabled":true',
+      "\"globalEnabled\":true",
     );
   });
 });
