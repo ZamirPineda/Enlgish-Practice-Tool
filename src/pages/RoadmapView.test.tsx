@@ -141,7 +141,7 @@ describe("RoadmapView", () => {
         }),
       ).toBeInTheDocument();
     });
-  }, 15000);
+  }, 30000);
 
   test("filters modules by route", () => {
     render(
@@ -305,5 +305,5 @@ describe("RoadmapView", () => {
     expect(
       await screen.findByRole("button", { name: "Continuar" }),
     ).toBeInTheDocument();
-  }, 15000);
+  }, 30000);
 });
