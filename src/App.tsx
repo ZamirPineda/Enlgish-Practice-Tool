@@ -380,7 +380,7 @@ const App: React.FC = () => {
             </Link>
             <button
               onClick={handleInstallClick}
-              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-sky-500/20 text-sky-600 dark:text-sky-400 hover:bg-sky-500/30 rounded-lg text-sm font-bold transition-colors"
+              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-sky-200 text-sky-900 dark:bg-sky-500/20 dark:text-sky-400 hover:bg-sky-300 dark:hover:bg-sky-500/30 rounded-lg text-sm font-bold transition-colors"
               aria-label="Install app"
             >
               <svg
@@ -609,7 +609,7 @@ const App: React.FC = () => {
             </p>
             <button
               onClick={handleUpdate}
-              className="mt-2 rounded-lg bg-accent hover:bg-accent-hover px-3 py-1.5 text-sm font-bold text-white transition-colors w-full"
+              className="mt-2 rounded-lg bg-accent hover:bg-accent-hover px-3 py-1.5 text-sm font-bold text-slate-900 transition-colors w-full"
             >
               Actualizar
             </button>
@@ -637,14 +637,14 @@ const App: React.FC = () => {
                 {onboardingStep < ONBOARDING_STEPS.length - 1 ? (
                   <button
                     onClick={() => setOnboardingStep((step) => step + 1)}
-                    className="ml-auto px-4 py-2 rounded-lg bg-accent hover:bg-accent-hover text-white text-sm font-black transition-colors"
+                    className="ml-auto px-4 py-2 rounded-lg bg-accent hover:bg-accent-hover text-slate-900 text-sm font-black transition-colors"
                   >
                     Next
                   </button>
                 ) : (
                   <button
                     onClick={closeOnboarding}
-                    className="ml-auto px-4 py-2 rounded-lg bg-success hover:bg-success-hover text-white text-sm font-black transition-colors"
+                    className="ml-auto px-4 py-2 rounded-lg bg-success hover:bg-success-hover text-slate-900 text-sm font-black transition-colors"
                   >
                     Let’s go
                   </button>

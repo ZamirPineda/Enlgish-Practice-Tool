@@ -1112,46 +1112,46 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               <div className="flex gap-3 overflow-x-auto pb-1 snap-x snap-mandatory md:grid md:grid-cols-3 md:overflow-visible">
                 <button
                   onClick={() => setPracticeObjective("all")}
-                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "all" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "all" ? "border-accent/40 bg-accent text-slate-900 shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
                   aria-label="Objective all"
                 >
-                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                  <span className="block text-[10px] tracking-[0.28em] opacity-90">
                     Practice objective
                   </span>
                   <span className="mt-2 block text-lg font-black tracking-tight normal-case">
                     All
                   </span>
-                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-80">
+                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-90">
                     Mixed review queue
                   </span>
                 </button>
                 <button
                   onClick={() => setPracticeObjective("interview")}
-                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "interview" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "interview" ? "border-accent/40 bg-accent text-slate-900 shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
                   aria-label="Objective interview"
                 >
-                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                  <span className="block text-[10px] tracking-[0.28em] opacity-90">
                     Practice objective
                   </span>
                   <span className="mt-2 block text-lg font-black tracking-tight normal-case">
                     Interview
                   </span>
-                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-80">
+                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-90">
                     Work and business terms
                   </span>
                 </button>
                 <button
                   onClick={() => setPracticeObjective("travel")}
-                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "travel" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "travel" ? "border-accent/40 bg-accent text-slate-900 shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
                   aria-label="Objective travel"
                 >
-                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                  <span className="block text-[10px] tracking-[0.28em] opacity-90">
                     Practice objective
                   </span>
                   <span className="mt-2 block text-lg font-black tracking-tight normal-case">
                     Travel
                   </span>
-                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-80">
+                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-90">
                     Trips and emergencies
                   </span>
                 </button>
