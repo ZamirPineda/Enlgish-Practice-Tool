@@ -1,0 +1,17 @@
+--- pwa-update.spec.ts
++++ pwa-update.spec.ts
+@@ -33,6 +35,14 @@
+       didReload = true;
+     });
+
++    // Dismiss onboarding if present
++    try {
++      const skip = page.getByRole("button", { name: "Skip" });
++      if (await skip.isVisible({ timeout: 1000 })) {
++        await skip.click();
++      }
++    } catch (e) {}
++
+     await updateButton.click({ force: true });
+
+     // Since window.location.reload() happens, let's wait a bit to verify nav or log

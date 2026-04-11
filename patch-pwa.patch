@@ -1,0 +1,27 @@
+--- e2e/pwa-update.spec.ts
++++ e2e/pwa-update.spec.ts
+@@ -33,7 +33,14 @@
+       didReload = true;
+     });
+
+-    await updateButton.click();
++    // Dismiss onboarding if present
++    try {
++      const skip = page.getByRole("button", { name: "Skip" });
++      if (await skip.isVisible({ timeout: 1000 })) {
++        await skip.click();
++      }
++    } catch (e) {}
++
++    await updateButton.click({ force: true });
+
+     // Since window.location.reload() happens, let's wait a bit to verify nav or log
+     // We expect the script to call reload, bounding test time to ensure it passed.
+@@ -47,6 +54,8 @@
+   }) => {
+     // Navigate to home (not an active session)
+     await page.goto("/#/");
++
++    await page.waitForFunction(() => !document.querySelector('.splash-screen-or-loading'));
+
+     await expect(page.getByRole("banner")).toBeVisible();

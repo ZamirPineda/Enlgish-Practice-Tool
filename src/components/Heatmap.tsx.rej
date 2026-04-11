@@ -1,0 +1,19 @@
+--- Heatmap.tsx
++++ Heatmap.tsx
+@@ -269,7 +269,7 @@
+         <div className="flex select-none gap-[3px] text-xs text-slate-500 max-w-full overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+           {/* Week day labels */}
+           <div className="flex flex-col gap-[3px] pr-2 pt-5 sticky left-0 bg-slate-900 z-10 font-medium">
+-            <div className="flex gap-[3px]" aria-label="Heatmap de repaso">
++            <div className="flex gap-[3px]" role="group" aria-label="Heatmap de repaso">
+               {["L", "", "M", "", "V", "", "D"].map((day, i) => (
+                 <div
+                   key={`day-label-${i}`}
+@@ -298,6 +298,7 @@
+                     }
+                     return (
+                       <div
++                        role="img"
+                         key={`day-${weekIndex}-${dayIndex}`}
+                         className={`h-3 w-3 rounded-[2px] ${getColor(count)} ${
+                           count > 0

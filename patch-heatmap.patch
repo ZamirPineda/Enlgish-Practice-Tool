@@ -1,0 +1,19 @@
+--- src/components/Heatmap.tsx
++++ src/components/Heatmap.tsx
+@@ -271,7 +271,7 @@
+               ))}
+             </div>
+
+-            <div className="flex gap-[3px]" aria-label="Heatmap de repaso">
++            <div className="flex gap-[3px]" role="group" aria-label="Heatmap de repaso">
+               {weeks.map((week, weekIndex) => (
+                 <div
+                   key={`week-${weekIndex}`}
+@@ -282,6 +282,7 @@
+                 >
+                   {week.map((day) => (
+                     <div
++                      role="img"
+                       key={day.date}
+                       className={`h-3 w-3 rounded-[2px] ${day.inRange ? getIntensityClass(day.count) : "bg-transparent"}`}
+                       title={`${day.date}: ${day.count} tarjetas repasadas`}

@@ -7,8 +7,6 @@ test.describe("PWA Auto Update Flow", () => {
     // Navigate to a game route (active session)
     await page.goto("/#/stop?mode=game");
 
-    await page.waitForFunction(() => !document.querySelector('.splash-screen-or-loading'));
-
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
 
@@ -34,15 +32,7 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
-    // Dismiss onboarding if present
-    try {
-      const skip = page.getByRole("button", { name: "Skip" });
-      if (await skip.isVisible({ timeout: 1000 })) {
-        await skip.click();
-      }
-    } catch (e) {}
-
-    await updateButton.click({ force: true });
+    await updateButton.click();
 
     // Since window.location.reload() happens, let's wait a bit to verify nav or log
     // We expect the script to call reload, bounding test time to ensure it passed.
@@ -55,8 +45,6 @@ test.describe("PWA Auto Update Flow", () => {
   }) => {
     // Navigate to home (not an active session)
     await page.goto("/#/");
-
-    await page.waitForFunction(() => !document.querySelector('.splash-screen-or-loading'));
 
     await expect(page.getByRole("banner")).toBeVisible();
 

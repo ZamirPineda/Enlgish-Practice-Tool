@@ -1,0 +1,20 @@
+--- e2e/critical-flows.spec.ts
++++ e2e/critical-flows.spec.ts
+@@ -49,7 +49,7 @@
+
+   await page.getByPlaceholder("e.g. Ubiquitous").fill("E2E Persistence Word");
+   await page
+-    .getByPlaceholder("Meaning, Example, etc.")
++    .getByPlaceholder("Write a meaning you can imagine")
+     .fill("Word created by e2e test");
+   await page.getByRole("button", { name: "Save Word" }).click();
+
+@@ -89,7 +89,7 @@
+   for (let step = 1; step <= 3; step += 1) {
+     await expect(page.getByText(`Review ${step} / 3`)).toBeVisible();
+     await page.getByRole("button", { name: /Show Answer/i }).click();
+-    await page.getByRole("button", { name: /^Got it/i }).click();
++    await page.getByRole("button", { name: /^Easy/i }).click();
+   }
+
+   await expect(
