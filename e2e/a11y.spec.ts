@@ -36,6 +36,7 @@ test.describe("Accessibility (A11y) Standards", () => {
   }) => {
     await page.goto("/#/calculus");
     await page.waitForFunction(() => !document.querySelector('.splash-screen-or-loading'));
+    await page.waitForTimeout(1000); // Allow any subsequent async renders or navigations to settle
 
     const results = await new AxeBuilder({ page }).analyze();
 
