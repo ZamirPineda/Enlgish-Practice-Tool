@@ -1,0 +1,15 @@
+--- package.json
++++ package.json
+@@ -62,7 +62,11 @@
+       "minimatch@>=9.0.0 <9.0.7": "9.0.7",
+       "minimatch@>=10.0.0 <10.2.3": "10.2.3",
+       "serialize-javascript@<=7.0.2": "7.0.3",
+-      "undici": "7.24.0"
++      "undici": "7.24.0",
++      "picomatch": "^4.0.4",
++      "happy-dom": "^20.8.9",
++      "lodash": "^4.18.1",
++      "vite": "^6.4.2"
+     }
+   }
+ }
