@@ -92,6 +92,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         <button
           onClick={onExit}
           className="text-slate-400 hover:text-white transition-colors"
+          aria-label="Exit math flashcards"
         >
           ✕ Salir
         </button>

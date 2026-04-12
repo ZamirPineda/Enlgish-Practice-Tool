@@ -29,3 +29,7 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+
+## 2026-03-09 - [Expand/Collapse Toggle Accessibility]
+**Learning:** Buttons that toggle the visibility of content (like expanding/collapsing family details in cards) often lack `aria-expanded` and a clean `aria-label`, forcing screen readers to read out raw text and emojis.
+**Action:** Always add `aria-expanded={isOpen}` and a descriptive `aria-label` (e.g., "Expand details" / "Collapse details") to expand/collapse toggle buttons to provide a clear accessible name and state.
