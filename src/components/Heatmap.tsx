@@ -282,6 +282,7 @@ const Heatmap: React.FC<HeatmapProps> = ({ days }) => {
                     <div
                       key={day.date}
                       className={`h-3 w-3 rounded-[2px] ${day.inRange ? getIntensityClass(day.count) : "bg-transparent"}`}
+                      role="img"
                       title={`${day.date}: ${day.count} tarjetas repasadas`}
                       aria-label={`${day.date}: ${day.count} tarjetas repasadas`}
                     />
@@ -303,6 +304,8 @@ const Heatmap: React.FC<HeatmapProps> = ({ days }) => {
             <div
               key={`legend-${index}`}
               className={`w-3 h-3 rounded-sm ${className}`}
+              role="img"
+              aria-label={`Intensidad ${index + 1}`}
             ></div>
           ))}
           <span>Mas</span>
