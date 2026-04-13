@@ -43,9 +43,6 @@ export const usePWAUpdate = () => {
         }
       };
 
-      // Expose to window for Playwright E2E tests to mock SW update
-      (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
-
       wb.addEventListener("waiting", triggerUpdate);
 
       wb.addEventListener("installed", (event) => {
@@ -60,6 +57,19 @@ export const usePWAUpdate = () => {
         console.error("Service worker registration failed:", err);
       });
     }
+
+    // Expose to window for Playwright E2E tests to mock SW update
+    (window as any).__TRIGGER_PWA_UPDATE = () => {
+      if (isActiveSession()) {
+        setUpdateAvailable(true);
+      } else {
+        if (!hasReloaded.current) {
+          hasReloaded.current = true;
+          if (wbRef.current) wbRef.current.messageSkipWaiting();
+          window.location.reload();
+        }
+      }
+    };
   }, []);
 
   const handleUpdate = useCallback(() => {
