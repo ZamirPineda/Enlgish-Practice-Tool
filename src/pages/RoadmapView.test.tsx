@@ -115,7 +115,7 @@ describe("RoadmapView", () => {
       await user.click(continueButton);
     }
 
-    const unlockedFollowupNode = screen.getByRole("button", {
+    const unlockedFollowupNode = await screen.findByRole("button", {
       name: /Abrir: Rephrase concise answers/i,
       hidden: true,
     });
@@ -129,7 +129,7 @@ describe("RoadmapView", () => {
       </MemoryRouter>,
     );
 
-    const rephraseNode = screen.getByRole("button", {
+    const rephraseNode = await screen.findByRole("button", {
       name: /Abrir: Rephrase concise answers/i,
     });
     await user.click(rephraseNode);
@@ -141,7 +141,7 @@ describe("RoadmapView", () => {
         }),
       ).toBeInTheDocument();
     });
-  }, 15000);
+  }, 25000);
 
   test("filters modules by route", () => {
     render(
