@@ -26,7 +26,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         <div
           aria-hidden="true"
           className={`block w-10 h-6 rounded-full transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-focus peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background ${
-            checked ? "bg-accent" : "bg-surface-hover"
+            checked ? "bg-accent-hover" : "bg-surface-hover"
           }`}
         ></div>
         <div
