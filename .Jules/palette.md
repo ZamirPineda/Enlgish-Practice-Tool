@@ -29,3 +29,7 @@
 ## 2026-03-07 - [Global Keyboard Shortcuts Safety]
 **Learning:** Global `keydown` listeners (e.g., `Space` to reveal) can hijack native interactions (like activating a "Quit" button) if not scoped correctly.
 **Action:** Always check `document.activeElement` for interactive types (BUTTON, A, INPUT, TEXTAREA) before `preventDefault()` in global listeners.
+
+## 2026-03-12 - [Custom Toggle Accessibility Pattern II]
+**Learning:** Even when custom toggles use a visually hidden checkbox (`sr-only`), without explicit `role="switch"` and `aria-checked` attributes, assistive technologies might misinterpret them. Furthermore, keyboard users lose context if visible focus indicators aren't explicitly mapped to the custom visual container.
+**Action:** When creating custom inputs that hide the native element, strictly pair the hidden input's state with `role="switch"` and `aria-checked`. Rely on CSS techniques (like Tailwind's `peer` and `peer-focus-visible`) to project native keyboard focus styles onto the decorative container. Add `aria-hidden="true"` to inner decorative elements to prevent screen reader noise.
