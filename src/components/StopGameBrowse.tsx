@@ -413,18 +413,32 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                         }}
                         className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${isShuffled ? "bg-purple-600 border-purple-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-purple-400"}`}
                         title={isShuffled ? "Unshuffle" : "Shuffle Words"}
+                        aria-label="Shuffle Words"
+                        aria-pressed={isShuffled}
                       >
                         🔀
                       </button>
                       <button
                         onClick={() => setStudyAutoPlay(!studyAutoPlay)}
                         className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${studyAutoPlay ? "bg-[var(--color-accent)] border-[var(--color-accent)] text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"}`}
+                        aria-label="Toggle Autoplay"
+                        aria-pressed={studyAutoPlay}
+                        title={
+                          studyAutoPlay ? "Disable Autoplay" : "Enable Autoplay"
+                        }
                       >
                         {studyAutoPlay ? "🔊" : "🔈"}
                       </button>
                       <button
                         onClick={() => setStudyRevealAll(!studyRevealAll)}
                         className={`px-2 py-1 min-h-[36px] rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 ${studyRevealAll ? "bg-amber-600 border-amber-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-amber-400"}`}
+                        aria-label="Reveal All Answers"
+                        aria-pressed={studyRevealAll}
+                        title={
+                          studyRevealAll
+                            ? "Hide All Answers"
+                            : "Reveal All Answers"
+                        }
                       >
                         {studyRevealAll ? "Hide" : "Reveal"}
                       </button>
@@ -449,6 +463,8 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                         <button
                           onClick={() => setBrowseFilter("")}
                           className="absolute right-1 top-1/2 -translate-y-1/2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] rounded-full p-0.5 hover:bg-[var(--color-surface-hover)]"
+                          aria-label="Clear search"
+                          title="Clear search"
                         >
                           <svg
                             className="h-3 w-3"
@@ -470,7 +486,11 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                     <button
                       onClick={() => setShowSavedOnly(!showSavedOnly)}
                       className={`p-1.5 min-h-[36px] min-w-[36px] rounded-lg border transition-all ${showSavedOnly ? "bg-pink-600 border-pink-500 text-white" : "bg-[var(--color-surface-2)] border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-pink-400"}`}
-                      title="Show Saved Only"
+                      title={
+                        showSavedOnly ? "Show All Items" : "Show Saved Only"
+                      }
+                      aria-label="Show Saved Only"
+                      aria-pressed={showSavedOnly}
                     >
                       <HeartIcon solid={showSavedOnly} />
                     </button>
@@ -479,6 +499,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       onClick={handleRandomPick}
                       className="p-1.5 min-h-[36px] min-w-[36px] rounded-lg border bg-gradient-to-r from-sky-600 to-purple-600 border-transparent text-white hover:opacity-90 transition-all shadow-sm"
                       title="Surprise Me!"
+                      aria-label="Surprise Me!"
                     >
                       <SparklesIcon />
                     </button>
@@ -705,6 +726,12 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                         <button
                           onClick={() => toggleCategory(category)}
                           className="w-full py-3 bg-[var(--color-surface-1)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] text-xs font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 border-t border-[var(--color-border)]/50"
+                          aria-expanded={isExpanded}
+                          aria-label={
+                            isExpanded
+                              ? `Collapse ${category}`
+                              : `Show ${hiddenCount} more ${category}`
+                          }
                         >
                           {isExpanded ? (
                             <>
