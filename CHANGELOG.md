@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.25.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.24.0...english-practice-pal-v1.25.0) (2026-04-18)
+
+
+### Features
+
+* enrich stop game feedback and spotlights ([f31a375](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/f31a3759815b051017923f2234206686e896cf9a))
+* expand practice games and stop mode experience ([70796e4](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/70796e408a5e1792c24ba6eb72c240300d84a122))
+
+
+### Bug Fixes
+
+* **pr-149:** rebase clean changes on main ([#149](https://github.com/ZamirPineda/Enlgish-Practice-Tool/issues/149)) ([b5f42fe](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/b5f42fe7744374c3f9dc12b03647f3826175f0c4))
+* **pr-150:** rebase clean changes on main ([#150](https://github.com/ZamirPineda/Enlgish-Practice-Tool/issues/150)) ([3ca745e](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/3ca745ec1c8bc16f2a9dbe8d9449cf9f6a440d21))
+* **pr-156:** rebase clean changes on main ([#156](https://github.com/ZamirPineda/Enlgish-Practice-Tool/issues/156)) ([e1d1bb0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/commit/e1d1bb0b78477b9d3427d8188ab462f47b930d38))
+
 ## [1.24.0](https://github.com/ZamirPineda/Enlgish-Practice-Tool/compare/english-practice-pal-v1.23.0...english-practice-pal-v1.24.0) (2026-03-07)
 
 
