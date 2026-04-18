@@ -618,18 +618,21 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                 <button
                   onClick={() => handleCategoryDifficultySelect("Relaxed")}
                   className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Relaxed" ? "bg-success border-success text-white shadow-lg shadow-success/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                  aria-pressed={categoryDifficulty === "Relaxed"}
                 >
                   Relaxed
                 </button>
                 <button
                   onClick={() => handleCategoryDifficultySelect("Normal")}
                   className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Normal" ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                  aria-pressed={categoryDifficulty === "Normal"}
                 >
                   Normal
                 </button>
                 <button
                   onClick={() => handleCategoryDifficultySelect("Hard")}
                   className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${categoryDifficulty === "Hard" ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                  aria-pressed={categoryDifficulty === "Hard"}
                 >
                   Hard
                 </button>
@@ -644,18 +647,21 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                 <button
                   onClick={() => setDifficulty(60)}
                   className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 60 ? "bg-success border-success text-white shadow-lg shadow-success/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                  aria-pressed={difficulty === 60}
                 >
                   60s
                 </button>
                 <button
                   onClick={() => setDifficulty(30)}
                   className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 30 ? "bg-accent border-accent text-white shadow-lg shadow-accent/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                  aria-pressed={difficulty === 30}
                 >
                   30s
                 </button>
                 <button
                   onClick={() => setDifficulty(15)}
                   className={`flex-1 py-2 rounded-xl border text-sm font-bold transition-all ${difficulty === 15 ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-500/20" : "bg-surface-2 border-border text-text-muted hover:bg-surface-hover hover:text-text-primary"}`}
+                  aria-pressed={difficulty === 15}
                 >
                   15s
                 </button>
