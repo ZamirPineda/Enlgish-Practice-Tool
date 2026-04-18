@@ -6,12 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { stopGameData } from "@/features/data/stopGameData";
-import {
-  SrsVocabularyItem,
-  StopCategory,
-  StopItem,
-  VaultAddOptions,
-} from "@/types";
+import { StopCategory, StopItem, VaultAddOptions } from "@/types";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import {
   GroupName,
@@ -37,22 +32,6 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { toast } from "@/components/ui/Toast";
 import { buildVaultAddOptionsFromStopItem } from "@/lib/vaultEntries";
-import {
-  StopCategorySpotlight,
-  supportsStopCategorySpotlight,
-} from "@/components/game/StopCategorySpotlight";
-import {
-  getCountryReferenceByCapital,
-  getCountryReferenceByName,
-} from "@/lib/geographyReference";
-import AmbientOrbScene from "@/components/visual/AmbientOrbScene";
-import InsightPanel from "@/components/visual/InsightPanel";
-import { getStopVisualThemeFromCategory } from "@/lib/stopVisualThemes";
-import StopFeedbackStage from "@/components/stop/StopFeedbackStage";
-import StopStreakCelebration from "@/components/stop/StopStreakCelebration";
-import StopSessionSummary from "@/components/stop/StopSessionSummary";
-import TimePressureScene from "@/components/visual/TimePressureScene";
-import AnswerFeedback from "@/components/visual/AnswerFeedback";
 
 interface StopGamePlayProps {
   onPlayWord: (word: string) => void;
@@ -67,85 +46,6 @@ const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 type StopGameAdaptiveLevel = "Relaxed" | "Normal" | "Hard";
 const DOWNSHIFT_AFTER_WRONG_STREAK = 3;
 const UPSHIFT_AFTER_CORRECT_STREAK = 3;
-const STOP_USAGE_MEMORY_KEY = "stop-game-used-answers";
-const VAULT_DECK_KEY = "vocab-vault-deck";
-const STOP_SUCCESS_AUTO_ADVANCE_MS = 2500;
-const STOP_RECOMMENDATION_LIMIT = 3;
-type StopUsageMemory = Record<string, Record<string, number>>;
-type SuggestedStopAlternative = {
-  item: StopItem;
-  alreadySaved: boolean;
-  priorUsageCount: number;
-};
-
-const normalizeStopWord = (value: string) => value.trim().toLowerCase();
-
-const getStopUsageComboKey = (letter: string, category: string) =>
-  `${letter.trim().toUpperCase()}::${category.trim().toLowerCase()}`;
-
-const readStopUsageMemory = (): StopUsageMemory => {
-  try {
-    const saved = localStorage.getItem(STOP_USAGE_MEMORY_KEY);
-    if (!saved) return {};
-    const parsed = JSON.parse(saved) as StopUsageMemory;
-    return parsed && typeof parsed === "object" ? parsed : {};
-  } catch {
-    return {};
-  }
-};
-
-const writeStopUsageMemory = (memory: StopUsageMemory) => {
-  try {
-    localStorage.setItem(STOP_USAGE_MEMORY_KEY, JSON.stringify(memory));
-  } catch {
-    // Ignore quota or parse failures to avoid blocking gameplay.
-  }
-};
-
-const getPriorUsageCount = (
-  memory: StopUsageMemory,
-  letter: string,
-  category: string,
-  word: string,
-) => {
-  const comboKey = getStopUsageComboKey(letter, category);
-  const normalizedWord = normalizeStopWord(word);
-  return memory[comboKey]?.[normalizedWord] || 0;
-};
-
-const trackSuccessfulStopWord = (
-  letter: string,
-  category: string,
-  word: string,
-): number => {
-  const memory = readStopUsageMemory();
-  const comboKey = getStopUsageComboKey(letter, category);
-  const normalizedWord = normalizeStopWord(word);
-  const nextCount = (memory[comboKey]?.[normalizedWord] || 0) + 1;
-
-  writeStopUsageMemory({
-    ...memory,
-    [comboKey]: {
-      ...(memory[comboKey] || {}),
-      [normalizedWord]: nextCount,
-    },
-  });
-
-  return nextCount;
-};
-
-const readVaultWordSet = () => {
-  try {
-    const saved = localStorage.getItem(VAULT_DECK_KEY);
-    const deck: Record<string, SrsVocabularyItem> = saved
-      ? JSON.parse(saved)
-      : {};
-    return new Set(Object.keys(deck).map(normalizeStopWord));
-  } catch {
-    return new Set<string>();
-  }
-};
-
 const STOP_GAME_DIFFICULTY =
   createAdaptiveDifficultyEngine<StopGameAdaptiveLevel>({
     gameId: "stop_game",
@@ -185,17 +85,6 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     useState<StopGameAdaptiveLevel>(STOP_GAME_DIFFICULTY.defaultLevel);
   const [hintedWord, setHintedWord] = useState<StopItem | null>(null);
   const [waitingForContinue, setWaitingForContinue] = useState(false);
-  const [pendingSaveWord, setPendingSaveWord] = useState<{
-    word: StopItem;
-    category?: StopCategory;
-  } | null>(null);
-  const [feedbackSpotlight, setFeedbackSpotlight] = useState<{
-    word: StopItem;
-    category: StopCategory;
-  } | null>(null);
-  const [recommendedAlternatives, setRecommendedAlternatives] = useState<
-    SuggestedStopAlternative[]
-  >([]);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error" | "info";
     message: string;
@@ -326,9 +215,6 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setHintedWord(null);
     setFeedback(null);
     setWaitingForContinue(false);
-    setPendingSaveWord(null);
-    setFeedbackSpotlight(null);
-    setRecommendedAlternatives([]);
     // Important: clear the transcript to avoid "ghost" words from previous rounds appearing
     resetTranscript();
     setTimeLeft(difficulty); // Reset Timer
@@ -344,7 +230,6 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setCurrentStreak(0);
     setBestStreak(0);
     setGameStats({ correct: 0, skipped: 0, incorrect: 0, history: [] });
-    setRecommendedAlternatives([]);
     setSessionStartTime(Date.now());
     wrongStreakRef.current = 0;
     correctStreakRef.current = 0;
@@ -361,50 +246,20 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     setHint(null);
     setHintedWord(null);
     setFeedback(null);
-    setFeedbackSpotlight(null);
     wrongStreakRef.current = 0;
     correctStreakRef.current = 0;
     stopListening();
     resetTranscript();
   };
 
-  const geographyReference = useMemo(() => {
-    if (!feedbackSpotlight) return null;
-    return feedbackSpotlight.category === "Countries"
-      ? getCountryReferenceByName(feedbackSpotlight.word.word)
-      : feedbackSpotlight.category === "Capitals"
-        ? getCountryReferenceByCapital(feedbackSpotlight.word.word)
-        : null;
-  }, [feedbackSpotlight]);
-
-  const visualTheme = useMemo(
-    () => getStopVisualThemeFromCategory(currentCategory),
-    [currentCategory],
-  );
-  const roundPressure = useMemo(() => {
-    if (!difficulty) return 0;
-    return Math.max(0, Math.min(1, 1 - timeLeft / difficulty));
-  }, [difficulty, timeLeft]);
-  const streakEnergy = useMemo(
-    () => Math.max(0, Math.min(1, currentStreak / 6)),
-    [currentStreak],
-  );
-  const sessionDurationSeconds = useMemo(
-    () => Math.max(1, Math.round((Date.now() - sessionStartTime) / 1000)),
-    [sessionStartTime, showSummary],
-  );
-
-  useEffect(() => {
-    if (!showSummary) return;
-    progressQuest("play_game", 1, "stop");
-    progressQuest("play_game", 1, "any");
-  }, [showSummary]);
-
   const handleEndGame = () => {
+    const durationInSeconds = Math.round(
+      (Date.now() - sessionStartTime) / 1000,
+    );
     trackAnalyticsEvent("session_end", {
       game: "stop_game",
       mode: selectedGroup,
-      duration: sessionDurationSeconds,
+      duration: durationInSeconds,
     });
     setShowSummary(true);
   };
@@ -426,55 +281,12 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
     setHintedWord(randomWord);
 
-    // --- Build the best non-redundant hint ---
-    const wordLower = randomWord.word.toLowerCase().trim();
-
-    // Check if translation is effectively the same as the word
-    const translationMatchesWord =
-      randomWord.translation.toLowerCase().trim() === wordLower;
-
-    // Check if tag is redundant with the category (e.g. tag "Vegetable" inside "Fruits & Vegetables")
-    const categoryLower = (currentCategory || "").toLowerCase();
-    const tagIsRedundant =
-      !randomWord.tag ||
-      categoryLower.includes(randomWord.tag.toLowerCase()) ||
-      randomWord.tag.toLowerCase().includes(categoryLower);
-
-    // Check if definition just restates the translation (pattern: "... known in Spanish as 'X'")
-    const definitionIsUseful =
-      randomWord.definition &&
-      !(
-        translationMatchesWord &&
-        randomWord.definition.toLowerCase().includes("known in spanish as")
-      );
-
-    // Priority chain: definition → translation → examSentence → example → tag → IPA → prefix
-    if (definitionIsUseful) {
+    if (randomWord.definition) {
       setHint(`💡 Hint: ${randomWord.definition}`);
-    } else if (randomWord.translation && !translationMatchesWord) {
+    } else {
       setHint(
         `💡 Hint: The Spanish translation is "${randomWord.translation}"`,
       );
-    } else if (randomWord.examSentence) {
-      // Mask the word in the sentence to create a fill-in-the-blank clue
-      const masked = randomWord.examSentence.replace(
-        new RegExp(randomWord.word, "gi"),
-        "_____",
-      );
-      setHint(`💡 Hint: "${masked}"`);
-    } else if (randomWord.example) {
-      const masked = randomWord.example.replace(
-        new RegExp(randomWord.word, "gi"),
-        "_____",
-      );
-      setHint(`💡 Hint: "${masked}"`);
-    } else if (randomWord.tag && !tagIsRedundant) {
-      setHint(`💡 Hint: It's classified as: ${randomWord.tag}`);
-    } else if (randomWord.ipa) {
-      setHint(`💡 Hint: It's pronounced ${randomWord.ipa}`);
-    } else {
-      const prefix = randomWord.word.slice(0, 2);
-      setHint(`💡 Hint: It starts with "${prefix}..."`);
     }
   };
 
@@ -532,7 +344,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
       setFeedback({
         type: "error",
-        message: `${messagePrefix} A valid answer is: "${selectedWordForFeedback.word}".`,
+        message: `${messagePrefix} A valid answer is: "${selectedWordForFeedback.word}". Added to Vault!`,
         isTimeout,
         isSkip,
       });
@@ -558,17 +370,12 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         ],
       }));
 
-      // Store the word for optional saving instead of auto-saving
-      setPendingSaveWord({
-        word: selectedWordForFeedback,
-        category: (currentCategory as StopCategory) || undefined,
+      onAddToVault(selectedWordForFeedback.word, definition, {
+        ...buildVaultAddOptionsFromStopItem(
+          selectedWordForFeedback,
+          currentCategory || undefined,
+        ),
       });
-      if (supportsStopCategorySpotlight(currentCategory)) {
-        setFeedbackSpotlight({
-          word: selectedWordForFeedback,
-          category: currentCategory,
-        });
-      }
 
       setWaitingForContinue(true);
     } else {
@@ -581,38 +388,6 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   };
 
   const handleContinue = () => {
-    pickNextChallenge();
-  };
-
-  const handleSaveRecommendedWord = (item: StopItem) => {
-    const definition = item.definition || item.translation || "";
-    onAddToVault(item.word, definition, {
-      ...buildVaultAddOptionsFromStopItem(
-        item,
-        (currentCategory as StopCategory) || undefined,
-      ),
-    });
-
-    setRecommendedAlternatives((prev) =>
-      prev.map((entry) =>
-        normalizeStopWord(entry.item.word) === normalizeStopWord(item.word)
-          ? { ...entry, alreadySaved: true }
-          : entry,
-      ),
-    );
-    toast.success(`"${item.word}" saved to Vault!`);
-  };
-
-  const handleSaveToVault = () => {
-    if (!pendingSaveWord) return;
-    const { word: item, category } = pendingSaveWord;
-    const definition = item.definition || item.translation || "";
-    onAddToVault(item.word, definition, {
-      ...buildVaultAddOptionsFromStopItem(item, category),
-    });
-    setPendingSaveWord(null);
-    toast.success(`"${item.word}" saved to Vault!`);
-    // Auto-continue to next challenge after saving
     pickNextChallenge();
   };
 
@@ -680,17 +455,11 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     const normalizedInput = inputValue.trim().toLowerCase();
     const validWords =
       stopGameData[currentLetter]?.[currentCategory as StopCategory] || [];
-    let matchedItem: StopItem | null = null;
 
     // 1. Check for exact match
-    let isCorrect = false;
-    for (const item of validWords) {
-      if (item.word.toLowerCase() === normalizedInput) {
-        isCorrect = true;
-        matchedItem = item;
-        break;
-      }
-    }
+    let isCorrect = validWords.some(
+      (item) => item.word.toLowerCase() === normalizedInput,
+    );
 
     let isCloseMatch = false;
     let actualCorrectWord = "";
@@ -707,7 +476,6 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             isCorrect = true;
             isCloseMatch = true;
             actualCorrectWord = item.word;
-            matchedItem = item;
             break; // Stop at first close match found
           }
         }
@@ -757,46 +525,6 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
       });
 
       const comboMessage = multiplier > 1 ? ` (Combo x${multiplier}!)` : "";
-      const acceptedWord = isCloseMatch
-        ? actualCorrectWord
-        : matchedItem?.word || inputValue.trim();
-      const usageMemory = readStopUsageMemory();
-      const priorUsageCount = getPriorUsageCount(
-        usageMemory,
-        currentLetter,
-        currentCategory,
-        acceptedWord,
-      );
-      const isRepeatedAnswer = priorUsageCount > 0;
-      const vaultWords = readVaultWordSet();
-      const suggestions = isRepeatedAnswer
-        ? validWords
-            .filter(
-              (item) =>
-                normalizeStopWord(item.word) !==
-                normalizeStopWord(acceptedWord),
-            )
-            .map((item) => ({
-              item,
-              alreadySaved: vaultWords.has(normalizeStopWord(item.word)),
-              priorUsageCount: getPriorUsageCount(
-                usageMemory,
-                currentLetter,
-                currentCategory,
-                item.word,
-              ),
-            }))
-            .sort((left, right) => {
-              if (left.alreadySaved !== right.alreadySaved) {
-                return left.alreadySaved ? 1 : -1;
-              }
-              if (left.priorUsageCount !== right.priorUsageCount) {
-                return left.priorUsageCount - right.priorUsageCount;
-              }
-              return left.item.word.localeCompare(right.item.word);
-            })
-            .slice(0, STOP_RECOMMENDATION_LIMIT)
-        : [];
 
       if (isCloseMatch) {
         setFeedback({
@@ -804,20 +532,14 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           // We use 'success' type but style it subtly differently or just rely on the text
           message: `Close enough! Acceptable for "${actualCorrectWord}". +${pointsEarned} point${pointsEarned > 1 ? "s" : ""}${comboMessage}`,
         });
-      } else if (isRepeatedAnswer) {
-        setFeedback({
-          type: "success",
-          message: `Correct, but "${acceptedWord}" is already in your history for ${currentCategory} with ${currentLetter}. Try one of these next. +${pointsEarned} point${pointsEarned > 1 ? "s" : ""}${comboMessage}`,
-        });
       } else {
         setFeedback({
           type: "success",
           message: `Correct! +${pointsEarned} point${pointsEarned > 1 ? "s" : ""}${comboMessage}`,
         });
       }
-      setRecommendedAlternatives(suggestions);
 
-      onPlayWord(acceptedWord);
+      onPlayWord(isCloseMatch ? actualCorrectWord : inputValue.trim());
 
       setGameStats((prev) => ({
         ...prev,
@@ -827,7 +549,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
           {
             letter: currentLetter,
             category: currentCategory,
-            word: acceptedWord,
+            word: isCloseMatch ? actualCorrectWord : inputValue.trim(),
             status: "correct",
           },
         ],
@@ -839,27 +561,19 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
         duration: Math.max(1, difficulty - timeLeft),
       });
 
-      if (matchedItem && supportsStopCategorySpotlight(currentCategory)) {
-        setFeedbackSpotlight({
-          word: matchedItem,
-          category: currentCategory,
-        });
-      }
-
       // Reward daily quest
       progressQuest("correct_answers", 1, "stop");
       progressQuest("correct_answers", 1, "any");
 
       // Clear the hint for the next round immediately, though pickNextChallenge does this too
       setHintedWord(null);
-      trackSuccessfulStopWord(currentLetter, currentCategory, acceptedWord);
 
-      if (isCloseMatch || isRepeatedAnswer) {
+      if (isCloseMatch) {
         setWaitingForContinue(true);
       } else {
         setTimeout(() => {
           pickNextChallenge();
-        }, STOP_SUCCESS_AUTO_ADVANCE_MS);
+        }, 1500);
       }
     } else {
       handleFailOrSkip(false); // Play 'wrong' sound happens inside
@@ -967,25 +681,6 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
     : null;
 
   if (showSummary) {
-    return (
-      <StopSessionSummary
-        score={score}
-        bestStreak={bestStreak}
-        selectedGroup={selectedGroup}
-        difficulty={difficulty}
-        sessionDurationSeconds={sessionDurationSeconds}
-        gameStats={gameStats}
-        onPlayAgain={() => {
-          setShowSummary(false);
-          startGame();
-        }}
-        onBackToMenu={() => {
-          setShowSummary(false);
-          setIsPlaying(false);
-        }}
-      />
-    );
-
     const gradeInfo = (() => {
       if (score >= 50)
         return {
@@ -1164,12 +859,7 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
   }
 
   return (
-    <div className="relative flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-[calc(env(safe-area-inset-bottom)+6.5rem)] md:pb-6 bg-background z-0">
-      <TimePressureScene
-        timeLeft={timeLeft}
-        maxTime={difficulty}
-        className="fixed"
-      />
+    <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 pb-[calc(env(safe-area-inset-bottom)+6.5rem)] md:pb-6 bg-background">
       <div className="flex min-h-full flex-col items-center justify-start md:justify-center">
         <div className="max-w-lg w-full space-y-6">
           <div className="flex justify-between items-center">
@@ -1194,75 +884,6 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
             >
               End Game
             </button>
-          </div>
-
-          <div className="grid gap-3 md:grid-cols-[minmax(0,1.2fr)_10rem]">
-            <AmbientOrbScene
-              compact
-              variant={
-                waitingForContinue
-                  ? feedback?.type === "success"
-                    ? "emerald"
-                    : "sunset"
-                  : visualTheme.scene
-              }
-              label="Stop Momentum"
-              title={`${currentLetter || "?"} - ${currentCategory || "Ready"}`}
-              description={
-                waitingForContinue
-                  ? feedback?.type === "success"
-                    ? "Successful rounds now land with a clearer visual release."
-                    : "Wrong answers and pressure moments now have a stronger visual cue."
-                  : "During the round, this surface supports pace without stealing attention from the answer flow."
-              }
-              intensity={waitingForContinue ? 0.8 : roundPressure}
-              energy={
-                waitingForContinue
-                  ? feedback?.type === "success"
-                    ? 0.85
-                    : 0.35
-                  : streakEnergy
-              }
-            />
-            <InsightPanel
-              compact
-              eyebrow="Round Surface"
-              title={
-                waitingForContinue
-                  ? feedback?.type === "success"
-                    ? "Round cleared"
-                    : "Pressure check"
-                  : currentStreak > 1
-                    ? `${currentStreak} streak`
-                    : "Live round"
-              }
-              description={
-                waitingForContinue
-                  ? "Round feedback now reads as a tactical state, not a detached decoration."
-                  : "This panel reacts to momentum, pressure, and streak without turning into UI noise."
-              }
-              accent={
-                waitingForContinue
-                  ? feedback?.type === "success"
-                    ? "emerald"
-                    : "amber"
-                  : visualTheme.accent
-              }
-              motif="game"
-              topic={visualTheme.topic}
-              statALabel="Timer"
-              statAValue={`${timeLeft}s`}
-              statBLabel="Score"
-              statBValue={`${score}`}
-              intensity={waitingForContinue ? 0.75 : roundPressure}
-              energy={
-                waitingForContinue
-                  ? feedback?.type === "success"
-                    ? 0.9
-                    : 0.3
-                  : streakEnergy
-              }
-            />
           </div>
 
           {/* Enhanced Timer Progress Bar */}
@@ -1393,96 +1014,17 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
 
                 {feedback && (
                   <div
-                    className={`text-sm font-bold ${feedback.type === "success" ? "text-success" : "text-error"} animate-fade-in relative z-20`}
+                    className={`text-sm font-bold ${feedback.type === "success" ? "text-success" : "text-error"} animate-fade-in`}
                   >
                     {feedback.message}
                   </div>
                 )}
-
-                <div className="relative w-full z-10">
-                  <AnswerFeedback type={feedback?.type || null} />
-                </div>
 
                 {hint && !feedback && (
                   <div className="text-sm font-medium text-amber-500 bg-amber-500/10 p-3 rounded-lg animate-fade-in border border-amber-500/20">
                     {hint}
                   </div>
                 )}
-
-                {feedback && (
-                  <StopFeedbackStage
-                    feedbackType={feedback.type}
-                    category={currentCategory}
-                    item={feedbackSpotlight?.word}
-                    isTimeout={feedback.isTimeout}
-                    isSkip={feedback.isSkip}
-                  />
-                )}
-
-                {feedback?.type === "success" && currentStreak >= 5 && (
-                  <StopStreakCelebration streak={currentStreak} score={score} />
-                )}
-
-                {feedback &&
-                  feedbackSpotlight &&
-                  supportsStopCategorySpotlight(feedbackSpotlight.category) && (
-                    <StopCategorySpotlight
-                      item={feedbackSpotlight.word}
-                      category={feedbackSpotlight.category}
-                      title={
-                        geographyReference
-                          ? "Geography Spotlight"
-                          : "Category Spotlight"
-                      }
-                    />
-                  )}
-
-                {feedback?.type === "success" &&
-                  recommendedAlternatives.length > 0 && (
-                    <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4 text-left">
-                      <div className="text-xs font-black uppercase tracking-[0.2em] text-emerald-300">
-                        Recommended Alternatives
-                      </div>
-                      <p className="mt-2 text-sm text-emerald-50/85">
-                        Keep variety in this slot by saving a different valid
-                        answer for <strong>{currentLetter}</strong> +{" "}
-                        <strong>{currentCategory}</strong>.
-                      </p>
-                      <div className="mt-3 grid gap-2">
-                        {recommendedAlternatives.map((entry) => (
-                          <div
-                            key={entry.item.word}
-                            className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/15 p-3"
-                          >
-                            <div className="min-w-0">
-                              <div className="text-sm font-bold text-white">
-                                {entry.item.word}
-                              </div>
-                              <div className="text-xs text-white/65">
-                                {entry.item.translation ||
-                                  entry.item.definition ||
-                                  "Valid alternative"}
-                              </div>
-                            </div>
-                            <Button
-                              type="button"
-                              size="sm"
-                              variant={
-                                entry.alreadySaved ? "secondary" : "success"
-                              }
-                              onClick={() =>
-                                !entry.alreadySaved &&
-                                handleSaveRecommendedWord(entry.item)
-                              }
-                              disabled={entry.alreadySaved}
-                            >
-                              {entry.alreadySaved ? "Saved" : "Save"}
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
 
                 <div className="flex gap-2">
                   {waitingForContinue ? (
@@ -1496,17 +1038,6 @@ export const StopGamePlay: React.FC<StopGamePlayProps> = ({
                       >
                         Continue
                       </Button>
-                      {pendingSaveWord && (
-                        <Button
-                          type="button"
-                          variant="secondary"
-                          className="py-3 px-6 whitespace-nowrap border-emerald-500/50 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all font-bold"
-                          onClick={handleSaveToVault}
-                          title="Save this word to your Vault"
-                        >
-                          💾 Save
-                        </Button>
-                      )}
                       {feedback?.type === "error" &&
                         !feedback.isSkip &&
                         inputValue.trim().length > 0 && (
