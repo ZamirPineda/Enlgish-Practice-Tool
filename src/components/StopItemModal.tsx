@@ -1,19 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { StopCategory, StopItem, WordFamily } from "@/types";
 import {
-  StopCategorySpotlight,
-  supportsStopCategorySpotlight,
-} from "@/components/game/StopCategorySpotlight";
-import {
   getCategoryTheme,
   getCategoryIcon,
   getFlagUrl,
 } from "@/lib/stopGameHelpers";
-import {
-  getCountryReferenceByCapital,
-  getCountryReferenceByName,
-  getNeighborReferences,
-} from "@/lib/geographyReference";
 
 interface StopItemModalProps {
   item: StopItem;
@@ -53,15 +44,6 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
 
   const countryName = category === "Countries" ? item.word : item.country;
   const flagUrl = getFlagUrl(countryName);
-  const geographyReference =
-    category === "Countries"
-      ? getCountryReferenceByName(item.word)
-      : category === "Capitals"
-        ? getCountryReferenceByCapital(item.word)
-        : null;
-  const neighborReferences = geographyReference
-    ? getNeighborReferences(geographyReference.canonicalCountry)
-    : [];
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -198,91 +180,6 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
 
           {/* Content Section */}
           <div className="space-y-4">
-            {supportsStopCategorySpotlight(category) && (
-              <StopCategorySpotlight
-                item={item}
-                category={category as StopCategory}
-                title="Category Spotlight"
-              />
-            )}
-
-            {geographyReference && (
-              <div className="bg-surface-2/50 rounded-xl p-4 border border-border">
-                <h3 className="text-sm font-bold text-text-muted uppercase tracking-wider mb-3">
-                  Geography Details
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="p-3 bg-surface-2 rounded border border-border">
-                    <div className="text-xs text-text-muted mb-1">
-                      {category === "Countries" ? "Country" : "Capital"}
-                    </div>
-                    <div className="font-bold text-text-primary text-base">
-                      {category === "Countries"
-                        ? geographyReference.canonicalCountry
-                        : item.word}
-                    </div>
-                    {category === "Countries" &&
-                    geographyReference.countryTranslation ? (
-                      <div className="text-xs text-text-secondary mt-1">
-                        {geographyReference.countryTranslation}
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="p-3 bg-surface-2 rounded border border-border">
-                    <div className="text-xs text-text-muted mb-1">
-                      {category === "Countries" ? "Capital" : "Country"}
-                    </div>
-                    <div className="font-bold text-accent text-base">
-                      {category === "Countries"
-                        ? geographyReference.capitalName || "Unknown"
-                        : geographyReference.canonicalCountry}
-                    </div>
-                    {category === "Countries" ? (
-                      geographyReference.capitalTranslation ? (
-                        <div className="text-xs text-text-secondary mt-1">
-                          {geographyReference.capitalTranslation}
-                        </div>
-                      ) : null
-                    ) : geographyReference.countryTranslation ? (
-                      <div className="text-xs text-text-secondary mt-1">
-                        {geographyReference.countryTranslation}
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
-
-                <div className="mt-4">
-                  <div className="text-xs text-text-muted mb-2 uppercase tracking-wider">
-                    Neighbor Countries
-                  </div>
-                  {neighborReferences.length > 0 ? (
-                    <div className="flex flex-wrap gap-2">
-                      {neighborReferences.map((neighbor) => (
-                        <div
-                          key={neighbor.canonicalCountry}
-                          className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-1 px-3 py-1 text-xs text-text-primary"
-                        >
-                          {neighbor.flagUrl ? (
-                            <img
-                              src={neighbor.flagUrl}
-                              alt=""
-                              className="w-5 h-3.5 rounded-[2px] object-cover"
-                            />
-                          ) : null}
-                          <span>{neighbor.canonicalCountry}</span>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-sm text-text-secondary">
-                      This location has no land borders in the shared geography
-                      reference.
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-
             {/* Special Layout for Verbs */}
             {isVerb && (verbForms.past || verbForms.participle) ? (
               <div className="bg-surface-2/50 rounded-xl p-4 border border-border">
@@ -337,6 +234,22 @@ export const StopItemModal: React.FC<StopItemModalProps> = ({
                 <p className="text-text-primary text-lg font-serif italic">
                   "{item.examSentence || item.example}"
                 </p>
+              </div>
+            )}
+
+            {/* Visual Associations (e.g. Colors, Countries placeholder) */}
+            {category === "Colors" && item.hex && (
+              <div className="flex items-center gap-4 bg-surface-2/50 p-4 rounded-xl border border-border">
+                <div
+                  className="w-16 h-16 rounded-full shadow-lg border-2 border-border"
+                  style={{ backgroundColor: item.hex }}
+                ></div>
+                <div>
+                  <h3 className="text-sm font-bold text-text-muted uppercase">
+                    Visual Color
+                  </h3>
+                  <p className="font-mono text-text-primary">{item.hex}</p>
+                </div>
               </div>
             )}
 

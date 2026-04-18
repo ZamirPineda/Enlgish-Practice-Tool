@@ -19,9 +19,13 @@ describe("DailySessionInsights", () => {
     render(<DailySessionInsights />);
 
     expect(
-      screen.getByText("Play 2 sessions with 70%+ accuracy to unlock daily reward."),
+      screen.getByText(
+        "Play 2 sessions with 70%+ accuracy to unlock daily reward.",
+      ),
     ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Claim +40 XP" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Claim +40 XP for daily session" }),
+    ).toBeDisabled();
   });
 
   it("claims reward once when eligible", () => {
@@ -44,14 +48,20 @@ describe("DailySessionInsights", () => {
 
     render(<DailySessionInsights />);
 
-    const claimButton = screen.getByRole("button", { name: "Claim +40 XP" });
+    const claimButton = screen.getByRole("button", {
+      name: "Claim +40 XP for daily session",
+    });
     expect(claimButton).toBeEnabled();
 
     act(() => {
       fireEvent.click(claimButton);
     });
 
-    expect(screen.getByRole("button", { name: "Reward Claimed" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", {
+        name: "Daily session reward already claimed",
+      }),
+    ).toBeDisabled();
     expect(localStorage.getItem("english-pal-global-xp")).toBe("40");
   });
 });

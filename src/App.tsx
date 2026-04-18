@@ -459,12 +459,10 @@ const App: React.FC = () => {
               <NavItem to="/docs?mode=game">🎯 Docs Hunt</NavItem>
               <NavItem to="/syntax-builder">⌨️ Syntax Builder</NavItem>
               <NavItem to="/bug-hunter">🐛 Bug Hunter</NavItem>
-              <NavItem to="/verb-patterns">🔀 Verb Patterns</NavItem>
               <NavItem to="/tech-hub">💻 Tech Hub</NavItem>
               <NavItem to="/diplomatic-reviewer">
                 💬 Diplomatic Reviewer
               </NavItem>
-              <NavItem to="/trivia">🧠 Trivia Quiz</NavItem>
             </NavGroup>
             <NavItem to="/roadmap">Roadmap</NavItem>
             <NavItem to="/content-curation">Curacion</NavItem>
@@ -547,12 +545,10 @@ const App: React.FC = () => {
                     <NavItem to="/docs?mode=game">🎯 Docs Hunt</NavItem>
                     <NavItem to="/syntax-builder">⌨️ Syntax Builder</NavItem>
                     <NavItem to="/bug-hunter">🐛 Bug Hunter</NavItem>
-                    <NavItem to="/verb-patterns">🔀 Verb Patterns</NavItem>
                     <NavItem to="/tech-hub">💻 Tech Hub</NavItem>
                     <NavItem to="/diplomatic-reviewer">
                       💬 Diplomatic Reviewer
                     </NavItem>
-                    <NavItem to="/trivia">🧠 Trivia Quiz</NavItem>
                   </div>
                   <NavItem to="/roadmap">Roadmap</NavItem>
                   <NavItem to="/content-curation">Curacion</NavItem>
@@ -637,14 +633,14 @@ const App: React.FC = () => {
                 {onboardingStep < ONBOARDING_STEPS.length - 1 ? (
                   <button
                     onClick={() => setOnboardingStep((step) => step + 1)}
-                    className="ml-auto px-4 py-2 rounded-lg bg-accent hover:bg-accent-hover text-white text-sm font-black transition-colors"
+                    className="ml-auto px-4 py-2 rounded-lg bg-accent hover:bg-accent-hover text-slate-900 text-sm font-black transition-colors"
                   >
                     Next
                   </button>
                 ) : (
                   <button
                     onClick={closeOnboarding}
-                    className="ml-auto px-4 py-2 rounded-lg bg-success hover:bg-success-hover text-white text-sm font-black transition-colors"
+                    className="ml-auto px-4 py-2 rounded-lg bg-success hover:bg-success-hover text-slate-900 text-sm font-black transition-colors"
                   >
                     Let’s go
                   </button>

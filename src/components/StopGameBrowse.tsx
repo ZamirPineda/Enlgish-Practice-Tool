@@ -20,7 +20,6 @@ import {
   PREDEFINED_ALL_ORDER,
 } from "@/lib/stopGameHelpers";
 import { buildVaultAddOptionsFromStopItem } from "@/lib/vaultEntries";
-import StopModeShowcase from "@/components/stop/StopModeShowcase";
 
 interface StopGameBrowseProps {
   onPlayWord: (word: string) => void;
@@ -153,15 +152,6 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
     shuffleSeed,
     viewMode,
   ]);
-
-  const visibleWordCount = useMemo(
-    () =>
-      Object.values(filteredCategoryData).reduce(
-        (sum, items) => sum + items.length,
-        0,
-      ),
-    [filteredCategoryData],
-  );
 
   useEffect(() => {
     setExpandedCategories({});
@@ -561,18 +551,6 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
       ) : (
         <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-6 bg-[var(--color-surface-2)]/50">
           <div className="max-w-7xl mx-auto pb-4">
-            <section className="mb-6">
-              <StopModeShowcase
-                viewMode={viewMode}
-                selectedLetter={selectedLetter}
-                selectedGroup={selectedGroup}
-                wordCount={visibleWordCount}
-                visibleCategoryCount={visibleCategories.length}
-                studyRevealAll={viewMode === "study" ? studyRevealAll : false}
-                studyAutoPlay={viewMode === "study" ? studyAutoPlay : false}
-                isShuffled={viewMode === "study" ? isShuffled : false}
-              />
-            </section>
             {currentData ? (
               <div
                 className={`grid ${viewMode === "study" ? "grid-cols-1 max-w-3xl mx-auto" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"} gap-6 animate-fade-in`}
@@ -599,9 +577,6 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                   const hasMore = items.length > displayLimit;
 
                   const theme = getCategoryTheme(category);
-                  const liveTranscript =
-                    frozenTranscript ||
-                    (finalTranscript || "") + (interimTranscript || "");
 
                   // Ghost Card Styling (for empty categories)
                   if (isEmpty) {
@@ -680,20 +655,16 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                             isSaved={savedWords.has(item.word)}
                             micState={micState}
                             transcript={
-                              practiceWord?.word === item.word
-                                ? liveTranscript
-                                : ""
+                              frozenTranscript ||
+                              (finalTranscript || "") +
+                                (interimTranscript || "")
                             }
-                            feedback={
-                              practiceWord?.word === item.word
-                                ? practiceFeedback
-                                : null
-                            }
+                            feedback={practiceFeedback}
                             isStudyMode={viewMode === "study"}
                             studyRevealAll={studyRevealAll}
                             studyAutoPlay={studyAutoPlay}
                             onDetailClick={
-                              viewMode === "browse" || viewMode === "study"
+                              viewMode === "study"
                                 ? (item) =>
                                     setSelectedItemForModal({ item, category })
                                 : undefined

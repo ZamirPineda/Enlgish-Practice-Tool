@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useMemo,
-  useState,
-  useCallback,
-} from "react";
+import React, { useRef, useEffect, useMemo, useState, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
@@ -67,9 +61,7 @@ const CODE_BUG_HUNTER_DIFFICULTY =
     defaultLevel: "normal",
   });
 
-const buildAdaptiveCodeBugRounds = (
-  rounds: CodeBugPrompt[],
-): CodeBugRound[] => {
+const buildAdaptiveCodeBugRounds = (rounds: CodeBugPrompt[]): CodeBugRound[] => {
   return rounds.map((round) => ({
     ...round,
     adaptiveLevel: mapDifficultyTierToAdaptiveLevel(round.difficultyTier),
@@ -91,31 +83,9 @@ const getLanguageColor = (language: string) => {
       return "text-green-400";
     case "sql":
       return "text-purple-400";
-    case "java":
-      return "text-orange-400";
-    case "golang":
-      return "text-cyan-400";
     default:
       return "text-text-primary";
   }
-};
-
-const LANGUAGE_CATEGORIES = (() => {
-  const langs = new Set(codeBugsData.map((b) => b.language));
-  return ["all", ...Array.from(langs).sort()] as const;
-})();
-
-const LANGUAGE_LABEL: Record<string, string> = {
-  all: "All",
-  tsx: "React/TSX",
-  typescript: "TypeScript",
-  javascript: "JavaScript",
-  python: "Python",
-  java: "Java",
-  css: "CSS",
-  sql: "SQL",
-  bash: "Bash",
-  golang: "Go",
 };
 
 const CodeBugHunterView: React.FC = () => {
@@ -135,21 +105,17 @@ const CodeBugHunterView: React.FC = () => {
   const [selectedLevel, setSelectedLevel] = useState<CodeBugHunterLevel>(
     resolveRoadmapLevel(roadmapConfig?.difficulty),
   );
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [timePreset, setTimePreset] = useState<TimePreset>("normal");
   const [hasStarted, setHasStarted] = useState(false);
   const rounds = useMemo(() => {
-    let pool = ADAPTIVE_CODE_BUG_ROUNDS.filter(
+    const levelRounds = ADAPTIVE_CODE_BUG_ROUNDS.filter(
       (item) => item.adaptiveLevel === selectedLevel,
     );
-    if (selectedCategory !== "all") {
-      const catPool = pool.filter((item) => item.language === selectedCategory);
-      if (catPool.length > 0) pool = catPool;
-    }
-    const filteredPool = pool.filter((item) =>
+    const filteredLevelRounds = levelRounds.filter((item) =>
       matchesRoadmapTags(item.tags, roadmapConfig?.tags || []),
     );
-    const candidateRounds = filteredPool.length > 0 ? filteredPool : pool;
+    const candidateRounds =
+      filteredLevelRounds.length > 0 ? filteredLevelRounds : levelRounds;
     const shuffled = [...candidateRounds];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -157,7 +123,7 @@ const CodeBugHunterView: React.FC = () => {
     }
     // Limit to 5 per session
     return shuffled.slice(0, SESSION_ROUND_LIMIT);
-  }, [roadmapConfig?.tags, selectedLevel, selectedCategory]);
+  }, [roadmapConfig?.tags, selectedLevel]);
 
   const [roundIndex, setRoundIndex] = useState(0);
   const sessionStartTime = useRef<number>(Date.now());
@@ -172,16 +138,12 @@ const CodeBugHunterView: React.FC = () => {
   const correctStreakRef = useRef(0);
 
   const round = rounds[roundIndex];
-  const roundTime = getTimeByPreset(
-    ROUND_TIME_SECONDS[selectedLevel],
-    timePreset,
-  );
+  const roundTime = getTimeByPreset(ROUND_TIME_SECONDS[selectedLevel], timePreset);
   const levelMultiplier = LEVEL_SCORE_MULTIPLIER[selectedLevel];
 
   const handleLevelSelect = (nextLevel: CodeBugHunterLevel) => {
-    setSelectedLevel(
-      (currentLevel) =>
-        CODE_BUG_HUNTER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
+    setSelectedLevel((currentLevel) =>
+      CODE_BUG_HUNTER_DIFFICULTY.setLevel(currentLevel, nextLevel).nextLevel,
     );
   };
 
@@ -266,23 +228,13 @@ const CodeBugHunterView: React.FC = () => {
         );
       }
     }
-  }, [
-    hasStarted,
-    submitted,
-    timeLeft,
-    round,
-    roundIndex,
-    rounds.length,
-    selectedLevel,
-  ]);
+  }, [hasStarted, submitted, timeLeft, round, roundIndex, rounds.length, selectedLevel]);
 
   if (!round) return null;
 
   const isCorrect = submitted && selectedLine === round.bugLineIndex;
   const basePoints = Math.round(BASE_POINTS_PER_CORRECT * levelMultiplier);
-  const timeBonus = Math.round(
-    timeLeft * TIME_BONUS_MULTIPLIER * levelMultiplier,
-  );
+  const timeBonus = Math.round(timeLeft * TIME_BONUS_MULTIPLIER * levelMultiplier);
 
   const startSession = useCallback(() => {
     sessionStartTime.current = Date.now();
@@ -486,23 +438,6 @@ const CodeBugHunterView: React.FC = () => {
     >
       <div className="space-y-3">
         <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
-          Tecnología / Lenguaje
-        </p>
-        <div className="flex justify-center flex-wrap gap-2">
-          {LANGUAGE_CATEGORIES.map((cat) => (
-            <Button
-              key={`cat-${cat}`}
-              size="sm"
-              variant={selectedCategory === cat ? "primary" : "secondary"}
-              onClick={() => setSelectedCategory(cat)}
-            >
-              {LANGUAGE_LABEL[cat] || cat}
-            </Button>
-          ))}
-        </div>
-      </div>
-      <div className="space-y-3">
-        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">
           Dificultad
         </p>
         <div className="flex justify-center flex-wrap gap-2">
@@ -552,8 +487,7 @@ const CodeBugHunterView: React.FC = () => {
         description="Encuentra y selecciona la línea de código que contiene el bug."
         meta={
           <p className="text-text-muted text-xs mt-1">
-            Nivel: {LEVEL_LABEL[selectedLevel]} | Hay exactamente 1 bug por
-            ronda.
+            Nivel: {LEVEL_LABEL[selectedLevel]} | Hay exactamente 1 bug por ronda.
           </p>
         }
         timeLeft={timeLeft}
