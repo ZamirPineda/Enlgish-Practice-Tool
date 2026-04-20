@@ -695,7 +695,6 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       {hasMore && (
                         <button
                           onClick={() => toggleCategory(category)}
-                          aria-expanded={isExpanded}
                           className="w-full py-3 bg-[var(--color-surface-1)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] text-xs font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 border-t border-[var(--color-border)]/50"
                         >
                           {isExpanded ? (
