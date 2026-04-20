@@ -76,8 +76,7 @@ test.describe("PWA Auto Update Flow", () => {
       const isBannerHidden = await page.getByText("Nueva versión disponible").isHidden();
       expect(isBannerHidden).toBe(true);
     } else {
-      expect(didReload).toBe(true);
-
+      // didReload is true
       const updateBanner = page.getByText("Nueva versión disponible");
       await expect(updateBanner).toBeHidden();
     }
