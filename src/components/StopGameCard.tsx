@@ -65,6 +65,7 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
         }}
+        aria-expanded={isOpen}
         className="text-[10px] uppercase font-bold text-text-muted hover:text-primary flex items-center gap-1 transition-colors"
       >
         {isOpen ? "Hide Family" : "Show Family 👨‍👩‍👧‍👦"}
