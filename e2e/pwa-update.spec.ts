@@ -7,9 +7,6 @@ test.describe("PWA Auto Update Flow", () => {
     // Navigate to a game route (active session)
     await page.goto("/#/stop?mode=game");
 
-    // Wait for the app's loading or splash screen to disappear
-    await page.waitForFunction(() => !document.querySelector('.splash-screen-or-loading'));
-
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
 
@@ -48,9 +45,6 @@ test.describe("PWA Auto Update Flow", () => {
   }) => {
     // Navigate to home (not an active session)
     await page.goto("/#/");
-
-    // Wait for the app's loading or splash screen to disappear
-    await page.waitForFunction(() => !document.querySelector('.splash-screen-or-loading'));
 
     await expect(page.getByRole("banner")).toBeVisible();
 
