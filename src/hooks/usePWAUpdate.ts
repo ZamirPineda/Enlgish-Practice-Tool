@@ -59,6 +59,19 @@ export const usePWAUpdate = () => {
       wb.register().catch((err) => {
         console.error("Service worker registration failed:", err);
       });
+    } else {
+      // Expose for tests even in non-prod
+      const triggerUpdate = () => {
+        if (isActiveSession()) {
+          setUpdateAvailable(true);
+        } else {
+          if (!hasReloaded.current) {
+            hasReloaded.current = true;
+            window.location.reload();
+          }
+        }
+      };
+      (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
     }
   }, []);
 

@@ -42,3 +42,6 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2025-04-21 - Accessible Toggle Buttons with aria-expanded
+**Learning:** Expanding/collapsing sections requires explicit `aria-expanded` state on the toggling button. Toggles for purely visual families/categories should be marked with this property and an accompanying `aria-label` when the text content is either mostly emoji ("Show Family 👨‍👩‍👧‍👦") or overly generic ("Collapse").
+**Action:** Add `aria-expanded={isOpen}` and a descriptive `aria-label` to any button whose primary purpose is toggling the visibility of an adjacent section.
