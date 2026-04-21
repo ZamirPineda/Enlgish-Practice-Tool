@@ -27,24 +27,24 @@ export const usePWAUpdate = () => {
   const hasReloaded = useRef(false);
 
   useEffect(() => {
-    const triggerUpdate = () => {
-      if (isActiveSession()) {
-        setUpdateAvailable(true);
-      } else {
-        if (!hasReloaded.current) {
-          hasReloaded.current = true;
-          if (wbRef.current) wbRef.current.messageSkipWaiting();
-          window.location.reload();
-        }
-      }
-    };
-
-    // Expose to window for Playwright E2E tests to mock SW update
-    (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
-
     if ("serviceWorker" in navigator && import.meta.env.PROD) {
       const wb = new Workbox("/sw.js");
       wbRef.current = wb;
+
+      const triggerUpdate = () => {
+        if (isActiveSession()) {
+          setUpdateAvailable(true);
+        } else {
+          if (!hasReloaded.current) {
+            hasReloaded.current = true;
+            if (wbRef.current) wbRef.current.messageSkipWaiting();
+            window.location.reload();
+          }
+        }
+      };
+
+      // Expose to window for Playwright E2E tests to mock SW update
+      (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
 
       wb.addEventListener("waiting", triggerUpdate);
 
@@ -59,6 +59,19 @@ export const usePWAUpdate = () => {
       wb.register().catch((err) => {
         console.error("Service worker registration failed:", err);
       });
+    } else {
+      // Expose for tests even in non-prod
+      const triggerUpdate = () => {
+        if (isActiveSession()) {
+          setUpdateAvailable(true);
+        } else {
+          if (!hasReloaded.current) {
+            hasReloaded.current = true;
+            window.location.reload();
+          }
+        }
+      };
+      (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
     }
   }, []);
 
