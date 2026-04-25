@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2026-03-12 - [Aria Pressed for Active State Buttons]
+
+**Learning:** Mutually exclusive filter and tab buttons (like the category filters in `StatsView`) often lack `aria-pressed` to indicate their selected state to screen readers, making it difficult for users to know which filter is currently active.
+**Action:** When implementing or fixing tab-like or mutually exclusive filter button groups, always add the `aria-pressed={isActive}` attribute to clearly communicate the active state.
