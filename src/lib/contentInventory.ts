@@ -118,7 +118,10 @@ const hashString = (value: string): string => {
     hash = (hash << 5) - hash + value.charCodeAt(index);
     hash |= 0;
   }
-  return Math.abs(hash).toString(36).padStart(4, "0");
+  const result = Math.abs(hash).toString(36);
+  // Ensure it's at least 4 characters for z.string().min(4) compatibility.
+  // We use a prefix that still guarantees determinism for the same input.
+  return result.length < 4 ? result.padStart(4, "x") : result;
 };
 
 export const createContentFingerprint = (
