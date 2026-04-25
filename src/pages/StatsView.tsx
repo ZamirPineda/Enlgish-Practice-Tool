@@ -746,12 +746,14 @@ const StatsView: React.FC = () => {
           <div className="flex bg-surface-2 p-1 rounded-xl w-fit">
             <button
               onClick={() => setActiveTab("overview")}
+              aria-pressed={activeTab === "overview"}
               className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "overview" ? "bg-surface-1 text-text-primary shadow-sm" : "text-text-muted hover:text-text-primary"}`}
             >
               Overview
             </button>
             <button
               onClick={() => setActiveTab("charts")}
+              aria-pressed={activeTab === "charts"}
               className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "charts" ? "bg-surface-1 text-text-primary shadow-sm" : "text-text-muted hover:text-text-primary"}`}
             >
               Stats for Nerds
@@ -763,6 +765,7 @@ const StatsView: React.FC = () => {
               <button
                 key={filter}
                 onClick={() => setCategoryFilter(filter)}
+                aria-pressed={categoryFilter === filter}
                 className={`px-4 py-2 rounded-lg text-sm font-bold transition-all capitalize ${categoryFilter === filter ? "bg-accent text-white shadow-sm" : "text-text-muted hover:text-text-primary"}`}
               >
                 {filter}
@@ -974,12 +977,14 @@ const StatsView: React.FC = () => {
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 <button
                   onClick={() => setAnalyticsRange("week")}
+                  aria-pressed={analyticsRange === "week"}
                   className={`min-h-[36px] px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${analyticsRange === "week" ? "bg-accent text-white border-accent" : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"}`}
                 >
                   This week
                 </button>
                 <button
                   onClick={() => setAnalyticsRange("30d")}
+                  aria-pressed={analyticsRange === "30d"}
                   className={`min-h-[36px] px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${analyticsRange === "30d" ? "bg-accent text-white border-accent" : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"}`}
                 >
                   Last 30 days
@@ -992,6 +997,7 @@ const StatsView: React.FC = () => {
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => setFocusRouteFilter("all")}
+                    aria-pressed={focusRouteFilter === "all"}
                     className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
                       focusRouteFilter === "all"
                         ? "bg-accent text-white border-accent"
@@ -1004,6 +1010,7 @@ const StatsView: React.FC = () => {
                     <button
                       key={`focus-${route}`}
                       onClick={() => setFocusRouteFilter(route)}
+                      aria-pressed={focusRouteFilter === route}
                       className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
                         focusRouteFilter === route
                           ? "bg-accent text-white border-accent"
@@ -1263,6 +1270,7 @@ const StatsView: React.FC = () => {
                     <div className="flex flex-wrap gap-2">
                       <button
                         onClick={() => setSelectedErrorGame("all")}
+                        aria-pressed={selectedErrorGame === "all"}
                         className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
                           selectedErrorGame === "all"
                             ? "bg-accent text-white border-accent"
@@ -1275,6 +1283,7 @@ const StatsView: React.FC = () => {
                         <button
                           key={`filter-${game}`}
                           onClick={() => setSelectedErrorGame(game)}
+                          aria-pressed={selectedErrorGame === game}
                           className={`min-h-[32px] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${
                             selectedErrorGame === game
                               ? "bg-accent text-white border-accent"
