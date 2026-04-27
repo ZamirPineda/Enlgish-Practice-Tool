@@ -19,7 +19,9 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/vault");
-    await page.waitForLoadState("networkidle");
+    await page.waitForFunction(
+      () => !document.querySelector(".splash-screen-or-loading"),
+    );
 
     const results = await new AxeBuilder({ page }).analyze();
 
@@ -33,7 +35,16 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/calculus");
-    await page.waitForLoadState("networkidle");
+    await page.waitForFunction(
+      () => {
+        const loader = document.querySelector(".splash-screen-or-loading");
+        if (loader) return false;
+        // Ensure page is somewhat idle before doing axe builder to prevent context destruction
+        return document.readyState === "complete";
+      },
+      { timeout: 10000 },
+    );
+    await page.waitForTimeout(1000); // extra buffer for any React rendering frames to settle
 
     const results = await new AxeBuilder({ page }).analyze();
 
