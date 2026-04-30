@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2026-04-30 - [Card Div to Button Pattern]\n\n**Learning:** Components designed as interactive "cards" (like ) often use  elements with  handlers but lack necessary keyboard accessibility attributes (role, tabIndex, keydown handlers). This prevents screen reader recognition and keyboard activation.\n**Action:** When a  is styled as an interactive card or button, ALWAYS add , , an  listener supporting 'Enter' and 'Space' (with  for Space), an , and  ring styles.
+## 2026-03-12 - [Card Div to Button Pattern]
+
+**Learning:** Components designed as interactive "cards" (like `MathFlashCard`) often use `div` elements with `onClick` handlers but lack necessary keyboard accessibility attributes (role, tabIndex, keydown handlers). This prevents screen reader recognition and keyboard activation.
+**Action:** When a `div` is styled as an interactive card or button, ALWAYS add `role="button"`, `tabIndex={0}`, an `onKeyDown` listener supporting 'Enter' and 'Space' (with `e.preventDefault()` for Space), an `aria-label`, and `focus-visible` ring styles.
