@@ -517,6 +517,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       key={letter}
                       onClick={() => hasData && setSelectedLetter(letter)}
                       disabled={!hasData}
+                      aria-pressed={isSelected}
                       className={`
                                           min-h-[36px] min-w-[32px] sm:h-9 sm:w-8 rounded-md font-bold text-xs sm:text-sm transition-all active:scale-[0.98] flex items-center justify-center border-b-2 relative overflow-hidden
                                           ${
@@ -547,6 +548,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                     <button
                       key={group}
                       onClick={() => setSelectedGroup(group)}
+                      aria-pressed={isSelected}
                       className={`
                                           min-h-[36px] px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all active:scale-[0.98] whitespace-nowrap border
                                           ${
@@ -696,6 +698,16 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                         <button
                           onClick={() => toggleCategory(category)}
                           className="w-full py-3 bg-[var(--color-surface-1)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] text-xs font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 border-t border-[var(--color-border)]/50"
+                          aria-expanded={isExpanded}
+                          aria-label={
+                            isExpanded
+                              ? "Collapse " + category
+                              : "Expand " +
+                                category +
+                                " to show " +
+                                hiddenCount +
+                                " more"
+                          }
                         >
                           {isExpanded ? (
                             <>
