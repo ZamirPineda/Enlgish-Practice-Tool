@@ -405,7 +405,6 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                         title={isShuffled ? "Unshuffle" : "Shuffle Words"}
                         aria-label="Shuffle Words"
                         aria-pressed={isShuffled}
-                        aria-pressed={isShuffled}
                       >
                         🔀
                       </button>
@@ -418,7 +417,6 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                             : "Enable Auto-play Audio"
                         }
                         aria-label="Auto-play Audio"
-                        aria-pressed={studyAutoPlay}
                         aria-pressed={studyAutoPlay}
                       >
                         {studyAutoPlay ? "🔊" : "🔈"}
@@ -519,7 +517,6 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       key={letter}
                       onClick={() => hasData && setSelectedLetter(letter)}
                       disabled={!hasData}
-                      aria-pressed={isSelected}
                       aria-pressed={isSelected}
                       className={`
                                           min-h-[36px] min-w-[32px] sm:h-9 sm:w-8 rounded-md font-bold text-xs sm:text-sm transition-all active:scale-[0.98] flex items-center justify-center border-b-2 relative overflow-hidden
