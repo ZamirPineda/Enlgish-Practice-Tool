@@ -289,6 +289,13 @@ const DailyProgressWidget: React.FC = () => {
           disabled={
             !sessionSummary.rewardEligible || sessionSummary.rewardClaimed
           }
+          aria-label={
+            sessionSummary.rewardClaimed
+              ? "Daily session reward claimed"
+              : sessionSummary.rewardEligible
+                ? `Claim daily session reward of ${sessionSummary.rewardXp} XP`
+                : "Play 2 sessions with 70%+ accuracy to unlock daily reward"
+          }
           className={`inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-black transition-colors ${sessionSummary.rewardEligible && !sessionSummary.rewardClaimed ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-surface-1 text-text-muted border border-border"}`}
         >
           <Award className="w-4 h-4" />
@@ -332,6 +339,13 @@ const DailyProgressWidget: React.FC = () => {
                 type="button"
                 onClick={() => handleClaimWeeklyTier(tier.id)}
                 disabled={!tier.eligible || tier.claimed}
+                aria-label={
+                  tier.claimed
+                    ? `Weekly reward ${tier.title} claimed`
+                    : tier.eligible
+                      ? `Claim ${tier.title} weekly reward of ${tier.rewardXp} XP`
+                      : `Complete ${tier.requiredDays} days to unlock ${tier.title} reward`
+                }
                 className={`w-full rounded-md px-2 py-1 text-[11px] font-black transition-colors ${tier.eligible && !tier.claimed ? "bg-sky-500 hover:bg-sky-600 text-white" : "bg-surface-2 text-text-muted border border-border"}`}
               >
                 {tier.claimed
