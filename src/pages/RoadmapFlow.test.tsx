@@ -117,41 +117,56 @@ describe("Roadmap sequential flow", () => {
 
     await recordMastery("Rephrase concise answers", 80);
 
-    expect(
-      screen.getByRole("button", {
-        name: /Abrir: Transform follow-up answers/i,
-      }),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", {
+          name: /Abrir: Transform follow-up answers/i,
+        }),
+      ).toBeInTheDocument();
+    });
 
     await recordMastery("Transform follow-up answers", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Story frame builder/i }),
-    ).toBeInTheDocument();
+    // wait for layout switch due to react concurrent rendering before asserting on the button
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: /Abrir: Story frame builder/i }),
+      ).toBeInTheDocument();
+    });
 
     await recordMastery("Story frame builder", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Story error cleanup/i }),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: /Abrir: Story error cleanup/i }),
+      ).toBeInTheDocument();
+    });
 
     await recordMastery("Story error cleanup", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Story rephrase variants/i }),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: /Abrir: Story rephrase variants/i }),
+      ).toBeInTheDocument();
+    });
 
     await recordMastery("Story rephrase variants", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Story follow-up transform/i }),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", {
+          name: /Abrir: Story follow-up transform/i,
+        }),
+      ).toBeInTheDocument();
+    });
 
     await recordMastery("Story follow-up transform", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Panel meeting builder/i }),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: /Abrir: Panel meeting builder/i }),
+      ).toBeInTheDocument();
+    });
 
     await recordMastery("Panel meeting builder", 90);
 
