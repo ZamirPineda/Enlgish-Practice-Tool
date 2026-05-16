@@ -22,6 +22,8 @@ test.describe("Accessibility (A11y) Standards", () => {
     await page.waitForFunction(
       () => !document.querySelector(".splash-screen-or-loading"),
     );
+    // Add extra sleep because concurrent rendering updates destroy the context leading to axe failing.
+    await page.waitForTimeout(2000);
 
     const results = await new AxeBuilder({ page }).analyze();
 
