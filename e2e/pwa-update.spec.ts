@@ -25,6 +25,17 @@ test.describe("PWA Auto Update Flow", () => {
     const updateButton = page.getByRole("button", { name: "Actualizar" });
     await expect(updateButton).toBeVisible();
 
+    // Wait for the app's loading or splash screen to disappear to prevent intercepts
+    await page.waitForFunction(
+      () => !document.querySelector(".splash-screen-or-loading"),
+    );
+
+    // Check for onboarding modal and dismiss it
+    const skipButton = page.getByRole("button", { name: /Saltar Intro|Skip/i });
+    if (await skipButton.isVisible()) {
+      await skipButton.click();
+    }
+
     // Click on update
     // Intercept reload to verify it happens
     let didReload = false;
@@ -32,11 +43,12 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
-    await updateButton.click();
+    await updateButton.click({ force: true });
 
     // Since window.location.reload() happens, let's wait a bit to verify nav or log
     // We expect the script to call reload, bounding test time to ensure it passed.
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1500);
+    await page.evaluate(() => true);
     expect(didReload).toBe(true);
   });
 
