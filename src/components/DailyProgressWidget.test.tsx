@@ -95,7 +95,9 @@ describe("DailyProgressWidget", () => {
       fireEvent.click(rewardButton);
     });
 
-    expect(screen.getByRole("button", { name: "Daily reward already claimed" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Daily reward already claimed" }),
+    ).toBeDisabled();
     expect(localStorage.getItem("english-pal-global-xp")).toBe("40");
   });
 
@@ -126,6 +128,10 @@ describe("DailyProgressWidget", () => {
     });
 
     expect(localStorage.getItem("english-pal-global-xp")).toBe("30");
-    expect(screen.getByRole("button", { name: "Starter tier reward already claimed" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", {
+        name: "Starter tier reward already claimed",
+      }),
+    ).toBeDisabled();
   });
 });

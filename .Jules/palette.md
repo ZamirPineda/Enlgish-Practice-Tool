@@ -44,5 +44,6 @@
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
 
 ## 2026-03-12 - [Aria Label added for Dynamic States]
+
 **Learning:** The application uses buttons with dynamic state/text to indicate status conditions (e.g. disabled buttons telling users what needs to be accomplished before they can click the button). These states should be translated to explicit ARIA labels.
 **Action:** When updating these components (e.g. `DailyProgressWidget.tsx`), provide clear, condition-specific `aria-label` attributes to ensure screen reader users receive actionable context about why a button is disabled, not just that it is 'disabled'.
