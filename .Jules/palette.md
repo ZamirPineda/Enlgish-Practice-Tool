@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Aria Label added for Dynamic Reward Claim Buttons]
+
+**Learning:** Buttons with dynamic text indicating different states (like "Reward Claimed", "Claim XP", or "Locked") lack explicit aria-labels, making it difficult for screen reader users to understand their purpose and disabled state reasoning (e.g. why they can't claim a reward yet).
+**Action:** Always add dynamic aria-labels to buttons whose text and disabled state change conditionally, clearly explaining the requirements or the current state (like "Daily session reward already claimed" or "Play 2 sessions with 70%+ accuracy to unlock daily reward").
