@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-05-25 - [Interactive Card Accessibility Pattern]
+
+**Learning:** `div` elements used as interactive cards (e.g., `StopGameCard`) with `onClick` often miss full semantic roles and proper focus management, failing keyboard navigation or screen reader experiences.
+**Action:** When making a non-interactive element like a `div` act as a button, add `role="button"`, `tabIndex={0}`, and handle `onKeyDown` for both 'Enter' and 'Space' keys. Ensure `e.preventDefault()` is called on 'Space' to prevent native page scrolling.
