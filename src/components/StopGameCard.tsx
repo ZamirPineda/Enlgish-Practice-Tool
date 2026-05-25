@@ -281,16 +281,19 @@ export const StopGameCard: React.FC<StopGameCardProps> = ({
     }
   };
 
+  const isInteractive = isStudyMode || !!onDetailClick;
+
   return (
     <div
       onClick={handleCardClick}
       onKeyDown={(e) => {
-        if (isStudyMode && (e.key === "Enter" || e.key === " ")) {
+        if (isInteractive && (e.key === "Enter" || e.key === " ")) {
           e.preventDefault();
           handleCardClick();
         }
       }}
-      tabIndex={isStudyMode ? 0 : undefined}
+      tabIndex={isInteractive ? 0 : undefined}
+      role={isInteractive ? "button" : undefined}
       className={`study-card flex flex-col group bg-surface-1/40 p-2.5 rounded-lg border transition-all hover:bg-surface-2 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary ${theme.glow} ${isPracticing ? "border-primary/50 bg-surface-2" : isSaved ? "border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.1)]" : "border-transparent hover:border-border"} ${onDetailClick || (isStudyMode && !studyRevealAll && !isRevealed) ? "cursor-pointer hover:scale-[1.02]" : ""}`}
     >
       <div className="flex items-center justify-between">
