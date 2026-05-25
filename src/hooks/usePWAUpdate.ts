@@ -27,8 +27,8 @@ export const usePWAUpdate = () => {
   const hasReloaded = useRef(false);
 
   useEffect(() => {
-    if ("serviceWorker" in navigator && import.meta.env.PROD) {
-      const wb = new Workbox("/sw.js");
+    if ("serviceWorker" in navigator) {
+      const wb = import.meta.env.PROD ? new Workbox("/sw.js") : null;
       wbRef.current = wb;
 
       const triggerUpdate = () => {
@@ -46,19 +46,21 @@ export const usePWAUpdate = () => {
       // Expose to window for Playwright E2E tests to mock SW update
       (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
 
-      wb.addEventListener("waiting", triggerUpdate);
+      if (wb) wb.addEventListener("waiting", triggerUpdate);
 
-      wb.addEventListener("installed", (event) => {
-        if (event.isUpdate) {
-          triggerUpdate();
-        }
-      });
+      if (wb)
+        wb.addEventListener("installed", (event: any) => {
+          if (event.isUpdate) {
+            triggerUpdate();
+          }
+        });
 
-      wb.addEventListener("controlling", triggerUpdate);
+      if (wb) wb.addEventListener("controlling", triggerUpdate);
 
-      wb.register().catch((err) => {
-        console.error("Service worker registration failed:", err);
-      });
+      if (wb)
+        wb.register().catch((err: any) => {
+          console.error("Service worker registration failed:", err);
+        });
     }
   }, []);
 
