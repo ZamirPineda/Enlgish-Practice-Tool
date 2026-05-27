@@ -66,8 +66,16 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
           setIsOpen(!isOpen);
         }}
         className="text-[10px] uppercase font-bold text-text-muted hover:text-primary flex items-center gap-1 transition-colors"
+        aria-expanded={isOpen}
+        aria-label={isOpen ? "Hide word family" : "Show word family"}
       >
-        {isOpen ? "Hide Family" : "Show Family 👨‍👩‍👧‍👦"}
+        {isOpen ? (
+          "Hide Family"
+        ) : (
+          <>
+            Show Family <span aria-hidden="true">👨‍👩‍👧‍👦</span>
+          </>
+        )}
         <ChevronDownIcon
           className={`w-3 h-3 transform transition-transform ${isOpen ? "rotate-180" : ""}`}
         />
