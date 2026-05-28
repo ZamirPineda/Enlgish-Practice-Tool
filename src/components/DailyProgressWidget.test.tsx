@@ -63,7 +63,7 @@ describe("DailyProgressWidget", () => {
     );
 
     const rewardButtonBefore = screen.getByRole("button", {
-      name: "Claim +40 XP",
+      name: "Complete 2 sessions with 70%+ accuracy to unlock daily reward",
     });
     expect(rewardButtonBefore).toBeDisabled();
 
@@ -87,7 +87,7 @@ describe("DailyProgressWidget", () => {
     expect(screen.getByText("Daily session reward ready.")).toBeInTheDocument();
 
     const rewardButton = screen.getByRole("button", {
-      name: "Claim +40 XP",
+      name: "Claim 40 XP daily reward",
     });
     expect(rewardButton).toBeEnabled();
 
@@ -95,7 +95,9 @@ describe("DailyProgressWidget", () => {
       fireEvent.click(rewardButton);
     });
 
-    expect(screen.getByRole("button", { name: "Reward Claimed" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Daily reward claimed" }),
+    ).toBeDisabled();
     expect(localStorage.getItem("english-pal-global-xp")).toBe("40");
   });
 
@@ -118,7 +120,7 @@ describe("DailyProgressWidget", () => {
     expect(screen.getByText(/3 \/ 7 active days/i)).toBeInTheDocument();
 
     const weeklyClaimButton = screen.getAllByRole("button", {
-      name: "Claim Reward",
+      name: "Claim Starter reward: 30 XP",
     })[0];
 
     act(() => {
@@ -126,6 +128,8 @@ describe("DailyProgressWidget", () => {
     });
 
     expect(localStorage.getItem("english-pal-global-xp")).toBe("30");
-    expect(screen.getByRole("button", { name: "Claimed" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Starter reward claimed" }),
+    ).toBeDisabled();
   });
 });
