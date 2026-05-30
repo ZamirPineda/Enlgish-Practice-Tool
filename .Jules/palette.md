@@ -42,3 +42,11 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2026-05-30 - [Interactive Card Accessibility Pattern]
+
+**Learning:** When turning complex  components into clickable cards (like flashcards), developers often rely on  without adding keyboard support or semantic roles, making them completely inaccessible to screen readers and keyboard users.
+**Action:** When creating an interactive card from a , always add , , an appropriate , and an  handler that maps the  and  keys to the click action. Always remember to call  on  to stop the page from scrolling.
+## 2026-05-30 - [Interactive Card Accessibility Pattern]
+
+**Learning:** When turning complex div components into clickable cards (like flashcards), developers often rely on onClick without adding keyboard support or semantic roles, making them completely inaccessible to screen readers and keyboard users.
+**Action:** When creating an interactive card from a div, always add role='button', tabIndex={0}, an appropriate aria-label, and an onKeyDown handler that maps the Enter and Space keys to the click action. Always remember to call e.preventDefault() on Space to stop the page from scrolling.
