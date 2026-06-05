@@ -129,13 +129,13 @@ describe("Roadmap sequential flow", () => {
       screen.getByRole("button", { name: /Abrir: Story frame builder/i }),
     ).toBeInTheDocument();
 
-    await recordMastery("Story frame builder", 80);
+    await recordMastery("Story frame builder", 78);
 
     expect(
       screen.getByRole("button", { name: /Abrir: Story error cleanup/i }),
     ).toBeInTheDocument();
 
-    await recordMastery("Story error cleanup", 80);
+    await recordMastery("Story error cleanup", 78);
 
     expect(
       screen.getByRole("button", { name: /Abrir: Story rephrase variants/i }),
