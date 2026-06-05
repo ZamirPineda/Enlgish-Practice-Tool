@@ -562,7 +562,12 @@ const StatsView: React.FC = () => {
         categoryFilter,
         focusRouteFilter,
       }),
-    [filteredAnalytics, contentTelemetryAvailableItems, categoryFilter, focusRouteFilter],
+    [
+      filteredAnalytics,
+      contentTelemetryAvailableItems,
+      categoryFilter,
+      focusRouteFilter,
+    ],
   );
   const previousContentTelemetrySummary = useMemo(
     () =>
@@ -572,7 +577,12 @@ const StatsView: React.FC = () => {
         categoryFilter,
         focusRouteFilter,
       }),
-    [previousAnalytics, contentTelemetryAvailableItems, categoryFilter, focusRouteFilter],
+    [
+      previousAnalytics,
+      contentTelemetryAvailableItems,
+      categoryFilter,
+      focusRouteFilter,
+    ],
   );
   const contentTelemetryRouteSummary = useMemo(
     () =>
@@ -747,12 +757,14 @@ const StatsView: React.FC = () => {
             <button
               onClick={() => setActiveTab("overview")}
               className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "overview" ? "bg-surface-1 text-text-primary shadow-sm" : "text-text-muted hover:text-text-primary"}`}
+              aria-pressed={activeTab === "overview"}
             >
               Overview
             </button>
             <button
               onClick={() => setActiveTab("charts")}
               className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "charts" ? "bg-surface-1 text-text-primary shadow-sm" : "text-text-muted hover:text-text-primary"}`}
+              aria-pressed={activeTab === "charts"}
             >
               Stats for Nerds
             </button>
@@ -764,6 +776,7 @@ const StatsView: React.FC = () => {
                 key={filter}
                 onClick={() => setCategoryFilter(filter)}
                 className={`px-4 py-2 rounded-lg text-sm font-bold transition-all capitalize ${categoryFilter === filter ? "bg-accent text-white shadow-sm" : "text-text-muted hover:text-text-primary"}`}
+                aria-pressed={categoryFilter === filter}
               >
                 {filter}
               </button>
@@ -975,12 +988,14 @@ const StatsView: React.FC = () => {
                 <button
                   onClick={() => setAnalyticsRange("week")}
                   className={`min-h-[36px] px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${analyticsRange === "week" ? "bg-accent text-white border-accent" : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"}`}
+                  aria-pressed={analyticsRange === "week"}
                 >
                   This week
                 </button>
                 <button
                   onClick={() => setAnalyticsRange("30d")}
                   className={`min-h-[36px] px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-widest border transition-colors ${analyticsRange === "30d" ? "bg-accent text-white border-accent" : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"}`}
+                  aria-pressed={analyticsRange === "30d"}
                 >
                   Last 30 days
                 </button>
@@ -997,6 +1012,7 @@ const StatsView: React.FC = () => {
                         ? "bg-accent text-white border-accent"
                         : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"
                     }`}
+                    aria-pressed={focusRouteFilter === "all"}
                   >
                     All routes
                   </button>
@@ -1009,6 +1025,7 @@ const StatsView: React.FC = () => {
                           ? "bg-accent text-white border-accent"
                           : "bg-surface-2 text-text-secondary border-border hover:bg-surface-hover"
                       }`}
+                      aria-pressed={focusRouteFilter === route}
                     >
                       {DAILY_LOOP_FOCUS_LABEL[route]}
                     </button>
@@ -1182,7 +1199,8 @@ const StatsView: React.FC = () => {
                   <p
                     className={`text-xs mt-1 ${getDeltaClass(coverageRateDelta)}`}
                   >
-                    vs prev: {formatDelta(roundToOneDecimal(coverageRateDelta))}%
+                    vs prev: {formatDelta(roundToOneDecimal(coverageRateDelta))}
+                    %
                   </p>
                 </article>
               </div>
@@ -1201,7 +1219,8 @@ const StatsView: React.FC = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                     {contentTelemetryRouteSummary.map((item) => {
                       const isHighlighted =
-                        focusRouteFilter === "all" || focusRouteFilter === item.route;
+                        focusRouteFilter === "all" ||
+                        focusRouteFilter === item.route;
 
                       return (
                         <article
@@ -1217,7 +1236,8 @@ const StatsView: React.FC = () => {
                             Coverage: {item.coverageRate}%
                           </p>
                           <p className="text-xs text-text-secondary mt-1">
-                            Unique: {item.uniqueSelected} / {item.availableItems}
+                            Unique: {item.uniqueSelected} /{" "}
+                            {item.availableItems}
                           </p>
                           <p className="text-xs text-amber-400 mt-1 uppercase font-bold tracking-widest">
                             Repeat: {item.repeatRate}%
@@ -1268,6 +1288,7 @@ const StatsView: React.FC = () => {
                             ? "bg-accent text-white border-accent"
                             : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"
                         }`}
+                        aria-pressed={selectedErrorGame === "all"}
                       >
                         All games
                       </button>
@@ -1280,6 +1301,7 @@ const StatsView: React.FC = () => {
                               ? "bg-accent text-white border-accent"
                               : "bg-surface-1 text-text-secondary border-border hover:bg-surface-hover"
                           }`}
+                          aria-pressed={selectedErrorGame === game}
                         >
                           {prettifyAnalyticsLabel(game)}
                         </button>
