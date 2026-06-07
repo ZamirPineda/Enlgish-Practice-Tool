@@ -695,17 +695,26 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       {hasMore && (
                         <button
                           onClick={() => toggleCategory(category)}
+                          aria-expanded={isExpanded}
+                          aria-controls={`cat-${category}`}
+                          aria-label={
+                            isExpanded
+                              ? `Collapse ${category}`
+                              : `Show ${hiddenCount} more ${category}`
+                          }
                           className="w-full py-3 bg-[var(--color-surface-1)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] text-xs font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 border-t border-[var(--color-border)]/50"
                         >
                           {isExpanded ? (
                             <>
-                              <span>Collapse</span>
-                              <ChevronUpIcon />
+                              <span aria-hidden="true">Collapse</span>
+                              <ChevronUpIcon aria-hidden="true" />
                             </>
                           ) : (
                             <>
-                              <span>Show {hiddenCount} More</span>
-                              <ChevronDownIcon />
+                              <span aria-hidden="true">
+                                Show {hiddenCount} More
+                              </span>
+                              <ChevronDownIcon aria-hidden="true" />
                             </>
                           )}
                         </button>
