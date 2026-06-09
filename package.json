@@ -92,7 +92,7 @@
       "serialize-javascript@<=7.0.2": "7.0.3",
       "picomatch": "^4.0.4",
       "happy-dom": "^20.8.9",
-      "lodash": "^4.18.0",
+      "lodash": "4.18.1",
       "vite": "^6.4.2",
       "flatted": "^3.4.2",
       "undici": "^7.24.0"
