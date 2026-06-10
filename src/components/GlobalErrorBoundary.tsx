@@ -59,6 +59,7 @@ class GlobalErrorBoundary extends React.Component<Props, State> {
                 type="button"
                 onClick={() => window.location.reload()}
                 className="px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 font-semibold"
+                aria-label="Reload page"
               >
                 Reload
               </button>
@@ -66,6 +67,7 @@ class GlobalErrorBoundary extends React.Component<Props, State> {
                 type="button"
                 onClick={this.handleReportIssue}
                 className="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-semibold"
+                aria-label="Report issue"
               >
                 Report issue
               </button>

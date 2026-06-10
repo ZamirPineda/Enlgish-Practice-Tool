@@ -92,6 +92,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         <button
           onClick={onExit}
           className="text-slate-400 hover:text-white transition-colors"
+          aria-label="Exit math flashcards"
         >
           ✕ Salir
         </button>
@@ -152,6 +153,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   handlePrev();
                 }}
                 className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                aria-label="Previous card"
               >
                 Anterior
               </button>
@@ -161,6 +163,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   handleNext();
                 }}
                 className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                aria-label="Next card"
               >
                 Siguiente
               </button>
