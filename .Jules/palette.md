@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Collapsible Component Accessibility]
+
+**Learning:** Buttons that toggle visibility of content (expand/collapse) must include the `aria-expanded` attribute mapped to their state and `aria-controls` pointing to the conditionally rendered panel's ID (use React's `useId()` for repeatable components like cards).
+**Action:** When implementing collapsible components or updating existing ones (like the Word Family viewer in StopGameCard), ensure `aria-expanded`, `aria-controls`, and an ID are present. Additionally, if the button contains complex emojis, wrap them in `<span aria-hidden="true">` to prevent verbose screen reader announcements.
