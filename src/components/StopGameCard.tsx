@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useId } from "react";
 import { StopItem, WordFamily, StopCategory, IrregularVerb } from "@/types";
 import {
   getCategoryIcon,
@@ -58,7 +58,7 @@ interface StopGameCardProps {
 
 const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const contentId = React.useId();
+  const contentId = useId();
   return (
     <div className="mt-3 border-t border-border/50 pt-2">
       <button
