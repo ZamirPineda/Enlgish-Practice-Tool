@@ -10,6 +10,14 @@ test.describe("PWA Auto Update Flow", () => {
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
 
+    // Dismiss onboarding if present
+    const skipButton = page.locator(
+      "button:has-text('Saltar Intro'), button:has-text('Skip')",
+    );
+    if (await skipButton.isVisible()) {
+      await skipButton.click({ force: true });
+    }
+
     // Trigger mocked PWA update
     await page.evaluate(() => {
       if ((window as any).__TRIGGER_PWA_UPDATE) {
