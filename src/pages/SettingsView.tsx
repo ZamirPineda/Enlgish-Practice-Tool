@@ -184,6 +184,13 @@ const SettingsView: React.FC<SettingsViewProps> = ({
               <button
                 onClick={() => buyFreeze()}
                 disabled={streakFreezes >= 3 || totalXp < 500}
+                aria-label={
+                  streakFreezes >= 3
+                    ? "Al máximo de congeladores de racha"
+                    : totalXp < 500
+                      ? "No tienes suficiente XP para comprar. Requiere 500 XP."
+                      : "Comprar congelador de racha por 500 XP"
+                }
                 className={`px-4 py-2 font-black rounded-lg transition-all ${
                   streakFreezes >= 3
                     ? "bg-surface-1 text-text-muted border border-border"
@@ -216,7 +223,10 @@ const SettingsView: React.FC<SettingsViewProps> = ({
               <Select
                 value={formValues.theme}
                 onValueChange={(value) =>
-                  applySettingUpdate("theme", value as SettingsFormValues["theme"])
+                  applySettingUpdate(
+                    "theme",
+                    value as SettingsFormValues["theme"],
+                  )
                 }
               >
                 <SelectTrigger id="theme-select">
@@ -308,7 +318,8 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                      Ajusta meta diaria y hora de cierre para calcular la racha.
+                      Ajusta meta diaria y hora de cierre para calcular la
+                      racha.
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -358,7 +369,9 @@ const SettingsView: React.FC<SettingsViewProps> = ({
                     onChange={(event) =>
                       applySettingUpdate(
                         "dailyGoalTarget",
-                        Number(event.target.value) as SettingsFormValues["dailyGoalTarget"],
+                        Number(
+                          event.target.value,
+                        ) as SettingsFormValues["dailyGoalTarget"],
                       )
                     }
                   />
