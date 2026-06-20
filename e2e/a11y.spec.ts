@@ -6,6 +6,9 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/");
+    await page.waitForFunction(
+      () => !document.querySelector(".splash-screen-or-loading"),
+    );
 
     const results = await new AxeBuilder({ page }).analyze();
 
@@ -19,7 +22,9 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/vault");
-    await page.waitForLoadState("networkidle");
+    await page.waitForFunction(
+      () => !document.querySelector(".splash-screen-or-loading"),
+    );
 
     const results = await new AxeBuilder({ page }).analyze();
 
@@ -33,7 +38,9 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/calculus");
-    await page.waitForLoadState("networkidle");
+    await page.waitForFunction(
+      () => !document.querySelector(".splash-screen-or-loading"),
+    );
 
     const results = await new AxeBuilder({ page }).analyze();
 
