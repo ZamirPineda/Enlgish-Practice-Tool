@@ -10,6 +10,7 @@ export const adjectivesData: StopData = {
         level: "C2",
         definition: "Inspiring disgust and loathing.",
         examSentence: "Racism is abhorrent to us all.",
+        wordFamily: { noun: "abhorrence", verb: "abhor", adjective: "abhorrent", adverb: "abhorrently" },
       },
       {
         word: "Abject",
