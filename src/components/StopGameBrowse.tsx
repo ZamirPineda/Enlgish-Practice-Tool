@@ -655,6 +655,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                         </span>
                       </div>
                       <div
+                        id={`category-panel-${category}`}
                         className={`p-4 flex-1 flex flex-col gap-3 ${theme.bgGradient}`}
                       >
                         {visibleItems.map((item, idx) => (
@@ -696,6 +697,13 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                         <button
                           onClick={() => toggleCategory(category)}
                           className="w-full py-3 bg-[var(--color-surface-1)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] text-xs font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 border-t border-[var(--color-border)]/50"
+                          aria-expanded={isExpanded}
+                          aria-controls={`category-panel-${category}`}
+                          aria-label={
+                            isExpanded
+                              ? `Collapse ${category} category`
+                              : `Expand ${category} category to show ${hiddenCount} more`
+                          }
                         >
                           {isExpanded ? (
                             <>
