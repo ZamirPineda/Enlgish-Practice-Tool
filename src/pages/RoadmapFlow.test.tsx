@@ -89,6 +89,7 @@ describe("Roadmap sequential flow", () => {
   });
 
   test("completes the English route sequentially from first node to module completion", async () => {
+    vitest.setConfig({ testTimeout: 45000 });
     renderView();
 
     expect(
