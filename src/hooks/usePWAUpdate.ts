@@ -44,10 +44,6 @@ export const usePWAUpdate = () => {
       const wb = new Workbox("/sw.js");
       wbRef.current = wb;
 
-
-
-
-
       wb.addEventListener("waiting", triggerUpdate);
 
       wb.addEventListener("installed", (event) => {

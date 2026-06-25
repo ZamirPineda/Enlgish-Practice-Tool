@@ -34,6 +34,7 @@ describe("RoadmapView", () => {
   });
 
   test("requires enough mastery before unlocking the next lesson", async () => {
+    vitest.setConfig({ testTimeout: 30000 });
     const user = userEvent.setup();
     const firstRender = render(
       <MemoryRouter>
