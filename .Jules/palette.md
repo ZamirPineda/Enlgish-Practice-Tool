@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Toggle Button State Accessibility]
+
+**Learning:** Groups of visually-styled `<button>` elements acting as mutually exclusive choices (like a group of tabs or filters) must include `aria-pressed={isActive}` to explicitly communicate the selected state to assistive technologies.
+**Action:** When creating or modifying button groups used for toggling states or views, always verify that `aria-pressed` is bound to the active state condition.
