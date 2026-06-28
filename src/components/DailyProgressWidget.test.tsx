@@ -63,7 +63,7 @@ describe("DailyProgressWidget", () => {
     );
 
     const rewardButtonBefore = screen.getByRole("button", {
-      name: "Claim +40 XP",
+      name: "Claim +40 XP (Locked: play 2 sessions to unlock)",
     });
     expect(rewardButtonBefore).toBeDisabled();
 
