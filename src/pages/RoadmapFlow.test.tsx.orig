@@ -209,7 +209,7 @@ describe("Roadmap sequential flow", () => {
     ).toBeDisabled();
   }, 15000);
 
-  test("resumes an in-progress unit after reload", { timeout: 60000 }, async () => {
+  test("resumes an in-progress unit after reload", { timeout: 30000 }, async () => {
     const firstRender = renderView();
 
     await recordMastery("Interview opener", 80);

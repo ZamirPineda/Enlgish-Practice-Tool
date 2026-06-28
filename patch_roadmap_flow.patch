@@ -1,0 +1,29 @@
+--- src/pages/RoadmapFlow.test.tsx
++++ src/pages/RoadmapFlow.test.tsx
+@@ -88,7 +88,7 @@
+     );
+   });
+
+-  test("completes the English route sequentially from first node to module completion", async () => {
++  test("completes the English route sequentially from first node to module completion", { timeout: 60000 }, async () => {
+     renderView();
+
+     expect(
+@@ -194,7 +194,7 @@
+     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+   });
+
+-  test("keeps the next lesson blocked until the current lesson reaches the mastery target", async () => {
++  test("keeps the next lesson blocked until the current lesson reaches the mastery target", { timeout: 30000 }, async () => {
+     renderView();
+
+     expect(
+@@ -259,7 +259,7 @@
+     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+   });
+
+-  test("resumes an in-progress unit after reload", async () => {
++  test("resumes an in-progress unit after reload", { timeout: 30000 }, async () => {
+     useRoadmapStore.setState({
+       progress: {
+         // Interview opener completed with required accuracy

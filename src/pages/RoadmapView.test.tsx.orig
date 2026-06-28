@@ -33,7 +33,7 @@ describe("RoadmapView", () => {
     addGlobalXpMock.mockReset();
   });
 
-  test("requires enough mastery before unlocking the next lesson", { timeout: 60000 }, async () => {
+  test("requires enough mastery before unlocking the next lesson", { timeout: 30000 }, async () => {
     const user = userEvent.setup();
     const firstRender = render(
       <MemoryRouter>
@@ -246,7 +246,7 @@ describe("RoadmapView", () => {
     );
   });
 
-  test("shows roadmap rewards after completing a full unit", { timeout: 60000 }, async () => {
+  test("shows roadmap rewards after completing a full unit", { timeout: 30000 }, async () => {
     render(
       <MemoryRouter>
         <RoadmapView />
