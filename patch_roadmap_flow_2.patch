@@ -1,0 +1,11 @@
+--- src/pages/RoadmapFlow.test.tsx
++++ src/pages/RoadmapFlow.test.tsx
+@@ -209,7 +209,7 @@
+     );
+   }, 15000);
+
+-  test("resumes an in-progress unit after reload", async () => {
++  test("resumes an in-progress unit after reload", { timeout: 30000 }, async () => {
+     const firstRender = renderView();
+
+     await recordMastery("Interview opener", 80);

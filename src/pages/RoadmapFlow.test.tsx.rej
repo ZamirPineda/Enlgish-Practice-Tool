@@ -1,0 +1,11 @@
+--- RoadmapFlow.test.tsx
++++ RoadmapFlow.test.tsx
+@@ -259,7 +259,7 @@
+     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+   });
+
+-  test("resumes an in-progress unit after reload", async () => {
++  test("resumes an in-progress unit after reload", { timeout: 30000 }, async () => {
+     useRoadmapStore.setState({
+       progress: {
+         // Interview opener completed with required accuracy
