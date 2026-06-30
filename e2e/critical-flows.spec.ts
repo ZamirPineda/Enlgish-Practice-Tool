@@ -10,6 +10,7 @@ const COMPLETED_ONBOARDING_SETTINGS = {
 
 const openApp = async (page: Page, deck?: Record<string, unknown>) => {
   await page.goto("/");
+  await page.waitForLoadState("domcontentloaded");
   await page.evaluate(
     ({ settings, seededDeck }) => {
       window.localStorage.setItem("app-settings", JSON.stringify(settings));
