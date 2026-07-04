@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Accessible State Toggles in Navigation Views]
+**Learning:** Icon-only navigation toggles (like "List View", "Grid View", and filter expansion) often lack state representation for screen readers, leading to a confusing navigation experience.
+**Action:** When implementing view-switching or filter-toggling icon buttons, always pair `aria-label` with `aria-pressed` (for mutually exclusive views) or `aria-expanded` (for collapsible panels) to communicate both purpose and current state.
