@@ -1404,6 +1404,8 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     onClick={() => setShowFilters(!showFilters)}
                     className={`p-2 rounded-xl focus:outline-none transition-colors ${showFilters ? "bg-accent/20 text-accent" : "text-slate-300 hover:bg-white/10 hover:text-white"}`}
                     title="Advanced Filters"
+                    aria-label="Toggle Advanced Filters"
+                    aria-expanded={showFilters}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -1538,6 +1540,8 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       onClick={() => setViewMode("grid")}
                       className={`p-2 rounded-lg transition-colors ${viewMode === "grid" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
                       title="Grid View"
+                      aria-label="Grid View"
+                      aria-pressed={viewMode === "grid"}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -1558,6 +1562,8 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       onClick={() => setViewMode("list")}
                       className={`p-2 rounded-lg transition-colors ${viewMode === "list" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
                       title="List View"
+                      aria-label="List View"
+                      aria-pressed={viewMode === "list"}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
