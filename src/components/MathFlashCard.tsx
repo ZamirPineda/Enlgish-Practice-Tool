@@ -99,7 +99,16 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        role="button"
+        tabIndex={0}
+        aria-label="Flip flashcard"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleFlip();
+          }
+        }}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-500/50 rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
       >
