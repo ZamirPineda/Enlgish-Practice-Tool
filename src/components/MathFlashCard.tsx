@@ -121,9 +121,6 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-2xl"
-        style={{ perspective: "1000px" }}
-        onClick={handleFlip}
         role="button"
         tabIndex={0}
         aria-expanded={isFlipped}
@@ -138,6 +135,9 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
             handleFlip();
           }
         }}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-2xl"
+        style={{ perspective: "1000px" }}
+        onClick={handleFlip}
       >
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}

@@ -1,4 +1,12 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+const fs = require("fs");
+let code = fs.readFileSync("src/hooks/usePWAUpdate.ts", "utf8");
+
+// The original issue memory says:
+// Playwright E2E tests for the PWA Auto Update flow trigger a mocked service worker update by calling `window.__TRIGGER_PWA_UPDATE()`. Ensure this function is exposed globally in `usePWAUpdate.ts` and not conditionally restricted to production environments, to allow test execution.
+
+// So we should expose __TRIGGER_PWA_UPDATE always, even outside the serviceWorker check
+
+code = `import { useState, useEffect, useCallback, useRef } from "react";
 import { Workbox } from "workbox-window";
 
 export const isActiveSession = () => {
@@ -74,3 +82,6 @@ export const usePWAUpdate = () => {
     handleUpdate,
   };
 };
+`;
+
+fs.writeFileSync("src/hooks/usePWAUpdate.ts", code);
