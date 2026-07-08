@@ -123,7 +123,7 @@ describe("Roadmap sequential flow", () => {
       }),
     ).toBeInTheDocument();
 
-    await recordMastery("Transform follow-up answers", 82);
+    await recordMastery("Transform follow-up answers", 80);
 
     expect(
       screen.getByRole("button", { name: /Abrir: Story frame builder/i }),
@@ -147,7 +147,7 @@ describe("Roadmap sequential flow", () => {
       screen.getByRole("button", { name: /Abrir: Story follow-up transform/i }),
     ).toBeInTheDocument();
 
-    await recordMastery("Story follow-up transform", 82);
+    await recordMastery("Story follow-up transform", 80);
 
     expect(
       screen.getByRole("button", { name: /Abrir: Panel meeting builder/i }),

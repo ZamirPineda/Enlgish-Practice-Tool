@@ -11,9 +11,6 @@ test.describe("PWA Auto Update Flow", () => {
     await expect(page.getByRole("banner")).toBeVisible();
 
     // Trigger mocked PWA update
-    await page.waitForFunction(
-      () => !document.querySelector(".splash-screen-or-loading"),
-    );
     await page.evaluate(() => {
       if ((window as any).__TRIGGER_PWA_UPDATE) {
         (window as any).__TRIGGER_PWA_UPDATE();
@@ -22,7 +19,7 @@ test.describe("PWA Auto Update Flow", () => {
 
     // Verify the update banner is shown
     const updateBanner = page.getByText("Nueva versión disponible");
-    await expect(updateBanner).toBeVisible({ timeout: 10000 });
+    await expect(updateBanner).toBeVisible();
 
     // Verify the update button is present
     const updateButton = page.getByRole("button", { name: "Actualizar" });
@@ -35,12 +32,12 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
-    await updateButton.click({ force: true });
+    await updateButton.click();
 
     // Since window.location.reload() happens, let's wait a bit to verify nav or log
     // We expect the script to call reload, bounding test time to ensure it passed.
-    await page.waitForTimeout(1500);
-    expect(didReload || (await page.evaluate(() => true))).toBe(true);
+    await page.waitForTimeout(500);
+    expect(didReload).toBe(true);
   });
 
   test("Does not show banner, but auto-reloads if NOT in active session", async ({
@@ -57,9 +54,6 @@ test.describe("PWA Auto Update Flow", () => {
     });
 
     // Trigger mocked PWA update
-    await page.waitForFunction(
-      () => !document.querySelector(".splash-screen-or-loading"),
-    );
     await page.evaluate(() => {
       if ((window as any).__TRIGGER_PWA_UPDATE) {
         (window as any).__TRIGGER_PWA_UPDATE();
@@ -67,8 +61,8 @@ test.describe("PWA Auto Update Flow", () => {
     });
 
     // It should immediately reload instead of showing banner
-    await page.waitForTimeout(1500);
-    expect(didReload || (await page.evaluate(() => true))).toBe(true);
+    await page.waitForTimeout(500);
+    expect(didReload).toBe(true);
 
     const updateBanner = page.getByText("Nueva versión disponible");
     await expect(updateBanner).toBeHidden();
