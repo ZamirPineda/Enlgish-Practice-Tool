@@ -48,6 +48,28 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setIsFlipped(!isFlipped);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger shortcuts if user is typing in an input
+      const activeTag = document.activeElement?.tagName;
+      if (activeTag === "INPUT" || activeTag === "TEXTAREA") return;
+
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        handleNext();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        onExit();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNext, handlePrev, onExit]);
+
   if (randomizedRows.length === 0) return <div>Loading...</div>;
 
   const currentrow = randomizedRows[currentCardIndex];
@@ -99,9 +121,23 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
+        role="button"
+        tabIndex={0}
+        aria-expanded={isFlipped}
+        aria-label={
+          isFlipped
+            ? "Respuesta mostrada. Presiona Enter o Espacio para voltear a la pregunta."
+            : "Pregunta mostrada. Presiona Enter o Espacio para voltear a la respuesta."
+        }
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleFlip();
+          }
+        }}
       >
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
@@ -125,7 +161,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
               {renderQuestion()}
             </div>
             <p className="text-text-muted text-sm animate-pulse mt-4 shrink-0">
-              Haz click para girar (ver respuesta/pregunta)
+              Haz click o presiona Espacio para girar
             </p>
           </div>
 
