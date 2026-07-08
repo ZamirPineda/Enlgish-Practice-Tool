@@ -124,11 +124,6 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         role="button"
         tabIndex={0}
         aria-expanded={isFlipped}
-        aria-label={
-          isFlipped
-            ? "Respuesta mostrada. Presiona Enter o Espacio para voltear a la pregunta."
-            : "Pregunta mostrada. Presiona Enter o Espacio para voltear a la respuesta."
-        }
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
@@ -139,6 +134,12 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
       >
+        {/* Screen Reader instructions */}
+        <span className="sr-only" aria-live="polite">
+          {isFlipped
+            ? "Respuesta mostrada. Presiona Enter o Espacio para voltear a la pregunta."
+            : "Pregunta mostrada. Presiona Enter o Espacio para voltear a la respuesta."}
+        </span>
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
           style={{
