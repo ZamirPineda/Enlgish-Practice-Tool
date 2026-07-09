@@ -48,6 +48,46 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setIsFlipped(!isFlipped);
   };
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if focus is on an interactive element other than body or our card
+      const activeTag = document.activeElement?.tagName;
+      if (
+        activeTag === "INPUT" ||
+        activeTag === "TEXTAREA" ||
+        activeTag === "SELECT"
+      ) {
+        return;
+      }
+
+      // If we are focused on a button or link, let the browser handle Enter/Space natively
+      if (
+        (e.code === "Space" || e.code === "Enter") &&
+        (activeTag === "BUTTON" || activeTag === "A")
+      ) {
+        return;
+      }
+
+      if (e.code === "Space" || e.code === "Enter") {
+        e.preventDefault();
+        handleFlip();
+      } else if (e.code === "ArrowRight") {
+        e.preventDefault();
+        handleNext();
+      } else if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.code === "Escape") {
+        e.preventDefault();
+        onExit();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNext, handlePrev, handleFlip, onExit]);
+
   if (randomizedRows.length === 0) return <div>Loading...</div>;
 
   const currentrow = randomizedRows[currentCardIndex];
@@ -99,9 +139,18 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        role="button"
+        tabIndex={0}
+        aria-label="Flashcard"
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleFlip();
+          }
+        }}
       >
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
