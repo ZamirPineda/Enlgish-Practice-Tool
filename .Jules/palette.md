@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Flashcard Keyboard Accessibility & Focus Safety]
+
+**Learning:** Custom interactive elements like flashcards implemented as `div`s often lack keyboard activation (Enter/Space) and explicit focusability (`tabIndex`), blocking non-mouse users. When implementing global keyboard shortcuts (e.g. Space to flip), it is critical to ignore inputs and links/buttons (`document.activeElement.tagName`) to prevent hijacking native UI interactions.
+**Action:** Always add `role="button"`, `tabIndex={0}`, and local `onKeyDown` to flashcard-like containers. For global shortcut listeners, defensively filter out interactions originating from `INPUT`, `TEXTAREA`, `BUTTON`, or `A` tags before calling `preventDefault()`.
