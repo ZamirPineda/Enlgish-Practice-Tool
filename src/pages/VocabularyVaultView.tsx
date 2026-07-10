@@ -188,7 +188,7 @@ const starterSectionThemes = [
     accentClass:
       "from-sky-500/20 via-cyan-500/10 to-transparent border-sky-400/20",
     badgeClass: "bg-sky-500/15 text-sky-200 border border-sky-400/20",
-    buttonClass: "bg-sky-500/10 text-sky-100 hover:bg-sky-500 hover:text-white",
+    buttonClass: "bg-sky-500/10 text-sky-900 hover:bg-sky-500 hover:text-white",
   },
   {
     key: "work-interview",
@@ -988,10 +988,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
         <div className="space-y-4">
           <ViewToolbar
-            className="overflow-hidden rounded-[2rem] border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.22),_transparent_42%),linear-gradient(135deg,rgba(15,23,42,0.96),rgba(15,23,42,0.86))] shadow-[0_30px_90px_-45px_rgba(14,165,233,0.65)]"
+            className="overflow-hidden rounded-[2rem] border-sky-900/10 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.22),_transparent_42%),linear-gradient(135deg,rgba(15,23,42,0.96),rgba(15,23,42,0.86))] shadow-[0_30px_90px_-45px_rgba(14,165,233,0.65)]"
             left={
               <div className="space-y-4">
-                <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-black uppercase tracking-[0.28em] text-sky-100">
+                <div className="inline-flex w-fit items-center gap-2 rounded-full border border-sky-900/10 bg-white/90 px-3 py-1 text-[10px] font-black uppercase tracking-[0.28em] text-sky-900">
                   Card-first flow
                 </div>
                 <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-white mb-3 sm:mb-4">
@@ -1005,28 +1005,28 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 <nav className="flex gap-2 overflow-x-auto pb-1 snap-x snap-mandatory md:flex-wrap md:overflow-visible">
                   <button
                     onClick={() => setActiveTab("study")}
-                    className={`min-h-[52px] min-w-[150px] snap-start rounded-[1.25rem] border px-4 py-3 text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 md:flex-1 ${activeTab === "study" ? "border-sky-300/30 bg-white text-slate-950 shadow-[0_16px_40px_-24px_rgba(255,255,255,0.9)]" : "border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10"}`}
+                    className={`min-h-[52px] min-w-[150px] snap-start rounded-[1.25rem] border px-4 py-3 text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 md:flex-1 ${activeTab === "study" ? "border-sky-300/30 bg-white text-slate-950 shadow-[0_16px_40px_-24px_rgba(255,255,255,0.9)]" : "border-sky-900/10 bg-white/90 text-slate-200 hover:border-white/20 hover:bg-white/10"}`}
                     aria-pressed={activeTab === "study"}
                   >
                     Daily Study
                   </button>
                   <button
                     onClick={() => setActiveTab("collection")}
-                    className={`min-h-[52px] min-w-[170px] snap-start rounded-[1.25rem] border px-4 py-3 text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 md:flex-1 ${activeTab === "collection" ? "border-sky-300/30 bg-white text-slate-950 shadow-[0_16px_40px_-24px_rgba(255,255,255,0.9)]" : "border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10"}`}
+                    className={`min-h-[52px] min-w-[170px] snap-start rounded-[1.25rem] border px-4 py-3 text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 md:flex-1 ${activeTab === "collection" ? "border-sky-300/30 bg-white text-slate-950 shadow-[0_16px_40px_-24px_rgba(255,255,255,0.9)]" : "border-sky-900/10 bg-white/90 text-slate-200 hover:border-white/20 hover:bg-white/10"}`}
                     aria-pressed={activeTab === "collection"}
                   >
                     My Collection ({totalInDeck})
                   </button>
                   <button
                     onClick={() => setActiveTab("sync")}
-                    className={`min-h-[52px] min-w-[160px] snap-start rounded-[1.25rem] border px-4 py-3 text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 md:flex-1 ${activeTab === "sync" ? "border-sky-300/30 bg-white text-slate-950 shadow-[0_16px_40px_-24px_rgba(255,255,255,0.9)]" : "border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10"}`}
+                    className={`min-h-[52px] min-w-[160px] snap-start rounded-[1.25rem] border px-4 py-3 text-left text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 md:flex-1 ${activeTab === "sync" ? "border-sky-300/30 bg-white text-slate-950 shadow-[0_16px_40px_-24px_rgba(255,255,255,0.9)]" : "border-sky-900/10 bg-white/90 text-slate-200 hover:border-white/20 hover:bg-white/10"}`}
                     aria-pressed={activeTab === "sync"}
                   >
                     Backup & Sync 🔄
                   </button>
                 </nav>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                  <div className="rounded-[1.5rem] border border-sky-900/10 bg-white/90 p-4">
                     <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400">
                       Due today
                     </p>
@@ -1034,7 +1034,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       {dueItemsForObjective.length}
                     </p>
                   </div>
-                  <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                  <div className="rounded-[1.5rem] border border-sky-900/10 bg-white/90 p-4">
                     <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400">
                       Deck progress
                     </p>
@@ -1042,7 +1042,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       {Math.round(progressPercent)}%
                     </p>
                   </div>
-                  <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                  <div className="rounded-[1.5rem] border border-sky-900/10 bg-white/90 p-4">
                     <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400">
                       Streak
                     </p>
@@ -1062,7 +1062,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   }}
                   size="lg"
                   variant="secondary"
-                  className="min-h-[56px] rounded-[1.25rem] border-white/10 bg-white/10 text-white hover:bg-white hover:text-slate-950"
+                  className="min-h-[56px] rounded-[1.25rem] border-sky-900/10 bg-white/10 text-white hover:bg-white hover:text-slate-950"
                 >
                   + Add Word
                 </Button>
@@ -1108,10 +1108,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               <div className="flex gap-3 overflow-x-auto pb-1 snap-x snap-mandatory md:grid md:grid-cols-3 md:overflow-visible">
                 <button
                   onClick={() => setPracticeObjective("all")}
-                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "all" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "all" ? "border-accent/40 bg-sky-800 text-slate-100 shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
                   aria-label="Objective all"
                 >
-                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                  <span className="block text-[10px] tracking-[0.28em] opacity-90">
                     Practice objective
                   </span>
                   <span className="mt-2 block text-lg font-black tracking-tight normal-case">
@@ -1123,10 +1123,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 </button>
                 <button
                   onClick={() => setPracticeObjective("interview")}
-                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "interview" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "interview" ? "border-accent/40 bg-sky-800 text-slate-100 shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
                   aria-label="Objective interview"
                 >
-                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                  <span className="block text-[10px] tracking-[0.28em] opacity-90">
                     Practice objective
                   </span>
                   <span className="mt-2 block text-lg font-black tracking-tight normal-case">
@@ -1138,10 +1138,10 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 </button>
                 <button
                   onClick={() => setPracticeObjective("travel")}
-                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "travel" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "travel" ? "border-accent/40 bg-sky-800 text-slate-100 shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
                   aria-label="Objective travel"
                 >
-                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                  <span className="block text-[10px] tracking-[0.28em] opacity-90">
                     Practice objective
                   </span>
                   <span className="mt-2 block text-lg font-black tracking-tight normal-case">
@@ -1161,7 +1161,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             <div className="space-y-5">
               <Card
                 elevated
-                className="overflow-hidden rounded-[2rem] border-white/10 bg-[radial-gradient(circle_at_top_right,_rgba(56,189,248,0.16),_transparent_30%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(15,23,42,0.88))] text-white"
+                className="overflow-hidden rounded-[2rem] border-sky-900/10 bg-[radial-gradient(circle_at_top_right,_rgba(56,189,248,0.16),_transparent_30%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(15,23,42,0.88))] text-white"
               >
                 <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.28em] mb-6">
                   Learning Pulse
@@ -1187,7 +1187,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   </div>
 
                   {/* Detailed Stats Breakdown */}
-                  <div className="pt-4 border-t border-white/10">
+                  <div className="pt-4 border-t border-sky-900/10">
                     <div className="flex justify-between text-xs font-bold uppercase mb-2">
                       <span className="text-slate-400">New: {newCount}</span>
                       <span className="text-accent">
@@ -1197,7 +1197,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         Mastered: {masteredCount}
                       </span>
                     </div>
-                    <div className="h-4 w-full bg-white/5 rounded-full p-1 border border-white/10 flex overflow-hidden gap-0.5">
+                    <div className="h-4 w-full bg-white/90 rounded-full p-1 border border-sky-900/10 flex overflow-hidden gap-0.5">
                       {totalInDeck > 0 ? (
                         <>
                           <div
@@ -1303,7 +1303,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                         key={item.word}
                         className="min-w-[82vw] snap-center sm:min-w-0"
                       >
-                        <div className="group relative flex h-full min-h-[220px] flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-surface-1/95 p-5 shadow-[0_20px_60px_-35px_rgba(15,23,42,0.95)] transition duration-300 ease-out will-change-transform md:hover:-translate-y-1 md:hover:-rotate-1 active:translate-x-1 active:rotate-1">
+                        <div className="group relative flex h-full min-h-[220px] flex-col overflow-hidden rounded-[1.75rem] border border-sky-900/10 bg-surface-1/95 p-5 shadow-[0_20px_60px_-35px_rgba(15,23,42,0.95)] transition duration-300 ease-out will-change-transform md:hover:-translate-y-1 md:hover:-rotate-1 active:translate-x-1 active:rotate-1">
                           <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-br from-white/10 via-white/5 to-transparent"></div>
                           <div className="relative flex h-full flex-col justify-between">
                             <div className="flex justify-between items-start gap-3">
@@ -1385,7 +1385,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 </div>
               </Card>
             ) : (
-              <div className="relative flex-1 mb-8 rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.14),_transparent_35%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(15,23,42,0.86))] p-5 shadow-[0_24px_80px_-45px_rgba(15,23,42,0.95)]">
+              <div className="relative flex-1 mb-8 rounded-[2rem] border border-sky-900/10 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.14),_transparent_35%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(15,23,42,0.86))] p-5 shadow-[0_24px_80px_-45px_rgba(15,23,42,0.95)]">
                 <p className="mb-4 text-[10px] font-black uppercase tracking-[0.28em] text-slate-400">
                   Search and filter
                 </p>
@@ -1395,7 +1395,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   placeholder="Search by word, definition or tag... (Press / to focus)"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-6 pr-12 py-4 rounded-[1.4rem] border-white/10 bg-white/10 text-white placeholder:text-slate-400"
+                  className="pl-6 pr-12 py-4 rounded-[1.4rem] border-sky-900/10 bg-white/10 text-white placeholder:text-slate-400"
                   aria-label="Search vault words"
                 />
 
@@ -1636,7 +1636,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                       {rowItems.map(({ item, matches }) => (
                         <div
                           key={item.word}
-                          className={`overflow-hidden border border-white/10 bg-surface-1/95 p-5 rounded-[1.75rem] shadow-[0_22px_70px_-42px_rgba(15,23,42,0.95)] transition duration-300 ease-out will-change-transform group relative flex md:hover:-translate-y-1 md:hover:-rotate-1 active:translate-y-1 active:rotate-1 ${viewMode === "grid" ? "flex-col" : "flex-row items-center gap-6"}`}
+                          className={`overflow-hidden border border-sky-900/10 bg-surface-1/95 p-5 rounded-[1.75rem] shadow-[0_22px_70px_-42px_rgba(15,23,42,0.95)] transition duration-300 ease-out will-change-transform group relative flex md:hover:-translate-y-1 md:hover:-rotate-1 active:translate-y-1 active:rotate-1 ${viewMode === "grid" ? "flex-col" : "flex-row items-center gap-6"}`}
                         >
                           <div
                             className={`flex justify-between items-start ${viewMode === "grid" ? "mb-2" : "flex-1"}`}
@@ -1802,7 +1802,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
         {activeTab === "sync" && (
           <div className="animate-fade-in grid gap-6 max-w-4xl mx-auto py-4 md:grid-cols-2">
             <Card
-              className="p-8 rounded-[2rem] border-white/10 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),_transparent_40%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(15,23,42,0.86))] text-white"
+              className="p-8 rounded-[2rem] border-sky-900/10 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),_transparent_40%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(15,23,42,0.86))] text-white"
               elevated
             >
               <h2 className="text-2xl font-black text-white mb-2">
@@ -1855,7 +1855,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
       <div
         className={`md:hidden fixed left-3 right-3 bottom-[calc(env(safe-area-inset-bottom)+5.25rem)] z-40 transition-all duration-300 ${showMobileActions ? "translate-y-0 opacity-100 scale-100" : "translate-y-4 opacity-0 scale-95 pointer-events-none"}`}
       >
-        <div className="bg-surface-1/85 backdrop-blur-2xl border border-white/10 rounded-[1.6rem] p-2 shadow-[0_24px_60px_-30px_rgba(15,23,42,0.95)] flex gap-2">
+        <div className="bg-surface-1/85 backdrop-blur-2xl border border-sky-900/10 rounded-[1.6rem] p-2 shadow-[0_24px_60px_-30px_rgba(15,23,42,0.95)] flex gap-2">
           <Button
             onClick={() => {
               resetAddForm();
