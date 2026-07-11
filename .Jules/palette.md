@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Expand/Collapse Accessibility Pattern]
+
+**Learning:** Buttons that toggle visibility of content (expand/collapse) often lack proper ARIA attributes to communicate their state and connection to the content. Emojis within button text can also cause verbose screen reader announcements.
+**Action:** Always include `aria-expanded` mapped to the state, `aria-controls` pointing to the conditionally rendered panel's ID, and a descriptive `aria-label`. Wrap any complex emojis in the button's text with `<span aria-hidden="true">`.
