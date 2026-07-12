@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Accessible Custom Flashcard Div Pattern]
+**Learning:** Custom flashcards implemented with `div` and `onClick` lack semantic meaning and keyboard focusability. Adding `aria-label` directly to the `div` masks child content from screen readers. Using global `window` event listeners for Space/Enter can cause double-triggering or unintended side-effects if not stopped.
+**Action:** Always add `role="button"` and `tabIndex={0}` to custom interactive containers. For screen reader text, insert a `<span className="sr-only">` rather than an `aria-label`. Manage key events locally with `onKeyDown` and use `e.stopPropagation()` when handling Space and Enter to avoid conflicts with global listeners. Ensure `focus-visible` styles are added for clear keyboard navigation states.
