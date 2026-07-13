@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-11 - [Dynamic Button Accessibility Pattern]
+
+**Learning:** Buttons with text that changes dynamically to indicate disabled or locked states (e.g., "Reward Claimed" vs "Claim +X XP") often fail WCAG accessibility if the visual text does not match the accessible name, or if the disabled reason is only communicated visually.
+**Action:** When creating dynamic buttons with locked/disabled states, provide an explicit `aria-label` that includes the exact visible text plus the required conditions (e.g., `Claim +40 XP (Locked: play 2 sessions to unlock)`). This ensures screen reader users understand both what the button does and why it cannot currently be activated.
