@@ -63,7 +63,7 @@ describe("DailyProgressWidget", () => {
     );
 
     const rewardButtonBefore = screen.getByRole("button", {
-      name: /Claim \+40 XP/i,
+      name: "Claim +40 XP",
     });
     expect(rewardButtonBefore).toBeDisabled();
 
@@ -126,6 +126,6 @@ describe("DailyProgressWidget", () => {
     });
 
     expect(localStorage.getItem("english-pal-global-xp")).toBe("30");
-    expect(screen.getByRole("button", { name: /Claimed Starter/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Claimed" })).toBeDisabled();
   });
 });
