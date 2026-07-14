@@ -63,7 +63,7 @@ describe("DailyProgressWidget", () => {
     );
 
     const rewardButtonBefore = screen.getByRole("button", {
-      name: /Claim \+40 XP/i,
+      name: "Claim +40 XP",
     });
     expect(rewardButtonBefore).toBeDisabled();
 
@@ -87,7 +87,7 @@ describe("DailyProgressWidget", () => {
     expect(screen.getByText("Daily session reward ready.")).toBeInTheDocument();
 
     const rewardButton = screen.getByRole("button", {
-      name: /Claim \+40 XP/i,
+      name: "Claim +40 XP",
     });
     expect(rewardButton).toBeEnabled();
 
@@ -118,7 +118,7 @@ describe("DailyProgressWidget", () => {
     expect(screen.getByText(/3 \/ 7 active days/i)).toBeInTheDocument();
 
     const weeklyClaimButton = screen.getAllByRole("button", {
-      name: /Claim Reward/i,
+      name: "Claim Reward",
     })[0];
 
     act(() => {
@@ -126,6 +126,6 @@ describe("DailyProgressWidget", () => {
     });
 
     expect(localStorage.getItem("english-pal-global-xp")).toBe("30");
-    expect(screen.getByRole("button", { name: /Claimed Starter/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Claimed" })).toBeDisabled();
   });
 });
