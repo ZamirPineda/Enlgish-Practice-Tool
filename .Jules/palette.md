@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-24 - [Word Family Toggle Accessibility Pattern]
+
+**Learning:** Component toggle buttons for word family expansion lacked ARIA attributes and had emoji icons exposing verbose readings to screen readers.
+**Action:** When creating expand/collapse triggers, ensure `aria-expanded` and `aria-controls` are present, attach `aria-hidden="true"` to decorative elements, and provide a clear descriptive `aria-label`.
