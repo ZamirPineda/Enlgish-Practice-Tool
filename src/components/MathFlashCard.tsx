@@ -27,14 +27,14 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setIsFlipped(false);
   }, [strategy, rows]);
 
-  const handleNext = () => {
+  const handleNext = React.useCallback(() => {
     setIsFlipped(false);
     setTimeout(() => {
       setCurrentCardIndex((prev) => (prev + 1) % randomizedRows.length);
     }, 150); // slight delay for smooth transition
-  };
+  }, [randomizedRows.length]);
 
-  const handlePrev = () => {
+  const handlePrev = React.useCallback(() => {
     // When going back, show the answer side first (since we likely just saw it)
     setIsFlipped(true);
     setTimeout(() => {
@@ -42,11 +42,53 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         (prev) => (prev - 1 + randomizedRows.length) % randomizedRows.length,
       );
     }, 150);
-  };
+  }, [randomizedRows.length]);
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+  const handleFlip = React.useCallback(() => {
+    setIsFlipped((prev) => !prev);
+  }, []);
+
+  // Global Keyboard Shortcuts
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      // Don't hijack if typing in an input
+      const activeElement = document.activeElement;
+      const activeTag = activeElement?.tagName;
+      if (activeTag === "INPUT" || activeTag === "TEXTAREA") {
+        return;
+      }
+
+      // Check if a button or focusable element is actively focused so we don't block their default Space/Enter behavior
+      const isButtonFocused =
+        activeTag === "BUTTON" ||
+        activeElement?.getAttribute("role") === "button";
+
+      switch (e.key) {
+        case " ":
+        case "Enter":
+          if (!isButtonFocused) {
+            e.preventDefault();
+            handleFlip();
+          }
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          handleNext();
+          break;
+        case "ArrowLeft":
+          e.preventDefault();
+          handlePrev();
+          break;
+        case "Escape":
+          e.preventDefault();
+          onExit();
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, [handleFlip, handleNext, handlePrev, onExit]); // Re-bind if dependencies change
 
   if (randomizedRows.length === 0) return <div>Loading...</div>;
 
@@ -91,6 +133,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         </span>
         <button
           onClick={onExit}
+          aria-label="Cerrar"
           className="text-slate-400 hover:text-white transition-colors"
         >
           ✕ Salir
@@ -99,9 +142,19 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        role="button"
+        tabIndex={0}
+        aria-label="Flashcard. Pulsa Enter o Espacio para girar."
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            handleFlip();
+          }
+        }}
       >
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
@@ -151,7 +204,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handlePrev();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
               >
                 Anterior
               </button>
@@ -160,7 +213,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handleNext();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
               >
                 Siguiente
               </button>

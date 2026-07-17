@@ -42,3 +42,6 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2026-03-12 - [Keyboard Navigation & Event Handlers in MathFlashCard]
+**Learning:** React components using `useEffect` for global event listeners (like keyboard shortcuts) are highly prone to stale closures if referenced functions aren't memoized. Additionally, global listeners must explicitly allow standard interactive elements (like focused `<button>` tags) to handle their own 'Enter' or 'Space' events to avoid accessibility regressions. Redundant `aria-label` attributes on buttons with clear text (like 'Siguiente') add noise for screen readers.
+**Action:** When adding global keyboard shortcuts, always wrap handler functions in `useCallback`. In the global `keydown` listener, ensure conditions check if `document.activeElement?.tagName === 'BUTTON'` before calling `preventDefault()` for standard activation keys. Avoid adding `aria-label` unless the button text is missing or visually obscured.
