@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-24 - [Interactive Div Keyboard Accessibility & Shortcuts]
+
+**Learning:** Custom interactive elements built with `div`s (like flashcards) often lack basic keyboard accessibility (focusability and Enter/Space activation) and global navigation shortcuts, heavily degrading usability for power users and screen reader users.
+**Action:** Always add `role="button"`, `tabIndex={0}`, `focus-visible` styling, and local `onKeyDown` handlers to interactive `div`s. When adding global shortcuts (arrows/space/escape), use `e.stopPropagation()` locally or check `document.activeElement` globally to prevent dual-triggers or hijacking standard button presses.
