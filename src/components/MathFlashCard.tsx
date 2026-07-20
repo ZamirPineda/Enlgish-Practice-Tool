@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { MathRow, MathStudyStrategy } from "@/types";
 import LatexRenderer from "@/components/LatexRenderer";
 import { shuffle } from "@/lib/arrayUtils";
@@ -17,6 +17,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [randomizedRows, setRandomizedRows] = useState<MathRow[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Initialize/Shuffle cards
   useEffect(() => {
@@ -59,7 +60,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         activeEl?.tagName === "A" ||
         activeEl?.getAttribute("role") === "button";
 
-      if (isInteractiveElement && activeEl?.id !== "flashcard-container") {
+      if (isInteractiveElement && activeEl !== containerRef.current) {
         return;
       }
 
@@ -130,10 +131,10 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        id="flashcard-container"
+        ref={containerRef}
         role="button"
         tabIndex={0}
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group rounded-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-accent"
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group rounded-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-500"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
         onKeyDown={(e) => {
@@ -145,8 +146,8 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         }}
       >
         <span className="sr-only">
-          Presiona Enter o Espacio para girar la tarjeta, flechas derecha e
-          izquierda para navegar, o Escape para salir.
+          Press Enter or Space to flip the card, Right and Left arrows to
+          navigate, or Escape to exit.
         </span>
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
