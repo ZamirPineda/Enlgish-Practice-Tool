@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-15 - [Keyboard Accessible Custom Components]
+**Learning:** Custom interactive elements implemented with `div` and `onClick` (like flashcards) fail WCAG requirements because they are not focusable, lack semantic roles, and do not respond to keyboard activation keys (Enter/Space).
+**Action:** When creating a custom interactive component, always add `role="button"`, `tabIndex={0}`, an explicit `aria-label`, visible focus styling (e.g. `focus-visible:ring-2`), and an `onKeyDown` handler to map Enter and Space to the same action as click.
