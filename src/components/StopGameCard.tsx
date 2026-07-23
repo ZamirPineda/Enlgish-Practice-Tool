@@ -57,6 +57,7 @@ interface StopGameCardProps {
 }
 
 const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
+  const contentId = React.useId();
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="mt-3 border-t border-border/50 pt-2">
@@ -66,14 +67,21 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
           setIsOpen(!isOpen);
         }}
         className="text-[10px] uppercase font-bold text-text-muted hover:text-primary flex items-center gap-1 transition-colors"
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        aria-label={isOpen ? "Hide word family" : "Show word family"}
       >
-        {isOpen ? "Hide Family" : "Show Family 👨‍👩‍👧‍👦"}
+        {isOpen ? "Hide Family" : "Show Family"}
+        {!isOpen && <span aria-hidden="true"> 👨‍👩‍👧‍👦</span>}
         <ChevronDownIcon
           className={`w-3 h-3 transform transition-transform ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
       {isOpen && (
-        <div className="mt-2 grid grid-cols-2 gap-2 text-xs bg-surface-1/40 p-2 rounded animate-fade-in">
+        <div
+          id={contentId}
+          className="mt-2 grid grid-cols-2 gap-2 text-xs bg-surface-1/40 p-2 rounded animate-fade-in"
+        >
           {family.noun && (
             <div>
               <span className="text-text-muted font-bold block text-[9px] uppercase">
