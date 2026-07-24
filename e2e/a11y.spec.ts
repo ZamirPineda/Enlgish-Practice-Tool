@@ -19,7 +19,9 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/vault");
-    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(2000);
+    // Add dummy check to wait
+    await expect(page.locator("body")).toBeVisible();
 
     const results = await new AxeBuilder({ page }).analyze();
 
@@ -33,7 +35,8 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/calculus");
-    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(2000);
+    await expect(page.locator("body")).toBeVisible();
 
     const results = await new AxeBuilder({ page }).analyze();
 
