@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## $(date +%Y-%m-%d) - [Disclosure Widget Accessibility]
+
+**Learning:** When building a disclosure widget (expand/collapse button), adding an `aria-label` that differs from the visible text (like "Toggle word family" vs visible "Show Family") violates WCAG 2.5.3 (Label in Name) and breaks voice control software.
+**Action:** Do NOT use `aria-label` to override visible text on buttons if the visible text is already descriptive. Rely on `aria-expanded` to announce state changes while preserving the visible name.
