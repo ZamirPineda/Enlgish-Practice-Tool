@@ -30,21 +30,26 @@ export const usePWAUpdate = () => {
     if ("serviceWorker" in navigator && import.meta.env.PROD) {
       const wb = new Workbox("/sw.js");
       wbRef.current = wb;
+    }
 
-      const triggerUpdate = () => {
-        if (isActiveSession()) {
-          setUpdateAvailable(true);
-        } else {
-          if (!hasReloaded.current) {
-            hasReloaded.current = true;
-            if (wbRef.current) wbRef.current.messageSkipWaiting();
-            window.location.reload();
-          }
+    // Always expose the trigger function for testing, regardless of PROD env
+    const triggerUpdate = () => {
+      if (isActiveSession()) {
+        setUpdateAvailable(true);
+      } else {
+        if (!hasReloaded.current) {
+          hasReloaded.current = true;
+          if (wbRef.current) wbRef.current.messageSkipWaiting();
+          window.location.reload();
         }
-      };
+      }
+    };
 
-      // Expose to window for Playwright E2E tests to mock SW update
-      (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
+    // Expose to window for Playwright E2E tests to mock SW update
+    (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
+
+    if ("serviceWorker" in navigator && import.meta.env.PROD) {
+      const wb = wbRef.current!;
 
       wb.addEventListener("waiting", triggerUpdate);
 
