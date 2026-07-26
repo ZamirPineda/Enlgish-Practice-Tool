@@ -19,7 +19,10 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/vault");
-    await page.waitForLoadState("networkidle");
+    await page.waitForFunction(
+      () =>
+        document.querySelector("h2") || document.querySelector(".bg-surface-1"),
+    );
 
     const results = await new AxeBuilder({ page }).analyze();
 
@@ -33,7 +36,10 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/calculus");
-    await page.waitForLoadState("networkidle");
+    await page.waitForFunction(
+      () =>
+        document.querySelector("h1") || document.querySelector(".bg-surface-1"),
+    );
 
     const results = await new AxeBuilder({ page }).analyze();
 
