@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2026-03-12 - [Global Keyboard Shortcuts Safety]
+
+**Learning:** Global keydown listeners (e.g., `Space` to reveal) can hijack native interactions. To prevent this, check `document.activeElement?.tagName` against standard interactive types (`BUTTON`, `A`, `INPUT`, `TEXTAREA`) before calling `preventDefault()` on `Space` or `Enter`. Do not broadly block all keys based on `getAttribute("role") === "button"`, as this unintentionally breaks arrow-key navigation for custom interactive elements when they are in focus.
+**Action:** Always refine the filtering condition for interactive elements to ensure that custom components with `role="button"` can still process non-conflicting keys (like Arrows) while allowing standard elements to handle their own activation keys (Space/Enter).
