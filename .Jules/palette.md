@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Interactive Container Accessibility Pattern]
+
+**Learning:** Adding `role="button"` to a complex interactive container (like a flashcard `div`) without proper instructions can hide its visible child text content from screen readers if an overriding `aria-label` is used instead.
+**Action:** When making custom containers accessible, avoid applying a full `aria-label` that masks child content. Instead, use a visually hidden `<span className="sr-only">` inside the container for screen reader instructions, and ensure proper focus styling and keyboard event handling.
