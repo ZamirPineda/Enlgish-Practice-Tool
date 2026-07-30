@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-10 - [Accessible Accordion & Emoji Handling]
+
+**Learning:** Buttons that toggle visibility of content (like "Show Family") often lack structural accessibility cues (`aria-expanded`, `aria-controls`) and contain emojis that screen readers may interpret awkwardly if left exposed, creating confusing button names.
+**Action:** When creating accordion or expand/collapse buttons, always include `aria-expanded` reflecting state, `aria-controls` linked to the conditionally rendered panel ID (using `useId()`), and explicitly wrap complex emojis in a `<span aria-hidden="true">` to preserve clear button labels.
