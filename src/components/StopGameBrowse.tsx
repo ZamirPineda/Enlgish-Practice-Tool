@@ -635,6 +635,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                   const headerClass = `${theme.headerGradient} px-5 py-4 flex items-center justify-between border-b border-white/5`;
                   const titleClass = `font-black text-lg ${theme.textClass} tracking-wide drop-shadow-sm`;
 
+                  const panelId = `category-panel-${category.replace(/\s+/g, "-").toLowerCase()}`;
                   return (
                     <div
                       key={category}
@@ -655,6 +656,7 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                         </span>
                       </div>
                       <div
+                        id={panelId}
                         className={`p-4 flex-1 flex flex-col gap-3 ${theme.bgGradient}`}
                       >
                         {visibleItems.map((item, idx) => (
@@ -695,17 +697,19 @@ const StopGameBrowse: React.FC<StopGameBrowseProps> = ({
                       {hasMore && (
                         <button
                           onClick={() => toggleCategory(category)}
+                          aria-expanded={isExpanded}
+                          aria-controls={panelId}
                           className="w-full py-3 bg-[var(--color-surface-1)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] text-xs font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 border-t border-[var(--color-border)]/50"
                         >
                           {isExpanded ? (
                             <>
                               <span>Collapse</span>
-                              <ChevronUpIcon />
+                              <ChevronUpIcon aria-hidden="true" />
                             </>
                           ) : (
                             <>
                               <span>Show {hiddenCount} More</span>
-                              <ChevronDownIcon />
+                              <ChevronDownIcon aria-hidden="true" />
                             </>
                           )}
                         </button>

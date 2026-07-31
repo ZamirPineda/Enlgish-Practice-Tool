@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useId } from "react";
 import { StopItem, WordFamily, StopCategory, IrregularVerb } from "@/types";
 import {
   getCategoryIcon,
@@ -58,6 +58,7 @@ interface StopGameCardProps {
 
 const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const panelId = useId();
   return (
     <div className="mt-3 border-t border-border/50 pt-2">
       <button
@@ -65,15 +66,26 @@ const WordFamilyViewer = ({ family }: { family: WordFamily }) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
         }}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         className="text-[10px] uppercase font-bold text-text-muted hover:text-primary flex items-center gap-1 transition-colors"
       >
-        {isOpen ? "Hide Family" : "Show Family 👨‍👩‍👧‍👦"}
+        <span aria-hidden="true">
+          {isOpen ? "Hide Family" : "Show Family 👨‍👩‍👧‍👦"}
+        </span>
+        <span className="sr-only">
+          {isOpen ? "Hide Word Family" : "Show Word Family"}
+        </span>
         <ChevronDownIcon
+          aria-hidden="true"
           className={`w-3 h-3 transform transition-transform ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
       {isOpen && (
-        <div className="mt-2 grid grid-cols-2 gap-2 text-xs bg-surface-1/40 p-2 rounded animate-fade-in">
+        <div
+          id={panelId}
+          className="mt-2 grid grid-cols-2 gap-2 text-xs bg-surface-1/40 p-2 rounded animate-fade-in"
+        >
           {family.noun && (
             <div>
               <span className="text-text-muted font-bold block text-[9px] uppercase">
