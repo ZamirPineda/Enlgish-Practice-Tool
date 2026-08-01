@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Custom Flashcard Component Keyboard Accessibility]
+
+**Learning:** Interactive components like custom flashcards (`div` with `onClick`) frequently lack keyboard navigation shortcuts and proper accessible roles/labels.
+**Action:** When implementing or updating custom interactive components like flashcards, explicitly add `role="button"`, `tabIndex={0}`, an accessible description (`aria-label` or `sr-only` text), keyboard event handlers (for Enter/Space), and visible focus styling (e.g., `focus-visible:ring-2`). When adding global shortcuts (e.g., Arrow keys for navigation), use a `useEffect` and carefully exempt native form elements (`INPUT`, `TEXTAREA`) and the component itself if it handles its own internal shortcuts.

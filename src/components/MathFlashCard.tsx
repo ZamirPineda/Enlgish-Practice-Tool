@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { MathRow, MathStudyStrategy } from "@/types";
 import LatexRenderer from "@/components/LatexRenderer";
 import { shuffle } from "@/lib/arrayUtils";
@@ -17,6 +17,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [randomizedRows, setRandomizedRows] = useState<MathRow[]>([]);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   // Initialize/Shuffle cards
   useEffect(() => {
@@ -27,14 +28,14 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setIsFlipped(false);
   }, [strategy, rows]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setIsFlipped(false);
     setTimeout(() => {
       setCurrentCardIndex((prev) => (prev + 1) % randomizedRows.length);
     }, 150); // slight delay for smooth transition
-  };
+  }, [randomizedRows.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     // When going back, show the answer side first (since we likely just saw it)
     setIsFlipped(true);
     setTimeout(() => {
@@ -42,11 +43,59 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         (prev) => (prev - 1 + randomizedRows.length) % randomizedRows.length,
       );
     }, 150);
-  };
+  }, [randomizedRows.length]);
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+  const handleFlip = useCallback(() => {
+    setIsFlipped((prev) => !prev);
+  }, []);
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      // Don't intercept if user is typing in an input/textarea
+      const activeTag = document.activeElement?.tagName;
+      const isInput =
+        activeTag === "INPUT" ||
+        activeTag === "TEXTAREA" ||
+        activeTag === "SELECT";
+
+      const isStandardInteractive =
+        activeTag === "BUTTON" || activeTag === "A" || isInput;
+
+      // Ensure we explicitly exempt the primary interactive component itself (our card)
+      // if it has focus, since it handles Space/Enter via its own onKeyDown.
+      if (isStandardInteractive && document.activeElement !== cardRef.current) {
+        return;
+      }
+
+      if (e.key === "Escape") {
+        onExit();
+        return;
+      }
+
+      if (e.key === "ArrowRight") {
+        handleNext();
+        return;
+      }
+
+      if (e.key === "ArrowLeft") {
+        handlePrev();
+        return;
+      }
+
+      // Space or Enter to flip, but ensure we don't double trigger if focus is on the card itself
+      if (e.key === " " || e.key === "Enter") {
+        if (document.activeElement === cardRef.current) {
+          // Handled by onKeyDown locally to avoid double-triggering
+          return;
+        }
+        e.preventDefault(); // prevent page scroll on Space
+        handleFlip();
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, [handleNext, handlePrev, handleFlip, onExit]);
 
   if (randomizedRows.length === 0) return <div>Loading...</div>;
 
@@ -99,10 +148,24 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        ref={cardRef}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            handleFlip();
+          }
+        }}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:ring-2 focus-visible:ring-accent focus:outline-none rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
       >
+        <span className="sr-only" lang="es">
+          Tarjeta de memoria. Usa Espacio o Enter para girar, flechas para
+          navegar.
+        </span>
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
           style={{
