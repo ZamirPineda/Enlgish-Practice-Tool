@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { MathRow, MathStudyStrategy } from "@/types";
 import LatexRenderer from "@/components/LatexRenderer";
 import { shuffle } from "@/lib/arrayUtils";
@@ -27,14 +27,14 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setIsFlipped(false);
   }, [strategy, rows]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setIsFlipped(false);
     setTimeout(() => {
       setCurrentCardIndex((prev) => (prev + 1) % randomizedRows.length);
     }, 150); // slight delay for smooth transition
-  };
+  }, [randomizedRows.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     // When going back, show the answer side first (since we likely just saw it)
     setIsFlipped(true);
     setTimeout(() => {
@@ -42,11 +42,58 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         (prev) => (prev - 1 + randomizedRows.length) % randomizedRows.length,
       );
     }, 150);
-  };
+  }, [randomizedRows.length]);
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+  const handleFlip = useCallback(() => {
+    setIsFlipped((prev) => !prev);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't hijack if user is typing in an input or focused on a standard interactive element
+      const activeTag = document.activeElement?.tagName;
+      const isInput =
+        activeTag === "INPUT" ||
+        activeTag === "TEXTAREA" ||
+        activeTag === "SELECT";
+      const isStandardInteractive =
+        activeTag === "BUTTON" || activeTag === "A" || isInput;
+
+      if (e.key === "Escape") {
+        onExit();
+        return;
+      }
+
+      if (isInput) {
+        return;
+      }
+
+      if (e.key === "ArrowRight") {
+        handleNext();
+        return;
+      }
+
+      if (e.key === "ArrowLeft") {
+        handlePrev();
+        return;
+      }
+
+      if (e.key === " " || e.key === "Enter") {
+        // Prevent default scrolling for space unless focused on a standard interactive element
+        if (!isStandardInteractive) {
+          e.preventDefault();
+          // If the flashcard itself is focused, the local onKeyDown will handle it
+          // to avoid double triggering. But if focus is on body, we handle it here.
+          if (document.activeElement?.getAttribute("role") !== "button") {
+            handleFlip();
+          }
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNext, handlePrev, handleFlip, onExit]);
 
   if (randomizedRows.length === 0) return <div>Loading...</div>;
 
@@ -99,10 +146,25 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        role="button"
+        tabIndex={0}
+        aria-pressed={isFlipped}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            handleFlip();
+          }
+        }}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
       >
+        <span className="sr-only">
+          {isFlipped
+            ? "Card flipped. Showing answer. Press Space or Enter to flip again, Right Arrow for next, Left Arrow for previous."
+            : "Study card. Showing question. Press Space or Enter to flip, Right Arrow for next, Left Arrow for previous."}
+        </span>
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
           style={{

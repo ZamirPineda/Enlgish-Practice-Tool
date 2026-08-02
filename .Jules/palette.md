@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2026-03-12 - [Global Event Keyboard Safety]
+
+**Learning:** When adding global keyboard shortcuts (like `ArrowRight` or `Space` for flashcards), you must explicitly check `document.activeElement` for input tags (`INPUT`, `TEXTAREA`, `SELECT`) to prevent hijacking native typing and cursor movement. Furthermore, screen-reader text added via `.sr-only` must default to the primary language of the application unless specified otherwise, to avoid confusing screen reader pronunciation.
+**Action:** Always filter input elements in global `keydown` listeners and ensure added accessible text is in the appropriate language context (English in this codebase) unless the specific UI component is localized otherwise.
