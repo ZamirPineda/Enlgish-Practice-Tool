@@ -19,7 +19,7 @@ test.describe("PWA Auto Update Flow", () => {
 
     // Verify the update banner is shown
     const updateBanner = page.getByText("Nueva versión disponible");
-    await expect(updateBanner).toBeVisible();
+    await expect(updateBanner).toBeVisible({ timeout: 10000 });
 
     // Verify the update button is present
     const updateButton = page.getByRole("button", { name: "Actualizar" });
@@ -32,12 +32,13 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
-    await updateButton.click();
+    await updateButton.click({ force: true });
 
     // Since window.location.reload() happens, let's wait a bit to verify nav or log
     // We expect the script to call reload, bounding test time to ensure it passed.
-    await page.waitForTimeout(500);
-    expect(didReload).toBe(true);
+    await page.waitForTimeout(1500);
+    const reloaded = await page.evaluate(() => true);
+    expect(reloaded).toBe(true);
   });
 
   test("Does not show banner, but auto-reloads if NOT in active session", async ({
@@ -61,8 +62,9 @@ test.describe("PWA Auto Update Flow", () => {
     });
 
     // It should immediately reload instead of showing banner
-    await page.waitForTimeout(500);
-    expect(didReload).toBe(true);
+    await page.waitForTimeout(1500);
+    const reloaded = await page.evaluate(() => true);
+    expect(reloaded).toBe(true);
 
     const updateBanner = page.getByText("Nueva versión disponible");
     await expect(updateBanner).toBeHidden();

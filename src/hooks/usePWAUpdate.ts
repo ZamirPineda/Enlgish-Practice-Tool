@@ -27,7 +27,7 @@ export const usePWAUpdate = () => {
   const hasReloaded = useRef(false);
 
   useEffect(() => {
-    if ("serviceWorker" in navigator && import.meta.env.PROD) {
+    if ("serviceWorker" in navigator) {
       const wb = new Workbox("/sw.js");
       wbRef.current = wb;
 
