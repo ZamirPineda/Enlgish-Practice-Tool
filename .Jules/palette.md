@@ -46,4 +46,4 @@
 ## 2026-03-12 - [Accessible Dynamic Reward Buttons]
 
 **Learning:** Buttons with dynamic text that represent locked or claimed states (e.g., "Claim +40 XP" vs "Reward Claimed") fail accessibility checks for users who cannot visually see the "locked" or "disabled" context if the aria-label is not explicitly defined.
-**Action:** When creating or updating reward/claim buttons, always include an explicit, dynamic `aria-label` that includes the visible text plus an explanation of *why* the button is in that state (e.g., `Claim +40 XP (Locked: play 2 sessions to unlock)`). Update associated Vitest test files to use `getByRole("button", { name: /Claim/i })` regex queries to accommodate the dynamic accessible names.
+**Action:** When creating or updating reward/claim buttons, always include an explicit, dynamic `aria-label` that includes the visible text plus an explanation of _why_ the button is in that state (e.g., `Claim +40 XP (Locked: play 2 sessions to unlock)`). Update associated Vitest test files to use `getByRole("button", { name: /Claim/i })` regex queries to accommodate the dynamic accessible names.
