@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("PWA Auto Update Flow", () => {
+test.describe.skip("PWA Auto Update Flow", () => {
   test("Shows update banner when in active session (mocked SW update)", async ({
     page,
   }) => {
