@@ -290,6 +290,13 @@ const DailyProgressWidget: React.FC = () => {
             !sessionSummary.rewardEligible || sessionSummary.rewardClaimed
           }
           className={`inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-black transition-colors ${sessionSummary.rewardEligible && !sessionSummary.rewardClaimed ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-surface-1 text-text-muted border border-border"}`}
+          aria-label={
+            sessionSummary.rewardClaimed
+              ? "Reward Claimed"
+              : sessionSummary.rewardEligible
+                ? `Claim +${sessionSummary.rewardXp} XP`
+                : `Claim +${sessionSummary.rewardXp} XP (Locked: play 2 sessions with 70%+ accuracy)`
+          }
         >
           <Award className="w-4 h-4" />
           {sessionSummary.rewardClaimed
@@ -333,6 +340,13 @@ const DailyProgressWidget: React.FC = () => {
                 onClick={() => handleClaimWeeklyTier(tier.id)}
                 disabled={!tier.eligible || tier.claimed}
                 className={`w-full rounded-md px-2 py-1 text-[11px] font-black transition-colors ${tier.eligible && !tier.claimed ? "bg-sky-500 hover:bg-sky-600 text-white" : "bg-surface-2 text-text-muted border border-border"}`}
+                aria-label={
+                  tier.claimed
+                    ? `Claimed ${tier.title} reward`
+                    : tier.eligible
+                      ? `Claim Reward for ${tier.title}: +${tier.rewardXp} XP`
+                      : `Locked: ${tier.title} requires ${tier.requiredDays} days to claim +${tier.rewardXp} XP`
+                }
               >
                 {tier.claimed
                   ? "Claimed"
