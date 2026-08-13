@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-08-13 - [Custom Interactive Div Accessibility Pattern]
+
+**Learning:** Custom interactive elements (like flip cards) implemented with `div`s often lack proper keyboard handlers and focus management, causing them to be inaccessible, while global shortcuts for them can hijack native text fields if not scoped carefully.
+**Action:** When implementing custom interactive `div`s, always add `role="button"`, `tabIndex={0}`, visible focus styling (e.g. `focus-visible:ring-2`), local `onKeyDown` handlers (with `e.stopPropagation()`), and use `<span className="sr-only">` for screen-reader instructions. Ensure global keydown listeners filter out standard interactive elements (BUTTON, A, INPUT) to prevent hijacking.
