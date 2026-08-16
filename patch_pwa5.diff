@@ -1,0 +1,36 @@
+--- e2e/pwa-update.spec.ts
++++ e2e/pwa-update.spec.ts
+@@ -6,15 +6,14 @@
+     // Navigate to a game route (active session)
+     await page.goto("/#/stop?mode=game");
+     await page.waitForLoadState("domcontentloaded");
+-    await page.evaluate(() => {
++    await page.evaluate(async () => {
+         localStorage.setItem("app-settings", JSON.stringify({
+             "hasCompletedOnboarding": true,
+             "hasSeenVaultCoachmark": true
+         }));
+     });
+     await page.waitForTimeout(500);
+-    await page.reload();
+-
++    await page.goto("/#/stop?mode=game");
+     // Ensure page is loaded
+     await expect(page.getByRole("banner")).toBeVisible();
+
+@@ -53,13 +52,13 @@
+     // Navigate to home (not an active session)
+     await page.goto("/#/");
+     await page.waitForLoadState("domcontentloaded");
+-    await page.evaluate(() => {
++    await page.evaluate(async () => {
+         localStorage.setItem("app-settings", JSON.stringify({
+             "hasCompletedOnboarding": true,
+             "hasSeenVaultCoachmark": true
+         }));
+     });
+     await page.waitForTimeout(500);
+-    await page.reload();
++    await page.goto("/#/");
+
+     await expect(page.getByRole("banner")).toBeVisible();
