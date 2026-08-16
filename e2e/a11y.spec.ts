@@ -19,6 +19,14 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/vault");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+        localStorage.setItem("app-settings", JSON.stringify({
+            "hasCompletedOnboarding": true,
+            "hasSeenVaultCoachmark": true
+        }));
+    });
+    await page.reload();
     await page.waitForLoadState("networkidle");
 
     const results = await new AxeBuilder({ page }).analyze();
@@ -33,6 +41,14 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/calculus");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+        localStorage.setItem("app-settings", JSON.stringify({
+            "hasCompletedOnboarding": true,
+            "hasSeenVaultCoachmark": true
+        }));
+    });
+    await page.reload();
     await page.waitForLoadState("networkidle");
 
     const results = await new AxeBuilder({ page }).analyze();
