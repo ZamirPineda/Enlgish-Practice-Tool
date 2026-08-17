@@ -333,6 +333,13 @@ const DailyProgressWidget: React.FC = () => {
                 onClick={() => handleClaimWeeklyTier(tier.id)}
                 disabled={!tier.eligible || tier.claimed}
                 className={`w-full rounded-md px-2 py-1 text-[11px] font-black transition-colors ${tier.eligible && !tier.claimed ? "bg-sky-500 hover:bg-sky-600 text-white" : "bg-surface-2 text-text-muted border border-border"}`}
+                aria-label={
+                  tier.claimed
+                    ? `Claimed tier ${tier.title} for ${tier.requiredDays} days`
+                    : tier.eligible
+                      ? `Claim Reward tier ${tier.title} for ${tier.requiredDays} days`
+                      : `Locked tier ${tier.title} for ${tier.requiredDays} days`
+                }
               >
                 {tier.claimed
                   ? "Claimed"
