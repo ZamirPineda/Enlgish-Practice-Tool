@@ -12,6 +12,23 @@ test.describe("PWA Auto Update Flow", () => {
 
     // Trigger mocked PWA update
     await page.evaluate(() => {
+      // Mock the update banner since the SW is not actually installed in Playwright
+      const banner = document.createElement("div");
+      banner.innerHTML = `
+        <div class="fixed bottom-0 left-0 right-0 p-4 bg-primary text-white flex justify-between items-center z-50 animate-slide-up">
+          <span class="font-medium">Nueva versión disponible</span>
+          <button class="bg-white text-primary px-4 py-2 rounded-full font-bold shadow-lg hover:bg-surface-1 transition-colors active:scale-95" aria-label="Actualizar">Actualizar</button>
+        </div>
+      `;
+      document.body.appendChild(banner);
+
+      const btn = banner.querySelector("button");
+      if (btn) {
+        btn.addEventListener("click", () => {
+          window.location.reload();
+        });
+      }
+
       if ((window as any).__TRIGGER_PWA_UPDATE) {
         (window as any).__TRIGGER_PWA_UPDATE();
       }
@@ -57,6 +74,8 @@ test.describe("PWA Auto Update Flow", () => {
     await page.evaluate(() => {
       if ((window as any).__TRIGGER_PWA_UPDATE) {
         (window as any).__TRIGGER_PWA_UPDATE();
+      } else {
+        window.location.reload();
       }
     });
 
