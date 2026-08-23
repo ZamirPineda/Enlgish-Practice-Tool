@@ -39,7 +39,7 @@ export const usePWAUpdate = () => {
       }
     };
 
-    // Always expose to window for Playwright E2E tests to mock SW update
+    // Expose to window for Playwright E2E tests to mock SW update ALWAYS
     (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
 
     if ("serviceWorker" in navigator && import.meta.env.PROD) {

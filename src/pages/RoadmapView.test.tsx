@@ -33,128 +33,117 @@ describe("RoadmapView", () => {
     addGlobalXpMock.mockReset();
   });
 
-  test(
-    "requires enough mastery before unlocking the next lesson",
-    { timeout: 30000 },
-    async () => {
-      const user = userEvent.setup();
-      const firstRender = render(
-        <MemoryRouter>
-          <RoadmapView />
-        </MemoryRouter>,
-      );
+  test("requires enough mastery before unlocking the next lesson", async () => {
+    const user = userEvent.setup();
+    const firstRender = render(
+      <MemoryRouter>
+        <RoadmapView />
+      </MemoryRouter>,
+    );
 
+    expect(
+      screen.getByRole("heading", { name: "Roadmap" }),
+    ).toBeInTheDocument();
+
+    const openerNode = screen.getByRole("button", {
+      name: /Interview opener/i,
+    });
+    await user.click(openerNode);
+
+    await waitFor(() => {
       expect(
-        screen.getByRole("heading", { name: "Roadmap" }),
+        screen.getByLabelText("Mastery para Interview opener"),
       ).toBeInTheDocument();
+    });
 
-      const openerNode = screen.getByRole("button", {
-        name: /Interview opener/i,
-      });
-      await user.click(openerNode);
+    fireEvent.change(screen.getByLabelText("Mastery para Interview opener"), {
+      target: { value: "60" },
+    });
+    await user.click(
+      screen.getByRole("button", {
+        name: "Registrar mastery para Interview opener",
+      }),
+    );
 
-      await waitFor(() => {
-        expect(
-          screen.getByLabelText("Mastery para Interview opener"),
-        ).toBeInTheDocument();
-      });
+    const fixSlipsNode = screen.getByRole("button", {
+      name: /Fix grammar slips/i,
+    });
+    await user.click(fixSlipsNode);
 
-      fireEvent.change(screen.getByLabelText("Mastery para Interview opener"), {
-        target: { value: "60" },
-      });
-      await user.click(
-        screen.getByRole("button", {
-          name: "Registrar mastery para Interview opener",
-        }),
-      );
-
-      const fixSlipsNode = screen.getByRole("button", {
-        name: /Fix grammar slips/i,
-      });
-      await user.click(fixSlipsNode);
-
-      await waitFor(() => {
-        expect(
-          screen.getByLabelText("Mastery para Fix grammar slips"),
-        ).toBeInTheDocument();
-      });
-
-      fireEvent.change(
-        screen.getByLabelText("Mastery para Fix grammar slips"),
-        {
-          target: { value: "60" },
-        },
-      );
-      await user.click(
-        screen.getByRole("button", {
-          name: "Registrar mastery para Fix grammar slips",
-        }),
-      );
-
+    await waitFor(() => {
       expect(
-        screen.getByText("Necesitas mastery minima de 70%. Actual: 60%."),
-      ).toBeInTheDocument();
-
-      const lockedFollowupNode = screen.getByRole("button", {
-        name: /Bloqueado: Rephrase concise answers/i,
-      });
-      expect(lockedFollowupNode).toBeDisabled();
-
-      await user.click(fixSlipsNode);
-      await waitFor(() => {
-        expect(
-          screen.getByLabelText("Mastery para Fix grammar slips"),
-        ).toBeInTheDocument();
-      });
-
-      fireEvent.change(
         screen.getByLabelText("Mastery para Fix grammar slips"),
-        {
-          target: { value: "80" },
-        },
-      );
-      await user.click(
+      ).toBeInTheDocument();
+    });
+
+    fireEvent.change(screen.getByLabelText("Mastery para Fix grammar slips"), {
+      target: { value: "60" },
+    });
+    await user.click(
+      screen.getByRole("button", {
+        name: "Registrar mastery para Fix grammar slips",
+      }),
+    );
+
+    expect(
+      screen.getByText("Necesitas mastery minima de 70%. Actual: 60%."),
+    ).toBeInTheDocument();
+
+    const lockedFollowupNode = screen.getByRole("button", {
+      name: /Bloqueado: Rephrase concise answers/i,
+    });
+    expect(lockedFollowupNode).toBeDisabled();
+
+    await user.click(fixSlipsNode);
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText("Mastery para Fix grammar slips"),
+      ).toBeInTheDocument();
+    });
+
+    fireEvent.change(screen.getByLabelText("Mastery para Fix grammar slips"), {
+      target: { value: "80" },
+    });
+    await user.click(
+      screen.getByRole("button", {
+        name: "Registrar mastery para Fix grammar slips",
+      }),
+    );
+
+    const continueButton = screen.queryByRole("button", {
+      name: "Continuar",
+    });
+    if (continueButton) {
+      await user.click(continueButton);
+    }
+
+    const unlockedFollowupNode = screen.getByRole("button", {
+      name: /Abrir: Rephrase concise answers/i,
+      hidden: true,
+    });
+    expect(unlockedFollowupNode).not.toBeDisabled();
+
+    firstRender.unmount();
+
+    render(
+      <MemoryRouter>
+        <RoadmapView />
+      </MemoryRouter>,
+    );
+
+    const rephraseNode = screen.getByRole("button", {
+      name: /Abrir: Rephrase concise answers/i,
+    });
+    await user.click(rephraseNode);
+
+    await waitFor(() => {
+      expect(
         screen.getByRole("button", {
-          name: "Registrar mastery para Fix grammar slips",
+          name: "Registrar mastery para Rephrase concise answers",
         }),
-      );
-
-      const continueButton = screen.queryByRole("button", {
-        name: "Continuar",
-      });
-      if (continueButton) {
-        await user.click(continueButton);
-      }
-
-      const unlockedFollowupNode = screen.getByRole("button", {
-        name: /Abrir: Rephrase concise answers/i,
-        hidden: true,
-      });
-      expect(unlockedFollowupNode).not.toBeDisabled();
-
-      firstRender.unmount();
-
-      render(
-        <MemoryRouter>
-          <RoadmapView />
-        </MemoryRouter>,
-      );
-
-      const rephraseNode = screen.getByRole("button", {
-        name: /Abrir: Rephrase concise answers/i,
-      });
-      await user.click(rephraseNode);
-
-      await waitFor(() => {
-        expect(
-          screen.getByRole("button", {
-            name: "Registrar mastery para Rephrase concise answers",
-          }),
-        ).toBeInTheDocument();
-      });
-    },
-    15000,
-  );
+      ).toBeInTheDocument();
+    });
+  }, 15000);
 
   test("filters modules by route", () => {
     render(
