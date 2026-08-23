@@ -64,7 +64,6 @@ function resolveManualChunk(id: string) {
 
   return manualChunks(id, {
     getModuleInfo: () => null,
-    getModuleIds: () => [],
   } as any);
 }
 

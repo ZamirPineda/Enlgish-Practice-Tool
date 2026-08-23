@@ -16,7 +16,9 @@ describe("DailySessionInsights", () => {
   });
 
   it("shows locked reward by default", () => {
-    render(<DailySessionInsights />);
+    act(() => {
+      render(<DailySessionInsights />);
+    });
 
     expect(
       screen.getByText(
@@ -46,7 +48,9 @@ describe("DailySessionInsights", () => {
       trackAnalyticsEvent("session_end", { game: "math_game" });
     });
 
-    render(<DailySessionInsights />);
+    act(() => {
+      render(<DailySessionInsights />);
+    });
 
     const claimButton = screen.getByRole("button", {
       name: "Claim +40 XP for daily session",
