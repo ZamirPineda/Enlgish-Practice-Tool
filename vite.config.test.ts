@@ -64,8 +64,8 @@ function resolveManualChunk(id: string) {
 
   return manualChunks(id, {
     getModuleInfo: () => null,
-    getModuleIds: function* () {},
-  });
+    getModuleIds: () => [],
+  } as any);
 }
 
 describe("vite base path", () => {
