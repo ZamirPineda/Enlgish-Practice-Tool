@@ -110,9 +110,7 @@ describe("RoadmapView", () => {
       }),
     );
 
-    const continueButton = screen.queryByRole("button", {
-      name: "Continuar",
-    });
+    const continueButton = screen.queryByRole("button", { name: "Continuar" });
     if (continueButton) {
       await user.click(continueButton);
     }
