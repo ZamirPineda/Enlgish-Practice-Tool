@@ -5,11 +5,25 @@ test.describe("PWA Auto Update Flow", () => {
     page,
   }) => {
     // Navigate to a game route (active session)
+    await page.goto("/");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+        }),
+      );
+    });
     await page.goto("/#/stop?mode=game");
+    await page.reload();
 
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
 
+    // Wait for the app to settle and PWA hook to mount
+    await page.waitForTimeout(1000);
     // Trigger mocked PWA update
     await page.evaluate(() => {
       if ((window as any).__TRIGGER_PWA_UPDATE) {
@@ -44,7 +58,19 @@ test.describe("PWA Auto Update Flow", () => {
     page,
   }) => {
     // Navigate to home (not an active session)
+    await page.goto("/");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+        }),
+      );
+    });
     await page.goto("/#/");
+    await page.reload();
 
     await expect(page.getByRole("banner")).toBeVisible();
 
@@ -53,6 +79,8 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
+    // Wait for the app to settle and PWA hook to mount
+    await page.waitForTimeout(1000);
     // Trigger mocked PWA update
     await page.evaluate(() => {
       if ((window as any).__TRIGGER_PWA_UPDATE) {
