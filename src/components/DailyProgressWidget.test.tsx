@@ -27,11 +27,13 @@ describe("DailyProgressWidget", () => {
   });
 
   it("updates current progress and resets when the day changes", () => {
-    render(
-      <MemoryRouter>
-        <DailyProgressWidget />
-      </MemoryRouter>,
-    );
+    act(() => {
+      render(
+        <MemoryRouter>
+          <DailyProgressWidget />
+        </MemoryRouter>,
+      );
+    });
 
     expect(
       screen.getByText("50 more cards needed to reach your goal."),
@@ -56,11 +58,13 @@ describe("DailyProgressWidget", () => {
   });
 
   it("shows session summary and allows claiming the daily session reward once", () => {
-    render(
-      <MemoryRouter>
-        <DailyProgressWidget />
-      </MemoryRouter>,
-    );
+    act(() => {
+      render(
+        <MemoryRouter>
+          <DailyProgressWidget />
+        </MemoryRouter>,
+      );
+    });
 
     const rewardButtonBefore = screen.getByRole("button", {
       name: "Claim +40 XP",
@@ -95,7 +99,9 @@ describe("DailyProgressWidget", () => {
       fireEvent.click(rewardButton);
     });
 
-    expect(screen.getByRole("button", { name: "Reward Claimed" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Reward Claimed" }),
+    ).toBeDisabled();
     expect(localStorage.getItem("english-pal-global-xp")).toBe("40");
   });
 
@@ -109,11 +115,13 @@ describe("DailyProgressWidget", () => {
       }),
     );
 
-    render(
-      <MemoryRouter>
-        <DailyProgressWidget />
-      </MemoryRouter>,
-    );
+    act(() => {
+      render(
+        <MemoryRouter>
+          <DailyProgressWidget />
+        </MemoryRouter>,
+      );
+    });
 
     expect(screen.getByText(/3 \/ 7 active days/i)).toBeInTheDocument();
 
