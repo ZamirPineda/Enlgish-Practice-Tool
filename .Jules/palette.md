@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Custom Interactive Element Key Hijacking]
+
+**Learning:** When creating custom interactive elements (like flashcards) with local `onKeyDown` handlers for Space/Enter, attaching a global `keydown` listener to the same component can cause the global listener to hijack the event if not explicitly filtered. Filtering strictly by `tagName` misses `role="button"` elements.
+**Action:** When using a global key listener alongside custom interactive components, check `document.activeElement?.getAttribute("role") === "button"` alongside standard tags (`BUTTON`, `A`) to exempt focused custom elements from the global action, allowing their local handlers to execute properly.
