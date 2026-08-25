@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Expand/Collapse Accessibility Pattern]
+
+**Learning:** Expand/collapse buttons (like `WordFamilyViewer` in `StopGameCard`) frequently miss proper ARIA mappings (`aria-expanded` and `aria-controls`), which leaves screen reader users completely unaware of the interaction's state and outcome.
+**Action:** When creating or fixing toggles that show/hide content, always use a unique ID (`React.useId()`) for `aria-controls`, bind the state to `aria-expanded`, and ensure any inline complex emojis are wrapped in `<span aria-hidden="true">`.
