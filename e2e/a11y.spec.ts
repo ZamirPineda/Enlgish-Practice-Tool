@@ -18,8 +18,15 @@ test.describe("Accessibility (A11y) Standards", () => {
   test("Vocabulary Vault view should not have severe accessibility violations", async ({
     page,
   }) => {
+    // Inject local storage to bypass coachmarks before navigating to vault
+    await page.goto("/");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(
+      'localStorage.setItem("app-settings", JSON.stringify({"hasCompletedOnboarding": true, "hasSeenVaultCoachmark": true, "hasSeenCoachmarks": true}))',
+    );
     await page.goto("/#/vault");
-    await page.waitForLoadState("networkidle");
+    await page.reload(); // Force react to pick up the updated storage state
+    await page.waitForTimeout(2000);
 
     const results = await new AxeBuilder({ page }).analyze();
 

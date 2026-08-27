@@ -27,6 +27,21 @@ export const usePWAUpdate = () => {
   const hasReloaded = useRef(false);
 
   useEffect(() => {
+    // Expose trigger manually if not prod for testing
+    if (import.meta.env.DEV) {
+      const devTrigger = () => {
+        if (isActiveSession()) {
+          setUpdateAvailable(true);
+        } else {
+          if (!hasReloaded.current) {
+            hasReloaded.current = true;
+            window.location.reload();
+          }
+        }
+      };
+      (window as any).__TRIGGER_PWA_UPDATE = devTrigger;
+    }
+
     if ("serviceWorker" in navigator && import.meta.env.PROD) {
       const wb = new Workbox("/sw.js");
       wbRef.current = wb;
