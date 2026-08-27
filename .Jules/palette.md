@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-24 - [Screen Reader Language Targeting]
+
+**Learning:** Adding screen-reader-only text (e.g., `<span className="sr-only">`) in a language (like Spanish) without an explicit `lang` tag causes English-configured screen readers to mispronounce it severely.
+**Action:** Always align the text language with the surrounding component's language context or explicitly provide a `lang` attribute (e.g., `lang="es"`) for isolated localized text strings.
