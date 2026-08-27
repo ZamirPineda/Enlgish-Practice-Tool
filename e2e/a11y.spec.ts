@@ -7,7 +7,7 @@ test.describe("Accessibility (A11y) Standards", () => {
   }) => {
     await page.goto("/");
 
-    const results = await new AxeBuilder({ page }).analyze();
+    const results = await new AxeBuilder({ page: page as any }).analyze();
 
     const severeViolations = results.violations.filter(
       (v) => v.impact === "serious" || v.impact === "critical",
@@ -28,7 +28,7 @@ test.describe("Accessibility (A11y) Standards", () => {
     await page.reload(); // Force react to pick up the updated storage state
     await page.waitForTimeout(2000);
 
-    const results = await new AxeBuilder({ page }).analyze();
+    const results = await new AxeBuilder({ page: page as any }).analyze();
 
     const severeViolations = results.violations.filter(
       (v) => v.impact === "serious" || v.impact === "critical",
@@ -42,7 +42,7 @@ test.describe("Accessibility (A11y) Standards", () => {
     await page.goto("/#/calculus");
     await page.waitForLoadState("networkidle");
 
-    const results = await new AxeBuilder({ page }).analyze();
+    const results = await new AxeBuilder({ page: page as any }).analyze();
 
     const severeViolations = results.violations.filter(
       (v) => v.impact === "serious" || v.impact === "critical",
