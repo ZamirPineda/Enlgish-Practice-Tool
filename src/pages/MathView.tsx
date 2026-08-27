@@ -376,7 +376,7 @@ const MathView: React.FC = () => {
             aria-selected={activeTab === "calculus"}
             className={`px-4 py-2 min-h-[40px] rounded-lg font-bold text-sm transition-all active:scale-[0.98] whitespace-nowrap ${
               activeTab === "calculus"
-                ? "bg-sky-600 text-white shadow-lg shadow-sky-900/50"
+                ? "bg-sky-700 text-white shadow-lg shadow-sky-900/50"
                 : "bg-surface-2 text-text-muted hover:bg-surface-hover hover:text-text-primary"
             }`}
           >
