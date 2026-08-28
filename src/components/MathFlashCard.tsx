@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { MathRow, MathStudyStrategy } from "@/types";
 import LatexRenderer from "@/components/LatexRenderer";
 import { shuffle } from "@/lib/arrayUtils";
@@ -27,14 +27,14 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setIsFlipped(false);
   }, [strategy, rows]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setIsFlipped(false);
     setTimeout(() => {
       setCurrentCardIndex((prev) => (prev + 1) % randomizedRows.length);
     }, 150); // slight delay for smooth transition
-  };
+  }, [randomizedRows.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     // When going back, show the answer side first (since we likely just saw it)
     setIsFlipped(true);
     setTimeout(() => {
@@ -42,11 +42,58 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         (prev) => (prev - 1 + randomizedRows.length) % randomizedRows.length,
       );
     }, 150);
-  };
+  }, [randomizedRows.length]);
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+  const handleFlip = useCallback(() => {
+    setIsFlipped((prev) => !prev);
+  }, []);
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      // Ignore if typing in an input
+      const tagName = document.activeElement?.tagName;
+      if (
+        tagName === "INPUT" ||
+        tagName === "TEXTAREA" ||
+        tagName === "SELECT"
+      ) {
+        return;
+      }
+
+      // If we are focused on the flashcard itself or a button, space/enter might be handled natively or by local handler.
+      // But if we are focused on body or some non-interactive element, handle global shortcuts.
+      // For arrows and escape, we can always handle them.
+
+      switch (e.key) {
+        case "Escape":
+          e.preventDefault();
+          onExit();
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          handleNext();
+          break;
+        case "ArrowLeft":
+          e.preventDefault();
+          handlePrev();
+          break;
+        case " ":
+        case "Enter":
+          // Only trigger global flip if we're not focused on an interactive element like a button
+          if (
+            document.activeElement?.getAttribute("role") !== "button" &&
+            document.activeElement?.tagName !== "BUTTON"
+          ) {
+            e.preventDefault();
+            handleFlip();
+          }
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, [onExit, handleNext, handlePrev, handleFlip]);
 
   if (randomizedRows.length === 0) return <div>Loading...</div>;
 
@@ -99,10 +146,22 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        role="button"
+        tabIndex={0}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:ring-4 focus-visible:ring-accent focus-visible:outline-none rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            handleFlip();
+          }
+        }}
       >
+        <span className="sr-only" lang="es">
+          Presiona Enter o Espacio para girar la tarjeta
+        </span>
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
           style={{
