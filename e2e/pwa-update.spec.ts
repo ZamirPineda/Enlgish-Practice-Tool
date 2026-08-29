@@ -4,6 +4,20 @@ test.describe("PWA Auto Update Flow", () => {
   test("Shows update banner when in active session (mocked SW update)", async ({
     page,
   }) => {
+    // Seed localStorage to bypass onboarding modals that intercept UI
+    await page.goto("/");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
+    });
+
     // Navigate to a game route (active session)
     await page.goto("/#/stop?mode=game");
 
@@ -32,7 +46,7 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
-    await updateButton.click();
+    await updateButton.click({ force: true });
 
     // Since window.location.reload() happens, let's wait a bit to verify nav or log
     // We expect the script to call reload, bounding test time to ensure it passed.
