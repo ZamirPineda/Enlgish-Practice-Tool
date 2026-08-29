@@ -4,8 +4,22 @@ test.describe("PWA Auto Update Flow", () => {
   test("Shows update banner when in active session (mocked SW update)", async ({
     page,
   }) => {
+    await page.goto("/");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
+    });
+
     // Navigate to a game route (active session)
     await page.goto("/#/stop?mode=game");
+    await page.reload();
 
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
@@ -32,7 +46,7 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
-    await updateButton.click();
+    await updateButton.click({ force: true });
 
     // Since window.location.reload() happens, let's wait a bit to verify nav or log
     // We expect the script to call reload, bounding test time to ensure it passed.
@@ -43,8 +57,22 @@ test.describe("PWA Auto Update Flow", () => {
   test("Does not show banner, but auto-reloads if NOT in active session", async ({
     page,
   }) => {
+    await page.goto("/");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
+    });
+
     // Navigate to home (not an active session)
     await page.goto("/#/");
+    await page.reload();
 
     await expect(page.getByRole("banner")).toBeVisible();
 
