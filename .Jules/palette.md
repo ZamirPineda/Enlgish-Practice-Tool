@@ -42,3 +42,6 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2024-08-29 - Accessibility convention for expand/collapse buttons
+**Learning:** Expanding/collapsing panels (like "Show Family / Hide Family" in `StopGameCard.tsx`) often lack `aria-expanded` and `aria-controls` attributes, missing WCAG requirements. Emojis inside buttons can also be noisy for screen readers if not hidden.
+**Action:** When adding expand/collapse toggle buttons, always use `aria-expanded={isOpen}`, map `aria-controls` to the panel ID, and wrap emojis in `<span aria-hidden="true">`. Do not use `aria-label` to override visible text (violates WCAG 2.5.3).
