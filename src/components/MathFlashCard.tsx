@@ -99,10 +99,32 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-2xl focus-visible:ring-offset-4 focus-visible:ring-offset-surface-0"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleFlip();
+          } else if (e.key === "ArrowRight") {
+            e.preventDefault();
+            handleNext();
+          } else if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            handlePrev();
+          } else if (e.key === "Escape") {
+            e.preventDefault();
+            onExit();
+          }
+        }}
       >
+        <span className="sr-only" lang="es">
+          Tarjeta de estudio interactiva. Usa Enter o Espacio para girar la
+          tarjeta, flecha derecha para la siguiente tarjeta, flecha izquierda
+          para la tarjeta anterior y Escape para salir.
+        </span>
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
           style={{
