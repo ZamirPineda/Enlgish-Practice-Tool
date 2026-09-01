@@ -11,10 +11,12 @@ test.describe("PWA Auto Update Flow", () => {
     await expect(page.getByRole("banner")).toBeVisible();
 
     // Trigger mocked PWA update
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForFunction(
+      () => typeof (window as any).__TRIGGER_PWA_UPDATE === "function",
+    );
     await page.evaluate(() => {
-      if ((window as any).__TRIGGER_PWA_UPDATE) {
-        (window as any).__TRIGGER_PWA_UPDATE();
-      }
+      (window as any).__TRIGGER_PWA_UPDATE();
     });
 
     // Verify the update banner is shown
@@ -54,10 +56,12 @@ test.describe("PWA Auto Update Flow", () => {
     });
 
     // Trigger mocked PWA update
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForFunction(
+      () => typeof (window as any).__TRIGGER_PWA_UPDATE === "function",
+    );
     await page.evaluate(() => {
-      if ((window as any).__TRIGGER_PWA_UPDATE) {
-        (window as any).__TRIGGER_PWA_UPDATE();
-      }
+      (window as any).__TRIGGER_PWA_UPDATE();
     });
 
     // It should immediately reload instead of showing banner
