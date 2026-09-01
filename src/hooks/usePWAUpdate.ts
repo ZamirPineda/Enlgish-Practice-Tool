@@ -27,10 +27,13 @@ export const usePWAUpdate = () => {
   const hasReloaded = useRef(false);
 
   useEffect(() => {
-    if ("serviceWorker" in navigator && import.meta.env.PROD) {
-      const wb = new Workbox("/sw.js");
-      wbRef.current = wb;
+    // We allow mocking SW behavior in tests by checking for a test variable
+    const isTestEnvironment = (window as any).__PLAYWRIGHT_TEST__ === true;
 
+    if (
+      ("serviceWorker" in navigator && import.meta.env.PROD) ||
+      isTestEnvironment
+    ) {
       const triggerUpdate = () => {
         if (isActiveSession()) {
           setUpdateAvailable(true);
@@ -38,27 +41,31 @@ export const usePWAUpdate = () => {
           if (!hasReloaded.current) {
             hasReloaded.current = true;
             if (wbRef.current) wbRef.current.messageSkipWaiting();
-            window.location.reload();
+            if ((window as any).__PWA_HANDLE_UPDATE) {
+              (window as any).__PWA_HANDLE_UPDATE();
+            } else {
+              window.location.reload();
+            }
           }
         }
       };
 
-      // Expose to window for Playwright E2E tests to mock SW update
       (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
 
-      wb.addEventListener("waiting", triggerUpdate);
-
-      wb.addEventListener("installed", (event) => {
-        if (event.isUpdate) {
-          triggerUpdate();
-        }
-      });
-
-      wb.addEventListener("controlling", triggerUpdate);
-
-      wb.register().catch((err) => {
-        console.error("Service worker registration failed:", err);
-      });
+      if (!isTestEnvironment) {
+        const wb = new Workbox("/sw.js");
+        wbRef.current = wb;
+        wb.addEventListener("waiting", triggerUpdate);
+        wb.addEventListener("installed", (event) => {
+          if (event.isUpdate) {
+            triggerUpdate();
+          }
+        });
+        wb.addEventListener("controlling", triggerUpdate);
+        wb.register().catch((err) => {
+          console.error("Service worker registration failed:", err);
+        });
+      }
     }
   }, []);
 
@@ -66,7 +73,11 @@ export const usePWAUpdate = () => {
     if (wbRef.current) {
       wbRef.current.messageSkipWaiting();
     }
-    window.location.reload();
+    if ((window as any).__PWA_HANDLE_UPDATE) {
+      (window as any).__PWA_HANDLE_UPDATE();
+    } else {
+      window.location.reload();
+    }
   }, []);
 
   return {
