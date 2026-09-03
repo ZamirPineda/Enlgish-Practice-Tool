@@ -48,6 +48,13 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setIsFlipped(!isFlipped);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleFlip();
+    }
+  };
+
   if (randomizedRows.length === 0) return <div>Loading...</div>;
 
   const currentrow = randomizedRows[currentCardIndex];
@@ -99,10 +106,16 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        role="button"
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
       >
+        <span className="sr-only" lang="es">
+          Tarjeta de memoria. Presione Enter o Espacio para voltear.
+        </span>
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
           style={{
