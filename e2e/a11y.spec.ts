@@ -19,7 +19,7 @@ test.describe("Accessibility (A11y) Standards", () => {
     page,
   }) => {
     await page.goto("/#/vault");
-    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(2000); // Give the vault time to load its virtualized list without relying on networkidle
 
     const results = await new AxeBuilder({ page }).analyze();
 
