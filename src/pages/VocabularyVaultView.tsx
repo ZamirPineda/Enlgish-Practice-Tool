@@ -165,7 +165,7 @@ const MemoryBar = ({ interval }: { interval: number }) => {
     percentage > 80
       ? "bg-success"
       : percentage > 40
-        ? "bg-accent"
+        ? "bg-sky-600"
         : "bg-amber-500";
   return (
     <div
@@ -1108,46 +1108,46 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               <div className="flex gap-3 overflow-x-auto pb-1 snap-x snap-mandatory md:grid md:grid-cols-3 md:overflow-visible">
                 <button
                   onClick={() => setPracticeObjective("all")}
-                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "all" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "all" ? "border-accent/40 bg-sky-700 text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-slate-300 hover:-translate-y-0.5 hover:border-accent/20"}`}
                   aria-label="Objective all"
                 >
-                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                  <span className="block text-[10px] tracking-[0.28em] text-white opacity-100">
                     Practice objective
                   </span>
-                  <span className="mt-2 block text-lg font-black tracking-tight normal-case">
+                  <span className="mt-2 block text-lg font-black tracking-tight normal-case text-white">
                     All
                   </span>
-                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-80">
+                  <span className="mt-1 block text-[11px] normal-case tracking-normal text-white opacity-100">
                     Mixed review queue
                   </span>
                 </button>
                 <button
                   onClick={() => setPracticeObjective("interview")}
-                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "interview" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "interview" ? "border-accent/40 bg-sky-700 text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-slate-300 hover:-translate-y-0.5 hover:border-accent/20"}`}
                   aria-label="Objective interview"
                 >
-                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                  <span className="block text-[10px] tracking-[0.28em] text-white opacity-100">
                     Practice objective
                   </span>
-                  <span className="mt-2 block text-lg font-black tracking-tight normal-case">
+                  <span className="mt-2 block text-lg font-black tracking-tight normal-case text-white">
                     Interview
                   </span>
-                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-80">
+                  <span className="mt-1 block text-[11px] normal-case tracking-normal text-white opacity-100">
                     Work and business terms
                   </span>
                 </button>
                 <button
                   onClick={() => setPracticeObjective("travel")}
-                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "travel" ? "border-accent/40 bg-accent text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-text-secondary hover:-translate-y-0.5 hover:border-accent/20"}`}
+                  className={`min-h-[92px] min-w-[220px] snap-start rounded-[1.4rem] border px-4 py-4 text-left text-xs font-bold uppercase tracking-widest transition-all duration-300 active:scale-[0.98] md:min-w-0 ${practiceObjective === "travel" ? "border-accent/40 bg-sky-700 text-white shadow-[0_20px_45px_-28px_rgba(14,165,233,0.95)]" : "border-border bg-surface-2/80 text-slate-300 hover:-translate-y-0.5 hover:border-accent/20"}`}
                   aria-label="Objective travel"
                 >
-                  <span className="block text-[10px] tracking-[0.28em] opacity-70">
+                  <span className="block text-[10px] tracking-[0.28em] text-white opacity-100">
                     Practice objective
                   </span>
-                  <span className="mt-2 block text-lg font-black tracking-tight normal-case">
+                  <span className="mt-2 block text-lg font-black tracking-tight normal-case text-white">
                     Travel
                   </span>
-                  <span className="mt-1 block text-[11px] normal-case tracking-normal opacity-80">
+                  <span className="mt-1 block text-[11px] normal-case tracking-normal text-white opacity-100">
                     Trips and emergencies
                   </span>
                 </button>
@@ -1208,7 +1208,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                             title={`New: ${newCount}`}
                           ></div>
                           <div
-                            className="bg-accent h-full transition-all duration-1000 shadow-[0_0_10px_rgba(14,165,233,0.5)]"
+                            className="bg-sky-600 h-full transition-all duration-1000 shadow-[0_0_10px_rgba(14,165,233,0.5)]"
                             style={{
                               width: `${(learningCount / totalInDeck) * 100}%`,
                             }}
@@ -1244,7 +1244,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
               </Card>
               <div className="grid grid-cols-3 gap-3">
                 <Card className="rounded-[1.5rem] border-border/70 bg-surface-1/90 p-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-text-secondary">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-slate-300">
                     Sessions
                   </p>
                   <p className="mt-2 text-2xl font-black text-text-primary">
@@ -1252,7 +1252,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   </p>
                 </Card>
                 <Card className="rounded-[1.5rem] border-border/70 bg-surface-1/90 p-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-text-secondary">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-slate-300">
                     Accuracy
                   </p>
                   <p className="mt-2 text-2xl font-black text-accent">
@@ -1260,7 +1260,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   </p>
                 </Card>
                 <Card className="rounded-[1.5rem] border-border/70 bg-surface-1/90 p-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-text-secondary">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-slate-300">
                     Minutes
                   </p>
                   <p className="mt-2 text-2xl font-black text-text-primary">
@@ -1288,13 +1288,13 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     section.theme.accentClass,
                   )}
                 >
-                  <p className="text-[10px] font-black uppercase tracking-[0.28em] text-text-secondary mb-2">
+                  <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-300 mb-2">
                     {section.theme.eyebrow}
                   </p>
                   <h2 className="text-xl sm:text-2xl font-black text-text-primary mb-2 flex items-center gap-3">
                     {section.title}
                   </h2>
-                  <p className="mb-5 max-w-2xl text-sm text-text-secondary">
+                  <p className="mb-5 max-w-2xl text-sm text-slate-300">
                     {section.theme.description}
                   </p>
                   <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 snap-x snap-mandatory sm:mx-0 sm:grid sm:grid-cols-2 sm:px-0 sm:overflow-visible xl:grid-cols-3">
@@ -1311,7 +1311,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                                 <h4 className="text-xl font-black text-text-primary group-hover:text-accent transition-colors">
                                   {item.word}
                                 </h4>
-                                <p className="mt-2 text-sm text-text-secondary line-clamp-3 leading-relaxed">
+                                <p className="mt-2 text-sm text-slate-300 line-clamp-3 leading-relaxed">
                                   {item.definition}
                                 </p>
                                 {item.tags.join(" · ")}
@@ -1358,7 +1358,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 <h2 className="text-2xl font-black text-text-primary mb-3">
                   Your Vault is empty
                 </h2>
-                <p className="text-text-secondary text-base mb-8 max-w-sm mx-auto leading-relaxed">
+                <p className="text-slate-300 text-base mb-8 max-w-sm mx-auto leading-relaxed">
                   Import our curated sample deck to get started immediately, or
                   add your first word manually.
                 </p>
@@ -1402,7 +1402,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
                   <button
                     onClick={() => setShowFilters(!showFilters)}
-                    className={`p-2 rounded-xl focus:outline-none transition-colors ${showFilters ? "bg-accent/20 text-accent" : "text-slate-300 hover:bg-white/10 hover:text-white"}`}
+                    className={`p-2 rounded-xl focus:outline-none transition-colors ${showFilters ? "bg-sky-600/20 text-accent" : "text-slate-300 hover:bg-white/10 hover:text-white"}`}
                     title="Advanced Filters"
                   >
                     <svg
@@ -1450,7 +1450,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             {showFilters && totalInDeck > 0 && (
               <div className="bg-surface-1/90 border border-border/70 rounded-[1.75rem] p-5 mt-2 mb-6 animate-fade-in flex flex-wrap gap-4 items-end shadow-[0_20px_50px_-35px_rgba(15,23,42,0.7)]">
                 <div className="flex-1 min-w-[120px]">
-                  <label className="block text-xs font-bold text-text-secondary uppercase mb-1">
+                  <label className="block text-xs font-bold text-slate-300 uppercase mb-1">
                     State
                   </label>
                   <select
@@ -1470,7 +1470,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   </select>
                 </div>
                 <div className="flex-1 min-w-[120px]">
-                  <label className="block text-xs font-bold text-text-secondary uppercase mb-1">
+                  <label className="block text-xs font-bold text-slate-300 uppercase mb-1">
                     Difficulty
                   </label>
                   <select
@@ -1490,7 +1490,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   </select>
                 </div>
                 <div className="flex-1 min-w-[200px]">
-                  <label className="block text-xs font-bold text-text-secondary uppercase mb-1">
+                  <label className="block text-xs font-bold text-slate-300 uppercase mb-1">
                     Tags (Comma sep)
                   </label>
                   <Input
@@ -1528,7 +1528,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
             )}
             {totalInDeck > 0 && (
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 rounded-[1.75rem] border border-border/70 bg-surface-1/90 p-4 shadow-[0_20px_50px_-35px_rgba(15,23,42,0.7)]">
-                <div className="text-sm text-text-secondary flex items-center gap-2">
+                <div className="text-sm text-slate-300 flex items-center gap-2">
                   Showing {searchResults.length} of {totalInDeck} words
                   {isSearching && <span className="animate-pulse">...</span>}
                 </div>
@@ -1536,7 +1536,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   <div className="flex items-center gap-2 bg-surface-2 p-1 rounded-xl border border-border">
                     <button
                       onClick={() => setViewMode("grid")}
-                      className={`p-2 rounded-lg transition-colors ${viewMode === "grid" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                      className={`p-2 rounded-lg transition-colors ${viewMode === "grid" ? "bg-surface-1 text-accent shadow-sm" : "text-slate-300 hover:text-text-primary"}`}
                       title="Grid View"
                     >
                       <svg
@@ -1556,7 +1556,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                     </button>
                     <button
                       onClick={() => setViewMode("list")}
-                      className={`p-2 rounded-lg transition-colors ${viewMode === "list" ? "bg-surface-1 text-accent shadow-sm" : "text-text-secondary hover:text-text-primary"}`}
+                      className={`p-2 rounded-lg transition-colors ${viewMode === "list" ? "bg-surface-1 text-accent shadow-sm" : "text-slate-300 hover:text-text-primary"}`}
                       title="List View"
                     >
                       <svg
@@ -1578,7 +1578,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                   <div className="flex items-center gap-2">
                     <label
                       htmlFor="sort-select"
-                      className="text-xs font-bold text-text-secondary uppercase"
+                      className="text-xs font-bold text-slate-300 uppercase"
                     >
                       Sort by:
                     </label>
@@ -1656,7 +1656,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                                     word: item.word,
                                   });
                                 }}
-                                className="text-text-secondary hover:text-accent rounded"
+                                className="text-slate-300 hover:text-accent rounded"
                                 aria-label={`Listen to ${item.word}`}
                               >
                                 <PlayIcon className="h-4 w-4" />
@@ -1680,7 +1680,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                                       item.word.trim().toLowerCase(),
                                     )
                                   }
-                                  className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-xl"
+                                  className="p-2 hover:bg-sky-600/10 text-slate-300 hover:text-accent rounded-xl"
                                   aria-label={`Edit ${item.word}`}
                                 >
                                   <svg
@@ -1700,7 +1700,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                                 </button>
                                 <button
                                   onClick={() => handleDelete(item.word)}
-                                  className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-xl"
+                                  className="p-2 hover:bg-red-500/10 text-slate-300 hover:text-red-400 rounded-xl"
                                   aria-label={`Delete ${item.word}`}
                                 >
                                   <TrashIcon />
@@ -1728,7 +1728,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           </div>
 
                           <p
-                            className={`text-text-secondary text-sm italic ${viewMode === "grid" ? "mb-4 line-clamp-2 flex-1" : "flex-1 line-clamp-1"}`}
+                            className={`text-slate-300 text-sm italic ${viewMode === "grid" ? "mb-4 line-clamp-2 flex-1" : "flex-1 line-clamp-1"}`}
                           >
                             "
                             <HighlightedText
@@ -1741,7 +1741,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                           <div
                             className={`${viewMode === "grid" ? "w-full" : "w-48 flex flex-col justify-center"}`}
                           >
-                            <div className="flex justify-between items-center text-[10px] font-black uppercase text-text-secondary">
+                            <div className="flex justify-between items-center text-[10px] font-black uppercase text-slate-300">
                               <span>Strength</span>
                               <span
                                 className={
@@ -1762,7 +1762,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                                 onClick={() =>
                                   handleEditWord(item.word.trim().toLowerCase())
                                 }
-                                className="p-2 hover:bg-accent/10 text-text-secondary hover:text-accent rounded-xl"
+                                className="p-2 hover:bg-sky-600/10 text-slate-300 hover:text-accent rounded-xl"
                                 aria-label={`Edit ${item.word}`}
                               >
                                 <svg
@@ -1782,7 +1782,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                               </button>
                               <button
                                 onClick={() => handleDelete(item.word)}
-                                className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-400 rounded-xl"
+                                className="p-2 hover:bg-red-500/10 text-slate-300 hover:text-red-400 rounded-xl"
                                 aria-label={`Delete ${item.word}`}
                               >
                                 <TrashIcon />
@@ -1829,7 +1829,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
                 type="file"
                 accept="application/json,.json"
                 onChange={handleImportFile}
-                className="w-full mb-4 text-sm text-text-secondary"
+                className="w-full mb-4 text-sm text-slate-300"
               />
               <textarea
                 value={importText}
@@ -1907,7 +1907,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           <div>
             <label
               htmlFor="new-word-input"
-              className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
+              className="block text-xs font-bold text-slate-300 uppercase mb-1 ml-1"
             >
               Word to learn
             </label>
@@ -1927,7 +1927,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           <div>
             <label
               htmlFor="new-context-input"
-              className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
+              className="block text-xs font-bold text-slate-300 uppercase mb-1 ml-1"
             >
               Clue / Scene / Source Sentence (Optional)
             </label>
@@ -1945,11 +1945,11 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           <div>
             <label
               htmlFor="new-def-input"
-              className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
+              className="block text-xs font-bold text-slate-300 uppercase mb-1 ml-1"
             >
               Meaning (simple + concrete)
             </label>
-            <p className="mb-2 ml-1 text-xs leading-relaxed text-text-secondary">
+            <p className="mb-2 ml-1 text-xs leading-relaxed text-slate-300">
               Mejor si escribes: traduccion, explicacion simple y una imagen
               mental. Ejemplo: "Desertificacion. Cuando una tierra fertil se
               vuelve desierto por sequia y calor."
@@ -1966,7 +1966,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           <div>
             <label
               htmlFor="new-tags-input"
-              className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
+              className="block text-xs font-bold text-slate-300 uppercase mb-1 ml-1"
             >
               Tags (comma separated)
             </label>
@@ -2011,7 +2011,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           <div>
             <label
               htmlFor="edit-word-input"
-              className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
+              className="block text-xs font-bold text-slate-300 uppercase mb-1 ml-1"
             >
               Word
             </label>
@@ -2027,7 +2027,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           <div>
             <label
               htmlFor="edit-context-input"
-              className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
+              className="block text-xs font-bold text-slate-300 uppercase mb-1 ml-1"
             >
               Clue / Scene / Source Sentence
             </label>
@@ -2044,11 +2044,11 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           <div>
             <label
               htmlFor="edit-def-input"
-              className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
+              className="block text-xs font-bold text-slate-300 uppercase mb-1 ml-1"
             >
               Meaning (simple + concrete)
             </label>
-            <p className="mb-2 ml-1 text-xs leading-relaxed text-text-secondary">
+            <p className="mb-2 ml-1 text-xs leading-relaxed text-slate-300">
               Evita meanings demasiado cortos como sinonimos sueltos. Mejor:
               traduccion + idea simple + escena.
             </p>
@@ -2064,7 +2064,7 @@ const VocabularyVaultView: React.FC<VocabularyVaultViewProps> = ({
           <div>
             <label
               htmlFor="edit-tags-input"
-              className="block text-xs font-bold text-text-secondary uppercase mb-1 ml-1"
+              className="block text-xs font-bold text-slate-300 uppercase mb-1 ml-1"
             >
               Tags (comma separated)
             </label>
