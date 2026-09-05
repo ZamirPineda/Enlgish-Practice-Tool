@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2024-05-23 - Screen Reader Redundancy with Emojis
+
+**Learning:** Decorative emojis placed inside interactive elements (like buttons) are read literally by screen readers (e.g., "Man, Woman, Girl, Boy" for 👨‍👩‍👧‍👦), creating confusing and redundant UX when adjacent to descriptive text like "Show Family".
+**Action:** Always wrap non-critical emojis in a `<span aria-hidden="true">` to preserve visual delight without polluting screen reader output.
