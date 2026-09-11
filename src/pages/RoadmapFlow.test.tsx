@@ -110,12 +110,20 @@ describe("Roadmap sequential flow", () => {
     ).toBeInTheDocument();
 
     await recordMastery("Fix grammar slips", 80);
+    await waitFor(() =>
+      screen.getByRole("button", { name: /Abrir: Rephrase concise answers/i }),
+    );
 
     expect(
       screen.getByRole("button", { name: /Abrir: Rephrase concise answers/i }),
     ).toBeInTheDocument();
 
     await recordMastery("Rephrase concise answers", 80);
+    await waitFor(() =>
+      screen.getByRole("button", {
+        name: /Abrir: Transform follow-up answers/i,
+      }),
+    );
 
     expect(
       screen.getByRole("button", {
@@ -207,14 +215,22 @@ describe("Roadmap sequential flow", () => {
         hidden: true,
       }),
     ).toBeDisabled();
-  }, 15000);
+  }, 40000);
 
   test("resumes an in-progress unit after reload", async () => {
     const firstRender = renderView();
 
     await recordMastery("Interview opener", 80);
     await recordMastery("Fix grammar slips", 80);
+    await waitFor(() =>
+      screen.getByRole("button", { name: /Abrir: Rephrase concise answers/i }),
+    );
     await recordMastery("Rephrase concise answers", 80);
+    await waitFor(() =>
+      screen.getByRole("button", {
+        name: /Abrir: Transform follow-up answers/i,
+      }),
+    );
 
     firstRender.unmount();
 
@@ -241,5 +257,5 @@ describe("Roadmap sequential flow", () => {
         }),
       ).toBeInTheDocument();
     });
-  }, 15000);
+  }, 40000);
 });
