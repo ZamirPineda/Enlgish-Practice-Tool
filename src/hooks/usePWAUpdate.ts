@@ -26,25 +26,26 @@ export const usePWAUpdate = () => {
   const wbRef = useRef<Workbox | null>(null);
   const hasReloaded = useRef(false);
 
+  const triggerUpdate = useCallback(() => {
+    if (isActiveSession()) {
+      setUpdateAvailable(true);
+    } else {
+      if (!hasReloaded.current) {
+        hasReloaded.current = true;
+        if (wbRef.current) wbRef.current.messageSkipWaiting();
+        window.location.reload();
+      }
+    }
+  }, []);
+
+  if (typeof window !== "undefined") {
+    (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
+  }
+
   useEffect(() => {
     if ("serviceWorker" in navigator && import.meta.env.PROD) {
       const wb = new Workbox("/sw.js");
       wbRef.current = wb;
-
-      const triggerUpdate = () => {
-        if (isActiveSession()) {
-          setUpdateAvailable(true);
-        } else {
-          if (!hasReloaded.current) {
-            hasReloaded.current = true;
-            if (wbRef.current) wbRef.current.messageSkipWaiting();
-            window.location.reload();
-          }
-        }
-      };
-
-      // Expose to window for Playwright E2E tests to mock SW update
-      (window as any).__TRIGGER_PWA_UPDATE = triggerUpdate;
 
       wb.addEventListener("waiting", triggerUpdate);
 
@@ -60,7 +61,7 @@ export const usePWAUpdate = () => {
         console.error("Service worker registration failed:", err);
       });
     }
-  }, []);
+  }, [triggerUpdate]);
 
   const handleUpdate = useCallback(() => {
     if (wbRef.current) {
