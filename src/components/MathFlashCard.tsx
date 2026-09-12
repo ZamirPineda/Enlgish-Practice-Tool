@@ -93,7 +93,10 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
           onClick={onExit}
           className="text-slate-400 hover:text-white transition-colors"
         >
-          ✕ Salir
+          ✕ Salir{" "}
+          <span className="opacity-70 ml-1 text-xs font-normal hidden sm:inline-block">
+            [Esc]
+          </span>
         </button>
       </div>
 
@@ -153,7 +156,10 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                 }}
                 className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
               >
-                Anterior
+                Anterior{" "}
+                <span className="opacity-50 ml-1 text-xs font-normal hidden sm:inline-block">
+                  [←]
+                </span>
               </button>
               <button
                 onClick={(e) => {
@@ -162,7 +168,10 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                 }}
                 className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
               >
-                Siguiente
+                Siguiente{" "}
+                <span className="opacity-50 ml-1 text-xs font-normal hidden sm:inline-block">
+                  [→]
+                </span>
               </button>
             </div>
           </div>

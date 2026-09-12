@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-11 - [Keyboard Shortcut Hints in Flashcards]
+
+**Learning:** Buttons in flashcard interfaces that have global keyboard shortcuts attached to them (e.g. Next/Prev card using arrow keys, Esc to quit) did not communicate these shortcuts visually, hurting discoverability for power users.
+**Action:** Append visual shortcut hints using `[Key]` styling inline with button text (e.g. `[←]` for Previous, `[Esc]` for Quit), applying a `sr-only` or visually dim styling to avoid breaking the layout while clearly communicating the shortcut.
