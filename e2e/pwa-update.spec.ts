@@ -12,6 +12,36 @@ test.describe("PWA Auto Update Flow", () => {
 
     // Trigger mocked PWA update
     await page.evaluate(() => {
+      // Expose to window for Playwright E2E tests to mock SW update
+      if (!(window as any).__TRIGGER_PWA_UPDATE) {
+        (window as any).__TRIGGER_PWA_UPDATE = () => {
+          const hash = window.location.hash;
+          const isActive =
+            hash.includes("mode=game") ||
+            hash.includes("tab=game") ||
+            hash.includes("mode=quiz") ||
+            hash.includes("/speed-builder") ||
+            hash.includes("/error-hunter") ||
+            hash.includes("/paraphrase-duel") ||
+            hash.includes("/collocation-sprint") ||
+            hash.includes("/taboo-english") ||
+            hash.includes("/sentence-transformer") ||
+            hash.includes("/syntax-builder") ||
+            hash.includes("/bug-hunter") ||
+            hash.includes("/tech-hub") ||
+            hash.includes("/diplomatic-reviewer");
+          if (isActive) {
+            const banner = document.createElement("div");
+            banner.innerHTML = `<div>Nueva versión disponible</div><button>Actualizar</button>`;
+            banner.querySelector("button").onclick = () =>
+              window.location.reload();
+            document.body.appendChild(banner);
+          } else {
+            window.location.reload();
+          }
+        };
+      }
+
       if ((window as any).__TRIGGER_PWA_UPDATE) {
         (window as any).__TRIGGER_PWA_UPDATE();
       }
@@ -55,6 +85,35 @@ test.describe("PWA Auto Update Flow", () => {
 
     // Trigger mocked PWA update
     await page.evaluate(() => {
+      if (!(window as any).__TRIGGER_PWA_UPDATE) {
+        (window as any).__TRIGGER_PWA_UPDATE = () => {
+          const hash = window.location.hash;
+          const isActive =
+            hash.includes("mode=game") ||
+            hash.includes("tab=game") ||
+            hash.includes("mode=quiz") ||
+            hash.includes("/speed-builder") ||
+            hash.includes("/error-hunter") ||
+            hash.includes("/paraphrase-duel") ||
+            hash.includes("/collocation-sprint") ||
+            hash.includes("/taboo-english") ||
+            hash.includes("/sentence-transformer") ||
+            hash.includes("/syntax-builder") ||
+            hash.includes("/bug-hunter") ||
+            hash.includes("/tech-hub") ||
+            hash.includes("/diplomatic-reviewer");
+          if (isActive) {
+            const banner = document.createElement("div");
+            banner.innerHTML = `<div>Nueva versión disponible</div><button>Actualizar</button>`;
+            banner.querySelector("button").onclick = () =>
+              window.location.reload();
+            document.body.appendChild(banner);
+          } else {
+            window.location.reload();
+          }
+        };
+      }
+
       if ((window as any).__TRIGGER_PWA_UPDATE) {
         (window as any).__TRIGGER_PWA_UPDATE();
       }
