@@ -42,3 +42,6 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2024-03-24 - Accessible Flashcard Container
+**Learning:** When building custom interactive components like flashcards that rely on `div` click handlers, adding global window keydown listeners can cause double-triggering if the container also natively focuses via `tabIndex={0}` and uses an `onKeyDown` handler. Also, directly placing `aria-label` on containers with visible child content overwrites the screen reader's ability to read the children natively.
+**Action:** Always scope custom interactive elements with `role="button"`, `tabIndex={0}`, visible focus styling (`focus-visible:ring`), and an internal `onKeyDown` (for Enter/Space) with `e.stopPropagation()` when dealing with overlapping global shortcuts. Use a visually hidden `<span className="sr-only">` inside the container for screen reader instructions rather than `aria-label`.
