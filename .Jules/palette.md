@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-11 - [Custom Flashcard Keyboard Interaction]
+
+**Learning:** Custom interactive elements (like the flashcard container `div` in `MathFlashCard.tsx`) often require `role="button"`, `tabIndex={0}`, and explicit `onKeyDown` handlers (for Space/Enter) to be accessible via keyboard. Additionally, global `keydown` listeners attached to the window must be careful not to hijack standard input elements, and must coordinate properly with local container handlers to avoid double-triggering or unintended side effects.
+**Action:** When implementing custom interactive "cards" or similar elements, ensure they have `role="button"`, visible focus styling (e.g., `focus-visible:ring-2`), and `tabIndex={0}`. Screen reader instructions via an `aria-label` or `.sr-only` span can explain interaction patterns. Always verify global shortcut behavior.
