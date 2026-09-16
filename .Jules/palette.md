@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2024-03-22 - Math Flashcards Accessibility
+
+**Learning:** Container components configured for keydown and click interaction (like MathFlashCard) need comprehensive roles (`role="button"`), keyboard focus support (`tabIndex={0}`), explicit localized screen reader instructions (using `lang="es"` for Spanish text), and visual hints for shortcuts to ensure both discoverability and screen-reader accessibility.
+**Action:** When implementing custom interactive containers acting as buttons, explicitly add `role="button"`, `tabIndex`, screen-reader instructions, and wrap event handler functions with `useCallback` when consumed in dependency arrays.
