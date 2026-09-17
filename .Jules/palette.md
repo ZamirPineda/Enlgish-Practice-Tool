@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-11 - [Expandable Content Accessibility]
+
+**Learning:** Buttons that toggle the visibility of content (like "Show Family" in StopGameCard) often lack the `aria-expanded` and `aria-controls` attributes, which are crucial for screen readers to understand the state and relationship of the toggled content. Additionally, complex emojis inside the button text should be hidden from screen readers using `aria-hidden="true"` to prevent confusing announcements.
+**Action:** Always add `aria-expanded` mapped to the open state, `aria-controls` pointing to a unique ID (using `useId()`), and wrap emojis in `<span aria-hidden="true">` for buttons that toggle content visibility.
