@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Global Keyboard Shortcuts and Custom Interactive Elements]
+
+**Learning:** When implementing global keyboard shortcuts (e.g. Next/Prev via arrow keys) that overlap with custom interactive elements (like a flashcard `div` acting as a button with Space/Enter), event handlers must be wrapped in `useCallback` to prevent infinite re-renders when passed to a `useEffect` dependency array. Additionally, custom elements must explicitly include `role="button"`, `tabIndex={0}`, visible focus states, and a local `onKeyDown` to gracefully handle 'Enter'/'Space' while calling `e.stopPropagation()` so the global listener doesn't double-trigger.
+**Action:** Use `useCallback` for all interaction handlers referenced in effects. Always scope keyboard accessibility properly: local interactive components handle their events locally (and stop propagation), while global effects filter out native input types to prevent hijacking browser defaults.
