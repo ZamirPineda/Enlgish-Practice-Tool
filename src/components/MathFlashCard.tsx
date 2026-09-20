@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { MathRow, MathStudyStrategy } from "@/types";
 import LatexRenderer from "@/components/LatexRenderer";
 import { shuffle } from "@/lib/arrayUtils";
@@ -27,14 +27,16 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setIsFlipped(false);
   }, [strategy, rows]);
 
-  const handleNext = () => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleNext = useCallback(() => {
     setIsFlipped(false);
     setTimeout(() => {
       setCurrentCardIndex((prev) => (prev + 1) % randomizedRows.length);
     }, 150); // slight delay for smooth transition
-  };
+  }, [randomizedRows.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     // When going back, show the answer side first (since we likely just saw it)
     setIsFlipped(true);
     setTimeout(() => {
@@ -42,11 +44,42 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         (prev) => (prev - 1 + randomizedRows.length) % randomizedRows.length,
       );
     }, 150);
-  };
+  }, [randomizedRows.length]);
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+  const handleFlip = useCallback(() => {
+    setIsFlipped((prev) => !prev);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore keydown events on input elements, buttons, and links to avoid hijacking native interactions.
+      const target = e.target as HTMLElement;
+      const isInputOrButton =
+        ["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"].includes(
+          target.tagName,
+        ) ||
+        (target.getAttribute("role") === "button" &&
+          !cardRef.current?.contains(target));
+      if (isInputOrButton) return;
+
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        handleNext();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        onExit();
+      } else if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        handleFlip();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNext, handlePrev, handleFlip, onExit]);
 
   if (randomizedRows.length === 0) return <div>Loading...</div>;
 
@@ -91,15 +124,28 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         </span>
         <button
           onClick={onExit}
-          className="text-slate-400 hover:text-white transition-colors"
+          className="text-slate-400 hover:text-white transition-colors flex items-center gap-1"
         >
-          ✕ Salir
+          ✕ Salir{" "}
+          <span className="opacity-50 text-xs hidden sm:inline-block ml-1">
+            [Esc]
+          </span>
         </button>
       </div>
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        ref={cardRef}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            handleFlip();
+          }
+        }}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:ring-2 focus-visible:ring-accent outline-none rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
       >
@@ -118,6 +164,10 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
               WebkitBackfaceVisibility: "hidden",
             }}
           >
+            <span className="sr-only" lang="es">
+              Tarjeta de memoria matemática. Presiona Espacio o Enter para
+              girar.
+            </span>
             <h3 className="text-text-secondary text-lg mb-4 font-semibold uppercase tracking-wider shrink-0">
               Pregunta
             </h3>
@@ -151,18 +201,24 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handlePrev();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border flex items-center justify-center gap-1"
               >
-                Anterior
+                Anterior{" "}
+                <span className="opacity-50 text-xs hidden sm:inline-block">
+                  [←]
+                </span>
               </button>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   handleNext();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border flex items-center justify-center gap-1"
               >
-                Siguiente
+                Siguiente{" "}
+                <span className="opacity-50 text-xs hidden sm:inline-block">
+                  [→]
+                </span>
               </button>
             </div>
           </div>
