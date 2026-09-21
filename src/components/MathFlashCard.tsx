@@ -34,6 +34,23 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     }
   };
 
+  const handleNext = React.useCallback(() => {
+    setIsFlipped(false);
+    setTimeout(() => {
+      setCurrentCardIndex((prev) => (prev + 1) % randomizedRows.length);
+    }, 150); // slight delay for smooth transition
+  }, [randomizedRows.length]);
+
+  const handlePrev = React.useCallback(() => {
+    // When going back, show the answer side first (since we likely just saw it)
+    setIsFlipped(true);
+    setTimeout(() => {
+      setCurrentCardIndex(
+        (prev) => (prev - 1 + randomizedRows.length) % randomizedRows.length,
+      );
+    }, 150);
+  }, [randomizedRows.length]);
+
   useEffect(() => {
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
       // Ignore if user is typing in an input field
@@ -58,23 +75,6 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     window.addEventListener("keydown", handleGlobalKeyDown);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown);
   }, [handleNext, handlePrev, onExit]);
-
-  const handleNext = React.useCallback(() => {
-    setIsFlipped(false);
-    setTimeout(() => {
-      setCurrentCardIndex((prev) => (prev + 1) % randomizedRows.length);
-    }, 150); // slight delay for smooth transition
-  }, [randomizedRows.length]);
-
-  const handlePrev = React.useCallback(() => {
-    // When going back, show the answer side first (since we likely just saw it)
-    setIsFlipped(true);
-    setTimeout(() => {
-      setCurrentCardIndex(
-        (prev) => (prev - 1 + randomizedRows.length) % randomizedRows.length,
-      );
-    }, 150);
-  }, [randomizedRows.length]);
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
