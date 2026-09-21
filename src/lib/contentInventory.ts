@@ -118,7 +118,9 @@ const hashString = (value: string): string => {
     hash = (hash << 5) - hash + value.charCodeAt(index);
     hash |= 0;
   }
-  return Math.abs(hash).toString(36);
+  // Ensure the hash is at least 4 chars by padding
+  const result = Math.abs(hash).toString(36);
+  return result.length < 4 ? result.padStart(4, "0") : result;
 };
 
 export const createContentFingerprint = (
