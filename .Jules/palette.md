@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Global Keyboard Shortcuts and Focus Hijacking]
+
+**Learning:** When using custom `div`-based cards (e.g. `MathFlashCard`) that respond to global keyboard shortcuts (like `Space` or `Enter`), native `<button>` components located within the card or globally can trigger twice if focused (once natively, once via the global listener). Also, custom components must manually implement `role="button"` and `tabIndex={0}` to be accessible via standard tab navigation, requiring explicit hidden instructions so screen readers provide the context of the container.
+**Action:** When creating global keyboard listeners for shortcuts, ensure to explicitly ignore keys when `document.activeElement?.tagName === "BUTTON"` is true. Ensure interactive `div`s implement full accessible traits (roles, focus-visible states) and provide visually hidden instructional text rather than `aria-label` which would mask child contents. Add visual keyboard hints (like `[Esc]` or `[→]`) to the UI buttons.
