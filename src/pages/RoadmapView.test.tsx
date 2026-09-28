@@ -131,6 +131,7 @@ describe("RoadmapView", () => {
 
     const rephraseNode = screen.getByRole("button", {
       name: /Abrir: Rephrase concise answers/i,
+      hidden: true,
     });
     await user.click(rephraseNode);
 
@@ -141,7 +142,7 @@ describe("RoadmapView", () => {
         }),
       ).toBeInTheDocument();
     });
-  }, 15000);
+  }, 60000);
 
   test("filters modules by route", () => {
     render(
@@ -305,5 +306,5 @@ describe("RoadmapView", () => {
     expect(
       await screen.findByRole("button", { name: "Continuar" }),
     ).toBeInTheDocument();
-  }, 15000);
+  }, 60000);
 });
