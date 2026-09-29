@@ -112,7 +112,7 @@
       "@vitest/snapshot": "4.1.11",
       "@vitest/spy": "4.1.11",
       "@vitest/utils": "4.1.11",
-      "@babel/core": ">=7.29.6",
+      "@babel/core": "7.29.6",
       "@babel/plugin-transform-modules-systemjs": ">=7.29.4",
       "serialize-javascript": ">=7.0.5",
       "ws": ">=8.21.0"
