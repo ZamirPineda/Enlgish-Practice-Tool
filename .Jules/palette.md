@@ -42,8 +42,3 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
-
-## 2026-03-11 - [Flashcard Keyboard Accessibility & UX]
-
-**Learning:** Interactive "Card" container components implemented as `div` elements (e.g. `MathFlashCard`) block screen readers and keyboard users from primary functionality (flipping) if lacking semantic roles and local key handlers. Additionally, relying solely on on-screen buttons for navigation is slow compared to established flashcard patterns.
-**Action:** When creating flashcards or custom toggle containers: add `role="button"`, `tabIndex={0}`, visible focus styling (`focus-visible`), and a local `onKeyDown` for Space/Enter (preventing bubbling via `e.target === e.currentTarget`). Implement global keyboard shortcuts (Left/Right/Esc) safely by filtering out standard input interactions, and add visual shortcut hints to related buttons. Use visually hidden `<span className="sr-only">` text for explicit screen reader instructions.
