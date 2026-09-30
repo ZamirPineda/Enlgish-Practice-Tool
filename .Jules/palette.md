@@ -44,5 +44,6 @@
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
 
 ## 2026-03-24 - [Flashcard Keyboard Navigation & Accessibility]
+
 **Learning:** Custom flashcard interactive components lacked global shortcuts and native button accessibility, making keyboard navigation difficult. Adding global listener (ArrowRight/Left, Escape) alongside local onKeyDown (Space/Enter) creates a robust user experience.
 **Action:** When creating custom components acting as buttons (e.g. Flashcards), ensure `role="button"`, `tabIndex={0}`, local `onKeyDown` for Space/Enter, visually hidden instructions (if text content shouldn't be overridden), and global shortcut hints inline with buttons.

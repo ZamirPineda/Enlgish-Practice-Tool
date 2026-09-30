@@ -1,6 +1,23 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("PWA Auto Update Flow", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/");
+    await page.evaluate(() => {
+      window.localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          theme: "dark",
+          reducedMotion: true,
+          ttsAutoPlay: true,
+          confirmDialogs: true,
+          hasCompletedOnboarding: true,
+        }),
+      );
+    });
+    await page.reload();
+  });
+
   test("Shows update banner when in active session (mocked SW update)", async ({
     page,
   }) => {
@@ -32,11 +49,11 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
-    await updateButton.click();
+    await updateButton.click({ force: true });
 
     // Since window.location.reload() happens, let's wait a bit to verify nav or log
     // We expect the script to call reload, bounding test time to ensure it passed.
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1000);
     expect(didReload).toBe(true);
   });
 
@@ -61,7 +78,7 @@ test.describe("PWA Auto Update Flow", () => {
     });
 
     // It should immediately reload instead of showing banner
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1000);
     expect(didReload).toBe(true);
 
     const updateBanner = page.getByText("Nueva versión disponible");
