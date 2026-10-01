@@ -7,11 +7,14 @@ test.describe("PWA Auto Update Flow", () => {
     // Pre-seed localStorage to avoid coachmarks blocking UI
     await page.goto("/");
     await page.evaluate(() => {
-      localStorage.setItem("app-settings", JSON.stringify({
-        hasCompletedOnboarding: true,
-        hasSeenVaultCoachmark: true,
-        hasSeenCoachmarks: true
-      }));
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
     });
 
     // Navigate to a game route (active session)
@@ -57,11 +60,14 @@ test.describe("PWA Auto Update Flow", () => {
     // Pre-seed localStorage to avoid coachmarks blocking UI
     await page.goto("/");
     await page.evaluate(() => {
-      localStorage.setItem("app-settings", JSON.stringify({
-        hasCompletedOnboarding: true,
-        hasSeenVaultCoachmark: true,
-        hasSeenCoachmarks: true
-      }));
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
     });
 
     // Navigate to home (not an active session)

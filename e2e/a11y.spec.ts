@@ -21,11 +21,14 @@ test.describe("Accessibility (A11y) Standards", () => {
     // Pre-seed localStorage to avoid coachmarks blocking UI
     await page.goto("/");
     await page.evaluate(() => {
-      localStorage.setItem("app-settings", JSON.stringify({
-        hasCompletedOnboarding: true,
-        hasSeenVaultCoachmark: true,
-        hasSeenCoachmarks: true
-      }));
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
     });
 
     await page.goto("/#/vault");
@@ -46,11 +49,14 @@ test.describe("Accessibility (A11y) Standards", () => {
     // Pre-seed localStorage to avoid coachmarks blocking UI
     await page.goto("/");
     await page.evaluate(() => {
-      localStorage.setItem("app-settings", JSON.stringify({
-        hasCompletedOnboarding: true,
-        hasSeenVaultCoachmark: true,
-        hasSeenCoachmarks: true
-      }));
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
     });
 
     await page.goto("/#/calculus");
