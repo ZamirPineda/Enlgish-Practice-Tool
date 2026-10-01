@@ -62,6 +62,10 @@ describe("DailyProgressWidget", () => {
       </MemoryRouter>,
     );
 
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+
     const rewardButtonBefore = screen.getByRole("button", {
       name: "Claim +40 XP",
     });
@@ -93,9 +97,12 @@ describe("DailyProgressWidget", () => {
 
     act(() => {
       fireEvent.click(rewardButton);
+      vi.advanceTimersByTime(100);
     });
 
-    expect(screen.getByRole("button", { name: "Reward Claimed" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Reward Claimed" }),
+    ).toBeDisabled();
     expect(localStorage.getItem("english-pal-global-xp")).toBe("40");
   });
 
@@ -115,6 +122,10 @@ describe("DailyProgressWidget", () => {
       </MemoryRouter>,
     );
 
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+
     expect(screen.getByText(/3 \/ 7 active days/i)).toBeInTheDocument();
 
     const weeklyClaimButton = screen.getAllByRole("button", {
@@ -123,6 +134,7 @@ describe("DailyProgressWidget", () => {
 
     act(() => {
       fireEvent.click(weeklyClaimButton);
+      vi.advanceTimersByTime(100);
     });
 
     expect(localStorage.getItem("english-pal-global-xp")).toBe("30");
