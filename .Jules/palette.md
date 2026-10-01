@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2026-03-12 - [Global Keyboard Accessibility]
+
+**Learning:** When making custom containers accessible using keyboard combinations, developers tend to forget standardizing visual keyboard cues and proper event propagation management.
+**Action:** When creating global keyboard accessibility changes and assigning `tabIndex=0` to custom containers acting like buttons, also add visible shortcut hints (like `[Esc]` or `[→]`) using `opacity-50 text-xs`, and scope `onKeyDown` handlers locally checking `e.target === e.currentTarget`.
