@@ -17,6 +17,9 @@ describe("DailySessionInsights", () => {
 
   it("shows locked reward by default", () => {
     render(<DailySessionInsights />);
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
 
     expect(
       screen.getByText(
@@ -48,6 +51,10 @@ describe("DailySessionInsights", () => {
 
     render(<DailySessionInsights />);
 
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+
     const claimButton = screen.getByRole("button", {
       name: "Claim +40 XP for daily session",
     });
@@ -55,6 +62,7 @@ describe("DailySessionInsights", () => {
 
     act(() => {
       fireEvent.click(claimButton);
+      vi.advanceTimersByTime(100);
     });
 
     expect(
