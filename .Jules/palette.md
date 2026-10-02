@@ -42,6 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
 ## 2024-06-15 - Interactive Flashcard Accessibility
+
 **Learning:** Custom interactive elements (like full-screen flashcards) need `role="button"` and `tabIndex={0}` to be keyboard accessible. Furthermore, when implementing global `window.addEventListener('keydown')` handlers (e.g. for `Space` or `Enter`), it's critical to check `document.activeElement?.tagName` and `role` to avoid inadvertently hijacking or double-triggering native interactions when focus is inside a child component or an input field.
 **Action:** When adding global keyboard shortcuts, always filter out standard inputs (`INPUT`, `TEXTAREA`) and interactive elements (`BUTTON`, `role="button"`). Also ensure custom containers acting as buttons use `role="button"`, `tabIndex={0}`, have visually-hidden screen reader instructions, and explicitly provide visual shortcut hints (e.g. `[Esc]`, `[←]`) for better UX.
