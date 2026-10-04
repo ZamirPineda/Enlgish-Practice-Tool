@@ -20,6 +20,7 @@ test.describe("Accessibility (A11y) Standards", () => {
   }) => {
     await page.goto("/#/vault");
     await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(2000);
 
     const results = await new AxeBuilder({ page }).analyze();
 
@@ -34,6 +35,7 @@ test.describe("Accessibility (A11y) Standards", () => {
   }) => {
     await page.goto("/#/calculus");
     await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(2000);
 
     const results = await new AxeBuilder({ page }).analyze();
 
