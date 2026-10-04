@@ -42,3 +42,13 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-12 - [Global Keyboard Shortcuts Safety]
+
+**Learning:** Custom interactive elements (like flashcards) need `role="button"` and local keyboard handlers, but when combined with global window keydown events, standard interactive elements (inputs, standard buttons) can get hijacked.
+**Action:** When using global `keydown` listeners for navigation (e.g. arrows), check `document.activeElement?.tagName` to avoid overriding native text inputs or other button actions. Use a React `useRef` to exempt the specific target container component from these exclusions if necessary.
+
+## 2026-03-12 - [Global Keyboard Shortcuts Safety Followup]
+
+**Learning:** When using both global `window` `keydown` events and local element `onKeyDown` handlers (like on a flashcard `div`), the global event can double-trigger or conflict. Exempting inner buttons in the global handler via `contains(target)` is insufficient if those buttons are meant to have standard behavior while the container itself has custom behavior.
+**Action:** In local `onKeyDown` handlers meant to intercept keys that would otherwise bubble, always call `e.stopPropagation()` alongside `e.preventDefault()`. In the global `keydown` listener, start with `if (e.defaultPrevented) return;` to ignore events already handled by local elements, and correctly check if the active element is a standard button before taking over Space/Enter.
