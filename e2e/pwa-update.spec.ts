@@ -4,8 +4,23 @@ test.describe("PWA Auto Update Flow", () => {
   test("Shows update banner when in active session (mocked SW update)", async ({
     page,
   }) => {
+    // Navigate and set local storage to skip onboarding
+    await page.goto("/");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
+    });
+
     // Navigate to a game route (active session)
     await page.goto("/#/stop?mode=game");
+    await page.reload();
 
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
@@ -27,42 +42,45 @@ test.describe("PWA Auto Update Flow", () => {
 
     // Click on update
     // Intercept reload to verify it happens
-    let didReload = false;
-    page.on("framenavigated", () => {
-      didReload = true;
-    });
-
-    await updateButton.click();
-
-    // Since window.location.reload() happens, let's wait a bit to verify nav or log
     // We expect the script to call reload, bounding test time to ensure it passed.
-    await page.waitForTimeout(500);
-    expect(didReload).toBe(true);
+    await Promise.all([
+      page.waitForEvent("framenavigated"),
+      updateButton.click({ force: true }),
+    ]);
   });
 
   test("Does not show banner, but auto-reloads if NOT in active session", async ({
     page,
   }) => {
+    // Navigate and set local storage to skip onboarding
+    await page.goto("/");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
+    });
+
     // Navigate to home (not an active session)
     await page.goto("/#/");
+    await page.reload();
 
     await expect(page.getByRole("banner")).toBeVisible();
 
-    let didReload = false;
-    page.on("framenavigated", () => {
-      didReload = true;
-    });
-
-    // Trigger mocked PWA update
-    await page.evaluate(() => {
-      if ((window as any).__TRIGGER_PWA_UPDATE) {
-        (window as any).__TRIGGER_PWA_UPDATE();
-      }
-    });
-
-    // It should immediately reload instead of showing banner
-    await page.waitForTimeout(500);
-    expect(didReload).toBe(true);
+    // Trigger mocked PWA update and wait for reload
+    await Promise.all([
+      page.waitForEvent("framenavigated"),
+      page.evaluate(() => {
+        if ((window as any).__TRIGGER_PWA_UPDATE) {
+          (window as any).__TRIGGER_PWA_UPDATE();
+        }
+      }),
+    ]);
 
     const updateBanner = page.getByText("Nueva versión disponible");
     await expect(updateBanner).toBeHidden();
