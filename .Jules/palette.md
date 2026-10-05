@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2026-03-12 - [Keyboard Shortcuts Accessibility]
+
+**Learning:** When buttons trigger global keyboard shortcuts (e.g., arrow keys for next/previous, Escape for exit), discoverability is often poor because the shortcuts are invisible.
+**Action:** Append visual shortcut hints (like `[Esc]` or `[←]`) inline with the button text to make keyboard shortcuts discoverable. Use visually dim styling (e.g., `opacity-50 text-xs`) and hide them on mobile (e.g., `hidden sm:inline-block`) to avoid breaking the layout.
