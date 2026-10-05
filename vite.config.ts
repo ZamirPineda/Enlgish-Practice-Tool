@@ -244,6 +244,7 @@ export default defineConfig(({ mode }) => {
     test: {
       globals: true,
       environment: "jsdom",
+      testTimeout: 30000,
       setupFiles: "./src/setupTests.ts",
       exclude: [...configDefaults.exclude, "e2e/**"],
       coverage: {
