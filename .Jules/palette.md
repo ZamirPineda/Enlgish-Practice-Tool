@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2025-03-05 - [Math Flashcard Accessibility and Global Shortcuts]
+**Learning:** Custom interactive components like flashcards often lack keyboard navigation (like Arrow keys or Space/Enter) and fail screen reader accessibility when implemented as simple `div`s. Furthermore, attaching both global and local keydown handlers requires careful propagation management.
+**Action:** Always add `role="button"`, `tabIndex={0}`, and an `onKeyDown` handler with `e.stopPropagation()` when e.target === e.currentTarget to custom interactive containers. For global shortcut listeners, wrap handlers in `useCallback` and ensure to ignore events where `document.activeElement.tagName` is an input or a standard button to avoid hijacking native interactions.
