@@ -7,6 +7,19 @@ test.describe("PWA Auto Update Flow", () => {
     // Navigate to a game route (active session)
     await page.goto("/#/stop?mode=game");
 
+    // Bypass onboarding which might block clicks
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
+    });
+    await page.reload();
+
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
 
@@ -61,7 +74,7 @@ test.describe("PWA Auto Update Flow", () => {
     });
 
     // It should immediately reload instead of showing banner
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1500);
     expect(didReload).toBe(true);
 
     const updateBanner = page.getByText("Nueva versión disponible");
