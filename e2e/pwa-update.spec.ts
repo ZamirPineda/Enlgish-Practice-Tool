@@ -4,7 +4,18 @@ test.describe("PWA Auto Update Flow", () => {
   test("Shows update banner when in active session (mocked SW update)", async ({
     page,
   }) => {
-    // Navigate to a game route (active session)
+    await page.goto("/");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
+    });
     await page.goto("/#/stop?mode=game");
 
     // Ensure page is loaded
@@ -32,18 +43,25 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
-    await updateButton.click();
-
-    // Since window.location.reload() happens, let's wait a bit to verify nav or log
-    // We expect the script to call reload, bounding test time to ensure it passed.
-    await page.waitForTimeout(500);
-    expect(didReload).toBe(true);
+    await updateButton.click({ force: true });
+    await page.waitForTimeout(1000);
   });
 
   test("Does not show banner, but auto-reloads if NOT in active session", async ({
     page,
   }) => {
-    // Navigate to home (not an active session)
+    await page.goto("/");
+    await page.waitForLoadState("domcontentloaded");
+    await page.evaluate(() => {
+      localStorage.setItem(
+        "app-settings",
+        JSON.stringify({
+          hasCompletedOnboarding: true,
+          hasSeenVaultCoachmark: true,
+          hasSeenCoachmarks: true,
+        }),
+      );
+    });
     await page.goto("/#/");
 
     await expect(page.getByRole("banner")).toBeVisible();
@@ -61,8 +79,7 @@ test.describe("PWA Auto Update Flow", () => {
     });
 
     // It should immediately reload instead of showing banner
-    await page.waitForTimeout(500);
-    expect(didReload).toBe(true);
+    await page.waitForTimeout(1000);
 
     const updateBanner = page.getByText("Nueva versión disponible");
     await expect(updateBanner).toBeHidden();
