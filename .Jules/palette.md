@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2026-03-12 - [Global Keyboard Navigation Accessibility]
+
+**Learning:** Component using global keydown handlers for navigating slides or flipping cards without applying `role="button"` and `tabIndex={0}` lack focus visibility and screen reader support, preventing proper accessibility.
+**Action:** When implementing global keyboard navigation (like in MathFlashCard), always ensure the main interactive element has `role="button"`, `tabIndex={0}`, an explicit `onKeyDown` handler for keyboard events bubbling up from standard keys ('Enter'/'Space'), and appropriate visually hidden screen reader text (e.g. `sr-only`). Also append visual hints for the keyboard shortcuts.
