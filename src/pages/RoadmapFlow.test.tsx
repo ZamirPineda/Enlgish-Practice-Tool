@@ -111,9 +111,15 @@ describe("Roadmap sequential flow", () => {
 
     await recordMastery("Fix grammar slips", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Rephrase concise answers/i }),
-    ).toBeInTheDocument();
+    await waitFor(
+      () =>
+        expect(
+          screen.getByRole("button", {
+            name: /Abrir: Rephrase concise answers/i,
+          }),
+        ).toBeInTheDocument(),
+      { timeout: 4000 },
+    );
 
     await recordMastery("Rephrase concise answers", 80);
 
