@@ -9,6 +9,11 @@ test.describe("PWA Auto Update Flow", () => {
 
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
+    try {
+      await page
+        .getByRole("button", { name: "Close" })
+        .click({ timeout: 2000 });
+    } catch (e) {}
 
     // Trigger mocked PWA update
     await page.evaluate(() => {
@@ -47,6 +52,11 @@ test.describe("PWA Auto Update Flow", () => {
     await page.goto("/#/");
 
     await expect(page.getByRole("banner")).toBeVisible();
+    try {
+      await page
+        .getByRole("button", { name: "Close" })
+        .click({ timeout: 2000 });
+    } catch (e) {}
 
     let didReload = false;
     page.on("framenavigated", () => {

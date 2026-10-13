@@ -53,7 +53,12 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
       // Ignore if user is typing in an input
       const activeElement = document.activeElement;
       const tagName = activeElement?.tagName;
-      if (tagName === "INPUT" || tagName === "TEXTAREA" || tagName === "SELECT")
+      if (
+        tagName === "INPUT" ||
+        tagName === "TEXTAREA" ||
+        tagName === "SELECT" ||
+        activeElement?.getAttribute("role") === "switch"
+      )
         return;
       if (tagName === "BUTTON") return; // Let buttons handle their own keys
 
