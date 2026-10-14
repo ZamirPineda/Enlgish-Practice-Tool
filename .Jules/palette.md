@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2025-02-20 - Math Flashcard Accessibility and Global Navigation
+**Learning:** Using `role="button"` and local `onKeyDown` alongside global keydown listeners requires careful event propagation handling. Setting `lang="es"` on screen reader text (`sr-only`) is critical so English readers don't mispronounce Spanish text.
+**Action:** Always add `tabIndex={0}` and `focus-visible` to interactive divs, carefully scope global events using `tagName` exclusions, and localize visually hidden text.
