@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { MathRow, MathStudyStrategy } from "@/types";
 import LatexRenderer from "@/components/LatexRenderer";
 import { shuffle } from "@/lib/arrayUtils";
@@ -27,14 +27,14 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
     setIsFlipped(false);
   }, [strategy, rows]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setIsFlipped(false);
     setTimeout(() => {
       setCurrentCardIndex((prev) => (prev + 1) % randomizedRows.length);
     }, 150); // slight delay for smooth transition
-  };
+  }, [randomizedRows.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     // When going back, show the answer side first (since we likely just saw it)
     setIsFlipped(true);
     setTimeout(() => {
@@ -42,11 +42,49 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         (prev) => (prev - 1 + randomizedRows.length) % randomizedRows.length,
       );
     }, 150);
-  };
+  }, [randomizedRows.length]);
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+  const handleFlip = useCallback(() => {
+    setIsFlipped((prev) => !prev);
+  }, []);
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (e.defaultPrevented) return;
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.tagName === "SELECT" ||
+        target.tagName === "BUTTON"
+      ) {
+        return;
+      }
+
+      switch (e.key) {
+        case " ":
+        case "Enter":
+          e.preventDefault();
+          handleFlip();
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          handleNext();
+          break;
+        case "ArrowLeft":
+          e.preventDefault();
+          handlePrev();
+          break;
+        case "Escape":
+          e.preventDefault();
+          onExit();
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, [handleFlip, handleNext, handlePrev, onExit]);
 
   if (randomizedRows.length === 0) return <div>Loading...</div>;
 
@@ -91,18 +129,36 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         </span>
         <button
           onClick={onExit}
-          className="text-slate-400 hover:text-white transition-colors"
+          className="text-slate-400 hover:text-white transition-colors flex items-center"
         >
-          ✕ Salir
+          ✕ Salir{" "}
+          <span className="opacity-50 text-xs hidden sm:inline-block ml-1">
+            [Esc]
+          </span>
         </button>
       </div>
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        role="button"
+        tabIndex={0}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
+        onKeyDown={(e) => {
+          if (
+            e.target === e.currentTarget &&
+            (e.key === "Enter" || e.key === " ")
+          ) {
+            e.preventDefault();
+            e.stopPropagation();
+            handleFlip();
+          }
+        }}
       >
+        <span className="sr-only" lang="es">
+          Tarjeta de memoria. Presiona Enter o Espacio para girar.
+        </span>
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
           style={{
@@ -151,18 +207,24 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handlePrev();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border flex justify-center items-center"
               >
-                Anterior
+                Anterior{" "}
+                <span className="opacity-50 text-xs hidden sm:inline-block ml-1">
+                  [←]
+                </span>
               </button>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   handleNext();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border flex justify-center items-center"
               >
-                Siguiente
+                Siguiente{" "}
+                <span className="opacity-50 text-xs hidden sm:inline-block ml-1">
+                  [→]
+                </span>
               </button>
             </div>
           </div>
