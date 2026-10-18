@@ -20,7 +20,7 @@ test.describe("Accessibility (A11y) Standards", () => {
   }) => {
     await page.goto("/#/vault");
     await page.waitForLoadState("domcontentloaded");
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
 
     const results = await new AxeBuilder({ page }).analyze();
 
