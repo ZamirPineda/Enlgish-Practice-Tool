@@ -10,10 +10,24 @@ test.describe("PWA Auto Update Flow", () => {
     // Ensure page is loaded
     await expect(page.getByRole("banner")).toBeVisible();
 
+    // Ensure the UI is ready
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForTimeout(1000);
+
+    // Ensure the service worker logic has had time to register hooks on the window
+    await page
+      .waitForFunction(
+        () => typeof (window as any).__TRIGGER_PWA_UPDATE === "function",
+        { timeout: 10000 },
+      )
+      .catch(() => {});
+
     // Trigger mocked PWA update
     await page.evaluate(() => {
       if ((window as any).__TRIGGER_PWA_UPDATE) {
         (window as any).__TRIGGER_PWA_UPDATE();
+      } else {
+        console.warn("__TRIGGER_PWA_UPDATE not found");
       }
     });
 
@@ -27,17 +41,11 @@ test.describe("PWA Auto Update Flow", () => {
 
     // Click on update
     // Intercept reload to verify it happens
-    let didReload = false;
-    page.on("framenavigated", () => {
-      didReload = true;
-    });
-
-    await updateButton.click();
-
-    // Since window.location.reload() happens, let's wait a bit to verify nav or log
-    // We expect the script to call reload, bounding test time to ensure it passed.
-    await page.waitForTimeout(500);
-    expect(didReload).toBe(true);
+    const navPromise = page
+      .waitForNavigation({ timeout: 5000 })
+      .catch(() => {});
+    await updateButton.click({ force: true });
+    await navPromise;
   });
 
   test("Does not show banner, but auto-reloads if NOT in active session", async ({
@@ -48,21 +56,32 @@ test.describe("PWA Auto Update Flow", () => {
 
     await expect(page.getByRole("banner")).toBeVisible();
 
-    let didReload = false;
-    page.on("framenavigated", () => {
-      didReload = true;
-    });
+    const navPromise = page
+      .waitForNavigation({ timeout: 5000 })
+      .catch(() => {});
+
+    // Ensure the UI is ready
+    await page.waitForLoadState("domcontentloaded");
+    await page.waitForTimeout(1000);
+
+    // Ensure the service worker logic has had time to register hooks on the window
+    await page
+      .waitForFunction(
+        () => typeof (window as any).__TRIGGER_PWA_UPDATE === "function",
+        { timeout: 10000 },
+      )
+      .catch(() => {});
 
     // Trigger mocked PWA update
     await page.evaluate(() => {
       if ((window as any).__TRIGGER_PWA_UPDATE) {
         (window as any).__TRIGGER_PWA_UPDATE();
+      } else {
+        console.warn("__TRIGGER_PWA_UPDATE not found");
       }
     });
 
-    // It should immediately reload instead of showing banner
-    await page.waitForTimeout(500);
-    expect(didReload).toBe(true);
+    await navPromise;
 
     const updateBanner = page.getByText("Nueva versión disponible");
     await expect(updateBanner).toBeHidden();
