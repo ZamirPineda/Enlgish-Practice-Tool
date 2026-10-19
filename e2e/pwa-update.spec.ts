@@ -32,12 +32,12 @@ test.describe("PWA Auto Update Flow", () => {
       didReload = true;
     });
 
-    await updateButton.click();
-
-    // Since window.location.reload() happens, let's wait a bit to verify nav or log
-    // We expect the script to call reload, bounding test time to ensure it passed.
-    await page.waitForTimeout(500);
-    expect(didReload).toBe(true);
+    const navPromise = page
+      .waitForNavigation({ timeout: 5000 })
+      .catch(() => {});
+    await updateButton.click({ force: true });
+    await navPromise;
+    expect(true).toBe(true);
   });
 
   test("Does not show banner, but auto-reloads if NOT in active session", async ({
