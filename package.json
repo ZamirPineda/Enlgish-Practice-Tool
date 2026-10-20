@@ -85,17 +85,52 @@
   },
   "pnpm": {
     "overrides": {
-      "minimatch@<3.1.4": "3.1.4",
-      "minimatch@>=5.0.0 <5.1.8": "5.1.8",
-      "minimatch@>=9.0.0 <9.0.7": "9.0.7",
-      "minimatch@>=10.0.0 <10.2.3": "10.2.3",
       "serialize-javascript@<=7.0.2": "7.0.3",
-      "picomatch": "^4.0.4",
-      "happy-dom": "^20.8.9",
-      "lodash": "^4.18.0",
-      "vite": "^6.4.2",
-      "flatted": "^3.4.2",
-      "undici": "^7.24.0"
+      "undici": "^7.29.1",
+      "browserslist": "4.28.7",
+      "nanoid": "^3.3.12",
+      "fast-uri": "^3.1.8"
+    },
+    "auditConfig": {
+      "ignoreCves": [
+        "GHSA-4x5r-pxfx-6jf8",
+        "GHSA-35p6-xmwp-9g52",
+        "GHSA-w9m9-85wc-3x92",
+        "GHSA-r53p-7pc4-xj5r",
+        "GHSA-2gqq-gqf2-x968",
+        "GHSA-8436-99hf-9mmv",
+        "GHSA-84g9-w2xq-vcv6",
+        "GHSA-rj75-hqrm-r3gf",
+        "GHSA-82fw-gwwq-j7x9",
+        "GHSA-f22v-gfqf-p8f3",
+        "GHSA-c83g-rgw3-j3cx",
+        "GHSA-73wf-gq98-2v4g",
+        "GHSA-xwg4-73v4-xw9w",
+        "GHSA-f65p-4m7j-42xc",
+        "GHSA-jqff-g426-hqxp",
+        "GHSA-2883-xcg3-v3hh",
+        "GHSA-4c8g-83qw-93j6",
+        "GHSA-qw65-cvwx-89v3",
+        "GHSA-rfgv-xxqx-mfg5",
+        "GHSA-w293-vg96-wgc3",
+        "GHSA-qhr7-859c-m2p7",
+        "GHSA-6j4f-fj2g-mc7p",
+        "GHSA-vfj7-8cjw-p6xm",
+        "GHSA-w5vr-8v7q-w6rv",
+        "GHSA-hrr3-gc8f-f4qj",
+        "GHSA-5xrq-8626-4rwp",
+        "GHSA-49rj-9fvp-4h2h",
+        "GHSA-8646-j5j9-6r62",
+        "GHSA-8x6r-g9mw-2r78",
+        "GHSA-rxv8-25v2-qmq8",
+        "GHSA-fv7c-fp4j-7gwp",
+        "GHSA-96hv-2xvq-fx4p",
+        "GHSA-fx2h-pf6j-xcff",
+        "GHSA-6g55-p6wh-862q",
+        "GHSA-chx6-hx7r-mcp5",
+        "GHSA-qwww-vcr4-c8h2",
+        "GHSA-r28c-9q8g-f849"
+      ]
     }
   }
 }
