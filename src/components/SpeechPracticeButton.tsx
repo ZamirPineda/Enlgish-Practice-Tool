@@ -108,7 +108,7 @@ const SpeechPracticeButton: React.FC<SpeechPracticeButtonProps> = ({
     <div className="flex items-center gap-2">
       <button
         onClick={handleClick}
-        className={`p-2 rounded-full transition-all duration-300 ${
+        className={`p-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
           status === "correct"
             ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/30"
             : micState === "listening"

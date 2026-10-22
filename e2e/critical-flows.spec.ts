@@ -50,7 +50,9 @@ test("adds item to Vault and keeps it after reload", async ({ page }) => {
 
   await page.getByPlaceholder("e.g. Ubiquitous").fill("E2E Persistence Word");
   await page
-    .getByPlaceholder("Write a meaning you can imagine, not only a synonym or translation.")
+    .getByPlaceholder(
+      "Write a meaning you can imagine, not only a synonym or translation.",
+    )
     .fill("Word created by e2e test");
   await page.getByRole("button", { name: "Save Word" }).click();
 
