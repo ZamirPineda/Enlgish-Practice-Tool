@@ -42,6 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
 ## 2024-05-24 - Interactive Component Focus Enhancements
+
 **Learning:** Custom interactive elements (like the flip card container in `MathFlashCard` or mic icon buttons in `SpeechPracticeButton`) often lack proper focus-visible styles when they are built with `div` or unstyled `button`s in Tailwind. Relying solely on mouse/touch interaction hides the element from keyboard users, breaking accessibility.
 **Action:** Always ensure any element with an `onClick` or custom interaction role has `focus-visible:ring-2` (and typically `focus-visible:ring-offset-2` or `focus-visible:ring-offset-4`) using the primary interactive colors (e.g., `focus-visible:ring-accent`), and ensure keyboard interactivity (`Enter` / `Space`) is supported if it is not a native `<button>`.
