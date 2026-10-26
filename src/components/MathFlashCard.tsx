@@ -99,10 +99,27 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (
+            e.target === e.currentTarget &&
+            (e.key === "Enter" || e.key === " ")
+          ) {
+            e.preventDefault();
+            e.stopPropagation();
+            handleFlip();
+          }
+        }}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent rounded-2xl transition-shadow"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
       >
+        <span className="sr-only" lang="es">
+          {isFlipped
+            ? "Tarjeta girada. Mostrando respuesta. Presiona enter o espacio para ver la pregunta"
+            : "Mostrando pregunta. Presiona enter o espacio para girar y ver la respuesta"}
+        </span>
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
           style={{
