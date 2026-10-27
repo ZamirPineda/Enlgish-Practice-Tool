@@ -42,3 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2026-03-10 - [Custom Card Accessibility Pattern]
+
+**Learning:** Interactive cards (like `MathFlashCard`) that use `div` elements with `onClick` handlers often lack semantic meaning and keyboard support, making them inaccessible to screen readers and keyboard users.
+**Action:** When creating or fixing custom interactive cards, always add `role="button"`, `tabIndex={0}`, visible focus styles (e.g., `focus-visible:ring-2`), and an `onKeyDown` handler to support 'Enter' and 'Space' keys. Include localized screen-reader-only instructions if necessary.
