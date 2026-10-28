@@ -42,6 +42,8 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
 ## 2023-10-28 - Math Flashcard Keyboard Shortcuts
+
 **Learning:** Adding global keyboard navigation (Esc, ArrowRight, ArrowLeft) to flashcards greatly improves usability, but requires explicit checks (`document.activeElement?.tagName`) to avoid hijacking standard inputs/buttons, along with inline visual shortcut hints for discoverability. Custom interactive `div` elements must include `role="button"`, `tabIndex={0}`, an `aria-label`, visible focus styling, and an `onKeyDown` handler that safely stops propagation for 'Enter'/'Space'.
 **Action:** When adding global shortcuts or making custom containers interactive, always implement standard keyboard event handlers with native element exclusions, focus states, ARIA roles/labels, and visually dim inline hints for shortcuts.
