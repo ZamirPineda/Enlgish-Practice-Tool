@@ -42,3 +42,6 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2024-05-18 - Math Flashcard Accessibility Enhancements
+**Learning:** Custom interactive elements representing cards or containers that users can flip or click (like flashcards) often lack native keyboard navigation (Enter/Space) and structural semantics, leading to inaccessible content for screen reader users and those navigating by keyboard. Additionally, interactive container clicks should explicitly ignore bubbled events.
+**Action:** Always add `role="button"`, `tabIndex={0}`, visible focus rings (e.g. `focus-visible:ring-2`), and specific `onKeyDown` listeners (ignoring bubbled events via `e.target !== e.currentTarget`) to custom clickable containers (like cards). Include a visually hidden `<span className="sr-only">` to expose dynamic instructions (e.g., flip state) for screen readers. Furthermore, for standard buttons with text and an icon, wrap the icon in `<span aria-hidden="true">` to prevent repetitive or confusing screen reader announcements.
