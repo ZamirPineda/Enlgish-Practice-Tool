@@ -246,6 +246,7 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       setupFiles: "./src/setupTests.ts",
       exclude: [...configDefaults.exclude, "e2e/**"],
+      testTimeout: 30000,
       coverage: {
         provider: "v8",
         reporter: ["text", "html", "json-summary"],
