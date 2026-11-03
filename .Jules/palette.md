@@ -42,3 +42,7 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+
+## 2024-05-18 - Math Flashcard Keyboard Accessibility
+**Learning:** Custom interactive elements implemented with `div` (e.g., flashcards) require full keyboard accessibility including `role="button"`, `tabIndex={0}`, an `onKeyDown` handler for Space/Enter, and visible focus styling. Global keydown listeners can hijack native interactions, so checking `e.target === e.currentTarget` in local handlers prevents conflicts with nested interactive elements.
+**Action:** Always add `role="button"`, `tabIndex={0}`, visible focus rings (e.g., `focus-visible:ring-2`), and a carefully scoped `onKeyDown` handler to custom interactive components that use `onClick`. Ensure `e.stopPropagation()` and `e.preventDefault()` are used correctly in the keydown handler.
