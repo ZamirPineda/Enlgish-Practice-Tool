@@ -16,7 +16,7 @@ describe("DailySessionInsights", () => {
   });
 
   it("shows locked reward by default", () => {
-    render(<DailySessionInsights />);
+    const { unmount } = render(<DailySessionInsights />);
 
     expect(
       screen.getByText(
@@ -26,6 +26,7 @@ describe("DailySessionInsights", () => {
     expect(
       screen.getByRole("button", { name: "Claim +40 XP for daily session" }),
     ).toBeDisabled();
+    unmount();
   });
 
   it("claims reward once when eligible", () => {
@@ -46,7 +47,7 @@ describe("DailySessionInsights", () => {
       trackAnalyticsEvent("session_end", { game: "math_game" });
     });
 
-    render(<DailySessionInsights />);
+    const { unmount } = render(<DailySessionInsights />);
 
     const claimButton = screen.getByRole("button", {
       name: "Claim +40 XP for daily session",
@@ -63,5 +64,6 @@ describe("DailySessionInsights", () => {
       }),
     ).toBeDisabled();
     expect(localStorage.getItem("english-pal-global-xp")).toBe("40");
+    unmount();
   });
 });

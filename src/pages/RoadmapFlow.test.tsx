@@ -91,18 +91,14 @@ describe("Roadmap sequential flow", () => {
   test("completes the English route sequentially from first node to module completion", async () => {
     renderView();
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Interview opener/i }),
-    ).toBeInTheDocument();
+    await screen.findByRole("button", { name: /Abrir: Interview opener/i });
     expect(
       screen.getByRole("button", { name: /Bloqueado: Fix grammar slips/i }),
     ).toBeInTheDocument();
 
     await recordMastery("Interview opener", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Fix grammar slips/i }),
-    ).toBeInTheDocument();
+    await screen.findByRole("button", { name: /Abrir: Fix grammar slips/i });
     expect(
       screen.getByRole("button", {
         name: /Bloqueado: Rephrase concise answers/i,
@@ -111,9 +107,9 @@ describe("Roadmap sequential flow", () => {
 
     await recordMastery("Fix grammar slips", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Rephrase concise answers/i }),
-    ).toBeInTheDocument();
+    await screen.findByRole("button", {
+      name: /Abrir: Rephrase concise answers/i,
+    });
 
     await recordMastery("Rephrase concise answers", 80);
 
@@ -125,45 +121,41 @@ describe("Roadmap sequential flow", () => {
 
     await recordMastery("Transform follow-up answers", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Story frame builder/i }),
-    ).toBeInTheDocument();
+    await screen.findByRole("button", { name: /Abrir: Story frame builder/i });
 
     await recordMastery("Story frame builder", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Story error cleanup/i }),
-    ).toBeInTheDocument();
+    await screen.findByRole("button", { name: /Abrir: Story error cleanup/i });
 
     await recordMastery("Story error cleanup", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Story rephrase variants/i }),
-    ).toBeInTheDocument();
+    await screen.findByRole("button", {
+      name: /Abrir: Story rephrase variants/i,
+    });
 
     await recordMastery("Story rephrase variants", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Story follow-up transform/i }),
-    ).toBeInTheDocument();
+    await screen.findByRole("button", {
+      name: /Abrir: Story follow-up transform/i,
+    });
 
     await recordMastery("Story follow-up transform", 80);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Panel meeting builder/i }),
-    ).toBeInTheDocument();
+    await screen.findByRole("button", {
+      name: /Abrir: Panel meeting builder/i,
+    });
 
     await recordMastery("Panel meeting builder", 90);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Panel precision cleanup/i }),
-    ).toBeInTheDocument();
+    await screen.findByRole("button", {
+      name: /Abrir: Panel precision cleanup/i,
+    });
 
     await recordMastery("Panel precision cleanup", 90);
 
-    expect(
-      screen.getByRole("button", { name: /Abrir: Panel rephrase trade-offs/i }),
-    ).toBeInTheDocument();
+    await screen.findByRole("button", {
+      name: /Abrir: Panel rephrase trade-offs/i,
+    });
 
     await recordMastery("Panel rephrase trade-offs", 90);
 
