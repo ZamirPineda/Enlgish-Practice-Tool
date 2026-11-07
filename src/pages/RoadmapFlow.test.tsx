@@ -44,7 +44,7 @@ describe("Roadmap sequential flow", () => {
     }
 
     fireEvent.click(
-      within(completionDialog).getByRole("button", { name: "Continuar" }),
+      within(completionDialog).getByRole("button", { name: "Continuar y cerrar modal" }),
     );
 
     await waitFor(() => {
