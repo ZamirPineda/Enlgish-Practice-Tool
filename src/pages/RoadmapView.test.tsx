@@ -110,7 +110,9 @@ describe("RoadmapView", () => {
       }),
     );
 
-    const continueButton = screen.queryByRole("button", { name: "Continuar" });
+    const continueButton = screen.queryByRole("button", {
+      name: "Continuar y cerrar modal",
+    });
     if (continueButton) {
       await user.click(continueButton);
     }
@@ -303,7 +305,7 @@ describe("RoadmapView", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      await screen.findByRole("button", { name: "Continuar" }),
+      await screen.findByRole("button", { name: "Continuar y cerrar modal" }),
     ).toBeInTheDocument();
   }, 15000);
 });

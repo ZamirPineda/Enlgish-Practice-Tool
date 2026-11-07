@@ -96,6 +96,7 @@ export const UnitCompletionModal: React.FC<UnitCompletionModalProps> = ({
                     <button
                       type="button"
                       onClick={handleClose}
+                      aria-label="Continuar y cerrar modal"
                       className="w-full rounded-2xl bg-emerald-500 px-6 py-4 text-base font-black uppercase tracking-widest text-white shadow-[0_4px_0_0_rgb(16,185,129)] transition-all hover:bg-emerald-400 hover:shadow-[0_2px_0_0_rgb(16,185,129)] hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/40"
                     >
                       Continuar
