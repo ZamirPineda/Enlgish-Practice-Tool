@@ -110,7 +110,9 @@ describe("RoadmapView", () => {
       }),
     );
 
-    const continueButton = screen.queryByRole("button", { name: "Continuar y cerrar modal" });
+    const continueButton = screen.queryByRole("button", {
+      name: "Continuar y cerrar modal",
+    });
     if (continueButton) {
       await user.click(continueButton);
     }

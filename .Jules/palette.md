@@ -44,9 +44,11 @@
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
 
 ## 2026-11-07 - [MathFlashCard Container Focus and Enter/Space Selection]
+
 **Learning:** `div` elements used as interactive cards (like in `MathFlashCard.tsx`) must have `role="button"` and `tabIndex={0}` to be accessible via keyboard. They must also have a visual focus state (e.g., `focus-visible:ring-2`) and support `Enter` and `Space` keyboard events to trigger their `onClick` functionality. When applying these events via `onKeyDown`, ensure to stop propagation if they contain child buttons so the container doesn't hijack child events.
 **Action:** When creating custom interactive containers, always add `role="button"`, `tabIndex={0}`, visible focus classes (`focus-visible:ring-2`), and `onKeyDown` handlers explicitly checking for `Enter` and `Space` keys (along with checking `e.target === e.currentTarget` to prevent hijacking child button events).
 
 ## 2026-11-07 - [UnitCompletionModal "Continuar" Accessibility]
+
 **Learning:** General "Continue" buttons within modals that trigger closing the modal may lack context for screen readers as to what exactly they are continuing from or what action they perform (e.g. closing).
 **Action:** When a generic confirmation button like "Continuar" is used to close a modal overlay, add an explicit `aria-label` (e.g. "Continuar y cerrar modal") to provide context to assistive technologies.
