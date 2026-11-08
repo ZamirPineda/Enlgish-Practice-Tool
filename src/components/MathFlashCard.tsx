@@ -91,7 +91,8 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         </span>
         <button
           onClick={onExit}
-          className="text-slate-400 hover:text-white transition-colors"
+          className="text-slate-400 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded px-2 py-1"
+          aria-label="Salir de las tarjetas"
         >
           ✕ Salir
         </button>
@@ -99,10 +100,27 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        role="button"
+        tabIndex={0}
+        aria-pressed={isFlipped}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-2xl"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
+        onKeyDown={(e) => {
+          if (
+            e.target === e.currentTarget &&
+            (e.key === "Enter" || e.key === " ")
+          ) {
+            e.preventDefault();
+            handleFlip();
+          }
+        }}
       >
+        <span className="sr-only">
+          {isFlipped
+            ? "Respuesta de la tarjeta. Presiona Enter o Espacio para volver a la pregunta."
+            : "Pregunta de la tarjeta. Presiona Enter o Espacio para revelar la respuesta."}
+        </span>
         <div
           className={`relative w-full h-full duration-500 preserve-3d transition-transform ${isFlipped ? "rotate-y-180" : ""}`}
           style={{
@@ -151,7 +169,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handlePrev();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 Anterior
               </button>
@@ -160,7 +178,7 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
                   e.stopPropagation();
                   handleNext();
                 }}
-                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border"
+                className="bg-surface-1 hover:bg-surface-hover text-text-primary px-6 py-2 rounded-full font-bold transition-all flex-1 max-w-[150px] border border-border focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 Siguiente
               </button>
