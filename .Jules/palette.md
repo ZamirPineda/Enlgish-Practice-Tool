@@ -42,3 +42,6 @@
 
 **Learning:** The 'Claim Reward' button in DailySessionInsights.tsx lacked an aria-label which can prevent screen-readers from easily interpreting its purpose given it contains an icon and dynamic text.
 **Action:** Use conditional aria-labels for buttons whose state and text changes, so users who rely on screen readers understand what the button currently does and why it might be disabled.
+## 2024-11-11 - MathFlashCard accessibility enhancement
+**Learning:** We need to provide interactive container elements (like custom flash cards) with role="button" and proper keyboard bindings (onKeyDown for Enter and Space) in order to make them fully accessible, particularly ensuring focus visibility (e.g. `focus-visible:ring-2`) and tabIndex. We also should always give an accessible name via `aria-label` to icon-heavy UI elements (like "✕ Salir" which could just sound like "multiply Salir" to a screen reader, and using `aria-label` is better UX).
+**Action:** Always add keyboard accessibility features (role, tabIndex, onKeyDown) when turning a <div> or other non-button HTML element into a clickable button interaction (like flipping a card). Ensure the focus indication is evident. Add `aria-label`s localized to the interface language.
