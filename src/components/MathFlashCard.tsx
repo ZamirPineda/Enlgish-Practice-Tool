@@ -91,7 +91,8 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
         </span>
         <button
           onClick={onExit}
-          className="text-slate-400 hover:text-white transition-colors"
+          aria-label="Salir de las tarjetas"
+          className="text-slate-400 hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded px-1"
         >
           ✕ Salir
         </button>
@@ -99,7 +100,15 @@ const MathFlashCard: React.FC<MathFlashCardProps> = ({
 
       {/* Card Container */}
       <div
-        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group"
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            if (e.target === e.currentTarget) handleFlip();
+          }
+        }}
+        className="w-full relative min-h-[400px] md:min-h-[500px] cursor-pointer perspective-1000 group focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
         style={{ perspective: "1000px" }}
         onClick={handleFlip}
       >
